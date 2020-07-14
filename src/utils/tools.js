@@ -34,3 +34,14 @@ export function monthTimeArea(now) {
     end: formatDate(monthEndDate, 'yyyy-MM-dd 00:00:00')
   }
 }
+
+export function axiosRequestParams(_this) {
+  return {
+    timeout: 20000,
+    baseURL: process.env.VUE_APP_BASE_URL,
+    headers: {
+      Authorization: 'Bearer ' + _this.$store.getters.mwxtoken,
+      Identifier: _this.$store.getters.mwxidntf
+    }
+  }
+}

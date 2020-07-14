@@ -1,6 +1,6 @@
 import Axios from 'axios'
+import { Message, MessageBox } from 'element-ui'
 import store from '@/store'
-import { Toast } from 'vant'
 
 const axios = Axios.create({
   timeout: 30000,

@@ -5,7 +5,7 @@ module.exports = {
     open: true,
     proxy: {
       '/api': {
-        target: 'http://dapi.auyen.com',
+        target: 'https://tapi.auyen.com',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'

@@ -1,4 +1,5 @@
 import { $login, $logout } from '@/service/main'
+import { menuList } from '@/utils/menu'
 import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage'
 
 const Base64 = require('js-base64').Base64
@@ -9,7 +10,8 @@ const user = {
     mwxidntf: getLocalStorage('mwxidntf') || '',
     mwxuser: JSON.parse(getLocalStorage('mwxuser')) || {},
     mwxrole: getLocalStorage('mwxrole') || '',
-    mwxorg: getLocalStorage('mwxorg') || ''
+    mwxorg: getLocalStorage('mwxorg') || '',
+    routers: menuList()
   },
 
   mutations: {
@@ -39,7 +41,7 @@ const user = {
             const orgId = user.authorities[0].orgId
             const roleId = user.authorities[0].roles[0].roleId
             const identifier = Base64.encode(
-              'mwxservice:' + orgId + ':' + user.user_id + ':' + roleId
+              'woperation:' + orgId + ':' + user.user_id + ':' + roleId
             )
 
             setLocalStorage('mwxtoken', token)

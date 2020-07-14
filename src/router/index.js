@@ -1,15 +1,24 @@
 import Vue from 'vue'
+import Layout from '@/views/layout/Layout'
 import { getLocalStorage } from '@/utils/storage'
 import VueRouter from 'vue-router'
 import driver from './driver.js'
 import Cashier from './cashier.js'
 import Carrier from './carrier.js'
 import Filler from './filler.js'
+import User from './user.js'
 import Component from './component.js'
 Vue.use(VueRouter)
 
+const _import = require('./_import_' + process.env.NODE_ENV)
+
 const routes = [
-  { path: '/', name: 'main' },
+  {
+    path: '/',
+    name: 'login',
+    meta: { title: '登录' },
+    component: () => import('@/views/main/login')
+  },
   {
     path: '/login',
     name: 'login',
@@ -17,21 +26,19 @@ const routes = [
     component: () => import('@/views/main/login')
   },
   {
-    path: '/agreement',
-    name: 'agreement',
-    meta: { title: '服务协议' },
-    component: () => import('@/views/main/agreement')
-  },
-  {
-    path: '/wxpay',
-    name: 'wxpay',
-    meta: { title: '微信支付' },
-    component: () => import('@/views/main/wxpay')
+    path: '/home',
+    name: 'home',
+    component: Layout,
+    redirect: '/home/index',
+    meta: { noCache: false, title: '首页', icon: 'icon-gongnengguanli' },
+    children: [
+      { path: 'index', component: _import('home/index'), name: 'home', meta: { title: '首页', icon: 'icon-gongnengguanli', noCache: false } }
+    ]
   }
 ]
 
 const router = new VueRouter({
-  routes: [...routes, ...driver, ...Cashier, ...Carrier, ...Filler, ...Component]
+  routes: [...routes, ...User, ...driver, ...Cashier, ...Carrier, ...Filler, ...Component]
 })
 router.beforeEach((to, from, next) => {
   const mwxtoken = getLocalStorage('mwxtoken')

@@ -9,8 +9,8 @@ const Base64 = require('js-base64').Base64
 export async function $login (data) {
   const headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: 'Basic ' + Base64.encode('mwxservice:123456'),
-    Identifier: Base64.encode('mwxservice:org:user:role')
+    Authorization: 'Basic ' + Base64.encode('woperation:123456'),
+    Identifier: Base64.encode('woperation:org:user:role')
   }
   return await axios({
     url: 'user/oauth/token',

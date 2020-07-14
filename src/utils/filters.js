@@ -1,7 +1,7 @@
 import { formatDate } from '@/utils/tools'
 
 const gasstationImage = item => {
-  return item || require('@/assets/component/gasstationlist/main_list_ placeholder@3x.png')
+  return item
 }
 
 const formateTData = (date, fmt) => {
