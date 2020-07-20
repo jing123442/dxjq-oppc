@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'userop'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'usercarrier'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
@@ -9,7 +9,7 @@ import { $resetPassword } from '@/service/user'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'userop',
+  name: 'usercarrier',
   data() {
     return {
       isShow: false,
@@ -30,18 +30,18 @@ export default {
             totalCount: ['data', 'total']
           }
         },
-        name: '平台用户管理'
+        name: '物流用户管理'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { userType: 0 } })
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { userType: 2 } })
     }
   },
   computed: {
     ...mapGetters({
-      mode_list: 'user_op_mode_list',
-      page_status: 'user_op_page_status',
-      page_column: 'user_op_column',
-      select_list: 'user_op_select_list',
+      mode_list: 'user_carrier_mode_list',
+      page_status: 'user_carrier_page_status',
+      page_column: 'user_carrier_column',
+      select_list: 'user_carrier_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -65,7 +65,7 @@ export default {
         page: 1,
         size: 10,
         param: {
-          orgType: 0
+          orgType: 2
         }
       })
     }

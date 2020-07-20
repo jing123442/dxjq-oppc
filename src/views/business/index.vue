@@ -1,15 +1,14 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'userop'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'busorg'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
 import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
-import { $resetPassword } from '@/service/user'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'userop',
+  name: 'busorg',
   data() {
     return {
       isShow: false,
@@ -23,25 +22,25 @@ export default {
           method: 'post'
         },
         list: {
-          url: '/user/user/list',
+          url: 'user/org/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
         },
-        name: '平台用户管理'
+        name: '企业管理'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { userType: 0 } })
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } })
     }
   },
   computed: {
     ...mapGetters({
-      mode_list: 'user_op_mode_list',
-      page_status: 'user_op_page_status',
-      page_column: 'user_op_column',
-      select_list: 'user_op_select_list',
+      mode_list: 'bus_org_mode_list',
+      page_status: 'bus_org_page_status',
+      page_column: 'bus_org_column',
+      select_list: 'bus_org_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -49,16 +48,7 @@ export default {
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) {
-      if (type == 'resetpwd') {
-        $resetPassword({ userId: row.userId }).then(response => {
-          this.$message({
-            message: response.message,
-            type: 'success'
-          })
-        })
-      }
-    },
+    onListEvent(type, row) {},
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
       callback({

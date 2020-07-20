@@ -20,8 +20,8 @@ export function menuList() {
     meta: { title: '用户管理', icon: 'el-icon-s-custom', noCache: false },
     children: [
       { path: '/index', name: 'user', meta: { title: '平台用户管理', noCache: false } },
-      { path: '/index1', name: 'user', meta: { title: '物流用户管理', noCache: false } },
-      { path: '/index2', name: 'user', meta: { title: '加气站用户管理', noCache: false } }
+      { path: '/carrier', name: 'carrier', meta: { title: '物流用户管理', noCache: false } },
+      { path: '/cashier', name: 'cashier', meta: { title: '加气站用户管理', noCache: false } }
     ]
   }, {
     path: '/business',
@@ -29,7 +29,7 @@ export function menuList() {
     meta: { title: '平台公司管理', icon: 'el-icon-s-home', noCache: false },
     children: [
       { path: '/index', name: 'business', meta: { title: '企业管理', noCache: false } },
-      { path: '/index', name: 'business', meta: { title: '资金账户管理', noCache: false } }
+      { path: '/account', name: 'account', meta: { title: '资金账户管理', noCache: false } }
     ]
   }, {
     path: '/filler',

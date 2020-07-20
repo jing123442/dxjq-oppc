@@ -6,29 +6,29 @@ const Base64 = require('js-base64').Base64
 
 const user = {
   state: {
-    mwxtoken: getLocalStorage('mwxtoken') || '',
-    mwxidntf: getLocalStorage('mwxidntf') || '',
-    mwxuser: JSON.parse(getLocalStorage('mwxuser')) || {},
-    mwxrole: getLocalStorage('mwxrole') || '',
-    mwxorg: getLocalStorage('mwxorg') || '',
+    woptoken: getLocalStorage('woptoken') || '',
+    wopidntf: getLocalStorage('wopidntf') || '',
+    wopuser: JSON.parse(getLocalStorage('wopuser')) || {},
+    woprole: getLocalStorage('woprole') || '',
+    woporg: getLocalStorage('woporg') || '',
     routers: menuList()
   },
 
   mutations: {
-    setmwxtoken: (state, payload) => {
-      state.mwxtoken = payload
+    setwoptoken: (state, payload) => {
+      state.woptoken = payload
     },
-    setmwxidntf: (state, payload) => {
-      state.mwxidntf = payload
+    setwopidntf: (state, payload) => {
+      state.wopidntf = payload
     },
-    setmwxuser: (state, payload) => {
-      state.mwxuser = payload
+    setwopuser: (state, payload) => {
+      state.wopuser = payload
     },
-    setmwxrole: (state, payload) => {
-      state.mwxrole = payload
+    setwoprole: (state, payload) => {
+      state.woprole = payload
     },
-    setmwxorg: (state, payload) => {
-      state.mwxorg = payload
+    setwoporg: (state, payload) => {
+      state.woporg = payload
     }
   },
   actions: {
@@ -44,16 +44,16 @@ const user = {
               'woperation:' + orgId + ':' + user.user_id + ':' + roleId
             )
 
-            setLocalStorage('mwxtoken', token)
-            setLocalStorage('mwxuser', JSON.stringify(user))
-            setLocalStorage('mwxidntf', identifier)
-            setLocalStorage('mwxorg', orgId)
-            setLocalStorage('mwxrole', roleId)
-            commit('setmwxtoken', token)
-            commit('setmwxidntf', identifier)
-            commit('setmwxuser', user)
-            commit('setmwxrole', roleId)
-            commit('setmwxorg', orgId)
+            setLocalStorage('woptoken', token)
+            setLocalStorage('wopuser', JSON.stringify(user))
+            setLocalStorage('wopidntf', identifier)
+            setLocalStorage('woporg', orgId)
+            setLocalStorage('woprole', roleId)
+            commit('setwoptoken', token)
+            commit('setwopidntf', identifier)
+            commit('setwopuser', user)
+            commit('setwoprole', roleId)
+            commit('setwoporg', orgId)
           }
 
           resolve(response)
@@ -66,20 +66,20 @@ const user = {
       return new Promise((resolve, reject) => {
         const data = {
           client_id: 'mwxservice',
-          user_id: state.mwxuser.user_id
+          user_id: state.wopuser.user_id
         }
         $logout(data).then(response => {
-          removeLocalStorage('mwxtoken')
-          removeLocalStorage('mwxuser')
-          removeLocalStorage('mwxidntf')
-          removeLocalStorage('mwxorg')
-          removeLocalStorage('mwxrole')
+          removeLocalStorage('woptoken')
+          removeLocalStorage('wopuser')
+          removeLocalStorage('wopidntf')
+          removeLocalStorage('woporg')
+          removeLocalStorage('woprole')
           removeLocalStorage('location_pointer')
-          commit('setmwxtoken')
-          commit('setmwxidntf')
-          commit('setmwxuser')
-          commit('setmwxrole')
-          commit('setmwxorg')
+          commit('setwoptoken')
+          commit('setwopidntf')
+          commit('setwopuser')
+          commit('setwoprole')
+          commit('setwoporg')
 
           resolve()
         }).catch(error => {
@@ -89,17 +89,17 @@ const user = {
     },
     clear({ commit, state }) {
       return new Promise((resolve, reject) => {
-        removeLocalStorage('mwxtoken')
-        removeLocalStorage('mwxuser')
-        removeLocalStorage('mwxidntf')
-        removeLocalStorage('mwxorg')
-        removeLocalStorage('mwxrole')
+        removeLocalStorage('woptoken')
+        removeLocalStorage('wopuser')
+        removeLocalStorage('wopidntf')
+        removeLocalStorage('woporg')
+        removeLocalStorage('woprole')
         removeLocalStorage('location_pointer')
-        commit('setmwxtoken')
-        commit('setmwxidntf')
-        commit('setmwxuser')
-        commit('setmwxrole')
-        commit('setmwxorg')
+        commit('setwoptoken')
+        commit('setwopidntf')
+        commit('setwopuser')
+        commit('setwoprole')
+        commit('setwoporg')
         resolve()
       })
     }

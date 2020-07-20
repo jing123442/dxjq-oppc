@@ -23,8 +23,8 @@ export async function $login (data) {
 export async function $logout (data) {
   const headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: 'Bearer ' + store.getters.mwxtoken,
-    Identifier: store.getters.mwxidntf
+    Authorization: 'Bearer ' + store.getters.woptoken,
+    Identifier: store.getters.wopidntf
   }
   return await axios({
     url: 'user/oauth/logout',

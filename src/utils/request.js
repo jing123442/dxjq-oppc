@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
 
 const axios = Axios.create({
@@ -8,8 +8,8 @@ const axios = Axios.create({
 })
 axios.interceptors.request.use(
   config => {
-    config.headers.Authorization = 'Bearer ' + store.getters.mwxtoken
-    config.headers.Identifier = store.getters.mwxidntf
+    config.headers.Authorization = 'Bearer ' + store.getters.woptoken
+    config.headers.Identifier = store.getters.wopidntf
     store.getters.debug && console.log('axios.interceptors.request.use...', config)
     return config
   },
@@ -21,14 +21,22 @@ axios.interceptors.response.use(
   response => {
     store.getters.debug && console.log('axios.interceptors.response.use...', response)
     if (response.data.code === 0) {
-      return Promise.resolve(response.data.data)
+      return Promise.resolve(response.data)
     } else if (response.data.code === 2814) {
-      Toast(response.data.message)
+      Message({
+        message: response.data.message,
+        type: 'error',
+        duration: 3 * 1000
+      })
       store.dispatch('clear').then(() => {
         location.reload() // 为了重新实例化vue-router对象 避免bug
       })
     } else {
-      Toast(response.data.message)
+      Message({
+        message: response.data.message,
+        type: 'error',
+        duration: 3 * 1000
+      })
       return Promise.reject(response.data.message)
     }
   },
@@ -51,7 +59,11 @@ axios.interceptors.response.use(
     } else {
       err.message = '连接服务器失败!'
     }
-    Toast(err.message)
+    Message({
+      message: err.message,
+      type: 'error',
+      duration: 3 * 1000
+    })
     return Promise.reject(err.message)
   }
 )

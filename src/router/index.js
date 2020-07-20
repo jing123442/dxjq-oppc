@@ -7,6 +7,7 @@ import Cashier from './cashier.js'
 import Carrier from './carrier.js'
 import Filler from './filler.js'
 import User from './user.js'
+import Business from './business.js'
 import Component from './component.js'
 Vue.use(VueRouter)
 
@@ -38,16 +39,16 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes: [...routes, ...User, ...driver, ...Cashier, ...Carrier, ...Filler, ...Component]
+  routes: [...routes, ...User, ...Business, ...driver, ...Cashier, ...Carrier, ...Filler, ...Component]
 })
 router.beforeEach((to, from, next) => {
-  const mwxtoken = getLocalStorage('mwxtoken')
+  const woptoken = getLocalStorage('woptoken')
 
   if (to.meta.title) { // 每页增加title
     document.title = to.meta.title
   }
-  if (mwxtoken) {
-    if (to.name === 'main') return next('/' + getLocalStorage('mwxrole'))
+  if (woptoken) {
+    if (to.name === 'main') return next('/' + getLocalStorage('woprole'))
     return next()
   }
   if (to.name === 'login' || to.name === 'agreement') return next()

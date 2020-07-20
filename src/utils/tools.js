@@ -22,6 +22,33 @@ export function formatDate(date, fmt) {
   return fmt
 }
 
+export function isTypeof(option) {
+  var value = Object.prototype.toString.call(option)
+
+  if (value === '[object Undefined]') return 'undefined'
+  else if (value === '[object String]') return 'string'
+  else if (value === '[object Boolean]') return 'boolean'
+  else if (value === '[object Number]') return 'number'
+  else if (value === '[object Null]') return 'null'
+  else if (value === '[object Object]') return 'object'
+  else if (value === '[object Array]') return 'array'
+  else if (value === '[object Date]') return 'date'
+  else if (value === '[object RegExp]') return 'regexp'
+  else if (value === '[object Function]') return 'function'
+}
+
+export function inArray(value, array) {
+  if (Array.prototype.indexOf) {
+    return array.indexOf(value)
+  } else {
+    for (var i = 0; i < array.length; i++) {
+      if (array[i] === value) return i
+    }
+  }
+
+  return -1
+}
+
 export function monthTimeArea(now) {
   var nowYear = now.getFullYear()
   var nowMonth = now.getMonth()
@@ -35,13 +62,51 @@ export function monthTimeArea(now) {
   }
 }
 
+/* 对象深度合并 */
+export function objectMerge(target, source) {
+  if (typeof target !== 'object') {
+    target = {}
+  }
+  if (Array.isArray(source)) {
+    return source.slice()
+  }
+  Object.keys(source).forEach((property) => {
+    const sourceProperty = source[property]
+    if (typeof sourceProperty === 'object') {
+      target[property] = objectMerge(target[property], sourceProperty)
+    } else {
+      target[property] = sourceProperty
+    }
+  })
+
+  return target
+}
+
+// 请求头文件
 export function axiosRequestParams(_this) {
   return {
     timeout: 20000,
     baseURL: process.env.VUE_APP_BASE_URL,
     headers: {
-      Authorization: 'Bearer ' + _this.$store.getters.mwxtoken,
-      Identifier: _this.$store.getters.mwxidntf
+      Authorization: 'Bearer ' + _this.$store.getters.woptoken,
+      Identifier: _this.$store.getters.wopidntf
     }
   }
+}
+
+// 请求默认参数
+export function queryDefaultParams(_this, param) {
+  let queryParams = objectMerge({}, _this.$store.getters.query_params)
+
+  if (isTypeof(queryParams) !== 'array') {
+    queryParams = []
+  }
+
+  if (isTypeof(param) === 'array') {
+    queryParams.push(...param)
+  } else if (isTypeof(param) === 'object') {
+    queryParams.push(param)
+  }
+  console.log(queryParams, _this.$store.getters.query_params)
+  return queryParams
 }

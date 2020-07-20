@@ -1,6 +1,6 @@
 const app = {
   state: {
-    debug: false,
+    debug: true,
     sidebar: {
       opened: true// !+sessionStorage.getItem('sidebarStatus')
     },
@@ -13,11 +13,11 @@ const app = {
     queryParams: [{
       type: 1,
       key: 'page',
-      value: 'page'
+      value: 'pageNum'
     }, {
       type: 1,
       key: 'size',
-      value: 'size'
+      value: 'pageSize'
     }],
     // 返回成功字段和值
     responseSuccess: {
