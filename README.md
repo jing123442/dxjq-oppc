@@ -1,4 +1,4 @@
-# wxmobile
+# weboppc
 
 ## Project setup
 ```

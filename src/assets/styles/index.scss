@@ -3,6 +3,7 @@
 @import 'transition';
 @import 'element-ui';
 @import 'sidebar';
+@import 'iconfont/iconfont.css';
 
 body {
   margin: 0;
@@ -193,18 +194,6 @@ div.el-dialog__body {
   height: 600px;
 }
 
-#app .nest-menu .el-submenu > .el-submenu__title,
-#app .el-submenu li.el-menu-item {
-  min-width: 180px !important;
-  background-color: $appMenuBg !important;
-}
-
-#app .nest-menu .el-submenu > .el-submenu__title:hover,
-#app .el-submenu li.el-menu-item:hover {
-  background-color: $appMenuHoverBg !important;
-}
-
-
 .el-dialog--center div.el-dialog__footer {
   padding: 20px 0;
 }
@@ -307,6 +296,7 @@ div.el-dialog__body {
   }
 
   .app-breadcrumb {
+    padding-left: 15px;
     height: $breadHeight;
     line-height: $breadHeight;
 

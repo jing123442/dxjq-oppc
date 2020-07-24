@@ -107,6 +107,6 @@ export function queryDefaultParams(_this, param) {
   } else if (isTypeof(param) === 'object') {
     queryParams.push(param)
   }
-  console.log(queryParams, _this.$store.getters.query_params)
+
   return queryParams
 }
