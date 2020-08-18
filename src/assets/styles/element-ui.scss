@@ -12,9 +12,19 @@
 //暂时性解决diolag 问题 https://github.com/ElemeFE/element/issues/2461
 .el-dialog {
   transform: none;
-  left: 0;
+  left: 6%;
   position: relative;
   margin: 0 auto;
+  z-index: 3001;
+}
+div.el-dialog__body {
+  margin-top: 5vh;
+}
+.el-date-editor.el-input, .el-date-editor.el-input__inner {
+  width: 100%;
+}
+.v-modal {
+  z-index: -1!important;
 }
 
 //element ui upload

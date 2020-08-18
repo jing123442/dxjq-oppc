@@ -22,7 +22,7 @@ export default {
           method: 'post'
         },
         list: {
-          url: 'user/org/list',
+          url: '/account/org_account/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],

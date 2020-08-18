@@ -7,6 +7,9 @@ import tagsView from './modules/tagsView'
 // columns
 import * as userList from './columns/user/index'
 import * as busList from './columns/business/index'
+import * as fillerList from './columns/filler/index'
+import * as carrierList from './columns/carrier/index'
+import * as policyList from './columns/policy/index'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -18,10 +21,19 @@ export default new Vuex.Store({
     userSelect: userList.select,
     busColumns: busList.columns,
     busSelect: busList.select,
-    busApp: busList.app
+    busApp: busList.app,
+    fillerColumns: fillerList.columns,
+    fillerSelect: fillerList.select,
+    fillerApp: fillerList.app,
+    carrierColumns: carrierList.columns,
+    carrierSelect: carrierList.select,
+    carrierApp: carrierList.app,
+    policyColumns: policyList.columns,
+    policySelect: policyList.select,
+    policyApp: policyList.app
   },
   getters: {
-    // user columns
+    // 平台用户管理
     user_op_mode_list: state => state.app.modeDefault,
     user_op_page_status: state => state.app.listDefault,
     user_op_column: state => state.userColumns.op,
@@ -38,11 +50,83 @@ export default new Vuex.Store({
     user_cashier_column: state => state.userColumns.cashier,
     user_cashier_select_list: state => state.userSelect.cashier,
 
-    // 加气站公司用户管理
+    // 平台公司
     bus_org_mode_list: state => state.busApp.mode.org,
     bus_org_page_status: state => state.app.listDefault,
     bus_org_column: state => state.busColumns.org,
     bus_org_select_list: state => state.busSelect.org,
+
+    // 加气站企业列表
+    filler_firmList_mode_list: state => state.fillerApp.mode.firmList,
+    filler_firmList_page_status: state => state.app.listDefault,
+    filler_firmList_column: state => state.fillerColumns.firmList,
+    filler_firmList_select_list: state => state.fillerSelect.firmList,
+
+    // 加气站列表
+    filler_gapList_mode_list: state => state.fillerApp.mode.gapList,
+    filler_gapList_page_status: state => state.app.listDefault,
+    filler_gapList_column: state => state.fillerColumns.gapList,
+    filler_gapList_select_list: state => state.fillerSelect.gapList,
+
+    // 加气站资金账户管理
+    filler_account_mode_list: state => state.fillerApp.mode.modeDefault,
+    filler_account_page_status: state => state.app.listDefault,
+    filler_account_column: state => state.fillerColumns.account,
+    filler_account_select_list: state => state.fillerSelect.account,
+
+    // 服务费设置
+    filler_sevicePrice_mode_list: state => state.fillerApp.mode.modeDefault,
+    filler_sevicePrice_page_status: state => state.app.listDefault,
+    filler_sevicePrice_column: state => state.fillerColumns.sevicePrice,
+    filler_sevicePrice_select_list: state => state.fillerSelect.sevicePrice,
+
+    // 气价维护
+    filler_updatePrice_mode_list: state => state.fillerApp.mode.modeDefault,
+    filler_updatePrice_page_status: state => state.app.listDefault,
+    filler_updatePrice_column: state => state.fillerColumns.updatePrice,
+    filler_updatePrice_select_list: state => state.fillerSelect.updatePrice,
+
+    // 物流公司
+    carrier_logistics_mode_list: state => state.carrierApp.mode.modeDefault,
+    carrier_logistics_page_status: state => state.app.listDefault,
+    carrier_logistics_column: state => state.carrierColumns.logistics,
+    carrier_logistics_select_list: state => state.carrierSelect.logistics,
+
+    // 公司账户
+    carrier_firmAccount_mode_list: state => state.carrierApp.mode.modeDefault,
+    carrier_firmAccount_page_status: state => state.app.listDefault,
+    carrier_firmAccount_column: state => state.carrierColumns.firmAccount,
+    carrier_firmAccount_select_list: state => state.carrierSelect.firmAccount,
+
+    // 车辆管理
+    carrier_vehicle_mode_list: state => state.carrierApp.mode.modeDefault,
+    carrier_vehicle_page_status: state => state.app.listDefault,
+    carrier_vehicle_column: state => state.carrierColumns.vehicle,
+    carrier_vehicle_select_list: state => state.carrierSelect.vehicle,
+
+    // 车辆资金账户管理
+    carrier_truckAccount_mode_list: state => state.carrierApp.mode.modeDefault,
+    carrier_truckAccount_page_status: state => state.app.listDefault,
+    carrier_truckAccount_column: state => state.carrierColumns.truckAccount,
+    carrier_truckAccount_select_list: state => state.carrierSelect.truckAccount,
+
+    // 充值记录
+    carrier_rechargeRecord_mode_list: state => state.carrierApp.mode.modeDefault,
+    carrier_rechargeRecord_page_status: state => state.app.listDefault,
+    carrier_rechargeRecord_column: state => state.carrierColumns.rechargeRecord,
+    carrier_rechargeRecord_select_list: state => state.carrierSelect.rechargeRecord,
+
+    // 圈存管理
+    carrier_inventoryManager_mode_list: state => state.carrierApp.mode.modeDefault,
+    carrier_inventoryManager_page_status: state => state.app.listDefault,
+    carrier_inventoryManager_column: state => state.carrierColumns.inventoryManager,
+    carrier_inventoryManager_select_list: state => state.carrierSelect.inventoryManager,
+
+    // 加气订单管理
+    carrier_orderManager_mode_list: state => state.carrierApp.mode.modeDefault,
+    carrier_orderManager_page_status: state => state.app.listDefault,
+    carrier_orderManager_column: state => state.carrierColumns.orderManager,
+    carrier_orderManager_select_list: state => state.carrierSelect.orderManager,
 
     // localstorage
     debug: state => state.app.debug,

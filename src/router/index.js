@@ -6,7 +6,9 @@ import driver from './driver.js'
 import Cashier from './cashier.js'
 import Carrier from './carrier.js'
 import Filler from './filler.js'
+import Policy from './policy.js'
 import User from './user.js'
+import Mine from './mine.js'
 import Business from './business.js'
 import Component from './component.js'
 Vue.use(VueRouter)
@@ -39,7 +41,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes: [...routes, ...User, ...Business, ...driver, ...Cashier, ...Carrier, ...Filler, ...Component]
+  routes: [...routes, ...Mine, ...User, ...Business, ...driver, ...Cashier, ...Carrier, ...Filler, ...Policy, ...Component]
 })
 router.beforeEach((to, from, next) => {
   const woptoken = getLocalStorage('woptoken')
