@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'filler'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'policy'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
@@ -8,28 +8,20 @@ import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'filler',
+  name: 'policy',
   data() {
     return {
       isShow: false,
       queryCustURL: {
-        addGap: {
-          url: '/gasstation/gasstation/edit',
-          method: 'post'
-        },
-        edit: {
-          url: '/user/org/edit',
-          method: 'post'
-        },
         list: {
-          url: 'user/org/list',
+          url: 'strategy/carrier/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
         },
-        name: '加气站企业'
+        name: '物流公司价格配置'
       },
       axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } })
@@ -37,10 +29,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      mode_list: 'filler_firmList_mode_list',
-      page_status: 'filler_firmList_page_status',
-      page_column: 'filler_firmList_column',
-      select_list: 'filler_firmList_select_list',
+      mode_list: 'policy_firmPrice_mode_list',
+      page_status: 'policy_firmPrice_page_status',
+      page_column: 'policy_firmPrice_column',
+      select_list: 'policy_firmPrice_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'

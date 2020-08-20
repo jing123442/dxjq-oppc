@@ -69,6 +69,16 @@ export function utilsOrderStatus() {
   ]
 }
 
+export function utilsPlanStatus() {
+  return [
+    { value: 0, label: '已取消' },
+    { value: 1, label: '已下单' },
+    { value: 2, label: '已确认' },
+    { value: 3, label: '已出港' },
+    { value: 4, label: '已签收' },
+    { value: 5, label: '已完成' }
+  ]
+}
 export function utilsAutoAccount() {
   return [
     { value: 0, label: '否' },

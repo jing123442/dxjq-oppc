@@ -10,6 +10,7 @@ import * as busList from './columns/business/index'
 import * as fillerList from './columns/filler/index'
 import * as carrierList from './columns/carrier/index'
 import * as policyList from './columns/policy/index'
+import * as settlementList from './columns/settlement/index'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -30,7 +31,10 @@ export default new Vuex.Store({
     carrierApp: carrierList.app,
     policyColumns: policyList.columns,
     policySelect: policyList.select,
-    policyApp: policyList.app
+    policyApp: policyList.app,
+    settlementColumns: settlementList.columns,
+    settlementSelect: settlementList.select,
+    settlementApp: settlementList.app
   },
   getters: {
     // 平台用户管理
@@ -127,6 +131,54 @@ export default new Vuex.Store({
     carrier_orderManager_page_status: state => state.app.listDefault,
     carrier_orderManager_column: state => state.carrierColumns.orderManager,
     carrier_orderManager_select_list: state => state.carrierSelect.orderManager,
+
+    // 物流公司价格配置
+    policy_firmPrice_mode_list: state => state.policyApp.mode.modeDefault,
+    policy_firmPrice_page_status: state => state.app.listDefault,
+    policy_firmPrice_column: state => state.policyColumns.firmPrice,
+    policy_firmPrice_select_list: state => state.policySelect.firmPrice,
+
+    // 物流公司价格配置
+    policy_gasPrice_mode_list: state => state.policyApp.mode.modeDefault,
+    policy_gasPrice_page_status: state => state.app.listDefault,
+    policy_gasPrice_column: state => state.policyColumns.gasPrice,
+    policy_gasPrice_select_list: state => state.policySelect.gasPrice,
+
+    // 价格变更记录
+    policy_record_mode_list: state => state.policyApp.mode.modeDefault,
+    policy_record_page_status: state => state.app.listDefault,
+    policy_record_column: state => state.policyColumns.record,
+    policy_record_select_list: state => state.policySelect.record,
+
+    // 液源地配置
+    policy_sourceConfig_mode_list: state => state.policyApp.mode.modeDefault,
+    policy_sourceConfig_page_status: state => state.app.listDefault,
+    policy_sourceConfig_column: state => state.policyColumns.sourceConfig,
+    policy_sourceConfig_select_list: state => state.policySelect.sourceConfig,
+
+    // 加气站库存查询
+    policy_gasStockList_mode_list: state => state.policyApp.mode.modeDefault,
+    policy_gasStockList_page_status: state => state.app.listDefault,
+    policy_gasStockList_column: state => state.policyColumns.gasStockList,
+    policy_gasStockList_select_list: state => state.policySelect.gasStockList,
+
+    // LNG计划管理
+    policy_lngPlan_mode_list: state => state.policyApp.mode.modeDefault,
+    policy_lngPlan_page_status: state => state.app.listDefault,
+    policy_lngPlan_column: state => state.policyColumns.lngPlan,
+    policy_lngPlan_select_list: state => state.policySelect.lngPlan,
+
+    // 加气站服务费汇总
+    settlement_servicePrice_mode_list: state => state.settlementApp.mode.modeDefault,
+    settlement_servicePrice_page_status: state => state.app.listDefault,
+    settlement_servicePrice_column: state => state.settlementColumns.servicePrice,
+    settlement_servicePrice_select_list: state => state.settlementSelect.servicePrice,
+
+    // 物流公司加气费汇总
+    settlement_gasPrice_mode_list: state => state.settlementApp.mode.modeDefault,
+    settlement_gasPrice_page_status: state => state.app.listDefault,
+    settlement_gasPrice_column: state => state.settlementColumns.gasPrice,
+    settlement_gasPrice_select_list: state => state.settlementSelect.gasPrice,
 
     // localstorage
     debug: state => state.app.debug,
