@@ -9,7 +9,7 @@ const columns = {
       { field: 'email', nameSpan: 10, name: '邮箱', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入邮箱' } },
       { field: 'addressDetail', nameSpan: 10, name: '详细地址', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址！', trigger: 'blur' }] },
       { field: 'address', nameSpan: 10, name: '地址' },
-      { field: 'createDate', nameSpan: 10, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
+      { field: 'createDate', nameSpan: 10, name: '创建时间', formatFun: 'formateTData all', stype: 'format' },
       { field: 'createrName', nameSpan: 10, name: '创建人' },
       { field: 'status', nameSpan: 10, name: '账号状态', formatter: 'status', width: 80, show: { type: 'radio', value: 0, ou: 1, obj: 'status', placeholder: '请选择账号状态' }, search: { type: 'select', obj: 'status', placeholder: '请选择账号状态' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
       { field: 'legalperson', nameSpan: 10, name: '法人姓名', hide: true, show: { type: 'text', ou: 2, placeholder: '请输入法人姓名' }, rules: [{ required: true, message: '请输入法人姓名！', trigger: 'blur' }] },

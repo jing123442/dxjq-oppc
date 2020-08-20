@@ -32,7 +32,7 @@ const columns = {
       { field: 'orgName', name: '公司名称', mapping: 'orgName', search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
       { field: 'carNumber', name: '车牌号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入车牌号' }, search: { type: 'text', placeholder: '请输入车牌号' }, rules: [{ required: true, message: '请输入车牌号', trigger: 'blur' }] },
       { field: 'status', name: '车辆状态', formatter: 'status', show: { type: 'radio', value: 0, obj: 'status', placeholder: '请选择车辆状态' }, search: { type: 'select', obj: 'status', placeholder: '请选择车辆状态' }, rules: [{ required: true, message: '请选择车辆状态！', trigger: 'blur' }] },
-      { field: 'truckDriverList', name: '当前绑定司机', formatter: '', stype: 'list-tag' },
+      { field: 'truckDriverList', name: '当前绑定司机', formatter: '', stype: 'list-tag', porps: { name: 'createrName' } },
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 240, list: [{ type: 'bind', name: '绑定司机' }, { type: 'edit', name: '编辑' }, { type: 'detail', name: '详情' }, { type: 'money', name: '资金归集' }] }
     ],
     truckAccount: [
