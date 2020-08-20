@@ -28,7 +28,7 @@ export function menuList() {
     name: 'business',
     meta: { title: '平台公司管理', icon: 'el-icon-s-home', noCache: false },
     children: [
-      { path: '/index', name: 'index', meta: { title: '企业管理', noCache: false } },
+      { path: '/index', name: 'index', meta: { title: '平台公司', noCache: false } },
       { path: '/account', name: 'account', meta: { title: '资金账户管理', noCache: false } }
     ]
   }, {

@@ -59,6 +59,11 @@ export default new Vuex.Store({
     bus_org_page_status: state => state.app.listDefault,
     bus_org_column: state => state.busColumns.org,
     bus_org_select_list: state => state.busSelect.org,
+    // 公司资金账户管理
+    bus_account_mode_list: state => state.busApp.mode.modeDefault,
+    bus_account_page_status: state => state.app.listDefault,
+    bus_account_column: state => state.busColumns.account,
+    bus_account_select_list: state => state.busSelect.account,
 
     // 加气站企业列表
     filler_firmList_mode_list: state => state.fillerApp.mode.firmList,

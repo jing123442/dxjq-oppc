@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'busorg'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="query_params" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'account'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="query_params" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
@@ -8,7 +8,7 @@ import { axiosRequestParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'busorg',
+  name: 'account',
   data() {
     return {
       isShow: false,
@@ -29,17 +29,17 @@ export default {
             totalCount: ['data', 'total']
           }
         },
-        name: '企业管理'
+        name: '公司资金账户管理 '
       },
       axios: axiosRequestParams(this)
     }
   },
   computed: {
     ...mapGetters({
-      mode_list: 'bus_org_mode_list',
-      page_status: 'bus_org_page_status',
-      page_column: 'bus_org_column',
-      select_list: 'bus_org_select_list',
+      mode_list: 'bus_account_mode_list',
+      page_status: 'bus_account_page_status',
+      page_column: 'bus_account_column',
+      select_list: 'bus_account_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       query_params: 'query_params',

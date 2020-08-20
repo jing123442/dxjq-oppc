@@ -9,7 +9,7 @@ const columns = {
       { field: 'email', nameSpan: 10, name: '邮箱', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入邮箱' } },
       { field: 'addressDetail', nameSpan: 10, name: '详细地址', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址！', trigger: 'blur' }] },
       { field: 'address', nameSpan: 10, name: '地址' },
-      { field: 'createDate', nameSpan: 10, name: '创建时间' },
+      { field: 'createDate', nameSpan: 10, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
       { field: 'createrName', nameSpan: 10, name: '创建人' },
       { field: 'status', nameSpan: 10, name: '账号状态', formatter: 'status', width: 80, show: { type: 'radio', value: 0, ou: 1, obj: 'status', placeholder: '请选择账号状态' }, search: { type: 'select', obj: 'status', placeholder: '请选择账号状态' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
       { field: 'legalperson', nameSpan: 10, name: '法人姓名', hide: true, show: { type: 'text', ou: 2, placeholder: '请输入法人姓名' }, rules: [{ required: true, message: '请输入法人姓名！', trigger: 'blur' }] },
@@ -18,6 +18,14 @@ const columns = {
       { field: 'bank', nameSpan: 10, name: '开户行', hide: true, show: { type: 'text', ou: 2, placeholder: '请输入开户行' }, rules: [{ required: true, message: '请输入开户行！', trigger: 'blur' }] },
       { field: 'account', nameSpan: 10, name: '银行账户', hide: true, show: { type: 'text', ou: 2, placeholder: '请输入银行账户' }, rules: [{ required: true, message: '请输入银行账户！', trigger: 'blur' }] },
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'edit', name: '编辑' }, { type: 'detail', name: '详情' }] }
+    ],
+    account: [
+      { field: 'orgId', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+      { field: 'orgName', nameSpan: 10, name: '公司名称', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称！', trigger: 'blur' }] },
+      { field: 'accountId', nameSpan: 10, name: '账号' },
+      { field: 'balance', nameSpan: 10, name: '余额' },
+      { field: 'createDate', nameSpan: 10, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
+      { field: 'useropts', stype: 'opt', ispush: false, name: '账户流水', fixed: 'right', width: 110, list: [{ type: 'check', name: '查看' }] }
     ]
   }
 }
