@@ -4,11 +4,11 @@
 
     <!-- 添加车辆 -->
     <el-dialog title="添加车辆" :visible.sync="dialogAddCarVisible" :width="add_edit_dialog">
-      <el-form :model="formAddCar" :rules="rules" ref="formAddCar"  size="small">
-        <el-form-item label="卡车名称" :label-width="formLabelWidth">
+      <!-- <el-form :model="formAddCar" :rules="rules" ref="formAddCar"  size="small">
+        <el-form-item label="公司名称" :label-width="formLabelWidth">
           <el-input v-model="formAddCar.orgName" :disabled="true" ></el-input>
         </el-form-item>
-        <el-form-item label="公司名称" :label-width="formLabelWidth" prop="truckName">
+        <el-form-item label="卡车名称" :label-width="formLabelWidth" prop="truckName">
           <el-input v-model="formAddCar.truckName" placeholder="请输入卡车名称"></el-input>
         </el-form-item>
         <el-form-item label="车牌号" :label-width="formLabelWidth" prop="carNumber">
@@ -40,7 +40,8 @@
          <el-form-item label="生产厂家" :label-width="formLabelWidth" prop="manufacturer">
           <el-input v-model="formAddCar.manufacturer" placeholder="请输入车辆生产厂家"></el-input>
         </el-form-item>
-      </el-form>
+      </el-form> -->
+      <Form :rules="rules" :formArr="formAddCar" :mode="formAddCar" :ref="addCarRef" :addCarRef="addCarRef"></Form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddCarVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogAddCarConfirm('formAddCar')">确 定</el-button>
@@ -95,11 +96,15 @@
 import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import {
-  carrierTruckAdd
-} from '@/utils/api.js'
+  $carrierTruckAdd
+} from '@/service/carrier.js'
+import Form from '@/components/Form/form'
 
 export default {
   name: 'carrier',
+  components: {
+    Form
+  },
   data() {
     return {
       isShow: false,
@@ -121,29 +126,41 @@ export default {
       axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } }),
       dialogAddCarVisible: false,
-      formAddCar: {
-        orgId: '',
-        orgName: '',
-        truckName: '',
-        carNumber: '',
-        frameNumber: '',
-        trailerNumber: '',
-        purchaseDate: '',
-        color: '',
-        deadWeight: '',
-        capacity: '',
-        manufacturer: ''
-      },
+      // formAddCar: {
+      //   orgId: '',
+      //   orgName: '',
+      //   truckName: '',
+      //   carNumber: '',
+      //   frameNumber: '',
+      //   trailerNumber: '',
+      //   purchaseDate: '',
+      //   color: '',
+      //   deadWeight: '',
+      //   capacity: '',
+      //   manufacturer: ''
+      // },
+      formLabelWidth: '120px',
+      addCarRef: 'formAddCar',
+      formAddCar: [
+        { filed: 'orgId', value: '', type: '', placeholder: '', label: '', width: '', disabled: false },
+        { filed: 'orgName', value: '', type: 'input', placeholder: '请输入公司名称', label: '公司名称', width: '120px', disabled: true },
+        { filed: 'truckName', value: '', type: 'input', placeholder: '请输入卡车名称', label: '卡车名称', width: '120px', disabled: false },
+        { filed: 'carNumber', value: '', type: 'input', placeholder: '请输入车牌号', label: '车牌号', width: '120px', disabled: false },
+        { filed: 'frameNumber', value: '', type: 'input', placeholder: '请输入车架号', label: '车架号', width: '120px', disabled: false }
+      ],
       rules: {
+        orgId: [{}],
+        orgName: [{}],
         truckName: [{ required: true, message: '卡车名称不能为空', trigger: 'blur' }],
         carNumber: [{ required: true, message: '车牌号不能为空', trigger: 'blur' }],
         frameNumber: [{ required: true, message: '车架号不能为空', trigger: 'blur' }],
+        trailerNumber: [{}],
+        purchaseDate: [{}],
         color: [{ required: true, message: '车辆颜色不能为空', trigger: 'blur' }],
         deadWeight: [{ required: true, message: '车辆载重量不能为空', trigger: 'blur' }],
         capacity: [{ required: true, message: '车辆储气罐容量不能为空', trigger: 'blur' }],
         manufacturer: [{ required: true, message: '车辆生产厂家不能为空', trigger: 'blur' }]
       },
-      formLabelWidth: '120px',
       dialogDetailVisible: false,
       formDetail: {}
     }
@@ -186,12 +203,12 @@ export default {
     },
     dialogAddCarConfirm(formData) {
       var self = this
-      this.$refs.formAddCar.validate((valid) => {
-        console.log(valid)
+      console.log(this.$refs.formAddCar.$refs.formAddCar)
+      this.$refs.formAddCar.$refs.formAddCar.validate((valid) => {
         if (valid) {
           console.log('添加成功', this.formAddCar)
           this.dialogAddCarVisible = false
-          carrierTruckAdd(this.formAddCar).then((res) => {
+          $carrierTruckAdd(this.formAddCar).then((res) => {
             if (res.code == 0) {
               self.$message({
                 message: res.message,

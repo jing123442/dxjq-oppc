@@ -30,10 +30,10 @@
 
 <script>
 import {
-  user_user_find,
-  user_user_edit_password,
-  user_user_edit
-} from '@/utils/api'
+  $userFind,
+  $editPassword,
+  $userEdit
+} from '@/service/user'
 export default {
   data() {
     var checkPhone = (rule, value, callback) => {
@@ -67,7 +67,7 @@ export default {
       "userId": JSON.parse(localStorage.getItem("wopuser")).user_id
     }
     var self = this;
-    user_user_find(params).then((res) => {
+    $userFind(params).then((res) => {
       self.form = res.data.user;
       // if (res.code == 0) {
       //   self.$message({
@@ -82,7 +82,7 @@ export default {
   methods: {
     sureEditPassword() {
       var self = this;
-      user_user_edit_password(this.password_form).then((res) => {
+      $editPassword(this.password_form).then((res) => {
         if (res.code == 0) {
           self.$message({
             message: res.message,
@@ -136,7 +136,7 @@ export default {
     },
     sureEditInfo(val) {
       var self = this;
-      user_user_edit(val).then((res) => {
+      $userEdit(val).then((res) => {
         if (res.code == 0) {
           self.$message({
             message: res.message,
@@ -149,7 +149,7 @@ export default {
       // this.$refs["form"].validate((valid) => {
       //   if (valid) {
       //     var self = this;
-      //     user_user_edit(val).then((res) => {
+      //     $userEdit(val).then((res) => {
       //       if (res.code == 0) {
       //         self.$message({
       //           message: res.message,
