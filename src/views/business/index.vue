@@ -1,6 +1,9 @@
 <template>
   <div class="template-main">
     <em-table-list :tableListName="'busorg'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <el-dialog title="平台公司详情" :visible.sync="dialogDetailVisible" :width="add_edit_dialog">
+      <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn"></nt-form>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -11,14 +14,15 @@ export default {
   name: 'busorg',
   data() {
     return {
+      dialogDetailVisible: false,
       isShow: false,
       queryCustURL: {
         add: {
-          url: '/user/user/add',
+          url: '/user/org/add',
           method: 'post'
         },
         edit: {
-          url: '/user/user/edit',
+          url: '/user/org/edit',
           method: 'post'
         },
         list: {
@@ -32,7 +36,8 @@ export default {
         name: '企业管理'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } })
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } }),
+      detailRow: {}
     }
   },
   computed: {
@@ -43,12 +48,19 @@ export default {
       select_list: 'bus_org_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
-      response_success: 'response_success'
+      response_success: 'response_success',
+      page_column_detail: 'bus_orgDetail_column'
     })
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) {},
+    onListEvent(type, row) {
+      row._btn = {}
+      if (type === 'detail') {
+        this.detailRow = row
+        this.dialogDetailVisible = true
+      }
+    },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
       callback({
@@ -58,7 +70,9 @@ export default {
           orgType: 0
         }
       })
-    }
+    },
+    initDataList() {},
+    subClearBtn() {}
   }
 }
 </script>

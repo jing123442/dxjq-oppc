@@ -1,5 +1,6 @@
 import { isTypeof, inArray } from '@/utils/tools'
 import { regionData } from 'element-china-area-data'
+// import { $userUserList } from '@/service/user'
 
 export function utilsBaseRole(arrs) {
   const defaultRole = [
@@ -84,6 +85,15 @@ export function utilsAutoAccount() {
     { value: 0, label: '否' },
     { value: 1, label: '是' }
   ]
+}
+
+export function untilsMarketingManList() {
+  // const params = {
+  //   page: 1, param: { baseRole: 7, status: 0, userType: 0 }, size: 100
+  // }
+  // $userUserList(params).then((res) => {
+  //   console.log(res)
+  // })
 }
 
 export function utilsDyOrgList() {

@@ -110,3 +110,27 @@ export function queryDefaultParams(_this, param) {
 
   return queryParams
 }
+
+// 弹出确认窗
+export function messageBox(_this, params) {
+  _this.$confirm(params.message, params.title, {
+    confirmButtonText: params.confirmButtonText,
+    cancelButtonText: params.cancelButtonText,
+    type: params.type
+  }).then(() => {
+    params.cb().then(res => {
+      if (res.code === 0) {
+        _this.$message({
+          type: 'success',
+          message: res.message
+        })
+        params.renderList(_this)
+      } else {
+        _this.$message({
+          type: 'error',
+          message: res.message
+        })
+      }
+    })
+  }).catch(() => {})
+}

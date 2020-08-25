@@ -1,5 +1,14 @@
 import { formatDate } from '@/utils/tools'
 
+// 如果要使用filters，该函数必须有
+const vueFiltersInit = (value, formatRules) => {
+  const formats = formatRules.split(' ')
+
+  const params = formats.filter((item, index) => index > 0)
+  // eslint-disable-next-line no-eval
+  return eval(formats[0])(value, ...params)
+}
+
 const gasstationImage = item => {
   return item
 }
@@ -44,6 +53,7 @@ const currency = (value, unit, currency, decimals) => {
 }
 
 export {
+  vueFiltersInit,
   gasstationImage,
   formateTData,
   formatDate,

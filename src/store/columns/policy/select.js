@@ -1,4 +1,4 @@
-import { utilsPlanStatus } from '@/utils/select'
+import { utilsPlanStatus, untilsMarketingManList } from '@/utils/select'
 // import { regionData } from 'element-china-area-data'
 
 const select = {
@@ -10,7 +10,11 @@ const select = {
     gasStockList: {},
     lngPlan: {
       planStatus: utilsPlanStatus()
-    }
+    },
+    carrierManConfig: {
+      marketingManList: untilsMarketingManList()
+    },
+    gasstationConfig: {}
   }
 }
 

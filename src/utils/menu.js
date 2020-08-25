@@ -61,11 +61,12 @@ export function menuList() {
     meta: { title: '运营策略管理', icon: 'el-icon-s-home', noCache: false },
     children: [
       { path: '/index', name: 'index', meta: { title: '物流公司价格配置', noCache: false } },
-      { path: '/strategyGasStationList', name: 'strategyGasStationList', meta: { title: '按物流公司配置价格', noCache: false } },
+      { path: '/strategyGasStationList', name: 'strategyGasStationList', meta: { title: '按加气站配置价格', noCache: false } },
       { path: '/priceUpdateLogList', name: 'priceUpdateLogList', meta: { title: '价格变更记录', noCache: false } },
       { path: '/sourceConfig', name: 'sourceConfig', meta: { title: '液源地配置', noCache: false } },
       { path: '/gasStockList', name: 'gasStockList', meta: { title: '加气站库存查询', noCache: false } },
-      { path: '/lngPlan', name: 'lngPlan', meta: { title: 'LNG计划管理', noCache: false } }
+      { path: '/lngPlan', name: 'lngPlan', meta: { title: 'LNG计划管理', noCache: false } },
+      { path: '/marketingManager', name: 'marketingManager', meta: { title: '营销合作经理配置', noCache: false } }
     ]
   }, {
     path: '/settlement',

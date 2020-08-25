@@ -19,3 +19,10 @@ export async function $userFind (data) {
 export async function $userEdit (data) {
   return await R({ url: '/user/user/edit', data })
 }
+
+export async function $userUserList (data) {
+  return await R({ url: 'user/user/list', data })
+}
+export async function $userOrgFind (data) {
+  return await R({ url: 'user/org/find', data })
+}

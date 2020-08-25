@@ -1,11 +1,12 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'lngPlan'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="lngPlan" :tableListName="'lngPlan'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, messageBox } from '@/utils/tools'
 import { mapGetters } from 'vuex'
+import { $orderConfirm, $orderCancel } from '@/service/strategy'
 
 export default {
   name: 'lngPlan',
@@ -38,9 +39,41 @@ export default {
       response_success: 'response_success'
     })
   },
-  created: function () {},
+  mounted: function () { },
   methods: {
-    onListEvent(type, row) {},
+    onListEvent(type, row) {
+      console.log(type, row)
+      const orderId = row.id
+      if (type === 'enter') {
+        messageBox(this, {
+          title: '提示',
+          message: '确认订单？',
+          confirmButtonText: '确认',
+          cancelButtonText: '取消',
+          type: 'warning',
+          cb: () => {
+            $orderConfirm({ id: orderId }).then((response) => {
+              return response
+            })
+          },
+          renderList: (self) => { self.$refs.lngPlan.initDataList() }
+        })
+      } else if (type === 'cancel') {
+        messageBox(this, {
+          title: '提示',
+          message: '确认取消计划？',
+          confirmButtonText: '确认',
+          cancelButtonText: '取消',
+          type: 'warning',
+          cb: () => {
+            return $orderCancel({ id: orderId }).then((response) => {
+              return response
+            })
+          },
+          renderList: (self) => { self.$refs.lngPlan.initDataList() }
+        })
+      }
+    },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
       callback({
