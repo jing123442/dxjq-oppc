@@ -73,6 +73,22 @@ const columns = {
       { field: 'status', name: '状态', formatter: 'utilsCheck', search: { type: 'select', obj: 'utilsCheck', placeholder: '请选择' } },
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: params => params.row.status === 1 ? [{ type: 'detail', name: '详情' }] : [{ type: 'check', name: '审核' }, { type: 'detail', name: '详情' }] }
     ],
+    rechargeRecordCheck: [
+      { field: 'orgName', name: '公司名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'tel', name: '手机号', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'amount', name: '充值金额', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'rechargeDate', name: '充值时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } }
+    ],
+    rechargeRecordDetail: [
+      { field: 'orgName', name: '公司名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'tel', name: '手机号', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'amount', name: '充值金额', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'rechargeDate', name: '充值时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'note', name: '摘要', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'status', name: '状态', formatter: 'orderStatus', show: { type: 'select', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'auditerName', name: '审核人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'auditDate', name: '审核时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } }
+    ],
     inventoryManager: [
       { field: 'transferOrderId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, ispush: false },
       { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
@@ -91,7 +107,20 @@ const columns = {
       { field: 'amount', name: '付款金额' },
       { field: 'orderStatus', name: '订单状态', formatter: 'orderStatus', search: { type: 'select', obj: 'orderStatus', placeholder: '请选择订单状态' } },
       { field: 'createDate', name: '创建日期', formatFun: 'formateTData', stype: 'format' },
-      { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'detail', name: '详情' }] }
+      { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'detaila', name: '详情' }] }
+    ],
+    orderManagerDetail: [
+      { field: 'orderId', name: '订单号', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'carrierOrgName', name: '物流公司名称', show: { type: 'text', ou: 0, isDisabled: true, style: 'width: 90%;' } },
+      { field: 'carNumber', name: '车牌号', show: { type: 'text', ou: 0, isDisabled: true, style: 'width: 90%;' } },
+      { field: 'driverName', name: '司机名称', show: { type: 'text', ou: 0, isDisabled: true, style: 'width: 90%;' } },
+      { field: 'gasstationName', name: '加气站名称', show: { type: 'text', ou: 1, isDisabled: true, style: 'width: 90%;' } },
+      { field: 'cashierName', name: '收银员名称', show: { type: 'text', ou: 1, isDisabled: true, style: 'width: 90%;' } },
+      { field: 'gasQty', name: '加气量', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },
+      { field: 'listPrice', name: '挂牌气价', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },
+      { field: 'actualPrice', name: '实际气价', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },
+      { field: 'amount', name: '实际加气金额', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },
+      { field: 'createDate', name: '加气时间', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } }
     ]
   }
 }

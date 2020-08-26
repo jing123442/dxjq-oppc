@@ -8,3 +8,7 @@ export async function $noPayOrder (data) {
 export async function $audit (data) {
   return await R({ url: 'business/recharge_order/audit', data })
 }
+// 充值
+export async function $rechargeAdd (data) {
+  return await R({ url: 'business/recharge_order/add', data })
+}

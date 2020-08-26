@@ -26,9 +26,14 @@ const columns = {
       { field: 'code', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
       { field: 'name', stype: 'mapping', name: '液源地', mapping: 'name', search: { type: 'text', placeholder: '请输入液源地' } },
       { field: 'price', name: '液源价格(元/吨)' },
-      { field: 'operaterName', name: '操作人' },
+      { field: 'operatorName', name: '操作人' },
       { field: 'operatorTime', name: '操作时间', formatFun: 'formateTData', stype: 'format' },
-      { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'sefAdd', name: '添加' }, { type: 'sefEdit', name: '编辑' }, { type: 'price', name: '配置价格' }, { type: 'record', name: '变更记录' }] }
+      { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'sefEdit', name: '编辑' }, { type: 'price', name: '配置价格' }, { type: 'record', name: '变更记录' }] }
+    ],
+    sourceConfigPrice: [
+      { field: 'name', name: '液源地', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'price', name: '当前液源价格', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'priceUpdate', name: '调整后液源价格', show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入调整后液源价格', trigger: 'blur' }] }
     ],
     gasStockList: [
       { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },

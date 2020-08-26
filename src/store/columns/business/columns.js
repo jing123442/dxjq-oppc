@@ -1,7 +1,7 @@
 const columns = {
   state: {
     org: [
-      { field: 'orgId', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+      { field: 'orgId', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, noShow: 1 },
       { field: 'orgName', nameSpan: 10, name: '企业名称', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入企业名称' }, search: { type: 'text', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请输入企业名称！', trigger: 'blur' }] },
       { field: 'contacts', nameSpan: 10, name: '联系人', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入联系人' }, rules: [{ required: true, message: '请输入联系人！', trigger: 'blur' }] },
       { field: 'mobile', nameSpan: 10, name: '联系电话', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入联系电话' }, rules: [{ required: true, message: '请输入联系电话！', trigger: 'blur' }] },

@@ -1,7 +1,11 @@
 const app = {
   state: {
     mode: {
-
+      orderManagerDetail: [
+        { ou: 0, name: '物流公司信息' },
+        { ou: 1, name: '加气站信息' },
+        { ou: 2, name: '订单详情' }
+      ]
     },
     list: {
       logistics: 13,

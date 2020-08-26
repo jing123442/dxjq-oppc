@@ -11,3 +11,7 @@ export async function $orderConfirm (data) {
 export async function $orderCancel (data) {
   return await R({ url: 'strategy/purchase/cancel', data })
 }
+
+export async function $priceUpdate (data) {
+  return await R({ url: 'strategy/lng_from/update', data })
+}

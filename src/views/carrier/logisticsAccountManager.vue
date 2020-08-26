@@ -1,8 +1,8 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'logisticsAccountManager'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'logisticsAccountManager'" ref="accountList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="充值" :visible.sync="dialogRechargeVisible" :width="add_edit_dialog">
-      <nt-form v-if="dialogRechargeVisible" :rowData="rechargeRow" :pageColumn="page_column_firmAccountRecharge" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn"></nt-form>
+      <nt-form ref="recharge" v-if="dialogRechargeVisible" :rowData="rechargeRow" :pageColumn="page_column_firmAccountRecharge" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn" @onListEvent="onListEventDialog"></nt-form>
     </el-dialog>
   </div>
 </template>
@@ -10,6 +10,7 @@
 import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $userOrgFind } from '@/service/user'
+import { $rechargeAdd } from '@/service/business'
 
 export default {
   name: 'logisticsAccountManager',
@@ -66,7 +67,7 @@ export default {
                 bType: 'default',
                 label: '取消',
                 icon: ''
-              },{
+              }, {
                 bType: 'primary',
                 label: '确定',
                 icon: ''
@@ -79,6 +80,26 @@ export default {
     },
     onListEventDialog(type, row) {
       console.log(type, row)
+      const self = this
+      if (type.label === '确定') {
+        this.$refs.recharge.$children[0].validate((valid) => {
+          if (valid) {
+            const params = { ...self.rechargeRow }
+            $rechargeAdd(params).then(res => {
+              console.log(res)
+              if (res.code === 0) {
+                self.$message.success(res.message)
+                self.dialogRechargeVisible = false
+                self.$refs.accountList.initDataList()
+              } else {
+                self.$message.success(res.message)
+              }
+            })
+          }
+        })
+      } else {
+        self.dialogRechargeVisible = false
+      }
     },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal

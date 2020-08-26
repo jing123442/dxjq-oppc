@@ -56,7 +56,7 @@ export default new Vuex.Store({
 
     // 平台公司
     bus_org_mode_list: state => state.busApp.mode.org,
-    bus_org_page_status: state => state.app.listDefault,
+    bus_org_page_status: state => state.busApp.list.org,
     bus_org_column: state => state.busColumns.org,
     bus_org_select_list: state => state.busSelect.org,
     // 平台公司详情
@@ -128,6 +128,10 @@ export default new Vuex.Store({
     carrier_rechargeRecord_page_status: state => state.carrierApp.list.rechargeRecord,
     carrier_rechargeRecord_column: state => state.carrierColumns.rechargeRecord,
     carrier_rechargeRecord_select_list: state => state.carrierSelect.rechargeRecord,
+    // 充值记录--审核
+    carrier_rechargeRecordCheck_column: state => state.carrierColumns.rechargeRecordCheck,
+    // 充值记录---详情
+    carrier_rechargeRecordDetail_column: state => state.carrierColumns.rechargeRecordDetail,
 
     // 圈存管理
     carrier_inventoryManager_mode_list: state => state.carrierApp.mode.modeDefault,
@@ -140,7 +144,9 @@ export default new Vuex.Store({
     carrier_orderManager_page_status: state => state.carrierApp.list.orderManager,
     carrier_orderManager_column: state => state.carrierColumns.orderManager,
     carrier_orderManager_select_list: state => state.carrierSelect.orderManager,
-
+    // 加气订单管理---详情
+    carrier_orderManagerDetail_mode_list: state => state.carrierApp.mode.orderManagerDetail,
+    carrier_orderManagerDetail_column: state => state.carrierColumns.orderManagerDetail,
     // 物流公司价格配置
     policy_firmPrice_mode_list: state => state.policyApp.mode.modeDefault,
     policy_firmPrice_page_status: state => state.policyApp.list.firmPrice,
@@ -164,7 +170,8 @@ export default new Vuex.Store({
     policy_sourceConfig_page_status: state => state.policyApp.list.sourceConfig,
     policy_sourceConfig_column: state => state.policyColumns.sourceConfig,
     policy_sourceConfig_select_list: state => state.policySelect.sourceConfig,
-
+    // 液源地配置--配置价格
+    policy_sourceConfigPrice_column: state => state.policyColumns.sourceConfigPrice,
     // 加气站库存查询
     policy_gasStockList_mode_list: state => state.policyApp.mode.modeDefault,
     policy_gasStockList_page_status: state => state.policyApp.list.gasStockList,
