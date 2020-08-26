@@ -3,7 +3,7 @@ const columns = {
     firmList: [
       { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
       { field: 'orgName', stype: 'mapping', name: '加气站企业名称', mapping: 'orgName', show: { type: 'text', remote: true, subField: 'orgName', ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请输入加气站企业名称' }, search: { type: 'text', placeholder: '请输入加气站企业名称' }, rules: [{ required: true, message: '请输入加气站企业名称', trigger: 'blur' }] },
-      // { field: 'selectedOptions', name: '所在地区', noShow: 2, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
+      { field: 'selectedOptions', name: '所在地区', show: { type: 'text', ou: 1, noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
       { field: 'address', name: '地址', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入地址' }, rules: [{ required: true, message: '请输入地址', trigger: 'blur' }] },
       { field: 'status', name: '账号状态', formatter: 'status' },
       { field: 'account', name: '银行账户', hide: true, show: { type: 'text', ou: 2, isCompare: true, style: 'width: 90%;', placeholder: '请输入银行账户' }, rules: [{ required: true, message: '请输入银行账户', trigger: 'blur' }] },

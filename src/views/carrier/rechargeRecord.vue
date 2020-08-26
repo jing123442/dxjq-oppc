@@ -55,7 +55,16 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
-      console.log(type)
+      switch (type) {
+        case 'check':
+          this.authRechargeRecord(row)
+          break
+        case 'detail':
+          this.detailRechargeRecord(row)
+          break
+      }
+    },
+    authRechargeRecord(row) {
       this.checkRow = row
       this.checkRow._btn = {
         iShow: true,
@@ -69,6 +78,10 @@ export default {
           icon: ''
         }]
       }
+
+      this.dialogCheckVisible = true
+    },
+    detailRechargeRecord(row) {
       this.detailRow = row
       this.detailRow._btn = {
         iShow: true,
@@ -78,12 +91,8 @@ export default {
           icon: ''
         }]
       }
-      if (type === 'check') {
-        this.dialogCheckVisible = true
-      } else if (type === 'detail') {
-        alert(1)
-        this.dialogDetailVisible = true
-      }
+
+      this.dialogDetailVisible = true
     },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
