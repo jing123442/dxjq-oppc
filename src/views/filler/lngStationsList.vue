@@ -29,7 +29,7 @@ export default {
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'setting', name: '设置默认收银员' }],
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } })
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 1 } })
     }
   },
   computed: {
@@ -45,7 +45,13 @@ export default {
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) {},
+    onListEvent(type, row) {
+      if (type === 'printer') {
+        const gasstationId = row.gasstationId
+        const gasstationName = row.gasstationName
+        this.$router.push(`lngStationsList/printerList?gasstationId=${gasstationId}&gasstationName=${gasstationName}`)
+      }
+    },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
       callback({

@@ -28,7 +28,7 @@ export default {
         name: '服务费设置'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } })
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 1 } })
     }
   },
   computed: {
@@ -44,7 +44,13 @@ export default {
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) {},
+    onListEvent(type, row) {
+      if (type === 'record') {
+        const gasstationId = row.gasstationId
+        const orgName = row.orgName
+        this.$router.push(`lngServiceFeeSetting/serviceChangeRecord?gasstationId=${gasstationId}&orgName=${orgName}`)
+      }
+    },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
       callback({

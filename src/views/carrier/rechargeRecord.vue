@@ -126,7 +126,7 @@ export default {
       }
     },
     onListEventDialogDetail(obj) {
-      console.log(obj)
+      this.dialogDetailVisible = false
     },
     initDataList() {},
     subClearBtn() {}

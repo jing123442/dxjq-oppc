@@ -1,10 +1,11 @@
-import { utilsStatus, utilsDyOrgList, untilsAddress } from '@/utils/select'
+import { utilsStatus, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
   state: {
     firmList: {
       orgId: utilsDyOrgList(),
+      cascaderAddress: regionData,
       status: utilsStatus()
     },
     gapList: {
@@ -21,6 +22,11 @@ const select = {
     },
     updatePrice: {
       orgId: utilsDyOrgList()
+    },
+    printerList: {
+      printStatus: utilsPrintStatus(),
+      status: utilsStatus(),
+      voiceStatus: utilsVoiceStatus()
     }
   }
 }

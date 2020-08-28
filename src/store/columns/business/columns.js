@@ -1,10 +1,11 @@
 const columns = {
   state: {
     org: [
-      { field: 'orgId', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, noShow: 1 },
-      { field: 'orgName', nameSpan: 10, name: '企业名称', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入企业名称' }, search: { type: 'text', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请输入企业名称！', trigger: 'blur' }] },
+      { field: 'orgId', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+      { field: 'orgName', nameSpan: 10, name: '企业名称', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入企业名称' }, search: { type: 'text', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请输入企业名称！', trigger: 'blur' }, { min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur' }] },
       { field: 'contacts', nameSpan: 10, name: '联系人', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入联系人' }, rules: [{ required: true, message: '请输入联系人！', trigger: 'blur' }] },
       { field: 'mobile', nameSpan: 10, name: '联系电话', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入联系电话' }, rules: [{ required: true, message: '请输入联系电话！', trigger: 'blur' }] },
+      { field: 'selectedOptions', nameSpan: 10, name: '所在地区', show: { type: 'cascader', formatter: 'address', obj: 'cascaderAddress', sign: '/', ou: 1, noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
       { field: 'email', nameSpan: 10, name: '邮箱', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入邮箱' } },
       { field: 'areas', nameSpan: 10, name: '详细地址', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址！', trigger: 'blur' }] },
       { field: 'address', nameSpan: 10, name: '地址' },
@@ -41,6 +42,15 @@ const columns = {
       { field: 'balance', nameSpan: 10, name: '余额' },
       { field: 'createDate', nameSpan: 10, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
       { field: 'useropts', stype: 'opt', ispush: false, name: '账户流水', fixed: 'right', width: 110, list: [{ type: 'check', name: '查看' }] }
+    ],
+    accountList: [
+      { field: 'id', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+      { field: 'orderId', nameSpan: 10, name: '单据流水id', search: { type: 'text', placeholder: '请输入单据流水id' } },
+      { field: 'changeAmount', nameSpan: 10, name: '变化金额' },
+      { field: 'accountBalance', nameSpan: 10, name: '变化后账户金额' },
+      { field: 'createrName', nameSpan: 10, name: '创建人' },
+      { field: 'createDate', nameSpan: 10, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
+      { field: 'note', nameSpan: 10, name: '充值' }
     ]
   }
 }

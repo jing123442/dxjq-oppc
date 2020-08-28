@@ -5,6 +5,7 @@ import user from './modules/user'
 import tagsView from './modules/tagsView'
 
 // columns
+import * as mineList from './columns/mine/index'
 import * as userList from './columns/user/index'
 import * as busList from './columns/business/index'
 import * as fillerList from './columns/filler/index'
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     app,
     user,
     tagsView,
+    mineColumns: mineList.columns,
     userColumns: userList.columns,
     userSelect: userList.select,
     busColumns: busList.columns,
@@ -37,6 +39,10 @@ export default new Vuex.Store({
     settlementApp: settlementList.app
   },
   getters: {
+    // 个人信息
+    mine_personal_column: state => state.mineColumns.personal,
+    // 修改密码
+    mine_passwordChange_column: state => state.mineColumns.passwordChange,
     // 平台用户管理
     user_op_mode_list: state => state.app.modeDefault,
     user_op_page_status: state => state.app.listDefault,
@@ -66,37 +72,46 @@ export default new Vuex.Store({
     bus_account_page_status: state => state.busApp.list.account,
     bus_account_column: state => state.busColumns.account,
     bus_account_select_list: state => state.busSelect.account,
-
+    // 公司资金账户管理 -- 查看--账户流水
+    bus_accountList_column: state => state.busColumns.accountList,
     // 加气站企业列表
     filler_firmList_mode_list: state => state.fillerApp.mode.firmList,
     filler_firmList_page_status: state => state.fillerApp.list.firmList,
     filler_firmList_column: state => state.fillerColumns.firmList,
     filler_firmList_select_list: state => state.fillerSelect.firmList,
-
+    // 加气站企业列表---添加加气站
+    filler_addGasStation_mode_list: state => state.fillerApp.mode.addGasStation,
+    filler_addGasStation_column: state => state.fillerColumns.addGasStation,
     // 加气站列表
     filler_gapList_mode_list: state => state.fillerApp.mode.gapList,
     filler_gapList_page_status: state => state.fillerApp.list.gapList,
     filler_gapList_column: state => state.fillerColumns.gapList,
     filler_gapList_select_list: state => state.fillerSelect.gapList,
-
+    // 加气站列表--打印机列表
+    filler_printList_page_status: state => state.fillerApp.list.printList,
+    filler_printList_select_list: state => state.fillerSelect.printList,
+    filler_printList_column: state => state.fillerColumns.printList,
     // 加气站资金账户管理
     filler_account_mode_list: state => state.fillerApp.mode.modeDefault,
     filler_account_page_status: state => state.fillerApp.list.account,
     filler_account_column: state => state.fillerColumns.account,
     filler_account_select_list: state => state.fillerSelect.account,
-
+    // 加气站资金账户管理--账户流水
+    filler_accountList_column: state => state.fillerColumns.accountList,
     // 服务费设置
     filler_sevicePrice_mode_list: state => state.fillerApp.mode.modeDefault,
     filler_sevicePrice_page_status: state => state.fillerApp.list.sevicePrice,
     filler_sevicePrice_column: state => state.fillerColumns.sevicePrice,
     filler_sevicePrice_select_list: state => state.fillerSelect.sevicePrice,
-
+    // 服务费设置--服务费变更记录
+    filler_serviceChangeRecord_column: state => state.fillerColumns.serviceChangeRecord,
     // 气价维护
     filler_updatePrice_mode_list: state => state.fillerApp.mode.modeDefault,
     filler_updatePrice_page_status: state => state.fillerApp.list.updatePrice,
     filler_updatePrice_column: state => state.fillerColumns.updatePrice,
     filler_updatePrice_select_list: state => state.fillerSelect.updatePrice,
-
+    // 气价维护--气价变更记录
+    filler_lngUpdatePrice_column: state => state.fillerColumns.lngUpdatePrice,
     // 物流公司
     carrier_logistics_mode_list: state => state.carrierApp.mode.modeDefault,
     carrier_logistics_page_status: state => state.carrierApp.list.logistics,

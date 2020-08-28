@@ -48,7 +48,11 @@ export default {
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) {},
+    onListEvent(type, row) {
+      if (type === 'check') {
+        this.$router.push(`account/accountList?orgId=${row.orgId}&accountId=${row.accountId}`)
+      }
+    },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
       callback({

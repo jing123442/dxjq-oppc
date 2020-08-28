@@ -40,7 +40,13 @@ export default {
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) {},
+    onListEvent(type, row) {
+      const gasstationId = row.gasstationId
+      const accountId = row.accountId
+      if (type === 'check') {
+        this.$router.push(`lngStationAccountManager/accountList?gasstationId=${gasstationId}&accountId=${accountId}`)
+      }
+    },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
       callback({

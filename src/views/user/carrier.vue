@@ -47,7 +47,7 @@ export default {
       response_success: 'response_success'
     })
   },
-  created: function () {},
+  created: function () { console.log(this.select_list) },
   methods: {
     onListEvent(type, row) {
       if (type == 'resetpwd') {

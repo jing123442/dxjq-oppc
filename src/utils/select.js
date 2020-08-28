@@ -86,6 +86,21 @@ export function utilsAutoAccount() {
     { value: 1, label: '是' }
   ]
 }
+export function utilsPrintStatus() {
+  return [
+    { value: 0, label: '离线' },
+    { value: 1, label: '在线' },
+    { value: 2, label: '缺纸' }
+  ]
+}
+export function utilsVoiceStatus() {
+  return [
+    { value: 0, label: '关' },
+    { value: 1, label: '低' },
+    { value: 2, label: '中' },
+    { value: 3, label: '高' }
+  ]
+}
 
 export function untilsMarketingManList() {
   // const params = {
@@ -100,10 +115,9 @@ export function utilsDyOrgList() {
   return {
     url: '/user/org/list',
     node: ['data', 'records'],
-    keyVal: {
+    props: {
       value: 'orgId',
       label: 'orgName'
-    },
-    params: Function
+    }
   }
 }

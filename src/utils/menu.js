@@ -12,7 +12,7 @@ export function menuList() {
     meta: { title: '个人中心', icon: 'el-icon-user', noCache: false },
     children: [
       { path: '/index', name: 'index', meta: { title: '个人信息', noCache: false } },
-      { path: '/index', name: 'mine', meta: { title: '修改密码', noCache: false } }
+      { path: '/editPassword', name: 'editPassword', meta: { title: '修改密码', noCache: false } }
     ]
   }, {
     path: '/user',

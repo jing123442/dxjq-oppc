@@ -2,7 +2,7 @@
   <div class="template-main">
     <em-table-list :tableListName="'busorg'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="平台公司详情" :visible.sync="dialogDetailVisible" :width="add_edit_dialog">
-      <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn"></nt-form>
+      <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventForm"></nt-form>
     </el-dialog>
   </div>
 </template>
@@ -14,7 +14,6 @@ export default {
   name: 'busorg',
   data() {
     return {
-      dialogDetailVisible: false,
       isShow: false,
       queryCustURL: {
         add: {
@@ -38,6 +37,7 @@ export default {
       buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '添加公司' }],
       axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } }),
+      dialogDetailVisible: false,
       detailRow: {}
     }
   },
@@ -59,6 +59,14 @@ export default {
       row._btn = {}
       if (type === 'detail') {
         this.detailRow = row
+        this.detailRow._btn = {
+          iShow: true,
+          list: [{
+            bType: 'primary',
+            label: '返回',
+            icon: ''
+          }]
+        }
         this.dialogDetailVisible = true
       }
     },
@@ -72,8 +80,9 @@ export default {
         }
       })
     },
-    initDataList() {},
-    subClearBtn() {}
+    onListEventForm(obj) {
+      this.dialogDetailVisible = false
+    }
   }
 }
 </script>
