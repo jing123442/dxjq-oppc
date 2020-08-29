@@ -4,11 +4,17 @@ export async function $noPayOrder (data) {
   return await R({ url: 'business/gas_order/find_nopayfordriver', data })
 }
 
-// 充值审核
 export async function $audit (data) {
   return await R({ url: 'business/recharge_order/audit', data })
 }
-// 充值
+
 export async function $rechargeAdd (data) {
   return await R({ url: 'business/recharge_order/add', data })
+}
+export async function $orderShow (data) {
+  return await R({ url: 'business/transfer_order/show', data })
+}
+
+export async function $transferOrderAdd (data) {
+  return await R({ url: 'business/transfer_order/add', data })
 }

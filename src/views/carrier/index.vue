@@ -1,9 +1,13 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'carrier'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'carrier'" ref="carrier" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog title="物流公司详情" :visible.sync="dialogDetailVisible" :width="add_edit_dialog">
-      <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn"></nt-form>
+      <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"></nt-form>
+    </el-dialog>
+
+     <el-dialog title="添加车辆" :visible.sync="dialogAddCarVisible" :width="add_edit_dialog">
+      <nt-form v-if="dialogAddCarVisible" ref="addCar" :rowData="addCarRow" :pageColumn="page_column_addCar" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventAddCar"></nt-form>
     </el-dialog>
  </div>
 </template>
@@ -40,9 +44,11 @@ export default {
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '添加公司' }],
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } }),
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 2 } }),
       dialogDetailVisible: false,
-      detailRow: {}
+      detailRow: {},
+      dialogAddCarVisible: false,
+      addCarRow: {}
     }
   },
   computed: {
@@ -51,6 +57,7 @@ export default {
       page_status: 'carrier_logistics_page_status',
       page_column: 'carrier_logistics_column',
       page_column_detail: 'carrier_logisticsDetail_column',
+      page_column_addCar: 'carrier_addCar_column',
       select_list: 'carrier_logistics_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
@@ -60,16 +67,34 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
-      row._btn = {}
       if (type === 'addCar') {
         // 添加车辆
-        this.formAddCar.orgId = row.orgId
-        this.formAddCar.orgName = row.orgName
-        this.dialogAddCarVisible = true
+        console.log(row)
+        this.addCarEvent(row)
       } else if (type === 'detail') {
         this.dialogDetailVisible = true
         this.detailRow = row
       }
+    },
+    addCarEvent(row) {
+      this.addCarRow._btn = {
+        iShow: true,
+        list: [
+          {
+            bType: 'primary',
+            label: '确定',
+            icon: ''
+          },
+          {
+            bType: 'default',
+            label: '取消',
+            icon: ''
+          }
+        ]
+      }
+      this.addCarRow.orgId = row.orgId
+      this.addCarRow.orgName = row.orgName
+      this.dialogAddCarVisible = true
     },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
@@ -77,7 +102,7 @@ export default {
         page: 1,
         size: 10,
         param: {
-          orgType: 0
+          orgType: 2
         }
       })
     },
@@ -104,8 +129,32 @@ export default {
         }
       })
     },
-    initDataList() {},
-    subClearBtn() {}
+    onListEventAddCar(obj) {
+      if (obj.label === '确定') {
+        const self = this
+        this.$refs.addCar.$children[0].validate(valid => {
+          if (valid) {
+            const params = {
+              creater: JSON.parse(localStorage.getItem('wopuser')).user_id,
+              createrName: JSON.parse(localStorage.getItem('wopuser')).user_name,
+              ...self.addCarRow
+            }
+            $carrierTruckAdd(params).then(res => {
+              if (res.code === 0) {
+                self.$message.success(res.message)
+                self.$refs.carrier.initDataList()
+                self.dialogAddCarVisible = false
+              } else {
+                self.$message.error(res.message)
+                self.dialogAddCarVisible = false
+              }
+            })
+          }
+        })
+      } else {
+        this.dialogAddCarVisible = false
+      }
+    }
   }
 }
 </script>

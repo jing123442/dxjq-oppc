@@ -119,6 +119,8 @@ export default new Vuex.Store({
     carrier_logistics_select_list: state => state.carrierSelect.logistics,
     // 物流公司--详情
     carrier_logisticsDetail_column: state => state.carrierColumns.logisticsDetail,
+    // 物流公司--添加车辆
+    carrier_addCar_column: state => state.carrierColumns.addCar,
     // 公司资金账户管理
     carrier_firmAccount_mode_list: state => state.carrierApp.mode.modeDefault,
     carrier_firmAccount_page_status: state => state.carrierApp.list.firmAccount,
@@ -126,6 +128,12 @@ export default new Vuex.Store({
     carrier_firmAccount_select_list: state => state.carrierSelect.firmAccount,
     // 公司资金账户管理---充值
     carrier_firmAccountRecharge_column: state => state.carrierColumns.firmAccountRecharge,
+    // 公司资金账户管理---账户流水
+    carrier_firmAccountList_column: state => state.carrierColumns.firmAccountList,
+    // 公司资金账户管理---圈存
+    carrier_vehicleCircle_column: state => state.carrierColumns.vehicleCircle,
+    // 公司资金账户管理---圈存弹窗
+    carrier_vehicleCircleEvent_column: state => state.carrierColumns.vehicleCircleEvent,
     // 车辆管理
     carrier_vehicle_mode_list: state => state.carrierApp.mode.modeDefault,
     carrier_vehicle_page_status: state => state.carrierApp.list.vehicle,

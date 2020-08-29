@@ -50,7 +50,7 @@ const columns = {
       { field: 'accountBalance', nameSpan: 10, name: '变化后账户金额' },
       { field: 'createrName', nameSpan: 10, name: '创建人' },
       { field: 'createDate', nameSpan: 10, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
-      { field: 'note', nameSpan: 10, name: '充值' }
+      { field: 'note', nameSpan: 10, name: '摘要' }
     ]
   }
 }

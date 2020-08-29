@@ -33,7 +33,7 @@ export default {
         name: '公司资金账户管理'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } }),
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 2 } }),
       dialogRechargeVisible: false,
       rechargeRow: {}
     }
@@ -53,30 +53,45 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
-      console.log(type, row)
-      const self = this
       if (type === 'recharge') {
-        const orgId = row.orgId
-        $userOrgFind({ orgId }).then(res => {
-          console.log(res)
-          if (res.code === 0) {
-            self.rechargeRow = res.data
-            self.rechargeRow._btn = {
-              iShow: true,
-              list: [{
-                bType: 'default',
-                label: '取消',
-                icon: ''
-              }, {
-                bType: 'primary',
-                label: '确定',
-                icon: ''
-              }]
-            }
-            self.dialogRechargeVisible = true
-          }
-        })
+        this.rechargeEvent(row)
+      } else if (type === 'accState') {
+        this.accountListEvent(row)
+      } else if (type === 'load') {
+        this.vehicleCircleEvent(row)
       }
+    },
+    rechargeEvent(row) {
+      const self = this
+      const orgId = row.orgId
+      $userOrgFind({ orgId }).then(res => {
+        console.log(res)
+        if (res.code === 0) {
+          self.rechargeRow = res.data
+          self.rechargeRow._btn = {
+            iShow: true,
+            list: [{
+              bType: 'default',
+              label: '取消',
+              icon: ''
+            }, {
+              bType: 'primary',
+              label: '确定',
+              icon: ''
+            }]
+          }
+          self.dialogRechargeVisible = true
+        }
+      })
+    },
+    accountListEvent(row) {
+      const orgId = row.orgId
+      const accountId = row.accountId
+      this.$router.push(`logisticsAccountManager/accountList?orgId=${orgId}&accountId=${accountId}`)
+    },
+    vehicleCircleEvent(row) {
+      const orgId = row.orgId
+      this.$router.push(`logisticsAccountManager/vehicleCircle?orgId=${orgId}`)
     },
     onListEventDialog(type, row) {
       console.log(type, row)
@@ -107,7 +122,7 @@ export default {
         page: 1,
         size: 10,
         param: {
-          orgType: 0
+          orgType: 2
         }
       })
     },

@@ -17,15 +17,16 @@ export default [
       { path: 'inventoryManager', component: _import('carrier/inventoryManager'), name: 'inventoryManager', meta: { title: '圈存管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'transactionOrderManager', component: _import('carrier/transactionOrderManager'), name: 'transactionOrderManager', meta: { title: '加气订单管理', icon: 'icon-gongnengguanli', noCache: false } },
       {
-        path: 'index',
+        path: 'logisticsAccountManager',
         component: {
           render (c) { return c('router-view') }
         },
-        name: 'index',
+        name: 'logisticsAccountManager',
         hidden: true,
-        meta: { title: '物流公司', icon: 'icon-gongnengguanli', noCache: false },
+        meta: { title: '公司资金账户管理', icon: 'icon-gongnengguanli', noCache: false },
         children: [
-          { path: 'index1', component: _import('carrier/last/index'), name: 'index1', meta: { title: '物流公司-1', icon: 'icon-gongnengguanli', noCache: false } }
+          { path: 'accountList', component: _import('carrier/sub/accountList'), name: 'accountList', meta: { title: '账户流水', icon: 'icon-gongnengguanli', noCache: false } },
+          { path: 'vehicleCircle', component: _import('carrier/sub/vehicleCircle'), name: 'vehicleCircle', meta: { title: '卡车圈存', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       }
     ]

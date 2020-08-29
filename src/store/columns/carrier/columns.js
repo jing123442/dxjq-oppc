@@ -2,18 +2,32 @@ const columns = {
   state: {
     logistics: [
       { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-      { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', show: { type: 'text', remote: true, subField: 'orgName', obj: 'orgId', style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
+      { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', show: { type: 'text', remote: true, obj: 'orgName', style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
+      { field: 'selectedOptions', name: '所在地区', show: { type: 'cascader', formatter: 'address', obj: 'cascaderAddress', sign: '/', noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
       { field: 'address', name: '地址', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入地址' }, rules: [{ required: true, message: '请输入地址', trigger: 'blur' }] },
       { field: 'mobile', name: '联系电话', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入联系电话' }, rules: [{ required: true, message: '请输入联系电话', trigger: 'blur' }] },
+      { field: 'contacts', name: '联系人', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入联系人' }, rules: [{ required: true, message: '请输入联系人', trigger: 'blur' }] },
       { field: 'createDate', name: '创建时间', formatFun: 'formateTData', stype: 'format' },
       { field: 'status', name: '账号状态', formatter: 'status', show: { type: 'radio', value: 0, obj: 'status', placeholder: '请选择账号状态' }, search: { type: 'select', obj: 'status', placeholder: '请选择账号状态' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
       { field: 'email', name: '邮箱', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入邮箱' }, rules: [{ required: true, message: '请输入邮箱', trigger: 'blur' }] },
-      { field: 'account', name: '银行账户', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入银行账户' } },
-      { field: 'bank', name: '开户行', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入开户行' } },
+      { field: 'account', name: '银行账户', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入银行账户' }, rules: [{ required: true, message: '请输入银行账户', trigger: 'blur' }] },
+      { field: 'bank', name: '开户行', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入开户行' }, rules: [{ required: true, message: '请输入开户行', trigger: 'blur' }] },
       { field: 'legalperson', name: '法人姓名', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入法人姓名' }, rules: [{ required: true, message: '请输入法人姓名', trigger: 'blur' }] },
-      { field: 'legalperson', name: '法人身份证号码', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入法人身份证号码' } },
+      { field: 'idCard', name: '法人身份证号码', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入法人身份证号码' }, rules: [{ required: true, message: '请输入法人身份证号码', trigger: 'blur' }] },
       { field: 'taxpayer', name: '纳税人识别号', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入纳税人识别号' }, rules: [{ required: true, message: '请输入纳税人识别号', trigger: 'blur' }] },
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'addCar', name: '添加车辆' }, { type: 'edit', name: '编辑' }, { type: 'detail', name: '详情' }] }
+    ],
+    addCar: [
+      { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', show: { type: 'text', isDisabled: true, remote: true, style: 'width: 90%;', placeholder: '请输入公司名称' } },
+      { field: 'truckName', name: '卡车名称', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入卡车名称' }, rules: [{ required: true, message: '请输入卡车名称', trigger: 'blur' }] },
+      { field: 'carNumber', name: '车牌号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入车牌号' }, rules: [{ required: true, message: '请输入车牌号', trigger: 'blur' }] },
+      { field: 'frameNumber', name: '车架号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入车架号' }, rules: [{ required: true, message: '请输入车架号', trigger: 'blur' }] },
+      { field: 'trailerNumber', name: '挂车牌号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入挂车牌号' } },
+      { field: 'purchaseDate', name: '购车日期', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入购车日期' } },
+      { field: 'color', name: '颜色', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入颜色' }, rules: [{ required: true, message: '请输入颜色', trigger: 'blur' }] },
+      { field: 'deadWeight', name: '载重量', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入载重量' }, rules: [{ required: true, message: '请输入载重量', trigger: 'blur' }] },
+      { field: 'capacity', name: '储气罐容量', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入储气罐容量' }, rules: [{ required: true, message: '请输入储气罐容量', trigger: 'blur' }] },
+      { field: 'manufacturer', name: '生产厂家', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入生产厂家' }, rules: [{ required: true, message: '请输入生产厂家', trigger: 'blur' }] }
     ],
     logisticsDetail: [
       { field: 'orgName', nameSpan: 10, name: '公司名称', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
@@ -40,12 +54,35 @@ const columns = {
       { field: 'updaterName', hide: true },
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'recharge', name: '充值' }, { type: 'load', name: '圈存' }, { type: 'accState', name: '账户流水' }, { type: 'edit', name: '编辑' }] }
     ],
+    firmAccountList: [
+      { field: 'id', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+      { field: 'orgName', nameSpan: 10, name: '公司名称' },
+      { field: 'orderId', nameSpan: 10, name: '单据流水id', search: { type: 'text', placeholder: '请输入单据流水id' } },
+      { field: 'changeAmount', nameSpan: 10, name: '变化金额' },
+      { field: 'accountBalance', nameSpan: 10, name: '变化后账户金额' },
+      { field: 'createrName', nameSpan: 10, name: '创建人' },
+      { field: 'createDate', nameSpan: 10, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
+      { field: 'note', nameSpan: 10, name: '摘要' }
+    ],
     firmAccountRecharge: [
       { field: 'orgName', name: '公司名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
       { field: 'mobile', name: '手机号', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
       { field: 'address', name: '公司地址', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
       { field: 'amount', name: '充值', show: { type: 'text', placeholder: '请输入充值金额', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入充值金额！', trigger: 'blur' }] },
       { field: 'note', name: '摘要', show: { type: 'textarea', placeholder: '请输入充值摘要', style: 'width: 90%;' } }
+    ],
+    vehicleCircle: [
+      { field: 'truckId', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+      { field: 'carNumber', nameSpan: 10, name: '车牌号', search: { type: 'text', placeholder: '请输入车牌号' } },
+      { field: 'balance', nameSpan: 10, name: '车辆账户余额' },
+      { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'circle', name: '圈存' }] }
+    ],
+    vehicleCircleEvent: [
+      { field: 'orgName', name: '公司名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'balance', name: '账户余额', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'carNumber', name: '车牌号', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'thuckBalance', name: '卡车余额', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'amount', name: '圈存金额', show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入圈存金额！', trigger: 'blur' }] }
     ],
     vehicle: [
       { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
