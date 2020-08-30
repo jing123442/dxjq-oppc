@@ -20,7 +20,10 @@ export default {
       queryCustURL: {
         add: {
           url: '/user/org/add',
-          method: 'post'
+          method: 'post',
+          params: {
+            aaaa: 111
+          }
         },
         edit: {
           url: '/user/org/edit',
