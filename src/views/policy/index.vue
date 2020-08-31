@@ -40,7 +40,12 @@ export default {
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) {},
+    onListEvent(type, row) {
+      if (type === 'setting') {
+        const orgId = row.orgId
+        this.$router.push(`index/logisticsPriceConfig?orgId=${orgId}`)
+      }
+    },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
       callback({

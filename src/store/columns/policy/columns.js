@@ -7,6 +7,17 @@ const columns = {
       { field: 'operateDate', name: '操作时间', stype: 'format', formatFun: 'formateTData' },
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'setting', name: '配置价格' }] }
     ],
+    logisticsPriceConfig: [
+      { field: 'gasstationName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
+      { field: 'operaterName', name: '操作人' },
+      { field: 'operateDate', name: '操作时间', stype: 'format', formatFun: 'formateTData' },
+      { field: 'price', name: '价格(元/公斤)' },
+      { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'editSelf', name: '编辑' }] }
+    ],
+    logisticsPriceConfigEdit: [
+      { field: 'price', name: '当前价格(元/公斤)', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
+      { field: 'priceCurrent', name: '价格', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入价格' }, rules: [{ required: true, message: '请输入价格', trigger: 'blur' }] }
+    ],
     gasPrice: [
       { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
       { field: 'gasstationName', stype: 'mapping', name: '加气站名称 ', mapping: 'gasstationName', search: { type: 'text', placeholder: '请输入加气站名称' } },

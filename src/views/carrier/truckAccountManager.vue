@@ -40,7 +40,14 @@ export default {
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) {},
+    onListEvent(type, row) {
+      if (type === 'detail') {
+        const orgId = row.orgId
+        const accountId = row.accountId
+        const truckId = row.truckId
+        this.$router.push(`truckAccountManager/truckAccountList?orgId=${orgId}&accountId=${accountId}&truckId=${truckId}`)
+      }
+    },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
       callback({

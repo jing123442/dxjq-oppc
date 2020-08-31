@@ -101,6 +101,16 @@ const columns = {
       { field: 'createDate', name: '创建时间', formatFun: 'formateTData', stype: 'format' },
       { field: 'useropts', stype: 'opt', ispush: false, name: '账户流水', fixed: 'right', width: 140, list: [{ type: 'detail', name: '查看' }] }
     ],
+    truckAccountList: [
+      { field: 'id', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+      { field: 'orgName', name: '公司名称' },
+      { field: 'orderId', name: '单据流水id', search: { type: 'text', placeholder: '请输入单据流水id' } },
+      { field: 'changeAmount', nameSpan: 10, name: '变化金额' },
+      { field: 'accountBalance', nameSpan: 10, name: '变化后账户金额' },
+      { field: 'createrName', nameSpan: 10, name: '创建人' },
+      { field: 'createDate', nameSpan: 10, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
+      { field: 'note', nameSpan: 10, name: '摘要' }
+    ],
     rechargeRecord: [
       { field: 'rechargeOrderId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, ispush: false },
       { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },

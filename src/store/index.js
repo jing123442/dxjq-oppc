@@ -145,7 +145,8 @@ export default new Vuex.Store({
     carrier_truckAccount_page_status: state => state.carrierApp.list.truckAccount,
     carrier_truckAccount_column: state => state.carrierColumns.truckAccount,
     carrier_truckAccount_select_list: state => state.carrierSelect.truckAccount,
-
+    // 车辆资金账户管理--账户流水
+    carrier_truckAccountList_column: state => state.carrierColumns.truckAccountList,
     // 充值记录
     carrier_rechargeRecord_mode_list: state => state.carrierApp.mode.modeDefault,
     carrier_rechargeRecord_page_status: state => state.carrierApp.list.rechargeRecord,
@@ -175,7 +176,10 @@ export default new Vuex.Store({
     policy_firmPrice_page_status: state => state.policyApp.list.firmPrice,
     policy_firmPrice_column: state => state.policyColumns.firmPrice,
     policy_firmPrice_select_list: state => state.policySelect.firmPrice,
-
+    // 物流公司价格配置--配置价格
+    policy_logisticsPriceConfig_column: state => state.policyColumns.logisticsPriceConfig,
+    // 物流公司价格配置--配置价格编辑
+    policy_logisticsPriceConfigEdit_column: state => state.policyColumns.logisticsPriceConfigEdit,
     // 按加气站配置价格
     policy_gasPrice_mode_list: state => state.policyApp.mode.modeDefault,
     policy_gasPrice_page_status: state => state.policyApp.list.gasPrice,
