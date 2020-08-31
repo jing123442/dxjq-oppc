@@ -25,6 +25,17 @@ const columns = {
       { field: 'operateDate', name: '操作时间', stype: 'format', formatFun: 'formateTData' },
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'setting', name: '配置价格' }] }
     ],
+    gasPriceConfig: [
+      { field: 'orgName', name: '物流公司名称', fixed: 'left', search: { type: 'text', placeholder: '请输入物流公司名称' } },
+      { field: 'operaterName', name: '操作人' },
+      { field: 'operateDate', name: '操作时间', stype: 'format', formatFun: 'formateTData' },
+      { field: 'price', name: '价格(元/公斤)' },
+      { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'editSelf', name: '编辑' }] }
+    ],
+    gasPriceConfigEdit: [
+      { field: 'price', name: '当前价格(元/公斤)', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
+      { field: 'priceCurrent', name: '价格', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入价格' }, rules: [{ required: true, message: '请输入价格', trigger: 'blur' }] }
+    ],
     record: [
       { field: 'id', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
       { field: 'orgName', stype: 'mapping', name: '物流公司名称', mapping: 'orgName', search: { type: 'text', placeholder: '请输入物流公司名称' } },
@@ -39,12 +50,17 @@ const columns = {
       { field: 'price', name: '液源价格(元/吨)' },
       { field: 'operatorName', name: '操作人' },
       { field: 'operatorTime', name: '操作时间', formatFun: 'formateTData', stype: 'format' },
-      { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'sefEdit', name: '编辑' }, { type: 'price', name: '配置价格' }, { type: 'record', name: '变更记录' }] }
+      { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'editSelf', name: '编辑' }, { type: 'price', name: '配置价格' }, { type: 'record', name: '变更记录' }] }
     ],
     sourceConfigPrice: [
       { field: 'name', name: '液源地', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
       { field: 'price', name: '当前液源价格', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
       { field: 'priceUpdate', name: '调整后液源价格', show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入调整后液源价格', trigger: 'blur' }] }
+    ],
+    sourceConfigEdit: [
+      { field: 'name', name: '液源地名称', show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入液源地名称', trigger: 'blur' }] },
+      { field: 'address', name: '详细地址', show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
+      { field: 'pointAddress', name: '经纬度', show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] }
     ],
     gasStockList: [
       { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
@@ -52,6 +68,11 @@ const columns = {
       { field: 'gasstationName', name: '加气站名称', search: { type: 'text', placeholder: '请输入加气站名称' } },
       { field: 'stock', name: '库存量(公斤)' },
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'record', name: '入库记录' }] }
+    ],
+    gasStockListRecord: [
+      { field: 'lngFromName', name: '液源地', fixed: 'left' },
+      { field: 'downloadWeight', name: '入库量(kg)' },
+      { field: 'completeTime', name: '时间', formatFun: 'formateTData', stype: 'format', sort: true }
     ],
     lngPlan: [
       { field: 'id', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },

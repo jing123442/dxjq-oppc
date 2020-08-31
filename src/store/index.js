@@ -185,7 +185,10 @@ export default new Vuex.Store({
     policy_gasPrice_page_status: state => state.policyApp.list.gasPrice,
     policy_gasPrice_column: state => state.policyColumns.gasPrice,
     policy_gasPrice_select_list: state => state.policySelect.gasPrice,
-
+    // 按加气站配置价格--配置价格
+    policy_gasPriceConfig_column: state => state.policyColumns.gasPriceConfig,
+    // 按加气站配置价格--配置价格编辑
+    policy_gasPriceConfigEdit_column: state => state.policyColumns.gasPriceConfigEdit,
     // 价格变更记录
     policy_record_mode_list: state => state.policyApp.mode.modeDefault,
     policy_record_page_status: state => state.policyApp.list.record,
@@ -199,12 +202,15 @@ export default new Vuex.Store({
     policy_sourceConfig_select_list: state => state.policySelect.sourceConfig,
     // 液源地配置--配置价格
     policy_sourceConfigPrice_column: state => state.policyColumns.sourceConfigPrice,
+    // 液源地配置--编辑
+    policy_sourceConfigEdit_column: state => state.policyColumns.sourceConfigEdit,
     // 加气站库存查询
     policy_gasStockList_mode_list: state => state.policyApp.mode.modeDefault,
     policy_gasStockList_page_status: state => state.policyApp.list.gasStockList,
     policy_gasStockList_column: state => state.policyColumns.gasStockList,
     policy_gasStockList_select_list: state => state.policySelect.gasStockList,
-
+    // 加气站库存查询--入库记录
+    policy_gasStockListRecord_column: state => state.policyColumns.gasStockListRecord,
     // LNG计划管理
     policy_lngPlan_mode_list: state => state.policyApp.mode.modeDefault,
     policy_lngPlan_page_status: state => state.policyApp.list.lngPlan,
@@ -245,6 +251,7 @@ export default new Vuex.Store({
 
     // dialog width
     add_edit_dialog_form: stare => '80%',
+    dialog_table: stare => '60%',
     del_dialog_form: stare => '40%',
 
     // layout

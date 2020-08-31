@@ -40,7 +40,12 @@ export default {
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) {},
+    onListEvent(type, row) {
+      if (type === 'setting') {
+        const gasstationId = row.gasstationId
+        this.$router.push(`strategyGasStationList/gasStationPriceConfig?gasstationId=${gasstationId}`)
+      }
+    },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
       callback({

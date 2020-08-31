@@ -23,7 +23,7 @@ const columns = {
       { field: 'carNumber', name: '车牌号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入车牌号' }, rules: [{ required: true, message: '请输入车牌号', trigger: 'blur' }] },
       { field: 'frameNumber', name: '车架号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入车架号' }, rules: [{ required: true, message: '请输入车架号', trigger: 'blur' }] },
       { field: 'trailerNumber', name: '挂车牌号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入挂车牌号' } },
-      { field: 'purchaseDate', name: '购车日期', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入购车日期' } },
+      { field: 'purchaseDate', name: '购车日期', show: { type: 'date-picker', model: 'date', style: 'width: 90%;', placeholder: '请输入购车日期' } },
       { field: 'color', name: '颜色', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入颜色' }, rules: [{ required: true, message: '请输入颜色', trigger: 'blur' }] },
       { field: 'deadWeight', name: '载重量', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入载重量' }, rules: [{ required: true, message: '请输入载重量', trigger: 'blur' }] },
       { field: 'capacity', name: '储气罐容量', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入储气罐容量' }, rules: [{ required: true, message: '请输入储气罐容量', trigger: 'blur' }] },

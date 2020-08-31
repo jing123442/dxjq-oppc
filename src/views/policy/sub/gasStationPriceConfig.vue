@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'logisticsPriceConfig'" ref="logisticsPriceConfig" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'gasStationPriceConfig'" ref="gasStationPriceConfig" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="设置价格" :visible.sync="dialogPriceVisible" :width="add_edit_dialog">
       <nt-form v-if="dialogPriceVisible" ref="priceForm" :rowData="priceRow" :pageColumn="page_column_edit" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventPrice"></nt-form>
     </el-dialog>
@@ -12,13 +12,13 @@ import { mapGetters } from 'vuex'
 import { $carrierPriceEdit } from '@/service/strategy'
 
 export default {
-  name: 'logisticsPriceConfig',
+  name: 'gasStationPriceConfig',
   data() {
     return {
       isShow: false,
       queryCustURL: {
         list: {
-          url: 'strategy/carrier_gasstation_price/gasstation_list',
+          url: 'strategy/carrier_gasstation_price/org_list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -28,7 +28,7 @@ export default {
         name: '价格配置'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgId: this.$route.query.orgId } }),
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { gasstationId: this.$route.query.gasstationId } }),
       dialogPriceVisible: false,
       priceRow: {}
     }
@@ -37,8 +37,8 @@ export default {
     ...mapGetters({
       mode_list: 'filler_sevicePrice_mode_list',
       page_status: 'filler_account_page_status',
-      page_column: 'policy_logisticsPriceConfig_column',
-      page_column_edit: 'policy_logisticsPriceConfigEdit_column',
+      page_column: 'policy_gasPriceConfig_column',
+      page_column_edit: 'policy_gasPriceConfigEdit_column',
       select_list: 'filler_printList_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
@@ -81,15 +81,15 @@ export default {
             const params = {
               creater: JSON.parse(localStorage.getItem('wopuser')).user_id,
               createrName: JSON.parse(localStorage.getItem('wopuser')).user_name,
-              gasstationId: self.priceRow.gasstationId,
-              orgId: self.$route.query.orgId,
+              gasstationId: self.$route.query.gasstationId,
+              orgId: self.priceRow.orgId,
               price: self.priceRow.priceCurrent
             }
             $carrierPriceEdit(params).then(res => {
               if (res.code === 0) {
                 self.$message.success(res.message)
                 self.dialogPriceVisible = false
-                self.$refs.logisticsPriceConfig.initDataList()
+                self.$refs.gasStationPriceConfig.initDataList()
               } else {
                 self.$message.error(res.message)
               }

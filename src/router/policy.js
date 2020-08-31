@@ -27,6 +27,18 @@ export default [
         children: [
           { path: 'logisticsPriceConfig', component: _import('policy/sub/logisticsPriceConfig'), name: 'logisticsPriceConfig', meta: { title: '配置价格', icon: 'icon-gongnengguanli', noCache: false } }
         ]
+      },
+      {
+        path: 'strategyGasStationList',
+        component: {
+          render (c) { return c('router-view') }
+        },
+        name: 'strategyGasStationList',
+        hidden: true,
+        meta: { title: '按加气站配置价格', icon: 'icon-gongnengguanli', noCache: false },
+        children: [
+          { path: 'gasStationPriceConfig', component: _import('policy/sub/gasStationPriceConfig'), name: 'gasStationPriceConfig', meta: { title: '配置价格', icon: 'icon-gongnengguanli', noCache: false } }
+        ]
       }
     ]
   }

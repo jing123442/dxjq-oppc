@@ -19,6 +19,7 @@ const columns = {
       { field: 'gasstationName', name: '加气站名称', show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
       { field: 'selectedOptions', name: '所在地区', show: { type: 'cascader', iType: 'string', ou: 2, obj: 'cascaderAddress', sign: '/', style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
       { field: 'gasAddress', name: '详细地址', show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '详细地址' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
+      { field: 'pointAddress', name: '经纬度', show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
       { field: 'timerPicker', name: '营业时间', show: { type: 'time-picker', ou: 2, range: true, style: 'width: 90%;', placeholder: '' }, rules: [{ required: true, message: '', trigger: 'blur' }] }
     ],
     gapList: [
@@ -30,6 +31,7 @@ const columns = {
       { field: 'cashierName', name: '收银员' },
       { field: 'selectedOptions', hide: true, name: '所在地区', show: { type: 'cascader', formatter: 'address', iType: 'string', ou: 2, obj: 'cascaderAddress', sign: '/', style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
       { field: 'address', hide: true, name: '详细地址', show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
+      { field: 'pointAddress', name: '经纬度', show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 260, list: [{ type: 'bind', name: '绑定收银员' }, { type: 'edit', name: '编辑' }, { type: 'printer', name: '打印机' }] }
     ],
     printList: [
@@ -52,7 +54,7 @@ const columns = {
       { field: 'accountId', name: '账号' },
       { field: 'balance', name: '账户余额' },
       { field: 'createDate', name: '创建日期', formatFun: 'formateTData', stype: 'format' },
-      { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 260, list: [{ type: 'check', name: '查看' }] }
+      { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'check', name: '查看' }] }
     ],
     accountList: [
       { field: 'gasstationName', name: '加气站名称', fixed: 'left' },
@@ -65,7 +67,7 @@ const columns = {
     ],
     sevicePrice: [
       { field: 'orgId', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-      { field: 'orgName', nameSpan: 10, name: '加气站企业名称', stype: 'mapping', mapping: 'orgName', search: { type: 'text', placeholder: '请输入加气站企业名称' } },
+      { field: 'orgName', nameSpan: 10, name: '加气站企业名称', search: { type: 'text', placeholder: '请输入加气站企业名称' } },
       { field: 'gasstationName', nameSpan: 10, name: '加气站名称', search: { type: 'text', placeholder: '请输入加气站名称' }, show: { type: 'text', remote: true, subField: 'gasstationName', isDisabled: true, style: 'width: 90%;', placeholder: '请输入加气站名称' } },
       { field: 'platformFee', nameSpan: 10, name: '平台服务费（元/公斤）', show: { type: 'text', style: 'width: 90%;', placeholder: '请设置平台服务费' }, rules: [{ required: true, message: '请设置平台服务费', trigger: 'blur' }] },
       { field: 'gasstationFee', nameSpan: 10, name: '加气站服务费（元/公斤）', show: { type: 'text', style: 'width: 90%;', placeholder: '请设置加气站服务费' }, rules: [{ required: true, message: '请设置加气站服务费', trigger: 'blur' }] },
