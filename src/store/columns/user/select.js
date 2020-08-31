@@ -3,7 +3,7 @@ import { utilsBaseRole, utilsStatus, utilsDyOrgList } from '@/utils/select'
 const select = {
   state: {
     op: {
-      baseRole: utilsBaseRole([1, 2]),
+      baseRole: utilsBaseRole([1, 2, 7]),
       status: utilsStatus(),
       orgId: utilsDyOrgList()
     },
