@@ -10,12 +10,15 @@
     <el-dialog title="变更记录" :visible.sync="dialogRecordVisible" :width="add_edit_dialog">
       <em-table-list v-if="dialogRecordVisible" ref="recordList" :tableListName="'recordList'" :axios="axios" :queryCustURL="queryCustURLRecord" :responseSuccess="response_success" :queryParam="queryParamsRecord" :mode_list="mode_list" :page_status="page_status" :page_column="page_column_record" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
+    <el-dialog title="新增" :visible.sync="dialogAddVisible" :width="add_edit_dialog">
+      <nt-form v-if="dialogAddVisible" ref="addSelf" :rowData="addRow" :pageColumn="page_column_edit" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn" @onListEvent="onListEventDialogAdd"></nt-form>
+    </el-dialog>
   </div>
 </template>
 <script>
 import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $priceUpdate } from '@/service/strategy'
+import { $priceUpdate, $priceAdd } from '@/service/strategy'
 
 export default {
   name: 'sourceConfig',
@@ -44,7 +47,7 @@ export default {
         },
         name: '变更记录'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '添加液源地' }],
+      buttonsList: [{ type: 'primary', icon: '', event: 'addSelf', name: '添加液源地' }],
       axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } }),
       queryParamsRecord: '',
@@ -52,7 +55,9 @@ export default {
       priceRow: {},
       dialogEditVisible: false,
       editRow: {},
-      dialogRecordVisible: false
+      dialogRecordVisible: false,
+      dialogAddVisible: false,
+      addRow: {}
     }
   },
   computed: {
@@ -62,6 +67,7 @@ export default {
       page_column: 'policy_sourceConfig_column',
       page_column_price: 'policy_sourceConfigPrice_column',
       page_column_edit: 'policy_sourceConfigEdit_column',
+      page_column_record: 'policy_sourceConfigRecord_column',
       select_list: 'policy_sourceConfig_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
@@ -71,12 +77,15 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
+      console.log(type)
       if (type === 'price') {
         this.priceRowEvent(row)
       } else if (type === 'editSelf') {
         this.editSelfEvent(row)
       } else if (type === 'record') {
         this.recordEvent(row)
+      } else if (type === 'addSelf') {
+        this.addSelfEvent(row)
       }
     },
     recordEvent(row) {
@@ -99,6 +108,22 @@ export default {
         }]
       }
       this.dialogEditVisible = true
+    },
+    addSelfEvent(row) {
+      this.addRow = row
+      this.addRow._btn = {
+        iShow: true,
+        list: [{
+          bType: 'default',
+          label: '取消',
+          icon: ''
+        }, {
+          bType: 'primary',
+          label: '确定',
+          icon: ''
+        }]
+      }
+      this.dialogAddVisible = true
     },
     priceRowEvent(row) {
       this.priceRow = row
@@ -167,6 +192,32 @@ export default {
         })
       } else {
         this.dialogEditVisible = false
+      }
+    },
+    onListEventDialogAdd(obj) {
+      const self = this
+      if (obj.label === '确定') {
+        this.$refs.addSelf.$children[0].validate(valid => {
+          if (valid) {
+            const params = {
+              ...this.addRow,
+              latitude: this.addRow.latitude,
+              longitude: this.addRow.longitude,
+              price: 0
+            }
+            $priceAdd(params).then(res => {
+              if (res.code === 0) {
+                self.$message.success(res.message)
+                self.dialogAddVisible = false
+                self.$refs.sourceConfig.initDataList()
+              } else {
+                self.$message.error(res.message)
+              }
+            })
+          }
+        })
+      } else {
+        this.dialogAddVisible = false
       }
     },
     initDataList() {},

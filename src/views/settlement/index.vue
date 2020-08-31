@@ -1,5 +1,11 @@
 <template>
   <div class="template-main">
+    <div class="total">
+      <span>加气量总额：</span>
+      <span>{{totalSumGasQty}}公斤</span>
+      <span class="fee">服务费总金额：</span>
+      <span>{{totalSumServiceFee}}元</span>
+    </div>
     <em-table-list :tableListName="'settlement'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
@@ -12,6 +18,8 @@ export default {
   data() {
     return {
       isShow: false,
+      totalSumGasQty: 0,
+      totalSumServiceFee: 0,
       queryCustURL: {
         list: {
           url: 'settle/gas_order/sum_fee',
@@ -41,7 +49,12 @@ export default {
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) {},
+    onListEvent(type, row) {
+      if (type === 'bill') {
+        const gasstationId = row.gasstationId
+        this.$router.push(`index/orderList?gasstationId=${gasstationId}`)
+      }
+    },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
       callback({
@@ -55,3 +68,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  .fee {
+    margin-left: 20px;
+  }
+</style>

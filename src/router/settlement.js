@@ -10,7 +10,19 @@ export default [
     meta: { title: '结算管理' },
     children: [
       { path: 'index', component: _import('settlement/index'), name: 'index', meta: { title: '加气站服务汇总', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'logisticsSettlement', component: _import('settlement/logisticsSettlement'), name: 'logisticsSettlement', meta: { title: '物流公司加气费汇总', icon: 'icon-gongnengguanli', noCache: false } }
+      { path: 'logisticsSettlement', component: _import('settlement/logisticsSettlement'), name: 'logisticsSettlement', meta: { title: '物流公司加气费汇总', icon: 'icon-gongnengguanli', noCache: false } },
+      {
+        path: 'index',
+        component: {
+          render (c) { return c('router-view') }
+        },
+        name: 'index',
+        hidden: true,
+        meta: { title: '加气站服务费汇总', icon: 'icon-gongnengguanli', noCache: false },
+        children: [
+          { path: 'orderList', component: _import('settlement/sub/orderList'), name: 'orderList', meta: { title: '加气站对账单', icon: 'icon-gongnengguanli', noCache: false } }
+        ]
+      }
     ]
   }
 ]

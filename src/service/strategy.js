@@ -19,3 +19,7 @@ export async function $priceUpdate (data) {
 export async function $carrierPriceEdit (data) {
   return await R({ url: 'strategy/carrier_gasstation_price/edit_price', data })
 }
+
+export async function $priceAdd (data) {
+  return await R({ url: 'strategy/lng_from/add', data })
+}

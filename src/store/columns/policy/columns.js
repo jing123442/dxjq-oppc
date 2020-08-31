@@ -62,6 +62,12 @@ const columns = {
       { field: 'address', name: '详细地址', show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
       { field: 'pointAddress', name: '经纬度', show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] }
     ],
+    sourceConfigRecord: [
+      { field: 'name', name: '液源地', fiexed: 'left' },
+      { field: 'price', name: '液源价格(元/吨)' },
+      { field: 'operatorName', name: '操作人' },
+      { field: 'operatorTime', name: '操作时间', formatFun: 'formateTData', stype: 'format' }
+    ],
     gasStockList: [
       { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
       { field: 'orgName', stype: 'mapping', name: '加气站企业名称', mapping: 'orgName', search: { type: 'text', placeholder: '请输入加气站企业名称' } },

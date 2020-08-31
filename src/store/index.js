@@ -204,6 +204,8 @@ export default new Vuex.Store({
     policy_sourceConfigPrice_column: state => state.policyColumns.sourceConfigPrice,
     // 液源地配置--编辑
     policy_sourceConfigEdit_column: state => state.policyColumns.sourceConfigEdit,
+    // 液源地配置--变更记录
+    policy_sourceConfigRecord_column: state => state.policyColumns.sourceConfigRecord,
     // 加气站库存查询
     policy_gasStockList_mode_list: state => state.policyApp.mode.modeDefault,
     policy_gasStockList_page_status: state => state.policyApp.list.gasStockList,
@@ -222,7 +224,8 @@ export default new Vuex.Store({
     settlement_servicePrice_page_status: state => state.settlementApp.list.servicePrice,
     settlement_servicePrice_column: state => state.settlementColumns.servicePrice,
     settlement_servicePrice_select_list: state => state.settlementSelect.servicePrice,
-
+    // 加气站服务费汇总--对账单
+    settlement_servicePriceBill_column: state => state.settlementColumns.servicePriceBill,
     // 物流公司加气费汇总
     settlement_gasPrice_mode_list: state => state.settlementApp.mode.modeDefault,
     settlement_gasPrice_page_status: state => state.settlementApp.list.gasPrice,
