@@ -34,7 +34,7 @@ export default {
         name: '液源地配置'
       },
       queryCustURLRecord: {
-         list: {
+        list: {
           url: 'strategy/lng_from_log/list',
           method: 'post',
           parse: {
