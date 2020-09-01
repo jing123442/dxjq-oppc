@@ -11,8 +11,8 @@
 </template>
 <script>
 import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
-import { mapGetters } from 'vuex'
 import { $excelDownload } from '@/service/settle'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'settlement',
@@ -55,7 +55,6 @@ export default {
         const gasstationId = row.gasstationId
         this.$router.push(`index/orderList?gasstationId=${gasstationId}`)
       } else if (type === 'export') {
-        console.log('export')
         this.excelDownload()
       }
     },
