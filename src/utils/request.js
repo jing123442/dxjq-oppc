@@ -67,6 +67,6 @@ axios.interceptors.response.use(
     return Promise.reject(err.message)
   }
 )
-export default ({ url, method = 'POST', data = {}, params = {} }) => {
-  return axios({ url, method, data, params })
+export default ({ url, method = 'POST', data = {}, params = {}, responseType = 'json' }) => {
+  return axios({ url, method, data, params, responseType })
 }
