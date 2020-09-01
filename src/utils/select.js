@@ -10,7 +10,8 @@ export function utilsBaseRole(arrs) {
     { value: 3, label: '加气企业管理者' },
     { value: 4, label: '收银员' },
     { value: 5, label: '物流公司管理者' },
-    { value: 6, label: '司机' }
+    { value: 6, label: '司机' },
+    { value: 7, label: '平台业务经理' }
   ]
 
   if (isTypeof(arrs) === 'array' && arrs.length > 0) {
