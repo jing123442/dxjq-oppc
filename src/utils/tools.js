@@ -134,3 +134,11 @@ export function messageBox(_this, params) {
     })
   }).catch(() => {})
 }
+
+// 新增默认参数
+export function createParams() {
+  return {
+    creater: JSON.parse(localStorage.getItem('wopuser')).user_id,
+    createrName: JSON.parse(localStorage.getItem('wopuser')).user_name
+  }
+}

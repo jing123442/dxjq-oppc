@@ -88,6 +88,7 @@ export default {
     onListEventAddGasStation(obj) {
       const self = this
       if (obj.label === '确定') {
+        console.log(self.gasStationRow)
         this.$refs.addGap.$children[0].validate(valid => {
           if (valid) {
             const params = {
@@ -101,6 +102,8 @@ export default {
               province: CodeToText[self.gasStationRow.selectedOptions[0]],
               city: CodeToText[self.gasStationRow.selectedOptions[1]],
               region: CodeToText[self.gasStationRow.selectedOptions[2]],
+              longitude: self.gasStationRow.pointAddress.split(',')[0],
+              latitude: self.gasStationRow.pointAddress.split(',')[1],
               creater: JSON.parse(localStorage.getItem('wopuser')).user_id,
               createrName: JSON.parse(localStorage.getItem('wopuser')).user_name
             }

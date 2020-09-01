@@ -1,6 +1,9 @@
 <template>
   <div class="template-main">
     <em-table-list ref="lngPlan" :tableListName="'lngPlan'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <el-dialog title="订单详细信息" :visible.sync="dialogDetailVisible" :width="add_edit_dialog">
+      <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventForm"></nt-form>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -25,7 +28,9 @@ export default {
         name: 'LNG计划管理'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { purchase: {} } })
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { purchase: {} } }),
+      dialogDetailVisible: false,
+      detailRow: {}
     }
   },
   computed: {
@@ -42,7 +47,6 @@ export default {
   mounted: function () { },
   methods: {
     onListEvent(type, row) {
-      console.log(type, row)
       const orderId = row.id
       if (type === 'enter') {
         messageBox(this, {
@@ -52,7 +56,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning',
           cb: () => {
-            $orderConfirm({ id: orderId }).then((response) => {
+            return $orderConfirm({ id: orderId }).then((response) => {
               return response
             })
           },
@@ -72,6 +76,20 @@ export default {
           },
           renderList: (self) => { self.$refs.lngPlan.initDataList() }
         })
+      } else if (type === 'detail') {
+        this.detailEvent(row)
+      }
+    },
+    detailEvent(row) {
+      this.dialogDetailVisible = true
+      this.detailRow = row
+      this.detailRow._btn = {
+        iShow: true,
+        list: [{
+          bType: 'primary',
+          label: '确定',
+          icon: ''
+        }]
       }
     },
     onReqParams(type, _this, callback) {
