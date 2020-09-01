@@ -11,6 +11,7 @@
 </template>
 <script>
 import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { $excelDownload } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -53,7 +54,33 @@ export default {
       if (type === 'bill') {
         const gasstationId = row.gasstationId
         this.$router.push(`index/orderList?gasstationId=${gasstationId}`)
+      } else if (type === 'export') {
+        this.excelDownload()
       }
+    },
+    excelDownload() {
+      const params = {
+        datas: {
+          gasstationName: '加气站名称',
+          sumGasQty: '加气量汇总（公斤）',
+          sumAmount: '加气金额汇总（元）',
+          sumServiceFee: '服务费汇总'
+        },
+        fileName: '账单',
+        interfaceName: '/settle/gas_order/sum_fee',
+        pageParam: {
+          param: {
+            dateParam: {
+              createDateFrom: '',
+              createDateTo: ''
+            },
+            gasOrder: {}
+          },
+          size: 10,
+          page: 1
+        }
+      }
+      $excelDownload(params)
     },
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal

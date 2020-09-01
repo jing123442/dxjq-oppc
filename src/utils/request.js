@@ -20,24 +20,38 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     store.getters.debug && console.log('axios.interceptors.response.use...', response)
-    if (response.data.code === 0) {
-      return Promise.resolve(response.data)
-    } else if (response.data.code === 2814) {
-      Message({
-        message: response.data.message,
-        type: 'error',
-        duration: 3 * 1000
-      })
-      store.dispatch('clear').then(() => {
-        location.reload() // 为了重新实例化vue-router对象 避免bug
-      })
+    if (response.config.responseType === 'blob') { // 导出文件
+      if (response.status === 200) {
+        return Promise.resolve(response.data)
+      } else {
+        var message = '文件导出失败！'
+        Message({
+          message: message,
+          type: 'error',
+          duration: 3 * 1000
+        })
+        return Promise.reject(message)
+      }
     } else {
-      Message({
-        message: response.data.message,
-        type: 'error',
-        duration: 3 * 1000
-      })
-      return Promise.reject(response.data.message)
+      if (response.data.code === 0) {
+        return Promise.resolve(response.data)
+      } else if (response.data.code === 2814) {
+        Message({
+          message: response.data.message,
+          type: 'error',
+          duration: 3 * 1000
+        })
+        store.dispatch('clear').then(() => {
+          location.reload() // 为了重新实例化vue-router对象 避免bug
+        })
+      } else {
+        Message({
+          message: response.data.message,
+          type: 'error',
+          duration: 3 * 1000
+        })
+        return Promise.reject(response.data.message)
+      }
     }
   },
   err => {
