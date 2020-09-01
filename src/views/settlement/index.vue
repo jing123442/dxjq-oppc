@@ -53,6 +53,8 @@ export default {
       if (type === 'bill') {
         const gasstationId = row.gasstationId
         this.$router.push(`index/orderList?gasstationId=${gasstationId}`)
+      } else if (type === 'export') {
+        console.log('export')
       }
     },
     onReqParams(type, _this, callback) {
