@@ -218,7 +218,11 @@ export default new Vuex.Store({
     policy_lngPlan_page_status: state => state.policyApp.list.lngPlan,
     policy_lngPlan_column: state => state.policyColumns.lngPlan,
     policy_lngPlan_select_list: state => state.policySelect.lngPlan,
-
+    // LNG计划管理--详情
+    policy_lngPlanDetail_column: state => state.policyColumns.lngPlanDetail,
+    // LNG计划管理--出港录入
+    policy_lngPlanDepartures_column: state => state.policyColumns.lngPlanDepartures,
+    policy_lngPlanDepartures_select_list: state => state.policySelect.lngPlanDepartures,
     // 加气站服务费汇总
     settlement_servicePrice_mode_list: state => state.settlementApp.mode.modeDefault,
     settlement_servicePrice_page_status: state => state.settlementApp.list.servicePrice,

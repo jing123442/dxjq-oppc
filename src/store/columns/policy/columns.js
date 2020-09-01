@@ -1,3 +1,4 @@
+import app from '../../modules/app'
 const columns = {
   state: {
     firmPrice: [
@@ -87,8 +88,36 @@ const columns = {
       { field: 'planTime', name: '期望到站日期' },
       { field: 'createTime', name: '提报时间' },
       { field: 'status', name: '状态', formatter: 'planStatus', search: { type: 'select', obj: 'planStatus', placeholder: '请选择状态' } },
-      // { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'enter', name: '确认' }, { type: 'cancel', name: '取消' }, { type: 'detail', name: '详情' }] }
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: params => lngPlan(params) }
+    ],
+    lngPlanDetail: [
+      { field: 'orgName', nameSpan: 12, name: '加气站企业名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'gasstationName', nameSpan: 12, name: '加气站名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'downloadContactName', nameSpan: 12, name: '卸车联系人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'downloadContactPhone', nameSpan: 12, name: '卸车联系人电话', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'planTime', nameSpan: 12, name: '期望送达时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'createTime', nameSpan: 12, name: '提报时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'businessContactName', nameSpan: 12, name: '平台联系人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'businessContactPhone', nameSpan: 12, name: '平台联系电话', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'lngFromName', nameSpan: 12, name: '液源地', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'uploadWeight', nameSpan: 12, name: '出港量(公斤)', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'downloadWeight', nameSpan: 12, name: '实际到站量(公斤)', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'id', nameSpan: 12, name: '订单编号', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'confirmTime', nameSpan: 12, name: '确认时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'confirmerName', nameSpan: 12, name: '确认操作人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'leaveTime', nameSpan: 12, name: '出港时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'leaverName', nameSpan: 12, name: '出港操作人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'reachTime', nameSpan: 12, name: '签收时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'reacherName', nameSpan: 12, name: '签收操作人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'completeTime', nameSpan: 12, name: '完成时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'completerName', nameSpan: 12, name: '完成操作人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'cancelTime', nameSpan: 12, name: '取消时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+      { field: 'cancelerName', nameSpan: 12, name: '取消操作人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } }
+    ],
+    lngPlanDepartures: [
+      { field: 'uploadUrl', name: '加气站图片', filefield: 'file', serial: 9, show: { type: 'file', props: { url: 'httpUrl', name: 'fileName' }, params: { fileId: 'fileId', fileName: 'fileName', httpUrl: 'reqUrl', isFirst: { type: 'value', value: 1 } }, action: app.state.fileUrl, listType: 'picture', style: 'width: 90%;', placeholder: '请上传加气站图片', node: ['data', 'suc'], rules: [{ required: true, message: '请上传加气站图片！', trigger: 'change' }] } },
+      { field: 'uploadWeight', name: '出港重量(公斤)', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入出港重量' }, rules: [{ required: true, message: '请输入出港重量', trigger: 'blur' }] },
+      { field: 'lngFromName', name: '液源地', formatter: 'source', show: { type: 'select', obj: 'source', placeholder: '请选择' } }
     ],
     carrierManConfig: [
       { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },

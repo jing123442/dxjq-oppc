@@ -2,7 +2,10 @@
   <div class="template-main">
     <em-table-list ref="lngPlan" :tableListName="'lngPlan'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="订单详细信息" :visible.sync="dialogDetailVisible" :width="add_edit_dialog">
-      <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventForm"></nt-form>
+      <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventDetail"></nt-form>
+    </el-dialog>
+    <el-dialog title="出港信息录入" :visible.sync="dialogDeparturesVisible" :width="add_edit_dialog">
+      <nt-form v-if="dialogDeparturesVisible" :rowData="departuresRow" :pageColumn="page_column_departures" :selectList="select_list_departures" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventDetail"></nt-form>
     </el-dialog>
   </div>
 </template>
@@ -30,7 +33,9 @@ export default {
       axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { purchase: {} } }),
       dialogDetailVisible: false,
-      detailRow: {}
+      detailRow: {},
+      dialogDeparturesVisible: false,
+      departuresRow: {}
     }
   },
   computed: {
@@ -38,6 +43,9 @@ export default {
       mode_list: 'policy_lngPlan_mode_list',
       page_status: 'policy_lngPlan_page_status',
       page_column: 'policy_lngPlan_column',
+      page_column_detail: 'policy_lngPlanDetail_column',
+      page_column_departures: 'policy_lngPlanDepartures_column',
+      select_list_departures: 'policy_lngPlanDepartures_select_list',
       select_list: 'policy_lngPlan_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
@@ -78,6 +86,24 @@ export default {
         })
       } else if (type === 'detail') {
         this.detailEvent(row)
+      } else if (type === 'write') {
+        this.departuresEvent(row)
+      }
+    },
+    departuresEvent(row) {
+      this.dialogDeparturesVisible = true
+      this.departuresRow = row
+      this.departuresRow._btn = {
+        iShow: true,
+        list: [{
+          bType: 'primary',
+          label: '确定',
+          icon: ''
+        }, {
+          bType: 'default',
+          label: '取消',
+          icon: ''
+        }]
       }
     },
     detailEvent(row) {
@@ -101,6 +127,11 @@ export default {
           orgType: 0
         }
       })
+    },
+    onListEventDetail(obj) {
+      if (obj.label === '确定') {
+        this.dialogDetailVisible = false
+      }
     }
   }
 }

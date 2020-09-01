@@ -122,3 +122,14 @@ export function utilsDyOrgList() {
     }
   }
 }
+
+export function utilsSource() {
+  return {
+    url: '/strategy/lng_from/list',
+    node: ['data', 'records'],
+    props: {
+      value: 'code',
+      label: 'name'
+    }
+  }
+}
