@@ -3,6 +3,7 @@ const columns = {
     servicePrice: [
       { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
       { field: 'gasstationName', stype: 'mapping', name: '加气站名称', mapping: 'gasstationName', search: { type: 'text', placeholder: '请输入加气站名称' } },
+      { field: 'dataPicker', hide: true, search: { type: 'date-picker', placeholder: '' } },
       { field: 'sumGasQty', name: '加气量汇总(公斤)' },
       { field: 'sumServiceFee', name: '服务费汇总(公斤)' },
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'bill', name: '对账单' }] }

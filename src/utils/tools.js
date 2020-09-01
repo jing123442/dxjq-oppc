@@ -142,3 +142,27 @@ export function createParams() {
     createrName: JSON.parse(localStorage.getItem('wopuser')).user_name
   }
 }
+
+// blob导出excel文件
+export function exportBlobToFiles(content, fileName) {
+  try {
+    const blob = new Blob([content], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+
+    if ('download' in document.createElement('a')) { // 非IE下载
+      const url = window.URL.createObjectURL(blob)
+      const aLink = document.createElement('a')
+
+      aLink.style.display = 'none'
+      aLink.href = url
+      aLink.setAttribute('download', fileName)
+      document.body.appendChild(aLink)
+      aLink.click()
+      document.body.removeChild(aLink) // 下载完成移除元素
+      window.URL.revokeObjectURL(url) // 释放掉blob对象
+    } else { // IE10+下载
+      navigator.msSaveBlob(blob, fileName)
+    }
+  } catch (e) {
+    console.error(e)
+  }
+}

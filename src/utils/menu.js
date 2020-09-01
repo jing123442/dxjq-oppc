@@ -69,6 +69,34 @@ export function menuList() {
       { path: '/marketingManager', name: 'marketingManager', meta: { title: '营销合作经理配置', noCache: false } }
     ]
   }, {
+    path: '/pricing',
+    name: 'pricing',
+    meta: { title: '定价管理', icon: 'el-icon-s-home', noCache: false },
+    children: [
+      {
+        path: '/index',
+        name: 'index',
+        meta: { title: '平台挂牌价', noCache: false },
+        children: [
+          { path: '/strategyGasStationList', name: 'strategyGasStationList', meta: { title: '长城奥扬出港价', noCache: false } },
+          { path: '/strategyGasStationList', name: 'strategyGasStationList', meta: { title: '区域优惠政策', noCache: false } },
+          { path: '/strategyGasStationList', name: 'strategyGasStationList', meta: { title: '运费测算', noCache: false } },
+          { path: '/strategyGasStationList', name: 'strategyGasStationList', meta: { title: '运费单价', noCache: false } },
+          { path: '/strategyGasStationList', name: 'strategyGasStationList', meta: { title: '加气站里程', noCache: false } },
+          { path: '/strategyGasStationList', name: 'strategyGasStationList', meta: { title: '加气站利润', noCache: false } }
+        ]
+      },
+      { path: '/strategyGasStationList', name: 'strategyGasStationList', meta: { title: '发布管理', noCache: false } }
+    ]
+  }, {
+    path: '/market',
+    name: 'market',
+    meta: { title: '营销管理', icon: 'el-icon-s-home', noCache: false },
+    children: [
+      { path: '/index', name: 'index', meta: { title: '优惠返利配置', noCache: false } },
+      { path: '/strategyGasStationList', name: 'strategyGasStationList', meta: { title: '长城奥扬费用', noCache: false } }
+    ]
+  }, {
     path: '/settlement',
     name: 'settlement',
     meta: { title: '结算管理', icon: 'el-icon-s-home', noCache: false },
