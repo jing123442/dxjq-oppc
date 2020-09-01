@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { axiosRequestParams, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -24,7 +24,7 @@ export default {
         name: '加气站对账单'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { dateParam: { createDateFrom: '', createDateTo: '' }, gasOrder: { gasstationId: this.$route.query.gasstationId } } })
+      queryParams: Function
     }
   },
   computed: {
@@ -42,14 +42,31 @@ export default {
   methods: {
     onListEvent(type, row) {},
     onReqParams(type, _this, callback) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
+      let params = {}
+      if (type == 'list') {
+        params = {
+          page: _this.pages.pageNum,
+          size: _this.pages.pageSize,
+          param: {
+            dateParam: {
+              createDateFrom: '',
+              createDateTo: ''
+            },
+            gasOrder: {
+              gasstationId: this.$route.query.gasstationId
+            }
+          }
         }
-      })
+
+        if (isTypeof(_this.finds) === 'object') {
+          for (var [k, v] of Object.entries(_this.finds)) {
+            params.param.gasOrder[k] = v
+          }
+        }
+      }
+
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
     }
   }
 }
