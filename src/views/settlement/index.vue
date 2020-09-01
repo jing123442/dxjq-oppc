@@ -65,7 +65,7 @@ export default {
           gasstationName: '加气站名称',
           sumGasQty: '加气量汇总（公斤）',
           sumAmount: '加气金额汇总（元）',
-          sumServiceFee:'服务费汇总',
+          sumServiceFee: '服务费汇总'
         },
         fileName: '账单',
         interfaceName: '/settle/gas_order/sum_fee',
@@ -75,10 +75,10 @@ export default {
               createDateFrom: '',
               createDateTo: ''
             },
-            gasOrder: {},
+            gasOrder: {}
           },
           size: 10,
-          page: 1,
+          page: 1
         }
       }
       $excelDownload(params)
