@@ -154,6 +154,7 @@ const columns = {
       { field: 'amount', name: '付款金额' },
       { field: 'orderStatus', name: '订单状态', formatter: 'orderStatus', search: { type: 'select', obj: 'orderStatus', placeholder: '请选择订单状态' } },
       { field: 'createDate', name: '创建日期', formatFun: 'formateTData', stype: 'format' },
+      { field: 'a', name: '日期筛选', hide: true, search: { type: 'date', modal: 'daterange' } },
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'detaila', name: '详情' }] }
     ],
     orderManagerDetail: [
