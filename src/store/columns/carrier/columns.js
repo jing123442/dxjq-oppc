@@ -1,10 +1,10 @@
 const columns = {
   state: {
     logistics: [
-      { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+      { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, show: { noShow: 1 } },
       { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', show: { type: 'text', remote: true, obj: 'orgName', style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
-      { field: 'selectedOptions', name: '所在地区', show: { type: 'cascader', formatter: 'address', obj: 'cascaderAddress', sign: '/', noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
-      { field: 'address', name: '地址', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入地址' }, rules: [{ required: true, message: '请输入地址', trigger: 'blur' }] },
+      { field: 'address', name: '地址', show: { type: 'cascader', fieldList: ['address', 'areas'], formatter: 'address', obj: 'cascaderAddress', props: { value: 'label', label: 'label' }, iType: 'string', sign: '', ou: 1, noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'change' }] },
+      { field: 'areas', name: '详细地址', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址！', trigger: 'blur' }] },
       { field: 'mobile', name: '联系电话', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入联系电话' }, rules: [{ required: true, message: '请输入联系电话', trigger: 'blur' }] },
       { field: 'contacts', name: '联系人', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入联系人' }, rules: [{ required: true, message: '请输入联系人', trigger: 'blur' }] },
       { field: 'createDate', name: '创建时间', formatFun: 'formateTData', stype: 'format' },

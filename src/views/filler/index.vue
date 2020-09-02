@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, createParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $gasStationAdd } from '@/service/gasstation'
 import { CodeToText } from 'element-china-area-data'
@@ -22,7 +22,8 @@ export default {
           url: '/user/org/add',
           method: 'post',
           params: {
-            aaaa: 111
+            orgType: 1,
+            ...createParams()
           }
         },
         edit: {

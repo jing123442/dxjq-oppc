@@ -3,10 +3,9 @@ const columns = {
     firmList: [
       { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, show: { noShow: 1 } },
       { field: 'orgName', name: '加气站企业名称', show: { type: 'text', ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请输入加气站企业名称' }, search: { type: 'text', placeholder: '请输入加气站企业名称' }, rules: [{ required: true, message: '请输入加气站企业名称', trigger: 'blur' }] },
-      { field: 'selectedOptions', name: '所在地区', hide: true, show: { type: 'cascader', formatter: 'address', obj: 'cascaderAddress', sign: '/', ou: 1, noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
-      { field: 'address', name: '地址', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入地址' }, rules: [{ required: true, message: '请输入地址', trigger: 'blur' }] },
+      { field: 'address', name: '地址', show: { type: 'cascader', fieldList: ['address', 'areas'], formatter: 'address', obj: 'cascaderAddress', props: { value: 'label', label: 'label' }, iType: 'string', sign: '', ou: 1, noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'change' }] },
+      { field: 'areas', name: '详细地址', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址！', trigger: 'blur' }] },
       { field: 'status', name: '账号状态', formatter: 'status' },
-      { field: 'orgType', name: '', hide: true, show: { noShow: 2 } },
       { field: 'account', name: '银行账户', hide: true, show: { type: 'text', ou: 2, isCompare: true, style: 'width: 90%;', placeholder: '请输入银行账户' }, rules: [{ required: true, message: '请输入银行账户', trigger: 'blur' }] },
       { field: 'bank', name: '开户行', hide: true, show: { type: 'text', ou: 2, isCompare: true, style: 'width: 90%;', placeholder: '请输入开户行' }, rules: [{ required: true, message: '请输入开户行', trigger: 'blur' }] },
       { field: 'taxpayer', name: '纳税人识别号', hide: true, show: { type: 'text', ou: 2, isCompare: true, style: 'width: 90%;', placeholder: '请输入纳税人识别号' }, rules: [{ required: true, message: '请输入纳税人识别号', trigger: 'blur' }] },
@@ -31,7 +30,7 @@ const columns = {
       { field: 'cashierName', name: '收银员' },
       { field: 'selectedOptions', hide: true, name: '所在地区', show: { type: 'cascader', formatter: 'address', iType: 'string', ou: 2, obj: 'cascaderAddress', sign: '/', style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
       { field: 'address', hide: true, name: '详细地址', show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
-      { field: 'pointAddress', name: '经纬度', show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
+      { field: 'pointAddress', name: '经纬度', hide: true, show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 260, list: [{ type: 'bind', name: '绑定收银员' }, { type: 'edit', name: '编辑' }, { type: 'printer', name: '打印机' }] }
     ],
     printList: [

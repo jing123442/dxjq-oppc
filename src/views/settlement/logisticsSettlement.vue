@@ -1,10 +1,29 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'logisticsSettlement'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <div class="stats-data">
+      <div class="data-item">
+        <span class="name">充值总额：</span>
+        <span class="value">{{totalList.sumRechargeAmount}} 元</span>
+      </div>
+      <div class="data-item">
+        <span class="name">加气量总额：</span>
+        <span class="value">{{totalList.totalSumGasQty}} 公斤</span>
+      </div>
+      <div class="data-item">
+        <span class="name">加气总金额：</span>
+        <span class="value">{{totalList.totalSumAmount}} 元</span>
+      </div>
+      <div class="data-item">
+        <span class="name">优惠总金额：</span>
+        <span class="value">{{totalList.totalSumDiscountAmount}} 元</span>
+      </div>
+    </div>
+    <em-table-list ref="logisticsTables" :tableListName="'logisticsSettlement'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { axiosRequestParams, isTypeof, exportBlobToFiles } from '@/utils/tools'
+import { $excelDownload } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -12,6 +31,7 @@ export default {
   data() {
     return {
       isShow: false,
+      totalList: { sumRechargeAmount: 0, totalSumGasQty: 0, totalSumAmount: 0, totalSumDiscountAmount: 0 },
       queryCustURL: {
         list: {
           url: 'settle/gas_order/sum_cost',
@@ -25,7 +45,7 @@ export default {
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'export', name: '导出' }],
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { dateParam: { createDateFrom: '', createDateTo: '' }, gasOrder: {} } })
+      queryParams: Function
     }
   },
   computed: {
@@ -39,18 +59,110 @@ export default {
       response_success: 'response_success'
     })
   },
-  created: function () {},
+  mounted: function () {
+    this.initTotalData()
+  },
   methods: {
-    onListEvent(type, row) {},
-    onReqParams(type, _this, callback) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
+    initTotalData() {
+      const response = this.$refs.logisticsTables.tableListResponse
+
+      if (response) {
+        clearTimeout(this.times)
+        if (response.code === 0) {
+          if (response.data && response.data.totalSum) {
+            this.totalList.sumRechargeAmount = response.data.totalSum.sumRechargeAmount ? response.data.totalSum.sumRechargeAmount : 0
+            this.totalList.totalSumGasQty = response.data.totalSum.totalSumGasQty ? response.data.totalSum.totalSumGasQty : 0
+            this.totalList.totalSumAmount = response.data.totalSum.totalSumAmount ? response.data.totalSum.totalSumAmount : 0
+            this.totalList.totalSumDiscountAmount = response.data.totalSum.totalSumDiscountAmount ? response.data.totalSum.totalSumDiscountAmount : 0
+          }
         }
+      } else {
+        this.times = setTimeout(() => {
+          this.initTotalData()
+        }, 200)
+      }
+    },
+    onListEvent(type, row) {
+      switch (type) {
+        case 'export':
+          this.excelDownload()
+          break
+        case 'recharge':
+          var orgId = row.carrierOrgId
+          this.$router.push(`logisticsSettlement/rechargeList?orgId=${orgId}`)
+          break
+        case 'filling':
+          var carrierOrgId = row.carrierOrgId
+          this.$router.push(`logisticsSettlement/gasOrderList?carrierOrgId=${carrierOrgId}`)
+          break
+        case 'truck':
+          var carrierOrgIdTruck = row.carrierOrgId
+          this.$router.push(`logisticsSettlement/truckList?carrierOrgId=${carrierOrgIdTruck}`)
+          break
+        default:
+          break
+      }
+    },
+    excelDownload() {
+      const finds = this.$refs.logisticsTables.finds
+      const pageList = this.$refs.logisticsTables.pages
+      const params = {
+        datas: {
+          carrierOrgName: '公司名称',
+          sumRechargeAmount: '充值金额汇总(元)',
+          sumGasQty: '加气量(公斤)',
+          sumAmount: '加气金额汇总(元)',
+          sumDiscountAmount: '优惠金额汇总(元)'
+        },
+        fileName: '账单',
+        interfaceName: '/settle/gas_order/sum_cost',
+        pageParam: this.parseSearch(finds, pageList.currentPage, pageList.pageSize)
+      }
+      $excelDownload(params).then(response => {
+        const fileName = '账单' + Date.parse(new Date()) + '.xlsx'
+
+        exportBlobToFiles(response, fileName)
       })
+    },
+    onReqParams(type, _this, callback) {
+      let params = {}
+      if (type == 'list') {
+        params = this.parseSearch(_this.finds, _this.pages.pageNum, _this.pages.pageSize)
+      }
+
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
+    },
+    parseSearch(finds, page, size) {
+      const params = {
+        size: size,
+        page: page,
+        param: {
+          dateParam: {
+            createDateFrom: '',
+            createDateTo: ''
+          },
+          gasOrder: {}
+        }
+      }
+
+      if (isTypeof(finds) === 'object') {
+        for (var [k, v] of Object.entries(finds)) {
+          if (k == 'dataPicker') {
+            if (finds.dataPicker === null) {
+              params.param.dateParam.createDateFrom = ''
+              params.param.dateParam.createDateTo = ''
+            } else {
+              params.param.dateParam.createDateFrom = v[0]
+              params.param.dateParam.createDateTo = v[1]
+            }
+          } else {
+            params.param.gasOrder[k] = v
+          }
+        }
+      }
+
+      return params
     }
   }
 }

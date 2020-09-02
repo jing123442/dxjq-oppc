@@ -78,7 +78,6 @@ export default {
             orgId: ''
           }
         }
-        console.log(_this.finds)
         if (isTypeof(_this.finds) === 'object') {
           for (var [k, v] of Object.entries(_this.finds)) {
             params.param.gasOrder[k] = v

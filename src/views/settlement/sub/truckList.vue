@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="orderListTables" :tableListName="'orderList'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="truckListTable" :tableListName="'truckList'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
@@ -9,20 +9,20 @@ import { $excelDownload } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'orderList',
+  name: 'truckList',
   data() {
     return {
       isShow: false,
       queryCustURL: {
         list: {
-          url: '/settle/gas_order/list_withtime',
+          url: '/settle/gas_order/sum_truck',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
         },
-        name: '加气站对账单'
+        name: '物流公司卡车汇总'
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'export', name: '导出' }],
       axios: axiosRequestParams(this),
@@ -33,7 +33,7 @@ export default {
     ...mapGetters({
       mode_list: 'filler_sevicePrice_mode_list',
       page_status: 'filler_account_page_status',
-      page_column: 'settlement_servicePriceBill_column',
+      page_column: 'settlement_gasPriceTruckList_column',
       select_list: 'filler_printList_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
@@ -45,24 +45,23 @@ export default {
     onListEvent(type, row) {
       if (type === 'export') {
         this.excelDownload()
+      } else if (type === 'bill') {
+        const truckId = row.truckId
+        this.$router.push(`truckList/truckOrderList?truckId=${truckId}`)
       }
     },
     excelDownload() {
-      const finds = this.$refs.orderListTables.finds
-      const pageList = this.$refs.orderListTables.pages
+      const finds = this.$refs.truckListTable.finds
+      const pageList = this.$refs.truckListTable.pages
       const params = {
         datas: {
-          orderId: '订单编号',
-          carrierOrgName: '物流公司名称',
           carNumber: '车牌号',
-          gasQty: '加气量',
-          amount: '加气金额',
-          gasstationFee: '服务费单价(元/公斤)',
-          serviceFee: '服务费',
-          updateDate: '加气时间'
+          sumGasQty: '加气量汇总',
+          sumAmount: '加气金额汇总(元)',
+          sumDiscountAmount: '优惠金额汇总(元)'
         },
         fileName: '订单',
-        interfaceName: '/settle/gas_order/list_withtime',
+        interfaceName: '/settle/gas_order/sum_truck',
         pageParam: this.parseSearch(finds, pageList.currentPage, pageList.pageSize)
       }
       $excelDownload(params).then(response => {
@@ -90,7 +89,7 @@ export default {
             createDateTo: ''
           },
           gasOrder: {
-            gasstationId: this.$route.query.gasstationId
+            carrierOrgId: this.$route.query.carrierOrgId
           }
         }
       }

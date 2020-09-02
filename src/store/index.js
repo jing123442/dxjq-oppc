@@ -235,7 +235,14 @@ export default new Vuex.Store({
     settlement_gasPrice_page_status: state => state.settlementApp.list.gasPrice,
     settlement_gasPrice_column: state => state.settlementColumns.gasPrice,
     settlement_gasPrice_select_list: state => state.settlementSelect.gasPrice,
-
+    // 物流公司加气费汇总--充值账单
+    settlement_gasPriceRechargeList_column: state => state.settlementColumns.gasPriceRechargeList,
+    // 物流公司加气费汇总--加气账单
+    settlement_gasPriceOrderList_column: state => state.settlementColumns.gasPriceOrderList,
+    // 物流公司加气费汇总--卡车汇总
+    settlement_gasPriceTruckList_column: state => state.settlementColumns.gasPriceTruckList,
+    // 物流公司加气费汇总--卡车对账单
+    settlement_gasPriceTruckOrderList_column: state => state.settlementColumns.gasPriceTruckOrderList,
     // 营销合作经理配置---物流公司
     policy_carrierManConfig_mode_list: state => state.policyApp.mode.modeDefault,
     policy_carrierManConfig_page_status: state => state.policyApp.list.marketingManager,

@@ -9,7 +9,6 @@
 <script>
 import { axiosRequestParams, queryDefaultParams, createParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-// import { CodeToText } from 'element-china-area-data'
 
 export default {
   name: 'busorg',
@@ -23,7 +22,6 @@ export default {
           params: {
             orgType: 0,
             ...createParams()
-            // address: CodeToText[selectOptions[0]] + CodeToText[selectOptions[1]] + CodeToText[selectOptions[2]] + areas
           }
         },
         edit: {

@@ -59,7 +59,7 @@ export default {
             self.circleRow = {
               orgId: self.$route.query.orgId,
               orgName: res.data.orgInfo.orgName,
-              truckId: res.data.truckInfo.truckId,
+              truckId: params.truckId,
               truckName: res.data.truckInfo.truckName,
               carNumber: res.data.truckInfo.carNumber,
               amount: '',

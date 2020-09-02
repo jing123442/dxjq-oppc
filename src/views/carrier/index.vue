@@ -12,7 +12,7 @@
  </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, createParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import {
   $carrierTruckAdd
@@ -26,7 +26,11 @@ export default {
       queryCustURL: {
         add: {
           url: '/user/org/add',
-          method: 'post'
+          method: 'post',
+          params: {
+            orgType: 2,
+            ...createParams()
+          }
         },
         edit: {
           url: '/user/org/edit',
@@ -106,39 +110,19 @@ export default {
         }
       })
     },
-    dialogAddCarConfirm(formData) {
-      var self = this
-      this.$refs.formAddCar.validate((valid) => {
-        console.log(valid)
-        if (valid) {
-          console.log('添加成功', this.formAddCar)
-          this.dialogAddCarVisible = false
-          $carrierTruckAdd(this.formAddCar).then((res) => {
-            if (res.code == 0) {
-              self.$message({
-                message: res.message,
-                type: 'success'
-              })
-            } else {
-              self.$message.error(res.message)
-            }
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
     onListEventAddCar(obj) {
       if (obj.label === '确定') {
         const self = this
         this.$refs.addCar.$children[0].validate(valid => {
           if (valid) {
             const params = {
-              creater: JSON.parse(localStorage.getItem('wopuser')).user_id,
-              createrName: JSON.parse(localStorage.getItem('wopuser')).user_name,
-              ...self.addCarRow
+              ...createParams(),
+              ...self.addCarRow,
+              purchaseDate: self.addCarRow.purchaseDate.split(' ')[0],
+              engineNumber: ''
             }
+            delete params._btn
+            console.log(params)
             $carrierTruckAdd(params).then(res => {
               if (res.code === 0) {
                 self.$message.success(res.message)

@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="orderListTables" :tableListName="'orderList'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="gasOrderListTable" :tableListName="'gasOrderList'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
@@ -9,7 +9,7 @@ import { $excelDownload } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'orderList',
+  name: 'gasOrderList',
   data() {
     return {
       isShow: false,
@@ -33,7 +33,7 @@ export default {
     ...mapGetters({
       mode_list: 'filler_sevicePrice_mode_list',
       page_status: 'filler_account_page_status',
-      page_column: 'settlement_servicePriceBill_column',
+      page_column: 'settlement_gasPriceOrderList_column',
       select_list: 'filler_printList_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
@@ -48,18 +48,19 @@ export default {
       }
     },
     excelDownload() {
-      const finds = this.$refs.orderListTables.finds
-      const pageList = this.$refs.orderListTables.pages
+      const finds = this.$refs.gasOrderListTable.finds
+      const pageList = this.$refs.gasOrderListTable.pages
       const params = {
         datas: {
           orderId: '订单编号',
-          carrierOrgName: '物流公司名称',
+          gasstationName: '加气站',
           carNumber: '车牌号',
-          gasQty: '加气量',
-          amount: '加气金额',
-          gasstationFee: '服务费单价(元/公斤)',
-          serviceFee: '服务费',
-          updateDate: '加气时间'
+          driverName: '司机',
+          gasQty: '加气量(公斤)',
+          actualPrice: '单价',
+          amount: '金额',
+          discountAmount: '优惠金额',
+          updateDate: '支付时间'
         },
         fileName: '订单',
         interfaceName: '/settle/gas_order/list_withtime',
@@ -90,7 +91,7 @@ export default {
             createDateTo: ''
           },
           gasOrder: {
-            gasstationId: this.$route.query.gasstationId
+            carrierOrgId: this.$route.query.carrierOrgId
           }
         }
       }

@@ -19,7 +19,7 @@ const app = {
       key: 'size',
       value: 'pageSize'
     }],
-    fileUrl: 'http://10.39.67.47:6015/file/dfs/upload',
+    fileUrl: '/api/message/upload/file',
     fileHeaders: {
       sysId: 33,
       userCode: '987654321'
