@@ -18,3 +18,7 @@ export async function $orderShow (data) {
 export async function $transferOrderAdd (data) {
   return await R({ url: 'business/transfer_order/add', data })
 }
+
+export async function $truckCollect (data) {
+  return await R({ url: 'business/transfer_order/collect', data })
+}

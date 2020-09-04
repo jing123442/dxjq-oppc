@@ -123,6 +123,18 @@ export function utilsDyOrgList() {
   }
 }
 
+export function utilsDriverList() {
+  return {
+    url: '/carrier/driver/list_all',
+    node: ['data', 'records'],
+    params: Function,
+    props: {
+      value: 'userId',
+      label: 'userName'
+    }
+  }
+}
+
 export function utilsSource() {
   return {
     url: '/strategy/lng_from/list',

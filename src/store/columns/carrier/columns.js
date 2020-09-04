@@ -87,10 +87,43 @@ const columns = {
     vehicle: [
       { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
       { field: 'orgName', name: '公司名称', mapping: 'orgName', search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
+      { field: 'truckId', name: '', hide: true },
+      { field: 'truckName', name: '卡车名称', hide: true, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入卡车名称' }, rules: [{ required: true, message: '请输入卡车名称', trigger: 'blur' }] },
       { field: 'carNumber', name: '车牌号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入车牌号' }, search: { type: 'text', placeholder: '请输入车牌号' }, rules: [{ required: true, message: '请输入车牌号', trigger: 'blur' }] },
+      { field: 'frameNumber', name: '车架号', hide: true, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入车架号' }, rules: [{ required: true, message: '请输入车架号', trigger: 'blur' }] },
+      { field: 'trailerNumber', name: '挂车牌号', hide: true, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入挂车牌号' } },
+      { field: 'purchaseDate', name: '购车日期', hide: true, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入购车日期' } },
+      { field: 'color', name: '颜色', hide: true, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入颜色' }, rules: [{ required: true, message: '请输入颜色', trigger: 'blur' }] },
+      { field: 'deadWeight', name: '载重量', hide: true, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入载重量' } },
+      { field: 'capacity', name: '储气罐容量', hide: true, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入储气罐容量' }, rules: [{ required: true, message: '请输入储气罐容量', trigger: 'blur' }] },
+      { field: 'manufacturer', name: '生产厂家', hide: true, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入生产厂家' }, rules: [{ required: true, message: '请输入生产厂家', trigger: 'blur' }] },
       { field: 'status', name: '车辆状态', formatter: 'status', show: { type: 'radio', value: 0, obj: 'status', placeholder: '请选择车辆状态' }, search: { type: 'select', obj: 'status', placeholder: '请选择车辆状态' }, rules: [{ required: true, message: '请选择车辆状态！', trigger: 'blur' }] },
-      { field: 'truckDriverList', name: '当前绑定司机', formatter: '', stype: 'list-tag', porps: { name: 'createrName' } },
+      { field: 'truckDriverList', name: '当前绑定司机', ispush: false, formatter: '', stype: 'list-tag', porps: { name: 'driverName' } },
       { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 240, list: [{ type: 'bind', name: '绑定司机' }, { type: 'edit', name: '编辑' }, { type: 'detail', name: '详情' }, { type: 'money', name: '资金归集' }] }
+    ],
+    vehicle_detail: [
+      { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+      { field: 'truckName', name: '卡车名称', hide: true, show: { type: 'text', ou: 0, isDisabled: true } },
+      { field: 'carNumber', name: '车牌号', show: { type: 'text', ou: 0, isDisabled: true } },
+      { field: 'frameNumber', name: '车架号', hide: true, show: { type: 'text', ou: 0, isDisabled: true } },
+      { field: 'trailerNumber', name: '挂车牌号', hide: true, show: { type: 'text', ou: 0, isDisabled: true } },
+      { field: 'purchaseDate', name: '购车日期', hide: true, show: { type: 'text', ou: 0, isDisabled: true } },
+      { field: 'color', name: '颜色', hide: true, show: { type: 'text', ou: 0, isDisabled: true } },
+      { field: 'deadWeight', name: '载重量', hide: true, show: { type: 'text', ou: 0, isDisabled: true } },
+      { field: 'capacity', name: '储气罐容量', hide: true, show: { type: 'text', ou: 0, isDisabled: true } },
+      { field: 'manufacturer', name: '生产厂家', hide: true, show: { type: 'text', ou: 0, isDisabled: true } },
+      { field: 'driverInfo', name: '', show: { type: 'span', ou: 1, isDisabled: true } },
+      { field: 'balance', name: '账户余额', show: { type: 'span', ou: 2, isDisabled: true } },
+      { field: 'status', name: '车辆状态', formatter: 'status', show: { type: 'radio', obj: 'status', ou: 2, isDisabled: true } }
+    ],
+    vehicle_collect: [
+      { field: 'amount', name: '归集金额', lg: 24, xl: 24, show: { type: 'text', placeholder: '请输入归集金额' }, rules: [{ required: true, message: '请输入归集金额', trigger: 'blur' }] },
+      { field: 'balanceInfo', name: '', lg: 24, xl: 24, show: { type: 'span' } }
+    ],
+    vehicle_bind: [
+      { field: 'orgName', name: '卡车名称', lg: 24, xl: 24, hide: true, show: { type: 'text', ou: 0, isDisabled: true } },
+      { field: 'carNumber', name: '车牌号', lg: 24, xl: 24, show: { type: 'text', ou: 0, isDisabled: true } },
+      { field: 'driverInfo', name: '绑定司机', lg: 24, xl: 24, show: { type: 'select', multiple: true, obj: 'driverList', placeholder: '请选择要绑定的司机' } }
     ],
     truckAccount: [
       { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, ispush: false },

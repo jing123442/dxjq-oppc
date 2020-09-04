@@ -1,4 +1,4 @@
-import { utilsStatus, utilsDyOrgList, utilsAutoAccount, utilsCheck, utilsAccountType, utilsOrderStatus } from '@/utils/select'
+import { utilsStatus, utilsDyOrgList, utilsAutoAccount, utilsCheck, utilsAccountType, utilsOrderStatus, utilsDriverList } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
@@ -14,7 +14,8 @@ const select = {
     },
     vehicle: {
       orgId: utilsDyOrgList(),
-      status: utilsStatus()
+      status: utilsStatus(),
+      driverList: utilsDriverList()
     },
     truckAccount: {},
     rechargeRecord: {

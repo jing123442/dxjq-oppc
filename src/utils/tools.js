@@ -143,6 +143,19 @@ export function createParams() {
   }
 }
 
+// 自定义按钮
+export function custFormBtnList() {
+  const bottonList = {
+    iShow: true,
+    list: [
+      { bType: 'info', icon: '', type: 'cancel', label: '取消' },
+      { bType: 'primary', icon: '', type: 'ok', label: '确认' }
+    ]
+  }
+
+  return bottonList
+}
+
 // blob导出excel文件
 export function exportBlobToFiles(content, fileName) {
   try {

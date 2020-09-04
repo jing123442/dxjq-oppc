@@ -139,6 +139,13 @@ export default new Vuex.Store({
     carrier_vehicle_page_status: state => state.carrierApp.list.vehicle,
     carrier_vehicle_column: state => state.carrierColumns.vehicle,
     carrier_vehicle_select_list: state => state.carrierSelect.vehicle,
+    // 车辆管理---详情
+    carrier_vehicle_detail_mode_list: state => state.carrierApp.mode.vehicle_detail,
+    carrier_vehicle_detail_column: state => state.carrierColumns.vehicle_detail,
+    // 车辆管理---资金归集
+    carrier_vehicle_collect_column: state => state.carrierColumns.vehicle_collect,
+    // 车辆管理---绑定司机
+    carrier_vehicle_bind_column: state => state.carrierColumns.vehicle_bind,
 
     // 车辆资金账户管理
     carrier_truckAccount_mode_list: state => state.carrierApp.mode.modeDefault,
