@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, createParams } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, createParams, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -75,14 +75,10 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { orgType: 0 } })
+
       // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
-        }
-      })
+      callback(params)
     },
     onListEventForm(obj) {
       this.dialogDetailVisible = false

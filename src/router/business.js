@@ -9,8 +9,8 @@ export default [
     redirect: '/business/index',
     meta: { title: '平台公司管理' },
     children: [
-      { path: 'index', component: _import('business/index'), name: 'business', meta: { title: '企业管理', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'account', component: _import('business/account'), name: 'account', meta: { title: '物流用户管理', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'index', component: _import('business/index'), name: 'business', meta: { title: '平台公司', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'account', component: _import('business/account'), name: 'account', meta: { title: '资金账户管理', icon: 'icon-gongnengguanli', noCache: false } },
       {
         path: 'account',
         component: {

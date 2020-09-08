@@ -1,10 +1,10 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'account'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="query_params" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'account'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams } from '@/utils/tools'
+import { axiosRequestParams, isTypeof, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -31,6 +31,7 @@ export default {
         },
         name: '公司资金账户管理 '
       },
+      queryParams: Function,
       axios: axiosRequestParams(this)
     }
   },
@@ -54,14 +55,15 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { orgType: 0 } })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (v !== '') params.param[k] = v
         }
-      })
+      }
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
     }
   }
 }

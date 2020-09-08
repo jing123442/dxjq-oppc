@@ -12,7 +12,7 @@
  </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, createParams } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, createParams, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import {
   $carrierTruckAdd
@@ -101,14 +101,10 @@ export default {
       this.dialogAddCarVisible = true
     },
     onReqParams(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { orgType: 0 } })
+
       // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 2
-        }
-      })
+      callback(params)
     },
     onListEventAddCar(obj) {
       if (obj.label === '确定') {
@@ -122,7 +118,6 @@ export default {
               engineNumber: ''
             }
             delete params._btn
-            console.log(params)
             $carrierTruckAdd(params).then(res => {
               if (res.code === 0) {
                 self.$message.success(res.message)

@@ -32,7 +32,9 @@ export default {
 
       const first = matched[0]
       if (first && first.name !== 'home') {
-        matched = [{ path: '/home', meta: { title: '首页' } }].concat(matched)
+        matched = [].concat(matched)
+      } else {
+        matched = [{ path: '/home/index', meta: { title: '首页' } }]
       }
 
       this.levelList = matched

@@ -10,10 +10,9 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $audit } from '@/service/business'
-// import { formateTData } from '@/utils/filters'
 
 export default {
   name: 'rechargeRecord',
@@ -95,14 +94,10 @@ export default {
       this.dialogDetailVisible = true
     },
     onReqParams(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { orgType: 0 } })
+
       // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
-        }
-      })
+      callback(params)
     },
     onListEventDialogRecharge(obj) {
       const self = this

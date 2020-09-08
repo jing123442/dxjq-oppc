@@ -2,31 +2,29 @@ import { utilsStatus, utilsDyOrgList, utilsAutoAccount, utilsCheck, utilsAccount
 import { regionData } from 'element-china-area-data'
 
 const select = {
-  state: {
-    logistics: {
-      orgId: utilsDyOrgList(),
-      status: utilsStatus(),
-      cascaderAddress: regionData
-    },
-    firmAccount: {
-      orgId: utilsDyOrgList(),
-      autoAccount: utilsAutoAccount()
-    },
-    vehicle: {
-      orgId: utilsDyOrgList(),
-      status: utilsStatus(),
-      driverList: utilsDriverList()
-    },
-    truckAccount: {},
-    rechargeRecord: {
-      utilsCheck: utilsCheck()
-    },
-    inventoryManager: {
-      utilsAccountType: utilsAccountType()
-    },
-    orderManager: {
-      orderStatus: utilsOrderStatus()
-    }
+  logistics: {
+    orgId: utilsDyOrgList(),
+    status: utilsStatus(),
+    cascaderAddress: regionData
+  },
+  firmAccount: {
+    orgId: utilsDyOrgList(),
+    autoAccount: utilsAutoAccount()
+  },
+  vehicle: {
+    orgId: utilsDyOrgList(),
+    status: utilsStatus(),
+    driverList: utilsDriverList()
+  },
+  truckAccount: {},
+  rechargeRecord: {
+    utilsCheck: utilsCheck()
+  },
+  inventoryManager: {
+    utilsAccountType: utilsAccountType()
+  },
+  orderManager: {
+    orderStatus: utilsOrderStatus()
   }
 }
 

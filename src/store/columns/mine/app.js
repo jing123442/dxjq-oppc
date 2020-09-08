@@ -1,5 +1,3 @@
-const app = {
-  state: {}
-}
+const app = {}
 
 export default app

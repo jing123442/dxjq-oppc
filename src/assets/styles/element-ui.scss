@@ -64,3 +64,24 @@ div.el-dialog__body {
 .el-table {
   font-size: $fontsize12;
 }
+
+.el-table .cell {
+  white-space: pre-line;
+  line-height: 32px;
+
+  input {
+    color: #409EFF;
+    font-size: 12px;
+    height: 32px;
+    line-height: 32px;
+    border-color: #f2f2f2;
+  }
+  i {
+    font-size: 15px;
+    padding-left: 10px;
+  }
+  .el-input__suffix .el-input__icon {
+    height: 30px;
+    line-height: 32px;
+  }
+}

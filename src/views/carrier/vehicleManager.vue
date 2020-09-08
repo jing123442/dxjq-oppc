@@ -13,7 +13,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo } from '@/utils/tools'
 import { $carrierTruckInfo, $carrierDriverList, $carrierTruckDriverAdd, $carrierTruckDriverDel } from '@/service/carrier'
 import { $truckCollect } from '@/service/business'
 import { mapGetters } from 'vuex'
@@ -225,14 +225,10 @@ export default {
       this.dialogTruckCollectVisible = false
     },
     onReqParams(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { orgType: 0 } })
+
       // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
-        }
-      })
+      callback(params)
     }
   }
 }

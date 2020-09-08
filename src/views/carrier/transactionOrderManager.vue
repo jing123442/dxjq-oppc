@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, isTypeof } from '@/utils/tools'
+import { axiosRequestParams, isTypeof, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -66,21 +66,11 @@ export default {
     onReqParams(type, _this, callback) {
       let params = {}
       if (type == 'list') {
-        params = {
-          page: _this.pages.pageNum,
-          size: _this.pages.pageSize,
-          param: {
-            dateParam: {
-              createDateFrom: '',
-              createDateTo: ''
-            },
-            gasOrder: {},
-            orgId: ''
-          }
-        }
+        params = Object.assign({}, callbackPagesInfo(_this), { param: { dateParam: { createDateFrom: '', createDateTo: '' }, gasOrder: {}, orgId: '' } })
+
         if (isTypeof(_this.finds) === 'object') {
           for (var [k, v] of Object.entries(_this.finds)) {
-            params.param.gasOrder[k] = v
+            if (v !== '') params.param.gasOrder[k] = v
           }
         }
       }

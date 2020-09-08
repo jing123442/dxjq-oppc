@@ -2,16 +2,23 @@ import { formatDate } from '@/utils/tools'
 
 // 如果要使用filters，该函数必须有
 const vueFiltersInit = (value, formatRules) => {
-  const formats = formatRules.split(' ')
+  if (typeof formatRules === 'string') {
+    const formats = formatRules.split(' ')
 
-  const params = formats.filter((item, index) => index > 0)
-  // eslint-disable-next-line no-eval
-  return eval(formats[0])(value, ...params)
+    const params = formats.filter((item, index) => index > 0)
+    // eslint-disable-next-line no-eval
+    return eval(formats[0])(value, ...params)
+  } else {
+    // eslint-disable-next-line no-eval
+    return eval(formatRules(value))
+  }
 }
 
 const gasstationImage = item => {
   return item
 }
+
+const kiloToTon = (value) => { return Number(value) * 1000 }
 
 const formateTData = (date, fmt) => {
   if (date) {
@@ -57,5 +64,6 @@ export {
   gasstationImage,
   formateTData,
   formatDate,
-  currency
+  currency,
+  kiloToTon
 }

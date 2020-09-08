@@ -2,8 +2,33 @@ import columns from './columns'
 import select from './select'
 import app from './app'
 
-export {
-  columns,
-  select,
-  app
+const state = Object.assign({}, { app: app }, { columns: columns }, { select: select })
+
+const getters = {
+  // 加气站服务费汇总
+  settlement_servicePrice_mode_list: item => item.app.modeDefault,
+  settlement_servicePrice_page_status: item => app.list.servicePrice,
+  settlement_servicePrice_column: item => columns.servicePrice,
+  settlement_servicePrice_select_list: item => item.app.selectDefault,
+  // 加气站服务费汇总--对账单
+  settlement_servicePriceBill_column: item => columns.servicePriceBill,
+  // 物流公司加气费汇总
+  settlement_gasPrice_mode_list: item => item.app.modeDefault,
+  settlement_gasPrice_page_status: item => app.list.gasPrice,
+  settlement_gasPrice_column: item => columns.gasPrice,
+  settlement_gasPrice_select_list: item => item.app.selectDefault,
+  // 物流公司加气费汇总--充值账单
+  settlement_gasPriceRechargeList_column: item => columns.gasPriceRechargeList,
+  // 物流公司加气费汇总--加气账单
+  settlement_gasPriceOrderList_column: item => columns.gasPriceOrderList,
+  // 物流公司加气费汇总--卡车汇总
+  settlement_gasPriceTruckList_column: item => columns.gasPriceTruckList,
+  // 物流公司加气费汇总--卡车对账单
+  settlement_gasPriceTruckOrderList_column: item => columns.gasPriceTruckOrderList
+}
+
+export default {
+  namespaced: true,
+  state,
+  getters
 }

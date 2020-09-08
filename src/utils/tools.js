@@ -143,6 +143,14 @@ export function createParams() {
   }
 }
 
+// 回调函数分页信息
+export function callbackPagesInfo(_this) {
+  return {
+    page: _this.pages.pageNum,
+    size: _this.pages.pageSize
+  }
+}
+
 // 自定义按钮
 export function custFormBtnList() {
   const bottonList = {
@@ -179,3 +187,12 @@ export function exportBlobToFiles(content, fileName) {
     console.error(e)
   }
 }
+/*
+export default {
+  // Vue.js的插件应当有一个公开方法 install。这个方法的第一个参数是 Vue 构造器，第二个参数是一个可选的选项对象。
+  install: function (Vue) {
+    Vue.prototype.exportBlobToFiles = (content, fileName) => exportBlobToFiles(content, fileName)
+    Vue.prototype.custFormBtnList = () => custFormBtnList()
+    Vue.prototype.callbackPagesInfo = (_this) => callbackPagesInfo(_this)
+  }
+} */
