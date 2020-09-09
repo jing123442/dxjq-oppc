@@ -1,7 +1,7 @@
 const columns = {
   op: [
     { field: 'userId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgId', stype: 'mapping', name: '企业名称', mapping: 'orgName', show: { type: 'select', subField: 'orgName', ou: 1, obj: 'orgId', isDisabled: true, style: 'width: 90%;', placeholder: '请选择企业名称' }, search: { type: 'text', field: 'orgName', placeholder: '请选择企业名称' }, rules: [{ required: true, message: '请选择企业名称！', trigger: 'blur' }] },
+    { field: 'orgId', stype: 'mapping', name: '企业名称', mapping: 'orgName', show: { type: 'select', subField: 'orgName', ou: 1, obj: 'orgId', isDisabled: true, style: 'width: 90%;', placeholder: '请选择企业名称' }, search: { type: 'text', field: 'orgName', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请选择企业名称！', trigger: 'blur' }] },
     { field: 'userName', name: '姓名', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入姓名' }, search: { type: 'text', placeholder: '请输入姓名' }, rules: [{ required: true, message: '请输入姓名！', trigger: 'blur' }] },
     { field: 'userCode', name: '登录账户', show: { type: 'text', ou: 1, isCompare: true, style: 'width: 90%;', placeholder: '请输入登录账户' } },
     { field: 'mobile', name: '电话', show: { type: 'text', ou: 1, isCompare: true, style: 'width: 90%;', placeholder: '请输入电话' }, search: { type: 'text', placeholder: '请输入电话' }, rules: [{ required: true, message: '请输入电话！', trigger: 'blur' }] },
@@ -13,7 +13,7 @@ const columns = {
   ],
   carrier: [
     { field: 'userId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgId', stype: 'mapping', name: '企业名称', mapping: 'orgName', show: { type: 'select', subField: 'orgName', ou: 1, obj: 'orgId', isDisabled: true, style: 'width: 90%;', placeholder: '请选择企业名称' }, search: { type: 'text', field: 'orgName', placeholder: '请选择企业名称' }, rules: [{ required: true, message: '请选择企业名称！', trigger: 'blur' }] },
+    { field: 'orgId', stype: 'mapping', name: '企业名称', mapping: 'orgName', show: { type: 'select', subField: 'orgName', ou: 1, obj: 'orgId', isDisabled: true, style: 'width: 90%;', placeholder: '请选择企业名称' }, search: { type: 'text', field: 'orgName', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请选择企业名称！', trigger: 'blur' }] },
     { field: 'userName', name: '姓名', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入姓名' }, search: { type: 'text', placeholder: '请输入姓名' }, rules: [{ required: true, message: '请输入姓名！', trigger: 'blur' }] },
     { field: 'userCode', name: '登录账户', show: { type: 'text', ou: 1, isCompare: true, style: 'width: 90%;', placeholder: '请输入登录账户' } },
     { field: 'mobile', name: '电话', show: { type: 'text', ou: 1, isCompare: true, style: 'width: 90%;', placeholder: '请输入电话' }, search: { type: 'text', placeholder: '请输入电话' }, rules: [{ required: true, message: '请输入电话！', trigger: 'blur' }] },
@@ -25,7 +25,7 @@ const columns = {
   ],
   cashier: [
     { field: 'userId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgId', stype: 'mapping', name: '企业名称', mapping: 'orgName', show: { type: 'select', remote: true, subField: 'orgName', ou: 1, obj: 'orgId', isDisabled: true, style: 'width: 90%;', placeholder: '请选择企业名称' }, search: { type: 'text', field: 'orgName', placeholder: '请选择企业名称' }, rules: [{ required: true, message: '请选择企业名称！', trigger: 'blur' }] },
+    { field: 'orgId', stype: 'mapping', name: '企业名称', mapping: 'orgName', show: { type: 'select', remote: true, subField: 'orgName', ou: 1, obj: 'orgId', isDisabled: true, style: 'width: 90%;', placeholder: '请选择企业名称' }, search: { type: 'text', field: 'orgName', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请选择企业名称！', trigger: 'blur' }] },
     { field: 'userName', name: '姓名', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入姓名' }, search: { type: 'text', placeholder: '请输入姓名' }, rules: [{ required: true, message: '请输入姓名！', trigger: 'blur' }] },
     { field: 'userCode', name: '登录账户', show: { type: 'text', ou: 1, isCompare: true, style: 'width: 90%;', placeholder: '请输入登录账户' } },
     { field: 'mobile', name: '电话', show: { type: 'text', ou: 1, isCompare: true, style: 'width: 90%;', placeholder: '请输入电话' }, search: { type: 'text', placeholder: '请输入电话' }, rules: [{ required: true, message: '请输入电话！', trigger: 'blur' }] },

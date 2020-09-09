@@ -33,6 +33,9 @@ const getters = {
   price_estimate_column: item => columns.estimate,
   price_estimate_select_list: item => item.app.selectDefault,
 
+  // 运费测算--变更记录
+  price_estimate_log_column: item => columns.estimateLog,
+
   // 运费价格
   price_freight_mode_list: item => item.app.modeDefault,
   price_freight_page_status: item => app.list.freight,

@@ -103,6 +103,7 @@ export default {
         row.balance = data.balance == null ? '未绑定账户' : data.balance
         row.driverInfo = truckInfo.join(' | ')
         this.detailRow = row
+        this.detailRow._btn = []
         this.dialogTruckDetailVisible = true
       })
     },
@@ -165,8 +166,10 @@ export default {
 
           this.truckBindDriverDel(params)
         })
+
+        this.$message.success('成功')
       }
-      this.$message.success('成功')
+
       this.dialogTruckBindVisible = false
     },
     truckBindDriverAdd(params) {

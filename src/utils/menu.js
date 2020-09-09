@@ -36,12 +36,18 @@ export function menuList() {
     name: 'filler',
     meta: { title: '加气站管理', icon: 'el-icon-s-home', noCache: false },
     children: [
+      { path: '/index', name: 'index', meta: { title: '加气站列表', noCache: false } },
+      { path: '/lngStationsList', name: 'lngStationsList', meta: { title: '加气站信息维护', noCache: false } },
+      { path: '/lngStationAccountManager', name: 'lngStationAccountManager', meta: { title: '加气站资金账户管理', noCache: false } },
+      { path: '/lngServiceFeeSetting', name: 'lngServiceFeeSetting', meta: { title: '加气站挂牌价查询', noCache: false } }
+    ]
+    /* children: [
       { path: '/index', name: 'index', meta: { title: '加气站企业列表', noCache: false } },
       { path: '/lngStationsList', name: 'lngStationsList', meta: { title: '加气站列表', noCache: false } },
       { path: '/lngStationAccountManager', name: 'lngStationAccountManager', meta: { title: '加气站资金账户管理', noCache: false } },
       { path: '/lngServiceFeeSetting', name: 'lngServiceFeeSetting', meta: { title: '服务费设置', noCache: false } },
       { path: '/lngUpdatePrice', name: 'lngUpdatePrice', meta: { title: '气价维护', noCache: false } }
-    ]
+    ] */
   }, {
     path: '/carrier',
     name: 'carrier',

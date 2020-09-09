@@ -123,6 +123,26 @@ export function utilsDyOrgList() {
   }
 }
 
+export function utilsUserList() {
+  return {
+    url: 'user/user/list',
+    node: ['data', 'records'],
+    params: {
+      page: 1,
+      size: 10,
+      param: {
+        status: 0,
+        userType: 0,
+        baseRole: 7
+      }
+    },
+    props: {
+      value: 'userId',
+      label: ['userId', 'userName', 'mobile']
+    }
+  }
+}
+
 export function utilsDriverList() {
   return {
     url: '/carrier/driver/list_all',
@@ -137,7 +157,7 @@ export function utilsDriverList() {
 
 export function utilsSource() {
   return {
-    url: '/strategy/lng_from/list',
+    url: 'strategy/lng_from/list',
     node: ['data', 'records'],
     props: {
       value: 'code',

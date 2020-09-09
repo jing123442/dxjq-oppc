@@ -111,29 +111,33 @@ const columns = {
     { field: 'completeTime', nameSpan: 12, name: '完成时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
     { field: 'completerName', nameSpan: 12, name: '完成操作人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
     { field: 'cancelTime', nameSpan: 12, name: '取消时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'cancelerName', nameSpan: 12, name: '取消操作人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } }
+    { field: 'cancelerName', nameSpan: 12, name: '取消操作人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+    { field: 'uploadUrl', nameSpan: 12, name: '出港重量图片', show: { type: 'file', isDialog: true, isDisabled: true, style: 'width: 90%;' } },
+    { field: 'downloadUrl', nameSpan: 12, name: '到站重量图片', show: { type: 'file', isDialog: true, isDisabled: true, style: 'width: 90%;' } }
   ],
   lngPlanDepartures: [
-    { field: 'uploadUrl', name: '加气站图片', filefield: 'file', serial: 9, show: { type: 'file', props: { url: 'httpUrl', name: 'fileName' }, params: { fileId: 'fileId', fileName: 'fileName', httpUrl: 'reqUrl', isFirst: { type: 'value', value: 1 } }, action: app.state.fileUrl, listType: 'picture', style: 'width: 90%;', placeholder: '请上传加气站图片', node: ['data', 'suc'], rules: [{ required: true, message: '请上传加气站图片！', trigger: 'change' }] } },
-    { field: 'uploadWeight', name: '出港重量(公斤)', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入出港重量' }, rules: [{ required: true, message: '请输入出港重量', trigger: 'blur' }] },
-    { field: 'lngFromName', name: '液源地', formatter: 'source', show: { type: 'select', obj: 'source', placeholder: '请选择' } }
+    { field: 'uploadUrl', name: '加气站图片', filefield: 'file', serial: 9, show: { type: 'file', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', placeholder: '请上传加气站图片', node: [], rules: [{ required: true, message: '请上传加气站图片！', trigger: 'change' }] } },
+    { field: 'uploadWeight', name: '出港重量(公斤)', nameSpan: 12, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入出港重量' }, rules: [{ required: true, message: '请输入出港重量', trigger: 'blur' }] },
+    { field: 'lngFromCode', name: '液源地', nameSpan: 12, formatter: 'source', show: { type: 'select', subField: 'lngFromName', obj: 'source', style: 'width: 90%;', placeholder: '请选择' } }
+  ],
+  lngPlanComplete: [
+    { field: 'downloadUrl', name: '加气站图片', filefield: 'file', serial: 9, show: { type: 'file', isDialog: true, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, isDisabled: true, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', placeholder: '请上传加气站图片', node: [], rules: [{ required: true, message: '请上传加气站图片！', trigger: 'change' }] } },
+    { field: 'downloadWeight', name: '到站重量(公斤)', nameSpan: 12, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入出港重量' }, rules: [{ required: true, message: '请输入出港重量', trigger: 'blur' }] }
   ],
   carrierManConfig: [
-    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgName', stype: 'mapping', name: '物流公司名称', mapping: 'orgName', search: { type: 'text', placeholder: '请输入物流公司名称' }, show: { type: 'text', isDisabled: true, remote: true, subField: 'orgName', obj: 'orgId', style: 'width: 90%;', placeholder: '请输入物流公司名称' }, rules: [{ required: true, message: '请输入物流公司名称', trigger: 'blur' }] },
-    { field: 'managerName', name: '营销合作经理姓名', search: { type: 'text', placeholder: '请输入营销合作经理姓名' } },
-    { field: 'managerPhone', name: '营销合作经理电话' },
-    { field: '', name: '营销合作经理', hide: true, show: { type: 'select', value: 0, obj: '', placeholder: '请选择' } },
-    { field: 'operateDate', name: '操作时间', stype: 'format', formatFun: 'formateTData' },
+    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', hide: true, width: 50 },
+    { field: 'orgName', name: '物流公司名称', nameSpan: 10, fixed: 'left', ispush: false, search: { type: 'text', placeholder: '请输入物流公司名称' }, show: { type: 'text', isDisabled: true, style: 'width: 90%;', placeholder: '请输入物流公司名称' } },
+    { field: 'managerInfo', name: '营销合作经理', stype: 'mapping', mapping: 'managerName', nameSpan: 10, show: { type: 'select', obj: 'userList', mulField: { managerId: 0, managerName: 1, managerPhone: 2 }, iType: 'string', placeholder: '请选择' }, search: { type: 'text', placeholder: '请输入营销合作经理' } },
+    { field: 'managerPhone', name: '营销合作经理电话', ispush: false },
+    { field: 'operateDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'edit', name: '配置合作经理' }] }
   ],
   gasstationConfig: [
-    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'gasstationName', stype: 'mapping', name: '加气站名称', mapping: 'gasstationName', search: { type: 'text', placeholder: '请输入加气站名称' }, show: { type: 'text', isDisabled: true, remote: true, subField: 'orgName', obj: 'orgId', style: 'width: 90%;', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
-    { field: 'managerName', name: '营销合作经理姓名', search: { type: 'text', placeholder: '请输入营销合作经理姓名' } },
-    { field: 'managerPhone', name: '营销合作经理电话' },
-    { field: '', name: '营销合作经理', hide: true, show: { type: 'select', value: 0, obj: '', placeholder: '请选择' } },
-    { field: 'operateDate', name: '操作时间', stype: 'format', formatFun: 'formateTData' },
+    { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+    { field: 'gasstationName', nameSpan: 10, name: '加气站名称', ispush: false, search: { type: 'text', placeholder: '请输入加气站名称' }, show: { type: 'text', isDisabled: true, style: 'width: 90%;', placeholder: '请输入加气站名称' } },
+    { field: 'managerInfo', name: '营销合作经理', stype: 'mapping', mapping: 'managerName', nameSpan: 10, show: { type: 'select', obj: 'userList', mulField: { managerId: 0, managerName: 1, managerPhone: 2 }, iType: 'string', placeholder: '请选择' }, search: { type: 'text', placeholder: '请输入营销合作经理' } },
+    { field: 'managerPhone', name: '营销合作经理电话', ispush: false },
+    { field: 'operateDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'edit', name: '配置合作经理' }] }
   ]
 }
@@ -148,7 +152,7 @@ const lngPlan = (params) => {
   if (status === 2) {
     list.unshift({ type: 'write', name: '录入磅单' })
   } else if (status === 1 || status === 4) {
-    list.unshift({ type: 'enter', name: '确认' })
+    list.unshift({ type: (status == 1 ? 'enter' : 'complete'), name: '确认' })
   }
   return list
 }

@@ -43,3 +43,15 @@ export async function $configAreaBenefit (data) {
 export async function $configAreaEditBenefit (data) {
   return await R({ url: 'strategy/area_benefit/update', data })
 }
+
+export async function $configGasFreight (data) {
+  return await R({ url: 'strategy/freight_config/set_freight', data })
+}
+
+export async function $purchaseLeave(data) {
+  return await R({ url: 'strategy/purchase/leave', data })
+}
+
+export async function $purchaseComplete(data) {
+  return await R({ url: 'strategy/purchase/complete', data })
+}

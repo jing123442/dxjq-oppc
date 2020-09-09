@@ -5,14 +5,17 @@
       <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventDetail"></nt-form>
     </el-dialog>
     <el-dialog title="出港信息录入" :visible.sync="dialogDeparturesVisible" :width="add_edit_dialog">
-      <nt-form v-if="dialogDeparturesVisible" :rowData="departuresRow" :pageColumn="page_column_departures" :selectList="select_list_departures" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventDetail"></nt-form>
+      <nt-form v-if="dialogDeparturesVisible" ref="departures" :formRef="'departuresForm'" :rowData="departuresRow" :pageColumn="page_column_departures" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventDetail"></nt-form>
+    </el-dialog>
+    <el-dialog title="确认信息" :visible.sync="dialogCompleteVisible" :width="add_edit_dialog">
+      <nt-form v-if="dialogCompleteVisible" ref="complete" :formRef="'completeForm'" :rowData="completeRow" :pageColumn="page_column_complete" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventComplete"></nt-form>
     </el-dialog>
   </div>
 </template>
 <script>
 import { axiosRequestParams, queryDefaultParams, messageBox } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $orderConfirm, $orderCancel } from '@/service/strategy'
+import { $orderConfirm, $orderCancel, $purchaseLeave, $purchaseComplete } from '@/service/strategy'
 
 export default {
   name: 'lngPlan',
@@ -35,7 +38,9 @@ export default {
       dialogDetailVisible: false,
       detailRow: {},
       dialogDeparturesVisible: false,
-      departuresRow: {}
+      departuresRow: {},
+      dialogCompleteVisible: false,
+      completeRow: {}
     }
   },
   computed: {
@@ -45,6 +50,7 @@ export default {
       page_column: 'policy_lngPlan_column',
       page_column_detail: 'policy_lngPlanDetail_column',
       page_column_departures: 'policy_lngPlanDepartures_column',
+      page_column_complete: 'policy_lngPlanComplete_column',
       select_list_departures: 'policy_lngPlanDepartures_select_list',
       select_list: 'policy_lngPlan_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
@@ -55,6 +61,7 @@ export default {
   mounted: function () { },
   methods: {
     onListEvent(type, row) {
+      console.log(type)
       const orderId = row.id
       if (type === 'enter') {
         messageBox(this, {
@@ -88,6 +95,8 @@ export default {
         this.detailEvent(row)
       } else if (type === 'write') {
         this.departuresEvent(row)
+      } else if (type === 'complete') {
+        this.completeEvent(row)
       }
     },
     departuresEvent(row) {
@@ -98,10 +107,30 @@ export default {
         list: [{
           bType: 'primary',
           label: '确定',
+          type: 'ok',
           icon: ''
         }, {
           bType: 'default',
           label: '取消',
+          type: 'cancel',
+          icon: ''
+        }]
+      }
+    },
+    completeEvent(row) {
+      this.dialogCompleteVisible = true
+      this.completeRow = row
+      this.completeRow._btn = {
+        iShow: true,
+        list: [{
+          bType: 'primary',
+          label: '确定',
+          type: 'ok',
+          icon: ''
+        }, {
+          bType: 'default',
+          label: '取消',
+          type: 'cancel',
           icon: ''
         }]
       }
@@ -128,10 +157,58 @@ export default {
         }
       })
     },
-    onListEventDetail(obj) {
-      if (obj.label === '确定') {
-        this.dialogDetailVisible = false
+    onListEventDetail(btnObj, row) {
+      if (btnObj.type === 'ok') {
+        this.$refs.departures.$refs.departuresForm.validate((valid) => {
+          if (valid) {
+            const params = {
+              id: row.id,
+              uploadUrl: row.uploadUrl[0].url,
+              uploadWeight: row.uploadWeight,
+              lngFromCode: row.lngFromCode,
+              lngFromName: row.lngFromName
+            }
+
+            $purchaseLeave(params).then(response => {
+              if (response.code == 0) {
+                this.$message.success('成功!')
+              } else {
+                this.$message.error('失败!')
+              }
+
+              this.$refs.lngPlan.initDataList()
+            })
+          } else {
+            console.log('error submit!!')
+          }
+        })
       }
+      this.dialogDeparturesVisible = false
+    },
+    onListEventComplete(btnObj, row) {
+      if (btnObj.type === 'ok') {
+        this.$refs.complete.$refs.completeForm.validate((valid) => {
+          if (valid) {
+            const params = {
+              id: row.id,
+              downloadWeight: row.downloadWeight
+            }
+
+            $purchaseComplete(params).then(response => {
+              if (response.code == 0) {
+                this.$message.success('成功!')
+              } else {
+                this.$message.error('失败!')
+              }
+
+              this.$refs.lngPlan.initDataList()
+            })
+          } else {
+            console.log('error submit!!')
+          }
+        })
+      }
+      this.dialogCompleteVisible = false
     }
   }
 }

@@ -1,3 +1,5 @@
+import { getLocalStorage } from '@/utils/storage'
+
 const app = {
   state: {
     debug: true,
@@ -19,16 +21,16 @@ const app = {
       key: 'size',
       value: 'pageSize'
     }],
-    fileUrl: '/api/message/upload/file',
+    fileUrl: process.env.VUE_APP_BASE_URL + '/message/upload/file',
     fileHeaders: {
-      sysId: 33,
-      userCode: '987654321'
+      Authorization: 'Bearer ' + getLocalStorage('woptoken'),
+      Identifier: getLocalStorage('wopidntf')
     },
     fileSuccess: {
       key: 'code',
-      value: 200,
+      value: 0,
       message: 'message',
-      filename: 'reqUrl'
+      filename: 'data'
     },
     // 返回成功字段和值
     responseSuccess: {

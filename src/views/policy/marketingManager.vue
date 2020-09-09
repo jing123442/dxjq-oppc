@@ -22,6 +22,10 @@ export default {
       isShow: false,
       carrierConfig: {
         queryCustURL: {
+          edit: {
+            url: 'strategy/carrier/configure_manager',
+            method: 'post'
+          },
           list: {
             url: 'strategy/carrier/list',
             method: 'post',
@@ -35,6 +39,10 @@ export default {
       },
       gasstationConfig: {
         queryCustURL: {
+          edit: {
+            url: 'strategy/gasstation/configure_manager',
+            method: 'post'
+          },
           list: {
             url: 'strategy/gasstation/list',
             method: 'post',

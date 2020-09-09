@@ -33,14 +33,21 @@ const columns = {
     { field: 'info', name: '', lg: 24, xl: 24, show: { type: 'span', value: '确认要删除该记录！' } }
   ],
   estimate: [
-    { field: 'operatorName', name: '加气站', fixed: 'left' },
-    { field: 'operatorName', name: '加气站地址' },
-    { field: 'operatorDate', name: '配置运费(元/吨)' },
-    { field: 'operatorDate', name: '计算运费(元/吨)' },
-    { field: 'operatorDate', name: '距液源地里程(公里)' },
-    { field: 'operatorDate', name: '操作人' },
-    { field: 'operatorDate', name: '操作时间' },
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
+    { field: 'address', name: '加气站地址', ispush: false },
+    { field: 'lngFromId', name: '', hide: true },
+    { field: 'freight', name: '配置运费(元/吨)', nameSpan: 20, show: { type: 'text' }, rules: [{ required: true, message: '请输入配置运费', trigger: 'blur' }] },
+    { field: 'calFreight', name: '计算运费(元/吨)', ispush: false },
+    { field: 'mileage', name: '距液源地里程(公里)', ispush: false },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 140, fixed: 'right', list: [{ type: 'config', name: '配置' }, { type: 'change', name: '变更记录' }] }
+  ],
+  estimateLog: [
+    { field: 'operatorDate', name: '操作人', fixed: 'left' },
+    { field: 'operatorDate', name: '操作时间' },
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName' },
+    { field: 'freight', name: '配置运费(元/吨)' },
+    { field: 'calFreight', name: '计算运费(元/吨)' },
+    { field: 'mileage', name: '距液源地里程(公里)' }
   ],
   freight: [
     { field: 'beginRange', stype: 'fields', fieldList: ['beginRange', 'endRange'], sign: ' ≤ X < ', name: '里程区间(公里)', fixed: 'left' },
@@ -55,7 +62,7 @@ const columns = {
   mileage: [
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
     { field: 'address', name: '加气站地址', search: { type: 'text', field: 'keyWord', placeholder: '请输入加气站名称' } },
-    { field: 'mileage', name: '距液源地里程(公里)', show: { type: 'text' } },
+    { field: 'mileage', name: '距液源地里程(公里)', nameSpan: 14, show: { type: 'text' } },
     /* { field: 'operatorDate', name: '操作人' },
     { field: 'operatorDate', name: '操作时间' }, */
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'edit', name: '配置' }, { type: 'change', name: '变更记录' }] }

@@ -39,6 +39,7 @@ const columns = {
   ],
   accountList: [
     { field: 'id', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+    { field: 'orgName', nameSpan: 10, name: '公司名称', search: { type: 'text', placeholder: '请输入公司名称' } },
     { field: 'orderId', nameSpan: 10, name: '单据流水id', search: { type: 'text', placeholder: '请输入单据流水id' } },
     { field: 'changeAmount', nameSpan: 10, name: '变化金额' },
     { field: 'accountBalance', nameSpan: 10, name: '变化后账户金额' },

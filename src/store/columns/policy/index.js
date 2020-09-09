@@ -56,7 +56,8 @@ const getters = {
   policy_lngPlanDetail_column: item => columns.lngPlanDetail,
   // LNG计划管理--出港录入
   policy_lngPlanDepartures_column: item => columns.lngPlanDepartures,
-  policy_lngPlanDepartures_select_list: item => select.lngPlanDepartures,
+  // LNG计划管理--确认到站重量
+  policy_lngPlanComplete_column: item => columns.lngPlanComplete,
 
   // 营销合作经理配置---物流公司
   policy_carrierManConfig_mode_list: item => item.app.modeDefault,
@@ -68,7 +69,7 @@ const getters = {
   policy_gasstationConfig_mode_list: item => item.app.modeDefault,
   policy_gasstationConfig_page_status: item => app.list.marketingManager,
   policy_gasstationConfig_column: item => columns.gasstationConfig,
-  policy_gasstationConfig_select_list: item => item.app.selectDefault
+  policy_gasstationConfig_select_list: item => select.gasstationConfig
 }
 
 export default {
