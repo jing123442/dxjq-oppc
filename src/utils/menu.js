@@ -82,8 +82,9 @@ export function menuList() {
       {
         path: '/price/index',
         name: 'index',
-        meta: { title: '平台挂牌价', noCache: false },
+        meta: { title: '挂牌价管理', noCache: false },
         children: [
+          { path: '/listing', name: 'listing', meta: { title: '平台挂牌价', noCache: false } },
           { path: '/departure', name: 'departure', meta: { title: '长城奥扬出港价', noCache: false } },
           { path: '/preferential', name: 'preferential', meta: { title: '区域优惠政策', noCache: false } },
           { path: '/estimate', name: 'estimate', meta: { title: '运费测算', noCache: false } },

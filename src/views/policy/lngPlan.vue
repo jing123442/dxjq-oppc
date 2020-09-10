@@ -13,7 +13,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, messageBox } from '@/utils/tools'
+import { axiosRequestParams, isTypeof, messageBox, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orderConfirm, $orderCancel, $purchaseLeave, $purchaseComplete } from '@/service/strategy'
 
@@ -34,7 +34,7 @@ export default {
         name: 'LNG计划管理'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { purchase: {} } }),
+      queryParams: Function,
       dialogDetailVisible: false,
       detailRow: {},
       dialogDeparturesVisible: false,
@@ -148,14 +148,15 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { purchase: {} } })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (v !== '') params.param.purchase[k] = v
         }
-      })
+      }
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
     },
     onListEventDetail(btnObj, row) {
       if (btnObj.type === 'ok') {
@@ -170,11 +171,7 @@ export default {
             }
 
             $purchaseLeave(params).then(response => {
-              if (response.code == 0) {
-                this.$message.success('成功!')
-              } else {
-                this.$message.error('失败!')
-              }
+              this.$message.success('成功!')
 
               this.$refs.lngPlan.initDataList()
             })
@@ -195,11 +192,7 @@ export default {
             }
 
             $purchaseComplete(params).then(response => {
-              if (response.code == 0) {
-                this.$message.success('成功!')
-              } else {
-                this.$message.error('失败!')
-              }
+              this.$message.success('成功!')
 
               this.$refs.lngPlan.initDataList()
             })

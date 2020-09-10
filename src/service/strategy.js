@@ -40,6 +40,14 @@ export async function $configAreaBenefit (data) {
   return await R({ url: 'strategy/area_benefit/set_area_benefit_list', data })
 }
 
+export async function $priceRelease (data) {
+  return await R({ url: 'strategy/release_manage/add', data })
+}
+
+export async function $priceReleaseAudit (data) {
+  return await R({ url: 'strategy/release_manage/release_audit', data })
+}
+
 export async function $configAreaEditBenefit (data) {
   return await R({ url: 'strategy/area_benefit/update', data })
 }

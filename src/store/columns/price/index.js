@@ -11,6 +11,12 @@ const getters = {
   price_listing_column: item => columns.listing,
   price_listing_select_list: item => item.app.selectDefault,
 
+  // 平台挂牌价--变更记录
+  price_listing_log_column: item => columns.listingLog,
+
+  // 平台挂牌价--变更记录
+  price_listing_release_column: item => columns.listingRelease,
+
   // 出港价
   price_departure_mode_list: item => item.app.modeDefault,
   price_departure_page_status: item => app.list.departure,
@@ -57,9 +63,12 @@ const getters = {
 
   // 发布管理
   price_release_mode_list: item => item.app.modeDefault,
-  price_release_page_status: item => item.app.listDefault,
+  price_release_page_status: item => app.list.release,
   price_release_column: item => columns.release,
-  price_release_select_list: item => item.app.selectDefault
+  price_release_select_list: item => select.release,
+
+  // 发布管理
+  price_release_log_column: item => columns.releaseLog
 }
 
 export default {

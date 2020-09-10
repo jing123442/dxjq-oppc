@@ -113,11 +113,8 @@ export default {
             }
 
             $configGasFreight(params).then((res) => {
-              if (res.code == 0) {
-                this.$message.success(res.message)
-              } else {
-                this.$message.error(res.message)
-              }
+              this.$message.success(res.message)
+
               this.$refs.tables[0].initDataList()
             })
           } else {

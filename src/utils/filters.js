@@ -18,7 +18,7 @@ const gasstationImage = item => {
   return item
 }
 
-const kiloToTon = (value) => { return Number(value) * 1000 }
+const kiloToTon = (value) => { return value ? Number(value) * 1000 : (value === 0 ? 0 : '') }
 
 const formateTData = (date, fmt) => {
   if (date) {

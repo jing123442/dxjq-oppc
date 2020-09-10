@@ -71,9 +71,9 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
+      row._btn = {}
       if (type === 'addCar') {
         // 添加车辆
-        console.log(row)
         this.addCarEvent(row)
       } else if (type === 'detail') {
         this.dialogDetailVisible = true
