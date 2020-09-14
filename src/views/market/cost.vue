@@ -1,60 +1,69 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'listing'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'cost'" :axios="axios" :buttonsList="buttonsList" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { axiosRequestParams, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'listing',
+  name: 'cost',
   data() {
     return {
-      isShow: false,
+      buttonsList: [{ type: 'primary', icon: '', event: 'edit', name: '设置长城奥扬费用' }],
       queryCustURL: {
+        edit: {
+          url: 'strategy/gway_cost/add',
+          method: 'post',
+          params: {
+            lngFromId: ''
+          },
+          rowType: true
+        },
+        byid: {
+          url: 'strategy/gway_cost/price',
+          method: 'post',
+          parse: ['data']
+        },
         list: {
-          url: 'strategy/carrier/list',
+          url: 'strategy/gway_cost_log/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
         },
-        name: '发布管理'
+        name: '长城奥扬费用'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } })
+      queryParams: Function
     }
   },
   computed: {
     ...mapGetters({
-      mode_list: 'price_listing_mode_list',
-      page_status: 'price_listing_page_status',
-      page_column: 'price_listing_column',
-      select_list: 'price_listing_select_list',
+      mode_list: 'market_cost_mode_list',
+      page_status: 'market_cost_page_status',
+      page_column: 'market_cost_column',
+      select_list: 'market_cost_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
     })
   },
-  created: function () {},
+  created() { },
+  mounted: function () { },
   methods: {
-    onListEvent(type, row) {
-      if (type === 'setting') {
-        const orgId = row.orgId
-        this.$router.push(`index/logisticsPriceConfig?orgId=${orgId}`)
-      }
+    onListEvent(type, row) {},
+    handleClick(tab, event) {
+      this.nextTick = false
+      this.initTableList()
     },
     onReqParams(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this))
+
       // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
-        }
-      })
+      callback(params)
     }
   }
 }

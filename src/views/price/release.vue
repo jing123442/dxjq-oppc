@@ -61,7 +61,7 @@ export default {
   methods: {
     onListEvent(type, row) {
       if (type === 'pass' || type === 'reject') {
-        var message = '请确认是否发布此价格'
+        var message = type === 'pass' ? '请确认是否发布此价格' : '请确认是否驳回此价格'
         this.$confirm(message, '提示', {
           confirmButtonText: '确认',
           cancelButtonText: '取消'

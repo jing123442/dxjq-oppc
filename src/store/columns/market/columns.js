@@ -1,34 +1,31 @@
 const columns = {
-  listing: [
+  rebate: [
+    { field: 'beginRange', stype: 'fields', fieldList: ['beginRange', 'endRange'], sign: ' ≤ X < ', name: '优惠返利区间(吨)', fixed: 'left' },
+    { field: 'rebate', name: '优惠返利金额(分/吨)' }
+  ],
+  rebateLog: [
+    { field: 'operatorName', name: '操作人', fixed: 'left' },
+    { field: 'operatorDate', name: '操作时间' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'search', name: '查看' }] }
+  ],
+  cost: [
+    { field: 'operatorName', name: '操作人', fixed: 'left', ispush: false },
+    { field: 'operatorDate', name: '操作时间', ispush: false },
+    { field: 'amount', name: '长城奥扬费用(元/吨)', ispush: false },
+    { field: 'operation', name: '长城奥扬运营费用', nameSpan: 8, hide: true, show: { type: 'text', style: 'width: 80%', util: ' 元/吨' } },
+    { field: 'platform', name: '长城奥扬平台服务费', nameSpan: 8, hide: true, show: { type: 'text', style: 'width: 80%', util: ' 元/吨' } },
+    { field: 'market', name: '长城奥扬市场开发费用', nameSpan: 8, hide: true, show: { type: 'text', style: 'width: 80%', util: ' 元/吨' } }
+  ],
+  profit: [
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
-    { field: 'address', name: '加气站地址', search: { type: 'text', field: 'keyWord', placeholder: '请输入名称/地址/操作人' } },
-    { field: 'platformPrice', name: '平台挂牌价(元/公斤)' },
-    { field: 'harbourPrice', name: '出港价(元/吨)', stype: 'format', formatFun: 'kiloToTon' },
-    { field: 'benefit', name: '区域优惠(元/吨)', stype: 'format', formatFun: 'kiloToTon' },
-    { field: 'freight', name: '运费(元/吨)', stype: 'format', formatFun: 'kiloToTon' },
+    { field: 'profitQuota', name: '加气站利润限额(元/公斤)' },
     { field: 'profit', name: '加气站利润(元/公斤)' },
-    { field: 'lngFromName', name: '液源地' },
     { field: 'operatorName', name: '操作人' },
     { field: 'operatorDate', name: '操作时间' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 100, fixed: 'right', list: [{ type: 'change', name: '变更记录' }] }
-  ],
-  listingLog: [
-    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
-    { field: 'harbourPrice', name: '出港价(元/吨)', stype: 'format', formatFun: 'kiloToTon' },
-    { field: 'benefit', name: '区域优惠(元/吨)', stype: 'format', formatFun: 'kiloToTon' },
-    { field: 'freight', name: '运费(元/吨)', stype: 'format', formatFun: 'kiloToTon' },
-    { field: 'platformPrice', name: '平台挂牌价(元/公斤)' },
-    { field: 'lngFromName', name: '液源地' },
-    { field: 'operatorName', name: '操作人' },
-    { field: 'operatorDate', name: '操作时间' }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 140, fixed: 'right', list: [{ type: 'config', name: '配置' }, { type: 'change', name: '变更记录' }] }
   ],
   listingRelease: [
     { field: 'releaseTime', name: '发布时间', nameSpan: 7, show: { type: 'date-picker', model: 'date' }, rules: [{ required: true, message: '请选择发布时间', trigger: 'blur' }] }
-  ],
-  departure: [
-    { field: 'operatorName', name: '操作人', fixed: 'left', ispush: false },
-    { field: 'operatorDate', name: '操作时间', ispush: false },
-    { field: 'harbourPrice', name: '长城奥扬出港价(元/吨)', nameSpan: 8, stype: 'format', formatFun: 'kiloToTon', show: { type: 'text' } }
   ],
   preferential: [
     { field: 'areaList', name: '地区(省市)', fixed: 'left', stype: 'fields', fieldList: ['province', 'city'], show: { type: 'cascader', obj: 'addressList', mulField: { province: 0, city: 1 }, props: { label: 'label', value: 'label', multiple: true } }, search: { type: 'text', field: 'keyWord', placeholder: '请选择地区(省市)' } },

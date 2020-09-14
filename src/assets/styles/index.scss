@@ -65,6 +65,26 @@ a:hover {
 
   .scroll-container, .template-main {
     background-color: $appMainBgColor;
+
+    .container-table-list {
+      padding: 0 15px 15px;
+      border-radius: 5px;
+      margin-bottom: 25px;
+      background-color: $appConBgColor;
+
+      .btn-list-border {
+        margin: 0 -15px 15px !important;
+        border-bottom: 1px solid $appConLineBgColor;
+
+        .btn-list-left {
+          text-align: left;
+          .title {
+            color: #409EFF;
+            font-size: 14px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -210,7 +230,7 @@ div.el-dialog__body {
 
 /**/
 .template-main {
-  padding: 10px;
+  padding: 15px;
 }
 
 /*按钮最下面*/
@@ -248,9 +268,10 @@ div.el-dialog__body {
 }
 
 .demo-form-inline {
-  padding: 20px 20px 0;
-  margin-bottom: 20px;
-  background: #f4f4f5;
+  padding: 15px 15px 0;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  background-color: $appConBgColor;
 }
 
 /*header*/

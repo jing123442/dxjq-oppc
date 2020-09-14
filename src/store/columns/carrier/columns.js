@@ -29,24 +29,24 @@ const columns = {
     { field: 'manufacturer', name: '生产厂家', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入生产厂家' }, rules: [{ required: true, message: '请输入生产厂家', trigger: 'blur' }] }
   ],
   logisticsDetail: [
-    { field: 'orgName', nameSpan: 10, name: '公司名称', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
-    { field: 'contacts', nameSpan: 10, name: '联系人', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
-    { field: 'mobile', nameSpan: 10, name: '联系电话', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
-    { field: 'address', nameSpan: 10, name: '地址', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
-    { field: 'email', nameSpan: 10, name: '邮箱', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
-    { field: 'legalperson', nameSpan: 10, name: '法人姓名', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
-    { field: 'idCard', nameSpan: 10, name: '法人身份证号码', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
-    { field: 'bank', nameSpan: 10, name: '开户行', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
-    { field: 'account', nameSpan: 10, name: '银行账户', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
-    { field: 'taxpayer', nameSpan: 10, name: '纳税人识别号', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
-    { field: 'status', nameSpan: 10, name: '账号状态', show: { type: 'select', obj: 'status', style: 'width: 90%;', isDisabled: true } }
+    { field: 'orgName', nameSpan: 5, name: '公司名称', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
+    { field: 'contacts', nameSpan: 5, name: '联系人', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
+    { field: 'mobile', nameSpan: 5, name: '联系电话', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
+    { field: 'address', nameSpan: 5, name: '地址', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
+    { field: 'email', nameSpan: 5, name: '邮箱', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
+    { field: 'legalperson', nameSpan: 5, name: '法人姓名', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
+    { field: 'idCard', nameSpan: 5, name: '法人身份证号码', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
+    { field: 'bank', nameSpan: 5, name: '开户行', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
+    { field: 'account', nameSpan: 5, name: '银行账户', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
+    { field: 'taxpayer', nameSpan: 5, name: '纳税人识别号', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },
+    { field: 'status', nameSpan: 5, name: '账号状态', show: { type: 'select', obj: 'status', style: 'width: 90%;', isDisabled: true } }
   ],
   firmAccount: [
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, ispush: false },
     { field: 'orgName', stype: 'mapping', name: '公司名称', ispush: false, mapping: 'orgName', show: { type: 'text', isDisabled: true, remote: true, subField: 'orgName', obj: 'orgId', style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
     { field: 'accountId', name: '公司账户管理' },
     { field: 'balance', name: '账户余额（元）', ispush: false },
-    { field: 'autoAccount', name: '是否自动圈存', formatter: 'autoAccount', nameSpan: 10, show: { type: 'radio', value: 0, obj: 'autoAccount', placeholder: '请选择是否自动圈存' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
+    { field: 'autoAccount', name: '是否自动圈存', formatter: 'autoAccount', nameSpan: 5, show: { type: 'radio', value: 0, obj: 'autoAccount', placeholder: '请选择是否自动圈存' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
     { field: 'createDate', name: '创建时间', ispush: false, formatFun: 'formateTData', stype: 'format' },
     { field: 'accountPassword', hide: true },
     { field: 'updater', hide: true },
@@ -54,14 +54,14 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'recharge', name: '充值' }, { type: 'load', name: '圈存' }, { type: 'accState', name: '账户流水' }, { type: 'edit', name: '编辑' }] }
   ],
   firmAccountList: [
-    { field: 'id', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgName', nameSpan: 10, name: '公司名称' },
-    { field: 'orderId', nameSpan: 10, name: '单据流水id', search: { type: 'text', placeholder: '请输入单据流水id' } },
-    { field: 'changeAmount', nameSpan: 10, name: '变化金额' },
-    { field: 'accountBalance', nameSpan: 10, name: '变化后账户金额' },
-    { field: 'createrName', nameSpan: 10, name: '创建人' },
-    { field: 'createDate', nameSpan: 10, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
-    { field: 'note', nameSpan: 10, name: '摘要' }
+    { field: 'id', nameSpan: 5, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+    { field: 'orgName', nameSpan: 5, name: '公司名称' },
+    { field: 'orderId', nameSpan: 5, name: '单据流水id', search: { type: 'text', placeholder: '请输入单据流水id' } },
+    { field: 'changeAmount', nameSpan: 5, name: '变化金额' },
+    { field: 'accountBalance', nameSpan: 5, name: '变化后账户金额' },
+    { field: 'createrName', nameSpan: 5, name: '创建人' },
+    { field: 'createDate', nameSpan: 5, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
+    { field: 'note', nameSpan: 5, name: '摘要' }
   ],
   firmAccountRecharge: [
     { field: 'orgName', name: '公司名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
@@ -71,9 +71,9 @@ const columns = {
     { field: 'note', name: '摘要', show: { type: 'textarea', placeholder: '请输入充值摘要', style: 'width: 90%;' } }
   ],
   vehicleCircle: [
-    { field: 'truckId', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'carNumber', nameSpan: 10, name: '车牌号', search: { type: 'text', placeholder: '请输入车牌号' } },
-    { field: 'balance', nameSpan: 10, name: '车辆账户余额' },
+    { field: 'truckId', nameSpan: 5, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+    { field: 'carNumber', nameSpan: 5, name: '车牌号', search: { type: 'text', placeholder: '请输入车牌号' } },
+    { field: 'balance', nameSpan: 5, name: '车辆账户余额' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'circle', name: '圈存' }] }
   ],
   vehicleCircleEvent: [
@@ -137,11 +137,11 @@ const columns = {
     { field: 'id', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
     { field: 'orgName', name: '公司名称' },
     { field: 'orderId', name: '单据流水id', search: { type: 'text', placeholder: '请输入单据流水id' } },
-    { field: 'changeAmount', nameSpan: 10, name: '变化金额' },
-    { field: 'accountBalance', nameSpan: 10, name: '变化后账户金额' },
-    { field: 'createrName', nameSpan: 10, name: '创建人' },
-    { field: 'createDate', nameSpan: 10, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
-    { field: 'note', nameSpan: 10, name: '摘要' }
+    { field: 'changeAmount', nameSpan: 5, name: '变化金额' },
+    { field: 'accountBalance', nameSpan: 5, name: '变化后账户金额' },
+    { field: 'createrName', nameSpan: 5, name: '创建人' },
+    { field: 'createDate', nameSpan: 5, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
+    { field: 'note', nameSpan: 5, name: '摘要' }
   ],
   rechargeRecord: [
     { field: 'rechargeOrderId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, ispush: false },

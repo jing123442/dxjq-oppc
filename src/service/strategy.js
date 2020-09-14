@@ -63,3 +63,11 @@ export async function $purchaseLeave(data) {
 export async function $purchaseComplete(data) {
   return await R({ url: 'strategy/purchase/complete', data })
 }
+
+export async function $configRebateList(data) {
+  return await R({ url: 'strategy/rebate_config/list', data })
+}
+
+export async function $saveConfigRebateList(data) {
+  return await R({ url: 'strategy/rebate_config/save_or_update_list', data })
+}

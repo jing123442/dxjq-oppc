@@ -76,6 +76,10 @@ div.el-dialog__body {
     -webkit-box-orient: vertical;
     /*伸缩盒子的子元素排列：从上到下*/
   }
+
+  .tables-line-red {
+    background-color: rgba(248, 10, 10, .5);
+  }
 }
 
 .el-table .cell {

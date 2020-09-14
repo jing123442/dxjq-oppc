@@ -64,13 +64,13 @@ const columns = {
     { field: 'note', name: '摘要' }
   ],
   sevicePrice: [
-    { field: 'orgId', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgName', nameSpan: 10, name: '加气站企业名称', search: { type: 'text', placeholder: '请输入加气站企业名称' } },
-    { field: 'gasstationName', nameSpan: 10, name: '加气站名称', search: { type: 'text', placeholder: '请输入加气站名称' }, show: { type: 'text', remote: true, subField: 'gasstationName', isDisabled: true, style: 'width: 90%;', placeholder: '请输入加气站名称' } },
-    { field: 'platformFee', nameSpan: 10, name: '平台服务费（元/公斤）', show: { type: 'text', style: 'width: 90%;', placeholder: '请设置平台服务费' }, rules: [{ required: true, message: '请设置平台服务费', trigger: 'blur' }] },
-    { field: 'gasstationFee', nameSpan: 10, name: '加气站服务费（元/公斤）', show: { type: 'text', style: 'width: 90%;', placeholder: '请设置加气站服务费' }, rules: [{ required: true, message: '请设置加气站服务费', trigger: 'blur' }] },
+    { field: 'orgId', nameSpan: 5, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+    { field: 'orgName', nameSpan: 5, name: '加气站企业名称', search: { type: 'text', placeholder: '请输入加气站企业名称' } },
+    { field: 'gasstationName', nameSpan: 5, name: '加气站名称', search: { type: 'text', placeholder: '请输入加气站名称' }, show: { type: 'text', remote: true, subField: 'gasstationName', isDisabled: true, style: 'width: 90%;', placeholder: '请输入加气站名称' } },
+    { field: 'platformFee', nameSpan: 5, name: '平台服务费（元/公斤）', show: { type: 'text', style: 'width: 90%;', placeholder: '请设置平台服务费' }, rules: [{ required: true, message: '请设置平台服务费', trigger: 'blur' }] },
+    { field: 'gasstationFee', nameSpan: 5, name: '加气站服务费（元/公斤）', show: { type: 'text', style: 'width: 90%;', placeholder: '请设置加气站服务费' }, rules: [{ required: true, message: '请设置加气站服务费', trigger: 'blur' }] },
     { field: 'gasstationId', hide: true, show: { type: 'hide' } },
-    { field: 'useropts', nameSpan: 10, stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 260, list: [{ type: 'edit', name: '修改' }, { type: 'record', name: '变更记录' }] }
+    { field: 'useropts', nameSpan: 5, stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 260, list: [{ type: 'edit', name: '修改' }, { type: 'record', name: '变更记录' }] }
   ],
   serviceChangeRecord: [
     { field: 'orgName', name: '加气站企业名称', fixed: 'left' },
@@ -81,11 +81,11 @@ const columns = {
     { field: 'createrName', name: '操作人' }
   ],
   updatePrice: [
-    { field: 'orgId', nameSpan: 10, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgName', nameSpan: 10, name: '加气站企业名称', stype: 'mapping', mapping: 'orgName', search: { type: 'text', placeholder: '请输入加气站企业名称' } },
-    { field: 'gasstationName', nameSpan: 10, name: '加气站名称', search: { type: 'text', placeholder: '请输入加气站名称' } },
-    { field: 'listPrice', nameSpan: 10, name: '当前挂牌价（元/公斤）' },
-    { field: 'useropts', nameSpan: 10, stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 260, list: [{ type: 'record', name: '变更记录' }] }
+    { field: 'orgId', nameSpan: 5, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
+    { field: 'orgName', nameSpan: 5, name: '加气站企业名称', stype: 'mapping', mapping: 'orgName', search: { type: 'text', placeholder: '请输入加气站企业名称' } },
+    { field: 'gasstationName', nameSpan: 5, name: '加气站名称', search: { type: 'text', placeholder: '请输入加气站名称' } },
+    { field: 'listPrice', nameSpan: 5, name: '当前挂牌价（元/公斤）' },
+    { field: 'useropts', nameSpan: 5, stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 260, list: [{ type: 'record', name: '变更记录' }] }
   ],
   lngUpdatePrice: [
     { field: 'orgName', name: '加气站企业名称', fixed: 'left' },

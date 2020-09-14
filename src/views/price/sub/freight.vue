@@ -2,13 +2,12 @@
   <div class="template-main">
     <el-tabs v-model="active" type="card" @tab-click="handleClick">
       <el-tab-pane v-for="(item, index) in tabsList" :key="index" :label="item.name" :name="index.toString()">
-        <el-row :gutter="10">
+        <el-row :gutter="10" style="margin: 0">
           <el-col :span="12">
             <em-table-list v-if="active == index && nextTick" :tableListName="'freight'" :source="'data'" :sourceData="freightData" :buttonsList="buttonsList" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent"></em-table-list>
           </el-col>
-          <el-col :span="12" >
-            <div style="border-left: 5px solid #409EFF;padding-left: 10px;height: 15px;line-height: 15px;margin-top: 25px;">变更记录</div>
-            <em-table-list v-if="active == index && nextTick" :tableListName="'freightLog'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="log_page_status" :page_column="log_page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+          <el-col :span="12" style="background-color: #ffffff;border-radius: 5px;" >
+            <em-table-list v-if="active == index && nextTick" :custTableTitle="'变更记录'" :tableListName="'freightLog'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="log_page_status" :page_column="log_page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
           </el-col>
         </el-row>
       </el-tab-pane>
@@ -154,6 +153,10 @@ export default {
           this.nextTick = true
           this.freightData = response.data || []
 
+          this.freightData.forEach(item => {
+            item.startPrice = 1000 * Number(item.startPrice)
+            item.rate = 1000 * Number(item.rate)
+          })
           if (this.freightData.length > 0) {
             this.freightDialogData = this.freightData
           } else {
