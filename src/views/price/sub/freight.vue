@@ -200,6 +200,7 @@ export default {
       this.freightDialogData.push(this.initDataObject(currBegin, currEnd))
 
       lastData.beginRange = currEnd
+      lastData.endRange = 0
       this.freightDialogData.push(lastData)
     },
     deleteTable(scope) {

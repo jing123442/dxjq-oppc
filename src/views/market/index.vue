@@ -8,7 +8,7 @@
         <em-table-list :custTableTitle="'变更记录'" :tableListName="'rebateLog'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="log_page_status" :page_column="log_page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
       </el-col>
     </el-row>
-    <el-dialog title="配置运费" :visible.sync="dialogConfigRebateVisible" :width="'70%'">
+    <el-dialog title="优惠返利配置" :visible.sync="dialogConfigRebateVisible" :width="'70%'">
       <el-table v-loading="loading" :data="rebateDialogData" stripe style="width:100%;margin-bottom: 20px;" ref="multipleTable" :cell-style="{padding: '5px 0'}" :header-cell-style="{padding: '7px 0',background:'#f6f6f6',color:'#999'}" border>
         <el-table-column :label="'优惠返利区间(吨)'" width="400">
           <template slot-scope="scope">
@@ -178,6 +178,7 @@ export default {
       this.rebateDialogData.push(this.initDataObject(currBegin, currEnd))
 
       lastData.beginRange = currEnd
+      lastData.endRange = 0
       this.rebateDialogData.push(lastData)
     },
     deleteTable(scope) {
