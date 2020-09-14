@@ -24,7 +24,7 @@
             <div style="display: flex" v-else>
               <el-input v-model="scope.row['beginRange']" :disabled="true" :clearable="true" autocomplete="off"></el-input>
               <div class="sign"> {{rangeSign}} </div>
-              <el-input v-model="scope.row['endRange']" :clearable="true" autocomplete="off"></el-input>
+              <el-input v-model="scope.row['endRange']" :clearable="true" @input="updateTable(scope)" autocomplete="off"></el-input>
             </div>
           </template>
         </el-table-column>
@@ -154,8 +154,8 @@ export default {
           this.freightData = response.data || []
 
           this.freightData.forEach(item => {
-            item.startPrice = 1000 * Number(item.startPrice)
-            item.rate = 1000 * Number(item.rate)
+            item.startPrice = 1 * Number(item.startPrice)
+            item.rate = 1 * Number(item.rate)
           })
           if (this.freightData.length > 0) {
             this.freightDialogData = this.freightData
@@ -207,6 +207,11 @@ export default {
       const prevInfo = this.freightDialogData[index - 1]
       this.freightDialogData[index + 1].beginRange = prevInfo.endRange
       this.freightDialogData.splice(index, 1)
+    },
+    updateTable(scope) {
+      var index = scope.$index
+      const prevInfo = this.freightDialogData[index]
+      this.freightDialogData[index + 1].beginRange = prevInfo.endRange
     },
     onReqParams(type, _this, callback) {
       let params = {}

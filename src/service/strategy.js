@@ -71,3 +71,11 @@ export async function $configRebateList(data) {
 export async function $saveConfigRebateList(data) {
   return await R({ url: 'strategy/rebate_config/save_or_update_list', data })
 }
+
+export async function $configGasProfit(data) {
+  return await R({ url: 'strategy/gasstation/edit', data })
+}
+
+export async function $listingPriceAlg(data) {
+  return await R({ url: 'strategy/price_config/add', data })
+}

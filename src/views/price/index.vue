@@ -1,5 +1,5 @@
 <template>
-  <div class="template-main">
+  <div class="template-main" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="正在计算平台挂牌价，请等待...">
     <em-table-list :tableListName="'listing'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" ref="tables" :page_status="page_status" :buttonsList="buttonsList" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog title="发布申请" :visible.sync="dialogReleaseVisible" width="50%">
@@ -12,7 +12,7 @@
 </template>
 <script>
 import { axiosRequestParams, callbackPagesInfo, isTypeof, custFormBtnList, formatDate } from '@/utils/tools'
-import { $priceRelease } from '@/service/strategy'
+import { $priceRelease, $listingPriceAlg } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -24,6 +24,7 @@ export default {
       dialogReleaseVisible: false,
       logRow: [],
       dialogChangeVisible: false,
+      fullscreenLoading: false,
       queryCustURL: {
         list: {
           url: 'strategy/price_config/list',
@@ -46,7 +47,7 @@ export default {
         },
         name: ''
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'release', name: '发布申请' }],
+      buttonsList: [{ type: 'primary', icon: '', event: 'alg', name: '平台挂牌价计算' }, { type: 'primary', icon: '', event: 'release', name: '发布申请' }],
       axios: axiosRequestParams(this),
       queryParams: Function
     }
@@ -68,7 +69,13 @@ export default {
   methods: {
     onListEvent(type, row) {
       row._btn = {}
-      if (type == 'release') {
+      if (type == 'alg') {
+        this.fullscreenLoading = true
+        $listingPriceAlg().then(response => {
+          this.fullscreenLoading = false
+          this.$refs.tables.initDataList()
+        })
+      } else if (type == 'release') {
         row._btn = custFormBtnList()
         this.$set(row, 'releaseTime', new Date())
         this.releaseRow = row

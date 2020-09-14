@@ -20,7 +20,7 @@
             <div style="display: flex" v-else>
               <el-input v-model="scope.row['beginRange']" :disabled="true" :clearable="true" autocomplete="off"></el-input>
               <div class="sign"> {{rangeSign}} </div>
-              <el-input v-model="scope.row['endRange']" :clearable="true" autocomplete="off"></el-input>
+              <el-input v-model="scope.row['endRange']" :clearable="true" @input="updateTable(scope)" autocomplete="off"></el-input>
             </div>
           </template>
         </el-table-column>
@@ -185,6 +185,11 @@ export default {
       const prevInfo = this.rebateDialogData[index - 1]
       this.rebateDialogData[index + 1].beginRange = prevInfo.endRange
       this.rebateDialogData.splice(index, 1)
+    },
+    updateTable(scope) {
+      var index = scope.$index
+      const prevInfo = this.rebateDialogData[index]
+      this.rebateDialogData[index + 1].beginRange = prevInfo.endRange
     },
     onReqParams(type, _this, callback) {
       let params = {}

@@ -98,7 +98,7 @@ export default {
     },
     configInfo(row) {
       this.configRow = Object.assign({}, row)
-      this.configRow.freight = row.freight ? Number(row.freight) * 1000 : 0
+      this.configRow.freight = row.freight ? Number(row.freight) * 1 : 0
       this.configRow._btn = custFormBtnList()
       this.dialogConfigVisible = true
     },

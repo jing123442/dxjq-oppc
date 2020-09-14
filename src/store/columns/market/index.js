@@ -25,7 +25,10 @@ const getters = {
   market_profit_mode_list: item => item.app.modeDefault,
   market_profit_page_status: item => app.list.profit,
   market_profit_column: item => columns.profit,
-  market_profit_select_list: item => item.app.selectDefault
+  market_profit_select_list: item => item.app.selectDefault,
+
+  // 加气站利润---变更记录
+  market_profit_log_column: item => columns.profitLog
 }
 
 export default {

@@ -1,17 +1,17 @@
 <template>
   <div class="template-main">
     <em-table-list ref="tables" :tableListName="'profit'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog title="配置" :visible.sync="dialogConfigVisible" width="50%">
+    <el-dialog title="配置" :visible.sync="dialogConfigVisible" :width="add_edit_dialog">
       <nt-form v-if="dialogConfigVisible" ref="config" :formRef="'configForm'" :rowData="configRow" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventConfig"></nt-form>
     </el-dialog>
     <el-dialog title="变更记录" :visible.sync="dialogChangeVisible" :width="add_edit_dialog">
-      <em-table-list v-if="dialogChangeVisible" :tableListName="'estimateLog'" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
+      <em-table-list v-if="dialogChangeVisible" :tableListName="'profitLog'" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
   </div>
 </template>
 <script>
 import { axiosRequestParams, callbackPagesInfo, custFormBtnList, isTypeof } from '@/utils/tools'
-import { $configGasFreight } from '@/service/strategy'
+import { $configGasProfit } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -24,7 +24,7 @@ export default {
       dialogChangeVisible: false,
       queryCustURL: {
         list: {
-          url: 'strategy/profit_quota_log/list',
+          url: 'strategy/gasstation/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -35,7 +35,7 @@ export default {
       },
       queryLogCustURL: {
         list: {
-          url: 'strategy/freight_config_log/list',
+          url: 'strategy/profit_quota_log/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -74,9 +74,10 @@ export default {
       }
     },
     configInfo(row) {
-      this.configRow = Object.assign({}, row)
-      this.configRow.freight = row.freight ? Number(row.freight) * 1000 : 0
-      this.configRow._btn = custFormBtnList()
+      row.profitQuota = row.profitQuota ? row.profitQuota : 0
+      row.profit = row.profit ? (row.profit > row.profitQuota ? row.profitQuota : row.profit) : (row.profit === 0 ? row.profitQuota : 0)
+      row._btn = custFormBtnList()
+      this.configRow = row
       this.dialogConfigVisible = true
     },
     onListEventConfig(btnObj, row) {
@@ -85,14 +86,14 @@ export default {
           if (valid) {
             const params = {
               gasstationId: row.gasstationId,
-              lngFromId: row.lngFromId,
-              freight: row.freight
+              profitQuota: row.profitQuota,
+              profit: row.profit
             }
 
-            $configGasFreight(params).then((res) => {
+            $configGasProfit(params).then((res) => {
               this.$message.success(res.message)
 
-              this.$refs.tables[0].initDataList()
+              this.$refs.tables.initDataList()
             })
           } else {
             console.log('error submit!!')
@@ -112,11 +113,8 @@ export default {
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
 
-      if (_this.tableListName == 'estimateLog') {
-        params.param.operatorType = 1
+      if (_this.tableListName == 'profitLog') {
         params.param.gasstationId = this.currRow.gasstationId
-      } else {
-        params.param.lngFromId = this.currLngForm.code
       }
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {

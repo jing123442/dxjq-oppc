@@ -101,7 +101,7 @@ export default {
     configEditInfo(row) {
       row._btn = custFormBtnList()
       this.configUpdateRow = Object.assign({}, row)
-      this.configUpdateRow.benefit = row.benefit ? Number(row.benefit) * 1000 : 0
+      this.configUpdateRow.benefit = row.benefit ? Number(row.benefit) * 1 : 0
       this.dialogConfigUpdateVisible = true
     },
     onListEventConfig(btnObj, row) {
