@@ -14,10 +14,10 @@ const getters = {
   filler_addGasStation_mode_list: item => app.mode.addGasStation,
   filler_addGasStation_column: item => columns.addGasStation,
   // 加气站列表
-  filler_gapList_mode_list: item => app.mode.gapList,
-  filler_gapList_page_status: item => app.list.gapList,
-  filler_gapList_column: item => columns.gapList,
-  filler_gapList_select_list: item => select.gapList,
+  filler_info_mode_list: item => app.mode.info,
+  filler_info_page_status: item => app.list.info,
+  filler_info_column: item => columns.info,
+  filler_info_select_list: item => select.info,
   // 加气站列表--打印机列表
   filler_printList_page_status: item => app.list.printList,
   filler_printList_select_list: item => select.printList,
@@ -30,10 +30,12 @@ const getters = {
   // 加气站资金账户管理--账户流水
   filler_accountList_column: item => columns.accountList,
   // 服务费设置
-  filler_sevicePrice_mode_list: item => item.app.modeDefault,
-  filler_sevicePrice_page_status: item => app.list.sevicePrice,
-  filler_sevicePrice_column: item => columns.sevicePrice,
-  filler_sevicePrice_select_list: item => select.sevicePrice,
+  filler_price_mode_list: item => item.app.modeDefault,
+  filler_price_page_status: item => app.list.price,
+  filler_price_column: item => columns.price,
+  filler_price_select_list: item => select.price,
+
+  filler_price_log_column: item => columns.priceLog,
   // 服务费设置--服务费变更记录
   filler_serviceChangeRecord_column: item => columns.serviceChangeRecord,
   // 气价维护

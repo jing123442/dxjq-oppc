@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'lngStationAccountManager'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'fillerAccount'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
@@ -8,7 +8,7 @@ import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'lngStationAccountManager',
+  name: 'fillerAccount',
   data() {
     return {
       isShow: false,
@@ -44,7 +44,7 @@ export default {
       const gasstationId = row.gasstationId
       const accountId = row.accountId
       if (type === 'check') {
-        this.$router.push(`lngStationAccountManager/accountList?gasstationId=${gasstationId}&accountId=${accountId}`)
+        this.$router.push(`fillerAccount/accountList?gasstationId=${gasstationId}&accountId=${accountId}`)
       }
     },
     onReqParams(type, _this, callback) {

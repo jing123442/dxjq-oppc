@@ -8,8 +8,6 @@ const columns = {
     { field: 'freight', name: '运费(元/吨)' },
     { field: 'profit', name: '加气站利润(元/公斤)' },
     { field: 'lngFromName', name: '液源地' },
-    { field: 'operatorName', name: '操作人' },
-    { field: 'operatorDate', name: '操作时间' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 100, fixed: 'right', list: [{ type: 'change', name: '变更记录' }] }
   ],
   listingLog: [

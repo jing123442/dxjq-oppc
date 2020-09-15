@@ -17,9 +17,6 @@
   margin: 0 auto;
   z-index: 3001;
 }
-div.el-dialog__body {
-  margin-top: 5vh;
-}
 .el-date-editor.el-input, .el-date-editor.el-input__inner {
   width: 100%;
 }
@@ -100,5 +97,8 @@ div.el-dialog__body {
   .el-input__suffix .el-input__icon {
     height: 30px;
     line-height: 32px;
+  }
+  .el-link {
+    font-size: 12px;
   }
 }

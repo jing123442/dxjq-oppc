@@ -136,7 +136,6 @@ export default {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
 
       if (_this.tableListName == 'estimateLog') {
-        params.param.operatorType = 1
         params.param.gasstationId = this.currRow.gasstationId
       } else {
         params.param.lngFromId = this.currLngForm.code

@@ -7,7 +7,7 @@ const select = {
     cascaderAddress: regionData,
     status: utilsStatus()
   },
-  gapList: {
+  info: {
     orgId: utilsDyOrgList(),
     status: utilsStatus(),
     cascaderAddress: regionData,
@@ -16,9 +16,7 @@ const select = {
   account: {
     orgId: utilsDyOrgList()
   },
-  sevicePrice: {
-    orgId: utilsDyOrgList()
-  },
+  price: {},
   updatePrice: {
     orgId: utilsDyOrgList()
   },
