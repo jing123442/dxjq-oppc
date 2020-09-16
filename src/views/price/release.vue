@@ -75,7 +75,7 @@ export default {
           })
         }).catch(() => {})
       } else {
-        row._btn = {}
+        this.currRow = row
         this.dialogChangeVisible = true
       }
     },
@@ -83,7 +83,7 @@ export default {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
 
       if (_this.tableListName == 'releaseLog') {
-        params.param.releaseId = 1
+        params.param.releaseId = this.currRow.id
       }
 
       if (isTypeof(_this.finds) === 'object') {

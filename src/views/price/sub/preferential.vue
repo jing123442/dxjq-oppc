@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, custFormBtnList, callbackPagesInfo } from '@/utils/tools'
+import { axiosRequestParams, custFormBtnList, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { $lngFormList, $configAreaBenefit, $configAreaEditBenefit } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
@@ -164,6 +164,11 @@ export default {
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { lngFromId: this.currLngForm.code } })
 
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          params.param[k] = v
+        }
+      }
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     }
