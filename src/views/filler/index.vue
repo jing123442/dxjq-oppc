@@ -31,7 +31,7 @@ export default {
           method: 'post'
         },
         list: {
-          url: 'user/org/list',
+          url: 'strategy/gasstation/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],

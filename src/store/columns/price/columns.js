@@ -17,8 +17,8 @@ const columns = {
     { field: 'freight', name: '运费(元/吨)' },
     { field: 'platformPrice', name: '平台挂牌价(元/公斤)' },
     { field: 'lngFromName', name: '液源地' },
-    { field: 'operatorName', name: '操作人' },
-    { field: 'operatorDate', name: '操作时间' }
+    { field: 'applyName', name: '操作人' },
+    { field: 'applyDate', name: '操作时间' }
   ],
   listingRelease: [
     { field: 'releaseTime', name: '发布时间', nameSpan: 7, show: { type: 'date-picker', model: 'date' }, rules: [{ required: true, message: '请选择发布时间', trigger: 'blur' }] }
@@ -44,7 +44,7 @@ const columns = {
     { field: 'info', name: '', lg: 24, xl: 24, show: { type: 'span', value: '确认要删除该记录！' } }
   ],
   estimate: [
-    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left', search: { type: 'text', field: 'keyWord', placeholder: '请输入加气站' } },
     { field: 'address', name: '加气站地址', ispush: false },
     { field: 'lngFromId', name: '', hide: true },
     { field: 'freight', name: '配置运费(元/吨)', nameSpan: 10, show: { type: 'text' }, rules: [{ required: true, message: '请输入配置运费', trigger: 'blur' }] },

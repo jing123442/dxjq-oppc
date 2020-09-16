@@ -116,7 +116,7 @@ const columns = {
     { field: 'downloadUrl', nameSpan: 6, name: '到站重量图片', show: { type: 'file', isDialog: true, isDisabled: true, style: 'width: 90%;' } }
   ],
   lngPlanDepartures: [
-    { field: 'uploadUrl', name: '加气站图片', filefield: 'file', serial: 9, show: { type: 'file', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', placeholder: '请上传加气站图片', node: [], rules: [{ required: true, message: '请上传加气站图片！', trigger: 'change' }] } },
+    { field: 'uploadUrl', name: '加气站图片', filefield: 'file', serial: 9, show: { type: 'file', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: app.state.fileHost, placeholder: '请上传加气站图片', node: [], rules: [{ required: true, message: '请上传加气站图片！', trigger: 'change' }] } },
     { field: 'uploadWeight', name: '出港重量(公斤)', nameSpan: 6, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入出港重量' }, rules: [{ required: true, message: '请输入出港重量', trigger: 'blur' }] },
     { field: 'lngFromCode', name: '液源地', nameSpan: 6, formatter: 'source', show: { type: 'select', subField: 'lngFromName', obj: 'source', style: 'width: 90%;', placeholder: '请选择' } }
   ],

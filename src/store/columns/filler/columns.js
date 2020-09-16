@@ -1,14 +1,14 @@
 const columns = {
   firmList: [
-    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, show: { noShow: 1 } },
-    { field: 'orgName', name: '企业名称', show: { type: 'text', ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请输入企业名称' }, search: { type: 'text', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, show: { noShow: 1 } },
+    { field: 'gasstationName', name: '企业名称', show: { type: 'text', ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请输入企业名称' }, search: { type: 'text', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
     { field: 'address', name: '地址', show: { type: 'cascader', fieldList: ['address', 'areas'], formatter: 'address', obj: 'cascaderAddress', props: { value: 'label', label: 'label' }, iType: 'string', sign: '', ou: 1, noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'change' }] },
     { field: 'areas', name: '详细地址', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址！', trigger: 'blur' }] },
     { field: 'status', name: '状态', formatter: 'status' },
-    { field: 'status', name: '认证状态', formatter: 'status' },
+    /* { field: 'status', name: '认证状态', formatter: 'status' },
     { field: 'status', name: '账户余额扣款协议', formatter: 'status' },
     { field: 'status', name: '通联云商通合作协议', formatter: 'status' },
-    { field: 'status', name: '绑定验证手机号', formatter: 'status' },
+    { field: 'status', name: '绑定验证手机号', formatter: 'status' }, */
     { field: 'status', name: '创建时间', formatter: 'status' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'gedit', name: '编辑' }, { type: 'detail', name: '详情' }, { type: 'auth', name: '认证' }, { type: 'search', name: '查看收银员' }] }
   ],
@@ -61,25 +61,24 @@ const columns = {
     { field: 'timerPicker', name: '营业时间', show: { type: 'time-picker', ou: 2, range: true, style: 'width: 90%;', placeholder: '' }, rules: [{ required: true, message: '', trigger: 'blur' }] }
   ],
   info: [
-    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgName', stype: 'mapping', name: '加气站名称', mapping: 'orgName', show: { type: 'text', remote: true, ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入加气站企业名称' }, rules: [{ required: true, isDisable: true, message: '请输入加气站企业名称', trigger: 'blur' }] },
+    { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
     { field: 'gasstationName', name: '加气站名称', show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加气站名称' }, search: { type: 'text', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
-    { field: 'listPrice', name: '加气站挂牌价(元/公斤)' },
-    { field: 'listPrice', name: '平台挂牌价(元/公斤)' },
-    { field: 'selectedOptions', hide: true, name: '所在地区', show: { type: 'cascader', iType: 'string', ou: 2, obj: 'cascaderAddress', sign: '/', style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
+    { field: 'listPrice', name: '加气站挂牌价(元/公斤)', ispush: false },
+    { field: 'platformPrice', name: '平台挂牌价(元/公斤)', ispush: false },
+    { field: 'selectedOptions', hide: true, name: '所在地区', show: { type: 'cascader', iType: 'string', ou: 2, mulField: { province: 0, city: 1, region: 2 }, props: { value: 'label', label: 'label' }, obj: 'cascaderAddress', style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
     { field: 'address', hide: true, name: '详细地址', show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
-    { field: 'pointAddress', name: '经纬度', hide: true, show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
+    { field: 'pointAddress', name: '经纬度', hide: true, show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 150, list: [{ type: 'edit', name: '编辑' }, { type: 'printer', name: '打印机' }] }
   ],
   printList: [
     { field: 'id', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, show: { noShow: 1 } },
-    { field: 'printName', name: '打印机名称', show: { type: 'text', parent: 'printer', style: 'width: 90%;', placeholder: '请输入打印机名称' }, rules: [{ required: true, message: '请输入打印机名称', trigger: 'blur' }] },
-    { field: 'machineCode', name: '终端号', show: { type: 'text', parent: 'printer', style: 'width: 90%;', placeholder: '请输入终端号' }, rules: [{ required: true, message: '请输入终端号', trigger: 'blur' }] },
-    { field: 'msign', name: '密钥', show: { type: 'text', parent: 'printer', style: 'width: 90%;', placeholder: '请输入密钥' }, rules: [{ required: true, message: '请输入密钥', trigger: 'blur' }] },
-    { field: 'phone', name: '流量卡号', show: { type: 'text', parent: 'printer', style: 'width: 90%;', placeholder: '请输入流量卡号' }, rules: [{ required: true, message: '请输入流量卡号', trigger: 'blur' }] },
+    { field: 'printName', name: '打印机名称', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入打印机名称' }, rules: [{ required: true, message: '请输入打印机名称', trigger: 'blur' }] },
+    { field: 'machineCode', name: '终端号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入终端号' }, rules: [{ required: true, message: '请输入终端号', trigger: 'blur' }] },
+    { field: 'msign', name: '密钥', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入密钥' }, rules: [{ required: true, message: '请输入密钥', trigger: 'blur' }] },
+    { field: 'phone', name: '流量卡号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入流量卡号' }, rules: [{ required: true, message: '请输入流量卡号', trigger: 'blur' }] },
     { field: 'status', name: '状态', formatter: 'printStatus', show: { noShow: 3 } },
-    { field: 'print', name: '打印小票', show: { type: 'text', parent: 'printer', style: 'width: 90%;', placeholder: '请输入打印小票' }, rules: [{ required: true, message: '请输入打印小票', trigger: 'blur' }] },
-    { field: 'voice', name: '音量', show: { type: 'text', parent: 'printer', style: 'width: 90%;', placeholder: '请输入音量' }, rules: [{ required: true, message: '请输入音量', trigger: 'blur' }] },
+    { field: 'print', name: '打印小票', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入打印小票' }, rules: [{ required: true, message: '请输入打印小票', trigger: 'blur' }] },
+    { field: 'voice', name: '音量', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入音量' }, rules: [{ required: true, message: '请输入音量', trigger: 'blur' }] },
     // { field: 'print', name: '打印小票', formatter: 'status', show: { type: 'radio', value: 0, obj: 'status', placeholder: '请选择打印小票' }, rules: [{ required: true, message: '请选择打印小票！', trigger: 'blur' }] },
     // { field: 'voice', name: '音量', formatter: 'voiceStatus', show: { type: 'radio', value: 0, obj: 'voiceStatus', placeholder: '请选择音量' }, rules: [{ required: true, message: '请选择音量！', trigger: 'blur' }] },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 90, list: [{ type: 'edit', name: '编辑' }] }

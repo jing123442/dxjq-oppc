@@ -162,6 +162,10 @@ export function utilsSource() {
     props: {
       value: 'code',
       label: 'name'
+    },
+    params: {
+      page: 1,
+      size: 10
     }
   }
 }

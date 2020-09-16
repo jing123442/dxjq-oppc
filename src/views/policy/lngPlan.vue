@@ -175,12 +175,15 @@ export default {
 
               this.$refs.lngPlan.initDataList()
             })
+            this.dialogDeparturesVisible = false
           } else {
             console.log('error submit!!')
+            return false
           }
         })
+      } else {
+        this.dialogDeparturesVisible = false
       }
-      this.dialogDeparturesVisible = false
     },
     onListEventComplete(btnObj, row) {
       if (btnObj.type === 'ok') {
@@ -196,12 +199,15 @@ export default {
 
               this.$refs.lngPlan.initDataList()
             })
+            this.dialogCompleteVisible = false
           } else {
             console.log('error submit!!')
+            return false
           }
         })
+      } else {
+        this.dialogCompleteVisible = false
       }
-      this.dialogCompleteVisible = false
     }
   }
 }

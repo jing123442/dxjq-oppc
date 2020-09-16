@@ -11,9 +11,6 @@ const select = {
   },
   gasstationConfig: {
     userList: utilsUserList()
-  },
-  lngPlanDepartures: {
-    source: utilsSource()
   }
 }
 

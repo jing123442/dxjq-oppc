@@ -1,16 +1,21 @@
 import { formatDate } from '@/utils/tools'
 
 // 如果要使用filters，该函数必须有
-const vueFiltersInit = (value, formatRules) => {
+const vueFiltersInit = (value, item, scope) => {
+  if (!item.formatFun) return '暂不支持格式化数据'
+
+  const formatRules = item.formatFun
+
+  // eslint-disable-next-line no-undef
   if (typeof formatRules === 'string') {
     const formats = formatRules.split(' ')
 
     const params = formats.filter((item, index) => index > 0)
     // eslint-disable-next-line no-eval
-    return eval(formats[0])(value, ...params)
+    return eval(formats[0])(value, ...params, scope.row)
   } else {
     // eslint-disable-next-line no-eval
-    return eval(formatRules(value))
+    return eval(formatRules(value, scope.row))
   }
 }
 
@@ -18,7 +23,17 @@ const gasstationImage = item => {
   return item
 }
 
+// 单位转换 * 1000
 const kiloToTon = (value) => { return value ? Number(value) * 1000 : (value === 0 ? 0 : '') }
+
+// value为空，显示其他字段内容
+const formatContent = (value, field, row) => {
+  if (value) {
+    return value
+  } else {
+    return row[field]
+  }
+}
 
 const formateTData = (date, fmt) => {
   if (date) {
@@ -65,5 +80,6 @@ export {
   formateTData,
   formatDate,
   currency,
-  kiloToTon
+  kiloToTon,
+  formatContent
 }

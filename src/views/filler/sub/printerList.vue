@@ -1,7 +1,6 @@
 <template>
   <div class="template-main">
-    <span>加气站名称：{{gasstationName}}</span>
-    <em-table-list :tableListName="'filler'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'printer'" :custTableTitle="'打印机列表-' + gasstationName" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
@@ -9,19 +8,27 @@ import { axiosRequestParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'lngServiceFeeSetting',
+  name: 'printer',
   data() {
     return {
-      gasstationName: '',
+      gasstationName: this.$route.query.gasstationName,
       isShow: false,
       queryCustURL: {
         add: {
           url: '/websocket/printer/add',
-          method: 'post'
+          method: 'post',
+          params: {
+            gasstationId: this.$route.query.gasstationId,
+            gasstationName: this.$route.query.gasstationName
+          }
         },
         edit: {
           url: '/websocket/printer/update',
-          method: 'post'
+          method: 'post',
+          params: {
+            gasstationId: this.$route.query.gasstationId,
+            gasstationName: this.$route.query.gasstationName
+          }
         },
         list: {
           url: 'websocket/printer/list',
@@ -40,7 +47,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      mode_list: 'filler_sevicePrice_mode_list',
+      mode_list: 'filler_price_mode_list',
       page_status: 'filler_printList_page_status',
       page_column: 'filler_printList_column',
       select_list: 'filler_printList_select_list',
@@ -49,9 +56,7 @@ export default {
       response_success: 'response_success'
     })
   },
-  created: function () {
-    this.gasstationName = this.$route.query.gasstationName
-  },
+  created: function () { },
   methods: {
     onListEvent(type, row) {},
     onReqParams(type, _this, callback) {

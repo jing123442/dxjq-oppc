@@ -75,7 +75,7 @@ export default {
     },
     configInfo(row) {
       row.profitQuota = row.profitQuota ? row.profitQuota : 0
-      row.profit = row.profit ? (row.profit > row.profitQuota ? row.profitQuota : row.profit) : (row.profit === 0 ? row.profitQuota : 0)
+      row.profit = row.profit ? (row.profit > row.profitQuota ? row.profitQuota : row.profit) : row.profitQuota
       row._btn = custFormBtnList()
       this.configRow = row
       this.dialogConfigVisible = true

@@ -199,6 +199,15 @@ span.el-checkbox__inner {
 
 div.el-dialog__header {
   background: $dialogHeadBg;
+  .el-dialog__title {
+    color: $dialogHeadColor;
+  }
+  .el-dialog__headerbtn i {
+    color: $dialogHeadColor;
+    &:hover {
+      color: $dialogHeadBtnColor;
+    }
+  }
 }
 
 .el-dialog--center div.el-dialog__body {

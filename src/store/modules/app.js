@@ -21,6 +21,7 @@ const app = {
       key: 'size',
       value: 'pageSize'
     }],
+    fileHost: process.env.VUE_APP_FILE_HOST,
     fileUrl: process.env.VUE_APP_BASE_URL + '/message/upload/file',
     fileHeaders: {
       Authorization: 'Bearer ' + getLocalStorage('woptoken'),

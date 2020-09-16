@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      mode_list: 'filler_sevicePrice_mode_list',
+      mode_list: 'filler_price_mode_list',
       page_status: 'filler_account_page_status',
       page_column: 'filler_accountList_column',
       select_list: 'filler_printList_select_list',

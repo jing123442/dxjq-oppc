@@ -14,11 +14,11 @@ export default {
       isShow: false,
       queryCustURL: {
         edit: {
-          url: '/gasstation/gasstation/edit',
+          url: 'strategy/gasstation/edit',
           method: 'post'
         },
         list: {
-          url: '/gasstation/gasstation/list_for_org',
+          url: 'strategy/gasstation/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -29,7 +29,7 @@ export default {
       },
       buttonsList: [],
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 1 } })
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { } })
     }
   },
   computed: {
@@ -49,7 +49,7 @@ export default {
       if (type === 'printer') {
         const gasstationId = row.gasstationId
         const gasstationName = row.gasstationName
-        this.$router.push(`lngStationsList/printerList?gasstationId=${gasstationId}&gasstationName=${gasstationName}`)
+        this.$router.push(`fillerInfo/printerList?gasstationId=${gasstationId}&gasstationName=${gasstationName}`)
       }
     },
     onReqParams(type, _this, callback) {
