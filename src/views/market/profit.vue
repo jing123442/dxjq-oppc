@@ -83,6 +83,8 @@ export default {
     onListEventConfig(btnObj, row) {
       if (btnObj.type == 'ok') {
         this.$refs.config.$refs.configForm.validate((valid) => {
+          row.profitQuota = row.profitQuota ? row.profitQuota : 0
+          row.profit = row.profit ? (row.profit > row.profitQuota ? row.profitQuota : row.profit) : row.profitQuota
           if (valid) {
             const params = {
               gasstationId: row.gasstationId,
