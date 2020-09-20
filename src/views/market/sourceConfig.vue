@@ -62,13 +62,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      mode_list: 'policy_sourceConfig_mode_list',
-      page_status: 'policy_sourceConfig_page_status',
-      page_column: 'policy_sourceConfig_column',
-      page_column_price: 'policy_sourceConfigPrice_column',
-      page_column_edit: 'policy_sourceConfigEdit_column',
-      page_column_record: 'policy_sourceConfigRecord_column',
-      select_list: 'policy_sourceConfig_select_list',
+      mode_list: 'market_sourceConfig_mode_list',
+      page_status: 'market_sourceConfig_page_status',
+      page_column: 'market_sourceConfig_column',
+      page_column_price: 'market_sourceConfigPrice_column',
+      page_column_edit: 'market_sourceConfigEdit_column',
+      page_column_record: 'market_sourceConfigRecord_column',
+      select_list: 'market_sourceConfig_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'

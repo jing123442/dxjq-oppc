@@ -44,7 +44,27 @@ const getters = {
   filler_updatePrice_column: item => columns.updatePrice,
   filler_updatePrice_select_list: item => select.updatePrice,
   // 气价维护--气价变更记录
-  filler_lngUpdatePrice_column: item => columns.lngUpdatePrice
+  filler_lngUpdatePrice_column: item => columns.lngUpdatePrice,
+
+  // 加气站库存查询
+  filler_gasStockList_mode_list: item => item.app.modeDefault,
+  filler_gasStockList_page_status: item => app.list.gasStockList,
+  filler_gasStockList_column: item => columns.gasStockList,
+  filler_gasStockList_select_list: item => item.app.selectDefault,
+  // 加气站库存查询--入库记录
+  filler_gasStockListRecord_column: item => columns.gasStockListRecord,
+
+  // LNG计划管理
+  filler_lngPlan_mode_list: item => item.app.modeDefault,
+  filler_lngPlan_page_status: item => app.list.lngPlan,
+  filler_lngPlan_column: item => columns.lngPlan,
+  filler_lngPlan_select_list: item => select.lngPlan,
+  // LNG计划管理--详情
+  filler_lngPlanDetail_column: item => columns.lngPlanDetail,
+  // LNG计划管理--出港录入
+  filler_lngPlanDepartures_column: item => columns.lngPlanDepartures,
+  // LNG计划管理--确认到站重量
+  filler_lngPlanComplete_column: item => columns.lngPlanComplete
 }
 
 export default {

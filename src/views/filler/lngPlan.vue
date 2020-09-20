@@ -45,14 +45,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      mode_list: 'policy_lngPlan_mode_list',
-      page_status: 'policy_lngPlan_page_status',
-      page_column: 'policy_lngPlan_column',
-      page_column_detail: 'policy_lngPlanDetail_column',
-      page_column_departures: 'policy_lngPlanDepartures_column',
-      page_column_complete: 'policy_lngPlanComplete_column',
-      select_list_departures: 'policy_lngPlanDepartures_select_list',
-      select_list: 'policy_lngPlan_select_list',
+      mode_list: 'filler_lngPlan_mode_list',
+      page_status: 'filler_lngPlan_page_status',
+      page_column: 'filler_lngPlan_column',
+      page_column_detail: 'filler_lngPlanDetail_column',
+      page_column_departures: 'filler_lngPlanDepartures_column',
+      page_column_complete: 'filler_lngPlanComplete_column',
+      select_list_departures: 'filler_lngPlanDepartures_select_list',
+      select_list: 'filler_lngPlan_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'

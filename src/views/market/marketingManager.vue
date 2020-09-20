@@ -60,14 +60,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      carrier_mode_list: 'policy_carrierManConfig_mode_list',
-      carrier_page_status: 'policy_carrierManConfig_page_status',
-      carrier_page_column: 'policy_carrierManConfig_column',
-      carrier_select_list: 'policy_carrierManConfig_select_list',
-      gasstation_mode_list: 'policy_gasstationConfig_mode_list',
-      gasstation_page_status: 'policy_gasstationConfig_page_status',
-      gasstation_page_column: 'policy_gasstationConfig_column',
-      gasstation_select_list: 'policy_gasstationConfig_select_list',
+      carrier_mode_list: 'market_carrierManConfig_mode_list',
+      carrier_page_status: 'market_carrierManConfig_page_status',
+      carrier_page_column: 'market_carrierManConfig_column',
+      carrier_select_list: 'market_carrierManConfig_select_list',
+      gasstation_mode_list: 'market_gasstationConfig_mode_list',
+      gasstation_page_status: 'market_gasstationConfig_page_status',
+      gasstation_page_column: 'market_gasstationConfig_column',
+      gasstation_select_list: 'market_gasstationConfig_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'

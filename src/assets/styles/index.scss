@@ -216,7 +216,6 @@ div.el-dialog__header {
 
 div.el-dialog__body {
   padding: 15px 20px 0;
-  background: $appMainBgColor;
 }
 
 .jbsztarea .el-textarea__inner {
@@ -354,6 +353,13 @@ div.el-dialog__body {
   font-size: 13px;
 
   display: flex;
+
+  position: absolute;
+  top: 115px;
+  left: 160px;
+  padding: 2px 20px;
+  background-color: rgba(255, 245, 33, .2);
+
   .data-item {
     margin-left: 25px;
     &:first-child {

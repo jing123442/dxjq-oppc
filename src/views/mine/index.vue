@@ -74,7 +74,9 @@ export default {
 
 <style lang='scss'>
   .mine-page-warp {
-    margin: 30px 0 0 10px;
+    margin: 0;
+    padding: 30px 0 0 10px;
+    background-color: #ffffff;
   }
 
 </style>

@@ -13,6 +13,8 @@ export default [
       { path: 'fillerInfo', component: _import('filler/fillerInfo'), name: 'fillerInfo', meta: { title: '加气站信息维护', icon: 'icon-', noCache: false } },
       { path: 'fillerAccount', component: _import('filler/account'), name: 'fillerAccount', meta: { title: '加气站资金账户管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'fillerPrice', component: _import('filler/price'), name: 'fillerPrice', meta: { title: '加气站挂牌价查询', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'gasStockList', component: _import('filler/gasStockList'), name: 'gasStockList', meta: { title: '加气站库存管理', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'lngPlan', component: _import('filler/lngPlan'), name: 'lngPlan', meta: { title: 'LNG计划管理', icon: 'icon-gongnengguanli', noCache: false } },
       {
         path: 'fillerInfo',
         component: { render (c) { return c('router-view') } },

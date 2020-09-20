@@ -18,7 +18,8 @@ const app = {
     account: 13,
     price: 13,
     updatePrice: 13,
-    printerList: 4
+    printerList: 4,
+    lngPlan: 13
   }
 }
 

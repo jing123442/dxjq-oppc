@@ -1,4 +1,4 @@
-import { utilsStatus, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus } from '@/utils/select'
+import { utilsStatus, utilsPlanStatus, utilsSource, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
@@ -24,6 +24,10 @@ const select = {
     printStatus: utilsPrintStatus(),
     status: utilsStatus(),
     voiceStatus: utilsVoiceStatus()
+  },
+  lngPlan: {
+    source: utilsSource(),
+    planStatus: utilsPlanStatus()
   }
 }
 

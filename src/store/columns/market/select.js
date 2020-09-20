@@ -1,4 +1,5 @@
 import { provinceAndCityData } from 'element-china-area-data'
+import { untilsMarketingManList, utilsUserList } from '@/utils/select'
 
 const select = {
   preferential: {
@@ -11,6 +12,13 @@ const select = {
       { value: 3, label: '驳回' },
       { value: 4, label: '已发布' }
     ]
+  },
+  carrierManConfig: {
+    userList: utilsUserList(),
+    marketingManList: untilsMarketingManList()
+  },
+  gasstationConfig: {
+    userList: utilsUserList()
   }
 }
 

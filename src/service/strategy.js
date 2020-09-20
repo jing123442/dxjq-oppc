@@ -73,7 +73,7 @@ export async function $saveConfigRebateList(data) {
 }
 
 export async function $configGasProfit(data) {
-  return await R({ url: 'strategy/gasstation/edit', data })
+  return await R({ url: 'strategy/gasstation/set_profit_quota', data })
 }
 
 export async function $listingPriceAlg(data) {

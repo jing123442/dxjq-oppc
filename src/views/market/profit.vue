@@ -88,8 +88,8 @@ export default {
           if (valid) {
             const params = {
               gasstationId: row.gasstationId,
-              profitQuota: row.profitQuota,
-              profit: row.profit
+              profitQuota: row.profitQuota.toString(),
+              profit: row.profit.toString()
             }
 
             $configGasProfit(params).then((res) => {

@@ -19,7 +19,7 @@ export default {
       isShow: false,
       queryCustURL: {
         add: {
-          url: '/user/org/add',
+          url: 'user/org/add',
           method: 'post',
           params: {
             orgType: 1,
@@ -27,11 +27,11 @@ export default {
           }
         },
         edit: {
-          url: '/user/org/edit',
+          url: 'user/org/edit',
           method: 'post'
         },
         list: {
-          url: 'strategy/gasstation/list',
+          url: 'user/org/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],

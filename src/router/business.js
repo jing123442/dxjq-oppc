@@ -10,7 +10,7 @@ export default [
     meta: { title: '平台公司管理' },
     children: [
       { path: 'index', component: _import('business/index'), name: 'business', meta: { title: '平台公司', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'account', component: _import('business/account'), name: 'account', meta: { title: '资金账户管理', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'account', component: _import('business/account'), name: 'account', meta: { title: '公司资金账户', icon: 'icon-gongnengguanli', noCache: false } },
       {
         path: 'account',
         component: {
@@ -18,7 +18,7 @@ export default [
         },
         name: 'account',
         hidden: true,
-        meta: { title: '平台公司管理', icon: 'icon-gongnengguanli', noCache: false },
+        meta: { title: '公司资金账户', icon: 'icon-gongnengguanli', noCache: false },
         children: [
           { path: 'accountList', component: _import('business/sub/accountList'), name: 'accountList', meta: { title: '账户流水', icon: 'icon-gongnengguanli', noCache: false } }
         ]

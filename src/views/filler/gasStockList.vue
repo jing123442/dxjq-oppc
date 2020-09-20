@@ -44,11 +44,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      mode_list: 'policy_gasStockList_mode_list',
-      page_status: 'policy_gasStockList_page_status',
-      page_column: 'policy_gasStockList_column',
-      page_column_record: 'policy_gasStockListRecord_column',
-      select_list: 'policy_gasStockList_select_list',
+      mode_list: 'filler_gasStockList_mode_list',
+      page_status: 'filler_gasStockList_page_status',
+      page_column: 'filler_gasStockList_column',
+      page_column_record: 'filler_gasStockListRecord_column',
+      select_list: 'filler_gasStockList_select_list',
       add_edit_dialog: 'dialog_table',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
