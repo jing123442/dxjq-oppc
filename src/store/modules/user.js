@@ -1,5 +1,6 @@
 import { $login, $logout } from '@/service/main'
 import { menuList } from '@/utils/menu'
+import app from '../modules/app'
 import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage'
 
 const Base64 = require('js-base64').Base64
@@ -54,6 +55,10 @@ const user = {
             commit('setwopuser', user)
             commit('setwoprole', roleId)
             commit('setwoporg', orgId)
+
+            // 更新上传文件头信息
+            app.state.fileHeaders.Authorization = 'Bearer ' + getLocalStorage('woptoken')
+            app.state.fileHeaders.Identifier = getLocalStorage('wopidntf')
           }
 
           resolve(response)
