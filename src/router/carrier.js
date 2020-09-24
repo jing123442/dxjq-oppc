@@ -25,7 +25,7 @@ export default [
         hidden: true,
         meta: { title: '公司资金账户管理', icon: 'icon-gongnengguanli', noCache: false },
         children: [
-          { path: 'accountList', component: _import('carrier/sub/accountList'), name: 'accountList', meta: { title: '账户流水', icon: 'icon-gongnengguanli', noCache: false } },
+          { path: 'accountList', component: _import('carrier/sub/accountList'), name: 'accountList', meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } },
           { path: 'vehicleCircle', component: _import('carrier/sub/vehicleCircle'), name: 'vehicleCircle', meta: { title: '卡车圈存', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       },
@@ -38,7 +38,7 @@ export default [
         hidden: true,
         meta: { title: '车辆资金账户管理', icon: 'icon-gongnengguanli', noCache: false },
         children: [
-          { path: 'truckAccountList', component: _import('carrier/sub/truckAccountList'), name: 'truckAccountList', meta: { title: '账户流水', icon: 'icon-gongnengguanli', noCache: false } }
+          { path: 'truckAccountList', component: _import('carrier/sub/truckAccountList'), name: 'truckAccountList', meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       }
     ]

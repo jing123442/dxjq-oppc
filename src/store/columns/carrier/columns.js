@@ -3,18 +3,30 @@ const columns = {
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, show: { noShow: 1 } },
     { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', show: { type: 'text', remote: true, obj: 'orgName', style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
     { field: 'address', name: '地址', show: { type: 'cascader', fieldList: ['address', 'areas'], formatter: 'address', obj: 'cascaderAddress', props: { value: 'label', label: 'label' }, iType: 'string', sign: '', ou: 1, noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'change' }] },
-    { field: 'areas', name: '详细地址', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址！', trigger: 'blur' }] },
-    { field: 'mobile', name: '联系电话', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入联系电话' }, rules: [{ required: true, message: '请输入联系电话', trigger: 'blur' }] },
-    { field: 'contacts', name: '联系人', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入联系人' }, rules: [{ required: true, message: '请输入联系人', trigger: 'blur' }] },
-    { field: 'createDate', name: '创建时间', formatFun: 'formateTData', stype: 'format' },
-    { field: 'status', name: '账号状态', formatter: 'status', show: { type: 'radio', value: 0, obj: 'status', placeholder: '请选择账号状态' }, search: { type: 'select', obj: 'status', placeholder: '请选择账号状态' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
-    { field: 'email', name: '邮箱', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入邮箱' }, rules: [{ required: true, message: '请输入邮箱', trigger: 'blur' }] },
-    { field: 'account', name: '银行账户', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入银行账户' }, rules: [{ required: true, message: '请输入银行账户', trigger: 'blur' }] },
-    { field: 'bank', name: '开户行', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入开户行' }, rules: [{ required: true, message: '请输入开户行', trigger: 'blur' }] },
-    { field: 'legalperson', name: '法人姓名', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入法人姓名' }, rules: [{ required: true, message: '请输入法人姓名', trigger: 'blur' }] },
-    { field: 'idCard', name: '法人身份证号码', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入法人身份证号码' }, rules: [{ required: true, message: '请输入法人身份证号码', trigger: 'blur' }] },
-    { field: 'taxpayer', name: '纳税人识别号', hide: true, show: { type: 'text', isCompare: true, style: 'width: 90%;', placeholder: '请输入纳税人识别号' }, rules: [{ required: true, message: '请输入纳税人识别号', trigger: 'blur' }] },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'addCar', name: '添加车辆' }, { type: 'edit', name: '编辑' }, { type: 'detail', name: '详情' }] }
+    { field: 'status', name: '企业状态', formatter: 'status' },
+    { field: 'authStatus', name: '认证状态', formatter: 'authStatus' },
+    { field: 'protocolNo', name: '转账协议', stype: 'format', formatFun: 'tableStatusToLabel' },
+    { field: 'contractNo', name: '提现协议', stype: 'format', formatFun: 'tableStatusToLabel' },
+    { field: 'legalPhone', name: '验证码手机号' },
+    {
+      field: 'useropts',
+      stype: 'opt',
+      ispush: false,
+      name: '操作',
+      fixed: 'right',
+      width: 230,
+      list: params => {
+        const row = params.row
+        const optList = []
+
+        row.authStatus != 2 && optList.push({ type: 'gedit', name: '编辑' })
+        optList.push({ type: 'detail', name: '详情' })
+        row.authStatus != 2 && optList.push({ type: 'auth', name: '认证' })
+        optList.push({ type: 'addCar', name: '添加车辆' })
+
+        return optList
+      }
+    }
   ],
   addCar: [
     { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', show: { type: 'text', isDisabled: true, remote: true, style: 'width: 90%;', placeholder: '请输入公司名称' } },
@@ -51,7 +63,7 @@ const columns = {
     { field: 'accountPassword', hide: true },
     { field: 'updater', hide: true },
     { field: 'updaterName', hide: true },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'recharge', name: '充值' }, { type: 'load', name: '圈存' }, { type: 'accState', name: '账户流水' }, { type: 'edit', name: '编辑' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'load', name: '圈存' }, { type: 'accState', name: '流水列表' }, { type: 'edit', name: '编辑' }] }
   ],
   firmAccountList: [
     { field: 'id', nameSpan: 5, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
@@ -131,7 +143,7 @@ const columns = {
     { field: 'carNumber', name: '车牌号' },
     { field: 'balance', name: '余额' },
     { field: 'createDate', name: '创建时间', formatFun: 'formateTData', stype: 'format' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '账户流水', fixed: 'right', width: 140, list: [{ type: 'detail', name: '查看' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'detail', name: '流水列表' }] }
   ],
   truckAccountList: [
     { field: 'id', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
@@ -149,8 +161,8 @@ const columns = {
     { field: 'tel', name: '手机号', search: { type: 'text', placeholder: '请输入手机号' } },
     { field: 'rechargeDate', name: '充值时间', formatFun: 'formateTData', stype: 'format' },
     { field: 'amount', name: '充值金额' },
-    { field: 'status', name: '状态', formatter: 'utilsCheck', search: { type: 'select', obj: 'utilsCheck', placeholder: '请选择' } },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: params => params.row.status === 1 ? [{ type: 'detail', name: '详情' }] : [{ type: 'check', name: '审核' }, { type: 'detail', name: '详情' }] }
+    { field: 'status', name: '状态', formatter: 'utilsCheck', search: { type: 'select', obj: 'utilsCheck', placeholder: '请选择' } }/* ,
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: params => params.row.status === 1 ? [{ type: 'detail', name: '详情' }] : [{ type: 'check', name: '审核' }, { type: 'detail', name: '详情' }] } */
   ],
   rechargeRecordCheck: [
     { field: 'orgName', name: '公司名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },

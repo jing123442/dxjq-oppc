@@ -22,7 +22,7 @@ export default {
         },
         name: '账户流水'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '添加公司' }],
+      buttonsList: [{ type: 'primary', icon: '', event: 'export', name: '导出流水' }],
       axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgId: this.$route.query.orgId, accountId: this.$route.query.accountId } })
     }
@@ -32,7 +32,7 @@ export default {
       mode_list: 'bus_org_mode_list',
       page_status: 'bus_org_page_status',
       page_column: 'bus_accountList_column',
-      select_list: 'bus_org_select_list',
+      select_list: 'bus_acc_list_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success',

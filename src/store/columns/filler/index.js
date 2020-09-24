@@ -11,8 +11,9 @@ const getters = {
   filler_firmList_column: item => columns.firmList,
   filler_firmList_select_list: item => select.firmList,
   // 加气站企业列表---添加加气站
-  filler_addGasStation_mode_list: item => app.mode.addGasStation,
-  filler_addGasStation_column: item => columns.addGasStation,
+  filler_gasstation_mode_list: item => app.mode.gasstation,
+  filler_auth_column: item => columns.fillerAuth,
+  filler_s_auth_column: item => columns.fillerSAuth,
   // 加气站列表
   filler_info_mode_list: item => app.mode.info,
   filler_info_page_status: item => app.list.info,
@@ -28,6 +29,7 @@ const getters = {
   filler_account_column: item => columns.account,
   filler_account_select_list: item => select.account,
   // 加气站资金账户管理--账户流水
+  filler_account_list_select_list: item => select.accountList,
   filler_accountList_column: item => columns.accountList,
   // 服务费设置
   filler_price_mode_list: item => item.app.modeDefault,
@@ -50,9 +52,11 @@ const getters = {
   filler_gasStockList_mode_list: item => item.app.modeDefault,
   filler_gasStockList_page_status: item => app.list.gasStockList,
   filler_gasStockList_column: item => columns.gasStockList,
-  filler_gasStockList_select_list: item => item.app.selectDefault,
+  filler_gasStockList_select_list: item => select.gasStockList,
   // 加气站库存查询--入库记录
   filler_gasStockListRecord_column: item => columns.gasStockListRecord,
+  // 加气站库存查询--库存调整
+  filler_gas_update_stock_column: item => columns.gasUpdateStock,
 
   // LNG计划管理
   filler_lngPlan_mode_list: item => item.app.modeDefault,

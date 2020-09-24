@@ -49,6 +49,14 @@ export function utilsStatus() {
     { value: 1, label: '停用' }
   ]
 }
+export function utilsAuthStatus() {
+  return [
+    { value: 0, label: '未认证' },
+    { value: 1, label: '认证中' },
+    { value: 2, label: '已认证' },
+    { value: 3, label: '认证失败' }
+  ]
+}
 export function utilsCheck() {
   return [
     { value: 0, label: '待审核' },
@@ -68,6 +76,23 @@ export function utilsOrderStatus() {
     { value: 1, label: '待支付' },
     { value: 2, label: '已支付' },
     { value: 3, label: '取消' }
+  ]
+}
+
+export function utilsIdentityType() {
+  return [
+    { value: 1, label: '身份证' },
+    { value: 2, label: '护照' },
+    { value: 3, label: '军官证' },
+    { value: 4, label: '回乡证' },
+    { value: 5, label: '台胞证' },
+    { value: 6, label: '警官证' },
+    { value: 7, label: '士兵证' },
+    { value: 8, label: '户口簿' },
+    { value: 9, label: '港澳居民来往/内地通行证' },
+    { value: 10, label: '临时身份证' },
+    { value: 11, label: '外国人居留证' },
+    { value: 99, label: '其它证件' }
   ]
 }
 

@@ -2,65 +2,73 @@ import app from '../../modules/app'
 
 const columns = {
   firmList: [
-    { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, show: { noShow: 1 } },
-    { field: 'gasstationName', name: '企业名称', show: { type: 'text', ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请输入企业名称' }, search: { type: 'text', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, show: { noShow: 1 } },
+    { field: 'orgName', name: '企业名称', show: { type: 'text', ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请输入企业名称' }, search: { type: 'text', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
     { field: 'address', name: '地址', show: { type: 'cascader', fieldList: ['address', 'areas'], formatter: 'address', obj: 'cascaderAddress', props: { value: 'label', label: 'label' }, iType: 'string', sign: '', ou: 1, noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'change' }] },
     { field: 'areas', name: '详细地址', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址！', trigger: 'blur' }] },
     { field: 'status', name: '状态', formatter: 'status' },
-    { field: 'authStatus', name: '认证状态', formatter: 'status' },
-    { field: 'protocolNo', name: '账户余额扣款协议', formatter: 'status' },
-    { field: 'status', name: '通联云商通合作协议', formatter: 'status' },
-    { field: 'legalPhone', name: '绑定验证手机号', formatter: 'status' },
-    { field: 'createDate', name: '创建时间', formatter: 'status' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'gedit', name: '编辑' }, { type: 'detail', name: '详情' }, { type: 'auth', name: '认证' }, { type: 'search', name: '查看收银员' }] }
+    { field: 'authStatus', name: '认证状态', formatter: 'authStatus' },
+    { field: 'protocolNo', name: '转账协议', stype: 'format', formatFun: 'tableStatusToLabel' },
+    { field: 'contractNo', name: '提现协议', stype: 'format', formatFun: 'tableStatusToLabel' },
+    { field: 'legalPhone', name: '绑定验证手机号' },
+    { field: 'createDate', name: '创建时间', stype: 'format', formatFun: 'formateTData' },
+    {
+      field: 'useropts',
+      stype: 'opt',
+      ispush: false,
+      name: '操作',
+      fixed: 'right',
+      width: 210,
+      list: params => {
+        const row = params.row
+        const optList = []
+
+        row.authStatus != 2 && optList.push({ type: 'gedit', name: '编辑' })
+        optList.push({ type: 'detail', name: '详情' })
+        row.authStatus != 2 && optList.push({ type: 'auth', name: '认证' })
+        optList.push({ type: 'search', name: '查看收银员' })
+
+        return optList
+      }
+    }
   ],
   fillerAuth: [
-    { field: 'status', name: '统一社会信用代码', show: { type: 'text', ou: 1 } },
-    { field: 'status', name: '企业名称', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '法人姓名', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '法人联系电话', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '法人证件类型', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '法人证件号', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '纳税人识别号', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '企业对公账户', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '开户银行名称', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '开户行支行名称', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '支行行号', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '联系人', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '联系电话', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '邮箱', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '详细地址', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '企业状态', show: { type: 'text', ou: 3 } }
+    { field: 'taxpayer', name: '统一社会信用代码', nameSpan: 6, show: { type: 'text', ou: 1 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'orgName', name: '企业名称', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'legalperson', name: '法人姓名', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'legalPhone', name: '法人联系电话', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'identityType', name: '法人证件类型', nameSpan: 6, show: { type: 'select', ou: 2, obj: 'identityType' }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'legalIds', name: '法人证件号', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'taxpayer', name: '纳税人识别号', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'account', name: '企业对公账户', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'bank', name: '开户银行名称', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'bankName', name: '开户行支行名称', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'unionBank', name: '支行行号', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'contacts', name: '联系人', nameSpan: 6, show: { type: 'text', ou: 2 } },
+    { field: 'mobile', name: '联系电话', nameSpan: 6, show: { type: 'text', ou: 2 } },
+    { field: 'email', name: '邮箱', nameSpan: 6, show: { type: 'text', ou: 2 } },
+    { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2 } },
+    { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 }, rules: [{ required: true, message: '请选择企业状态', trigger: 'blur' }] }
   ],
   fillerSAuth: [
-    { field: 'status', name: '营业执照号', show: { type: 'text', ou: 1 } },
-    { field: 'status', name: '税务登记证', show: { type: 'text', ou: 1 } },
-    { field: 'status', name: '组机机构代码', show: { type: 'text', ou: 1 } },
-    { field: 'status', name: '企业名称', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '法人姓名', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '法人联系电话', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '法人证件类型', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '法人证件号', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '纳税人识别号', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '企业对公账户', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '开户银行名称', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '开户行支行名称', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '支行行号', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '联系人', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '联系电话', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '邮箱', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '详细地址', show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '企业状态', show: { type: 'text', ou: 3 } }
-  ],
-  addGasStation: [
-    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgName', name: '公司名称', stype: 'mapping', mapping: 'orgName', show: { type: 'text', isDisabled: true, remote: true, ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请输入公司名称' } },
-    { field: 'address', name: '详细地址', show: { type: 'text', ou: 1, style: 'width: 90%;', isDisabled: true, placeholder: '请输入公司名称' } },
-    { field: 'gasstationName', name: '加气站名称', show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
-    { field: 'selectedOptions', name: '所在地区', show: { type: 'cascader', iType: 'string', ou: 2, obj: 'cascaderAddress', sign: '/', style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
-    { field: 'gasAddress', name: '详细地址', show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '详细地址' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
-    { field: 'pointAddress', name: '经纬度', show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
-    { field: 'timerPicker', name: '营业时间', show: { type: 'time-picker', ou: 2, range: true, style: 'width: 90%;', placeholder: '' }, rules: [{ required: true, message: '', trigger: 'blur' }] }
+    { field: 'businessLicense', name: '营业执照号', nameSpan: 6, show: { type: 'text', ou: 1 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'taxRegister', name: '税务登记证', nameSpan: 6, show: { type: 'text', ou: 1 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'organizationCode', name: '组机机构代码', nameSpan: 6, show: { type: 'text', ou: 1 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'orgName', name: '企业名称', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'legalperson', name: '法人姓名', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'legalPhone', name: '法人联系电话', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'identityType', name: '法人证件类型', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'legalIds', name: '法人证件号', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'taxpayer', name: '纳税人识别号', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'account', name: '企业对公账户', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'bank', name: '开户银行名称', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'bankName', name: '开户行支行名称', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'unionBank', name: '支行行号', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'contacts', name: '联系人', nameSpan: 6, show: { type: 'text', ou: 2 } },
+    { field: 'mobile', name: '联系电话', nameSpan: 6, show: { type: 'text', ou: 2 } },
+    { field: 'email', name: '邮箱', nameSpan: 6, show: { type: 'text', ou: 2 } },
+    { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2 } },
+    { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 }, rules: [{ required: true, message: '请选择企业状态', trigger: 'blur' }] }
   ],
   info: [
     { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
@@ -87,19 +95,19 @@ const columns = {
   ],
   account: [
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'gasstationName', name: '加气站名称', search: { type: 'text', placeholder: '请输入加气站名称' } },
+    { field: 'orgName', name: '加气站名称', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'accountId', name: '账号' },
     { field: 'balance', name: '账户余额' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 100, list: [{ type: 'check', name: '账号流水' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 100, list: [{ type: 'check', name: '流水列表' }] }
   ],
   accountList: [
     { field: 'gasstationName', name: '加气站名称', fixed: 'left' },
-    { field: 'orderId', name: '交易单号', show: { type: 'text' }, search: { type: 'text', placeholder: '请输入交易单号' } },
-    { field: 'changeAmount', name: '交易类型' },
+    { field: 'billId', name: '交易单号', show: { type: 'text' }, search: { type: 'text', placeholder: '请输入交易单号' } },
+    { field: 'type', name: '交易类型', formatter: 'type' },
     { field: 'changeAmount', name: '变化金额' },
     { field: 'accountBalance', name: '变化后账户金额' },
     { field: 'createDate', name: '交易时间', stype: 'format', formatFun: 'formateTData', search: { type: 'date-picker', model: 'daterange' } },
-    { field: 'note', name: '交易编号' }
+    { field: 'orderId', name: '订单编号' }
   ],
   price: [
     { field: 'gasstationName', nameSpan: 5, name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
@@ -137,12 +145,20 @@ const columns = {
   gasStockList: [
     { field: 'gasstationName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'stock', name: '库存量(公斤)' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'record', name: '入库记录' }, { type: 'update', name: '库存调整' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'record', name: '库存记录' }, { type: 'update', name: '库存调整' }] }
+  ],
+  gasUpdateStock: [
+    { field: 'gasstationId', name: '', nameSpan: 6, show: { type: 'hide', isDisabled: true } },
+    { field: 'stock', name: '当前库存(公斤)', nameSpan: 6, show: { type: 'text', isDisabled: true } },
+    { field: 'increase', name: '调整重量(公斤)', nameSpan: 6, show: { type: 'text', placeholder: '请输入调整重量' } },
+    { field: 'note', name: '摘要', nameSpan: 6, show: { type: 'textarea', placeholder: '请输入调整库存重量摘要' } }
   ],
   gasStockListRecord: [
-    { field: 'lngFromName', name: '液源地', fixed: 'left' },
-    { field: 'downloadWeight', name: '入库量(kg)' },
-    { field: 'completeTime', name: '时间', formatFun: 'formateTData', stype: 'format' }
+    { field: 'createDate', name: '时间', fixed: 'left', formatFun: 'formateTData', stype: 'format' },
+    { field: 'stockType', name: '变更类型', formatter: 'stockType' },
+    { field: 'quantity', name: '变更量(公斤)' },
+    { field: 'stock', name: '变更后库存(公斤)' },
+    { field: 'note', name: '摘要' }
   ],
   lngPlan: [
     { field: 'gasstationName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },

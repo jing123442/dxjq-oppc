@@ -18,7 +18,8 @@ const getters = {
   bus_account_column: item => columns.account,
   bus_account_select_list: item => select.account,
   // 公司资金账户管理 -- 查看--账户流水
-  bus_accountList_column: item => columns.accountList
+  bus_accountList_column: item => columns.accountList,
+  bus_acc_list_select_list: item => select.accountList
 }
 
 export default {

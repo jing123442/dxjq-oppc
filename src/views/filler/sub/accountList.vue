@@ -14,17 +14,17 @@ export default {
       isShow: false,
       queryCustURL: {
         list: {
-          url: 'account/gasstation_account_log/list',
+          url: 'account/org_account_log/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
         },
-        name: '打印机列表'
+        name: ''
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { accountId: this.$route.query.accountId, gasstationId: this.$route.query.gasstationId } })
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { accountId: this.$route.query.accountId, orgId: this.$route.query.orgId } })
     }
   },
   computed: {
@@ -32,7 +32,7 @@ export default {
       mode_list: 'filler_price_mode_list',
       page_status: 'filler_account_page_status',
       page_column: 'filler_accountList_column',
-      select_list: 'filler_printList_select_list',
+      select_list: 'filler_account_list_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'

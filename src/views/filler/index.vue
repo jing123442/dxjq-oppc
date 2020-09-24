@@ -1,35 +1,37 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="gasList" :tableListName="'filler'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" :tableListName="'filler'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="添加加气站" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog">
-      <nt-form ref="addGap" v-if="dialogAddGasStationVisible" :rowData="gasStationRow" :modeList="mode_list_addGasStation" :pageColumn="page_column_addGasStation" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventAddGasStation"></nt-form>
+      <div v-if="isAuthInfo" class="auth-status" :class="authColor"><span class="auth-status__dot" :class="authColor"></span>
+        {{authRow.authStatus == 2 ? '已认证' : (authRow.authStatus == 1 ? '认证中' : (authRow.authStatus == 3 ? '认证失败' : '未认证'))}}
+      </div>
+      <el-tabs v-model="active" type="card" @tab-click="handleClick">
+        <el-tab-pane label="一证" name="2" :disabled="tabDisabled">
+          <nt-form ref="addGap" v-if="active == 2 && dialogAddGasStationVisible" :rowData="authRow" :modeList="mode_list_gasstation" :pageColumn="auth_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
+        </el-tab-pane>
+        <el-tab-pane label="三证" name="1" :disabled="tabDisabled">
+          <nt-form ref="addGap" v-if="active == 1 && dialogAddGasStationVisible" :rowData="authRow" :modeList="mode_list_gasstation" :pageColumn="auth_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
+        </el-tab-pane>
+      </el-tabs>
     </el-dialog>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, createParams } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, custFormBtnList } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $gasStationAdd } from '@/service/gasstation'
-import { CodeToText } from 'element-china-area-data'
+import { $orgAuth } from '@/service/pay'
+import { $userOrgAdd, $userOrgEdit } from '@/service/user'
 
 export default {
   name: 'filler',
   data() {
     return {
+      active: '2',
+      isAuthInfo: false,
+      tabDisabled: false,
+      authColor: 'off',
       isShow: false,
       queryCustURL: {
-        add: {
-          url: 'user/org/add',
-          method: 'post',
-          params: {
-            orgType: 1,
-            ...createParams()
-          }
-        },
-        edit: {
-          url: 'user/org/edit',
-          method: 'post'
-        },
         list: {
           url: 'user/org/list',
           method: 'post',
@@ -40,40 +42,75 @@ export default {
         },
         name: '加气站企业'
       },
-      buttonsList: [{ type: 'primary', icon: 'el-icon-plus', event: 'add', name: '增加企业' }],
+      buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '增加企业' }],
       axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 1 } }),
       dialogAddGasStationVisible: false,
-      gasStationRow: {}
+      authRow: {},
+      auth_page_column: []
     }
   },
   computed: {
     ...mapGetters({
       mode_list: 'filler_firmList_mode_list',
-      mode_list_addGasStation: 'filler_addGasStation_mode_list',
+      mode_list_gasstation: 'filler_gasstation_mode_list',
       page_status: 'filler_firmList_page_status',
       page_column: 'filler_firmList_column',
-      page_column_addGasStation: 'filler_addGasStation_column',
+      page_auth_column: 'filler_auth_column',
+      page_s_auth_column: 'filler_s_auth_column',
       select_list: 'filler_firmList_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
     })
   },
-  created: function () {},
+  created: function () {
+    this.resetAuthPageCol()
+  },
   methods: {
     onListEvent(type, row) {
-      if (type === 'addGas') {
-        this.dialogAddGasStationVisible = true
-        this.gasStationRow = row
-        this.gasStationRow._btn = {
-          iShow: true,
-          list: [{
-            bType: 'primary',
-            label: '确定',
-            icon: ''
-          }]
-        }
+      this.currType = type
+      // 重置page_column值
+      this.resetAuthPageCol()
+
+      // 重置tab标签值
+      this.active = row && row.authType ? '' + row.authType : '2'
+      // 显示认证状态
+      this.authColor = row && row.authStatus == 2 ? 'no' : 'off'
+      // 是否显示dialog
+      this.dialogAddGasStationVisible = true
+      this.authRow = row
+      if (type === 'add_info' || type === 'gedit' || type === 'auth') {
+        this.authRow._btn = custFormBtnList()
+      } else {
+        this.authRow._btn = {}
+      }
+    },
+    handleClick() {
+      this.resetAuthPageCol()
+    },
+    resetAuthPageCol() {
+      if (this.active == '2') {
+        this.auth_page_column = this.page_auth_column
+      } else {
+        this.auth_page_column = this.page_s_auth_column
+      }
+      if (this.currType == 'auth' || this.currType == 'detail') {
+        this.tabDisabled = true
+        this.isAuthInfo = true
+        this.auth_page_column.forEach(item => {
+          if (item.show && item.show.type != 'hide') {
+            item.show.isDisabled = true
+          }
+        })
+      } else {
+        this.tabDisabled = false
+        this.isAuthInfo = false
+        this.auth_page_column.forEach(item => {
+          if (item.show && item.show.type != 'hide') {
+            item.show.isDisabled = false
+          }
+        })
       }
     },
     onReqParams(type, _this, callback) {
@@ -86,41 +123,86 @@ export default {
         }
       })
     },
-    onListEventAddGasStation(obj) {
-      const self = this
-      if (obj.label === '确定') {
-        console.log(self.gasStationRow)
-        this.$refs.addGap.$children[0].validate(valid => {
-          if (valid) {
-            const params = {
-              address: self.gasStationRow.gasAddress,
-              businessHoursBegin: self.gasStationRow.timerPicker[0],
-              businessHoursEnd: self.gasStationRow.timerPicker[1],
-              orgId: self.gasStationRow.orgId,
-              orgName: self.gasStationRow.orgName,
-              gasstationName: self.gasStationRow.gasstationName,
-              selectedOptions: self.gasStationRow.selectedOptions,
-              province: CodeToText[self.gasStationRow.selectedOptions[0]],
-              city: CodeToText[self.gasStationRow.selectedOptions[1]],
-              region: CodeToText[self.gasStationRow.selectedOptions[2]],
-              longitude: self.gasStationRow.pointAddress.split(',')[0],
-              latitude: self.gasStationRow.pointAddress.split(',')[1],
-              creater: JSON.parse(localStorage.getItem('wopuser')).user_id,
-              createrName: JSON.parse(localStorage.getItem('wopuser')).user_name
-            }
-            $gasStationAdd(params).then(res => {
-              if (res.code === 0) {
-                self.$message.success(res.message)
-                self.dialogAddGasStationVisible = false
-                self.$refs.gasList.initDataList()
-              } else {
-                self.$message.error(res.message)
-              }
+    onFormEvent(obj, row) {
+      if (obj.type === 'ok') {
+        if (this.currType === 'add_info' || this.currType === 'gedit') {
+          this.onListEventAddGasStation(row)
+        } else {
+          this.orgAuthEvent(row)
+        }
+      }
+
+      this.dialogAddGasStationVisible = false
+    },
+    orgAuthEvent(row) {
+      const params = {
+        memberType: 2,
+        orgId: row.orgId,
+        source: 2
+      }
+      $orgAuth(params).then(res => {
+        this.$message.success('成功！')
+
+        this.$refs.tables.initDataList()
+      })
+    },
+    onListEventAddGasStation(row) {
+      this.$refs.addGap.$children[0].validate(valid => {
+        if (valid) {
+          const params = Object.assign({}, row)
+
+          params.authType = this.active
+          params.orgType = 1
+          delete params._btn
+          if (this.currType === 'add_info') {
+            $userOrgAdd(params).then(res => {
+              this.$message.success('成功！')
+
+              this.$refs.tables.initDataList()
+            })
+          } else {
+            $userOrgEdit(params).then(res => {
+              this.$message.success('成功！')
+
+              this.$refs.tables.initDataList()
             })
           }
-        })
-      }
+        }
+      })
     }
   }
 }
 </script>
+
+<style lang="scss">
+  .auth-status {
+    position: absolute;
+    right: 20px;
+    margin-top: 5px;
+    padding-left: 10px;
+    &.off {
+      color: red;
+    }
+
+    &.no {
+      color: #4caf50;
+    }
+
+    &__dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-right: 10px;
+      margin-bottom: 1px;
+
+      &.off {
+        background-color: red;
+      }
+
+      &.no {
+        background-color: #4caf50;
+      }
+    }
+  }
+</style>

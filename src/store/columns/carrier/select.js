@@ -1,10 +1,11 @@
-import { utilsStatus, utilsDyOrgList, utilsAutoAccount, utilsCheck, utilsAccountType, utilsOrderStatus, utilsDriverList } from '@/utils/select'
+import { utilsStatus, utilsAuthStatus, utilsDyOrgList, utilsAutoAccount, utilsCheck, utilsAccountType, utilsOrderStatus, utilsDriverList } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
   logistics: {
     orgId: utilsDyOrgList(),
     status: utilsStatus(),
+    authStatus: utilsAuthStatus(),
     cascaderAddress: regionData
   },
   firmAccount: {

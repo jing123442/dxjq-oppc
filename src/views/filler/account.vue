@@ -14,7 +14,7 @@ export default {
       isShow: false,
       queryCustURL: {
         list: {
-          url: '/account/gasstation_account/list',
+          url: '/account/org_account/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -41,10 +41,10 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
-      const gasstationId = row.gasstationId
+      const orgId = row.orgId
       const accountId = row.accountId
       if (type === 'check') {
-        this.$router.push(`fillerAccount/accountList?gasstationId=${gasstationId}&accountId=${accountId}`)
+        this.$router.push(`fillerAccount/accountList?orgId=${orgId}&accountId=${accountId}`)
       }
     },
     onReqParams(type, _this, callback) {

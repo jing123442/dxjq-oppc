@@ -23,6 +23,11 @@ const gasstationImage = item => {
   return item
 }
 
+const tableStatusToLabel = value => {
+  if (value) return '已签约'
+  else return '未签约'
+}
+
 // 单位转换 * 1000
 const kiloToTon = (value) => { return value ? Number(value) * 1000 : (value === 0 ? 0 : '') }
 
@@ -81,5 +86,6 @@ export {
   formatDate,
   currency,
   kiloToTon,
-  formatContent
+  formatContent,
+  tableStatusToLabel
 }

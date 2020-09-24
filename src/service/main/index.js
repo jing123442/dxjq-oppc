@@ -6,6 +6,7 @@ const axios = Axios.create({
 })
 const Base64 = require('js-base64').Base64
 
+// 登录
 export async function $login (data) {
   const headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
@@ -20,6 +21,7 @@ export async function $login (data) {
   })
 }
 
+// 登出
 export async function $logout (data) {
   const headers = {
     'Content-Type': 'application/x-www-form-urlencoded',

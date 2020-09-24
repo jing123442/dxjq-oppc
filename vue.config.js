@@ -1,7 +1,7 @@
 module.exports = {
   publicPath: './',
   devServer: {
-    port: 8118,
+    port: 8888,
     open: true,
     proxy: {
       '/api': {

@@ -2,8 +2,18 @@
   <div class="template-main">
     <em-table-list :tableListName="'carrier'" ref="carrier" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
-    <el-dialog title="物流公司详情" :visible.sync="dialogDetailVisible" :width="add_edit_dialog">
-      <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"></nt-form>
+    <el-dialog title="物流公司" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog">
+      <div v-if="isAuthInfo" class="auth-status" :class="authColor"><span class="auth-status__dot" :class="authColor"></span>
+        {{authRow.authStatus == 2 ? '已认证' : (authRow.authStatus == 1 ? '认证中' : (authRow.authStatus == 3 ? '认证失败' : '未认证'))}}
+      </div>
+      <el-tabs v-model="active" type="card" @tab-click="handleClick">
+        <el-tab-pane label="一证" name="2" :disabled="tabDisabled">
+          <nt-form ref="addGap" v-if="active == 2 && dialogAddGasStationVisible" :rowData="authRow" :modeList="mode_list_gasstation" :pageColumn="auth_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
+        </el-tab-pane>
+        <el-tab-pane label="三证" name="1" :disabled="tabDisabled">
+          <nt-form ref="addGap" v-if="active == 1 && dialogAddGasStationVisible" :rowData="authRow" :modeList="mode_list_gasstation" :pageColumn="auth_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
+        </el-tab-pane>
+      </el-tabs>
     </el-dialog>
 
      <el-dialog title="添加车辆" :visible.sync="dialogAddCarVisible" :width="add_edit_dialog">
@@ -12,30 +22,22 @@
  </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, createParams, callbackPagesInfo } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo, createParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import {
-  $carrierTruckAdd
-} from '@/service/carrier.js'
+import { $orgAuth } from '@/service/pay'
+import { $userOrgAdd, $userOrgEdit } from '@/service/user'
+import { $carrierTruckAdd } from '@/service/carrier.js'
 
 export default {
   name: 'carrier',
   data() {
     return {
+      active: '2',
+      isAuthInfo: false,
+      tabDisabled: false,
+      authColor: 'off',
       isShow: false,
       queryCustURL: {
-        add: {
-          url: '/user/org/add',
-          method: 'post',
-          params: {
-            orgType: 2,
-            ...createParams()
-          }
-        },
-        edit: {
-          url: '/user/org/edit',
-          method: 'post'
-        },
         list: {
           url: 'user/org/list',
           method: 'post',
@@ -46,11 +48,12 @@ export default {
         },
         name: '物流公司'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '添加公司' }],
+      buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '添加公司' }],
       axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 2 } }),
-      dialogDetailVisible: false,
-      detailRow: {},
+      dialogAddGasStationVisible: false,
+      authRow: {},
+      auth_page_column: [],
       dialogAddCarVisible: false,
       addCarRow: {}
     }
@@ -60,9 +63,11 @@ export default {
       mode_list: 'carrier_logistics_mode_list',
       page_status: 'carrier_logistics_page_status',
       page_column: 'carrier_logistics_column',
-      page_column_detail: 'carrier_logisticsDetail_column',
       page_column_addCar: 'carrier_addCar_column',
       select_list: 'carrier_logistics_select_list',
+      page_auth_column: 'filler_auth_column',
+      page_s_auth_column: 'filler_s_auth_column',
+      mode_list_gasstation: 'filler_gasstation_mode_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -75,9 +80,23 @@ export default {
       if (type === 'addCar') {
         // 添加车辆
         this.addCarEvent(row)
-      } else if (type === 'detail') {
-        this.dialogDetailVisible = true
-        this.detailRow = row
+      } else {
+        this.currType = type
+        // 重置page_column值
+        this.resetAuthPageCol()
+
+        // 重置tab标签值
+        this.active = row && row.authType ? '' + row.authType : '2'
+        // 显示认证状态
+        this.authColor = row && row.authStatus == 2 ? 'no' : 'off'
+        // 是否显示dialog
+        this.dialogAddGasStationVisible = true
+        this.authRow = row
+        if (type === 'add_info' || type === 'gedit' || type === 'auth') {
+          this.authRow._btn = custFormBtnList()
+        } else {
+          this.authRow._btn = {}
+        }
       }
     },
     addCarEvent(row) {
@@ -133,6 +152,80 @@ export default {
       } else {
         this.dialogAddCarVisible = false
       }
+    },
+    handleClick() {
+      this.resetAuthPageCol()
+    },
+    resetAuthPageCol() {
+      if (this.active == '2') {
+        this.auth_page_column = this.page_auth_column
+      } else {
+        this.auth_page_column = this.page_s_auth_column
+      }
+      if (this.currType == 'auth' || this.currType == 'detail') {
+        this.tabDisabled = true
+        this.isAuthInfo = true
+        this.auth_page_column.forEach(item => {
+          if (item.show && item.show.type != 'hide') {
+            item.show.isDisabled = true
+          }
+        })
+      } else {
+        this.tabDisabled = false
+        this.isAuthInfo = false
+        this.auth_page_column.forEach(item => {
+          if (item.show && item.show.type != 'hide') {
+            item.show.isDisabled = false
+          }
+        })
+      }
+    },
+    onFormEvent(obj, row) {
+      if (obj.type === 'ok') {
+        if (this.currType === 'add_info' || this.currType === 'gedit') {
+          this.onListEventAddGasStation(row)
+        } else {
+          this.orgAuthEvent(row)
+        }
+      }
+
+      this.dialogAddGasStationVisible = false
+    },
+    orgAuthEvent(row) {
+      const params = {
+        memberType: 2,
+        orgId: row.orgId,
+        source: 2
+      }
+      $orgAuth(params).then(res => {
+        this.$message.success('成功！')
+
+        this.$refs.tables.initDataList()
+      })
+    },
+    onListEventAddGasStation(row) {
+      this.$refs.addGap.$children[0].validate(valid => {
+        if (valid) {
+          const params = Object.assign({}, row)
+
+          params.authType = this.active
+          params.orgType = 0
+          delete params._btn
+          if (this.currType === 'add_info') {
+            $userOrgAdd(params).then(res => {
+              this.$message.success('成功！')
+
+              this.$refs.tables.initDataList()
+            })
+          } else {
+            $userOrgEdit(params).then(res => {
+              this.$message.success('成功！')
+
+              this.$refs.tables.initDataList()
+            })
+          }
+        }
+      })
     }
   }
 }
