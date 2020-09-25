@@ -8,7 +8,7 @@ const columns = {
     { field: 'freight', name: '运费(元/吨)' },
     { field: 'profit', name: '加气站利润(元/公斤)' },
     { field: 'lngFromName', name: '液源地' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 100, fixed: 'right', list: [{ type: 'change', name: '变更记录' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 190, fixed: 'right', list: [{ type: 'form', name: '液源地选择' }, { type: 'change', name: '变更记录' }] }
   ],
   listingLog: [
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },

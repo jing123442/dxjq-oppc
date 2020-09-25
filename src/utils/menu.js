@@ -2,14 +2,14 @@ export function menuList() {
   return [{
     path: '/home',
     name: 'home',
-    meta: { title: '首页', icon: 'el-icon-s-home', noCache: false },
+    meta: { title: '首页', icon: 'icon-shouye', class: 'em-iconfont', noCache: false },
     children: [
-      { path: '/index', name: 'home', meta: { title: '首页', icon: 'el-icon-s-home', noCache: false } }
+      { path: '/index', name: 'home', meta: { title: '首页', icon: 'icon-shouye', class: 'em-iconfont', noCache: false } }
     ]
   }, {
     path: '/mine',
     name: 'mine',
-    meta: { title: '个人中心', icon: 'el-icon-user', noCache: false },
+    meta: { title: '个人中心', icon: 'icon-gerenzhongxin', class: 'em-iconfont', noCache: false },
     children: [
       { path: '/index', name: 'index', meta: { title: '个人信息', noCache: false } },
       { path: '/editPassword', name: 'editPassword', meta: { title: '修改密码', noCache: false } }
@@ -17,7 +17,7 @@ export function menuList() {
   }, {
     path: '/user',
     name: 'user',
-    meta: { title: '用户管理', icon: 'el-icon-s-custom', noCache: false },
+    meta: { title: '用户管理', icon: 'icon-yonghuguanli', class: 'em-iconfont', noCache: false },
     children: [
       { path: '/index', name: 'index', meta: { title: '平台用户管理', noCache: false } },
       { path: '/carrier', name: 'carrier', meta: { title: '物流用户管理', noCache: false } },
@@ -26,7 +26,7 @@ export function menuList() {
   }, {
     path: '/business',
     name: 'business',
-    meta: { title: '平台公司管理', icon: 'el-icon-s-home', noCache: false },
+    meta: { title: '平台公司管理', icon: 'icon-pingtaigongsiguanli', class: 'em-iconfont', noCache: false },
     children: [
       { path: '/index', name: 'index', meta: { title: '平台公司', noCache: false } },
       { path: '/account', name: 'account', meta: { title: '公司资金账户', noCache: false } }
@@ -34,7 +34,7 @@ export function menuList() {
   }, {
     path: '/filler',
     name: 'filler',
-    meta: { title: '加气站管理', icon: 'el-icon-s-home', noCache: false },
+    meta: { title: '加气站管理', icon: 'icon-jiaqizhanguanli', class: 'em-iconfont', noCache: false },
     children: [
       { path: '/index', name: 'index', meta: { title: '加气站列表', noCache: false } },
       { path: '/fillerInfo', name: 'fillerInfo', meta: { title: '加气站信息维护', noCache: false } },
@@ -46,7 +46,7 @@ export function menuList() {
   }, {
     path: '/carrier',
     name: 'carrier',
-    meta: { title: '物流公司管理', icon: 'el-icon-s-home', noCache: false },
+    meta: { title: '物流公司管理', icon: 'icon-wuliugongsiguanli', class: 'em-iconfont', noCache: false },
     children: [
       { path: '/index', name: 'index', meta: { title: '物流公司', noCache: false } },
       { path: '/logisticsAccountManager', name: 'logisticsAccountManager', meta: { title: '公司资金账户管理', noCache: false } },
@@ -59,7 +59,7 @@ export function menuList() {
   }, {
     path: '/price',
     name: 'price',
-    meta: { title: '定价管理', icon: 'el-icon-s-home', noCache: false },
+    meta: { title: '定价管理', icon: 'icon-dingjiaguanli', class: 'em-iconfont', noCache: false },
     children: [
       {
         path: '/price/index',
@@ -79,7 +79,7 @@ export function menuList() {
   }, {
     path: '/market',
     name: 'market',
-    meta: { title: '营销管理', icon: 'el-icon-s-home', noCache: false },
+    meta: { title: '营销管理', icon: 'icon-yingxiaoguanli', class: 'em-iconfont', noCache: false },
     children: [
       { path: '/index', name: 'index', meta: { title: '优惠返利配置', noCache: false } },
       { path: '/cost', name: 'cost', meta: { title: '长城奥扬费用', noCache: false } },
@@ -90,7 +90,7 @@ export function menuList() {
   }, {
     path: '/settlement',
     name: 'settlement',
-    meta: { title: '结算管理', icon: 'el-icon-s-home', noCache: false },
+    meta: { title: '结算管理', icon: 'icon-jiesuanguanli', class: 'em-iconfont', noCache: false },
     children: [
       { path: '/index', name: 'index', meta: { title: '加气站服务汇总', noCache: false } },
       { path: '/logisticsSettlement', name: 'logisticsSettlement', meta: { title: '物流公司加气费汇总', noCache: false } }

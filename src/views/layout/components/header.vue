@@ -68,6 +68,11 @@ export default {
       justify-content: flex-start;
       cursor: pointer;
       font-size: 22px;
+      padding-left: 50px;
+      background-size: 40px;
+      background-position: center left;
+      background-repeat: no-repeat;
+      background-image: url(../../../assets/images/logo.png);
       .logo_prefix {
         color: $headerLogoTextColor;
       }

@@ -49,14 +49,12 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'check', name: '流水列表' }, { type: 'cash', name: '提现' }] }
   ],
   accountList: [
-    { field: 'id', nameSpan: 5, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgName', nameSpan: 5, name: '公司名称', search: { type: 'text', placeholder: '请输入公司名称' } },
+    { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData', stype: 'format' },
     { field: 'billId', nameSpan: 5, name: '交易单号', search: { type: 'text', placeholder: '请输入交易单号' } },
     { field: 'changeAmount', nameSpan: 5, name: '交易类型' },
     { field: 'changeAmount', nameSpan: 5, name: '变化金额(元)' },
     { field: 'accountBalance', nameSpan: 5, name: '变化后金额(元)' },
-    { field: 'createrName', nameSpan: 5, name: '创建人' },
-    { field: 'createDate', nameSpan: 5, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
+    { field: 'note', nameSpan: 5, name: '摘要' },
     { field: 'orderId', nameSpan: 5, name: '订单编号' }
   ]
 }

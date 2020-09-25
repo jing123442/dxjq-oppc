@@ -66,14 +66,13 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'load', name: '圈存' }, { type: 'accState', name: '流水列表' }, { type: 'edit', name: '编辑' }] }
   ],
   firmAccountList: [
-    { field: 'id', nameSpan: 5, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgName', nameSpan: 5, name: '公司名称' },
-    { field: 'orderId', nameSpan: 5, name: '单据流水id', search: { type: 'text', placeholder: '请输入单据流水id' } },
-    { field: 'changeAmount', nameSpan: 5, name: '变化金额' },
-    { field: 'accountBalance', nameSpan: 5, name: '变化后账户金额' },
-    { field: 'createrName', nameSpan: 5, name: '创建人' },
-    { field: 'createDate', nameSpan: 5, name: '创建时间', formatFun: 'formateTData', stype: 'format' },
-    { field: 'note', nameSpan: 5, name: '摘要' }
+    { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData', stype: 'format', search: { type: 'date-picker', model: 'daterange' } },
+    { field: 'billId', name: '交易单号', show: { type: 'text' }, search: { type: 'text', placeholder: '请输入交易单号' } },
+    { field: 'type', name: '交易类型', formatter: 'type' },
+    { field: 'changeAmount', nameSpan: 5, name: '变化金额(元)' },
+    { field: 'accountBalance', nameSpan: 5, name: '变化后账户金额(元)' },
+    { field: 'note', nameSpan: 5, name: '摘要' },
+    { field: 'orderId', name: '订单编号' }
   ],
   firmAccountRecharge: [
     { field: 'orgName', name: '公司名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
@@ -156,13 +155,12 @@ const columns = {
     { field: 'note', nameSpan: 5, name: '摘要' }
   ],
   rechargeRecord: [
-    { field: 'rechargeOrderId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, ispush: false },
-    { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
-    { field: 'tel', name: '手机号', search: { type: 'text', placeholder: '请输入手机号' } },
-    { field: 'rechargeDate', name: '充值时间', formatFun: 'formateTData', stype: 'format' },
-    { field: 'amount', name: '充值金额' },
-    { field: 'status', name: '状态', formatter: 'utilsCheck', search: { type: 'select', obj: 'utilsCheck', placeholder: '请选择' } }/* ,
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: params => params.row.status === 1 ? [{ type: 'detail', name: '详情' }] : [{ type: 'check', name: '审核' }, { type: 'detail', name: '详情' }] } */
+    { field: 'rechargeOrderId', name: '订单编号', fixed: 'left', search: { type: 'text', placeholder: '请输入充值方或订单编号' } },
+    { field: 'createDate', name: '充值时间', formatFun: 'formateTData', stype: 'format' },
+    { field: 'orgName', name: '充值方' },
+    { field: 'amount', name: '充值金额(元)' },
+    { field: 'type', name: '支付方式', formatter: 'rechargeType' },
+    { field: 'status', name: '订单状态', formatter: 'utilsCheck' }
   ],
   rechargeRecordCheck: [
     { field: 'orgName', name: '公司名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },

@@ -104,17 +104,17 @@ export default {
   methods: {
     onListEvent(type, row) {
       this.currType = type
-      if (type === 'bind') {
+      if (type === 'bind' || type === 'unbind') {
         this.currRow = row
         this.dialogBindVisible = true
       } else if (isTypeof(type) == 'object' && type.field == 'protocolNo') {
-        $signBalanceProtocol({ orgId: row.orgId }).then(response => {
+        $signBalanceProtocol({ orgId: row.orgId, source: 2 }).then(response => {
           if (response.code === 0) {
             window.open(response.data)
           }
         })
       } else if (isTypeof(type) == 'object' && type.field == 'contractNo') {
-        $signContract({ orgId: row.orgId }).then(response => {
+        $signContract({ orgId: row.orgId, source: 2 }).then(response => {
           if (response.code === 0) {
             window.open(response.data)
           }
@@ -263,11 +263,13 @@ export default {
     onListEventAddGasStation(row) {
       this.$refs.addGap.$children[0].validate(valid => {
         if (valid) {
-          const params = Object.assign({}, row)
+          const params = {}
+          this.auth_page_column.forEach(item => {
+            params[item.field] = row[item.field]
+          })
 
           params.authType = this.active
           params.orgType = 0
-          delete params._btn
           if (this.currType === 'add_info') {
             $userOrgAdd(params).then(res => {
               this.$message.success('成功！')

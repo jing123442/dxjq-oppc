@@ -101,12 +101,12 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 100, list: [{ type: 'check', name: '流水列表' }] }
   ],
   accountList: [
-    { field: 'gasstationName', name: '加气站名称', fixed: 'left' },
+    { field: 'createDate', name: '交易时间', fixed: 'left', stype: 'format', formatFun: 'formateTData', search: { type: 'date-picker', model: 'daterange' } },
     { field: 'billId', name: '交易单号', show: { type: 'text' }, search: { type: 'text', placeholder: '请输入交易单号' } },
     { field: 'type', name: '交易类型', formatter: 'type' },
-    { field: 'changeAmount', name: '变化金额' },
-    { field: 'accountBalance', name: '变化后账户金额' },
-    { field: 'createDate', name: '交易时间', stype: 'format', formatFun: 'formateTData', search: { type: 'date-picker', model: 'daterange' } },
+    { field: 'changeAmount', name: '变化金额(元)' },
+    { field: 'accountBalance', name: '变化后账户金额(元)' },
+    { field: 'note', name: '摘要' },
     { field: 'orderId', name: '订单编号' }
   ],
   price: [

@@ -206,11 +206,13 @@ export default {
     onListEventAddGasStation(row) {
       this.$refs.addGap.$children[0].validate(valid => {
         if (valid) {
-          const params = Object.assign({}, row)
+          const params = {}
+          this.auth_page_column.forEach(item => {
+            params[item.field] = row[item.field]
+          })
 
           params.authType = this.active
           params.orgType = 0
-          delete params._btn
           if (this.currType === 'add_info') {
             $userOrgAdd(params).then(res => {
               this.$message.success('成功！')
