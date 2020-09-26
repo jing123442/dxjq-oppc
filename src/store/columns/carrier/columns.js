@@ -31,6 +31,7 @@ const columns = {
   addCar: [
     { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', show: { type: 'text', isDisabled: true, remote: true, style: 'width: 90%;', placeholder: '请输入公司名称' } },
     { field: 'truckName', name: '卡车名称', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入卡车名称' }, rules: [{ required: true, message: '请输入卡车名称', trigger: 'blur' }] },
+    { field: 'linked', name: '卡车类型', show: { type: 'select', obj: 'truckType', style: 'width: 90%;', placeholder: '请选择卡车类型' }, rules: [{ required: true, message: '请选择卡车类型', trigger: 'blur' }] },
     { field: 'carNumber', name: '车牌号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入车牌号' }, rules: [{ required: true, message: '请输入车牌号', trigger: 'blur' }] },
     { field: 'frameNumber', name: '车架号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入车架号' }, rules: [{ required: true, message: '请输入车架号', trigger: 'blur' }] },
     { field: 'trailerNumber', name: '挂车牌号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入挂车牌号' } },
@@ -38,7 +39,8 @@ const columns = {
     { field: 'color', name: '颜色', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入颜色' }, rules: [{ required: true, message: '请输入颜色', trigger: 'blur' }] },
     { field: 'deadWeight', name: '载重量', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入载重量' }, rules: [{ required: true, message: '请输入载重量', trigger: 'blur' }] },
     { field: 'capacity', name: '储气罐容量', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入储气罐容量' }, rules: [{ required: true, message: '请输入储气罐容量', trigger: 'blur' }] },
-    { field: 'manufacturer', name: '生产厂家', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入生产厂家' }, rules: [{ required: true, message: '请输入生产厂家', trigger: 'blur' }] }
+    { field: 'manufacturer', name: '生产厂家', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入生产厂家' }, rules: [{ required: true, message: '请输入生产厂家', trigger: 'blur' }] },
+    { field: 'autoAccount', name: '圈存方式', show: { type: 'radio', obj: 'autoAccount', placeholder: '请选择圈存方式' }, rules: [{ required: true, message: '请选择圈存方式', trigger: 'blur' }] }
   ],
   logisticsDetail: [
     { field: 'orgName', nameSpan: 5, name: '公司名称', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },

@@ -9,10 +9,13 @@ const getters = {
   price_listing_mode_list: item => item.app.modeDefault,
   price_listing_page_status: item => app.list.listing,
   price_listing_column: item => columns.listing,
-  price_listing_select_list: item => item.app.selectDefault,
+  price_listing_select_list: item => select.listing,
 
   // 平台挂牌价--变更记录
   price_listing_log_column: item => columns.listingLog,
+
+  // 平台挂牌价--配置液源地
+  price_listing_from_column: item => columns.listingFrom,
 
   // 平台挂牌价--变更记录
   price_listing_release_column: item => columns.listingRelease,

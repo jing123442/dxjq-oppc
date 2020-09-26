@@ -5,6 +5,9 @@
     <el-dialog title="发布申请" :visible.sync="dialogReleaseVisible" width="50%">
       <nt-form v-if="dialogReleaseVisible" ref="release" :formRef="'releaseForm'" :rowData="releaseRow" :pageColumn="release_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventRelease"></nt-form>
     </el-dialog>
+    <el-dialog title="配置液源地" :visible.sync="dialogFromVisible" width="50%">
+      <nt-form v-if="dialogFromVisible" ref="from" :formRef="'fromForm'" :rowData="fromRow" :pageColumn="from_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventFrom"></nt-form>
+    </el-dialog>
     <el-dialog title="变更记录" :visible.sync="dialogChangeVisible" :width="add_edit_dialog">
       <em-table-list v-if="dialogChangeVisible" :tableListName="'listingLog'" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
@@ -12,7 +15,7 @@
 </template>
 <script>
 import { axiosRequestParams, callbackPagesInfo, isTypeof, custFormBtnList, formatDate } from '@/utils/tools'
-import { $priceRelease, $listingPriceAlg } from '@/service/strategy'
+import { $priceRelease, $listingPriceAlg, $updateGasstation } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -22,6 +25,8 @@ export default {
       isShow: false,
       releaseRow: [],
       dialogReleaseVisible: false,
+      fromRow: [],
+      dialogFromVisible: false,
       logRow: [],
       dialogChangeVisible: false,
       fullscreenLoading: false,
@@ -59,6 +64,7 @@ export default {
       page_column: 'price_listing_column',
       select_list: 'price_listing_select_list',
       log_page_column: 'price_listing_log_column',
+      from_page_column: 'price_listing_from_column',
       release_page_column: 'price_listing_release_column',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
@@ -70,20 +76,49 @@ export default {
     onListEvent(type, row) {
       row._btn = {}
       if (type == 'alg') {
-        this.fullscreenLoading = true
-        $listingPriceAlg().then(response => {
-          this.fullscreenLoading = false
-          this.$refs.tables.initDataList()
-        })
+        this.algListingPrice()
       } else if (type == 'release') {
         row._btn = custFormBtnList()
         this.$set(row, 'releaseTime', new Date())
         this.releaseRow = row
         this.dialogReleaseVisible = true
+      } else if (type == 'from') {
+        row._btn = custFormBtnList()
+        this.fromRow = row
+        this.dialogFromVisible = true
       } else {
         this.currRow = row
         this.dialogChangeVisible = true
       }
+    },
+    algListingPrice() {
+      this.fullscreenLoading = true
+      $listingPriceAlg().then(response => {
+        this.fullscreenLoading = false
+        this.$refs.tables.initDataList()
+      })
+    },
+    onListEventFrom(btnObj, row) {
+      if (btnObj.type == 'ok') {
+        this.$refs.from.$refs.fromForm.validate((valid) => {
+          if (valid) {
+            const params = {
+              gasstationId: row.gasstationId,
+              lngFromId: row.lngFromId,
+              lngFromName: row.lngFromName
+            }
+
+            $updateGasstation(params).then((res) => {
+              this.$message.success(res.message)
+
+              this.algListingPrice()
+            })
+          } else {
+            console.log('error submit!!')
+          }
+        })
+      }
+      this.dialogFromVisible = false
     },
     onListEventRelease(btnObj, row) {
       if (btnObj.type == 'ok') {

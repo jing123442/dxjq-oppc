@@ -112,6 +112,20 @@ export function utilsAutoAccount() {
     { value: 1, label: '是' }
   ]
 }
+// 圈存方式
+export function utilsAutoAccountType() {
+  return [
+    { value: 0, label: '手动圈存' },
+    { value: 1, label: '自动圈存' }
+  ]
+}
+// 开车类型
+export function utilsTruckType() {
+  return [
+    { value: 0, label: '自营' },
+    { value: 1, label: '挂靠' }
+  ]
+}
 export function utilsPrintStatus() {
   return [
     { value: 0, label: '离线' },

@@ -1,6 +1,10 @@
+import { utilsSource } from '@/utils/select'
 import { provinceAndCityData } from 'element-china-area-data'
 
 const select = {
+  listing: {
+    fromList: utilsSource()
+  },
   preferential: {
     addressList: provinceAndCityData
   },

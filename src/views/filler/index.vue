@@ -163,6 +163,7 @@ export default {
               this.$refs.tables.initDataList()
             })
           } else {
+            params.orgId = row.orgId
             $userOrgEdit(params).then(res => {
               this.$message.success('成功！')
 

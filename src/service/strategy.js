@@ -15,6 +15,11 @@ export async function $lngFormList (data) {
   return await R({ url: 'strategy/lng_from/all' })
 }
 
+// 根据gasstationId更新加气站基本信息
+export async function $updateGasstation (data) {
+  return await R({ url: 'strategy/gasstation/edit', data })
+}
+
 // 根据港口id,查询港口价格
 export async function $configPriceList (data) {
   return await R({ url: 'strategy/carriage_price/carriagePrice/' + data, method: 'get' })

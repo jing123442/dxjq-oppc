@@ -8,7 +8,7 @@ const columns = {
     { field: 'freight', name: '运费(元/吨)' },
     { field: 'profit', name: '加气站利润(元/公斤)' },
     { field: 'lngFromName', name: '液源地' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 190, fixed: 'right', list: [{ type: 'form', name: '液源地选择' }, { type: 'change', name: '变更记录' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 190, fixed: 'right', list: [{ type: 'from', name: '液源地选择' }, { type: 'change', name: '变更记录' }] }
   ],
   listingLog: [
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
@@ -19,6 +19,9 @@ const columns = {
     { field: 'lngFromName', name: '液源地' },
     { field: 'applyName', name: '操作人' },
     { field: 'applyDate', name: '操作时间' }
+  ],
+  listingFrom: [
+    { field: 'lngFromId', name: '液源地', placeholder: '请选择液源地！', show: { type: 'select', obj: 'fromList', subField: 'lngFromName' }, rules: [{ required: true, message: '请选择液源地', trigger: 'blur' }] }
   ],
   listingRelease: [
     { field: 'releaseTime', name: '发布时间', nameSpan: 7, show: { type: 'date-picker', model: 'date' }, rules: [{ required: true, message: '请选择发布时间', trigger: 'blur' }] }
