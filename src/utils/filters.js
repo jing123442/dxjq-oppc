@@ -49,7 +49,7 @@ const formateTData = (date, fmt) => {
     if (fmt == 'date') {
       return times[0]
     }
-    return times[0] + ' ' + (time[0] || '00') + ':' + (time[1] || '00') + (fmt == 'all' ? (':' + (time[1] || '00')) : '')
+    return times[0] + ' ' + (time[0] || '00') + ':' + (time[1] || '00') + (fmt == 'all' ? (':' + (time[2] || '00')) : '')
   }
 
   return ''

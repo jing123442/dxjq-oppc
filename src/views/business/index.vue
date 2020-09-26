@@ -14,7 +14,7 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
-    <el-dialog title="绑定手机号" :visible.sync="dialogBindVisible" width="30%">
+    <el-dialog title="bindTitle" :visible.sync="dialogBindVisible" width="30%">
       <el-form size="small" :model="formBindTel" label-width="80px" ref="formBindTel" v-if="dialogBindVisible" :rules="formBindTelRules">
         <el-form-item label="手机号" prop="tel" style="width: 90%;">
           <el-input v-model="formBindTel.tel"></el-input>
@@ -69,6 +69,7 @@ export default {
       dialogAddGasStationVisible: false,
       authRow: {},
       auth_page_column: [],
+      bindTitle: '绑定手机号',
       dialogBindVisible: false,
       codeBtn: {
         text: '获取验证码',
@@ -105,6 +106,7 @@ export default {
     onListEvent(type, row) {
       this.currType = type
       if (type === 'bind' || type === 'unbind') {
+        this.bindTitle = type === 'bind' ? '绑定手机号' : '解绑手机号'
         this.currRow = row
         this.dialogBindVisible = true
       } else if (isTypeof(type) == 'object' && type.field == 'protocolNo') {

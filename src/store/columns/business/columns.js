@@ -49,7 +49,7 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'check', name: '流水列表' }, { type: 'cash', name: '提现' }] }
   ],
   accountList: [
-    { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData', stype: 'format' },
+    { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format' },
     { field: 'billId', nameSpan: 5, name: '交易单号', search: { type: 'text', placeholder: '请输入交易单号' } },
     { field: 'changeAmount', nameSpan: 5, name: '交易类型' },
     { field: 'changeAmount', nameSpan: 5, name: '变化金额(元)' },

@@ -18,7 +18,7 @@ const columns = {
     { field: 'platformPrice', name: '平台挂牌价(元/公斤)' },
     { field: 'lngFromName', name: '液源地' },
     { field: 'applyName', name: '操作人' },
-    { field: 'applyDate', name: '操作时间' }
+    { field: 'applyDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all', width: 140 }
   ],
   listingFrom: [
     { field: 'lngFromId', name: '液源地', placeholder: '请选择液源地！', show: { type: 'select', obj: 'fromList', subField: 'lngFromName' }, rules: [{ required: true, message: '请选择液源地', trigger: 'blur' }] }
@@ -28,7 +28,7 @@ const columns = {
   ],
   departure: [
     { field: 'operatorName', name: '操作人', fixed: 'left', ispush: false },
-    { field: 'operatorDate', name: '操作时间', ispush: false },
+    { field: 'operatorDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'harbourPrice', name: '长城奥扬出港价(元/吨)', nameSpan: 8, show: { type: 'text' } }
   ],
   preferential: [
@@ -56,8 +56,8 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 140, fixed: 'right', list: [{ type: 'config', name: '配置' }, { type: 'change', name: '变更记录' }] }
   ],
   estimateLog: [
-    { field: 'operatorDate', name: '操作人', fixed: 'left' },
-    { field: 'operatorDate', name: '操作时间' },
+    { field: 'operatorName', name: '操作人', fixed: 'left' },
+    { field: 'operatorDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName' },
     { field: 'freight', name: '配置运费(元/吨)' },
     { field: 'calFreight', name: '计算运费(元/吨)' },
@@ -70,7 +70,7 @@ const columns = {
   ],
   freightLog: [
     { field: 'operatorName', name: '操作人', fixed: 'left' },
-    { field: 'operatorDate', name: '操作时间' },
+    { field: 'operatorDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'search', name: '查看' }] }
   ],
   mileage: [
@@ -85,15 +85,15 @@ const columns = {
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
     { field: 'mileage', name: '距液源地里程(公里)' },
     { field: 'operatorName', name: '操作人' },
-    { field: 'operatorDate', name: '操作时间' }
+    { field: 'operatorDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all', width: 140 }
   ],
   release: [
-    { field: 'releaseTime', name: '结算价发布时间', fixed: 'left' },
+    { field: 'releaseTime', name: '结算价发布时间', fixed: 'left', stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'applyName', name: '申请人', search: { type: 'text', field: 'keyWord', placeholder: '请输入申请人/操作人' } },
-    { field: 'applyDate', name: '申请时间' },
+    { field: 'applyDate', name: '申请时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'status', name: '状态', formatter: 'status' },
     { field: 'auditName', name: '审核人' },
-    { field: 'auditDate', name: '审核时间' },
+    { field: 'auditDate', name: '审核时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
     {
       field: 'useropts',
       stype: 'opt',

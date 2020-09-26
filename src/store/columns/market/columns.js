@@ -33,11 +33,13 @@ const columns = {
   ],
   sourceConfig: [
     { field: 'code', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'name', stype: 'mapping', name: '液源地', mapping: 'name', search: { type: 'text', placeholder: '请输入液源地' } },
-    { field: 'price', name: '液源价格(元/吨)' },
-    { field: 'operatorName', name: '操作人' },
-    { field: 'operatorTime', name: '操作时间', formatFun: 'formateTData', stype: 'format' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'editSelf', name: '编辑' }, { type: 'price', name: '配置价格' }, { type: 'record', name: '变更记录' }] }
+    { field: 'name', name: '液源地', search: { type: 'text', placeholder: '请输入液源地' }, show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入液源地名称', trigger: 'blur' }] },
+    { field: 'address', name: '详细地址', show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
+    { field: 'price', name: '当前液源价格', hide: true, show: { type: 'hide', value: 0, style: 'width: 90%;' } },
+    { field: 'operatorName', name: '操作人', ispush: false },
+    { field: 'operatorTime', name: '操作时间', ispush: false, formatFun: 'formateTData all', width: 140, stype: 'format' },
+    { field: 'pointAddress', name: '经纬度', hide: true, show: { type: 'map', ou: 2, mapKey: 'address', mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 100, list: [{ type: 'edit', name: '编辑' }] }
   ],
   sourceConfigPrice: [
     { field: 'name', name: '液源地', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
@@ -47,20 +49,20 @@ const columns = {
   sourceConfigEdit: [
     { field: 'name', name: '液源地名称', show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入液源地名称', trigger: 'blur' }] },
     { field: 'address', name: '详细地址', show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
-    { field: 'pointAddress', name: '经纬度', show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] }
+    { field: 'pointAddress', name: '经纬度', show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] }
   ],
   sourceConfigRecord: [
     { field: 'name', name: '液源地', fiexed: 'left' },
     { field: 'price', name: '液源价格(元/吨)' },
     { field: 'operatorName', name: '操作人' },
-    { field: 'operatorTime', name: '操作时间', formatFun: 'formateTData', stype: 'format' }
+    { field: 'operatorTime', name: '操作时间', formatFun: 'formateTData all', width: 140, stype: 'format' }
   ],
   carrierManConfig: [
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', hide: true, width: 50 },
     { field: 'orgName', name: '物流公司名称', nameSpan: 5, fixed: 'left', ispush: false, search: { type: 'text', placeholder: '请输入物流公司名称' }, show: { type: 'text', isDisabled: true, style: 'width: 90%;', placeholder: '请输入物流公司名称' } },
     { field: 'managerInfo', name: '营销合作经理', stype: 'mapping', mapping: 'managerName', nameSpan: 5, show: { type: 'select', obj: 'userList', mulField: { managerId: 0, managerName: 1, managerPhone: 2 }, iType: 'string', placeholder: '请选择' }, search: { type: 'text', placeholder: '请输入营销合作经理' } },
     { field: 'managerPhone', name: '营销合作经理电话', ispush: false },
-    { field: 'operateDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData' },
+    { field: 'operateDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'edit', name: '配置合作经理' }] }
   ],
   gasstationConfig: [
@@ -68,7 +70,7 @@ const columns = {
     { field: 'gasstationName', nameSpan: 5, name: '加气站名称', ispush: false, search: { type: 'text', placeholder: '请输入加气站名称' }, show: { type: 'text', isDisabled: true, style: 'width: 90%;', placeholder: '请输入加气站名称' } },
     { field: 'managerInfo', name: '营销合作经理', stype: 'mapping', mapping: 'managerName', nameSpan: 5, show: { type: 'select', obj: 'userList', mulField: { managerId: 0, managerName: 1, managerPhone: 2 }, iType: 'string', placeholder: '请选择' }, search: { type: 'text', placeholder: '请输入营销合作经理' } },
     { field: 'managerPhone', name: '营销合作经理电话', ispush: false },
-    { field: 'operateDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData' },
+    { field: 'operateDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'edit', name: '配置合作经理' }] }
   ]
 }

@@ -26,6 +26,14 @@ export default {
     return {
       isShow: false,
       queryCustURL: {
+        add: {
+          url: 'strategy/lng_from/add',
+          method: 'post'
+        },
+        edit: {
+          url: 'strategy/lng_from/update',
+          method: 'post'
+        },
         list: {
           url: 'strategy/lng_from/list',
           method: 'post',
@@ -34,7 +42,7 @@ export default {
             totalCount: ['data', 'total']
           }
         },
-        name: '液源地配置'
+        name: '液源地'
       },
       queryCustURLRecord: {
         list: {
@@ -47,7 +55,7 @@ export default {
         },
         name: '变更记录'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'addSelf', name: '添加液源地' }],
+      buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '添加液源地' }],
       axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } }),
       queryParamsRecord: '',

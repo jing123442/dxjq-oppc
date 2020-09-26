@@ -16,7 +16,7 @@ const columns = {
     { field: 'amount', name: '加气金额' },
     { field: 'gasstationFee', name: '服务费单价(元/公斤)' },
     { field: 'serviceFee', name: '服务费' },
-    { field: 'updateDate', name: '加气时间', formatFun: 'formateTData', stype: 'format' }
+    { field: 'updateDate', name: '加气时间', formatFun: 'formateTData all', width: 140, stype: 'format' }
   ],
   gasPrice: [
     { field: 'carrierOrgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
@@ -40,7 +40,7 @@ const columns = {
     { field: 'actualPrice', name: '单价' },
     { field: 'amount', name: '金额' },
     { field: 'discountAmount', name: '优惠金额' },
-    { field: 'updateDate', name: '支付时间', formatFun: 'formateTData', stype: 'format' }
+    { field: 'updateDate', name: '支付时间', formatFun: 'formateTData all', width: 140, stype: 'format' }
   ],
   gasPriceTruckList: [
     { field: 'carNumber', name: '车牌号', fixed: 'left', search: { type: 'text', placeholder: '请输入车牌号' } },
@@ -57,7 +57,7 @@ const columns = {
     { field: 'amount', name: '金额' },
     { field: 'discountAmount', name: '优惠金额' },
     { field: 'gasstationName', name: '加气站', search: { type: 'text', placeholder: '请输入加气站' } },
-    { field: 'updateDate', name: '支付时间', formatFun: 'formateTData', stype: 'format' }
+    { field: 'updateDate', name: '支付时间', formatFun: 'formateTData all', width: 140, stype: 'format' }
   ]
 }
 

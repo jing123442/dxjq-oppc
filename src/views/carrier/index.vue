@@ -100,21 +100,7 @@ export default {
       }
     },
     addCarEvent(row) {
-      this.addCarRow._btn = {
-        iShow: true,
-        list: [
-          {
-            bType: 'primary',
-            label: '确定',
-            icon: ''
-          },
-          {
-            bType: 'default',
-            label: '取消',
-            icon: ''
-          }
-        ]
-      }
+      this.addCarRow._btn = custFormBtnList()
       this.addCarRow.orgId = row.orgId
       this.addCarRow.orgName = row.orgName
       this.dialogAddCarVisible = true
@@ -125,33 +111,25 @@ export default {
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     },
-    onListEventAddCar(obj) {
-      if (obj.label === '确定') {
-        const self = this
+    onListEventAddCar(btnObj, row) {
+      if (btnObj.type === 'ok') {
         this.$refs.addCar.$children[0].validate(valid => {
           if (valid) {
             const params = {
               ...createParams(),
-              ...self.addCarRow,
-              purchaseDate: self.addCarRow.purchaseDate.split(' ')[0],
+              ...this.addCarRow,
+              purchaseDate: this.addCarRow.purchaseDate.split(' ')[0],
               engineNumber: ''
             }
             delete params._btn
             $carrierTruckAdd(params).then(res => {
-              if (res.code === 0) {
-                self.$message.success(res.message)
-                self.$refs.carrier.initDataList()
-                self.dialogAddCarVisible = false
-              } else {
-                self.$message.error(res.message)
-                self.dialogAddCarVisible = false
-              }
+              this.$message.success(res.message)
+              this.$refs.carrier.initDataList()
             })
           }
         })
-      } else {
-        this.dialogAddCarVisible = false
       }
+      this.dialogAddCarVisible = false
     },
     handleClick() {
       this.resetAuthPageCol()

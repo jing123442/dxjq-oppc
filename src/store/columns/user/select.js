@@ -4,17 +4,17 @@ const select = {
   op: {
     baseRole: utilsBaseRole([1, 2, 7]),
     status: utilsStatus(),
-    orgId: utilsDyOrgList()
+    orgId: utilsDyOrgList(0)
   },
   carrier: {
     baseRole: utilsBaseRole([5, 6]),
     status: utilsStatus(),
-    orgId: utilsDyOrgList()
+    orgId: utilsDyOrgList(2)
   },
   cashier: {
     baseRole: utilsBaseRole([3, 4]),
     status: utilsStatus(),
-    orgId: utilsDyOrgList()
+    orgId: utilsDyOrgList(1)
   }
 }
 

@@ -3,20 +3,20 @@ import { regionData } from 'element-china-area-data'
 
 const select = {
   firmList: {
-    orgId: utilsDyOrgList(),
+    orgId: utilsDyOrgList(1),
     cascaderAddress: regionData,
     status: utilsStatus(),
     authStatus: utilsAuthStatus(),
     identityType: utilsIdentityType()
   },
   info: {
-    orgId: utilsDyOrgList(),
+    orgId: utilsDyOrgList(1),
     status: utilsStatus(),
     cascaderAddress: regionData,
     address: untilsAddress()
   },
   account: {
-    orgId: utilsDyOrgList()
+    orgId: utilsDyOrgList(1)
   },
   accountList: {
     type: [
@@ -32,7 +32,7 @@ const select = {
     ]
   },
   updatePrice: {
-    orgId: utilsDyOrgList()
+    orgId: utilsDyOrgList(1)
   },
   printerList: {
     printStatus: utilsPrintStatus(),

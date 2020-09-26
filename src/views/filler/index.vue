@@ -14,6 +14,9 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
+    <el-dialog title="收银员信息" :visible.sync="dialogFillerUserVisible" :width="add_edit_dialog">
+      <em-table-list v-if="dialogFillerUserVisible" ref="recordList" :tableListName="'recordList'" :axios="axios" :queryCustURL="queryCustURLUser" :responseSuccess="response_success" :queryParam="queryParamsUser" :mode_list="mode_list" :page_status="page_status" :page_column="page_user_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -42,12 +45,25 @@ export default {
         },
         name: '加气站企业'
       },
+      queryCustURLUser: {
+        list: {
+          url: '/user/user/list',
+          method: 'post',
+          parse: {
+            tableData: ['data', 'records'],
+            totalCount: ['data', 'total']
+          }
+        },
+        name: '加气站企业'
+      },
       buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '增加企业' }],
       axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 1 } }),
+      queryParamsUser: null,
       dialogAddGasStationVisible: false,
       authRow: {},
-      auth_page_column: []
+      auth_page_column: [],
+      dialogFillerUserVisible: false
     }
   },
   computed: {
@@ -58,6 +74,7 @@ export default {
       page_column: 'filler_firmList_column',
       page_auth_column: 'filler_auth_column',
       page_s_auth_column: 'filler_s_auth_column',
+      page_user_column: 'filler_user_column',
       select_list: 'filler_firmList_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
@@ -70,20 +87,26 @@ export default {
   methods: {
     onListEvent(type, row) {
       this.currType = type
-      // 重置page_column值
-      this.resetAuthPageCol()
-
-      // 重置tab标签值
-      this.active = row && row.authType ? '' + row.authType : '2'
-      // 显示认证状态
-      this.authColor = row && row.authStatus == 2 ? 'no' : 'off'
-      // 是否显示dialog
-      this.dialogAddGasStationVisible = true
-      this.authRow = row
-      if (type === 'add_info' || type === 'gedit' || type === 'auth') {
-        this.authRow._btn = custFormBtnList()
-      } else {
+      if (type == 'search') {
         this.authRow._btn = {}
+        this.queryParamsUser = queryDefaultParams(this, { type: 2, key: 'param', value: { userType: 1, baseRole: 4, orgId: row.orgId } })
+        this.dialogFillerUserVisible = true
+      } else {
+        // 重置page_column值
+        this.resetAuthPageCol()
+
+        // 重置tab标签值
+        this.active = row && row.authType ? '' + row.authType : '2'
+        // 显示认证状态
+        this.authColor = row && row.authStatus == 2 ? 'no' : 'off'
+        // 是否显示dialog
+        this.dialogAddGasStationVisible = true
+        this.authRow = row
+        if (type === 'add_info' || type === 'gedit' || type === 'auth') {
+          this.authRow._btn = custFormBtnList()
+        } else {
+          this.authRow._btn = {}
+        }
       }
     },
     handleClick() {

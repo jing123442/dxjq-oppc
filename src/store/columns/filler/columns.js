@@ -11,7 +11,7 @@ const columns = {
     { field: 'protocolNo', name: '转账协议', stype: 'format', formatFun: 'tableStatusToLabel' },
     { field: 'contractNo', name: '提现协议', stype: 'format', formatFun: 'tableStatusToLabel' },
     { field: 'legalPhone', name: '绑定验证手机号' },
-    { field: 'createDate', name: '创建时间', stype: 'format', formatFun: 'formateTData' },
+    { field: 'createDate', name: '创建时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
     {
       field: 'useropts',
       stype: 'opt',
@@ -70,6 +70,13 @@ const columns = {
     { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2 } },
     { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 }, rules: [{ required: true, message: '请选择企业状态', trigger: 'blur' }] }
   ],
+  fillerUser: [
+    { field: 'userName', name: '用户姓名', fixed: 'left' },
+    { field: 'userCode', name: '登录账号' },
+    { field: 'mobile', name: '手机号码' },
+    { field: 'lastLoginDate', name: '最后登录时间' },
+    { field: 'status', name: '账号状态', formatter: 'status' }
+  ],
   info: [
     { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
     { field: 'gasstationName', name: '加气站名称', show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加气站名称' }, search: { type: 'text', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
@@ -101,7 +108,7 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 100, list: [{ type: 'check', name: '流水列表' }] }
   ],
   accountList: [
-    { field: 'createDate', name: '交易时间', fixed: 'left', stype: 'format', formatFun: 'formateTData', search: { type: 'date-picker', model: 'daterange' } },
+    { field: 'createDate', name: '交易时间', fixed: 'left', stype: 'format', formatFun: 'formateTData all', width: 140, search: { type: 'date-picker', model: 'daterange' } },
     { field: 'billId', name: '交易单号', show: { type: 'text' }, search: { type: 'text', placeholder: '请输入交易单号' } },
     { field: 'type', name: '交易类型', formatter: 'type' },
     { field: 'changeAmount', name: '变化金额(元)' },
@@ -118,14 +125,14 @@ const columns = {
     { field: 'gasstationName', nameSpan: 5, name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'listPrice', nameSpan: 5, name: '当前挂牌价(元/公斤)' },
     { field: 'createrName', name: '操作人' },
-    { field: 'createDate', name: '操作时间', stype: 'format', formatFun: 'formateTData' }
+    { field: 'createDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all', width: 140 }
   ],
   serviceChangeRecord: [
     { field: 'orgName', name: '加气站企业名称', fixed: 'left' },
     { field: 'gasstationName', name: '加气站名称', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'platformFee', name: '平台服务费(元/公斤)' },
     { field: 'gasstationFee', name: '加气站服务费(元/公斤)' },
-    { field: 'createDate', name: '操作时间', stype: 'format', formatFun: 'formateTData' },
+    { field: 'createDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'createrName', name: '操作人' }
   ],
   updatePrice: [
@@ -139,7 +146,7 @@ const columns = {
     { field: 'orgName', name: '加气站企业名称', fixed: 'left' },
     { field: 'gasstationName', name: '加气站名称' },
     { field: 'listPrice', name: '当前挂牌价（元/公斤）' },
-    { field: 'createDate', name: '操作时间', stype: 'format', formatFun: 'formateTData' },
+    { field: 'createDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'createrName', name: '操作人' }
   ],
   gasStockList: [
@@ -154,7 +161,7 @@ const columns = {
     { field: 'note', name: '摘要', nameSpan: 6, show: { type: 'textarea', placeholder: '请输入调整库存重量摘要' } }
   ],
   gasStockListRecord: [
-    { field: 'createDate', name: '时间', fixed: 'left', formatFun: 'formateTData', stype: 'format' },
+    { field: 'createDate', name: '时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format' },
     { field: 'stockType', name: '变更类型', formatter: 'stockType' },
     { field: 'quantity', name: '变更量(公斤)' },
     { field: 'stock', name: '变更后库存(公斤)' },

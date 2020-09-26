@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { axiosRequestParams } from '@/utils/tools'
+import { axiosRequestParams, custFormBtnList } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import {
   $userFind,
@@ -15,7 +15,8 @@ export default {
   data() {
     return {
       axios: axiosRequestParams(this),
-      row: {}
+      row: {},
+      initRow: {}
     }
   },
   computed: {
@@ -32,36 +33,22 @@ export default {
       const params = {
         userId: JSON.parse(localStorage.getItem('wopuser')).user_id
       }
-      const self = this
       $userFind(params).then(res => {
         if (res.code === 0) {
-          self.row = res.data.user
-          self.row._btn = {
-            iShow: true,
-            list: [{
-              bType: 'primary',
-              label: '确认修改',
-              icon: ''
-            }, {
-              bType: 'primary',
-              label: '取消',
-              icon: ''
-            }]
-          }
+          this.initRow = Object.assign({}, res.data.user)
+          this.row = res.data.user
+          this.row._btn = custFormBtnList()
         }
       })
     },
     onListEvent(obj) {
-      const params = { ...this.row }
-      const self = this
-      if (obj.label === '确认修改') {
-        console.log(params)
+      if (obj.type === 'ok') {
+        const params = { ...this.row }
+        if (this.initRow.mobile == params.mobile) {
+          delete params.mobile
+        }
         $userEdit(params).then(res => {
-          if (res.code === 0) {
-            self.$message.success(res.message)
-          } else {
-            self.$message.error(res.message)
-          }
+          this.$message.success(res.message)
         })
       } else {
         this.$router.push('/home/index')

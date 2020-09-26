@@ -3,7 +3,7 @@ import { regionData } from 'element-china-area-data'
 
 const select = {
   logistics: {
-    orgId: utilsDyOrgList(),
+    orgId: utilsDyOrgList(2),
     status: utilsStatus(),
     authStatus: utilsAuthStatus(),
     cascaderAddress: regionData,
@@ -12,12 +12,14 @@ const select = {
     identityType: utilsIdentityType()
   },
   firmAccount: {
-    orgId: utilsDyOrgList(),
+    orgId: utilsDyOrgList(2),
     autoAccount: utilsAutoAccount()
   },
   vehicle: {
-    orgId: utilsDyOrgList(),
+    orgId: utilsDyOrgList(2),
     status: utilsStatus(),
+    truckType: utilsTruckType(),
+    autoAccount: utilsAutoAccountType(),
     driverList: utilsDriverList()
   },
   truckAccount: {},
