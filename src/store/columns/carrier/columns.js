@@ -148,14 +148,13 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'detail', name: '流水列表' }] }
   ],
   truckAccountList: [
-    { field: 'id', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgName', name: '公司名称' },
-    { field: 'orderId', name: '单据流水id', search: { type: 'text', placeholder: '请输入单据流水id' } },
-    { field: 'changeAmount', nameSpan: 5, name: '变化金额' },
-    { field: 'accountBalance', nameSpan: 5, name: '变化后账户金额' },
-    { field: 'createrName', nameSpan: 5, name: '创建人' },
-    { field: 'createDate', nameSpan: 5, name: '创建时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
-    { field: 'note', nameSpan: 5, name: '摘要' }
+    { field: 'createDate', name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format' },
+    { field: 'orderId', name: '交易单号', search: { type: 'text', placeholder: '请输入交易单号' } },
+    { field: 'type', name: '交易类型', formatter: 'type' },
+    { field: 'changeAmount', name: '变化金额(元)' },
+    { field: 'accountBalance', name: '变化后账户金额(元)' },
+    { field: 'note', name: '摘要' },
+    { field: 'orderId', name: '订单编号' }
   ],
   rechargeRecord: [
     { field: 'rechargeOrderId', name: '订单编号', fixed: 'left', search: { type: 'text', placeholder: '请输入充值方或订单编号' } },
