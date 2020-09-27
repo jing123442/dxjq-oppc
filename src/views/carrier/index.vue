@@ -106,7 +106,7 @@ export default {
       this.dialogAddCarVisible = true
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { orgType: 0 } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { orgType: 2 } })
 
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
@@ -190,7 +190,7 @@ export default {
           })
 
           params.authType = this.active
-          params.orgType = 0
+          params.orgType = 2
           if (this.currType === 'add_info') {
             $userOrgAdd(params).then(res => {
               this.$message.success('成功！')
