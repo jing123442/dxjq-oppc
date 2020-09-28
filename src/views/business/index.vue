@@ -110,13 +110,13 @@ export default {
         this.currRow = row
         this.dialogBindVisible = true
       } else if (isTypeof(type) == 'object' && type.field == 'protocolNo') {
-        $signBalanceProtocol({ orgId: row.orgId, source: 2 }).then(response => {
+        $signBalanceProtocol({ orgId: row.orgId, source: 2, jumpUrl: window.location.href }).then(response => {
           if (response.code === 0) {
             window.open(response.data)
           }
         })
       } else if (isTypeof(type) == 'object' && type.field == 'contractNo') {
-        $signContract({ orgId: row.orgId, source: 2 }).then(response => {
+        $signContract({ orgId: row.orgId, source: 2, jumpUrl: window.location.href }).then(response => {
           if (response.code === 0) {
             window.open(response.data)
           }

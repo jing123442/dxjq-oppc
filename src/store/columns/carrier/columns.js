@@ -69,7 +69,7 @@ const columns = {
   ],
   firmAccountList: [
     { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: 'daterange' } },
-    { field: 'billId', name: '交易单号', show: { type: 'text' }, search: { type: 'text', placeholder: '请输入交易单号' } },
+    /* { field: 'billId', name: '交易单号', show: { type: 'text' }, search: { type: 'text', placeholder: '请输入交易单号' } }, */
     { field: 'type', name: '交易类型', formatter: 'type' },
     { field: 'changeAmount', nameSpan: 5, name: '变化金额(元)' },
     { field: 'accountBalance', nameSpan: 5, name: '变化后账户金额(元)' },
