@@ -1,6 +1,7 @@
 <template>
   <div class="template-main">
-    <el-tabs v-model="active" type="card" @tab-click="handleClick">
+    <div v-if="tabsList.length <= 0" class="text-content">请先配置液源地</div>
+    <el-tabs v-else v-model="active" type="card" @tab-click="handleClick">
       <el-tab-pane v-for="(item, index) in tabsList" :key="index" :label="item.name" :name="index.toString()">
         <el-row :gutter="10" style="margin: 0">
           <el-col :span="12">
@@ -121,7 +122,7 @@ export default {
       response_success: 'response_success'
     }),
     currLngForm() {
-      return this.tabsList[this.active]
+      return this.tabsList[this.active] || {}
     }
   },
   created() {

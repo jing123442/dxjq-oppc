@@ -196,3 +196,11 @@ export default {
     Vue.prototype.callbackPagesInfo = (_this) => callbackPagesInfo(_this)
   }
 } */
+
+export function routeImport() {
+  if (process.env.NODE_ENV == 'prod') {
+    return './product.js'
+  } else {
+    return './development.js'
+  }
+}

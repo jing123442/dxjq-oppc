@@ -2,8 +2,6 @@ import Vue from 'vue'
 import Layout from '@/views/layout/Layout'
 import { getLocalStorage } from '@/utils/storage'
 import VueRouter from 'vue-router'
-import driver from './driver.js'
-import Cashier from './cashier.js'
 import Carrier from './carrier.js'
 import Filler from './filler.js'
 import Price from './price.js'
@@ -12,10 +10,9 @@ import Settlement from './settlement.js'
 import User from './user.js'
 import Mine from './mine.js'
 import Business from './business.js'
-import Component from './component.js'
 Vue.use(VueRouter)
 
-const _import = require('./_import_' + process.env.NODE_ENV)
+const _import = process.env.NODE_ENV == 'prod' ? require('./_product') : require('./_development')
 
 const routes = [
   {
@@ -43,7 +40,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes: [...routes, ...Mine, ...User, ...Business, ...driver, ...Cashier, ...Carrier, ...Filler, ...Price, ...Market, ...Settlement, ...Component]
+  routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Market, ...Settlement]
 })
 router.beforeEach((to, from, next) => {
   const woptoken = getLocalStorage('woptoken')

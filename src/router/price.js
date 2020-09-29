@@ -1,5 +1,5 @@
 import Layout from '@/views/layout/Layout'
-const _import = require('./_import_' + process.env.NODE_ENV)
+const _import = process.env.NODE_ENV == 'prod' ? require('./_product') : require('./_development')
 
 export default [
   {
