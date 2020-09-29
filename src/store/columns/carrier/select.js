@@ -1,4 +1,4 @@
-import { utilsStatus, utilsTruckType, utilsAutoAccountType, utilsAuthStatus, utilsDyOrgList, utilsAutoAccount, utilsAccountType, utilsOrderStatus, utilsDriverList, utilsIdentityType } from '@/utils/select'
+import { utilsStatus, utilsTruckType, utilsAutoAccountType, utilsAuthStatus, utilsDyOrgList, utilsAutoAccount, utilsAccountType, utilsOrderStatus, utilsDriverList, utilsIdentityType, utilsTradeType } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
@@ -13,7 +13,8 @@ const select = {
   },
   firmAccount: {
     orgId: utilsDyOrgList(2),
-    autoAccount: utilsAutoAccount()
+    autoAccount: utilsAutoAccount(),
+    type: utilsTradeType()
   },
   vehicle: {
     orgId: utilsDyOrgList(2),
@@ -23,11 +24,7 @@ const select = {
     driverList: utilsDriverList()
   },
   truckAccount: {
-    type: [
-      { value: 1, label: '加气' },
-      { value: 2, label: '圈入/充值' },
-      { value: 3, label: '圈出' }
-    ]
+    type: utilsTradeType()
   },
   rechargeRecord: {
     utilsCheck: [

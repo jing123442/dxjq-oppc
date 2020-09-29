@@ -14,7 +14,7 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
-    <el-dialog title="bindTitle" :visible.sync="dialogBindVisible" width="30%">
+    <el-dialog :title="bindTitle" :visible.sync="dialogBindVisible" width="30%">
       <el-form size="small" :model="formBindTel" label-width="80px" ref="formBindTel" v-if="dialogBindVisible" :rules="formBindTelRules">
         <el-form-item label="手机号" prop="tel" style="width: 90%;">
           <el-input v-model="formBindTel.tel"></el-input>

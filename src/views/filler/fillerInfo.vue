@@ -58,7 +58,7 @@ export default {
         page: 1,
         size: 10,
         param: {
-          orgType: 0
+          orgType: 1
         }
       })
     }

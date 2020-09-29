@@ -65,8 +65,8 @@ const columns = {
   ],
   freight: [
     { field: 'beginRange', stype: 'fields', fieldList: ['beginRange', 'endRange'], sign: ' ≤ X < ', name: '里程区间(公里)', fixed: 'left' },
-    { field: 'startPrice', name: '起步价(元/吨)' },
-    { field: 'rate', name: '变动费率(元/吨)' }
+    { field: 'startPrice', name: '起步价(元/吨/公里)' },
+    { field: 'rate', name: '变动费率(元/吨/公里)' }
   ],
   freightLog: [
     { field: 'operatorName', name: '操作人', fixed: 'left' },

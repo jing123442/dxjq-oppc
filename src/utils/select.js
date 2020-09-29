@@ -142,6 +142,18 @@ export function utilsVoiceStatus() {
   ]
 }
 
+export function utilsTradeType() {
+  return [
+    { value: 1, label: '充值' },
+    { value: 2, label: '圈出' },
+    { value: 3, label: '圈入' },
+    { value: 4, label: '提现' },
+    { value: 5, label: '收入' },
+    { value: 6, label: '服务费' },
+    { value: 7, label: '平台费' }
+  ]
+}
+
 export function untilsMarketingManList() {
   // const params = {
   //   page: 1, param: { baseRole: 7, status: 0, userType: 0 }, size: 100

@@ -111,6 +111,8 @@ const columns = {
     { field: 'createDate', name: '交易时间', fixed: 'left', stype: 'format', formatFun: 'formateTData all', width: 140, search: { type: 'date-picker', model: 'daterange' } },
     { field: 'billId', name: '交易单号', show: { type: 'text' }, search: { type: 'text', placeholder: '请输入交易单号' } },
     { field: 'type', name: '交易类型', formatter: 'type' },
+    { field: 'anotherAccount', name: '对方账号' },
+    { field: 'anotherName', name: '对方账户名称' },
     { field: 'changeAmount', name: '变化金额(元)' },
     { field: 'accountBalance', name: '变化后账户金额(元)' },
     { field: 'note', name: '摘要' },
@@ -175,8 +177,8 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: params => lngPlan(params) }
   ],
   lngPlanDetail: [
-    { field: 'orgName', nameSpan: 6, name: '加气站企业名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'gasstationName', nameSpan: 6, name: '加气站名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
+    /* { field: 'orgName', nameSpan: 6, name: '加气站企业名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } }, */
+    { field: 'gasstationName', nameSpan: 3, lg: 24, xl: 24, inputSpan: 21, name: '加气站名称', show: { type: 'text', isDisabled: true, style: 'width: 96%;' } },
     { field: 'downloadContactName', nameSpan: 6, name: '卸车联系人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
     { field: 'downloadContactPhone', nameSpan: 6, name: '卸车联系人电话', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
     { field: 'planTime', nameSpan: 6, name: '期望送达时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },

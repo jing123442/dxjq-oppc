@@ -1,7 +1,7 @@
 const columns = {
   rebate: [
-    { field: 'beginRange', stype: 'fields', fieldList: ['beginRange', 'endRange'], sign: ' ≤ X < ', name: '优惠返利区间(吨)', fixed: 'left' },
-    { field: 'rebate', name: '优惠返利金额(分/吨)' }
+    { field: 'beginRange', stype: 'fields', fieldList: ['beginRange', 'endRange'], sign: ' ≤ X < ', name: '优惠区间(吨)', fixed: 'left' },
+    { field: 'rebate', name: '优惠金额(元/吨)' }
   ],
   rebateLog: [
     { field: 'operatorName', name: '操作人', fixed: 'left' },

@@ -24,7 +24,7 @@ export default {
         name: '加气站资金账户管理'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } })
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 1 } })
     }
   },
   computed: {

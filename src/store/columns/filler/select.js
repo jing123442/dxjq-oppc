@@ -1,4 +1,4 @@
-import { utilsStatus, utilsAuthStatus, utilsPlanStatus, utilsSource, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus, utilsIdentityType } from '@/utils/select'
+import { utilsStatus, utilsAuthStatus, utilsPlanStatus, utilsSource, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus, utilsIdentityType, utilsTradeType } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
@@ -19,9 +19,7 @@ const select = {
     orgId: utilsDyOrgList(1)
   },
   accountList: {
-    type: [
-      { value: 1, label: '加气服务费' }
-    ]
+    type: utilsTradeType()
   },
   price: {},
   gasStockList: {

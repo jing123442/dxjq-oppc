@@ -1,4 +1,4 @@
-import { utilsStatus, utilsAuthStatus, utilsIdentityType } from '@/utils/select'
+import { utilsStatus, utilsAuthStatus, utilsIdentityType, utilsTradeType } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
@@ -14,11 +14,7 @@ const select = {
     ]
   },
   accountList: {
-    type: [
-      { value: 1, label: '充值' },
-      { value: 2, label: '圈存' },
-      { value: 3, label: '卡车账户资金归集' }
-    ]
+    type: utilsTradeType()
   }
 }
 

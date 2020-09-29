@@ -81,7 +81,7 @@ export function menuList() {
     name: 'market',
     meta: { title: '营销管理', icon: 'icon-yingxiaoguanli', class: 'em-iconfont', noCache: false },
     children: [
-      { path: '/index', name: 'index', meta: { title: '优惠返利配置', noCache: false } },
+      { path: '/index', name: 'index', meta: { title: '专项优惠配置', noCache: false } },
       { path: '/cost', name: 'cost', meta: { title: '长城奥扬费用', noCache: false } },
       { path: '/profit', name: 'profit', meta: { title: '加气站利润', noCache: false } },
       { path: '/marketingManager', name: 'marketingManager', meta: { title: '营销合作经理配置', noCache: false } },
