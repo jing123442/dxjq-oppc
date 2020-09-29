@@ -23,3 +23,7 @@ export async function $unbindPhone (data) {
 export async function $bindPhone (data) {
   return await R({ url: 'pay/allinpay/bindPhone', data })
 }
+
+export async function $orgWithdraw (data) {
+  return await R({ url: 'pay/allinpay/withdrawApply', data })
+}

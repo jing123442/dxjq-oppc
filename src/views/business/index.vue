@@ -149,9 +149,7 @@ export default {
         verificationCodeType: this.currType == 'bind' ? 9 : 6
       }
       $sendVerificationCode(params).then(res => {
-        if (res.code === 0) {
-          this.$message.success(res.message)
-        }
+        this.$message.success(res.message)
       })
       let time = 60
       this.codeBtn.text = time + 's'
