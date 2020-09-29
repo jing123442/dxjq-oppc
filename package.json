@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "http-server ./dist",
     "serve": "vue-cli-service serve",
     "build-dev": "vue-cli-service build --mode dev",
-    "build-test": "vue-cli-service build --mode test",
+    "build-test": "vue-cli-service build --mode tests",
     "build-prod": "vue-cli-service build --mode prod",
     "lint": "vue-cli-service lint"
   },
@@ -40,6 +41,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
+    "http-server": "^0.12.3",
     "node-sass": "^4.12.0",
     "postcss-px-to-viewport": "^1.1.1",
     "sass-loader": "^8.0.2",
