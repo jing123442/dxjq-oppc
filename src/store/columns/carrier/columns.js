@@ -99,7 +99,7 @@ const columns = {
     { field: 'amount', name: '圈存金额', show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入圈存金额！', trigger: 'blur' }] }
   ],
   vehicle: [
-    { field: 'orgId', name: '公司名称', stype: 'mapping', mapping: 'orgName', fixed: 'left', show: { type: 'hide', subField: 'orgName' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
+    { field: 'orgId', name: '公司名称', stype: 'mapping', mapping: 'orgName', fixed: 'left', show: { type: 'hide', subField: 'orgName' }, search: { type: 'text', field: 'orgName', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
     { field: 'truckId', name: '', hide: true },
     { field: 'truckName', name: '卡车名称', hide: true, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入卡车名称' }, rules: [{ required: true, message: '请输入卡车名称', trigger: 'blur' }] },
     { field: 'carNumber', name: '车牌号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入车牌号' }, search: { type: 'text', placeholder: '请输入车牌号' }, rules: [{ required: true, message: '请输入车牌号', trigger: 'blur' }] },

@@ -123,7 +123,7 @@ export function utilsAutoAccountType() {
 export function utilsTruckType() {
   return [
     { value: 0, label: '自营' },
-    { value: 1, label: '挂靠' }
+    { value: 1, label: '其他' }
   ]
 }
 export function utilsPrintStatus() {
