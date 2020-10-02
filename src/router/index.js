@@ -12,7 +12,7 @@ import Mine from './mine.js'
 import Business from './business.js'
 Vue.use(VueRouter)
 
-const _import = process.env.NODE_ENV == 'prod' ? require('./_product') : require('./_development')
+const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : require('./_development')
 
 const routes = [
   {
@@ -34,7 +34,7 @@ const routes = [
     redirect: '/home/index',
     meta: { noCache: false, title: '首页', icon: 'icon-gongnengguanli' },
     children: [
-      { path: 'index', component: _import('home/index'), name: 'home', meta: { title: '首页', icon: 'icon-gongnengguanli', noCache: false } }
+      { path: 'index', component: inImport('home/index'), name: 'home', meta: { title: '首页', icon: 'icon-gongnengguanli', noCache: false } }
     ]
   }
 ]

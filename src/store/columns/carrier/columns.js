@@ -7,7 +7,7 @@ const columns = {
     { field: 'authStatus', name: '认证状态', formatter: 'authStatus' },
     { field: 'protocolNo', name: '转账协议', stype: 'format', formatFun: 'tableStatusToLabel' },
     { field: 'contractNo', name: '提现协议', stype: 'format', formatFun: 'tableStatusToLabel' },
-    { field: 'legalPhone', name: '验证码手机号' },
+    { field: 'bindPhone', name: '验证码手机号' },
     {
       field: 'useropts',
       stype: 'opt',

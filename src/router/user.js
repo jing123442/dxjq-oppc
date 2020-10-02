@@ -1,5 +1,5 @@
 import Layout from '@/views/layout/Layout'
-const _import = process.env.NODE_ENV == 'prod' ? require('./_product') : require('./_development')
+const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : require('./_development')
 
 export default [
   {
@@ -9,9 +9,9 @@ export default [
     redirect: '/user/index',
     meta: { title: '用户管理' },
     children: [
-      { path: 'index', component: _import('user/index'), name: 'user', meta: { title: '平台用户管理', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'carrier', component: _import('user/carrier'), name: 'carrier', meta: { title: '物流用户管理', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'cashier', component: _import('user/cashier'), name: 'cashier', meta: { title: '加气站用户管理', icon: 'icon-gongnengguanli', noCache: false } }
+      { path: 'index', component: inImport('user/index'), name: 'user', meta: { title: '平台用户管理', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'carrier', component: inImport('user/carrier'), name: 'carrier', meta: { title: '物流用户管理', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'cashier', component: inImport('user/cashier'), name: 'cashier', meta: { title: '加气站用户管理', icon: 'icon-gongnengguanli', noCache: false } }
     ]
   }
 ]

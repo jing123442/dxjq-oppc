@@ -10,7 +10,7 @@ const columns = {
     { field: 'authStatus', name: '认证状态', formatter: 'authStatus' },
     { field: 'protocolNo', name: '转账协议', stype: 'format', formatFun: 'tableStatusToLabel' },
     { field: 'contractNo', name: '提现协议', stype: 'format', formatFun: 'tableStatusToLabel' },
-    { field: 'legalPhone', name: '绑定验证手机号' },
+    { field: 'bindPhone', name: '绑定验证手机号' },
     { field: 'createDate', name: '创建时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
     {
       field: 'useropts',
