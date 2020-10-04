@@ -25,5 +25,5 @@ export async function $bindPhone (data) {
 }
 
 export async function $orgWithdraw (data) {
-  return await R({ url: 'pay/allinpay/withdrawApply', data })
+  return await R({ url: 'pay/allinpay/withdraw_apply', data })
 }

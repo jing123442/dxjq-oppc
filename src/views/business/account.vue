@@ -33,7 +33,8 @@
 <script>
 import { axiosRequestParams, isTypeof, callbackPagesInfo, custFormBtnList } from '@/utils/tools'
 import { $userOrgFind } from '@/service/user'
-import { $sendVerificationCode, $orgWithdraw } from '@/service/pay'
+import { $orgWithdraw } from '@/service/pay'
+import { $verifySendMessage } from '@/service/message'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -121,7 +122,7 @@ export default {
     btnClickEvent(btnObj) {
       if (btnObj.type == 'ok') {
         this.$refs.formWithdraw.validate(valid => {
-          if (!valid) {
+          if (valid) {
             if (this.formWithdraw.amount > this.formWithdraw.balance) {
               this.$message.error('提现金额大于账号金额！')
               return false
@@ -129,9 +130,10 @@ export default {
               this.$message.error('提现金额大于0！')
               return false
             }
+            console.log(this.formWithdraw)
             const params = {
               amount: this.formWithdraw.amount,
-              legalBankno: this.formWithdraw.account,
+              legalBankno: this.formWithdraw.orgAccount,
               note: this.formWithdraw.note,
               orgId: this.formWithdraw.orgId,
               orgName: this.formWithdraw.orgName,
@@ -154,11 +156,10 @@ export default {
     },
     getCodeEvent() {
       const params = {
-        bindPhone: this.formWithdraw.tel,
-        orgId: this.formWithdraw.orgId,
-        verificationCodeType: 6
+        mobile: this.formWithdraw.tel,
+        type: 5
       }
-      $sendVerificationCode(params).then(res => {
+      $verifySendMessage(params).then(res => {
         this.$message.success(res.message)
       })
       let time = 60
