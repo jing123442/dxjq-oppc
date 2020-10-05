@@ -50,7 +50,7 @@ const columns = {
   ],
   accountList: [
     { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format' },
-    { field: 'billId', nameSpan: 5, name: '交易单号', search: { type: 'text', placeholder: '请输入交易单号' } },
+    /* { field: 'billId', nameSpan: 5, name: '交易单号', search: { type: 'text', placeholder: '请输入交易单号' } }, */
     { field: 'type', nameSpan: 5, name: '交易类型', formatter: 'type' },
     { field: 'anotherAccount', name: '对方账号' },
     { field: 'anotherName', name: '对方账户名称' },

@@ -24,7 +24,11 @@ const select = {
     driverList: utilsDriverList()
   },
   truckAccount: {
-    type: utilsTradeType()
+    type: [
+      { value: 1, label: '加气' },
+      { value: 2, label: '圈入/充值' },
+      { value: 3, label: '圈出' }
+    ]
   },
   rechargeRecord: {
     utilsCheck: [

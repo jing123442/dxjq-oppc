@@ -153,10 +153,8 @@ const columns = {
   ],
   truckAccountList: [
     { field: 'createDate', name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format' },
-    { field: 'orderId', name: '交易单号', search: { type: 'text', placeholder: '请输入交易单号' } },
+    /* { field: 'orderId', name: '交易单号', search: { type: 'text', placeholder: '请输入交易单号' } }, */
     { field: 'type', name: '交易类型', formatter: 'type' },
-    { field: 'anotherAccount', name: '对方账号' },
-    { field: 'anotherName', name: '对方账户名称' },
     { field: 'changeAmount', name: '变化金额(元)' },
     { field: 'accountBalance', name: '变化后账户金额(元)' },
     { field: 'note', name: '摘要' },
