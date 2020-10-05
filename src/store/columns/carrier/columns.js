@@ -58,14 +58,15 @@ const columns = {
   firmAccount: [
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, ispush: false },
     { field: 'orgName', stype: 'mapping', name: '公司名称', ispush: false, mapping: 'orgName', show: { type: 'text', isDisabled: true, remote: true, subField: 'orgName', obj: 'orgId', style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
-    { field: 'accountId', name: '公司账户管理' },
+    { field: 'accountId', name: '账户' },
     { field: 'balance', name: '账户余额（元）', ispush: false },
-    { field: 'autoAccount', name: '是否自动圈存', formatter: 'autoAccount', nameSpan: 5, show: { type: 'radio', value: 0, obj: 'autoAccount', placeholder: '请选择是否自动圈存' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
-    { field: 'createDate', name: '创建时间', ispush: false, formatFun: 'formateTData all', width: 140, stype: 'format' },
+    // { field: 'autoAccount', name: '是否自动圈存', formatter: 'autoAccount', nameSpan: 5, show: { type: 'radio', value: 0, obj: 'autoAccount', placeholder: '请选择是否自动圈存' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
+    // { field: 'createDate', name: '创建时间', ispush: false, formatFun: 'formateTData all', width: 140, stype: 'format' },
     { field: 'accountPassword', hide: true },
     { field: 'updater', hide: true },
     { field: 'updaterName', hide: true },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'load', name: '圈存' }, { type: 'accState', name: '流水列表' }, { type: 'edit', name: '编辑' }] }
+    // { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'load', name: '圈存' }, { type: 'accState', name: '流水列表' }, { type: 'edit', name: '编辑' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'accState', name: '流水列表' }] }
   ],
   firmAccountList: [
     { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: 'daterange' } },
@@ -114,7 +115,8 @@ const columns = {
     { field: 'status', name: '车辆状态', formatter: 'status', show: { type: 'radio', value: 0, obj: 'status', placeholder: '请选择车辆状态' }, search: { type: 'select', obj: 'status', placeholder: '请选择车辆状态' }, rules: [{ required: true, message: '请选择车辆状态！', trigger: 'blur' }] },
     { field: 'autoAccount', name: '圈存方式', hide: true, show: { type: 'radio', obj: 'autoAccount', value: 0, placeholder: '请选择圈存方式' }, rules: [{ required: true, message: '请选择圈存方式', trigger: 'blur' }] },
     { field: 'truckDriverList', name: '当前绑定司机', ispush: false, formatter: '', stype: 'list-tag', porps: { name: 'driverName' } },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 240, list: [{ type: 'bind', name: '绑定司机' }, { type: 'edit', name: '编辑' }, { type: 'detail', name: '详情' }, { type: 'money', name: '资金归集' }] }
+    // { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 240, list: [{ type: 'bind', name: '绑定司机' }, { type: 'edit', name: '编辑' }, { type: 'detail', name: '详情' }, { type: 'money', name: '资金归集' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 240, list: [{ type: 'bind', name: '绑定司机' }, { type: 'edit', name: '编辑' }, { type: 'detail', name: '详情' }] }
   ],
   vehicle_detail: [
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
