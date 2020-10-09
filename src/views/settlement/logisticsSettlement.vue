@@ -83,21 +83,30 @@ export default {
       }
     },
     onListEvent(type, row) {
+      const finds = Object.assign({}, this.$refs.logisticsTables.finds)
+
+      finds.orgId = row.carrierOrgId
       switch (type) {
         case 'export':
           this.excelDownload()
           break
         case 'recharge':
-          var orgId = row.carrierOrgId
-          this.$router.push(`logisticsSettlement/rechargeList?orgId=${orgId}`)
+          this.$router.push({
+            path: 'logisticsSettlement/rechargeList',
+            query: finds
+          })
           break
         case 'filling':
-          var carrierOrgId = row.carrierOrgId
-          this.$router.push(`logisticsSettlement/gasOrderList?carrierOrgId=${carrierOrgId}`)
+          this.$router.push({
+            path: 'logisticsSettlement/gasOrderList',
+            query: finds
+          })
           break
         case 'truck':
-          var carrierOrgIdTruck = row.carrierOrgId
-          this.$router.push(`logisticsSettlement/truckList?carrierOrgId=${carrierOrgIdTruck}`)
+          this.$router.push({
+            path: 'logisticsSettlement/truckList',
+            query: finds
+          })
           break
         default:
           break
@@ -132,6 +141,12 @@ export default {
 
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
+
+      // 刷新统计数据
+      if (this.$refs.logisticsTables && this.$refs.logisticsTables.tableListResponse) {
+        this.$refs.logisticsTables.tableListResponse = null
+        this.initTotalData()
+      }
     },
     parseSearch(finds, page, size) {
       const params = {

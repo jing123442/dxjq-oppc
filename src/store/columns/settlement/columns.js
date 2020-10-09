@@ -21,6 +21,7 @@ const columns = {
   gasPrice: [
     { field: 'carrierOrgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
     { field: 'carrierOrgName', stype: 'mapping', name: '公司名称', mapping: 'carrierOrgName', search: { type: 'text', placeholder: '请输入公司名称' } },
+    { field: 'dataPicker', hide: true, search: { type: 'date-picker', placeholder: '' } },
     { field: 'sumRechargeAmount', name: '充值金额汇总(元)' },
     { field: 'sumGasQty', name: '加气量(公斤)' },
     { field: 'sumAmount', name: '加气金额汇总(元)' },

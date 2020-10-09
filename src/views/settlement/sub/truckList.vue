@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, isTypeof, exportBlobToFiles } from '@/utils/tools'
+import { axiosRequestParams, isTypeof, exportBlobToFiles, callbackPagesInfo } from '@/utils/tools'
 import { $excelDownload } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
@@ -31,23 +31,28 @@ export default {
   },
   computed: {
     ...mapGetters({
-      mode_list: 'filler_sevicePrice_mode_list',
-      page_status: 'filler_account_page_status',
+      mode_list: 'settlement_gasPrice_mode_list',
+      page_status: 'settlement_gasPrice_page_status',
       page_column: 'settlement_gasPriceTruckList_column',
-      select_list: 'filler_printList_select_list',
+      select_list: 'settlement_gasPrice_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
     })
   },
-  created: function () { console.log(this.page_status) },
+  created: function () { },
   methods: {
     onListEvent(type, row) {
       if (type === 'export') {
         this.excelDownload()
       } else if (type === 'bill') {
-        const truckId = row.truckId
-        this.$router.push(`truckList/truckOrderList?truckId=${truckId}`)
+        const finds = this.$route.query
+
+        finds.truckId = row.truckId
+        this.$router.push({
+          path: 'truckList/truckOrderList',
+          query: finds
+        })
       }
     },
     excelDownload() {
@@ -71,50 +76,36 @@ export default {
       })
     },
     onReqParams(type, _this, callback) {
-      let params = {}
-      if (type == 'list') {
-        params = this.parseSearch(_this.finds, _this.pages.pageNum, _this.pages.pageSize)
-      }
+      const selfQuery = this.$route.query
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { carrierOrgId: selfQuery.orgId }, dateParam: {} } })
 
-      // eslint-disable-next-line standard/no-callback-literal
-      callback(params)
-    },
-    parseSearch(finds, page, size) {
-      const params = {
-        size: size,
-        page: page,
-        param: {
-          dateParam: {
-            createDateFrom: '',
-            createDateTo: ''
-          },
-          gasOrder: {
-            carrierOrgId: this.$route.query.carrierOrgId
-          }
-        }
-      }
-
-      if (isTypeof(finds) === 'object') {
-        for (var [k, v] of Object.entries(finds)) {
+      if (isTypeof(selfQuery) === 'object') {
+        for (var [k, v] of Object.entries(selfQuery)) {
           if (k == 'dataPicker') {
-            if (finds.dataPicker === null) {
+            if (selfQuery.dataPicker === null) {
               params.param.dateParam.createDateFrom = ''
               params.param.dateParam.createDateTo = ''
             } else {
               params.param.dateParam.createDateFrom = v[0]
               params.param.dateParam.createDateTo = v[1]
             }
-          } else {
-            if (!v) {
-              delete params.param.gasOrder[k]
-            } else {
-              params.param.gasOrder[k] = v
-            }
           }
         }
       }
 
-      return params
+      if (isTypeof(_this.finds) === 'object') {
+        // eslint-disable-next-line no-redeclare
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (!v) {
+            delete params.param.gasOrder[k]
+          } else {
+            params.param.gasOrder[k] = v
+          }
+        }
+      }
+
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
     }
   }
 }

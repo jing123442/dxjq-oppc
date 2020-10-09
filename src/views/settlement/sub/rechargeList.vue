@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { axiosRequestParams, isTypeof, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -14,7 +14,7 @@ export default {
       isShow: false,
       queryCustURL: {
         list: {
-          url: '/settle/recharge_order/list_withtime',
+          url: 'settle/recharge_order/list_withtime',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -24,15 +24,15 @@ export default {
         name: '物流公司充值账单'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { carrierOrder: { orgId: this.$route.query.orgId }, dateParam: {} } })
+      queryParams: Function
     }
   },
   computed: {
     ...mapGetters({
-      mode_list: 'filler_sevicePrice_mode_list',
-      page_status: 'filler_account_page_status',
+      mode_list: 'settlement_gasPrice_mode_list',
+      page_status: 'settlement_gasPrice_page_status',
       page_column: 'settlement_gasPriceRechargeList_column',
-      select_list: 'filler_printList_select_list',
+      select_list: 'settlement_gasPrice_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -42,14 +42,24 @@ export default {
   methods: {
     onListEvent(type, row) {},
     onReqParams(type, _this, callback) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
+      const selfQuery = this.$route.query
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { carrierOrder: { orgId: selfQuery.orgId }, dateParam: {} } })
+
+      if (isTypeof(selfQuery) === 'object') {
+        for (var [k, v] of Object.entries(selfQuery)) {
+          if (k == 'dataPicker') {
+            if (selfQuery.dataPicker === null) {
+              params.param.dateParam.createDateFrom = ''
+              params.param.dateParam.createDateTo = ''
+            } else {
+              params.param.dateParam.createDateFrom = v[0]
+              params.param.dateParam.createDateTo = v[1]
+            }
+          }
         }
-      })
+      }
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
     }
   }
 }

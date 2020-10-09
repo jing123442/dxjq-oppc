@@ -75,8 +75,13 @@ export default {
     },
     onListEvent(type, row) {
       if (type === 'bill') {
-        const gasstationId = row.gasstationId
-        this.$router.push(`index/orderList?gasstationId=${gasstationId}`)
+        const finds = this.$refs.settlementTables.finds
+
+        finds.gasstationId = row.gasstationId
+        this.$router.push({
+          path: 'index/orderList',
+          query: finds
+        })
       } else if (type === 'export') {
         this.excelDownload()
       }
@@ -109,6 +114,12 @@ export default {
 
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
+
+      // 刷新统计数据
+      if (this.$refs.settlementTables && this.$refs.settlementTables.tableListResponse) {
+        this.$refs.settlementTables.tableListResponse = null
+        this.initTotalData()
+      }
     },
     parseSearch(finds, page, size) {
       const params = {
