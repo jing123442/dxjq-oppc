@@ -146,7 +146,7 @@ const columns = {
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, ispush: false },
     { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
     { field: 'accountId', name: '账号' },
-    { field: 'carNumber', name: '车牌号' },
+    { field: 'carNumber', name: '车牌号', search: { type: 'text', placeholder: '请输入车牌号' } },
     { field: 'balance', name: '余额' },
     { field: 'createDate', name: '创建时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'detail', name: '流水列表' }] }
