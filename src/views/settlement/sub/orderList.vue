@@ -48,8 +48,6 @@ export default {
       }
     },
     excelDownload() {
-      const finds = this.$refs.orderListTables.finds
-      const pageList = this.$refs.orderListTables.pages
       const params = {
         datas: {
           orderId: '订单编号',
@@ -63,7 +61,7 @@ export default {
         },
         fileName: '订单',
         interfaceName: '/settle/gas_order/list_withtime',
-        pageParam: this.parseSearch(finds, pageList.currentPage, pageList.pageSize)
+        pageParam: this.parseSearch(this.$refs.orderListTables)
       }
       $excelDownload(params).then(response => {
         const fileName = '订单' + Date.parse(new Date()) + '.xlsx'
@@ -72,6 +70,12 @@ export default {
       })
     },
     onReqParams(type, _this, callback) {
+      const params = this.parseSearch(_this)
+
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
+    },
+    parseSearch(_this) {
       const selfQuery = this.$route.query
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { gasstationId: selfQuery.gasstationId }, dateParam: {} } })
 
@@ -100,8 +104,7 @@ export default {
         }
       }
 
-      // eslint-disable-next-line standard/no-callback-literal
-      callback(params)
+      return params
     }
   }
 }

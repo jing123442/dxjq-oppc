@@ -12,10 +12,10 @@ const vueFiltersInit = (value, item, scope) => {
 
     const params = formats.filter((item, index) => index > 0)
     // eslint-disable-next-line no-eval
-    return eval(formats[0])(value, ...params, scope.row)
+    return eval('(' + formats[0] + ')')(value, ...params, scope.row)
   } else {
     // eslint-disable-next-line no-eval
-    return eval(formatRules(value, scope.row))
+    return eval('(' + formatRules(value, scope.row) + ')')
   }
 }
 

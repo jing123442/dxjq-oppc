@@ -72,6 +72,12 @@ export default {
       })
     },
     onReqParams(type, _this, callback) {
+      const params = this.parseSearch(_this)
+
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
+    },
+    parseSearch(_this) {
       const selfQuery = this.$route.query
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { truckId: selfQuery.truckId }, dateParam: {} } })
 
@@ -100,8 +106,7 @@ export default {
         }
       }
 
-      // eslint-disable-next-line standard/no-callback-literal
-      callback(params)
+      return params
     }
   }
 }

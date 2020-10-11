@@ -197,7 +197,7 @@ const columns = {
     { field: 'orderId', stype: 'mapping', name: '订单号', mapping: 'orderId', search: { type: 'text', placeholder: '请输入订单号' } },
     { field: 'gasstationName', name: '加气站', search: { type: 'text', placeholder: '请输入加气站' } },
     { field: 'carNumber', name: '车牌号', search: { type: 'text', placeholder: '请输入车牌号' } },
-    { field: 'cashierName', name: '司机名称', search: { type: 'text', placeholder: '请输入司机名称' } },
+    { field: 'driverName', name: '司机名称', search: { type: 'text', placeholder: '请输入司机名称' } },
     { field: 'gasQty', name: '加气量' },
     { field: 'amount', name: '付款金额' },
     { field: 'orderStatus', name: '订单状态', formatter: 'orderStatus', search: { type: 'select', obj: 'orderStatus', placeholder: '请选择订单状态' } },

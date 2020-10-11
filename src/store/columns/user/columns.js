@@ -19,7 +19,7 @@ const columns = {
     { field: 'mobile', name: '手机号码', show: { type: 'text', ou: 1, isCompare: true, style: 'width: 90%;', placeholder: '请输入手机号码' }, search: { type: 'text', placeholder: '请输入手机号码' }, rules: [{ required: true, message: '请输入手机号码！', trigger: 'blur' }] },
     { field: 'lastLoginDate', name: '最后登录时间', ispush: false },
     { field: 'userType', hide: true, name: '', show: { type: 'hide', value: 2 } },
-    { field: 'baseRole', name: '账号类型', formatter: 'baseRole', show: { type: 'radio', value: 5, ou: 1, isDisabled: true, obj: 'baseRole', placeholder: '请选择账号类型' }, search: { type: 'select', obj: 'baseRole', placeholder: '请选择账号类型' }, rules: [{ required: true, message: '请选择账号类型', trigger: 'blur' }] },
+    { field: 'baseRole', name: '账号类型', formatter: 'baseRole', show: { type: 'radio', value: 6, ou: 1, isDisabled: true, obj: 'baseRole', placeholder: '请选择账号类型' }, search: { type: 'select', obj: 'baseRole', placeholder: '请选择账号类型' }, rules: [{ required: true, message: '请选择账号类型', trigger: 'blur' }] },
     { field: 'status', name: '账号状态', formatter: 'status', width: 80, show: { type: 'radio', value: 0, ou: 1, obj: 'status', placeholder: '请选择账号状态' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'edit', name: '编辑' }, { type: 'resetpwd', name: '重置密码' }] }
   ],
@@ -31,7 +31,7 @@ const columns = {
     { field: 'mobile', name: '手机号码', show: { type: 'text', ou: 1, isCompare: true, style: 'width: 90%;', placeholder: '请输入手机号码' }, search: { type: 'text', placeholder: '请输入手机号码' }, rules: [{ required: true, message: '请输入手机号码！', trigger: 'blur' }] },
     { field: 'lastLoginDate', name: '最后登录时间', ispush: false },
     { field: 'userType', hide: true, name: '', show: { type: 'hide', value: 1 } },
-    { field: 'baseRole', name: '账号类型', formatter: 'baseRole', show: { type: 'radio', value: 3, ou: 1, isDisabled: true, obj: 'baseRole', placeholder: '请选择账号类型' }, search: { type: 'select', obj: 'baseRole', placeholder: '请选择账号类型' }, rules: [{ required: true, message: '请选择账号类型', trigger: 'blur' }] },
+    { field: 'baseRole', name: '账号类型', formatter: 'baseRole', show: { type: 'radio', value: 4, ou: 1, isDisabled: true, obj: 'baseRole', placeholder: '请选择账号类型' }, search: { type: 'select', obj: 'baseRole', placeholder: '请选择账号类型' }, rules: [{ required: true, message: '请选择账号类型', trigger: 'blur' }] },
     { field: 'status', name: '账号状态', formatter: 'status', width: 80, show: { type: 'radio', value: 0, ou: 1, obj: 'status', placeholder: '请选择账号状态' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'edit', name: '编辑' }, { type: 'resetpwd', name: '重置密码' }] }
   ]
