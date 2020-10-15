@@ -13,7 +13,9 @@ module.exports = {
       }
     }
   },
+  transpileDependencies: ['element-ui', 'em-element-ui', 'vuex'],
   chainWebpack: config => {
+    config.entry.app = ['@babel/polyfill', './src/main.js']
     config.module
       .rule('images')
       .use('url-loader')
