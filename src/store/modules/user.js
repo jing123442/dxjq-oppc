@@ -70,7 +70,7 @@ const user = {
     logout({ commit, state }) {
       return new Promise((resolve, reject) => {
         const data = {
-          client_id: 'mwxservice',
+          client_id: 'woperation',
           user_id: state.wopuser.user_id
         }
         $logout(data).then(response => {
