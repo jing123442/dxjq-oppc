@@ -13,7 +13,7 @@ module.exports = {
       }
     }
   },
-  transpileDependencies: ['element-ui', 'em-element-ui', 'vuex'],
+  transpileDependencies: [],
   chainWebpack: config => {
     config.entry.app = ['@babel/polyfill', './src/main.js']
     config.module
