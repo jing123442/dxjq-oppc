@@ -13,6 +13,7 @@ module.exports = {
       }
     }
   },
+  transpileDependencies: ['element-china-area-data'],
   chainWebpack: config => {
     config.module
       .rule('images')
