@@ -1,4 +1,4 @@
-import { utilsStatus, utilsAuthStatus, utilsIdentityType, utilsTradeType } from '@/utils/select'
+import { utilsStatus, utilsAuthStatus, utilsIdentityType, utilsTradeType, utilsBankList } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
@@ -6,7 +6,8 @@ const select = {
     status: utilsStatus(),
     authStatus: utilsAuthStatus(),
     cascaderAddress: regionData,
-    identityType: utilsIdentityType()
+    identityType: utilsIdentityType(),
+    bankList: utilsBankList()
   },
   account: {
     accountType: [

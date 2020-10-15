@@ -1,4 +1,4 @@
-import { utilsStatus, utilsAuthStatus, utilsPlanStatus, utilsSource, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus, utilsIdentityType, utilsTradeType } from '@/utils/select'
+import { utilsStatus, utilsAuthStatus, utilsPlanStatus, utilsSource, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus, utilsIdentityType, utilsTradeType, utilsBankList } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
@@ -7,7 +7,8 @@ const select = {
     cascaderAddress: regionData,
     status: utilsStatus(),
     authStatus: utilsAuthStatus(),
-    identityType: utilsIdentityType()
+    identityType: utilsIdentityType(),
+    bankList: utilsBankList()
   },
   info: {
     orgId: utilsDyOrgList(1),

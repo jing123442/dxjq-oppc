@@ -227,3 +227,18 @@ export function utilsSource() {
     }
   }
 }
+
+export function utilsBankList() {
+  return {
+    url: 'user/bank/list_by_keywords',
+    node: ['data'],
+    props: {
+      value: 'bankName',
+      label: 'bankName'
+    },
+    params: {
+      page: 1,
+      size: 10
+    }
+  }
+}
