@@ -161,7 +161,7 @@ const columns = {
     { field: 'orderId', name: '订单编号' }
   ],
   rechargeRecord: [
-    { field: 'rechargeOrderId', name: '订单编号', fixed: 'left', search: { type: 'text', placeholder: '请输入充值方或订单编号' } },
+    { field: 'rechargeOrderId', name: '订单编号', fixed: 'left', search: { type: 'text', field: 'keyword', placeholder: '请输入充值方或订单编号' } },
     { field: 'createDate', name: '充值时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '' } },
     { field: 'orgName', name: '充值方' },
     { field: 'amount', name: '充值金额(元)' },
