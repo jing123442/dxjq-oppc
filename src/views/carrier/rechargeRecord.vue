@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, callbackPagesInfo } from '@/utils/tools'
+import { axiosRequestParams, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $audit } from '@/service/business'
 
@@ -31,7 +31,7 @@ export default {
         name: '充值记录'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } }),
+      queryParams: Function,
       dialogCheckVisible: false,
       checkRow: {},
       dialogDetailVisible: false,
@@ -94,8 +94,23 @@ export default {
       this.dialogDetailVisible = true
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { orgType: 0 } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { dateParam: { createDateFrom: '', createDateTo: '' }, rechargeOrder: {} } })
 
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k == 'createDate') {
+            if (_this.finds.createDate === null) {
+              params.param.dateParam.createDateFrom = ''
+              params.param.dateParam.createDateTo = ''
+            } else {
+              params.param.dateParam.createDateFrom = v[0]
+              params.param.dateParam.createDateTo = v[1]
+            }
+          } else {
+            if (v !== '') params.param.rechargeOrder[k] = v
+          }
+        }
+      }
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     },
