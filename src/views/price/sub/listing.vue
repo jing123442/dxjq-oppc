@@ -115,7 +115,13 @@ export default {
             $updateGasstationPriceConfig(params).then((res) => {
               this.$message.success(res.message)
 
-              this.$refs.tables.initDataList()
+              const data = res.data
+
+              row.platformPrice = data.platformPrice
+              row.harbourPrice = data.harbourPrice
+              row.benefit = data.benefit
+              row.freight = data.freight
+              row.profit = data.profit
             })
           } else {
             console.log('error submit!!')
