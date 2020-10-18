@@ -15,7 +15,7 @@
 </template>
 <script>
 import { axiosRequestParams, callbackPagesInfo, isTypeof, custFormBtnList, formatDate } from '@/utils/tools'
-import { $priceRelease, $listingPriceAlg, $updateGasstation } from '@/service/strategy'
+import { $priceRelease, $listingPriceAlg, $updateGasstationPriceConfig } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -25,7 +25,7 @@ export default {
       isShow: false,
       releaseRow: [],
       dialogReleaseVisible: false,
-      fromRow: [],
+      fromRow: {},
       dialogFromVisible: false,
       logRow: [],
       dialogChangeVisible: false,
@@ -84,6 +84,7 @@ export default {
         this.dialogReleaseVisible = true
       } else if (type == 'from') {
         row._btn = custFormBtnList()
+        this.fromOldRow = Object.assign({}, row)
         this.fromRow = row
         this.dialogFromVisible = true
       } else {
@@ -102,21 +103,27 @@ export default {
       if (btnObj.type == 'ok') {
         this.$refs.from.$refs.fromForm.validate((valid) => {
           if (valid) {
+            if (this.fromOldRow.lngFromId == row.lngFromId) {
+              return false
+            }
             const params = {
               gasstationId: row.gasstationId,
               lngFromId: row.lngFromId,
               lngFromName: row.lngFromName
             }
 
-            $updateGasstation(params).then((res) => {
+            $updateGasstationPriceConfig(params).then((res) => {
               this.$message.success(res.message)
 
-              this.algListingPrice()
+              this.$refs.tables.initDataList()
             })
           } else {
             console.log('error submit!!')
           }
         })
+      } else {
+        row.lngFromId = this.fromOldRow.lngFromId
+        row.lngFromName = this.fromOldRow.lngFromName
       }
       this.dialogFromVisible = false
     },
