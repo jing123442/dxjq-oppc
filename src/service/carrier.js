@@ -25,5 +25,6 @@ export async function $importDownloadFile (data) {
 }
 
 export async function $exportDataFile (data) {
+  // return await axios({ url: 'carrier/import/import_truck', method: 'POST', data: data.file, headers: data.headers })
   return await R({ url: 'carrier/import/import_truck', method: 'POST', data: data.file })
 }

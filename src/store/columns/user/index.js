@@ -19,7 +19,10 @@ const getters = {
   user_cashier_mode_list: item => item.app.modeDefault,
   user_cashier_page_status: item => item.app.listDefault,
   user_cashier_column: item => columns.cashier,
-  user_cashier_select_list: item => select.cashier
+  user_cashier_select_list: item => select.cashier,
+
+  // 选择企业
+  user_business_column: item => columns.business
 }
 
 export default {

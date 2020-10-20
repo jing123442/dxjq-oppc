@@ -82,6 +82,18 @@ export function objectMerge(target, source) {
   return target
 }
 
+// 上传文件头文件
+export function toolsFileHeaders(_this) {
+  const userInfo = _this.$store.getters.wopuser
+
+  return {
+    userId: userInfo.user_id,
+    userName: userInfo.user_name,
+    Identifier: _this.$store.getters.wopidntf,
+    Authorization: _this.$store.getters.woptoken
+  }
+}
+
 // 请求头文件
 export function axiosRequestParams(_this) {
   return {

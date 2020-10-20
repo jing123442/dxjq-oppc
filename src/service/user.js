@@ -31,10 +31,14 @@ export async function $userOrgFind (data) {
   return await R({ url: 'user/org/find', data })
 }
 
-export async function $importDownloadFile (data) {
+export async function $importCarrierDownloadFile (data) {
   return await R({ url: 'user/import/download_user_tpl', method: 'get', params: data, responseType: 'blob' })
 }
 
-export async function $exportDataFile (data) {
+export async function $exportCarrierUserFile (data) {
   return await R({ url: 'user/import/import_user', method: 'POST', data: data.file })
+}
+
+export async function $userOrgList (data) {
+  return await R({ url: 'user/org/list', method: 'POST', data })
 }

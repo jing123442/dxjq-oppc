@@ -61,7 +61,7 @@
  </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles, toolsFileHeaders } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
@@ -113,13 +113,11 @@ export default {
       mode_list_gasstation: 'filler_gasstation_mode_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
-      response_success: 'response_success',
-      wopuser: 'wopuser',
-      woporg: 'woporg'
+      response_success: 'response_success'
     })
   },
   created: function () {
-    this.initFileHeaders()
+    this.headers = toolsFileHeaders(this)
   },
   methods: {
     onListEvent(type, row) {
@@ -149,13 +147,6 @@ export default {
         }
       }
     },
-    initFileHeaders() {
-      this.headers = {
-        orgId: this.woporg,
-        userId: this.wopuser.user_id,
-        userName: this.wopuser.user_name
-      }
-    },
     exportCarEvent(row) {
       this.exportCarRow._btn = custFormBtnList()
       this.exportCarRow.orgId = row.orgId
@@ -181,16 +172,14 @@ export default {
         var _fromData = new FormData()
 
         _fromData.append('file', files)
+        _fromData.append('orgId', this.exportCarRow.orgId)
 
-        $exportDataFile({ file: _fromData }).then(response => {
+        $exportDataFile({ file: _fromData, headers: this.headers }).then(response => {
           this.dialogExportCarVisible = false
         })
       } else {
         this.dialogExportCarVisible = false
       }
-    },
-    onListEventExportCar(btnObj, row) {
-      this.dialogExportCarVisible = false
     },
     downloadModel() {
       $importDownloadFile({ orgId: this.exportCarRow.orgId }).then(response => {
