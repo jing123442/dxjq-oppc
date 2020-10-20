@@ -14,7 +14,7 @@ const columns = {
       ispush: false,
       name: '操作',
       fixed: 'right',
-      width: 230,
+      width: 260,
       list: params => {
         const row = params.row
         const optList = []
@@ -22,7 +22,8 @@ const columns = {
         row.authStatus != 2 && optList.push({ type: 'gedit', name: '编辑' })
         optList.push({ type: 'detail', name: '详情' })
         row.authStatus != 2 && optList.push({ type: 'auth', name: '认证' })
-        optList.push({ type: 'addCar', name: '添加车辆' })
+        row.authStatus == 2 && optList.push({ type: 'addCar', name: '添加车辆' })
+        row.authStatus == 2 && optList.push({ type: 'exportCar', name: '导入车辆' })
 
         return optList
       }
@@ -216,7 +217,8 @@ const columns = {
     { field: 'listPrice', name: '挂牌气价', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },
     { field: 'actualPrice', name: '实际气价', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },
     { field: 'amount', name: '实际加气金额', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },
-    { field: 'createDate', name: '加气时间', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } }
+    { field: 'createDate', name: '加气时间', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },
+    { field: 'updateDate', name: '支付时间', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } }
   ]
 }
 

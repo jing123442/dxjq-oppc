@@ -165,9 +165,9 @@ export function custFormBtnList() {
 }
 
 // blob导出excel文件
-export function exportBlobToFiles(content, fileName) {
+export function exportBlobToFiles(content, fileName, fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
   try {
-    const blob = new Blob([content], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+    const blob = new Blob([content], { type: fileType })
 
     if ('download' in document.createElement('a')) { // 非IE下载
       const url = window.URL.createObjectURL(blob)

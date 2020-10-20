@@ -30,3 +30,11 @@ export async function $userUserList (data) {
 export async function $userOrgFind (data) {
   return await R({ url: 'user/org/find', data })
 }
+
+export async function $importDownloadFile (data) {
+  return await R({ url: 'user/import/download_user_tpl', method: 'get', params: data, responseType: 'blob' })
+}
+
+export async function $exportDataFile (data) {
+  return await R({ url: 'user/import/import_user', method: 'POST', data: data.file })
+}

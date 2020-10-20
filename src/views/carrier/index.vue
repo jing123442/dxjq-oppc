@@ -15,18 +15,57 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
-
-     <el-dialog title="添加车辆" :visible.sync="dialogAddCarVisible" :width="add_edit_dialog">
+    <el-dialog title="添加车辆" :visible.sync="dialogAddCarVisible" :width="add_edit_dialog">
       <nt-form v-if="dialogAddCarVisible" ref="addCar" :rowData="addCarRow" :pageColumn="page_column_addCar" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventAddCar"></nt-form>
+    </el-dialog>
+    <el-dialog title="批量导入车辆" :visible.sync="dialogExportCarVisible" :width="add_edit_dialog">
+      <el-form ref="exportCar" v-if="dialogExportCarVisible" :model="exportCarRow" size="small" :rules="exportRules" label-position="left">
+        <el-form-item>
+          <div>
+            <i class="el-icon-download"></i>
+            <span style="display: inline-block;padding-left: 2px;">下载模板</span>
+          </div>
+          <div style="padding-left: 20px;">为提高导入的成功率，请下载并使用系统提供的模板</div>
+          <el-button size="small" type="primary" style="margin: 10px 20px;" @click="downloadModel">下载模板</el-button>
+        </el-form-item>
+        <el-form-item>
+          <div>
+            <i class="el-icon-upload"></i>
+            <span style="display: inline-block;padding-left: 2px;">上传文件</span>
+          </div>
+          <div style="padding-left: 20px;">
+            <el-upload
+              class="upload-demo"
+              ref="upload"
+              name="file"
+              :limit="1"
+              :headers="headers"
+              action="/user/import/import_user"
+              :auto-upload="false">
+              <el-button slot="trigger" size="small" type="primary">选取上传文件</el-button>
+              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+          </div>
+        </el-form-item>
+        <!-- 按钮 -->
+        <el-form-item class="el-del-btn-item">
+          <div class="btn-item-footer">
+            <el-button v-for="(btnItem, index) in exportCarRow._btn.list" :key="index" :type="btnItem.bType"
+                       size="small"
+                       :icon="btnItem.icon" @click="btnClickEvent(btnItem)">{{btnItem.label}}
+            </el-button>
+          </div>
+        </el-form-item>
+      </el-form>
     </el-dialog>
  </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo, createParams } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
-import { $carrierTruckAdd } from '@/service/carrier.js'
+import { $carrierTruckAdd, $importDownloadFile, $exportDataFile } from '@/service/carrier'
 
 export default {
   name: 'carrier',
@@ -48,6 +87,7 @@ export default {
         },
         name: '物流公司'
       },
+      headers: {},
       buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '添加公司' }],
       axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 2 } }),
@@ -55,7 +95,10 @@ export default {
       authRow: {},
       auth_page_column: [],
       dialogAddCarVisible: false,
-      addCarRow: {}
+      addCarRow: {},
+      dialogExportCarVisible: false,
+      exportCarRow: {},
+      exportRules: {}
     }
   },
   computed: {
@@ -70,14 +113,21 @@ export default {
       mode_list_gasstation: 'filler_gasstation_mode_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
-      response_success: 'response_success'
+      response_success: 'response_success',
+      wopuser: 'wopuser',
+      woporg: 'woporg'
     })
   },
-  created: function () {},
+  created: function () {
+    this.initFileHeaders()
+  },
   methods: {
     onListEvent(type, row) {
       row._btn = {}
-      if (type === 'addCar') {
+      if (type === 'exportCar') {
+        // 批量导入车辆
+        this.exportCarEvent(row)
+      } else if (type === 'addCar') {
         // 添加车辆
         this.addCarEvent(row)
       } else {
@@ -99,6 +149,19 @@ export default {
         }
       }
     },
+    initFileHeaders() {
+      this.headers = {
+        orgId: this.woporg,
+        userId: this.wopuser.user_id,
+        userName: this.wopuser.user_name
+      }
+    },
+    exportCarEvent(row) {
+      this.exportCarRow._btn = custFormBtnList()
+      this.exportCarRow.orgId = row.orgId
+      this.exportCarRow.orgName = row.orgName
+      this.dialogExportCarVisible = true
+    },
     addCarEvent(row) {
       this.addCarRow._btn = custFormBtnList()
       this.addCarRow.orgId = row.orgId
@@ -110,6 +173,31 @@ export default {
 
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
+    },
+    btnClickEvent(btnObj, row) {
+      if (btnObj.type === 'ok') {
+        var files = document.getElementsByName('file')[0].files[0]
+
+        var _fromData = new FormData()
+
+        _fromData.append('file', files)
+
+        $exportDataFile({ file: _fromData }).then(response => {
+          this.dialogExportCarVisible = false
+        })
+      } else {
+        this.dialogExportCarVisible = false
+      }
+    },
+    onListEventExportCar(btnObj, row) {
+      this.dialogExportCarVisible = false
+    },
+    downloadModel() {
+      $importDownloadFile({ orgId: this.exportCarRow.orgId }).then(response => {
+        const fileName = '批量导入车辆模板_' + Date.parse(new Date()) + '.xlsx'
+
+        exportBlobToFiles(response, fileName)
+      })
     },
     onListEventAddCar(btnObj, row) {
       if (btnObj.type === 'ok') {
