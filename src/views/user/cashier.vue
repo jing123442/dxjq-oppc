@@ -4,7 +4,7 @@
     <el-dialog title="请选择需要批量导入用户的企业" :visible.sync="dialogExportCarrierVisible" width="50%">
       <nt-form v-if="dialogExportCarrierVisible" ref="addCar" :rowData="businessRow" :pageColumn="page_business_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="btnUserClickEvent"></nt-form>
     </el-dialog>
-    <el-dialog title="批量导入加气站公函" :visible.sync="dialogExportCarVisible" :width="add_edit_dialog">
+    <el-dialog title="批量导入加气站用户" :visible.sync="dialogExportCarVisible" :width="add_edit_dialog">
       <el-form ref="exportCar" v-if="dialogExportCarVisible" :model="exportCarrierUserRow" size="small" :rules="exportCarrierUserRules" label-position="left">
         <el-form-item>
           <div>
@@ -26,10 +26,11 @@
               name="file"
               :limit="1"
               :headers="headers"
+              accept=".xls,.xlsx"
               action="/user/import/import_user"
               :auto-upload="false">
               <el-button slot="trigger" size="small" type="primary">选取上传文件</el-button>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+              <div slot="tip" class="el-upload__tip">只能上传xlsx，且不超过10Mb</div>
             </el-upload>
           </div>
         </el-form-item>
@@ -126,22 +127,24 @@ export default {
       this.dialogExportCarVisible = true
     },
     downloadModel() {
-      $importCarrierDownloadFile({ orgId: this.exportCarrierUserRow.orgId }).then(response => {
+      $importCarrierDownloadFile({ orgId: this.exportCarrierUserRow.orgId, times: (new Date()).getTime() }).then(response => {
         const fileName = 'user_tpl-' + this.exportCarrierUserRow.orgId + '.xlsx'
 
         exportBlobToFiles(response, fileName)
       })
     },
     btnUserClickEvent(btnObj, row) {
-      $userOrgList({ page: 1, size: 10, param: { orgName: row.orgName } }).then(response => {
-        const data = response.data.records
+      if (btnObj.type === 'ok') {
+        $userOrgList({ page: 1, size: 10, param: { orgName: row.orgName } }).then(response => {
+          const data = response.data.records
 
-        if (data[0].authStatus == 2) {
-          this.exportCarrierUser(row)
-        } else {
-          this.$message.error('该企业未认证，无权批量导入用户！')
-        }
-      })
+          if (data[0].authStatus == 2) {
+            this.exportCarrierUser(row)
+          } else {
+            this.$message.error('该企业未认证，无权批量导入用户！')
+          }
+        })
+      }
       this.dialogExportCarrierVisible = false
     },
     btnClickEvent(btnObj, row) {
