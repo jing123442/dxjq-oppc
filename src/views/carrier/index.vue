@@ -175,6 +175,8 @@ export default {
         _fromData.append('orgId', this.exportCarRow.orgId)
 
         $exportDataFile({ file: _fromData, headers: this.headers }).then(response => {
+          this.$message.success(response.data)
+          this.$refs.carrier.initDataList()
           this.dialogExportCarVisible = false
         })
       } else {
@@ -183,7 +185,7 @@ export default {
     },
     downloadModel() {
       $importDownloadFile({ orgId: this.exportCarRow.orgId }).then(response => {
-        const fileName = '批量导入车辆模板_' + Date.parse(new Date()) + '.xlsx'
+        const fileName = 'truck_tpl-' + this.exportCarRow.orgId + '.xlsx'
 
         exportBlobToFiles(response, fileName)
       })

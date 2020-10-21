@@ -1,6 +1,6 @@
 <template>
   <section class="app-main">
-    <scroll-bar>
+    <scroll-bar :isResetTop="true">
       <transition name="fade" mode="out-in">
         <keep-alive :include="cachedViews">
           <router-view></router-view>

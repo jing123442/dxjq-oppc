@@ -98,6 +98,14 @@ export default {
       line-height: 10px;
       padding-top: 7px;
       font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .user-name {
+        font-size: 16px;
+        padding-right: 10px;
+      }
       img {
         cursor: pointer;
       }

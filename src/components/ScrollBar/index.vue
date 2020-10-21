@@ -10,9 +10,20 @@ const delta = 15
 
 export default {
   name: 'scrollBar',
+  props: {
+    isResetTop: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       top: 0
+    }
+  },
+  watch: {
+    $route() {
+      this.isResetTop && (this.top = 0)
     }
   },
   methods: {
