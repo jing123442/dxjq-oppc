@@ -48,6 +48,9 @@
             </el-upload>
           </div>
         </el-form-item>
+        <el-form-item>
+          <div>建议使用 <a style="color: #409EFF" href="https://pacakge.cache.wpscdn.cn/wps/download/W.P.S.10072.12012.2019.exe">WPS Office 2019 PC</a> 版本</div>
+        </el-form-item>
         <!-- 按钮 -->
         <el-form-item class="el-del-btn-item">
           <div class="btn-item-footer">

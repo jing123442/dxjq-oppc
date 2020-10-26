@@ -3,7 +3,7 @@
     <em-table-list :tableListName="'usercarrier'" ref="tables" :axios="axios" :queryCustURL="queryCustURL" :buttonsList="buttonsList" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent"></em-table-list>
 
     <el-dialog title="请选择需要批量导入用户的企业" :visible.sync="dialogExportCarrierVisible" width="50%">
-      <nt-form v-if="dialogExportCarrierVisible" ref="addCar" :rowData="businessRow" :pageColumn="page_business_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="btnUserClickEvent"></nt-form>
+      <nt-form v-if="dialogExportCarrierVisible" ref="carrierUser" :formRef="'carrierUserForm'" :rowData="businessRow" :pageColumn="page_business_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="btnUserClickEvent"></nt-form>
     </el-dialog>
     <el-dialog title="批量导入物流用户" :visible.sync="dialogExportCarVisible" :width="add_edit_dialog">
       <el-form ref="exportCar" v-if="dialogExportCarVisible" :model="exportCarrierUserRow" size="small" :rules="exportCarrierUserRules" label-position="left">
@@ -34,6 +34,9 @@
               <div slot="tip" class="el-upload__tip">只能上传xlsx，且不超过10Mb</div>
             </el-upload>
           </div>
+        </el-form-item>
+        <el-form-item>
+          <div>建议使用 <a style="color: #409EFF" href="https://pacakge.cache.wpscdn.cn/wps/download/W.P.S.10072.12012.2019.exe">WPS Office 2019 PC</a> 版本</div>
         </el-form-item>
         <!-- 按钮 -->
         <el-form-item class="el-del-btn-item">
@@ -136,17 +139,25 @@ export default {
     },
     btnUserClickEvent(btnObj, row) {
       if (btnObj.type === 'ok') {
-        $userOrgList({ page: 1, size: 10, param: { orgName: row.orgName } }).then(response => {
-          const data = response.data.records
+        this.$refs.carrierUser.$refs.carrierUserForm.validate((valid) => {
+          if (valid) {
+            $userOrgList({ page: 1, size: 10, param: { orgName: row.orgName } }).then(response => {
+              const data = response.data.records
 
-          if (data[0].authStatus == 2) {
-            this.exportCarrierUser(row)
+              if (data[0].authStatus == 2) {
+                this.exportCarrierUser(row)
+              } else {
+                this.$message.error('该企业未认证，无权批量导入用户！')
+              }
+            })
+            this.dialogExportCarrierVisible = false
           } else {
-            this.$message.error('该企业未认证，无权批量导入用户！')
+            console.log('error submit!!')
           }
         })
+      } else {
+        this.dialogExportCarrierVisible = false
       }
-      this.dialogExportCarrierVisible = false
     },
     btnClickEvent(btnObj, row) {
       if (btnObj.type === 'ok') {
