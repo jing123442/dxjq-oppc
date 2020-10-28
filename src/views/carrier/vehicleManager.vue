@@ -115,7 +115,7 @@ export default {
         data.records.forEach(item => {
           driverList.push({
             value: item.userId,
-            label: item.userName
+            label: item.userName + ' / ' + item.mobile
           })
         })
         this.bindSelect.driverList = driverList
@@ -130,6 +130,7 @@ export default {
       })
       this.$set(row, 'driverInfo', truckInfo)
       this.bindRow = row
+      // this.$refs.tables.initSelectList()
     },
     onListEventBind(btnObj, row) {
       if (btnObj.type == 'ok') {
