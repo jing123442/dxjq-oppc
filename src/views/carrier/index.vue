@@ -144,8 +144,16 @@ export default {
         // 是否显示dialog
         this.dialogAddGasStationVisible = true
         this.authRow = row
-        if (type === 'add_info' || type === 'gedit' || type === 'auth') {
+        if (type === 'add_info' || type === 'gedit') {
           this.authRow._btn = custFormBtnList()
+        } else if (type === 'auth') {
+          this.authRow._btn = {
+            iShow: true,
+            list: [
+              { bType: 'info', icon: '', type: 'cancel', label: '取消' },
+              { bType: 'primary', icon: '', type: 'ok', label: '去认证' }
+            ]
+          }
         } else {
           this.authRow._btn = {}
         }

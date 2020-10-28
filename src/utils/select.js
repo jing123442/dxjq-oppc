@@ -203,12 +203,12 @@ export function utilsUserList() {
 
 export function utilsDriverList() {
   return {
-    url: '/carrier/driver/list_all',
+    url: 'carrier/driver/list_all',
     node: ['data', 'records'],
     params: Function,
     props: {
       value: 'userId',
-      label: 'userName'
+      label: ['userName', 'mobile']
     }
   }
 }

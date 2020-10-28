@@ -8,7 +8,7 @@ const columns = {
     { field: 'lastLoginDate', name: '最后登录时间', ispush: false },
     { field: 'userType', hide: true, name: '', show: { type: 'hide', value: 0 } },
     { field: 'baseRole', name: '账号类型', formatter: 'baseRole', show: { type: 'radio', value: 1, ou: 1, isDisabled: true, obj: 'baseRole', placeholder: '请选择账号类型' }, search: { type: 'select', obj: 'baseRole', placeholder: '请选择账号类型' }, rules: [{ required: true, message: '请选择账号类型', trigger: 'blur' }] },
-    { field: 'status', name: '账号状态', formatter: 'status', width: 80, show: { type: 'radio', value: 0, ou: 1, obj: 'status', placeholder: '请选择账号状态' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
+    { field: 'status', name: '账号状态', formatter: 'status', width: 120, filters: [{ value: 0, text: '启用' }, { value: 1, text: '停用' }], show: { type: 'radio', value: 0, ou: 1, obj: 'status', placeholder: '请选择账号状态' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'edit', name: '编辑' }, { type: 'resetpwd', name: '重置密码' }] }
   ],
   carrier: [
