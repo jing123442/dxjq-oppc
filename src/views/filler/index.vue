@@ -1,7 +1,7 @@
 <template>
   <div class="template-main">
     <em-table-list ref="tables" :tableListName="'filler'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @checkboxStatus="checkboxStatus"></em-table-list>
-    <el-dialog title="添加加气站" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog">
+    <el-dialog title="添加加气站" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog" :append-to-body="true">
       <div v-if="isAuthInfo" class="auth-status" :class="authColor"><span class="auth-status__dot" :class="authColor"></span>
         {{authRow.authStatus == 2 ? '已认证' : (authRow.authStatus == 1 ? '认证中' : (authRow.authStatus == 3 ? '认证失败' : '未认证'))}}
       </div>
@@ -14,7 +14,7 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
-    <el-dialog title="收银员信息" :visible.sync="dialogFillerUserVisible" :width="add_edit_dialog">
+    <el-dialog title="收银员信息" :visible.sync="dialogFillerUserVisible" :width="add_edit_dialog" :append-to-body="true">
       <em-table-list v-if="dialogFillerUserVisible" ref="recordList" :tableListName="'recordList'" :axios="axios" :queryCustURL="queryCustURLUser" :responseSuccess="response_success" :queryParam="queryParamsUser" :mode_list="mode_list" :page_status="page_status" :page_column="page_user_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
   </div>
@@ -22,8 +22,8 @@
 <script>
 import { axiosRequestParams, queryDefaultParams, custFormBtnList } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $orgAuth } from '@/service/pay'
-import { $userOrgAdd, $userOrgEdit } from '@/service/user'
+import { $orgAuth, $uploadOrgPic } from '@/service/pay'
+import { $userOrgAdd, $userOrgEdit, $userOrgPicList } from '@/service/user'
 
 export default {
   name: 'filler',
@@ -92,6 +92,9 @@ export default {
         this.queryParamsUser = queryDefaultParams(this, { type: 2, key: 'param', value: { userType: 1, baseRole: 4, orgId: row.orgId } })
         this.dialogFillerUserVisible = true
       } else {
+      	$userOrgPicList({ orgId: row.orgId }).then(response => {
+          console.log(response)
+        })
         // 重置page_column值
         this.resetAuthPageCol()
 
@@ -156,10 +159,11 @@ export default {
           this.onListEventAddGasStation(row)
         } else {
           this.orgAuthEvent(row)
+          this.dialogAddGasStationVisible = false
         }
+      } else {
+        this.dialogAddGasStationVisible = false
       }
-
-      this.dialogAddGasStationVisible = false
     },
     orgAuthEvent(row) {
       const params = {
@@ -173,16 +177,32 @@ export default {
         this.$refs.tables.initDataList()
       })
     },
+    uploadOrgPic(orgId, filePath, picType) {
+      const params = {
+        orgId: orgId,
+        picType: picType,
+        filePath: filePath
+      }
+
+      $uploadOrgPic(params).then(response => {})
+    },
     onListEventAddGasStation(row) {
       this.$refs.addGap.$children[0].validate(valid => {
         if (valid) {
           const params = {}
           this.auth_page_column.forEach(item => {
-            params[item.field] = row[item.field]
+            if (item.ispush !== false) {
+              params[item.field] = row[item.field]
+            }
           })
 
           params.authType = this.active
           params.orgType = 1
+          // 上传企业证件信息
+          console.log(row)
+          this.uploadOrgPic(row.orgId, (row.taxpayerPic && row.taxpayerPic[0] && row.taxpayerPic[0].name) || '', 1)
+          this.uploadOrgPic(row.orgId, (row.identityzPic && row.identityzPic[0] && row.identityzPic[0].name) || '', 8)
+          this.uploadOrgPic(row.orgId, (row.identityfPic && row.identityfPic[0] && row.identityfPic[0].name) || '', 9)
           if (this.currType === 'add_info') {
             $userOrgAdd(params).then(res => {
               this.$message.success('成功！')
@@ -197,6 +217,8 @@ export default {
               this.$refs.tables.initDataList()
             })
           }
+
+          this.dialogAddGasStationVisible = false
         }
       })
     }

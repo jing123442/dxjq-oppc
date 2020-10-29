@@ -6,10 +6,10 @@
         <em-table-list v-if="active == index && nextTick" ref="tables" :tableListName="'preferential'" :axios="axios" :buttonsList="buttonsList" :queryCustURL="queryCustURL" :responseSuccess="response_success" :composeParam="composeParam" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
       </el-tab-pane>
     </el-tabs>
-    <el-dialog title="配置" :visible.sync="dialogConfigVisible" :width="add_edit_dialog">
+    <el-dialog title="配置" :visible.sync="dialogConfigVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogConfigVisible" ref="config" :formRef="'configForm'" :rowData="configRow" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventConfig"></nt-form>
     </el-dialog>
-    <el-dialog title="修改" :visible.sync="dialogConfigUpdateVisible" :width="add_edit_dialog">
+    <el-dialog title="修改" :visible.sync="dialogConfigUpdateVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogConfigUpdateVisible" ref="configEdit" :formRef="'configEditForm'" :rowData="configUpdateRow" :pageColumn="edit_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventConfigEdit"></nt-form>
     </el-dialog>
   </div>

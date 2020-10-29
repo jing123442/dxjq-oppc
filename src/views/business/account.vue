@@ -2,7 +2,7 @@
   <div class="template-main">
     <em-table-list :tableListName="'account'" ref="tables" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
-    <el-dialog :title="'提现-' + orgTitle" :visible.sync="dialogWithdrawVisible" width="40%">
+    <el-dialog :title="'提现-' + orgTitle" :visible.sync="dialogWithdrawVisible" width="40%" :append-to-body="true">
       <el-form size="small" :model="formWithdraw" label-width="80px" ref="formWithdraw" v-if="dialogWithdrawVisible" :rules="formWithdrawRules">
         <el-form-item label="提现金额" prop="amount" style="width: 90%;">
           <el-input v-model="formWithdraw.amount"></el-input>

@@ -1,10 +1,10 @@
 <template>
   <div class="template-main">
     <em-table-list :tableListName="'gasStockList'" ref="tables" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog title="库存记录" :visible.sync="dialogRecordVisible" width="80%">
+    <el-dialog title="库存记录" :visible.sync="dialogRecordVisible" width="80%" :append-to-body="true">
       <em-table-list v-if="dialogRecordVisible" ref="recordList" :tableListName="'recordList'" :axios="axios" :queryCustURL="queryCustURLRecord" :responseSuccess="response_success" :queryParam="queryParamsRecord" :mode_list="mode_list" :page_status="page_status" :page_column="page_column_record" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
-    <el-dialog title="库存调整" :visible.sync="dialogUpdateStockVisible" width="80%">
+    <el-dialog title="库存调整" :visible.sync="dialogUpdateStockVisible" width="80%" :append-to-body="true">
       <nt-form ref="stock" v-if="dialogUpdateStockVisible" :rowData="updateRow" :modeList="{}" :pageColumn="page_column_update" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
     </el-dialog>
   </div>

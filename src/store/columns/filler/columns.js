@@ -48,7 +48,10 @@ const columns = {
     { field: 'mobile', name: '联系电话', nameSpan: 6, show: { type: 'text', ou: 2 } },
     { field: 'email', name: '邮箱', nameSpan: 6, show: { type: 'text', ou: 2 } },
     { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 } }
+    { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 } },
+    { field: 'taxpayerPic', name: '', ispush: false, filefield: 'file', xs: 8, sm: 8, md: 8, lg: 8, xl: 8, nameSpan: 2, hide: true, show: { type: 'file', ou: 3, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: app.state.fileHost, placeholder: '请上传营业执照图片', node: [], rules: [{ required: true, message: '请上传营业执照图片！', trigger: 'change' }] } },
+    { field: 'identityzPic', name: '', ispush: false, filefield: 'file', xs: 8, sm: 8, md: 8, lg: 8, xl: 8, nameSpan: 2, hide: true, show: { type: 'file', ou: 3, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: app.state.fileHost, placeholder: '请上传法人身份证人像面图片', node: [], rules: [{ required: true, message: '请上传法人身份证人像面图片！', trigger: 'change' }] } },
+    { field: 'identityfPic', name: '', ispush: false, filefield: 'file', xs: 8, sm: 8, md: 8, lg: 8, xl: 8, nameSpan: 2, hide: true, show: { type: 'file', ou: 3, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: app.state.fileHost, placeholder: '请上法人身份证国徽面图片', node: [], rules: [{ required: true, message: '请上法人身份证国徽面图片！', trigger: 'change' }] } }
   ],
   fillerSAuth: [
     { field: 'businessLicense', name: '营业执照号', nameSpan: 6, show: { type: 'text', ou: 1 } },
@@ -68,7 +71,10 @@ const columns = {
     { field: 'mobile', name: '联系电话', nameSpan: 6, show: { type: 'text', ou: 2 } },
     { field: 'email', name: '邮箱', nameSpan: 6, show: { type: 'text', ou: 2 } },
     { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2 } },
-    { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 } }
+    { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 } },
+    { field: 'taxpayerPic', name: '', ispush: false, filefield: 'file', xs: 8, sm: 8, md: 8, lg: 8, xl: 8, nameSpan: 2, hide: true, show: { type: 'file', ou: 3, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: app.state.fileHost, placeholder: '请上传营业执照图片', node: [], rules: [{ required: true, message: '请上传营业执照图片！', trigger: 'change' }] } },
+    { field: 'identityzPic', name: '', ispush: false, filefield: 'file', xs: 8, sm: 8, md: 8, lg: 8, xl: 8, nameSpan: 2, hide: true, show: { type: 'file', ou: 3, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: app.state.fileHost, placeholder: '请上传法人身份证人像面图片', node: [], rules: [{ required: true, message: '请上传法人身份证人像面图片！', trigger: 'change' }] } },
+    { field: 'identityfPic', name: '', ispush: false, filefield: 'file', xs: 8, sm: 8, md: 8, lg: 8, xl: 8, nameSpan: 2, hide: true, show: { type: 'file', ou: 3, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: app.state.fileHost, placeholder: '请上法人身份证国徽面图片', node: [], rules: [{ required: true, message: '请上法人身份证国徽面图片！', trigger: 'change' }] } }
   ],
   fillerUser: [
     { field: 'userName', name: '用户姓名', fixed: 'left' },

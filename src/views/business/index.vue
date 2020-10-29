@@ -1,7 +1,7 @@
 <template>
   <div class="template-main">
     <em-table-list :tableListName="'busorg'" ref="tables" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog title="添加平台公司" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog">
+    <el-dialog title="添加平台公司" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog" :append-to-body="true">
       <div v-if="isAuthInfo" class="auth-status" :class="authColor"><span class="auth-status__dot" :class="authColor"></span>
         {{authRow.authStatus == 2 ? '已认证' : (authRow.authStatus == 1 ? '认证中' : (authRow.authStatus == 3 ? '认证失败' : '未认证'))}}
       </div>
@@ -14,7 +14,7 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
-    <el-dialog :title="bindTitle" :visible.sync="dialogBindVisible" width="30%">
+    <el-dialog :title="bindTitle" :visible.sync="dialogBindVisible" width="30%" :append-to-body="true">
       <el-form size="small" :model="formBindTel" label-width="80px" ref="formBindTel" v-if="dialogBindVisible" :rules="formBindTelRules">
         <el-form-item label="手机号" prop="tel" style="width: 90%;">
           <el-input v-model="formBindTel.tel"></el-input>
@@ -40,8 +40,8 @@
 <script>
 import { axiosRequestParams, queryDefaultParams, custFormBtnList, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $orgAuth, $signContract, $signBalanceProtocol, $sendVerificationCode, $bindPhone, $unbindPhone } from '@/service/pay'
-import { $userOrgAdd, $userOrgEdit } from '@/service/user'
+import { $orgAuth, $signContract, $signBalanceProtocol, $sendVerificationCode, $bindPhone, $unbindPhone, $uploadOrgPic } from '@/service/pay'
+import { $userOrgAdd, $userOrgEdit, $userOrgPicList } from '@/service/user'
 
 export default {
   name: 'busorg',
@@ -122,6 +122,9 @@ export default {
           }
         })
       } else {
+        $userOrgPicList({ orgId: row.orgId }).then(response => {
+          console.log(response)
+        })
         // 重置page_column值
         this.resetAuthPageCol()
 
@@ -243,10 +246,11 @@ export default {
           this.onListEventAddGasStation(row)
         } else {
           this.orgAuthEvent(row)
+          this.dialogAddGasStationVisible = false
         }
+      } else {
+        this.dialogAddGasStationVisible = false
       }
-
-      this.dialogAddGasStationVisible = false
     },
     orgAuthEvent(row) {
       const params = {
@@ -260,16 +264,32 @@ export default {
         this.$refs.tables.initDataList()
       })
     },
+    uploadOrgPic(orgId, filePath, picType) {
+      const params = {
+        orgId: orgId,
+        picType: picType,
+        filePath: filePath
+      }
+
+      $uploadOrgPic(params).then(response => {})
+    },
     onListEventAddGasStation(row) {
       this.$refs.addGap.$children[0].validate(valid => {
         if (valid) {
           const params = {}
           this.auth_page_column.forEach(item => {
-            params[item.field] = row[item.field]
+            if (item.ispush !== false) {
+              params[item.field] = row[item.field]
+            }
           })
 
           params.authType = this.active
           params.orgType = 0
+          // 上传企业证件信息
+          console.log(row)
+          this.uploadOrgPic(row.orgId, (row.taxpayerPic && row.taxpayerPic[0] && row.taxpayerPic[0].name) || '', 1)
+          this.uploadOrgPic(row.orgId, (row.identityzPic && row.identityzPic[0] && row.identityzPic[0].name) || '', 8)
+          this.uploadOrgPic(row.orgId, (row.identityfPic && row.identityfPic[0] && row.identityfPic[0].name) || '', 9)
           if (this.currType === 'add_info') {
             $userOrgAdd(params).then(res => {
               this.$message.success('成功！')
@@ -284,6 +304,8 @@ export default {
               this.$refs.tables.initDataList()
             })
           }
+
+          this.dialogAddGasStationVisible = false
         }
       })
     }
