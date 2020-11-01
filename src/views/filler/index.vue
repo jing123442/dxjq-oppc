@@ -22,8 +22,8 @@
 <script>
 import { axiosRequestParams, queryDefaultParams, custFormBtnList } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $orgAuth, $uploadOrgPic } from '@/service/pay'
-import { $userOrgAdd, $userOrgEdit, $userOrgPicList } from '@/service/user'
+import { $orgAuth } from '@/service/pay'
+import { $userOrgAdd, $userOrgEdit } from '@/service/user'
 
 export default {
   name: 'filler',
@@ -92,9 +92,6 @@ export default {
         this.queryParamsUser = queryDefaultParams(this, { type: 2, key: 'param', value: { userType: 1, baseRole: 4, orgId: row.orgId } })
         this.dialogFillerUserVisible = true
       } else {
-      	$userOrgPicList({ orgId: row.orgId }).then(response => {
-          console.log(response)
-        })
         // 重置page_column值
         this.resetAuthPageCol()
 
@@ -177,15 +174,6 @@ export default {
         this.$refs.tables.initDataList()
       })
     },
-    uploadOrgPic(orgId, filePath, picType) {
-      const params = {
-        orgId: orgId,
-        picType: picType,
-        filePath: filePath
-      }
-
-      $uploadOrgPic(params).then(response => {})
-    },
     onListEventAddGasStation(row) {
       this.$refs.addGap.$children[0].validate(valid => {
         if (valid) {
@@ -198,11 +186,6 @@ export default {
 
           params.authType = this.active
           params.orgType = 1
-          // 上传企业证件信息
-          console.log(row)
-          this.uploadOrgPic(row.orgId, (row.taxpayerPic && row.taxpayerPic[0] && row.taxpayerPic[0].name) || '', 1)
-          this.uploadOrgPic(row.orgId, (row.identityzPic && row.identityzPic[0] && row.identityzPic[0].name) || '', 8)
-          this.uploadOrgPic(row.orgId, (row.identityfPic && row.identityfPic[0] && row.identityfPic[0].name) || '', 9)
           if (this.currType === 'add_info') {
             $userOrgAdd(params).then(res => {
               this.$message.success('成功！')

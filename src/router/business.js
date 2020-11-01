@@ -22,6 +22,18 @@ export default [
         children: [
           { path: 'accountList', component: inImport('business/sub/accountList'), name: 'accountList', meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } }
         ]
+      },
+      {
+        path: 'index',
+        component: {
+          render (c) { return c('router-view') }
+        },
+        name: 'index',
+        hidden: true,
+        meta: { title: '平台公司', icon: 'icon-gongnengguanli', noCache: false },
+        children: [
+          { path: 'auth', component: inImport('business/sub/auth'), name: 'auth', meta: { title: '企业信息', icon: 'icon-gongnengguanli', noCache: false } }
+        ]
       }
     ]
   }

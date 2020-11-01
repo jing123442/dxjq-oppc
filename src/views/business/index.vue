@@ -40,8 +40,8 @@
 <script>
 import { axiosRequestParams, queryDefaultParams, custFormBtnList, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $orgAuth, $signContract, $signBalanceProtocol, $sendVerificationCode, $bindPhone, $unbindPhone, $uploadOrgPic } from '@/service/pay'
-import { $userOrgAdd, $userOrgEdit, $userOrgPicList } from '@/service/user'
+import { $orgAuth, $signContract, $signBalanceProtocol, $sendVerificationCode, $bindPhone, $unbindPhone } from '@/service/pay'
+import { $userOrgAdd, $userOrgEdit } from '@/service/user'
 
 export default {
   name: 'busorg',
@@ -121,10 +121,9 @@ export default {
             window.open(response.data)
           }
         })
+      } else if (type === 'auth') {
+        this.$router.push(`index/auth?orgId=${row.orgId}`)
       } else {
-        $userOrgPicList({ orgId: row.orgId }).then(response => {
-          console.log(response)
-        })
         // 重置page_column值
         this.resetAuthPageCol()
 
@@ -135,7 +134,7 @@ export default {
         // 是否显示dialog
         this.dialogAddGasStationVisible = true
         this.authRow = row
-        if (type === 'add_info' || type === 'gedit' || type === 'auth') {
+        if (type === 'add_info' || type === 'gedit') {
           this.authRow._btn = this.formBtnList
         } else {
           this.authRow._btn = {}
@@ -264,15 +263,6 @@ export default {
         this.$refs.tables.initDataList()
       })
     },
-    uploadOrgPic(orgId, filePath, picType) {
-      const params = {
-        orgId: orgId,
-        picType: picType,
-        filePath: filePath
-      }
-
-      $uploadOrgPic(params).then(response => {})
-    },
     onListEventAddGasStation(row) {
       this.$refs.addGap.$children[0].validate(valid => {
         if (valid) {
@@ -285,11 +275,6 @@ export default {
 
           params.authType = this.active
           params.orgType = 0
-          // 上传企业证件信息
-          console.log(row)
-          this.uploadOrgPic(row.orgId, (row.taxpayerPic && row.taxpayerPic[0] && row.taxpayerPic[0].name) || '', 1)
-          this.uploadOrgPic(row.orgId, (row.identityzPic && row.identityzPic[0] && row.identityzPic[0].name) || '', 8)
-          this.uploadOrgPic(row.orgId, (row.identityfPic && row.identityfPic[0] && row.identityfPic[0].name) || '', 9)
           if (this.currType === 'add_info') {
             $userOrgAdd(params).then(res => {
               this.$message.success('成功！')
