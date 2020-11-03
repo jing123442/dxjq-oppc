@@ -214,7 +214,7 @@ const columns = {
     { field: 'gasstationName', name: '加气站名称', show: { type: 'text', ou: 1, isDisabled: true, style: 'width: 90%;' } },
     { field: 'cashierName', name: '收银员名称', show: { type: 'text', ou: 1, isDisabled: true, style: 'width: 90%;' } },
     { field: 'gasQty', name: '加气量', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },
-    { field: 'listPrice', name: '挂牌气价', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },
+    { field: 'platformPrice', name: '挂牌气价', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },
     { field: 'actualPrice', name: '实际气价', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },
     { field: 'amount', name: '实际加气金额', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },
     { field: 'createDate', name: '加气时间', show: { type: 'text', ou: 2, isDisabled: true, style: 'width: 90%;' } },

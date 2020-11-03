@@ -12,57 +12,13 @@
       <li>
         <div class="li-headers">企业影印件上传</div>
         <div class="li-form">
-          <div>企业营业执照
-            <el-upload
-              v-if="authRow.authStatus == 2"
-              class="upload-demo"
-              :action="$store.state.app.fileUrl"
-              :file-list="fileList"
-              :headers="$store.state.app.fileHeaders"
-              name="file"
-              multiple
-              :limit="1"
-              :on-error="(response, file, fileList) => {handleError(1, response, file, fileList)}"
-              :on-success="(response, file, fileList) => {handleSucess(1, response, file, fileList)}"
-              list-type="picture-card"><i class="el-icon-plus"></i></el-upload>
-          </div>
-          <div v-if="authRow.authStatus == 2"></div>
+          <div>企业营业执照</div>
+          <div v-if="authRow.authStatus == 2" @click="authLisenceUpload">去认证</div>
           <div v-else style="color: red;">未认证企业基本信息</div>
         </div>
         <div class="li-form">
-          <div>法人身份证人像面照片
-            <el-upload
-              v-if="authRow.authStatus == 2"
-              class="upload-demo"
-              :action="$store.state.app.fileUrl"
-              :file-list="fileZList"
-              :headers="$store.state.app.fileHeaders"
-              name="file"
-              multiple
-              :limit="1"
-              :on-error="(response, file, fileList) => {handleError(8, response, file, fileList)}"
-              :on-success="(response, file, fileList) => {handleSucess(8, response, file, fileList)}"
-              list-type="picture-card"><i class="el-icon-plus"></i></el-upload>
-          </div>
-          <div v-if="authRow.authStatus == 2"></div>
-          <div v-else style="color: red;">未认证企业基本信息</div>
-        </div>
-        <div class="li-form">
-          <div>法人身份证国徽面照片
-            <el-upload
-              v-if="authRow.authStatus == 2"
-              class="upload-demo"
-              :action="$store.state.app.fileUrl"
-              :file-list="fileFList"
-              :headers="$store.state.app.fileHeaders"
-              name="file"
-              multiple
-              :limit="1"
-              :on-error="(response, file, fileList) => {handleError(9, response, file, fileList)}"
-              :on-success="(response, file, fileList) => {handleSucess(9, response, file, fileList)}"
-              list-type="picture-card"><i class="el-icon-plus"></i></el-upload>
-          </div>
-          <div v-if="authRow.authStatus == 2"></div>
+          <div>法人身份证照片</div>
+          <div v-if="authRow.authStatus == 2" @click="authIdcardUpload">去认证</div>
           <div v-else style="color: red;">未认证企业基本信息</div>
         </div>
       </li>
@@ -156,6 +112,12 @@ export default {
     },
     handleClick() {
       this.resetAuthPageCol()
+    },
+    authLisenceUpload() {
+      this.$router.push(`lisence?orgId=${this.$route.query.orgId}&authType=${this.authRow.authType}`)
+    },
+    authIdcardUpload() {
+      this.$router.push(`idcard?orgId=${this.$route.query.orgId}`)
     },
     resetAuthPageCol() {
       if (this.active == '2') {

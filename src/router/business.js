@@ -32,7 +32,9 @@ export default [
         hidden: true,
         meta: { title: '平台公司', icon: 'icon-gongnengguanli', noCache: false },
         children: [
-          { path: 'auth', component: inImport('business/sub/auth'), name: 'auth', meta: { title: '企业信息', icon: 'icon-gongnengguanli', noCache: false } }
+          { path: 'auth', component: inImport('business/sub/auth'), name: 'auth', meta: { title: '企业信息', icon: 'icon-gongnengguanli', noCache: false } },
+          { path: 'lisence', component: inImport('business/sub/lisence'), name: 'lisence', meta: { title: '企业营业执照认证', icon: 'icon-gongnengguanli', noCache: false } },
+          { path: 'idcard', component: inImport('business/sub/idcard'), name: 'idcard', meta: { title: '法人身份证认证', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       }
     ]

@@ -35,3 +35,18 @@ export async function $logout (data) {
     headers
   })
 }
+
+// 上传文件
+export async function $upload (data) {
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+    Authorization: 'Bearer ' + store.getters.woptoken,
+    Identifier: store.getters.wopidntf
+  }
+  return await axios({
+    url: 'message/upload/file',
+    method: 'POST',
+    data: data,
+    headers
+  })
+}
