@@ -3,18 +3,21 @@ const columns = {
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, show: { noShow: 1 } },
     { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', show: { type: 'text', remote: true, obj: 'orgName', style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
     { field: 'address', name: '地址', show: { type: 'cascader', fieldList: ['address', 'areas'], formatter: 'address', obj: 'cascaderAddress', props: { value: 'label', label: 'label' }, iType: 'string', sign: '', ou: 1, noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'change' }] },
-    { field: 'status', name: '企业状态', formatter: 'status' },
-    { field: 'authStatus', name: '认证状态', formatter: 'authStatus' },
-    { field: 'protocolNo', name: '转账协议', stype: 'format', formatFun: 'tableStatusToLabel' },
-    { field: 'contractNo', name: '提现协议', stype: 'format', formatFun: 'tableStatusToLabel' },
-    { field: 'bindPhone', name: '验证码手机号' },
+    { field: 'status', name: '企业状态', formatter: 'status', width: 75 },
+    { field: 'authStatus', name: '认证状态', formatter: 'authStatus', filters: [{ value: 0, text: '未认证' }, { value: 1, text: '认证中' }, { value: 2, text: '已认证' }, { value: 3, text: '认证失败' }] },
+    { field: 'protocolNo', name: '转账协议', stype: 'format', formatFun: 'tableStatusToLabel', width: 75 },
+    { field: 'contractNo', name: '提现协议', stype: 'format', formatFun: 'tableStatusToLabel', width: 75 },
+    { field: 'regnumStatus', name: '营业执照认证', formatter: 'authStatus' },
+    { field: 'idcardStatus', name: '法人证件认证', formatter: 'authStatus' },
+    { field: 'bindPhone', name: '验证码手机号', width: 110 },
+    { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140, search: { type: 'date-picker', placeholder: '' } },
     {
       field: 'useropts',
       stype: 'opt',
       ispush: false,
       name: '操作',
       fixed: 'right',
-      width: 260,
+      width: 200,
       list: params => {
         const row = params.row
         const optList = []

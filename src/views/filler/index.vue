@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
@@ -58,7 +58,7 @@ export default {
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '增加企业' }],
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 1 } }),
+      queryParams: Function,
       queryParamsUser: null,
       dialogAddGasStationVisible: false,
       authRow: {},
@@ -137,14 +137,15 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
+      const params = Object.assign({}, callbackPagesInfo(_this), { startDate: '20200-01-01 00:00:00', endDate: '20200-11-01 00:00:00', param: { orgType: 1 } })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (v !== '') params.param[k] = v
         }
-      })
+      }
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
     },
     checkboxStatus(row, index, callback) {
       // eslint-disable-next-line standard/no-callback-literal
