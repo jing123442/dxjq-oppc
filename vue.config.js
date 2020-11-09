@@ -1,8 +1,5 @@
-const path = require('path');
-
 module.exports = {
   publicPath: './',
-  lintOnSave: false,
   devServer: {
     port: 8888,
     open: true,
@@ -13,21 +10,6 @@ module.exports = {
         pathRewrite: {
           '^/api': '/'
         }
-      }
-    },
-    overlay: {
-      warnings: false,
-      errors: false
-    }
-  },
-  configureWebpack: {
-    resolve: {
-      extensions: ['.js', '.vue', '.json'],
-      modules: ['node_modules'],
-      alias: {
-        main: path.resolve(__dirname, './src/src'),
-        packages: path.resolve(__dirname, './src/packages'),
-        'nt-ui': path.resolve(__dirname, './src')
       }
     }
   },

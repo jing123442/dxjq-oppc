@@ -4,7 +4,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
-import emElementUI from './src/index'
+import emElementUI from 'em-element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/styles/index.scss' // global css
 import * as filters from '@/utils/filters' // 过滤器
