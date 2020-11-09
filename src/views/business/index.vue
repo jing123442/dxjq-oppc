@@ -38,7 +38,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList, isTypeof, callbackPagesInfo } from '@/utils/tools'
+import { axiosRequestParams, custFormBtnList, isTypeof, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth, $signContract, $signBalanceProtocol, $sendVerificationCode, $bindPhone, $unbindPhone } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'

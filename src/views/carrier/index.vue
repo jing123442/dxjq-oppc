@@ -65,7 +65,7 @@
  </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles, isTypeof, toolsFileHeaders } from '@/utils/tools'
+import { axiosRequestParams, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles, isTypeof, toolsFileHeaders } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
