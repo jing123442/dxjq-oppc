@@ -137,11 +137,21 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { startDate: '20200-01-01 00:00:00', endDate: '20200-11-01 00:00:00', param: { orgType: 1 } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { org: { orgType: 1 }, dateParam: { createDateFrom: '', createDateTo: '' } } })
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (v !== '') params.param[k] = v
+          if (k == 'authDate') {
+            if (_this.finds.authDate === null) {
+              params.param.dateParam.createDateFrom = ''
+              params.param.dateParam.createDateTo = ''
+            } else {
+              params.param.dateParam.createDateFrom = v[0]
+              params.param.dateParam.createDateTo = v[1]
+            }
+          } else {
+            if (v !== '') params.param.org[k] = v
+          }
         }
       }
       // eslint-disable-next-line standard/no-callback-literal

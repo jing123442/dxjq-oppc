@@ -38,7 +38,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList, isTypeof } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, custFormBtnList, isTypeof, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth, $signContract, $signBalanceProtocol, $sendVerificationCode, $bindPhone, $unbindPhone } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
@@ -65,7 +65,7 @@ export default {
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '添加公司' }],
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } }),
+      queryParams: Function,
       dialogAddGasStationVisible: false,
       authRow: {},
       auth_page_column: [],
@@ -230,14 +230,15 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { org: { orgType: 0 }, dateParam: { createDateFrom: '', createDateTo: '' } } })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (v !== '') params.param.org[k] = v
         }
-      })
+      }
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
     },
     onFormEvent(obj, row) {
       if (obj.type === 'ok') {

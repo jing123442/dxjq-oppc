@@ -65,7 +65,7 @@
  </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles, toolsFileHeaders } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles, isTypeof, toolsFileHeaders } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
@@ -94,7 +94,7 @@ export default {
       headers: {},
       buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '添加公司' }],
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 2 } }),
+      queryParams: Function,
       dialogAddGasStationVisible: false,
       authRow: {},
       auth_page_column: [],
@@ -172,8 +172,23 @@ export default {
       this.dialogAddCarVisible = true
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { orgType: 2 } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { org: { orgType: 2 }, dateParam: { createDateFrom: '', createDateTo: '' } } })
 
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k == 'authDate') {
+            if (_this.finds.authDate === null) {
+              params.param.dateParam.createDateFrom = ''
+              params.param.dateParam.createDateTo = ''
+            } else {
+              params.param.dateParam.createDateFrom = v[0]
+              params.param.dateParam.createDateTo = v[1]
+            }
+          } else {
+            if (v !== '') params.param.org[k] = v
+          }
+        }
+      }
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     },
