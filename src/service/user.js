@@ -42,3 +42,7 @@ export async function $exportCarrierUserFile (data) {
 export async function $userOrgList (data) {
   return await R({ url: 'user/org/list', method: 'POST', data })
 }
+
+export async function $userOrgPicList (data) {
+  return await R({ url: 'user/org_pic/find_org_pic_list', method: 'POST', data })
+}

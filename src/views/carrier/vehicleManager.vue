@@ -1,13 +1,13 @@
 <template>
   <div class="template-main">
     <em-table-list ref="tables" :tableListName="'vehicleManager'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog title="车辆详情" :visible.sync="dialogTruckDetailVisible" :width="add_edit_dialog">
+    <el-dialog title="车辆详情" :visible.sync="dialogTruckDetailVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogTruckDetailVisible" :rowData="detailRow" :pageColumn="truck_page_column" :mode-list="truck_mode_list" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"></nt-form>
     </el-dialog>
-    <el-dialog title="车辆资金归集" :visible.sync="dialogTruckCollectVisible" :width="'50%'">
+    <el-dialog title="车辆资金归集" :visible.sync="dialogTruckCollectVisible" :width="'50%'" :append-to-body="true">
       <nt-form v-if="dialogTruckCollectVisible" ref="collect" :formRef="'collectForm'" :rowData="collectRow" :pageColumn="collect_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventCollect"></nt-form>
     </el-dialog>
-    <el-dialog title="绑定司机" :visible.sync="dialogTruckBindVisible" :width="'50%'">
+    <el-dialog title="绑定司机" :visible.sync="dialogTruckBindVisible" :width="'50%'" :append-to-body="true">
       <nt-form v-if="dialogTruckBindVisible" ref="bind" :formRef="'bindForm'" :rowData="bindRow" :pageColumn="bind_page_column" :selectList="bindSelect" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventBind"></nt-form>
     </el-dialog>
   </div>

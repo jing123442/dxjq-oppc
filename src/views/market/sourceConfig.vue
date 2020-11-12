@@ -1,16 +1,16 @@
 <template>
   <div class="template-main">
     <em-table-list :buttonsList="buttonsList" ref="sourceConfig" :tableListName="'sourceConfig'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-     <el-dialog title="配置价格" :visible.sync="dialogPriceVisible" :width="add_edit_dialog">
+     <el-dialog title="配置价格" :visible.sync="dialogPriceVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogPriceVisible" ref="priceSetting" :rowData="priceRow" :pageColumn="page_column_price" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn" @onListEvent="onListEventDialogPrice"></nt-form>
     </el-dialog>
-     <el-dialog title="编辑" :visible.sync="dialogEditVisible" :width="add_edit_dialog">
+     <el-dialog title="编辑" :visible.sync="dialogEditVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogEditVisible" ref="editSelf" :rowData="editRow" :pageColumn="page_column_edit" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn" @onListEvent="onListEventDialogEdit"></nt-form>
     </el-dialog>
-    <el-dialog title="变更记录" :visible.sync="dialogRecordVisible" :width="add_edit_dialog">
+    <el-dialog title="变更记录" :visible.sync="dialogRecordVisible" :width="add_edit_dialog" :append-to-body="true">
       <em-table-list v-if="dialogRecordVisible" ref="recordList" :tableListName="'recordList'" :axios="axios" :queryCustURL="queryCustURLRecord" :responseSuccess="response_success" :queryParam="queryParamsRecord" :mode_list="mode_list" :page_status="page_status" :page_column="page_column_record" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
-    <el-dialog title="新增" :visible.sync="dialogAddVisible" :width="add_edit_dialog">
+    <el-dialog title="新增" :visible.sync="dialogAddVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogAddVisible" ref="addSelf" :rowData="addRow" :pageColumn="page_column_edit" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn" @onListEvent="onListEventDialogAdd"></nt-form>
     </el-dialog>
   </div>

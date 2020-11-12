@@ -1,7 +1,7 @@
 <template>
   <div class="template-main">
     <em-table-list ref="tables" :tableListName="'filler'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @checkboxStatus="checkboxStatus"></em-table-list>
-    <el-dialog title="添加加气站" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog">
+    <el-dialog title="添加加气站" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog" :append-to-body="true">
       <div v-if="isAuthInfo" class="auth-status" :class="authColor"><span class="auth-status__dot" :class="authColor"></span>
         {{authRow.authStatus == 2 ? '已认证' : (authRow.authStatus == 1 ? '认证中' : (authRow.authStatus == 3 ? '认证失败' : '未认证'))}}
       </div>
@@ -14,13 +14,13 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
-    <el-dialog title="收银员信息" :visible.sync="dialogFillerUserVisible" :width="add_edit_dialog">
+    <el-dialog title="收银员信息" :visible.sync="dialogFillerUserVisible" :width="add_edit_dialog" :append-to-body="true">
       <em-table-list v-if="dialogFillerUserVisible" ref="recordList" :tableListName="'recordList'" :axios="axios" :queryCustURL="queryCustURLUser" :responseSuccess="response_success" :queryParam="queryParamsUser" :mode_list="mode_list" :page_status="page_status" :page_column="page_user_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList } from '@/utils/tools'
+import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
@@ -58,7 +58,7 @@ export default {
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '增加企业' }],
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 1 } }),
+      queryParams: Function,
       queryParamsUser: null,
       dialogAddGasStationVisible: false,
       authRow: {},
@@ -137,14 +137,25 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { org: { orgType: 1 }, dateParam: { createDateFrom: '', createDateTo: '' } } })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k == 'authDate') {
+            if (_this.finds.authDate === null) {
+              params.param.dateParam.createDateFrom = ''
+              params.param.dateParam.createDateTo = ''
+            } else {
+              params.param.dateParam.createDateFrom = v[0]
+              params.param.dateParam.createDateTo = v[1]
+            }
+          } else {
+            if (v !== '') params.param.org[k] = v
+          }
         }
-      })
+      }
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
     },
     checkboxStatus(row, index, callback) {
       // eslint-disable-next-line standard/no-callback-literal
@@ -156,10 +167,11 @@ export default {
           this.onListEventAddGasStation(row)
         } else {
           this.orgAuthEvent(row)
+          this.dialogAddGasStationVisible = false
         }
+      } else {
+        this.dialogAddGasStationVisible = false
       }
-
-      this.dialogAddGasStationVisible = false
     },
     orgAuthEvent(row) {
       const params = {
@@ -178,7 +190,9 @@ export default {
         if (valid) {
           const params = {}
           this.auth_page_column.forEach(item => {
-            params[item.field] = row[item.field]
+            if (item.ispush !== false) {
+              params[item.field] = row[item.field]
+            }
           })
 
           params.authType = this.active
@@ -197,6 +211,8 @@ export default {
               this.$refs.tables.initDataList()
             })
           }
+
+          this.dialogAddGasStationVisible = false
         }
       })
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="template-main">
     <em-table-list :tableListName="'busorg'" ref="tables" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog title="添加平台公司" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog">
+    <el-dialog title="添加平台公司" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog" :append-to-body="true">
       <div v-if="isAuthInfo" class="auth-status" :class="authColor"><span class="auth-status__dot" :class="authColor"></span>
         {{authRow.authStatus == 2 ? '已认证' : (authRow.authStatus == 1 ? '认证中' : (authRow.authStatus == 3 ? '认证失败' : '未认证'))}}
       </div>
@@ -14,7 +14,7 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
-    <el-dialog :title="bindTitle" :visible.sync="dialogBindVisible" width="30%">
+    <el-dialog :title="bindTitle" :visible.sync="dialogBindVisible" width="30%" :append-to-body="true">
       <el-form size="small" :model="formBindTel" label-width="80px" ref="formBindTel" v-if="dialogBindVisible" :rules="formBindTelRules">
         <el-form-item label="手机号" prop="tel" style="width: 90%;">
           <el-input v-model="formBindTel.tel"></el-input>
@@ -38,7 +38,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList, isTypeof } from '@/utils/tools'
+import { axiosRequestParams, custFormBtnList, isTypeof, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth, $signContract, $signBalanceProtocol, $sendVerificationCode, $bindPhone, $unbindPhone } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
@@ -65,7 +65,7 @@ export default {
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '添加公司' }],
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } }),
+      queryParams: Function,
       dialogAddGasStationVisible: false,
       authRow: {},
       auth_page_column: [],
@@ -121,6 +121,8 @@ export default {
             window.open(response.data)
           }
         })
+      } else if (type === 'auth') {
+        this.$router.push(`index/auth?orgId=${row.orgId}`)
       } else {
         // 重置page_column值
         this.resetAuthPageCol()
@@ -132,7 +134,7 @@ export default {
         // 是否显示dialog
         this.dialogAddGasStationVisible = true
         this.authRow = row
-        if (type === 'add_info' || type === 'gedit' || type === 'auth') {
+        if (type === 'add_info' || type === 'gedit') {
           this.authRow._btn = this.formBtnList
         } else {
           this.authRow._btn = {}
@@ -228,14 +230,15 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { org: { orgType: 0 }, dateParam: { createDateFrom: '', createDateTo: '' } } })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (v !== '') params.param.org[k] = v
         }
-      })
+      }
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
     },
     onFormEvent(obj, row) {
       if (obj.type === 'ok') {
@@ -243,10 +246,11 @@ export default {
           this.onListEventAddGasStation(row)
         } else {
           this.orgAuthEvent(row)
+          this.dialogAddGasStationVisible = false
         }
+      } else {
+        this.dialogAddGasStationVisible = false
       }
-
-      this.dialogAddGasStationVisible = false
     },
     orgAuthEvent(row) {
       const params = {
@@ -265,7 +269,9 @@ export default {
         if (valid) {
           const params = {}
           this.auth_page_column.forEach(item => {
-            params[item.field] = row[item.field]
+            if (item.ispush !== false) {
+              params[item.field] = row[item.field]
+            }
           })
 
           params.authType = this.active
@@ -284,6 +290,8 @@ export default {
               this.$refs.tables.initDataList()
             })
           }
+
+          this.dialogAddGasStationVisible = false
         }
       })
     }

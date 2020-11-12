@@ -165,13 +165,14 @@ export function untilsMarketingManList() {
 
 export function utilsDyOrgList(type = null) {
   return {
-    url: '/user/org/list',
+    url: 'user/org/list',
     node: ['data', 'records'],
     params: {
       page: 1,
       size: 10,
       param: {
-        orgType: type
+        org: { orgType: 0 },
+        dateParam: { createDateFrom: '', createDateTo: '' }
       }
     },
     props: {

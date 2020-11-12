@@ -1,13 +1,13 @@
 <template>
   <div class="template-main">
     <em-table-list ref="lngPlan" :tableListName="'lngPlan'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog title="订单详细信息" :visible.sync="dialogDetailVisible" :width="add_edit_dialog">
+    <el-dialog title="订单详细信息" :visible.sync="dialogDetailVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventDetail"></nt-form>
     </el-dialog>
-    <el-dialog title="出港信息录入" :visible.sync="dialogDeparturesVisible" :width="add_edit_dialog">
+    <el-dialog title="出港信息录入" :visible.sync="dialogDeparturesVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogDeparturesVisible" ref="departures" :formRef="'departuresForm'" :rowData="departuresRow" :pageColumn="page_column_departures" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventDetail"></nt-form>
     </el-dialog>
-    <el-dialog title="确认信息" :visible.sync="dialogCompleteVisible" :width="add_edit_dialog">
+    <el-dialog title="确认信息" :visible.sync="dialogCompleteVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogCompleteVisible" ref="complete" :formRef="'completeForm'" :rowData="completeRow" :pageColumn="page_column_complete" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventComplete"></nt-form>
     </el-dialog>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="template-main">
     <em-table-list :tableListName="'logisticsAccountManager'" ref="accountList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog title="充值" :visible.sync="dialogRechargeVisible" :width="add_edit_dialog">
+    <el-dialog title="充值" :visible.sync="dialogRechargeVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form ref="recharge" v-if="dialogRechargeVisible" :rowData="rechargeRow" :pageColumn="page_column_firmAccountRecharge" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn" @onListEvent="onListEventDialog"></nt-form>
     </el-dialog>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="template-main">
     <em-table-list :tableListName="'vehicleCircle'" ref="vehicleCircle" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog title="圈存" :visible.sync="dialogCircleVisible" :width="add_edit_dialog">
+    <el-dialog title="圈存" :visible.sync="dialogCircleVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogCircleVisible" :rowData="circleRow" :pageColumn="page_column_circle_event" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventCircle"></nt-form>
     </el-dialog>
   </div>

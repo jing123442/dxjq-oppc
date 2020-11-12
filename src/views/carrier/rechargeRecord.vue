@@ -1,10 +1,10 @@
 <template>
   <div class="template-main">
     <em-table-list ref="rechargeRecord" :tableListName="'rechargeRecord'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-     <el-dialog title="审核" :visible.sync="dialogCheckVisible" :width="add_edit_dialog">
+     <el-dialog title="审核" :visible.sync="dialogCheckVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogCheckVisible" :rowData="checkRow" :pageColumn="page_column_check" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn" @onListEvent="onListEventDialogRecharge"></nt-form>
     </el-dialog>
-     <el-dialog title="充值详情" :visible.sync="dialogDetailVisible" :width="add_edit_dialog">
+     <el-dialog title="充值详情" :visible.sync="dialogDetailVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn" @onListEvent="onListEventDialogDetail"></nt-form>
     </el-dialog>
   </div>

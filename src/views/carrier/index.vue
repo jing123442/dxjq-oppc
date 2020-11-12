@@ -2,7 +2,7 @@
   <div class="template-main">
     <em-table-list :tableListName="'carrier'" ref="carrier" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
-    <el-dialog title="物流公司" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog">
+    <el-dialog title="物流公司" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog" :append-to-body="true">
       <div v-if="isAuthInfo" class="auth-status" :class="authColor"><span class="auth-status__dot" :class="authColor"></span>
         {{authRow.authStatus == 2 ? '已认证' : (authRow.authStatus == 1 ? '认证中' : (authRow.authStatus == 3 ? '认证失败' : '未认证'))}}
       </div>
@@ -15,10 +15,10 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
-    <el-dialog title="添加车辆" :visible.sync="dialogAddCarVisible" :width="add_edit_dialog">
+    <el-dialog title="添加车辆" :visible.sync="dialogAddCarVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogAddCarVisible" ref="addCar" :rowData="addCarRow" :pageColumn="page_column_addCar" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventAddCar"></nt-form>
     </el-dialog>
-    <el-dialog title="批量导入车辆" :visible.sync="dialogExportCarVisible" :width="add_edit_dialog">
+    <el-dialog title="批量导入车辆" :visible.sync="dialogExportCarVisible" :width="add_edit_dialog" :append-to-body="true">
       <el-form ref="exportCar" v-if="dialogExportCarVisible" :model="exportCarRow" size="small" :rules="exportRules" label-position="left">
         <el-form-item>
           <div>
@@ -65,7 +65,7 @@
  </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles, toolsFileHeaders } from '@/utils/tools'
+import { axiosRequestParams, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles, isTypeof, toolsFileHeaders } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
@@ -94,7 +94,7 @@ export default {
       headers: {},
       buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '添加公司' }],
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 2 } }),
+      queryParams: Function,
       dialogAddGasStationVisible: false,
       authRow: {},
       auth_page_column: [],
@@ -172,8 +172,23 @@ export default {
       this.dialogAddCarVisible = true
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { orgType: 2 } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { org: { orgType: 2 }, dateParam: { createDateFrom: '', createDateTo: '' } } })
 
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k == 'authDate') {
+            if (_this.finds.authDate === null) {
+              params.param.dateParam.createDateFrom = ''
+              params.param.dateParam.createDateTo = ''
+            } else {
+              params.param.dateParam.createDateFrom = v[0]
+              params.param.dateParam.createDateTo = v[1]
+            }
+          } else {
+            if (v !== '') params.param.org[k] = v
+          }
+        }
+      }
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     },
@@ -255,10 +270,11 @@ export default {
           this.onListEventAddGasStation(row)
         } else {
           this.orgAuthEvent(row)
+          this.dialogAddGasStationVisible = false
         }
+      } else {
+        this.dialogAddGasStationVisible = false
       }
-
-      this.dialogAddGasStationVisible = false
     },
     orgAuthEvent(row) {
       const params = {
@@ -277,7 +293,9 @@ export default {
         if (valid) {
           const params = {}
           this.auth_page_column.forEach(item => {
-            params[item.field] = row[item.field]
+            if (item.ispush !== false) {
+              params[item.field] = row[item.field]
+            }
           })
 
           params.authType = this.active
@@ -296,6 +314,8 @@ export default {
               this.$refs.tables.initDataList()
             })
           }
+
+          this.dialogAddGasStationVisible = false
         }
       })
     }

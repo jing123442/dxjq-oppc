@@ -2,7 +2,7 @@
   <div class="template-main">
     <em-table-list :tableListName="'release'" ref="tables" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
-    <el-dialog title="变更记录" :visible.sync="dialogChangeVisible" :width="add_edit_dialog">
+    <el-dialog title="变更记录" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
       <em-table-list v-if="dialogChangeVisible" :tableListName="'releaseLog'" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
   </div>
