@@ -10,7 +10,7 @@ const columns = {
     { field: 'regnumStatus', name: '营业执照认证', formatter: 'authStatus' },
     { field: 'idcardStatus', name: '法人证件认证', formatter: 'authStatus' },
     { field: 'bindPhone', name: '验证码手机号', width: 110 },
-    { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140, search: { type: 'date-picker', placeholder: '' } },
+    { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140, search: { type: 'date-picker', placeholder: '', value: () => { return ['2020-01-01 00:00:00', '2020-10-01 00:00:00'] } } },
     {
       field: 'useropts',
       stype: 'opt',
@@ -198,15 +198,15 @@ const columns = {
   ],
   orderManager: [
     { field: 'orderId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, ispush: false },
-    { field: 'orderId', stype: 'mapping', name: '订单号', mapping: 'orderId', search: { type: 'text', placeholder: '请输入订单号' } },
-    { field: 'gasstationName', name: '加气站', search: { type: 'text', placeholder: '请输入加气站' } },
-    { field: 'carNumber', name: '车牌号', search: { type: 'text', placeholder: '请输入车牌号' } },
-    { field: 'driverName', name: '司机名称', search: { type: 'text', placeholder: '请输入司机名称' } },
+    { field: 'orderId', stype: 'mapping', name: '订单号', mapping: 'orderId', search: { type: 'text', field: 'keyword', style: 'width: 280px;', placeholder: '请输入订单号/加气站/车牌号/司机/收银员' } },
+    { field: 'gasstationName', name: '加气站' },
+    { field: 'carNumber', name: '车牌号' },
+    { field: 'driverName', name: '司机名称' },
     { field: 'gasQty', name: '加气量' },
     { field: 'amount', name: '付款金额' },
+    { field: 'cashierName', name: '收银员' },
     { field: 'orderStatus', name: '订单状态', formatter: 'orderStatus', search: { type: 'select', obj: 'orderStatus', placeholder: '请选择订单状态' } },
-    { field: 'createDate', name: '创建日期', formatFun: 'formateTData all', width: 140, stype: 'format' },
-    { field: 'a', name: '日期筛选', hide: true, search: { type: 'date', modal: 'daterange' } },
+    { field: 'createDate', name: '创建日期', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', field: 'datePicker', placeholder: '' } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'detaila', name: '详情' }] }
   ],
   orderManagerDetail: [

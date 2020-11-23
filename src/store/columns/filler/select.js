@@ -14,7 +14,12 @@ const select = {
     orgId: utilsDyOrgList(1),
     status: utilsStatus(),
     cascaderAddress: regionData,
-    address: untilsAddress()
+    address: untilsAddress(),
+    qrcodeType: [
+      { value: 0, label: '未设置' },
+      { value: 1, label: '加气站二维码' },
+      { value: 2, label: '收银员二维码' }
+    ]
   },
   account: {
     orgId: utilsDyOrgList(1)

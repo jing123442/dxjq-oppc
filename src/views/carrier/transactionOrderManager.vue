@@ -1,7 +1,7 @@
 <template>
   <div class="template-main">
     <em-table-list :tableListName="'transactionOrderManager'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-     <el-dialog title="交易订单详情" :visible.sync="dialogDetailVisible" :width="add_edit_dialog" :append-to-body="true">
+    <el-dialog title="交易订单详情" :visible.sync="dialogDetailVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :modeList="mode_list_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn" @onListEvent="onListEventDialogDetail"></nt-form>
     </el-dialog>
   </div>
@@ -45,9 +45,7 @@ export default {
       response_success: 'response_success'
     })
   },
-  created: function () {
-    console.log(this.mode_list_detail)
-  },
+  created: function () {},
   methods: {
     onListEvent(type, row) {
       if (type === 'detaila') {
@@ -70,7 +68,17 @@ export default {
 
         if (isTypeof(_this.finds) === 'object') {
           for (var [k, v] of Object.entries(_this.finds)) {
-            if (v !== '') params.param.gasOrder[k] = v
+            if (k == 'datePicker') {
+              if (_this.finds.datePicker === null) {
+                params.param.dateParam.createDateFrom = ''
+                params.param.dateParam.createDateTo = ''
+              } else {
+                params.param.dateParam.createDateFrom = v[0]
+                params.param.dateParam.createDateTo = v[1]
+              }
+            } else {
+              if (v !== '') params.param.gasOrder[k] = v
+            }
           }
         }
       }
