@@ -171,7 +171,7 @@ export function utilsDyOrgList(type = null) {
       page: 1,
       size: 10,
       param: {
-        org: { orgType: 0 },
+        org: { orgType: type },
         dateParam: { createDateFrom: '', createDateTo: '' }
       }
     },
