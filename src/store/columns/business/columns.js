@@ -55,7 +55,7 @@ const columns = {
     { field: 'accountId', nameSpan: 5, name: '账号' },
     { field: 'accountType', nameSpan: 5, name: '资金账户类型', formatter: 'accountType' },
     { field: 'balance', nameSpan: 5, name: '账户余额(元)' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'check', name: '流水列表' }, { type: 'cash', name: '提现' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 190, list: [{ type: 'check', name: '流水列表' }, { type: 'cash', name: '提现' }, { type: 'cashdetail', name: '提现明细' }] }
   ],
   accountList: [
     { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format' },
@@ -67,6 +67,13 @@ const columns = {
     { field: 'accountBalance', nameSpan: 5, name: '变化后金额(元)' },
     { field: 'note', nameSpan: 5, name: '摘要' },
     { field: 'orderId', nameSpan: 5, name: '订单编号' }
+  ],
+  accountDetail: [
+    { field: 'withdrawOrderId', name: '提现单号', fixed: 'left' },
+    { field: 'amount', name: '提现金额(元)' },
+    { field: 'createDate', name: '提现时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '' } },
+    { field: 'status', name: '状态', formatter: 'status' },
+    { field: 'note', name: '备注' }
   ]
 }
 

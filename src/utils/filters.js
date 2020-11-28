@@ -78,6 +78,15 @@ const currency = (value, unit, currency, decimals) => {
     _float +
     (unit ? ' ' + unit : '')
 }
+const formatCardNumber = cardNumber => {
+  if (cardNumber && cardNumber.length > 8) {
+    const middleStars = '*'.repeat(cardNumber.substring(4, cardNumber.length - 4).length)
+    const fourStarArray = middleStars.match(/.{4}/g) || []
+    fourStarArray.push('*'.repeat(middleStars.length % 4))
+    return `${cardNumber.substring(0, 4)} ${fourStarArray.join(' ')} ${cardNumber.substring(cardNumber.length - 4, cardNumber.length)}`
+  }
+  return cardNumber
+}
 
 export {
   vueFiltersInit,
@@ -87,5 +96,6 @@ export {
   currency,
   kiloToTon,
   formatContent,
-  tableStatusToLabel
+  tableStatusToLabel,
+  formatCardNumber
 }

@@ -4,7 +4,6 @@ const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : requir
 export default [
   {
     path: '/market',
-    name: 'market',
     component: Layout,
     redirect: '/market/index',
     meta: { title: '营销管理' },

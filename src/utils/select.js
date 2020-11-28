@@ -150,7 +150,17 @@ export function utilsTradeType() {
     { value: 4, label: '提现' },
     { value: 5, label: '收入' },
     { value: 6, label: '服务费' },
-    { value: 7, label: '平台费' }
+    { value: 7, label: '平台费' },
+    { value: 8, label: '调增' },
+    { value: 9, label: '调减' }
+  ]
+}
+
+export function utilsPayType() {
+  return [
+    { value: 0, label: '余额' },
+    { value: 1, label: '微信' },
+    { value: 2, label: '微信+余额' }
   ]
 }
 
@@ -204,7 +214,7 @@ export function utilsUserList() {
 
 export function utilsDriverList() {
   return {
-    url: 'carrier/driver/list_all',
+    url: 'strategy/driver/list_all',
     node: ['data', 'records'],
     params: Function,
     props: {

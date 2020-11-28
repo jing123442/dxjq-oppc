@@ -10,6 +10,7 @@ import Settlement from './settlement.js'
 import User from './user.js'
 import Mine from './mine.js'
 import Business from './business.js'
+import Setting from './setting.js'
 Vue.use(VueRouter)
 
 const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : require('./_development')
@@ -17,7 +18,6 @@ const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : requir
 const routes = [
   {
     path: '/',
-    name: 'login',
     meta: { title: '登录' },
     component: () => import('@/views/main/login')
   },
@@ -34,13 +34,13 @@ const routes = [
     redirect: '/home/index',
     meta: { noCache: false, title: '首页', icon: 'icon-gongnengguanli' },
     children: [
-      { path: 'index', component: inImport('home/index'), name: 'home', meta: { title: '首页', icon: 'icon-gongnengguanli', noCache: false } }
+      { path: 'index', component: inImport('home/index'), meta: { title: '首页', icon: 'icon-gongnengguanli', noCache: false } }
     ]
   }
 ]
 
 const router = new VueRouter({
-  routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Market, ...Settlement]
+  routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Market, ...Settlement, ...Setting]
 })
 router.beforeEach((to, from, next) => {
   const woptoken = getLocalStorage('woptoken')

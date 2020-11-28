@@ -7,10 +7,7 @@
 <script>
 import { axiosRequestParams, custFormBtnList } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import {
-  $userFind,
-  $userEdit
-} from '@/service/user'
+import { $userFind, $userEdit } from '@/service/user'
 export default {
   data() {
     return {

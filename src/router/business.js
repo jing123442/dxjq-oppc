@@ -4,7 +4,6 @@ const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : requir
 export default [
   {
     path: '/business',
-    name: 'business',
     component: Layout,
     redirect: '/business/index',
     meta: { title: '平台公司管理' },
@@ -16,11 +15,11 @@ export default [
         component: {
           render (c) { return c('router-view') }
         },
-        name: 'account',
         hidden: true,
         meta: { title: '公司资金账户', icon: 'icon-gongnengguanli', noCache: false },
         children: [
-          { path: 'accountList', component: inImport('business/sub/accountList'), name: 'accountList', meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } }
+          { path: 'accountList', component: inImport('business/sub/accountList'), name: 'accountList', meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } },
+          { path: 'accountDetail', component: inImport('business/sub/detail'), name: 'accountDetail', meta: { title: '提现明细', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       },
       {

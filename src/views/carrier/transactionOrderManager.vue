@@ -17,7 +17,7 @@ export default {
       isShow: false,
       queryCustURL: {
         list: {
-          url: 'business/gas_order/list_withtime',
+          url: 'pay/gas_order/list_withtime',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],

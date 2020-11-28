@@ -95,5 +95,12 @@ export function menuList() {
       { path: '/index', name: 'index', meta: { title: '加气站服务汇总', noCache: false } },
       { path: '/logisticsSettlement', name: 'logisticsSettlement', meta: { title: '物流公司加气费汇总', noCache: false } }
     ]
+  }, {
+    path: '/setting',
+    name: 'setting',
+    meta: { title: '系统设置', icon: 'el-icon-setting', noCache: false },
+    children: [
+      { path: '/withdraw', name: 'withdraw', meta: { title: '账户余额限定', icon: 'el-icon-setting', noCache: false } }
+    ]
   }]
 }

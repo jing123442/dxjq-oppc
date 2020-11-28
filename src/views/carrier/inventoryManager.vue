@@ -14,7 +14,7 @@ export default {
       isShow: false,
       queryCustURL: {
         list: {
-          url: 'business/transfer_order/list',
+          url: 'pay/transfer_order/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],

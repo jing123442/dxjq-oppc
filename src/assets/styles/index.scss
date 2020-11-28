@@ -65,29 +65,28 @@ a:hover {
 
   .scroll-container, .template-main {
     background-color: $appMainBgColor;
+  }
+}
+.container-table-list {
+  padding: 0 15px 15px;
+  border-radius: 5px;
+  margin-bottom: 25px;
+  background-color: $appConBgColor;
 
-    .container-table-list {
-      padding: 0 15px 15px;
-      border-radius: 5px;
-      margin-bottom: 25px;
-      background-color: $appConBgColor;
+  .btn-list-border {
+    margin: 0 -15px 15px !important;
+    border-bottom: 1px solid $appConLineBgColor;
 
-      .btn-list-border {
-        margin: 0 -15px 15px !important;
-        border-bottom: 1px solid $appConLineBgColor;
-
-        .btn-list-left {
-          text-align: left;
-          .title {
-            color: #409EFF;
-            font-size: 14px;
-          }
-        }
+    .btn-list-left {
+      text-align: left;
+      .title {
+        color: #409EFF;
+        font-size: 14px;
+        cursor: pointer;
       }
     }
   }
 }
-
 .app-container {
   padding: 20px;
 }
@@ -216,6 +215,19 @@ div.el-dialog__header {
 
 div.el-dialog__body {
   padding: 15px 20px 0;
+  .el-tabs {
+    margin: 0 -20px;
+
+    .el-tabs__header {
+      padding: 0 30px;
+    }
+    .el-tab-pane {
+      margin-bottom: -18px;
+      .el-form-bottom {
+        padding: 0 30px;
+      }
+    }
+  }
 }
 
 .jbsztarea .el-textarea__inner {
@@ -368,6 +380,88 @@ div.el-dialog__body {
 
     .value {
       color: #ff4949;
+    }
+  }
+}
+.notice {
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px dotted rgba(255, 140, 29, 5);
+  background-color: rgba(249, 255, 47, 0.5);
+  p {
+    &.title {
+      padding-left: 0;
+      font-weight: bold;
+    }
+    padding-left: 15px;
+    margin-block-start: 3px;
+    margin-block-end: 2px;
+  }
+}
+.result-info {
+  .title {
+    font-size: 24px;
+    color: #1C1D21;
+  }
+  .worker {
+    font-size: 14px;
+    color: #868B9A;
+  }
+  .center {
+    text-align: center;
+  }
+  .detail {
+    padding: 15px;
+    margin: 30px 30%;
+    border-radius: 8px;
+    background-color: #e8e8e8;
+
+    .el-form-item {
+      padding-left: 30px;
+      margin-bottom: 0;
+
+      .price {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+  }
+}
+.card-box {
+  width: 260px;
+  display: flex;
+  border-radius: 6px;
+  border: 1px solid #D2D5E1;
+  align-items: center;
+  padding: 12px;
+  justify-content: flex-start;
+
+  img {
+    width: 48px;
+    height: 48px;
+    margin-right: 10px;
+  }
+  .box-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    div {
+      line-height: normal;
+      padding-bottom: 5px;
+      &.name {
+        color: #606574;
+        font-weight: bold;
+        font-size: 20px;
+      }
+      &.desc {
+        font-size: 13px;
+        color: #868B9A;
+      }
+      &:last-child {
+        padding-bottom: 0;
+      }
     }
   }
 }

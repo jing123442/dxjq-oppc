@@ -4,12 +4,11 @@ const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : requir
 export default [
   {
     path: '/filler',
-    name: 'filler',
     component: Layout,
     redirect: '/filler/index',
     meta: { title: '加气站管理' },
     children: [
-      { path: 'index', component: inImport('filler/index'), name: 'index', meta: { title: '加气站列表', icon: 'icon', noCache: false } },
+      { path: 'index', component: inImport('filler/index'), name: 'filler', meta: { title: '加气站列表', icon: 'icon', noCache: false } },
       { path: 'fillerInfo', component: inImport('filler/fillerInfo'), name: 'fillerInfo', meta: { title: '加气站信息维护', icon: 'icon-', noCache: false } },
       { path: 'fillerAccount', component: inImport('filler/account'), name: 'fillerAccount', meta: { title: '加气站资金账户管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'fillerPrice', component: inImport('filler/price'), name: 'fillerPrice', meta: { title: '加气站挂牌价查询', icon: 'icon-gongnengguanli', noCache: false } },
@@ -18,7 +17,6 @@ export default [
       {
         path: 'fillerInfo',
         component: { render (c) { return c('router-view') } },
-        name: 'fillerInfo',
         hidden: true,
         meta: { title: '加气站列表', icon: 'icon-gongnengguanli', noCache: false },
         children: [
@@ -28,11 +26,10 @@ export default [
       {
         path: 'fillerAccount',
         component: { render (c) { return c('router-view') } },
-        name: 'fillerAccount',
         hidden: true,
         meta: { title: '加气站资金账户管理', icon: 'icon-gongnengguanli', noCache: false },
         children: [
-          { path: 'accountList', component: inImport('filler/sub/accountList'), name: 'accountList', meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } }
+          { path: 'accountList', component: inImport('filler/sub/accountList'), meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       },
       {

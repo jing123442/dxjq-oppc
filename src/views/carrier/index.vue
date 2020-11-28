@@ -69,7 +69,7 @@ import { axiosRequestParams, custFormBtnList, callbackPagesInfo, createParams, e
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
-import { $carrierTruckAdd, $importDownloadFile, $exportDataFile } from '@/service/carrier'
+import { $strategyTruckAdd, $importDownloadFile, $exportDataFile } from '@/service/strategy'
 
 export default {
   name: 'carrier',
@@ -228,7 +228,7 @@ export default {
               engineNumber: ''
             }
             delete params._btn
-            $carrierTruckAdd(params).then(res => {
+            $strategyTruckAdd(params).then(res => {
               this.$message.success(res.message)
               this.$refs.carrier.initDataList()
             })

@@ -9,7 +9,7 @@
 <script>
 import { axiosRequestParams, queryDefaultParams, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $orderShow, $transferOrderAdd } from '@/service/business'
+import { $orderShow, $transferOrderAdd } from '@/service/pay'
 
 export default {
   name: 'vehicleCircle',

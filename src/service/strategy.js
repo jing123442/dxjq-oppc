@@ -103,3 +103,38 @@ export async function $listingPriceAlg(data) {
 export async function $updateStock(data) {
   return await R({ url: 'strategy/gasstation/eidt_stock', params: data })
 }
+
+// 增加卡车
+export async function $strategyTruckAdd (data) {
+  return await R({ url: 'strategy/truck/add', data })
+}
+
+// 获取卡车信息
+export async function $strategyTruckInfo (data) {
+  return await R({ url: 'strategy/truck/find', data })
+}
+
+// 获取绑定卡车的司机list
+export async function $strategyDriverList (data) {
+  return await R({ url: 'strategy/driver/list_all', data })
+}
+
+// 卡车增加司机
+export async function $strategyTruckDriverAdd (data) {
+  return await R({ url: 'strategy/truck_driver/add', data })
+}
+
+// 卡车删除司机
+export async function $strategyTruckDriverDel (data) {
+  return await R({ url: 'strategy/truck_driver/del', data })
+}
+
+// 下载卡车信息list
+export async function $importDownloadFile (data) {
+  return await R({ url: 'strategy/import/download_truck_tpl', method: 'get', params: data, responseType: 'blob' })
+}
+
+// 导入卡车数据
+export async function $exportDataFile (data) {
+  return await R({ url: 'strategy/import/import_truck', method: 'POST', data: data.file })
+}

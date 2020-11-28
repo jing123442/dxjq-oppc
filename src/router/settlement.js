@@ -4,19 +4,17 @@ const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : requir
 export default [
   {
     path: '/settlement',
-    name: 'settlement',
     component: Layout,
     redirect: '/settlement/index',
     meta: { title: '结算管理' },
     children: [
-      { path: 'index', component: inImport('settlement/index'), name: 'index', meta: { title: '加气站服务汇总', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'index', component: inImport('settlement/index'), name: 'settlement', meta: { title: '加气站服务汇总', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'logisticsSettlement', component: inImport('settlement/logisticsSettlement'), name: 'logisticsSettlement', meta: { title: '物流公司加气费汇总', icon: 'icon-gongnengguanli', noCache: false } },
       {
         path: 'index',
         component: {
           render (c) { return c('router-view') }
         },
-        name: 'index',
         hidden: true,
         meta: { title: '加气站服务费汇总', icon: 'icon-gongnengguanli', noCache: false },
         children: [
@@ -28,7 +26,6 @@ export default [
         component: {
           render (c) { return c('router-view') }
         },
-        name: 'logisticsSettlement',
         hidden: true,
         meta: { title: '加气站服务费汇总', icon: 'icon-gongnengguanli', noCache: false },
         children: [
@@ -40,7 +37,6 @@ export default [
             component: {
               render (c) { return c('router-view') }
             },
-            name: 'truckList',
             hidden: true,
             meta: { title: '卡车列表', icon: 'icon-gongnengguanli', noCache: false },
             children: [

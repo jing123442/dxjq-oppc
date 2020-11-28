@@ -10,7 +10,7 @@
 import { axiosRequestParams, queryDefaultParams, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $userOrgFind } from '@/service/user'
-import { $rechargeAdd } from '@/service/business'
+import { $rechargeAdd } from '@/service/pay'
 
 export default {
   name: 'logisticsAccountManager',

@@ -14,8 +14,8 @@
 </template>
 <script>
 import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo } from '@/utils/tools'
-import { $carrierTruckInfo, $carrierDriverList, $carrierTruckDriverAdd, $carrierTruckDriverDel } from '@/service/carrier'
-import { $truckCollect } from '@/service/business'
+import { $strategyTruckInfo, $strategyDriverList, $strategyTruckDriverAdd, $strategyTruckDriverDel } from '@/service/strategy'
+import { $truckCollect } from '@/service/pay'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -32,11 +32,11 @@ export default {
       dialogTruckBindVisible: false,
       queryCustURL: {
         edit: {
-          url: '/carrier/truck/edit',
+          url: 'strategy/truck/edit',
           method: 'post'
         },
         list: {
-          url: 'carrier/truck/list',
+          url: 'strategy/truck/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -81,7 +81,7 @@ export default {
       }
     },
     truckCollect(row) {
-      $carrierTruckInfo({ truckId: row.truckId }).then(response => {
+      $strategyTruckInfo({ truckId: row.truckId }).then(response => {
         const data = response.data
 
         row._btn = this.bottonList
@@ -93,7 +93,7 @@ export default {
       })
     },
     truckDetail(row) {
-      $carrierTruckInfo({ truckId: row.truckId }).then(response => {
+      $strategyTruckInfo({ truckId: row.truckId }).then(response => {
         const truckInfo = []
         const data = response.data
 
@@ -108,7 +108,7 @@ export default {
       })
     },
     truckBindDriver(row) {
-      $carrierDriverList({ page: 1, size: 100, param: { truckId: row.truckId } }).then(response => {
+      $strategyDriverList({ page: 1, size: 100, param: { truckId: row.truckId } }).then(response => {
         const driverList = []
         const data = response.data
 
@@ -174,7 +174,7 @@ export default {
       this.dialogTruckBindVisible = false
     },
     truckBindDriverAdd(params) {
-      $carrierTruckDriverAdd(params).then((res) => {
+      $strategyTruckDriverAdd(params).then((res) => {
         /* if (res.code == 0) {
           this.$message.success(res.message)
         } else {
@@ -184,7 +184,7 @@ export default {
       })
     },
     truckBindDriverDel(params) {
-      $carrierTruckDriverDel(params).then((res) => {
+      $strategyTruckDriverDel(params).then((res) => {
         /* if (res.code == 0) {
           this.$message.success(res.message)
         } else {

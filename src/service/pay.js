@@ -31,3 +31,30 @@ export async function $orgWithdraw (data) {
 export async function $uploadOrgPic (data) {
   return await R({ url: 'pay/allinpay/upload_org_pic', data })
 }
+// 设置限定余额
+export async function $updateWithdrawConfig (data) {
+  return await R({ url: 'pay/withdraw_quota_config/update', data })
+}
+// 设置限定余额
+export async function $getWithdrawInfo (data) {
+  return await R({ url: 'pay/withdraw_quota_config/find_by_orgType', data })
+}
+
+export async function $audit (data) {
+  return await R({ url: 'pay/recharge_order/audit', data })
+}
+
+export async function $rechargeAdd (data) {
+  return await R({ url: 'pay/recharge_order/add', data })
+}
+export async function $orderShow (data) {
+  return await R({ url: 'pay/transfer_order/show', data })
+}
+
+export async function $transferOrderAdd (data) {
+  return await R({ url: 'pay/transfer_order/add', data })
+}
+
+export async function $truckCollect (data) {
+  return await R({ url: 'pay/transfer_order/collect', data })
+}

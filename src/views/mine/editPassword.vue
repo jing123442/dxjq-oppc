@@ -7,9 +7,7 @@
 <script>
 import { axiosRequestParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import {
-  $editPassword
-} from '@/service/user'
+import { $editPassword } from '@/service/user'
 export default {
   data() {
     return {

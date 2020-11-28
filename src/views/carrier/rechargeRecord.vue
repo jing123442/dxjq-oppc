@@ -12,7 +12,7 @@
 <script>
 import { axiosRequestParams, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $audit } from '@/service/business'
+import { $audit } from '@/service/pay'
 
 export default {
   name: 'rechargeRecord',
@@ -21,7 +21,7 @@ export default {
       isShow: false,
       queryCustURL: {
         list: {
-          url: 'business/recharge_order/list',
+          url: 'pay/recharge_order/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
