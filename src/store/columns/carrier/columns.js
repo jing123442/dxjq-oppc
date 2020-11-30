@@ -10,7 +10,7 @@ const columns = {
     { field: 'regnumStatus', name: '营业执照认证', formatter: 'authStatus' },
     { field: 'idcardStatus', name: '法人证件认证', formatter: 'authStatus' },
     { field: 'bindPhone', name: '验证码手机号', width: 110 },
-    { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140, search: { type: 'date-picker', placeholder: '', value: () => { return ['2020-01-01 00:00:00', '2020-10-01 00:00:00'] } } },
+    { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140, search: { type: 'date-picker', placeholder: ''/* , value: () => { return ['2020-01-01 00:00:00', '2020-10-01 00:00:00'] } */ } },
     {
       field: 'useropts',
       stype: 'opt',

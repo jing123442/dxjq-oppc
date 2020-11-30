@@ -168,8 +168,8 @@ export default {
           this.truckBindDriverDel(params)
         })
 
-        this.$refs.tables.initDataList()
         this.$message.success('成功')
+        this.$refs.tables.initDataList()
       }
 
       this.dialogTruckBindVisible = false
@@ -181,7 +181,7 @@ export default {
         } else {
           this.$message.error(res.message)
         } */
-        this.$refs.tables.initDataList()
+        // this.$refs.tables.initDataList()
       })
     },
     truckBindDriverDel(params) {
@@ -191,7 +191,7 @@ export default {
         } else {
           this.$message.error(res.message)
         } */
-        this.$refs.tables.initDataList()
+        // this.$refs.tables.initDataList()
       })
     },
     onListEventCollect(btnObj, row) {

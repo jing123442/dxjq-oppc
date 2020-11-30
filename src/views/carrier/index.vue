@@ -65,7 +65,7 @@
  </div>
 </template>
 <script>
-import { axiosRequestParams, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles, isTypeof, toolsFileHeaders } from '@/utils/tools'
+import { axiosRequestParams, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles, isTypeof, toolsFileHeaders, formatDate } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
@@ -224,7 +224,7 @@ export default {
             const params = {
               ...createParams(),
               ...this.addCarRow,
-              purchaseDate: this.addCarRow.purchaseDate.split(' ')[0],
+              purchaseDate: formatDate(this.addCarRow.purchaseDate, 'yyyy-MM-dd'),
               engineNumber: ''
             }
             delete params._btn

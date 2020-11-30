@@ -1,4 +1,4 @@
-import { formatDate } from '@/utils/tools'
+import { formatDate, formateTData as formateTSData } from '@/utils/tools'
 
 // 如果要使用filters，该函数必须有
 const vueFiltersInit = (value, item, scope) => {
@@ -41,18 +41,7 @@ const formatContent = (value, field, row) => {
 }
 
 const formateTData = (date, fmt) => {
-  if (date) {
-    const sign = date.indexOf('T') >= 0 ? 'T' : ' '
-    const times = date.split(sign)
-    const time = times[1] && times[1].split(':')
-
-    if (fmt == 'date') {
-      return times[0]
-    }
-    return times[0] + ' ' + (time[0] || '00') + ':' + (time[1] || '00') + (fmt == 'all' ? (':' + (time[2] || '00')) : '')
-  }
-
-  return ''
+  return formateTSData(date, fmt)
 }
 
 const currency = (value, unit, currency, decimals) => {

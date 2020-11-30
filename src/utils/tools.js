@@ -1,6 +1,25 @@
-export function formatDate(date, fmt) {
+export function formateTData(date, fmt) { // 字符串
+  if (date) {
+    if (fmt == 'date') {
+      return formatDate(date, 'yyyy-MM-dd')
+    } else if (fmt == 'all') {
+      return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+    } else {
+      return formatDate(date, 'yyyy-MM-dd hh:mm')
+    }
+  }
+
+  return ''
+}
+export function formatDate(date, fmt) { // date对象
   var padLeftZero = function (str) {
     return ('00' + str).substr(str.length)
+  }
+  if (isTypeof(date) === 'string') {
+    let tmpDate = date.replace(/-/g, '/')
+    tmpDate = tmpDate.replace(/T/g, ' ')
+
+    date = new Date(tmpDate)
   }
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
