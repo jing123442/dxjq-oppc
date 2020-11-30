@@ -11,7 +11,7 @@ const getters = {
   setting_withdraw_column: item => columns.withdraw,
   setting_withdraw_select_list: item => item.app.selectDefault,
   // 变更记录
-  setting_withdraw_log_column: item => columns.withdrawLog,
+  setting_withdraw_log_column: item => columns.withdrawLog
 }
 
 export default {
