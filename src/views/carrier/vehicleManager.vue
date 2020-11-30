@@ -168,6 +168,7 @@ export default {
           this.truckBindDriverDel(params)
         })
 
+        this.$refs.tables.initDataList()
         this.$message.success('成功')
       }
 

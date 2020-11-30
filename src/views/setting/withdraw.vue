@@ -2,7 +2,7 @@
   <div class="template-main">
     <em-table-list ref="withdrawConfig" :tableListName="'withdrawConfig'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
-    <el-dialog :title="orgTitle" :visible.sync="dialogWithdrawVisible" width="40%" :append-to-body="true">
+    <el-dialog :title="orgTitle" :visible.sync="dialogWithdrawVisible" width="40%" :append-to-body="true" @close="closeWithdrawDialog()">
       <el-form size="small" :model="formWithdraw" label-width="120px" ref="formWithdraw" v-if="dialogWithdrawVisible" :rules="formWithdrawRules">
         <el-form-item label="设置余额限定" prop="currentQuota" style="width: 90%;">
           <el-input v-model="formWithdraw.currentQuota"></el-input>
@@ -127,6 +127,9 @@ export default {
         this.$refs.withdrawConfig.initDataList()
         this.dialogWithdrawVisible = false
       }
+    },
+    closeWithdrawDialog() {
+      this.$refs.withdrawConfig.initDataList()
     },
     onReqParams(type, _this, callback) {}
   }
