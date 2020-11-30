@@ -114,3 +114,10 @@
   color: $navActiveTextColor;
   cursor: pointer;
 }
+.el-input-group__append {
+  width: 140px;
+  text-align: center;
+  color: #ffffff;
+  border-width: 0;
+  background-color: $navActiveTextColor;
+}

@@ -13,7 +13,7 @@
           <el-input v-model="formWithdraw.amount"></el-input>
           <span>账户余额 <span>{{formWithdraw.balance}}</span> 元，可提现余额 <span>{{formWithdraw.withdrawAmount}}</span> 元，<span class="btn-link" @click="balanceToAmount">全部金额</span></span>
         </el-form-item>
-        <el-form-item label="银行卡" prop="note" style="width: 90%;">
+        <el-form-item label="银行卡" prop="orgAccount" style="width: 90%;">
           <div class="card-box">
             <img src="@/assets/images/business/bank_none@3x.png" />
             <div class="box-info">
@@ -56,7 +56,7 @@
           <span>验证码将发送至 <span>{{formWithdraw.tel | formatCardNumber}}</span></span>
         </el-form-item>
         <el-form-item style="text-align: right;margin-right: 10%;">
-          <el-button type="primary" @click="nextWithdraw('formWithdrawNext')">提 交</el-button>
+          <el-button type="primary" :disabled="withdrawStatus" @click="nextWithdraw('formWithdrawNext')">提 交</el-button>
         </el-form-item>
       </el-form>
       <el-form size="small" v-show="active == 3" class="result-info" style="padding: 30px 30px 20px;">
@@ -124,6 +124,7 @@ export default {
       },
       orderInfo: {},
       formWithdraw: {},
+      withdrawStatus: true,
       formWithdrawRules: {
         amount: [{ required: true, message: '请输入提现金额！', trigger: 'blur' }],
         note: [{ required: true, message: '请输入备注！', trigger: 'blur' }]
@@ -185,7 +186,7 @@ export default {
       this.$refs[form].validate(valid => {
         if (valid) {
           if (this.active == 1) {
-            if (this.formWithdraw.amount > this.formWithdraw.withdrawAmount) {
+            if (Number(this.formWithdraw.amount) > Number(this.formWithdraw.withdrawAmount)) {
               this.$message.error('提现金额大于账号金额！')
               return false
             } else if (this.formWithdraw.amount <= 0) {
@@ -194,6 +195,7 @@ export default {
             }
             this.active = 2
           } else if (this.active == 2) {
+            this.withdrawStatus = true
             this.btnClickEvent()
           }
         } else {
@@ -211,7 +213,7 @@ export default {
     },
     btnClickEvent() {
       const params = {
-        amount: this.formWithdraw.amount,
+        amount: Number(this.formWithdraw.amount),
         legalBankno: this.formWithdraw.orgAccount,
         note: this.formWithdraw.note,
         orgId: this.formWithdraw.orgId,
@@ -223,6 +225,8 @@ export default {
         this.$message.success('成功！')
         this.orderInfo = response.data
         this.active = 3
+      }).catch(() => {
+        this.withdrawStatus = false
       })
     },
     getCodeEvent() {
@@ -231,6 +235,7 @@ export default {
         type: 5
       }
       $verifySendMessage(params).then(res => {
+        this.withdrawStatus = false
         this.$message.success('短信发送成功！')
       })
       let time = 60

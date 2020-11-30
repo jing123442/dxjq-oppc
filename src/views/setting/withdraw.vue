@@ -124,6 +124,7 @@ export default {
           }
         })
       } else {
+        this.$refs.withdrawConfig.initDataList()
         this.dialogWithdrawVisible = false
       }
     },
