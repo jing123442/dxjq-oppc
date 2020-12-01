@@ -154,18 +154,21 @@ export default {
           if (isDriverFlag) {
             this.bindSelect.driverList && this.bindSelect.driverList.forEach(item => {
               if (item.value == driverId) {
-                params.driverId = driverId
-                params.driverName = item.label
-                this.truckBindDriverAdd(params)
+                var tmpParams = Object.assign({}, params)
+
+                tmpParams.driverId = driverId
+                tmpParams.driverName = item.label
+                this.truckBindDriverAdd(tmpParams)
               }
             })
           }
         })
 
         tmpDriverList.forEach(item => {
-          params.driverId = item.driverId
+          var tmpParams = Object.assign({}, params)
+          tmpParams.driverId = item.driverId
 
-          this.truckBindDriverDel(params)
+          this.truckBindDriverDel(tmpParams)
         })
 
         this.$message.success('成功')

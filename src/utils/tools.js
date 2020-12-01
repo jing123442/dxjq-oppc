@@ -12,6 +12,7 @@ export function formateTData(date, fmt) { // 字符串
   return ''
 }
 export function formatDate(date, fmt) { // date对象
+  if (!date) return ''
   var padLeftZero = function (str) {
     return ('00' + str).substr(str.length)
   }
