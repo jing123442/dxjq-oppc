@@ -8,8 +8,8 @@
           <el-input v-model="formWithdraw.currentQuota"></el-input>
           <span>现行的余额限定为 <span>{{formWithdraw.balance}}</span> 元</span>
         </el-form-item>
-        <el-form-item label="备注" prop="note" style="width: 90%;">
-          <el-input v-model="formWithdraw.note" type="textarea" :rows="4" placeholder="请输入备注">
+        <el-form-item label="修改说明" prop="note" style="width: 90%;">
+          <el-input v-model="formWithdraw.note" type="textarea" :rows="4" placeholder="请输入修改说明">
           </el-input>
         </el-form-item>
         <!-- 按钮 -->
