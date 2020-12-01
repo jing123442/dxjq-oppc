@@ -232,10 +232,13 @@ export default {
               this.$message.success(res.message)
               this.$refs.carrier.initDataList()
             })
+
+            this.dialogAddCarVisible = false
           }
         })
+      } else {
+        this.dialogAddCarVisible = false
       }
-      this.dialogAddCarVisible = false
     },
     handleClick() {
       this.resetAuthPageCol()
