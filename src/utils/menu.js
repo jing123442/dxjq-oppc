@@ -101,7 +101,7 @@ export function menuList() {
     meta: { title: '系统设置', icon: 'el-icon-setting', noCache: false },
     children: [
       { path: '/withdraw', name: 'withdraw', meta: { title: '账户余额限定', noCache: false } },
-      { path: '/index', name: 'index', hidden: true, meta: { title: '账户余额限定', noCache: false } }
+      { path: '/index', name: 'index', hidden: true, meta: { title: '暂不使用', noCache: false } }
     ]
   }]
 }
