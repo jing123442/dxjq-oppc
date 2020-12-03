@@ -17,9 +17,21 @@
             </div>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item divided>
+                <div class="setting-div" @click="userInfoUpdate('user')">
+                  <span class="setting-icon"><i class="icon iconfont el-icon-user"></i></span>
+                  <span class="setting-string"> 个人信息</span>
+                </div>
+              </el-dropdown-item>
+              <el-dropdown-item divided>
+                <div class="setting-div" @click="userInfoUpdate('pwd')">
+                  <span class="setting-icon"><i class="icon iconfont el-icon-lock"></i></span>
+                  <span class="setting-string"> 修改密码</span>
+                </div>
+              </el-dropdown-item>
+              <el-dropdown-item divided>
                 <div class="setting-div" @click="logout">
-                  <span class="setting-icon"><i class="icon iconfont el-icon-back"></i></span>
-                  <span class="setting-string"> 退出</span>
+                  <span class="setting-icon"><i class="icon iconfont el-icon-switch-button"></i></span>
+                  <span class="setting-string"> 退出登录</span>
                 </div>
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -47,6 +59,15 @@ export default {
       this.$store.dispatch('logout').then(() => {
         location.reload() // In order to re-instantiate the vue-router object to avoid bugs
       })
+    },
+    userInfoUpdate(evt) {
+      let path = '/mine/index'
+
+      if (evt === 'pwd') {
+        path = '/mine/editPassword'
+      }
+
+      this.$router.push({ path: path })
     }
   },
   computed: {
