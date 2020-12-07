@@ -58,3 +58,7 @@ export async function $transferOrderAdd (data) {
 export async function $truckCollect (data) {
   return await R({ url: 'pay/transfer_order/collect', data })
 }
+
+export async function $withdrawTotalAmount (data) {
+  return await R({ url: 'pay/withdraw_order/find_total_amount', data })
+}

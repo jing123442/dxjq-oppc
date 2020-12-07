@@ -1,5 +1,12 @@
 <template>
   <div class="template-main">
+    <div class="stats-data">
+      <div class="data-item" v-for="(item, index) in totalInfo" :key="index">
+        <span class="name">{{item.name}}</span>
+        <span class="value">{{item.total}} 元</span>
+      </div>
+    </div>
+
     <em-table-list :tableListName="'accountDetail'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog :title="'提现'" :visible.sync="dialogWithdrawDetailVisible" width="60%" :append-to-body="true">
@@ -21,6 +28,7 @@
 </template>
 <script>
 import { axiosRequestParams, isTypeof, callbackPagesInfo } from '@/utils/tools'
+import { $withdrawTotalAmount } from '@/service/pay'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -44,6 +52,7 @@ export default {
         3: require('@/assets/images/business/success@2x.png'),
         4: require('@/assets/images/business/fail@2x.png')
       },
+      totalInfo: [],
       orderInfo: {},
       buttonsList: [],
       axios: axiosRequestParams(this),
@@ -65,6 +74,41 @@ export default {
   },
   created: function () {},
   methods: {
+    totalAmountInfo(datetime, status) {
+      const params = {
+        dateParam: {
+          createDateFrom: datetime ? datetime[0] : null,
+          createDateTo: datetime ? datetime[1] : null
+        },
+        withdrawOrder: {
+          status: status || null,
+          orgId: this.$route.query.orgId
+        }
+      }
+
+      this.totalInfo = []
+      $withdrawTotalAmount(params).then(response => {
+        if (!status) {
+          // 提现总额
+          this.totalInfo.push({ name: '提现总额：', total: response.data.total })
+        }
+
+        if (!status || status == 12) {
+          // 提现银行处理中
+          this.totalInfo.push({ name: '银行处理中：', total: response.data.bankProcessingTotal })
+        }
+
+        if (!status || status == 3) {
+          // 提现成功
+          this.totalInfo.push({ name: '提现成功：', total: response.data.sucessTotal })
+        }
+
+        if (!status || status == 4) {
+          // 提现失败
+          this.totalInfo.push({ name: '提现失败：', total: response.data.failTotal })
+        }
+      })
+    },
     onListEvent(type, row) {
       if (type === 'detail') {
         this.orderInfo = row
@@ -80,6 +124,8 @@ export default {
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { withdrawOrder: { orgId: this.$route.query.orgId }, dateParam: { createDateFrom: '', createDateTo: '' } } })
+      let datetime = null
+      let status = null
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
@@ -88,14 +134,20 @@ export default {
               params.param.dateParam.createDateFrom = ''
               params.param.dateParam.createDateTo = ''
             } else {
+              datetime = v
               params.param.dateParam.createDateFrom = v[0]
               params.param.dateParam.createDateTo = v[1]
             }
           } else {
-            if (v !== '') params.param.withdrawOrder[k] = v
+            if (v !== '') {
+              if (k == 'status') status = v
+              params.param.withdrawOrder[k] = v
+            }
           }
         }
       }
+
+      this.totalAmountInfo(datetime, status)
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     }

@@ -17,10 +17,11 @@ const select = {
   accountList: {
     type: utilsTradeType(),
     status: [
-      { value: 1, label: '待提现' },
-      { value: 2, label: '提现中' },
+      { value: 1, label: '银行处理中' },
+      { value: 2, label: '银行处理中' },
       { value: 3, label: '提现成功' },
-      { value: 4, label: '失败' }
+      { value: 4, label: '失败' },
+      { value: 12, label: '银行处理中' }
     ]
   }
 }
