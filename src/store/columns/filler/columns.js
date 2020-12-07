@@ -46,8 +46,8 @@ const columns = {
     { field: 'bank', name: '开户银行名称', nameSpan: 6, show: { type: 'select', obj: 'bankList', ou: 2 } },
     { field: 'bankName', name: '开户行支行名称', nameSpan: 6, show: { type: 'text', ou: 2 } },
     { field: 'unionBank', name: '支行行号', nameSpan: 6, show: { type: 'text', ou: 2 } },
-    { field: 'contacts', name: '联系人', nameSpan: 6, show: { type: 'text', ou: 2 } },
-    { field: 'mobile', name: '联系电话', nameSpan: 6, show: { type: 'text', ou: 2 } },
+    { field: 'contacts', name: '财务联系人', nameSpan: 6, show: { type: 'text', ou: 2 } },
+    { field: 'mobile', name: '财务联系电话', nameSpan: 6, show: { type: 'text', ou: 2 } },
     { field: 'email', name: '邮箱', nameSpan: 6, show: { type: 'text', ou: 2 } },
     { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2 } },
     { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 } }
@@ -66,8 +66,8 @@ const columns = {
     { field: 'bank', name: '开户银行名称', nameSpan: 6, show: { type: 'select', obj: 'bankList', ou: 2 } },
     { field: 'bankName', name: '开户行支行名称', nameSpan: 6, show: { type: 'text', ou: 2 } },
     { field: 'unionBank', name: '支行行号', nameSpan: 6, show: { type: 'text', ou: 2 } },
-    { field: 'contacts', name: '联系人', nameSpan: 6, show: { type: 'text', ou: 2 } },
-    { field: 'mobile', name: '联系电话', nameSpan: 6, show: { type: 'text', ou: 2 } },
+    { field: 'contacts', name: '财务联系人', nameSpan: 6, show: { type: 'text', ou: 2 } },
+    { field: 'mobile', name: '财务联系电话', nameSpan: 6, show: { type: 'text', ou: 2 } },
     { field: 'email', name: '邮箱', nameSpan: 6, show: { type: 'text', ou: 2 } },
     { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2 } },
     { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 } }

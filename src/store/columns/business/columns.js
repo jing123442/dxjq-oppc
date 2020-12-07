@@ -73,7 +73,23 @@ const columns = {
     { field: 'amount', name: '提现金额(元)' },
     { field: 'createDate', name: '提现时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '' } },
     { field: 'status', name: '状态', formatter: 'status' },
-    { field: 'note', name: '备注' }
+    { field: 'note', name: '备注' },
+    {
+      field: 'useropts',
+      stype: 'opt',
+      ispush: false,
+      name: '操作',
+      fixed: 'right',
+      width: 150,
+      list: params => {
+        const row = params.row
+        const optList = [{ type: 'detail', name: '详细' }]
+
+        row.receiptUrl && optList.push({ type: 'receipt', name: '查看回单' })
+
+        return optList
+      }
+    }
   ]
 }
 

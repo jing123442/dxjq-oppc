@@ -23,7 +23,7 @@ export default [
         hidden: true,
         meta: { title: '公司资金账户管理', icon: 'icon-gongnengguanli', noCache: false },
         children: [
-          { path: 'accountList', component: inImport('carrier/sub/accountList'), meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } },
+          { path: 'accountList', component: inImport('carrier/sub/accountList'), name: 'accountCarrierList', meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } },
           { path: 'vehicleCircle', component: inImport('carrier/sub/vehicleCircle'), name: 'vehicleCircle', meta: { title: '卡车圈存', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       },

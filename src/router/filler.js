@@ -29,7 +29,7 @@ export default [
         hidden: true,
         meta: { title: '加气站资金账户管理', icon: 'icon-gongnengguanli', noCache: false },
         children: [
-          { path: 'accountList', component: inImport('filler/sub/accountList'), meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } }
+          { path: 'accountList', component: inImport('filler/sub/accountList'), name: 'accountFillerList', meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       },
       {

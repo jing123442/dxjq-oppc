@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, callbackPagesInfo } from '@/utils/tools'
+import { axiosRequestParams, isTypeof, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -13,7 +13,7 @@ export default {
     return {
       queryCustURL: {
         list: {
-          url: 'account/org_account_log/list',
+          url: 'account/org_account_log/list_withtime',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -23,7 +23,7 @@ export default {
         name: '流水列表'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgId: this.$route.query.orgId, accountId: this.$route.query.accountId } })
+      queryParams: Function
     }
   },
   computed: {
@@ -41,7 +41,23 @@ export default {
   methods: {
     onListEvent(type, row) {},
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { orgType: 0 } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { orgAccountLog: { accountId: this.$route.query.accountId, orgId: this.$route.query.orgId }, dateParam: { createDateFrom: '', createDateTo: '' } } })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k == 'createDate') {
+            if (_this.finds.createDate === null) {
+              params.param.dateParam.createDateFrom = ''
+              params.param.dateParam.createDateTo = ''
+            } else {
+              params.param.dateParam.createDateFrom = v[0]
+              params.param.dateParam.createDateTo = v[1]
+            }
+          } else {
+            if (v !== '') params.param.orgAccountLog[k] = v
+          }
+        }
+      }
 
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
