@@ -152,7 +152,8 @@ export function utilsTradeType() {
     { value: 6, label: '服务费' },
     { value: 7, label: '平台费' },
     { value: 8, label: '调增' },
-    { value: 9, label: '调减' }
+    { value: 9, label: '调减' },
+    { value: 10, label: '提现退回' }
   ]
 }
 
