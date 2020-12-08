@@ -103,10 +103,10 @@ export default {
           this.totalInfo.push({ name: '提现成功：', total: response.data.sucessTotal })
         }
 
-        if (!status || status == 4) {
+        /* if (!status || status == 4) {
           // 提现失败
           this.totalInfo.push({ name: '提现失败：', total: response.data.failTotal })
-        }
+        } */
       })
     },
     onListEvent(type, row) {
