@@ -1,31 +1,14 @@
 import { getLocalStorage } from '@/utils/storage'
 
-const app = {
+const file = {
   state: {
-    debug: true,
-    sidebar: {
-      opened: true// !+sessionStorage.getItem('sidebarStatus')
-    },
-    systemprefix: '运营管理平台',
-    systemsuffix: '',
-    listDefault: 29,
-    modeDefault: [],
-    selectDefault: {},
-    // 请求参数
-    queryParams: [{
-      type: 1,
-      key: 'page',
-      value: 'pageNum'
-    }, {
-      type: 1,
-      key: 'size',
-      value: 'pageSize'
-    }],
     fileHost: process.env.VUE_APP_FILE_HOST,
     fileUrl: process.env.VUE_APP_BASE_URL + 'message/upload/file',
-    fileHeaders: {
-      Authorization: 'Bearer ' + getLocalStorage('woptoken'),
-      Identifier: getLocalStorage('wopidntf')
+    fileHeaders: function () {
+      return {
+        Authorization: 'Bearer ' + getLocalStorage('woptoken'),
+        Identifier: getLocalStorage('wopidntf')
+      }
     },
     fileSuccess: {
       key: 'code',
@@ -33,24 +16,24 @@ const app = {
       message: 'message',
       filename: 'data'
     },
-    // 返回成功字段和值
-    responseSuccess: {
-      key: 'code',
-      value: 0,
-      message: 'message',
-      logout: '2814'
-    }
+    successAxios: {
+      url: 'user/org_pic/add',
+      method: 'post',
+      axios: {
+        timeout: 30000,
+        baseURL: process.env.VUE_APP_BASE_URL,
+        headers: function() {
+          return {
+            Authorization: 'Bearer ' + getLocalStorage('woptoken'),
+            Identifier: getLocalStorage('wopidntf')
+          }
+        }
+      }
+    },
+    deleteAxios: process.env.VUE_APP_BASE_URL + 'user/org_pic/delete_org_pic'
   },
-  mutations: {
-    TOGGLE_SIDEBAR: state => {
-      state.sidebar.opened = !state.sidebar.opened
-    }
-  },
-  actions: {
-    toggleSideBar: ({ commit }) => {
-      commit('TOGGLE_SIDEBAR')
-    }
-  }
+  mutations: {},
+  actions: {}
 }
 
-export default app
+export default file
