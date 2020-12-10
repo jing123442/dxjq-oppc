@@ -44,7 +44,7 @@
 </template>
 <script>
 import { callbackPagesInfo, axiosRequestParams, custFormBtnList } from '@/utils/tools'
-import { $userOrgFind, $userOrgPicList } from '@/service/user'
+import { $userOrgFind } from '@/service/user'
 import { $orgAuth, $uploadOrgPic } from '@/service/pay'
 import { mapGetters } from 'vuex'
 
@@ -84,9 +84,6 @@ export default {
   },
   created: function () {
     this.initData()
-    $userOrgPicList({ orgId: this.$route.query.orgId }).then(response => {
-      console.log(response)
-    })
   },
   methods: {
     initData() {

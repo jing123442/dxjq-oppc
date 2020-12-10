@@ -116,6 +116,7 @@ export default {
     getOrgPicList() {
       var pathUrl = this.$store.state.app.fileHost
       const params = {
+        picTypes: [1],
         orgId: this.$route.query.orgId
       }
       $userOrgPicList(params).then(res => {

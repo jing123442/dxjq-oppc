@@ -1,4 +1,4 @@
-import app from '../../modules/app'
+import file from '../../modules/file'
 
 const columns = {
   org: [
@@ -34,9 +34,9 @@ const columns = {
     }
   ],
   orgAutn: [
-    { field: 'taxpayerPic', name: '', ispush: false, filefield: 'file', xs: 8, sm: 8, md: 8, lg: 8, xl: 8, nameSpan: 2, hide: true, show: { type: 'file', ou: 3, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: app.state.fileHost, placeholder: '请上传营业执照图片', node: [], rules: [{ required: true, message: '请上传营业执照图片！', trigger: 'change' }] } },
-    { field: 'identityzPic', name: '', ispush: false, filefield: 'file', xs: 8, sm: 8, md: 8, lg: 8, xl: 8, nameSpan: 2, hide: true, show: { type: 'file', ou: 3, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: app.state.fileHost, placeholder: '请上传法人身份证人像面图片', node: [], rules: [{ required: true, message: '请上传法人身份证人像面图片！', trigger: 'change' }] } },
-    { field: 'identityfPic', name: '', ispush: false, filefield: 'file', xs: 8, sm: 8, md: 8, lg: 8, xl: 8, nameSpan: 2, hide: true, show: { type: 'file', ou: 3, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: app.state.fileHost, placeholder: '请上法人身份证国徽面图片', node: [], rules: [{ required: true, message: '请上法人身份证国徽面图片！', trigger: 'change' }] } }
+    { field: 'taxpayerPic', name: '', ispush: false, filefield: 'file', xs: 8, sm: 8, md: 8, lg: 8, xl: 8, nameSpan: 2, hide: true, show: { type: 'file', ou: 3, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传营业执照图片', node: [], rules: [{ required: true, message: '请上传营业执照图片！', trigger: 'change' }] } },
+    { field: 'identityzPic', name: '', ispush: false, filefield: 'file', xs: 8, sm: 8, md: 8, lg: 8, xl: 8, nameSpan: 2, hide: true, show: { type: 'file', ou: 3, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传法人身份证人像面图片', node: [], rules: [{ required: true, message: '请上传法人身份证人像面图片！', trigger: 'change' }] } },
+    { field: 'identityfPic', name: '', ispush: false, filefield: 'file', xs: 8, sm: 8, md: 8, lg: 8, xl: 8, nameSpan: 2, hide: true, show: { type: 'file', ou: 3, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上法人身份证国徽面图片', node: [], rules: [{ required: true, message: '请上法人身份证国徽面图片！', trigger: 'change' }] } }
   ],
   orgDetail: [
     { field: 'orgName', nameSpan: 5, name: '公司名称', show: { type: 'text', style: 'width: 90%;', isDisabled: true } },

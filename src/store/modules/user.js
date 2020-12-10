@@ -1,6 +1,5 @@
 import { $login, $logout } from '@/service/main'
 import { menuList } from '@/utils/menu'
-import app from '../modules/app'
 import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage'
 
 const Base64 = require('js-base64').Base64
@@ -33,7 +32,7 @@ const user = {
     }
   },
   actions: {
-    login({ commit, state }, data) {
+    login({ dispatch, commit, state }, data) {
       return new Promise((resolve, reject) => {
         $login(data).then(response => {
           if (response.data.code === 0) {
@@ -56,9 +55,14 @@ const user = {
             commit('setwoprole', roleId)
             commit('setwoporg', orgId)
 
-            // 更新上传文件头信息
-            app.state.fileHeaders.Authorization = 'Bearer ' + getLocalStorage('woptoken')
-            app.state.fileHeaders.Identifier = getLocalStorage('wopidntf')
+            // 重置文件操作头参数
+            const headers = {
+              Authorization: 'Bearer ' + token,
+              Identifier: identifier
+            }
+            dispatch('setFileHeaders', headers)
+            dispatch('setFileSuccessHeaders', headers)
+            dispatch('setFileDelHeaders', headers)
           }
 
           resolve(response)

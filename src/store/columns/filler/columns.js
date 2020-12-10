@@ -1,4 +1,4 @@
-import app from '../../modules/app'
+import file from '../../modules/file'
 
 const columns = {
   firmList: [
@@ -80,15 +80,20 @@ const columns = {
     { field: 'status', name: '账号状态', formatter: 'status' }
   ],
   info: [
-    { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'gasstationName', name: '加气站名称', show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加气站名称' }, search: { type: 'text', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
+    { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, show: { type: 'hide', isNode: true, parent: 'gasstationVO' } },
+    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' }, search: { type: 'text', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
     { field: 'listPrice', name: '加气站挂牌价(元/公斤)', ispush: false },
     { field: 'platformPrice', name: '平台挂牌价(元/公斤)', ispush: false },
     { field: 'qrcode', name: '收款码类型', formatter: 'qrcodeType', ispush: false },
-    { field: 'selectedOptions', hide: true, name: '所在地区', show: { type: 'cascader', iType: 'string', ou: 2, mulField: { province: 0, city: 1, region: 2 }, props: { value: 'label', label: 'label' }, obj: 'cascaderAddress', style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
-    { field: 'address', hide: true, name: '详细地址', show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
-    { field: 'pointAddress', name: '经纬度', hide: true, show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
-    { field: 'url', name: '加气站图片', filefield: 'file', hide: true, show: { type: 'file', ou: 2, iType: 'string', paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: app.state.fileHost, placeholder: '请上传加气站图片', node: [], rules: [{ required: true, message: '请上传加气站图片！', trigger: 'change' }] } },
+    { field: 'selectedOptions', hide: true, name: '所在地区', nameSpan: 6, show: { type: 'cascader', parent: 'gasstationVO', iType: 'string', ou: 2, mulField: { province: 0, city: 1, region: 2 }, props: { value: 'label', label: 'label' }, obj: 'cascaderAddress', style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
+    { field: 'address', hide: true, name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
+    { field: 'pointAddress', name: '经纬度', hide: true, nameSpan: 6, show: { type: 'map', ou: 2, parent: 'gasstationVO', mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
+    { field: 'url', name: '加气站头像', filefield: 'file', hide: true, nameSpan: 6, show: { type: 'file', ou: 2, parent: 'gasstationVO', iType: 'string', paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传加气站头像', node: [], rules: [{ required: true, message: '请上传加气站头像！', trigger: 'change' }] } },
+    { field: 'orgPics', name: '加气站形象图', filefield: 'file', ispush: false, hide: true, nameSpan: 6, show: { type: 'file', ou: 2, limit: 6, iType: 'string', paramField: 'url', props: { url: 'picPath', name: 'picPath' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传加气站形象图', node: [], successAxios: file.state.successAxios, deleteAxios: file.state.deleteAxios, rules: [{ required: true, message: '请上传加气站形象图！', trigger: 'change' }] } },
+    { field: 'introduce', hide: true, name: '加气站宣传文案', nameSpan: 6, show: { type: 'textarea', ou: 2, maxlength: 400, isWordLimit: true, style: 'width: 90%;', placeholder: '请输入加气站宣传文案' } },
+    { field: 'mobile', hide: true, name: '加气站联系电话', nameSpan: 6, show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加气站联系电话' } },
+    { field: 'fillingMachineNum', hide: true, name: '加注机数量', nameSpan: 6, show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加注机数量' } },
+    { field: 'cashierNum', hide: true, name: '收银员数量', nameSpan: 6, show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入收银员数量' } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 150, list: [{ type: 'edit', name: '编辑' }, { type: 'printer', name: '打印机' }] }
   ],
   printList: [
@@ -207,12 +212,12 @@ const columns = {
     { field: 'downloadUrl', nameSpan: 6, name: '到站重量图片', show: { type: 'file', isDialog: true, isDisabled: true, style: 'width: 90%;' } }
   ],
   lngPlanDepartures: [
-    { field: 'uploadUrl', name: '上传出港磅单', filefield: 'file', nameSpan: 6, serial: 9, show: { type: 'file', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: app.state.fileHost, placeholder: '请上传出港磅单', node: [], rules: [{ required: true, message: '请上传出港磅单！', trigger: 'change' }] } },
+    { field: 'uploadUrl', name: '上传出港磅单', filefield: 'file', nameSpan: 6, serial: 9, show: { type: 'file', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传出港磅单', node: [], rules: [{ required: true, message: '请上传出港磅单！', trigger: 'change' }] } },
     { field: 'uploadWeight', name: '出港重量(公斤)', nameSpan: 6, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入出港重量' }, rules: [{ required: true, message: '请输入出港重量', trigger: 'blur' }] },
     { field: 'lngFromCode', name: '液源地', nameSpan: 6, formatter: 'source', show: { type: 'select', subField: 'lngFromName', obj: 'source', style: 'width: 90%;', placeholder: '请选择' } }
   ],
   lngPlanComplete: [
-    { field: 'downloadUrl', name: '出港磅单图片', filefield: 'file', nameSpan: 6, serial: 9, show: { type: 'file', isDialog: true, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, isDisabled: true, action: app.state.fileUrl, headers: app.state.fileHeaders, success: app.state.fileSuccess, listType: 'picture', style: 'width: 90%;', placeholder: '请上传出港磅单图片', node: [], rules: [{ required: true, message: '请上传出港磅单图片！', trigger: 'change' }] } },
+    { field: 'downloadUrl', name: '出港磅单图片', filefield: 'file', nameSpan: 6, serial: 9, show: { type: 'file', isDialog: true, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, isDisabled: true, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', placeholder: '请上传出港磅单图片', node: [], rules: [{ required: true, message: '请上传出港磅单图片！', trigger: 'change' }] } },
     { field: 'downloadWeight', name: '到站重量(公斤)', nameSpan: 6, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入到站重量' }, rules: [{ required: true, message: '请输入到站重量', trigger: 'blur' }] }
   ]
 }

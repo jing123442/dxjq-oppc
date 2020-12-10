@@ -14,8 +14,14 @@ export default {
       isShow: false,
       queryCustURL: {
         edit: {
-          url: 'strategy/gasstation/edit',
-          method: 'post'
+          url: 'user/gasstation_card/update',
+          method: 'post',
+          rowType: true
+        },
+        byid: {
+          url: 'user/gasstation_card/find',
+          key: 'gasstationId',
+          parse: ['data']
         },
         list: {
           url: 'strategy/gasstation/list',

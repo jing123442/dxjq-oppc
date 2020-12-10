@@ -46,3 +46,11 @@ export async function $userOrgList (data) {
 export async function $userOrgPicList (data) {
   return await R({ url: 'user/org_pic/find_org_pic_list', method: 'POST', data })
 }
+
+export async function $userOrgAddPic (data) {
+  return await R({ url: 'user/org_pic/add', method: 'POST', data })
+}
+
+export async function $userOrgDeletePic (data) {
+  return await R({ url: 'user/org_pic/delete_org_pic', method: 'POST', data })
+}
