@@ -116,7 +116,7 @@ export default {
         this.dialogWithdrawDetailVisible = true
       } else {
         if (row.receiptUrl) {
-          window.open(this.$store.state.app.fileHost + row.receiptUrl)
+          window.open(this.$store.state.file.fileHost + row.receiptUrl)
         } else {
           this.$message.error('未找到回单信息！')
         }

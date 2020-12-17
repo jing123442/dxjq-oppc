@@ -86,7 +86,7 @@ export default {
       })
     },
     getOrgPicList() {
-      var pathUrl = this.$store.state.app.fileHost
+      var pathUrl = this.$store.state.file.fileHost
       const params = {
         picTypes: [8, 9],
         orgId: this.$route.query.orgId
