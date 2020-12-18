@@ -17,6 +17,7 @@ const columns = {
     { field: 'benefit', name: '区域优惠(元/吨)' },
     { field: 'freight', name: '运费(元/吨)' },
     { field: 'platformPrice', name: '平台挂牌价(元/公斤)' },
+    { field: 'gasprice', name: '气价调节(元/吨)' },
     { field: 'lngFromName', name: '液源地' },
     { field: 'applyName', name: '操作人' },
     { field: 'applyDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all', width: 140 }
