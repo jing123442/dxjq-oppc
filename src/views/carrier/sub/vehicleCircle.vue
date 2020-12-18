@@ -27,7 +27,7 @@ export default {
         name: '车辆圈存'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgId: this.$route.query.orgId } }),
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { accountType: 0, orgId: this.$route.query.orgId } }),
       dialogCircleVisible: false,
       circleRow: {}
     }

@@ -7,8 +7,9 @@ const columns = {
     { field: 'benefit', name: '区域优惠(元/吨)' },
     { field: 'freight', name: '运费(元/吨)' },
     { field: 'profit', name: '加气站利润(元/公斤)' },
+    { field: 'gasprice', name: '气价调节(元/吨)' },
     { field: 'lngFromName', name: '液源地' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 190, fixed: 'right', list: [{ type: 'from', name: '液源地选择' }, { type: 'change', name: '变更记录' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 230, fixed: 'right', list: [{ type: 'from', name: '液源地选择' }, { type: 'change', name: '变更记录' }, { type: 'measure', name: '气价调节' }] }
   ],
   listingLog: [
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
@@ -23,6 +24,9 @@ const columns = {
   listingFrom: [
     { field: 'lngFromId', name: '液源地', placeholder: '请选择液源地！', show: { type: 'select', obj: 'fromList', subField: 'lngFromName' }, rules: [{ required: true, message: '请选择液源地', trigger: 'blur' }] }
   ],
+  listingMeasure: [
+    { field: 'measureMoney', name: '设置气价调节金额', nameSpan: 6, lg: 23, xl: 23, show: { type: 'text', placeholder: '请输入设置气价调节金额', util: ' 元/吨', style: 'width: 80%;' }, rules: [{ required: true, message: '请输入设置气价调节金额', trigger: 'blur' }] }
+  ],
   listingRelease: [
     { field: 'releaseTime', name: '发布时间', nameSpan: 7, show: { type: 'date-picker', model: 'date' }, rules: [{ required: true, message: '请选择发布时间', trigger: 'blur' }] }
   ],
@@ -30,6 +34,11 @@ const columns = {
     { field: 'operatorName', name: '操作人', fixed: 'left', ispush: false },
     { field: 'operatorDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'harbourPrice', name: '长城奥扬出港价(元/吨)', nameSpan: 8, show: { type: 'text' } }
+  ],
+  measure: [
+    { field: 'operatorName', name: '操作人', fixed: 'left', ispush: false },
+    { field: 'operatorDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData all', width: 140 },
+    { field: 'gasprice', name: '气价调节(元/吨)', nameSpan: 8 }
   ],
   preferential: [
     { field: 'areaList', name: '地区(省市)', fixed: 'left', stype: 'fields', fieldList: ['province', 'city'], show: { type: 'cascader', obj: 'addressList', mulField: { province: 0, city: 1 }, props: { label: 'label', value: 'label', multiple: true } }, search: { type: 'text', field: 'keyWord', placeholder: '请输入地区(省市)' } },

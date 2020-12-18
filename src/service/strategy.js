@@ -138,3 +138,8 @@ export async function $importDownloadFile (data) {
 export async function $exportDataFile (data) {
   return await R({ url: 'strategy/import/import_truck', method: 'POST', data: data.file })
 }
+
+// 设置气价调节
+export async function $gasstationUpdatePrice (data) {
+  return await R({ url: 'strategy/gasstation/gas_price_edit', method: 'POST', data })
+}

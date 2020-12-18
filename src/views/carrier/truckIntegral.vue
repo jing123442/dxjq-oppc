@@ -24,15 +24,15 @@ export default {
         name: '卡车司机账户管理'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { accountType: 0 } })
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { accountType: 1 } })
     }
   },
   computed: {
     ...mapGetters({
-      mode_list: 'carrier_truckAccount_mode_list',
-      page_status: 'carrier_truckAccount_page_status',
-      page_column: 'carrier_truckAccount_column',
-      select_list: 'carrier_truckAccount_select_list',
+      mode_list: 'carrier_truckIntegral_mode_list',
+      page_status: 'carrier_truckIntegral_page_status',
+      page_column: 'carrier_truckIntegral_column',
+      select_list: 'carrier_truckIntegral_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -45,7 +45,7 @@ export default {
         const orgId = row.orgId
         const accountId = row.accountId
         const truckId = row.truckId
-        this.$router.push(`truckAccountManager/truckAccountList?orgId=${orgId}&accountId=${accountId}&truckId=${truckId}`)
+        this.$router.push(`truckIntegral/truckIntegralList?orgId=${orgId}&accountId=${accountId}&truckId=${truckId}`)
       }
     },
     onReqParams(type, _this, callback) {

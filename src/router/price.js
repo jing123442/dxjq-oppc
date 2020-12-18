@@ -22,6 +22,7 @@ export default [
           { path: 'preferential', component: inImport('price/sub/preferential'), name: 'preferential', meta: { title: '区域优惠政策', icon: 'icon-gongnengguanli', noCache: false } },
           { path: 'estimate', component: inImport('price/sub/estimate'), name: 'estimate', meta: { title: '运费测算', icon: 'icon-gongnengguanli', noCache: false } },
           { path: 'freight', component: inImport('price/sub/freight'), name: 'freight', meta: { title: '配置价格', icon: 'icon-gongnengguanli', noCache: false } },
+          { path: 'measure', component: inImport('price/sub/measure'), name: 'measure', meta: { title: '气价调节', icon: 'icon-gongnengguanli', noCache: false } },
           { path: 'mileage', component: inImport('price/sub/mileage'), name: 'mileage', meta: { title: '加气站里程', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       }

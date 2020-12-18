@@ -12,6 +12,7 @@ export default [
       { path: 'logisticsAccountManager', component: inImport('carrier/logisticsAccountManager'), name: 'logisticsAccountManager', meta: { title: '公司资金账户管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'vehicleManager', component: inImport('carrier/vehicleManager'), name: 'vehicleManager', meta: { title: '车辆管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'truckAccountManager', component: inImport('carrier/truckAccountManager'), name: 'truckAccountManager', meta: { title: '卡车资金账户管理', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'truckIntegral', component: inImport('carrier/truckIntegral'), name: 'truckIntegral', meta: { title: '卡车积分账户管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'rechargeRecord', component: inImport('carrier/rechargeRecord'), name: 'rechargeRecord', meta: { title: '充值记录', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'inventoryManager', component: inImport('carrier/inventoryManager'), name: 'inventoryManager', meta: { title: '圈存管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'transactionOrderManager', component: inImport('carrier/transactionOrderManager'), name: 'transactionOrderManager', meta: { title: '加气订单管理', icon: 'icon-gongnengguanli', noCache: false } },
@@ -36,6 +37,17 @@ export default [
         meta: { title: '车辆资金账户管理', icon: 'icon-gongnengguanli', noCache: false },
         children: [
           { path: 'truckAccountList', component: inImport('carrier/sub/truckAccountList'), name: 'truckAccountList', meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } }
+        ]
+      },
+      {
+        path: 'truckIntegral',
+        component: {
+          render (c) { return c('router-view') }
+        },
+        hidden: true,
+        meta: { title: '卡车积分账户管理', icon: 'icon-gongnengguanli', noCache: false },
+        children: [
+          { path: 'truckIntegralList', component: inImport('carrier/sub/truckIntegralList'), name: 'truckIntegralList', meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       }
     ]

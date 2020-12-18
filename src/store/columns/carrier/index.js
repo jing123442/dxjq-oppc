@@ -47,6 +47,14 @@ const getters = {
   carrier_truckAccount_select_list: item => select.truckAccount,
   // 车辆资金账户管理--账户流水
   carrier_truckAccountList_column: item => columns.truckAccountList,
+
+  // 开车积分账户管理
+  carrier_truckIntegral_mode_list: item => item.app.modeDefault,
+  carrier_truckIntegral_page_status: item => app.list.truckIntegral,
+  carrier_truckIntegral_column: item => columns.truckIntegral,
+  carrier_truckIntegral_select_list: item => select.truckAccount,
+  // 车辆资金账户管理--账户流水
+  carrier_truckIntegralList_column: item => columns.truckIntegralList,
   // 充值记录
   carrier_rechargeRecord_mode_list: item => item.app.modeDefault,
   carrier_rechargeRecord_page_status: item => app.list.rechargeRecord,

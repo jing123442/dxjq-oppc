@@ -23,15 +23,15 @@ export default {
         name: '流水列表'
       },
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgId: this.$route.query.orgId, accountId: this.$route.query.accountId, truckId: this.$route.query.truckId, acountType: 0 } })
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgId: this.$route.query.orgId, accountId: this.$route.query.accountId, truckId: this.$route.query.truckId, acountType: 1 } })
     }
   },
   computed: {
     ...mapGetters({
-      mode_list: 'carrier_truckAccount_mode_list',
-      page_status: 'carrier_truckAccount_page_status',
-      page_column: 'carrier_truckAccountList_column',
-      select_list: 'carrier_truckAccount_select_list',
+      mode_list: 'carrier_truckIntegral_mode_list',
+      page_status: 'carrier_truckIntegral_page_status',
+      page_column: 'carrier_truckIntegralList_column',
+      select_list: 'carrier_truckIntegral_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'

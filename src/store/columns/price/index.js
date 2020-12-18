@@ -16,6 +16,8 @@ const getters = {
 
   // 平台挂牌价--配置液源地
   price_listing_from_column: item => columns.listingFrom,
+  // 平台挂牌价--气价调节
+  price_listing_measure_column: item => columns.listingMeasure,
 
   // 平台挂牌价--变更记录
   price_listing_release_column: item => columns.listingRelease,
@@ -25,6 +27,9 @@ const getters = {
   price_departure_page_status: item => app.list.departure,
   price_departure_column: item => columns.departure,
   price_departure_select_list: item => item.app.selectDefault,
+
+  // 气价调节
+  price_measure_column: item => columns.measure,
 
   // 区域优惠政策
   price_preferential_mode_list: item => item.app.modeDefault,

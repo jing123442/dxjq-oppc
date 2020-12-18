@@ -52,6 +52,7 @@ export function menuList() {
       { path: '/logisticsAccountManager', name: 'logisticsAccountManager', meta: { title: '公司资金账户管理', noCache: false } },
       { path: '/vehicleManager', name: 'vehicleManager', meta: { title: '车辆管理', noCache: false } },
       { path: '/truckAccountManager', name: 'truckAccountManager', meta: { title: '卡车资金账户管理', noCache: false } },
+      { path: '/truckIntegral', name: 'truckIntegral', meta: { title: '卡车积分账户管理', noCache: false } },
       { path: '/rechargeRecord', name: 'rechargeRecord', meta: { title: '充值记录', noCache: false } },
       /* { path: '/inventoryManager', name: 'inventoryManager', meta: { title: '圈存管理', noCache: false } }, */
       { path: '/transactionOrderManager', name: 'transactionOrderManager', meta: { title: '加气订单管理', noCache: false } }
@@ -71,6 +72,7 @@ export function menuList() {
           { path: '/preferential', name: 'preferential', meta: { title: '区域优惠政策', noCache: false } },
           { path: '/estimate', name: 'estimate', meta: { title: '运费测算', noCache: false } },
           { path: '/freight', name: 'freight', meta: { title: '运费单价', noCache: false } },
+          { path: '/measure', name: 'measure', meta: { title: '气价调节', noCache: false } },
           { path: '/mileage', name: 'mileage', meta: { title: '加气站里程', noCache: false } }
         ]
       },
