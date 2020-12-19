@@ -79,7 +79,7 @@ export default {
 
         finds.gasstationId = row.gasstationId
         this.$router.push({
-          path: 'index/orderList',
+          path: 'settIndex/orderList',
           query: finds
         })
       } else if (type === 'export') {

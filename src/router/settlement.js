@@ -4,14 +4,17 @@ const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : requir
 export default [
   {
     path: '/settlement',
+    name: 'settlement',
     component: Layout,
-    redirect: '/settlement/index',
+    redirect: '/settlement/settIndex',
     meta: { title: '结算管理' },
     children: [
-      { path: 'index', component: inImport('settlement/index'), name: 'settlement', meta: { title: '加气站服务汇总', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'settIndex', component: inImport('settlement/index'), name: 'settIndex', meta: { title: '加气站服务汇总', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'logisticsSettlement', component: inImport('settlement/logisticsSettlement'), name: 'logisticsSettlement', meta: { title: '物流公司加气费汇总', icon: 'icon-gongnengguanli', noCache: false } },
       {
-        path: 'index',
+        path: 'settIndex',
+        name: 'subSettIndex',
+        redirect: '/settlement/settIndex',
         component: {
           render (c) { return c('router-view') }
         },
@@ -23,11 +26,13 @@ export default [
       },
       {
         path: 'logisticsSettlement',
+        name: 'subLogisticsSettlement',
+        redirect: '/settlement/logisticsSettlement',
         component: {
           render (c) { return c('router-view') }
         },
         hidden: true,
-        meta: { title: '加气站服务费汇总', icon: 'icon-gongnengguanli', noCache: false },
+        meta: { title: '物流公司加气费汇总', icon: 'icon-gongnengguanli', noCache: false },
         children: [
           { path: 'rechargeList', component: inImport('settlement/sub/rechargeList'), name: 'rechargeList', meta: { title: '物流公司充值账单', icon: 'icon-gongnengguanli', noCache: false } },
           { path: 'gasOrderList', component: inImport('settlement/sub/gasOrderList'), name: 'gasOrderList', meta: { title: '物流公司加气账单', icon: 'icon-gongnengguanli', noCache: false } },

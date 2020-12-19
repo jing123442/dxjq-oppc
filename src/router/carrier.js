@@ -4,11 +4,12 @@ const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : requir
 export default [
   {
     path: '/carrier',
+    name: 'carrier',
     component: Layout,
-    redirect: '/carrier/index',
+    redirect: '/carrier/carrierIndex',
     meta: { title: '物流公司管理' },
     children: [
-      { path: 'index', component: inImport('carrier/index'), name: 'carrier', meta: { title: '物流公司', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'carrierIndex', component: inImport('carrier/index'), name: 'carrierIndex', meta: { title: '物流公司', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'logisticsAccountManager', component: inImport('carrier/logisticsAccountManager'), name: 'logisticsAccountManager', meta: { title: '公司资金账户管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'vehicleManager', component: inImport('carrier/vehicleManager'), name: 'vehicleManager', meta: { title: '车辆管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'truckAccountManager', component: inImport('carrier/truckAccountManager'), name: 'truckAccountManager', meta: { title: '卡车资金账户管理', icon: 'icon-gongnengguanli', noCache: false } },
@@ -18,6 +19,8 @@ export default [
       { path: 'transactionOrderManager', component: inImport('carrier/transactionOrderManager'), name: 'transactionOrderManager', meta: { title: '加气订单管理', icon: 'icon-gongnengguanli', noCache: false } },
       {
         path: 'logisticsAccountManager',
+        name: 'subLogisticsAccountManager',
+        redirect: '/carrier/logisticsAccountManager',
         component: {
           render (c) { return c('router-view') }
         },
@@ -30,17 +33,21 @@ export default [
       },
       {
         path: 'truckAccountManager',
+        name: 'subTruckAccountManager',
+        redirect: '/carrier/truckAccountManager',
         component: {
           render (c) { return c('router-view') }
         },
         hidden: true,
-        meta: { title: '车辆资金账户管理', icon: 'icon-gongnengguanli', noCache: false },
+        meta: { title: '卡车资金账户管理', icon: 'icon-gongnengguanli', noCache: false },
         children: [
           { path: 'truckAccountList', component: inImport('carrier/sub/truckAccountList'), name: 'truckAccountList', meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       },
       {
         path: 'truckIntegral',
+        name: 'subTruckIntegral',
+        redirect: '/carrier/truckIntegral',
         component: {
           render (c) { return c('router-view') }
         },

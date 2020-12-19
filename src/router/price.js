@@ -4,14 +4,17 @@ const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : requir
 export default [
   {
     path: '/price',
+    name: 'price',
     component: Layout,
-    redirect: '/price/index',
+    redirect: '/price/priceIndex',
     meta: { title: '定价管理' },
     children: [
-      { path: 'release', component: inImport('price/release'), name: 'release', meta: { title: '发布管理', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'index', component: inImport('price/index'), name: 'price', meta: { title: '挂牌价管理', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'priceRelease', component: inImport('price/release'), name: 'priceRelease', meta: { title: '发布管理', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'priceIndex', component: inImport('price/index'), name: 'priceIndex', meta: { title: '挂牌价管理', icon: 'icon-gongnengguanli', noCache: false } },
       {
-        path: 'index',
+        path: 'priceIndex',
+        name: 'subPriceIndex',
+        redirect: '/price/priceIndex',
         component: {
           render (c) { return c('router-view') }
         },
