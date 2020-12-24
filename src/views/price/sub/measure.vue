@@ -74,7 +74,7 @@ export default {
         this.$refs.from.$refs.measureForm.validate((valid) => {
           if (valid) {
             const params = {
-              gasprice: row.measureMoney
+              preGasprice: row.measureMoney
             }
 
             $gasstationUpdatePrice(params).then((res) => {
