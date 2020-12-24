@@ -1,49 +1,52 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'fillerInfo'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <table-total-data :dataList="dataList" :rowData="totalInfo"></table-total-data>
+    <em-table-list ref="tables" :tableListName="'orderFiller'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { axiosRequestParams, callbackPagesInfo, isTypeof, formatPeriodDate } from '@/utils/tools'
+import { $gwayOrderTotal } from '@/service/settle'
+import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'fillerInfo',
+  name: 'orderFiller',
+  components: { TableTotalData },
   data() {
     return {
-      isShow: false,
       queryCustURL: {
-        edit: {
-          url: 'user/gasstation_card/update',
-          method: 'post',
-          rowType: true
-        },
-        byid: {
-          url: 'user/gasstation_card/find',
-          key: 'gasstationId',
-          parse: ['data']
-        },
         list: {
-          url: 'strategy/gasstation/list',
+          url: 'settle/gasstation_gway/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
         },
-        name: '加气站列表'
+        name: '加气站企业'
       },
-      buttonsList: [],
+      buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */],
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { } })
+      queryParams: Function,
+      dataList: [{
+        name: '加气量总额：',
+        field: 'gasQtyTotal',
+        unit: ' 公斤'
+      }, {
+        name: '服务费总金额：',
+        field: 'profitTotal',
+        unit: ' 元'
+      }],
+      totalInfo: { gasQtyTotal: 0, profitTotal: 0 }
     }
   },
   computed: {
     ...mapGetters({
-      mode_list: 'filler_info_mode_list',
-      page_status: 'filler_info_page_status',
-      page_column: 'filler_info_column',
-      select_list: 'filler_info_select_list',
+      mode_list: 'order_filler_mode_list',
+      page_status: 'order_filler_page_status',
+      page_column: 'order_filler_column',
+      select_list: 'order_filler_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -52,21 +55,44 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
-      if (type === 'printer') {
-        const gasstationId = row.gasstationId
-        const gasstationName = row.gasstationName
-        this.$router.push(`fillerInfo/printerList?gasstationId=${gasstationId}&gasstationName=${gasstationName}`)
+      const params = { orgId: row.gasstationId, periodYear: row.periodYear, periodMonth: row.periodMonth }
+
+      if (type === 'detail') {
+        this.$router.push({
+          path: 'orderFiller/fillerDetailList',
+          query: params
+        })
+      } else if (type === 'withdraw') {
+        this.$router.push({
+          path: 'orderFiller/fillerWithdrawList',
+          query: params
+        })
       }
     },
-    onReqParams(type, _this, callback) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 1
-        }
+    initTotalData(params) {
+      $gwayOrderTotal(params).then(response => {
+        this.totalInfo = response.data
       })
+    },
+    onReqParams(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { }, dateParam: { } } })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k == 'period') {
+            const period = formatPeriodDate(_this.finds[k])
+
+            params.param.dateParam.createDateFrom = period.periodYear
+            params.param.dateParam.createDateTo = period.periodMonth
+          } else {
+            if (v !== '') params.param.gasOrder[k] = v
+          }
+        }
+      }
+
+      this.initTotalData(params)
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
     }
   }
 }

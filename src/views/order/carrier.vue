@@ -1,38 +1,60 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'fillerAccount'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <table-total-data :dataList="dataList" :rowData="totalInfo"></table-total-data>
+    <em-table-list ref="tables" :tableListName="'orderCarrier'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { axiosRequestParams, callbackPagesInfo, isTypeof, formatPeriodDate } from '@/utils/tools'
+import { $carrierOrderTotal } from '@/service/settle'
+import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'fillerAccount',
+  name: 'orderCarrier',
+  components: { TableTotalData },
   data() {
     return {
-      isShow: false,
       queryCustURL: {
         list: {
-          url: '/account/org_account/list',
+          url: 'settle/carrier/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
         },
-        name: '加气站资金账户管理'
+        name: '加气站企业'
       },
+      buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */],
       axios: axiosRequestParams(this),
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 1 } })
+      queryParams: Function,
+      dataList: [{
+        name: '充值总额：',
+        field: 'rechargeTotal',
+        unit: ' 元'
+      }, {
+        name: '加气量总额：',
+        field: 'gasQtyTotal',
+        unit: ' 公斤'
+      }, {
+        name: '加气总金额：',
+        field: 'gasAmountTotal',
+        unit: ' 元'
+      }, {
+        name: '优惠总金额：',
+        field: 'discountTotal',
+        unit: ' 元'
+      }],
+      totalInfo: { discountTotal: 0, gasAmountTotal: 0, gasQtyTotal: 0, rechargeTotal: 0 }
     }
   },
   computed: {
     ...mapGetters({
-      mode_list: 'filler_account_mode_list',
-      page_status: 'filler_account_page_status',
-      page_column: 'filler_account_column',
-      select_list: 'filler_account_select_list',
+      mode_list: 'order_carrier_mode_list',
+      page_status: 'order_carrier_page_status',
+      page_column: 'order_carrier_column',
+      select_list: 'order_carrier_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -41,21 +63,49 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
-      const orgId = row.orgId
-      const accountId = row.accountId
-      if (type === 'check') {
-        this.$router.push(`fillerAccount/accountList?orgId=${orgId}&accountId=${accountId}`)
+      const params = { orgId: row.carrierOrgId, periodYear: row.periodYear, periodMonth: row.periodMonth }
+
+      if (type === 'recharge') {
+        this.$router.push({
+          path: 'orderCarrier/carrierRechargeList',
+          query: params
+        })
+      } else if (type === 'settlement') {
+        this.$router.push({
+          path: 'orderCarrier/carrierSettlementList',
+          query: params
+        })
+      } else if (type === 'truck') {
+        this.$router.push({
+          path: 'orderCarrier/carrierTruckList',
+          query: params
+        })
       }
     },
-    onReqParams(type, _this, callback) {
-      // eslint-disable-next-line standard/no-callback-literal
-      callback({
-        page: 1,
-        size: 10,
-        param: {
-          orgType: 0
-        }
+    initTotalData(params) {
+      $carrierOrderTotal(params).then(response => {
+        this.totalInfo = response.data
       })
+    },
+    onReqParams(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { }, dateParam: { } } })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k == 'period') {
+            const period = formatPeriodDate(_this.finds[k])
+
+            params.param.dateParam.createDateFrom = period.periodYear
+            params.param.dateParam.createDateTo = period.periodMonth
+          } else {
+            if (v !== '') params.param.gasOrder[k] = v
+          }
+        }
+      }
+
+      this.initTotalData()
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
     }
   }
 }

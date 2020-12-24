@@ -89,7 +89,7 @@ export function menuList() {
       { path: '/marketingManager', name: 'marketingManager', meta: { title: '营销合作经理配置', noCache: false } },
       { path: '/marketSourceConfig', name: 'marketSourceConfig', meta: { title: '液源地配置', noCache: false } }
     ]
-  }, {
+  }, /* {
     path: '/settlement',
     name: 'settlement',
     meta: { title: '结算管理', icon: 'icon-jiesuanguanli', class: 'em-iconfont', noCache: false },
@@ -97,10 +97,10 @@ export function menuList() {
       { path: '/settIndex', name: 'settIndex', meta: { title: '加气站服务汇总', noCache: false } },
       { path: '/logisticsSettlement', name: 'logisticsSettlement', meta: { title: '物流公司加气费汇总', noCache: false } }
     ]
-  }, {
+  }, */{
     path: '/order',
     name: 'order',
-    meta: { title: '订单中心', icon: 'el-icon-setting', noCache: false },
+    meta: { title: '订单中心', icon: 'icon-jiesuanguanli', class: 'em-iconfont', noCache: false },
     children: [
       { path: '/orderIndex', name: 'orderIndex', meta: { title: '加气订单', noCache: false } },
       { path: '/orderFiller', name: 'orderFiller', meta: { title: '加气站结算订单', noCache: false } },

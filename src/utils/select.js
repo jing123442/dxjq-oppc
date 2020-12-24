@@ -159,9 +159,10 @@ export function utilsTradeType() {
 
 export function utilsPayType() {
   return [
-    { value: 0, label: '余额' },
-    { value: 1, label: '微信' },
-    { value: 2, label: '微信+余额' }
+    { value: 0, label: '余额支付' },
+    { value: 1, label: '微信支付' },
+    { value: 2, label: '支付宝支付' },
+    { value: 3, label: '第三方支付' }
   ]
 }
 

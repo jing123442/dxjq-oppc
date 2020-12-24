@@ -1,23 +1,23 @@
 <template>
   <div class="template-main">
     <table-total-data :dataList="dataList" :rowData="totalInfo"></table-total-data>
-    <em-table-list ref="tables" :tableListName="'orderBussiness'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" :tableListName="'orderFiller'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
 import { axiosRequestParams, callbackPagesInfo, isTypeof, formatPeriodDate } from '@/utils/tools'
-import { $xqkjOrderTotal } from '@/service/settle'
+import { $gwayOrderTotal } from '@/service/settle'
 import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'orderBussiness',
+  name: 'orderFiller',
   components: { TableTotalData },
   data() {
     return {
       queryCustURL: {
         list: {
-          url: 'settle/gas_order/list',
+          url: 'settle/gasstation_gway/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -35,30 +35,34 @@ export default {
         unit: ' 公斤'
       }, {
         name: '服务费总金额：',
-        field: 'gwayAmountTotal',
+        field: 'profitTotal',
         unit: ' 元'
       }],
-      totalInfo: { gasQtyTotal: 0, gwayAmountTotal: 0 }
+      totalInfo: { gasQtyTotal: 0, profitTotal: 0 }
     }
   },
   computed: {
     ...mapGetters({
-      mode_list: 'order_bussiness_mode_list',
-      page_status: 'order_bussiness_page_status',
-      page_column: 'order_bussiness_column',
-      select_list: 'order_bussiness_select_list',
+      mode_list: 'order_filler_mode_list',
+      page_status: 'order_filler_page_status',
+      page_column: 'order_filler_column',
+      select_list: 'order_filler_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
     })
   },
-  created: function () { },
+  created: function () {},
   methods: {
     onListEvent(type, row) {
-
+      if (type == 'detail') {
+        this.$router.push({
+          path: 'orderFiller/fillerDetailList'
+        })
+      }
     },
     initTotalData(params) {
-      $xqkjOrderTotal(params).then(response => {
+      $gwayOrderTotal(params).then(response => {
         this.totalInfo = response.data
       })
     },

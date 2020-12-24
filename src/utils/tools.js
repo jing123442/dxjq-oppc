@@ -42,6 +42,37 @@ export function formatDate(date, fmt) { // date对象
   return fmt
 }
 
+// 获取当前账期
+export function formatPeriodDate(date, number = 24) {
+  if (date) {
+    const periodYear = new Date(date).getFullYear()
+    const periodMonth = new Date(date).getMonth() + 1
+    return {
+      periodYear,
+      periodMonth
+    }
+  } else {
+    const dateNow = Date.now()
+    let periodYear = new Date(dateNow).getFullYear()
+    let periodMonth = new Date(dateNow).getMonth() + 1
+    const periodDate = new Date(dateNow).getDate()
+    if (periodMonth == 1) {
+      if (periodDate <= number) {
+        periodYear--
+        periodMonth = 12
+      }
+    } else {
+      if (periodDate <= number) {
+        periodMonth--
+      }
+    }
+    return {
+      periodYear,
+      periodMonth
+    }
+  }
+}
+
 export function isTypeof(option) {
   var value = Object.prototype.toString.call(option)
 
