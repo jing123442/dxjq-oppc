@@ -132,6 +132,7 @@ export default {
               row.benefit = data.benefit
               row.freight = data.freight
               row.profit = data.profit
+              row.gasprice = data.gasprice
             })
           } else {
             console.log('error submit!!')
@@ -149,7 +150,7 @@ export default {
           if (valid) {
             const params = {
               gasstationId: row.gasstationId,
-              gasprice: row.measureMoney
+              preGasprice: row.measureMoney
             }
 
             $gasstationUpdatePrice(params).then((res) => {
