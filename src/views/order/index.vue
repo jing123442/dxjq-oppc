@@ -57,7 +57,7 @@ export default {
 
     },
     initTotalData() {
-      const response = this.$refs.tables && this.$refs.tables.tableListResponse
+      const response = this.$refs.tables && this.$refs.tables.tableListResponse ? this.$refs.tables.tableListResponse : null
 
       if (response) {
         clearTimeout(this.times)
