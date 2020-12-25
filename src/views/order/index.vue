@@ -53,13 +53,12 @@ export default {
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) {
-
-    },
+    onListEvent(type, row) {},
     initTotalData() {
+      const loading = this.$refs.tables ? this.$refs.tables.loading : true
       const response = this.$refs.tables && this.$refs.tables.tableListResponse ? this.$refs.tables.tableListResponse : null
 
-      if (response) {
+      if (!loading && response) {
         clearTimeout(this.times)
         if (response.code === 0) {
           if (response.data && response.data.totalInfo) {
@@ -99,9 +98,10 @@ export default {
         }
       }
 
-      this.initTotalData()
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
+
+      this.initTotalData()
     }
   }
 }
