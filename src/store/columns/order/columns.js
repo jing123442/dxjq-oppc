@@ -43,8 +43,8 @@ const columns = {
   ],
   fillerWithdraw: [
     { field: 'withdrawOrderId', name: '提现编号', fixed: 'left' },
-    { field: 'createDate', name: '提现申请时间' },
-    { field: 'updateDate', name: '提现到账时间' },
+    { field: 'createDate', name: '提现申请时间', formatFun: 'formateTData all', stype: 'format' },
+    { field: 'updateDate', name: '提现到账时间', formatFun: 'formateTData all', stype: 'format' },
     { field: 'amount', name: '提现金额' }
   ],
   carrierOrder: [
@@ -75,8 +75,8 @@ const columns = {
     { field: 'discountAmount', name: '优惠金额' }
   ],
   carrierRecharge: [
-    { field: 'gasstationName', name: '充值金额(元)', fixed: 'left' },
-    { field: 'gasstationName', name: '充值时间' }
+    { field: 'amount', name: '充值金额(元)', fixed: 'left' },
+    { field: 'rechargeDate', name: '充值时间', formatFun: 'formateTData all', stype: 'format' }
   ],
   carrierToTruck: [
     { field: 'carNumber', name: '车牌号', fixed: 'left', search: { type: 'text', placeholder: '请输入车牌号' } },
