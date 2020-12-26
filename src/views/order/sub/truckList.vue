@@ -65,7 +65,7 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (v !== '') params.param.gasOrder[k] = v
+          if (v !== '') params.param.carrierTruck[k] = v
         }
       }
 

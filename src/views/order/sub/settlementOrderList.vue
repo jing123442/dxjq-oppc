@@ -66,7 +66,7 @@ export default {
       })
     },
     onReqParams(type, _this, callback) {
-      const querys = { param: { carrierGasstation: { carrierOrgId: this.$route.query.orgId, gasstationId: this.$route.query.fillerId }, dateParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth } } }
+      const querys = { param: { gasOrder: { carrierOrgId: this.$route.query.orgId, gasstationId: this.$route.query.fillerId }, dateParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth } } }
 
       this.initTotalData()
 

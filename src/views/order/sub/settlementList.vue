@@ -79,14 +79,7 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k == 'period') {
-            const period = formatPeriodDate(_this.finds[k])
-
-            querys.param.dateParam.createDateFrom = period.periodYear
-            querys.param.dateParam.createDateTo = period.periodMonth
-          } else {
-            if (v !== '') querys.param.carrierGasstation[k] = v
-          }
+          if (v !== '') querys.param.carrierGasstation[k] = v
         }
       }
 

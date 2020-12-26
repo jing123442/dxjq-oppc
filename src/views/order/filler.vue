@@ -113,7 +113,7 @@ export default {
       })
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { }, dateParam: { } } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasstationGway: { }, dateParam: { } } })
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
@@ -123,7 +123,7 @@ export default {
             params.param.dateParam.createDateFrom = period.periodYear
             params.param.dateParam.createDateTo = period.periodMonth
           } else {
-            if (v !== '') params.param.gasOrder[k] = v
+            if (v !== '') params.param.gasstationGway[k] = v
           }
         }
       }
