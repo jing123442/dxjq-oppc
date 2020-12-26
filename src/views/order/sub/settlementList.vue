@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, callbackPagesInfo, isTypeof, formatPeriodDate } from '@/utils/tools'
+import { axiosRequestParams, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { $carrierGasstationOrderTotal } from '@/service/settle'
 import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
