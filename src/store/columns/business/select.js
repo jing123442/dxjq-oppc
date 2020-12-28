@@ -11,7 +11,8 @@ const select = {
   },
   account: {
     accountType: [
-      { value: 0, label: '现金账户' }
+      { value: 0, label: '现金账户' },
+      { value: 1, label: '积分账号' }
     ]
   },
   accountList: {

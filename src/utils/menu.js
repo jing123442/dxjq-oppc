@@ -53,9 +53,9 @@ export function menuList() {
       { path: '/vehicleManager', name: 'vehicleManager', meta: { title: '车辆管理', noCache: false } },
       { path: '/truckAccountManager', name: 'truckAccountManager', meta: { title: '卡车资金账户管理', noCache: false } },
       { path: '/truckIntegral', name: 'truckIntegral', meta: { title: '卡车积分账户管理', noCache: false } },
-      { path: '/rechargeRecord', name: 'rechargeRecord', meta: { title: '充值记录', noCache: false } },
+      { path: '/rechargeRecord', name: 'rechargeRecord', meta: { title: '充值记录', noCache: false } }
       /* { path: '/inventoryManager', name: 'inventoryManager', meta: { title: '圈存管理', noCache: false } }, */
-      { path: '/transactionOrderManager', name: 'transactionOrderManager', meta: { title: '加气订单管理', noCache: false } }
+      /* { path: '/transactionOrderManager', name: 'transactionOrderManager', meta: { title: '加气订单管理', noCache: false } } */
     ]
   }, {
     path: '/price',
