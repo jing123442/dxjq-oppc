@@ -33,3 +33,8 @@ export async function $carrierGasstationFind (data) {
 export async function $gasstationGwayFind (data) {
   return await R({ url: 'settle/gasstation_gway/find', data })
 }
+
+// 提现汇总
+export async function $gasstationWithdrawTotal (data) {
+  return await R({ url: 'settle/withdraw_order/list_total_amount', data })
+}

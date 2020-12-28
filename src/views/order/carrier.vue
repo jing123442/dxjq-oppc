@@ -88,15 +88,15 @@ export default {
       })
     },
     onReqParams(type, _this, callback) {
-      const querys = { param: { carrier: { }, dateParam: { } } }
+      const querys = { param: { carrier: { }, dataParam: { } } }
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (k == 'period') {
             const period = formatPeriodDate(_this.finds[k])
 
-            querys.param.dateParam.createDateFrom = period.periodYear
-            querys.param.dateParam.createDateTo = period.periodMonth
+            querys.param.dataParam.periodYear = period.periodYear
+            querys.param.dataParam.periodMonth = period.periodMonth
           } else {
             if (v !== '') querys.param.carrier[k] = v
           }

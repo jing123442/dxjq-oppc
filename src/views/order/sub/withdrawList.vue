@@ -6,7 +6,7 @@
 </template>
 <script>
 import { axiosRequestParams, callbackPagesInfo, isTypeof } from '@/utils/tools'
-import { $gwayOrderTotal } from '@/service/settle'
+import { $gasstationWithdrawTotal } from '@/service/settle'
 import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
 
@@ -52,8 +52,8 @@ export default {
   methods: {
     onListEvent(type, row) { },
     initTotalData(params) {
-      $gwayOrderTotal(params).then(response => {
-        this.totalInfo = response.data
+      $gasstationWithdrawTotal(params).then(response => {
+        this.totalInfo = response.data || {}
       })
     },
     onReqParams(type, _this, callback) {

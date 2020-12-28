@@ -66,7 +66,7 @@ export default {
     initTotalData() {
       const params = {
         gasstationGway: { gasstationId: this.$route.query.orgId },
-        dateParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth }
+        dataParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth }
       }
       $gasstationGwayFind(params).then(response => {
         this.totalInfo = response.data

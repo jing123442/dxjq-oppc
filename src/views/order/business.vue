@@ -63,22 +63,25 @@ export default {
       })
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { }, dateParam: { } } })
+      const querys = { param: { gasOrder: { }, dateParam: { } } }
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (k == 'period') {
             const period = formatPeriodDate(_this.finds[k])
 
-            params.param.dateParam.createDateFrom = period.periodYear
-            params.param.dateParam.createDateTo = period.periodMonth
+            querys.param.dateParam.periodYear = period.periodYear
+            querys.param.dateParam.periodMonth = period.periodMonth
           } else {
-            if (v !== '') params.param.gasOrder[k] = v
+            if (v !== '') querys.param.gasOrder[k] = v
           }
         }
       }
 
-      this.initTotalData(params)
+      this.initTotalData(querys.param)
+
+      const params = Object.assign({}, callbackPagesInfo(_this), querys)
+
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     }

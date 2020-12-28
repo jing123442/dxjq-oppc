@@ -105,11 +105,11 @@ export function monthTimeArea(now) {
   var nowMonth = now.getMonth()
 
   var monthStartDate = new Date(nowYear, nowMonth, 1)
-  var monthEndDate = new Date(nowYear, nowMonth + 1, 1)
+  var monthEndDate = new Date(nowYear, nowMonth + 1, 0)
 
   return {
     start: formatDate(monthStartDate, 'yyyy-MM-dd 00:00:00'),
-    end: formatDate(monthEndDate, 'yyyy-MM-dd 00:00:00')
+    end: formatDate(monthEndDate, 'yyyy-MM-dd 23:59:59')
   }
 }
 
