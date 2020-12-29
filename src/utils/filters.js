@@ -40,6 +40,17 @@ const formatContent = (value, field, row) => {
   }
 }
 
+// 格式化卡车对应多个司机
+const truckToDriverList = (value) => {
+  const result = []
+
+  value.forEach(item => {
+    result.push(item.driverName)
+  })
+
+  return result.join(' | ')
+}
+
 const formateTData = (date, fmt) => {
   return formateTSData(date, fmt)
 }
@@ -86,5 +97,6 @@ export {
   kiloToTon,
   formatContent,
   tableStatusToLabel,
-  formatCardNumber
+  formatCardNumber,
+  truckToDriverList
 }

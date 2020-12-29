@@ -75,7 +75,10 @@ export function utilsOrderStatus() {
   return [
     { value: 1, label: '待支付' },
     { value: 2, label: '已支付' },
-    { value: 3, label: '取消' }
+    { value: 3, label: '取消' },
+    { value: 4, label: '支付中' },
+    { value: 5, label: '退款中' },
+    { value: 6, label: '退款完成' }
   ]
 }
 
@@ -153,7 +156,10 @@ export function utilsTradeType() {
     { value: 7, label: '平台费' },
     { value: 8, label: '调增' },
     { value: 9, label: '调减' },
-    { value: 10, label: '提现退回' }
+    { value: 10, label: '提现退回' },
+    { value: 11, label: '平台费退回' },
+    { value: 12, label: '收入退回' },
+    { value: 13, label: '服务费退回' }
   ]
 }
 

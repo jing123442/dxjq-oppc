@@ -13,7 +13,7 @@ export default {
     return {
       queryCustURL: {
         list: {
-          url: 'settle/recharge_order/list_withtime',
+          url: 'settle/recharge_order/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -24,17 +24,7 @@ export default {
       },
       buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */],
       axios: axiosRequestParams(this),
-      queryParams: Function,
-      dataList: [{
-        name: '加气量总额：',
-        field: 'gasQtyTotal',
-        unit: ' 公斤'
-      }, {
-        name: '服务费总金额：',
-        field: 'profitTotal',
-        unit: ' 元'
-      }],
-      totalInfo: { gasQtyTotal: 0, profitTotal: 0 }
+      queryParams: Function
     }
   },
   computed: {

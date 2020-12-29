@@ -1,9 +1,6 @@
 <template>
   <div class="template-main">
     <em-table-list ref="tables" :tableListName="'vehicleManager'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog title="车辆详情" :visible.sync="dialogTruckDetailVisible" :width="add_edit_dialog" :append-to-body="true">
-      <nt-form v-if="dialogTruckDetailVisible" :rowData="detailRow" :pageColumn="truck_page_column" :mode-list="truck_mode_list" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"></nt-form>
-    </el-dialog>
     <el-dialog title="车辆资金归集" :visible.sync="dialogTruckCollectVisible" :width="'50%'" :append-to-body="true">
       <nt-form v-if="dialogTruckCollectVisible" ref="collect" :formRef="'collectForm'" :rowData="collectRow" :pageColumn="collect_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventCollect"></nt-form>
     </el-dialog>
@@ -23,8 +20,6 @@ export default {
   data() {
     return {
       isShow: false,
-      detailRow: {},
-      dialogTruckDetailVisible: false,
       collectRow: {},
       dialogTruckCollectVisible: false,
       bindRow: {},
@@ -56,10 +51,8 @@ export default {
       page_status: 'carrier_vehicle_page_status',
       page_column: 'carrier_vehicle_column',
       select_list: 'carrier_vehicle_select_list',
-      truck_page_column: 'carrier_vehicle_detail_column',
       collect_page_column: 'carrier_vehicle_collect_column',
       bind_page_column: 'carrier_vehicle_bind_column',
-      truck_mode_list: 'carrier_vehicle_detail_mode_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -69,9 +62,6 @@ export default {
   methods: {
     onListEvent(type, row) {
       switch (type) {
-        case 'detail' :
-          this.truckDetail(row)
-          break
         case 'money' :
           this.truckCollect(row)
           break
@@ -90,21 +80,6 @@ export default {
         row.balanceInfo = data.balance == null ? '未绑定账户' : '账号余额：' + data.balance + ' 元'
         this.collectRow = row
         this.dialogTruckCollectVisible = true
-      })
-    },
-    truckDetail(row) {
-      $strategyTruckInfo({ truckId: row.truckId }).then(response => {
-        const truckInfo = []
-        const data = response.data
-
-        data.driverList && data.driverList.forEach(item => {
-          truckInfo.push(item.userName + ' / ' + item.mobile)
-        })
-        row.balance = data.balance == null ? '未绑定账户' : data.balance
-        row.driverInfo = truckInfo.join(' | ')
-        this.detailRow = row
-        this.detailRow._btn = []
-        this.dialogTruckDetailVisible = true
       })
     },
     truckBindDriver(row) {

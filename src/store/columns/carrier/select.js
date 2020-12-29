@@ -28,7 +28,10 @@ const select = {
     type: [
       { value: 1, label: '加气' },
       { value: 2, label: '圈入/充值' },
-      { value: 3, label: '圈出' }
+      { value: 3, label: '圈出' },
+      { value: 4, label: '加气退款' },
+      { value: 5, label: '加气积分' },
+      { value: 6, label: '加气积分退回' }
     ]
   },
   rechargeRecord: {

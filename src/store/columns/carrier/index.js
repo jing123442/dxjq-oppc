@@ -28,13 +28,10 @@ const getters = {
   // 公司资金账户管理---圈存弹窗
   carrier_vehicleCircleEvent_column: item => columns.vehicleCircleEvent,
   // 车辆管理
-  carrier_vehicle_mode_list: item => item.app.modeDefault,
+  carrier_vehicle_mode_list: item => app.mode.vehicle_detail,
   carrier_vehicle_page_status: item => app.list.vehicle,
   carrier_vehicle_column: item => columns.vehicle,
   carrier_vehicle_select_list: item => select.vehicle,
-  // 车辆管理---详情
-  carrier_vehicle_detail_mode_list: item => app.mode.vehicle_detail,
-  carrier_vehicle_detail_column: item => columns.vehicle_detail,
   // 车辆管理---资金归集
   carrier_vehicle_collect_column: item => columns.vehicle_collect,
   // 车辆管理---绑定司机
