@@ -47,10 +47,10 @@ export default {
       detailInfo: { orgName: '', mobile: '', period: '' },
       dataList: [{
         name: '加气站提现成功总金额：',
-        field: 'amount',
+        field: 'amountTotal',
         unit: ' 元'
       }],
-      totalInfo: { amount: 0 }
+      totalInfo: { amountTotal: 0 }
     }
   },
   computed: {
