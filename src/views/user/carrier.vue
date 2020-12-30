@@ -141,7 +141,7 @@ export default {
       if (btnObj.type === 'ok') {
         this.$refs.carrierUser.$refs.carrierUserForm.validate((valid) => {
           if (valid) {
-            $userOrgList({ page: 1, size: 10, param: { orgName: row.orgName } }).then(response => {
+            $userOrgList({ page: 1, size: 10, param: { org: { orgType: 2, orgName: row.orgName } } }).then(response => {
               const data = response.data.records
 
               if (data[0].authStatus == 2) {
