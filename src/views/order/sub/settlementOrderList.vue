@@ -1,11 +1,12 @@
 <template>
   <div class="template-main">
-    <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 35px;'"></table-total-data>
+    <table-total-data :dataList="detailList" :rowData="detailInfo" :headerClass="'top-detail'"></table-total-data>
+    <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 98px;'"></table-total-data>
     <em-table-list ref="tables" :tableListName="'orderFiller'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, callbackPagesInfo } from '@/utils/tools'
+import { axiosRequestParams, callbackPagesInfo, formatPeriodDateTime } from '@/utils/tools'
 import { $carrierGasstationFind } from '@/service/settle'
 import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
@@ -29,6 +30,17 @@ export default {
       buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */],
       axios: axiosRequestParams(this),
       queryParams: Function,
+      detailList: [{
+        currField: 'orgName',
+        name: '与',
+        field: 'fillerName',
+        unit: '结算订单'
+      }, {
+        name: '数据账期时间：',
+        field: 'period',
+        unit: ''
+      }],
+      detailInfo: { orgName: '', fillerName: '', period: '' },
       dataList: [{
         name: '加气量总额：',
         field: 'gasQtyTotal',
@@ -61,6 +73,9 @@ export default {
     onListEvent(type, row) { },
     initTotalData() {
       const params = { id: this.$route.query.id }
+
+      // 初始化头部文件
+      this.detailInfo = { orgName: this.$route.query.orgName, fillerName: this.$route.query.fillerName, period: formatPeriodDateTime(this.$route.query.periodYear, this.$route.query.periodMonth) }
       $carrierGasstationFind(params).then(response => {
         this.totalInfo = response.data
       })

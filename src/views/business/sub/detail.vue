@@ -1,12 +1,6 @@
 <template>
   <div class="template-main">
-    <div class="stats-data">
-      <div class="data-item" v-for="(item, index) in totalInfo" :key="index">
-        <span class="name">{{item.name}}</span>
-        <span class="value">{{item.total}} 元</span>
-      </div>
-    </div>
-
+    <table-total-data :dataList="dataList" :rowData="totalInfo"></table-total-data>
     <em-table-list :tableListName="'accountDetail'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog :title="'提现'" :visible.sync="dialogWithdrawDetailVisible" width="60%" :append-to-body="true">
@@ -29,10 +23,12 @@
 <script>
 import { axiosRequestParams, isTypeof, callbackPagesInfo } from '@/utils/tools'
 import { $withdrawTotalAmount } from '@/service/pay'
+import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'accountDetail',
+  components: { TableTotalData },
   data() {
     return {
       queryCustURL: {
@@ -52,7 +48,20 @@ export default {
         3: require('@/assets/images/business/success@2x.png'),
         4: require('@/assets/images/business/fail@2x.png')
       },
-      totalInfo: [],
+      dataList: [{
+        name: '提现总额：',
+        field: 'total',
+        unit: ' 元'
+      }, {
+        name: '银行处理中：',
+        field: 'bankProcessingTotal',
+        unit: ' 元'
+      }, {
+        name: '提现成功：',
+        field: 'sucessTotal',
+        unit: ' 元'
+      }],
+      totalInfo: { total: 0, bankProcessingTotal: 0, sucessTotal: 0 },
       orderInfo: {},
       buttonsList: [],
       axios: axiosRequestParams(this),
@@ -86,21 +95,22 @@ export default {
         }
       }
 
-      this.totalInfo = []
+      this.dataList = []
       $withdrawTotalAmount(params).then(response => {
+        this.totalInfo = response.data
         if (!status) {
           // 提现总额
-          this.totalInfo.push({ name: '提现总额：', total: response.data.total })
+          this.dataList.push({ name: '提现总额：', field: 'total', unit: ' 元' })
         }
 
         if (!status || status == 12) {
           // 提现银行处理中
-          this.totalInfo.push({ name: '银行处理中：', total: response.data.bankProcessingTotal })
+          this.dataList.push({ name: '银行处理中：', field: 'bankProcessingTotal', unit: ' 元' })
         }
 
         if (!status || status == 3) {
           // 提现成功
-          this.totalInfo.push({ name: '提现成功：', total: response.data.sucessTotal })
+          this.dataList.push({ name: '提现成功：', field: 'sucessTotal', unit: ' 元' })
         }
 
         /* if (!status || status == 4) {

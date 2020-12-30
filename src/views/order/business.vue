@@ -1,7 +1,7 @@
 <template>
   <div class="template-main">
-    <table-total-data :dataList="dataList" :rowData="totalInfo"></table-total-data>
-    <em-table-list ref="tables" :tableListName="'orderBussiness'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'left: 230px;'"></table-total-data>
+    <em-table-list ref="tables" :tableListName="'orderBussiness'" custTableTitle="长城奥扬与象群科技结算订单" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>

@@ -61,6 +61,8 @@ export default {
   methods: {
     onListEvent(type, row) {
       this.query.fillerId = row.gasstationId
+      this.query.orgName = row.carrierOrgName
+      this.query.fillerName = row.gasstationName
       this.query.id = row.id
       if (type == 'detail') {
         this.$router.push({
@@ -71,6 +73,7 @@ export default {
     },
     initTotalData(params) {
       $carrierGasstationOrderTotal(params).then(response => {
+        console.log(response)
         this.totalInfo = response.data
       })
     },

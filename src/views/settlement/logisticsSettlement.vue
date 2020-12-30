@@ -1,36 +1,38 @@
 <template>
   <div class="template-main">
-    <div class="stats-data">
-      <div class="data-item">
-        <span class="name">充值总额：</span>
-        <span class="value">{{totalList.sumRechargeAmount}} 元</span>
-      </div>
-      <div class="data-item">
-        <span class="name">加气量总额：</span>
-        <span class="value">{{totalList.totalSumGasQty}} 公斤</span>
-      </div>
-      <div class="data-item">
-        <span class="name">加气总金额：</span>
-        <span class="value">{{totalList.totalSumAmount}} 元</span>
-      </div>
-      <div class="data-item">
-        <span class="name">优惠总金额：</span>
-        <span class="value">{{totalList.totalSumDiscountAmount}} 元</span>
-      </div>
-    </div>
+    <table-total-data :dataList="dataList" :rowData="totalList"></table-total-data>
     <em-table-list ref="logisticsTables" :tableListName="'logisticsSettlement'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
 import { axiosRequestParams, isTypeof, exportBlobToFiles } from '@/utils/tools'
 import { $excelDownload } from '@/service/settle'
+import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'logisticsSettlement',
+  components: { TableTotalData },
   data() {
     return {
       isShow: false,
+      dataList: [{
+        name: '充值总额：',
+        field: 'sumRechargeAmount',
+        unit: ' 元'
+      }, {
+        name: '加气量总额：',
+        field: 'totalSumGasQty',
+        unit: ' 公斤'
+      }, {
+        name: '加气总金额：',
+        field: 'totalSumAmount',
+        unit: ' 元'
+      }, {
+        name: '优惠总金额：',
+        field: 'totalSumDiscountAmount',
+        unit: ' 元'
+      }],
       totalList: { sumRechargeAmount: 0, totalSumGasQty: 0, totalSumAmount: 0, totalSumDiscountAmount: 0 },
       queryCustURL: {
         list: {

@@ -1,12 +1,14 @@
 <template>
   <div class="template-main">
-    <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 35px;'"></table-total-data>
+    <table-total-data :dataList="detailList" :rowData="detailInfo" :headerClass="'top-detail'"></table-total-data>
+    <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 98px;'"></table-total-data>
     <em-table-list ref="tables" :tableListName="'orderFiller'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { axiosRequestParams, callbackPagesInfo, isTypeof, formatPeriodDateTime } from '@/utils/tools'
 import { $gasstationWithdrawTotal } from '@/service/settle'
+import { $userOrgFind } from '@/service/user'
 import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
 
@@ -29,6 +31,20 @@ export default {
       buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */],
       axios: axiosRequestParams(this),
       queryParams: Function,
+      detailList: [{
+        name: '长城奥扬与',
+        field: 'orgName',
+        unit: '提现成功明细'
+      }, {
+        name: '加气站联系电话：',
+        field: 'mobile',
+        unit: ''
+      }, {
+        name: '数据账期时间：',
+        field: 'period',
+        unit: ''
+      }],
+      detailInfo: { orgName: '', mobile: '', period: '' },
       dataList: [{
         name: '加气站提现成功总金额：',
         field: 'amount',
@@ -54,6 +70,12 @@ export default {
     initTotalData(params) {
       $gasstationWithdrawTotal(params).then(response => {
         this.totalInfo = response.data || {}
+      })
+      // 加气站信息
+      $userOrgFind({ orgId: this.$route.query.orgId }).then(response => {
+        this.detailInfo = {
+          orgName: response.data.orgName, mobile: response.data.mobile, period: formatPeriodDateTime(this.$route.query.periodYear, this.$route.query.periodMonth)
+        }
       })
     },
     onReqParams(type, _this, callback) {

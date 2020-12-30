@@ -360,29 +360,6 @@ div.el-dialog__body {
   }
 }
 
-.stats-data {
-  color: #2F3337;
-  font-size: 13px;
-
-  display: flex;
-
-  position: absolute;
-  top: 115px;
-  left: 160px;
-  padding: 2px 20px;
-  background-color: rgba(255, 245, 33, .2);
-
-  .data-item {
-    margin-left: 25px;
-    &:first-child {
-      margin-left: 0;
-    }
-
-    .value {
-      color: #ff4949;
-    }
-  }
-}
 .notice {
   padding: 15px;
   margin-bottom: 15px;

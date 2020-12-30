@@ -128,7 +128,7 @@ export default {
         }
       }
 
-      this.initTotalData(querys)
+      this.initTotalData(querys.param)
 
       const params = Object.assign({}, callbackPagesInfo(_this), querys)
       // eslint-disable-next-line standard/no-callback-literal

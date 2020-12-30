@@ -42,7 +42,7 @@ export default {
   methods: {
     onListEvent(type, row) {},
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { carrierOrder: { orgId: this.$route.query.orgId }, dateParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth } } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { rechargeOrder: { orgId: this.$route.query.orgId }, dateParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth } } })
 
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)

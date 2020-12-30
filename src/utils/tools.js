@@ -73,6 +73,18 @@ export function formatPeriodDate(date, number = 24) {
   }
 }
 
+// 获取当前账期时间段
+export function formatPeriodDateTime(year, month, number = 24) {
+  if (year && month) {
+    const startPeriodTime = month == 1 ? ((Number(year) - 1) + '-12-' + (number + 1) + ' 00:00:00') : (year + '-' + (Number(month) - 1) + '-' + (number + 1) + ' 00:00:00')
+    const endPeriodTime = year + '-' + month + '-' + number + ' 23:59:59'
+
+    return startPeriodTime + ' 至 ' + endPeriodTime
+  }
+
+  return ''
+}
+
 export function isTypeof(option) {
   var value = Object.prototype.toString.call(option)
 

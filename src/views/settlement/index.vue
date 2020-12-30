@@ -1,28 +1,30 @@
 <template>
   <div class="template-main">
-    <div class="stats-data">
-      <div class="data-item">
-        <span class="name">加气量总额：</span>
-        <span class="value">{{totalList.gasTotal}} 公斤</span>
-      </div>
-      <div class="data-item">
-        <span class="name">服务费总金额：</span>
-        <span class="value">{{totalList.serviceTotal}} 元</span>
-      </div>
-    </div>
+    <table-total-data :dataList="dataList" :rowData="totalList"></table-total-data>
     <em-table-list ref="settlementTables" :tableListName="'settlement'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
 import { axiosRequestParams, isTypeof, exportBlobToFiles } from '@/utils/tools'
 import { $excelDownload } from '@/service/settle'
+import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'settlement',
+  components: { TableTotalData },
   data() {
     return {
       isShow: false,
+      dataList: [{
+        name: '加气量总额：',
+        field: 'total',
+        unit: ' 公斤'
+      }, {
+        name: '服务费总金额：',
+        field: 'bankProcessingTotal',
+        unit: ' 元'
+      }],
       totalList: { gasTotal: 0, serviceTotal: 0 },
       queryCustURL: {
         list: {
