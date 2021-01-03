@@ -5,6 +5,7 @@
 </template>
 <script>
 import { axiosRequestParams, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { $generateDownloadFile } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -23,7 +24,8 @@ export default {
         query: this.$route.query,
         name: '加气站企业'
       },
-      buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */],
+      currParams: {},
+      buttonsList: [{ type: 'primary', icon: '', event: 'download', name: '导出' }],
       axios: axiosRequestParams(this),
       queryParams: Function,
       dataList: [{
@@ -51,7 +53,17 @@ export default {
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) { },
+    onListEvent(type, row) {
+      if (type === 'download') {
+        const params = [{
+          exportParam: JSON.stringify(this.currParams),
+          type: 4
+        }]
+        $generateDownloadFile(params).then(response => {
+          this.$alert('您的物流公司卡车结算明细已申请，请在下载中心下载。', '下载提示')
+        })
+      }
+    },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { carrierOrgId: this.$route.query.orgId, carNumber: this.$route.query.carNumber }, dateParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth } } })
 
@@ -61,6 +73,7 @@ export default {
         }
       }
 
+      this.currParams = params.param
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     }

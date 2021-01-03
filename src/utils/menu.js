@@ -105,7 +105,8 @@ export function menuList() {
       { path: '/orderIndex', name: 'orderIndex', meta: { title: '加气订单', noCache: false } },
       { path: '/orderFiller', name: 'orderFiller', meta: { title: '加气站结算订单', noCache: false } },
       { path: '/orderCarrier', name: 'orderCarrier', meta: { title: '物流公司结算订单', noCache: false } },
-      { path: '/orderBusiness', name: 'orderBusiness', meta: { title: '象群科技结算订单', noCache: false } }
+      { path: '/orderBusiness', name: 'orderBusiness', meta: { title: '象群科技结算订单', noCache: false } },
+      { path: '/orderDownload', name: 'orderDownload', meta: { title: '下载中心', noCache: false } }
     ]
   }, {
     path: '/setting',

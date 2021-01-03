@@ -38,3 +38,8 @@ export async function $gasstationGwayFind (data) {
 export async function $gasstationWithdrawTotal (data) {
   return await R({ url: 'settle/withdraw_order/list_total_amount', data })
 }
+
+// 下载文件申请
+export async function $generateDownloadFile (data) {
+  return await R({ url: 'settle/generate_file/add', data })
+}

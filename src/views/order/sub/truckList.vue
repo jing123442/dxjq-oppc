@@ -5,6 +5,7 @@
 </template>
 <script>
 import { axiosRequestParams, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { $generateDownloadFile } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -22,7 +23,8 @@ export default {
         },
         name: '加气站企业'
       },
-      buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */],
+      currParams: {},
+      buttonsList: [{ type: 'primary', icon: '', event: 'download', name: '导出' }],
       axios: axiosRequestParams(this),
       queryParams: Function,
       query: this.$route.query,
@@ -58,6 +60,14 @@ export default {
           path: 'carrierTruckList/carrierTruckOrderList',
           query: this.query
         })
+      } else if (type === 'download') {
+        const params = [{
+          exportParam: JSON.stringify(this.currParams),
+          type: 5
+        }]
+        $generateDownloadFile(params).then(response => {
+          this.$alert('您的物流公司卡车汇总已申请，请在下载中心下载。', '下载提示')
+        })
       }
     },
     onReqParams(type, _this, callback) {
@@ -69,6 +79,7 @@ export default {
         }
       }
 
+      this.currParams = params.param
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     }

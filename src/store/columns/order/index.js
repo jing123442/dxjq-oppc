@@ -43,7 +43,13 @@ const getters = {
   order_bussiness_mode_list: item => item.app.modeDefault,
   order_bussiness_page_status: item => app.list.bussiness,
   order_bussiness_column: item => columns.bussinessOrder,
-  order_bussiness_select_list: item => select.bussiness
+  order_bussiness_select_list: item => select.bussiness,
+
+  // 下载中心
+  order_download_mode_list: item => item.app.modeDefault,
+  order_download_page_status: item => app.list.download,
+  order_download_column: item => columns.downloadOrder,
+  order_download_select_list: item => select.download
 }
 
 export default {

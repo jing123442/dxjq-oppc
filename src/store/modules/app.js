@@ -1,6 +1,6 @@
 const app = {
   state: {
-    debug: true,
+    debug: false,
     sidebar: {
       opened: true// !+sessionStorage.getItem('sidebarStatus')
     },

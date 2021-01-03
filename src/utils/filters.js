@@ -23,6 +23,10 @@ const gasstationImage = item => {
   return item
 }
 
+const formatGwayPrice = value => {
+  return (Number(value) / 1000).toFixed(3)
+}
+
 const tableStatusToLabel = value => {
   if (value) return '已签约'
   else return '未签约'
@@ -95,6 +99,7 @@ export {
   formatDate,
   currency,
   kiloToTon,
+  formatGwayPrice,
   formatContent,
   tableStatusToLabel,
   formatCardNumber,

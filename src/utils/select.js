@@ -57,6 +57,29 @@ export function utilsAuthStatus() {
     { value: 3, label: '认证失败' }
   ]
 }
+export function utilsDownloadStatus() {
+  return [
+    { value: 1, label: '待生成' },
+    { value: 2, label: '已生成' },
+    { value: 3, label: '生成失败' }
+  ]
+}
+export function utilsDownloadType() {
+  return [
+    { value: 1, label: '物流公司加气站结算明细' },
+    { value: 2, label: '物流公司加气站对账函' },
+    { value: 3, label: '物流公司账期汇总列表' },
+    { value: 4, label: '物流公司卡车结算明细' },
+    { value: 5, label: '物流公司卡车汇总' },
+    { value: 6, label: '加气站物流公司对账函' },
+    { value: 7, label: '加气站结算明细' },
+    { value: 8, label: '加气站汇总列表' },
+    { value: 9, label: '加气站与长城奥扬对账单' },
+    { value: 10, label: '加气站提现明细' },
+    { value: 11, label: '象群科技订单列表' },
+    { value: 12, label: '象群科技与长城奥扬对账函' }
+  ]
+}
 export function utilsCheck() {
   return [
     { value: 0, label: '待审核' },

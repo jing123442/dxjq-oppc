@@ -85,7 +85,7 @@ const columns = {
     { field: 'gasQtyTotal', name: '加气量汇总(公斤)' },
     { field: 'amountTotal', name: '加气金额汇总(元)' },
     { field: 'discountTotal', name: '优惠金额汇总(元)' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'bill', name: '卡车加气对账单' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'bill', name: '卡车订单明细' }] }
   ],
   carrierToTruckOrder: [
     { field: 'orderId', name: '订单编号', fixed: 'left', search: { type: 'text', placeholder: '请输入订单编号' } },
@@ -105,8 +105,16 @@ const columns = {
     { field: 'carrierOrgName', name: '物流公司' },
     { field: 'carNumber', name: '车牌号' },
     { field: 'gasQty', name: '加气量' },
-    /* { field: 'gwayprice', name: '单位利润额' }, */
+    { field: 'gwayprice', name: '单位利润额(元/公斤)', formatFun: 'formatGwayPrice', stype: 'format' },
     { field: 'gwayamount', name: '服务费金额' }
+  ],
+  downloadOrder: [
+    { field: 'type', stype: 'mapping', mapping: 'typeName', name: '文件类型', fixed: 'left', search: { type: 'select', serial: 2, obj: 'type', placeholder: '文件类型' } },
+    { field: 'fileName', name: '导出文件编号' },
+    { field: 'status', name: '文件状态', formatter: 'status', search: { type: 'select', serial: 3, obj: 'status', placeholder: '文件状态' } },
+    { field: 'createDate', name: '申请时间', formatFun: 'formateTData all', stype: 'format', search: { type: 'date-picker', serial: 1, placeholder: '', style: 'width: 350px;', findField: 'createDate', value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) } },
+    { field: 'genDate', name: '文件生成时间', formatFun: 'formateTData all', stype: 'format' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: params => { return params.row.status == 2 && [{ type: 'down', name: '下载' }] } }
   ]
 }
 

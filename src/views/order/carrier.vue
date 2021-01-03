@@ -6,7 +6,7 @@
 </template>
 <script>
 import { axiosRequestParams, callbackPagesInfo, isTypeof, formatPeriodDate } from '@/utils/tools'
-import { $carrierOrderTotal } from '@/service/settle'
+import { $carrierOrderTotal, $generateDownloadFile } from '@/service/settle'
 import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
 
@@ -26,7 +26,8 @@ export default {
         },
         name: '加气站企业'
       },
-      buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */],
+      currParams: {},
+      buttonsList: [{ type: 'primary', icon: '', event: 'download', name: '导出' }],
       axios: axiosRequestParams(this),
       queryParams: Function,
       dataList: [{
@@ -80,9 +81,18 @@ export default {
           path: 'orderCarrier/carrierTruckList',
           query: params
         })
+      } else if (type === 'download') {
+        const params = [{
+          exportParam: JSON.stringify(this.currParams),
+          type: 3
+        }]
+        $generateDownloadFile(params).then(response => {
+          this.$alert('您的物流公司结算订单已申请，请在下载中心下载。', '下载提示')
+        })
       }
     },
     initTotalData(params) {
+      this.currParams = params
       $carrierOrderTotal(params).then(response => {
         this.totalInfo = response.data
       })

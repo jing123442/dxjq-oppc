@@ -231,8 +231,8 @@ export function custFormBtnList() {
   const bottonList = {
     iShow: true,
     list: [
-      { bType: 'info', icon: '', type: 'cancel', label: '取消' },
-      { bType: 'primary', icon: '', type: 'ok', label: '确认' }
+      { bType: 'info', icon: 'el-icon-close', type: 'cancel', label: '取消' },
+      { bType: 'primary', icon: 'el-icon-check', type: 'ok', label: '确认' }
     ]
   }
 
