@@ -3,7 +3,7 @@ import { getLocalStorage } from '@/utils/storage'
 const file = {
   state: {
     fileHost: process.env.VUE_APP_FILE_HOST,
-    fileUrl: process.env.VUE_APP_BASE_URL + 'message/upload/file',
+    fileUrl: process.env.VUE_APP_BASE_URL + 'message/upload/image',
     fileHeaders: {
       Authorization: 'Bearer ' + getLocalStorage('woptoken'),
       Identifier: getLocalStorage('wopidntf')

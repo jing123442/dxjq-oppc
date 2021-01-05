@@ -119,7 +119,13 @@ export default {
             const params = []
             row.modelList.forEach(item => {
               const itemPrams = {}
-              itemPrams.exportParam = JSON.stringify(this.currParams)
+              if (Number(item) === 2) {
+                const tmpCurrParams = { carrierGasstation: this.currParams.gasOrder, dataParam: this.currParams.dateParam }
+                itemPrams.exportParam = JSON.stringify(tmpCurrParams)
+              } else {
+                itemPrams.exportParam = JSON.stringify(this.currParams)
+              }
+
               itemPrams.type = Number(item)
               params.push(itemPrams)
             })
