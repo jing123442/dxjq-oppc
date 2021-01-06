@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'carrier'" ref="carrier" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'carrier'" ref="tables" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog title="物流公司" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog" :append-to-body="true">
       <div v-if="isAuthInfo" class="auth-status" :class="authColor"><span class="auth-status__dot" :class="authColor"></span>
@@ -203,7 +203,7 @@ export default {
 
         $exportDataFile({ file: _fromData, headers: this.headers }).then(response => {
           this.$message.success(response.data)
-          this.$refs.carrier.initDataList()
+          this.$refs.tables.initDataList()
           this.dialogExportCarVisible = false
         })
       } else {
@@ -230,7 +230,7 @@ export default {
             delete params._btn
             $strategyTruckAdd(params).then(res => {
               this.$message.success(res.message)
-              this.$refs.carrier.initDataList()
+              this.$refs.tables.initDataList()
             })
 
             this.dialogAddCarVisible = false

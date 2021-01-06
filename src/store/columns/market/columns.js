@@ -30,8 +30,8 @@ const columns = {
     { field: 'operatorDate', name: '操作时间' }
   ],
   sourceConfig: [
-    { field: 'code', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'name', name: '液源地', search: { type: 'text', placeholder: '请输入液源地' }, show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入液源地名称', trigger: 'blur' }] },
+    { field: 'code', name: '', stype: 'checkbox', align: 'center', fixed: 'left', hide: true, width: 50 },
+    { field: 'name', name: '液源地', fixed: 'left', search: { type: 'text', placeholder: '请输入液源地' }, show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入液源地名称', trigger: 'blur' }] },
     { field: 'address', name: '详细地址', show: { type: 'text', style: 'width: 90%;' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
     { field: 'price', name: '当前液源价格', hide: true, show: { type: 'hide', value: 0, style: 'width: 90%;' } },
     { field: 'operatorName', name: '操作人', ispush: false },

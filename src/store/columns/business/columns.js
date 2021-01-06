@@ -2,8 +2,8 @@ import file from '../../modules/file'
 
 const columns = {
   org: [
-    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, show: { noShow: 1 } },
-    { field: 'orgName', name: '企业名称', search: { type: 'text', placeholder: '请输入企业名称' } },
+    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', hide: true, width: 50, show: { noShow: 1 } },
+    { field: 'orgName', name: '企业名称', fixed: 'left', search: { type: 'text', placeholder: '请输入企业名称' } },
     { field: 'address', name: '地址' },
     { field: 'status', name: '企业状态', formatter: 'status' },
     { field: 'authStatus', name: '认证状态', formatter: 'authStatus' },
@@ -50,8 +50,8 @@ const columns = {
     { field: 'status', nameSpan: 5, name: '企业状态', show: { type: 'select', obj: 'status', style: 'width: 90%;', isDisabled: true } }
   ],
   account: [
-    { field: 'orgId', nameSpan: 5, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgName', nameSpan: 5, name: '公司名称', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称！', trigger: 'blur' }] },
+    { field: 'orgId', nameSpan: 5, name: '', stype: 'checkbox', align: 'center', fixed: 'left', hide: true, width: 50 },
+    { field: 'orgName', nameSpan: 5, name: '公司名称', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称！', trigger: 'blur' }] },
     { field: 'accountId', nameSpan: 5, name: '账号' },
     { field: 'accountType', nameSpan: 5, name: '资金账户类型', formatter: 'accountType' },
     { field: 'balance', nameSpan: 5, name: '账户余额(元)' },

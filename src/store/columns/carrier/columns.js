@@ -1,7 +1,7 @@
 const columns = {
   logistics: [
-    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, show: { noShow: 1 } },
-    { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', show: { type: 'text', remote: true, obj: 'orgName', style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
+    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { noShow: 1 } },
+    { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', fixed: 'left', show: { type: 'text', remote: true, obj: 'orgName', style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
     { field: 'address', name: '地址', show: { type: 'cascader', fieldList: ['address', 'areas'], formatter: 'address', obj: 'cascaderAddress', props: { value: 'label', label: 'label' }, iType: 'string', sign: '', ou: 1, noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'change' }] },
     { field: 'status', name: '企业状态', formatter: 'status', width: 75 },
     { field: 'authStatus', name: '认证状态', formatter: 'authStatus', filters: [{ value: 0, text: '未认证' }, { value: 1, text: '认证中' }, { value: 2, text: '已认证' }, { value: 3, text: '认证失败' }] },
@@ -60,8 +60,8 @@ const columns = {
     { field: 'status', nameSpan: 5, name: '账号状态', show: { type: 'select', obj: 'status', style: 'width: 90%;', isDisabled: true } }
   ],
   firmAccount: [
-    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, ispush: false },
-    { field: 'orgName', stype: 'mapping', name: '公司名称', ispush: false, mapping: 'orgName', show: { type: 'text', isDisabled: true, remote: true, subField: 'orgName', obj: 'orgId', style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
+    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, ispush: false },
+    { field: 'orgName', stype: 'mapping', name: '公司名称', ispush: false, mapping: 'orgName', fixed: 'left', show: { type: 'text', isDisabled: true, remote: true, subField: 'orgName', obj: 'orgId', style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
     { field: 'accountId', name: '账户' },
     { field: 'balance', name: '账户余额（元）', ispush: false },
     // { field: 'autoAccount', name: '是否自动圈存', formatter: 'autoAccount', nameSpan: 5, show: { type: 'radio', value: 0, obj: 'autoAccount', placeholder: '请选择是否自动圈存' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
@@ -133,8 +133,8 @@ const columns = {
     { field: 'driverInfo', name: '绑定司机', lg: 24, xl: 24, show: { type: 'select', multiple: true, obj: 'driverList', placeholder: '请选择要绑定的司机' } }
   ],
   truckAccount: [
-    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, ispush: false },
-    { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
+    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', hide: true, width: 50, ispush: false },
+    { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', fixed: 'left', search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
     { field: 'accountId', name: '账号' },
     { field: 'carNumber', name: '车牌号', search: { type: 'text', placeholder: '请输入车牌号' } },
     { field: 'balance', name: '余额' },
@@ -151,8 +151,8 @@ const columns = {
     { field: 'orderId', name: '订单编号' }
   ],
   truckIntegral: [
-    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, ispush: false },
-    { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
+    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', hide: true, width: 50, ispush: false },
+    { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', fixed: 'left', search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
     { field: 'accountId', name: '账号' },
     { field: 'carNumber', name: '车牌号', search: { type: 'text', placeholder: '请输入车牌号' } },
     { field: 'balance', name: '积分' },

@@ -74,6 +74,12 @@
     -webkit-box-orient: vertical;
     /*伸缩盒子的子元素排列：从上到下*/
   }
+  th > .cell {
+    min-height: 32px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
+  }
 
   .tables-line-red {
     background-color: rgba(248, 10, 10, .5);

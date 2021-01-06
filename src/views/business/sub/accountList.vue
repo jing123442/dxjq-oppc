@@ -22,7 +22,7 @@ export default {
         },
         name: '账户流水'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'export', name: '导出流水' }],
+      buttonsList: [/* { type: 'primary', icon: '', event: 'export', name: '导出流水' } */],
       axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgId: this.$route.query.orgId, accountId: this.$route.query.accountId } })
     }
