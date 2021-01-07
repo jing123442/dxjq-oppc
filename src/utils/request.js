@@ -35,6 +35,13 @@ axios.interceptors.response.use(
     } else {
       if (response.data.code === 0) {
         return Promise.resolve(response.data)
+      } else if (response.data.code === 2402 || response.data.code === 2403) {
+        Message({
+          message: response.data.message,
+          type: 'warning',
+          duration: 5 * 1000
+        })
+        return Promise.reject(response.data.message)
       } else if (response.data.code === 2814) {
         Message({
           message: response.data.message,
