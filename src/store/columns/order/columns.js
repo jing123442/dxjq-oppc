@@ -109,11 +109,11 @@ const columns = {
     { field: 'gwayamount', name: '服务费金额' }
   ],
   downloadOrder: [
-    { field: 'type', stype: 'mapping', mapping: 'typeName', name: '文件类型', fixed: 'left', search: { type: 'select', serial: 2, obj: 'type', placeholder: '文件类型' } },
+    { field: 'type', stype: 'mapping', mapping: 'typeName', name: '文件类型', width: 160, fixed: 'left', search: { type: 'select', serial: 2, obj: 'type', placeholder: '文件类型' } },
     { field: 'fileName', name: '导出文件编号' },
-    { field: 'status', name: '文件状态', formatter: 'status', search: { type: 'select', serial: 3, obj: 'status', placeholder: '文件状态' } },
-    { field: 'createDate', name: '申请时间', formatFun: 'formateTData all', stype: 'format', search: { type: 'date-picker', serial: 1, placeholder: '', style: 'width: 350px;', findField: 'createDate', value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) } },
-    { field: 'genDate', name: '文件生成时间', formatFun: 'formateTData all', stype: 'format' },
+    { field: 'status', name: '文件状态', formatter: 'status', width: 90, search: { type: 'select', serial: 3, obj: 'status', placeholder: '文件状态' } },
+    { field: 'createDate', name: '申请时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', serial: 1, placeholder: '', style: 'width: 350px;', findField: 'createDate', value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) } },
+    { field: 'genDate', name: '文件生成时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
     { field: 'note', name: '描述' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: params => { return params.row.status == 2 && [{ type: 'down', name: '下载' }] } }
   ]

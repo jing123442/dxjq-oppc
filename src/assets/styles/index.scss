@@ -68,7 +68,7 @@ a:hover {
   }
 }
 .container-table-list {
-  padding: 0 15px 15px;
+  padding: 0 15px;
   border-radius: 5px;
   margin-bottom: 25px;
   background-color: $appConBgColor;
@@ -92,7 +92,7 @@ a:hover {
 }
 
 .el-pagination {
-  padding: 30px 0;
+  padding: 25px 0;
 }
 
 //组件淡入淡出
@@ -289,7 +289,7 @@ div.el-dialog__body {
 
 .demo-form-inline {
   padding: 15px 15px 0;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border-radius: 5px;
   background-color: $appConBgColor;
 }

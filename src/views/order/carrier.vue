@@ -87,7 +87,7 @@ export default {
           type: 3
         }]
         $generateDownloadFile(params).then(response => {
-          this.$alert('您的物流公司结算订单已申请，请在下载中心下载。', '下载提示')
+          this.$alert('您选择的下载内容已申请，请在下载中心下载。', '下载提示')
         })
       }
     },

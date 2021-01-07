@@ -60,7 +60,7 @@ export default {
           type: 4
         }]
         $generateDownloadFile(params).then(response => {
-          this.$alert('您的物流公司卡车结算明细已申请，请在下载中心下载。', '下载提示')
+          this.$alert('您选择的下载内容已申请，请在下载中心下载。', '下载提示')
         })
       }
     },
