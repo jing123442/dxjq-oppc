@@ -741,7 +741,7 @@ export default {
       $findGasstationStockSum({ date: this.currDate, districtId: this.currDistrict }).then(res => {
         this.ec02BarOptions = {
           tooltip: {
-            formatter: (data) => this.formatterEchartTooltip(data)
+            formatter: (data) => this.formatterEchartTooltip(data, ['stockTotal'])
           },
           grid: {
             left: '13%',
