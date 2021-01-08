@@ -16,6 +16,7 @@
   position: relative;
   margin: 0 auto;
   z-index: 3001;
+  border-radius: 5px;
   margin-bottom: 10px;
 }
 .el-date-editor.el-input, .el-date-editor.el-input__inner {
@@ -111,6 +112,10 @@
 }
 .el-form-item__content {
 
+}
+
+.el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
+  border-radius: 0 0 5px 5px;
 }
 
 .text-content {

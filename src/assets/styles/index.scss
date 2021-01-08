@@ -197,6 +197,7 @@ span.el-checkbox__inner {
 }
 
 div.el-dialog__header {
+  border-radius: 5px 5px 0 0;
   background: $dialogHeadBg;
   .el-dialog__title {
     color: $dialogHeadColor;
