@@ -70,7 +70,7 @@ export default {
       rebateData: [],
       rebateDialogData: [],
       formBtnList: custFormBtnList(),
-      buttonsList: [{ type: 'primary', icon: '', event: 'config', name: '配置' }],
+      buttonsList: [/* { type: 'primary', icon: '', event: 'config', name: '配置' } */],
       queryCustURL: {
         list: {
           url: 'strategy/rebate_log/list',
