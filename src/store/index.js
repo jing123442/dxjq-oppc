@@ -16,6 +16,7 @@ import market from './columns/market/index'
 import settlement from './columns/settlement/index'
 import setting from './columns/setting/index'
 import order from './columns/order/index'
+import customer from './columns/customer/index'
 
 const PAGE_CONFIG = {
   // localstorage
@@ -41,7 +42,7 @@ const PAGE_CONFIG = {
   query_params: state => state.app.queryParams,
   response_success: state => state.app.responseSuccess
 }
-const getters = Object.assign(PAGE_CONFIG, mine.getters, userList.getters, business.getters, filler.getters, carrier.getters, price.getters, settlement.getters, market.getters, setting.getters, order.getters)
+const getters = Object.assign(PAGE_CONFIG, mine.getters, userList.getters, business.getters, filler.getters, carrier.getters, price.getters, settlement.getters, market.getters, setting.getters, order.getters, customer.getters)
 
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -57,7 +58,9 @@ export default new Vuex.Store({
     carrier,
     price,
     market,
-    settlement
+    settlement,
+    order,
+    customer
   },
   getters: getters
 })
