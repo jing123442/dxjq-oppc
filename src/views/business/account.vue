@@ -167,15 +167,15 @@ export default {
           } else {
             $getWithdrawInfo({ orgType: row.orgType }).then(res => {
               console.log(data)
-              const currentQuota = res.data && res.data.currentQuota ? res.data.currentQuota : 0
+              const currentQuota = res.data && res.data.currentQuota ? Number(res.data.currentQuota) : 0
               this.orgTitle = row.orgName
               row.tel = data.bindPhone
               row.orgAccount = data.account
               row.bankName = data.bank
               this.formWithdraw = row
               this.$set(this.formWithdraw, 'currentQuota', currentQuota.toFixed(2))
-              this.$set(this.formWithdraw, 'amount', (row.balance > currentQuota) ? (row.balance - currentQuota).toFixed(2) : 0)
-              this.$set(this.formWithdraw, 'withdrawAmount', (row.balance > currentQuota) ? (row.balance - currentQuota).toFixed(2) : 0)
+              this.$set(this.formWithdraw, 'amount', (Number(row.balance) > currentQuota) ? (Number(row.balance) - currentQuota).toFixed(2) : 0)
+              this.$set(this.formWithdraw, 'withdrawAmount', (Number(row.balance) > currentQuota) ? (Number(row.balance) - currentQuota).toFixed(2) : 0)
               this.dialogWithdrawVisible = true
             })
           }
