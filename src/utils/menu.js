@@ -116,5 +116,13 @@ export function menuList() {
       { path: '/withdraw', name: 'withdraw', meta: { title: '账户余额限定', noCache: false } },
       { path: '/index', name: 'index', hidden: true, meta: { title: '暂不使用', noCache: false } }
     ]
+  }, {
+    path: '/customer',
+    name: 'customer',
+    meta: { title: '客服中心', icon: 'el-icon-setting', noCache: false },
+    children: [
+      { path: '/customerIndex', name: 'customerIndex', meta: { title: '发布管理', noCache: false } },
+      { path: '/customerType', name: 'customerType', meta: { title: '分类管理', noCache: false } }
+    ]
   }]
 }
