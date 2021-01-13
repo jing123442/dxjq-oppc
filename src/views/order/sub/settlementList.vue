@@ -1,7 +1,6 @@
 <template>
   <div class="template-main">
-    <div class="nt-table-title">结算订单为成功支付后订单</div>
-    <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 120px;'"></table-total-data>
+    <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 108px;'" :detailInfo="'结算订单为成功支付后订单'"></table-total-data>
     <em-table-list ref="tables" :tableListName="'orderFiller'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>

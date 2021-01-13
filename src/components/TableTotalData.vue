@@ -1,10 +1,14 @@
 <template>
-  <div class="stats-data" :class="headerClass" :style="headerStyle">
-    <div class="data-item" v-for="(item, index) in dataList" :key="index">
-      <span class="name">{{item.currField ? rowData[item.currField] : ''}}{{item.name}}</span>
-      <span class="value">{{rowData[item.field]}} {{item.unit}}</span>
+  <div class="stats-data" :style="headerStyle">
+    <div class="table-detail-info" v-if="detailInfo">{{detailInfo}}</div>
+    <div :class="headerClass" >
+      <div class="data-item" v-for="(item, index) in dataList" :key="index">
+        <span class="name">{{item.currField ? rowData[item.currField] : ''}}{{item.name}}</span>
+        <span class="value">{{rowData[item.field]}} {{item.unit}}</span>
+      </div>
     </div>
   </div>
+
 </template>
 <script>
 export default {
@@ -25,6 +29,10 @@ export default {
     headerClass: {
       type: String,
       default: 'total-data'
+    },
+    detailInfo: {
+      type: String,
+      default: ''
     }
   }
 }
@@ -33,12 +41,19 @@ export default {
   .stats-data {
     color: #2F3337;
     font-size: 13px;
-  }
-  .total-data {
-    display: flex;
     position: absolute;
     top: 115px;
     left: 160px;
+    display: flex;
+    align-items: center;
+
+    .table-detail-info {
+      color: #ff8c1d;
+      padding-right: 5px;
+    }
+  }
+  .total-data {
+    display: flex;
     padding: 2px 20px;
     background-color: rgba(255, 245, 33, .2);
 
