@@ -52,7 +52,17 @@
 
 .el-tree{
   .el-tree-node__content{
-    height: 36px;
+    height: 40px;
+    border-left: 3px solid transparent;
+  }
+  .el-tree-node {
+    &.is-current {
+      border-left: 3px solid $defaultColorBlue;
+      .el-tree-node__content {
+        border-left-width: 0;
+        background-color: rgba(0, 132, 244, .3);
+      }
+    }
   }
   .el-input__inner{
     height: 26px;
@@ -101,6 +111,9 @@
   i {
     font-size: 15px;
     padding-left: 10px;
+    &.el-icon-arrow-right {
+      padding-left: 0;
+    }
   }
   .el-input__suffix .el-input__icon {
     height: 30px;
@@ -111,11 +124,22 @@
   }
 }
 .el-form-item__content {
+  .edui-editor-toolbarbox {
+    .edui-combox-body, .edui-state-checked, .edui-box > div {
+      line-height: 20px;
+    }
+  }
+}
 
+#edui_fixedlayer {
+  z-index: 10000 !important;
 }
 
 .el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
   border-radius: 0 0 5px 5px;
+  &.el-form-item__content--span {
+    border-radius: 5px;
+  }
 }
 
 .text-content {
@@ -131,4 +155,8 @@
   color: #ffffff;
   border-width: 0;
   background-color: $navActiveTextColor;
+}
+
+.checkbox-client {
+  width: 40%;
 }

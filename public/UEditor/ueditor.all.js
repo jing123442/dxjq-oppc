@@ -7611,6 +7611,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             if (!cmd || !cmd.execCommand) {
                 return null;
             }
+
             if (!cmd.notNeedUndo && !me.__hasEnterExecCommand) {
                 me.__hasEnterExecCommand = true;
                 if (me.queryCommandState.apply(me,arguments) != -1) {
@@ -8092,7 +8093,6 @@ UE.Editor.defaultOptions = function(editor){
 
                 /* 发出ajax请求 */
                 me._serverConfigLoaded = false;
-
                 configUrl && UE.ajax.request(configUrl,{
                     'method': 'GET',
                     'dataType': isJsonp ? 'jsonp':'',

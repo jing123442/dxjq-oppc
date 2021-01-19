@@ -726,7 +726,8 @@
                 try {
                     var responseText = (ret._raw || ret),
                         json = utils.str2json(responseText);
-                    if (json.state == 'SUCCESS') {
+                    if (json.code === 0) {
+                        json.url = json.data;
                         _this.imageList.push(json);
                         $file.append('<span class="success"></span>');
                     } else {
@@ -877,7 +878,7 @@
                     'onsuccess': function (r) {
                         try {
                             var json = isJsonp ? r:eval('(' + r.responseText + ')');
-                            if (json.state == 'SUCCESS') {
+                            if (json.code === 0) {
                                 _this.pushData(json.list);
                                 _this.listIndex = parseInt(json.start) + parseInt(json.list.length);
                                 if(_this.listIndex >= json.total) {

@@ -121,8 +121,8 @@ export function menuList() {
     name: 'customer',
     meta: { title: '客服中心', icon: 'el-icon-setting', noCache: false },
     children: [
-      { path: '/customerIndex', name: 'customerIndex', meta: { title: '发布管理', noCache: false } },
-      { path: '/customerType', name: 'customerType', meta: { title: '分类管理', noCache: false } }
+      { path: '/customerIndex', name: 'customerIndex', meta: { title: 'QA发布管理', noCache: false } },
+      { path: '/customerType', name: 'customerType', meta: { title: 'QA分类管理', noCache: false } }
     ]
   }]
 }

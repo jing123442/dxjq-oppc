@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 108px;'" :detailInfo="'结算订单为成功支付后订单'"></table-total-data>
+    <nt-text-info :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 108px;'" :detailInfo="'结算订单为成功支付后订单'"></nt-text-info>
     <em-table-list ref="tables" :tableListName="'orderFiller'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="导出下载" :visible.sync="dialogExportDownVisible" :width="add_edit_dialog" :append-to-body="true">
       <el-form ref="exportDown" v-if="dialogExportDownVisible" :model="exportRow" :rules="exportRowRules" size="small" label-position="left">
@@ -33,12 +33,10 @@
 <script>
 import { axiosRequestParams, callbackPagesInfo, isTypeof, formatPeriodDate, custFormBtnList, formatPeriodDateTime } from '@/utils/tools'
 import { $gwayOrderTotal, $generateDownloadFile } from '@/service/settle'
-import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'orderFiller',
-  components: { TableTotalData },
   data() {
     return {
       queryCustURL: {

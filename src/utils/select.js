@@ -1,6 +1,27 @@
 import { isTypeof, inArray } from '@/utils/tools'
 import { regionData } from 'element-china-area-data'
+import { $childQACatalogsList } from '@/service/message'
 // import { $userUserList } from '@/service/user'
+
+export function utilsQATreeList(node, resolve) {
+  const params = { parentId: 0 }
+
+  if (node.level > 0) {
+    params.parentId = node.data.id
+  }
+
+  $childQACatalogsList(params).then(response => {
+    const treeList = isTypeof(response.data) === 'array' ? response.data : []
+
+    treeList && treeList.forEach(item => {
+      if (node.level > 0) {
+        item.leaf = true
+      }
+    })
+
+    resolve(treeList)
+  })
+}
 
 export function utilsBaseRole(arrs) {
   const defaultRole = [
@@ -56,6 +77,18 @@ export function utilsAuthStatus() {
     { value: 2, label: '已认证' },
     { value: 3, label: '认证失败' }
   ]
+}
+// 客户端list
+export function utilsQAClientList() {
+  return {
+    url: 'message/qa_client/list',
+    node: ['data'],
+    params: {},
+    props: {
+      value: 'clientId',
+      label: 'clientName'
+    }
+  }
 }
 export function utilsDownloadStatus() {
   return [

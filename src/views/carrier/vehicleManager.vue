@@ -30,6 +30,15 @@ export default {
           url: 'strategy/truck/edit',
           method: 'post'
         },
+        detail: {
+          extend: {
+            url: 'account/truck_account/get_balance',
+            key: 'truckId',
+            method: 'post',
+            parse: ['data'],
+            extendLabel: [{ key: 'balance', label: 'balance' }]
+          }
+        },
         list: {
           url: 'strategy/truck/list',
           method: 'post',

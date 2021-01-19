@@ -9,8 +9,8 @@ export default [
     redirect: '/customer/index',
     meta: { title: '客服中心' },
     children: [
-      { path: 'customerIndex', component: inImport('customer/index'), name: 'customerIndex', meta: { title: '发布管理', noCache: false } },
-      { path: 'customerType', component: inImport('customer/type'), name: 'customerType', meta: { title: '分类管理', noCache: false } }
+      { path: 'customerIndex', component: inImport('customer/index'), name: 'customerIndex', meta: { title: 'QA发布管理', noCache: false } },
+      { path: 'customerType', component: inImport('customer/type'), name: 'customerType', meta: { title: 'QA分类管理', noCache: false } }
     ]
   }
 ]

@@ -8,6 +8,17 @@ const file = {
       Authorization: 'Bearer ' + getLocalStorage('woptoken'),
       Identifier: getLocalStorage('wopidntf')
     },
+    fileUEditorConfig: {
+      UEDITOR_HOME_URL: '/UEditor/',
+      serverUrl: process.env.VUE_APP_BASE_URL + 'message/upload/image',
+      imageActionName: 'file',
+      imageAllowFiles: ['.png', '.jpg', '.jpeg', '.gif', '.bmp'],
+      imageUrlPrefix: process.env.VUE_APP_FILE_HOST,
+      headers: {
+        Authorization: 'Bearer ' + getLocalStorage('woptoken'),
+        Identifier: getLocalStorage('wopidntf')
+      }
+    },
     fileSuccess: {
       key: 'code',
       value: 0,

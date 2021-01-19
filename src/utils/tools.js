@@ -227,14 +227,22 @@ export function callbackPagesInfo(_this) {
 }
 
 // 自定义按钮
-export function custFormBtnList() {
+export function custFormBtnList(type = 3) {
   const bottonList = {
     iShow: true,
-    list: [
-      { bType: 'info', icon: 'el-icon-close', type: 'cancel', label: '取消' },
-      { bType: 'primary', icon: 'el-icon-check', type: 'ok', label: '确认' }
-    ]
+    list: []
   }
+  const btnList = []
+
+  if ((type & 1) == 1) {
+    btnList.push({ bType: 'info', icon: 'el-icon-close', type: 'cancel', label: '取消' })
+  }
+
+  if ((type & 2) == 2) {
+    btnList.push({ bType: 'primary', icon: 'el-icon-check', type: 'ok', label: '确认' })
+  }
+
+  bottonList.list = btnList
 
   return bottonList
 }
