@@ -4,9 +4,10 @@ import { $childQACatalogsList } from '@/service/message'
 // import { $userUserList } from '@/service/user'
 
 export function utilsQATreeList(node, resolve) {
-  const params = { parentId: 0 }
+  const params = { parentId: 0, status: 1 }
 
   if (node.level > 0) {
+    params.status = 1
     params.parentId = node.data.id
   }
 

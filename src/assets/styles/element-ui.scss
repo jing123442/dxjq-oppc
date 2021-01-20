@@ -73,6 +73,19 @@
 .el-table {
   font-size: $fontsize12;
 
+  .el-table__row--level-0 {
+    background-color: #ffffff;
+    & > td {
+      background-color: transparent !important;
+    }
+  }
+
+  .el-table__row--level-1 {
+    background-color: #f6f8fa;
+    & > td {
+      background-color: transparent !important;
+    }
+  }
   td .cell {
     display: -webkit-box;
     /*作为弹性伸缩盒子模型显示*/

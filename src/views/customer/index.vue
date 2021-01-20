@@ -5,6 +5,9 @@
       <el-tree :props="defaultProps" accordion :load="loadTreeNode" lazy @node-click="reloadTableList"></el-tree>
     </div>
     <em-table-list ref="tables" :tableListName="'order'" style="flex: 1;" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <el-dialog title="新增QA" :visible.sync="dialogAddInfoVisible" width="80%" :append-to-body="true">
+      <nt-form ref="addInfo" :formRef="'addInfoForm'" v-if="dialogAddInfoVisible" :rowData="addInfoRow" :modeList="mode_list" :inputType="'show'" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onEventAddInfo"></nt-form>
+    </el-dialog>
     <el-dialog title="匹配客户端" :visible.sync="dialogClientVisible" width="40%" :append-to-body="true">
       <el-form ref="clientRow" v-if="dialogClientVisible" :model="clientRow" :rules="clientRowRules" size="small" label-position="left">
         <el-form-item prop="clients" style="margin-bottom: 50px;">
@@ -27,7 +30,7 @@
 </template>
 <script>
 import { axiosRequestParams, callbackPagesInfo, isTypeof, custFormBtnList } from '@/utils/tools'
-import { $qaClientUpdate, $contentToclientList, $qaClientList } from '@/service/message'
+import { $qaClientUpdate, $contentToclientList, $qaClientList, $qaContentAddInfo } from '@/service/message'
 import { utilsQATreeList } from '@/utils/select'
 import { mapGetters } from 'vuex'
 
@@ -41,10 +44,6 @@ export default {
         isLeaf: 'leaf'
       },
       queryCustURL: {
-        add: {
-          url: 'message/qa_content/add',
-          method: 'post'
-        },
         edit: {
           url: 'message/qa_content/update',
           method: 'post',
@@ -77,15 +76,22 @@ export default {
         },
         name: '发布管理'
       },
+      dialogAddInfoVisible: false,
+      addInfoRow: {
+        parentId: '',
+        catalogsId: ''
+      },
       clientList: [],
-      buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */],
+      buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '增加QA' }],
       axios: axiosRequestParams(this),
       queryParams: Function,
       dialogClientVisible: false,
       clientRow: {
         clients: []
       },
-      clientRowRules: {}
+      clientRowRules: {
+        clients: [{ required: true, message: '请选择匹配客户端！', trigger: 'blur' }]
+      }
     }
   },
   computed: {
@@ -126,6 +132,9 @@ export default {
           this.clientRow._btn = custFormBtnList()
           this.dialogClientVisible = true
         })
+      } else if (type === 'add_info') {
+        this.addInfoRow._btn = custFormBtnList()
+        this.dialogAddInfoVisible = true
       }
     },
     btnClickEvent(btn, row) {
@@ -147,6 +156,29 @@ export default {
         this.dialogClientVisible = false
       }
     },
+    onEventAddInfo(btn, row) {
+      console.log(row)
+      if (btn.type == 'ok') {
+        this.$refs.addInfo.$refs.addInfoForm.validate((valid) => {
+          if (valid) {
+            const params = {
+              catalogsId: row.catalogsId,
+              content: row.content,
+              sortOrder: row.sortOrder,
+              title: row.title
+            }
+
+            $qaContentAddInfo(params).then(response => {
+              this.$message.success('增加QA信息成功！')
+              this.$refs.tables.initDataList()
+            })
+            this.dialogAddInfoVisible = false
+          }
+        })
+      } else {
+        this.dialogAddInfoVisible = false
+      }
+    },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { qaContent: { } } })
 
@@ -166,8 +198,14 @@ export default {
       callback(params)
     },
     reloadTableList(data) {
-      this.$refs.tables.finds = { catalogsId: data.id }
-      this.$refs.tables.initDataList()
+      if (data.parentId !== 0) {
+        // 增值分类默认选择
+        this.addInfoRow.parentId = data.parentId
+        this.addInfoRow.catalogsId = data.id
+
+        this.$refs.tables.finds = { catalogsId: data.id }
+        this.$refs.tables.initDataList()
+      }
     }
   }
 }

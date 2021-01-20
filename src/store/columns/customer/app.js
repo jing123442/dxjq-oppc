@@ -1,6 +1,7 @@
 const app = {
   list: {
-    customer: 29
+    customer: 13,
+    type: 13
   },
   mode: {
     customer: [

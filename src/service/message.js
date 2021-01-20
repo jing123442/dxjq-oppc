@@ -18,6 +18,11 @@ export async function $childQACatalogsList (data) {
   return await R({ url: 'message/qa_catalogs/list', data })
 }
 
+// 增加QA信息
+export async function $qaContentAddInfo (data) {
+  return await R({ url: 'message/qa_content/add', data })
+}
+
 // 修改客户端信息
 export async function $qaClientUpdate (data) {
   return await R({ url: 'message/qa_content_client/update', data })

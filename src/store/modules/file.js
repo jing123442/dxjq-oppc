@@ -9,7 +9,7 @@ const file = {
       Identifier: getLocalStorage('wopidntf')
     },
     fileUEditorConfig: {
-      UEDITOR_HOME_URL: '/UEditor/',
+      UEDITOR_HOME_URL: './UEditor/',
       serverUrl: process.env.VUE_APP_BASE_URL + 'message/upload/image',
       imageActionName: 'file',
       imageAllowFiles: ['.png', '.jpg', '.jpeg', '.gif', '.bmp'],
