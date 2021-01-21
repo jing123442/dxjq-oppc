@@ -1,7 +1,7 @@
 <template>
   <div class="template-main">
     <em-table-list ref="tables" :tableListName="'order'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'id'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog :title="childrenTitle" :visible.sync="dialogAddChildVisible" width="add_edit_dialog" :append-to-body="true">
+    <el-dialog :title="childrenTitle" :visible.sync="dialogAddChildVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogAddChildVisible" ref="addChild" :formRef="'addChildForm'" :rowData="addChildRow" :inputType="'show-child'" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventAddChild"></nt-form>
     </el-dialog>
     <el-dialog title="子分类详情" :visible.sync="dialogDetailChildVisible" :width="add_edit_dialog" :append-to-body="true">
@@ -30,6 +30,7 @@ export default {
         del: {
           url: 'message/qa_catalogs/delete',
           method: 'post',
+          title: ['删除问题分类', '删除子分类'],
           name: 'name',
           props: {
             id: 'id',

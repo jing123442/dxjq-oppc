@@ -157,15 +157,18 @@ export default {
       }
     },
     onEventAddInfo(btn, row) {
-      console.log(row)
       if (btn.type == 'ok') {
         this.$refs.addInfo.$refs.addInfoForm.validate((valid) => {
           if (valid) {
+            if (row.catalogsIds.length == 1) {
+              this.$message.error('请选择子分类')
+              return false
+            }
             const params = {
               qaContent: {
-                catalogsId: row.catalogsId,
+                catalogsId: row.catalogsIds[1],
                 content: row.content,
-                sortOrder: row.sortOrder,
+                sortOrder: Number(row.sortOrder),
                 title: row.title
               }
             }

@@ -15,7 +15,7 @@ export default {
       isShow: false,
       queryCustURL: {
         add: {
-          url: '/websocket/printer/add',
+          url: 'message/printer/add',
           method: 'post',
           params: {
             gasstationId: this.$route.query.gasstationId,
@@ -23,7 +23,7 @@ export default {
           }
         },
         edit: {
-          url: '/websocket/printer/update',
+          url: 'message/printer/update',
           method: 'post',
           params: {
             gasstationId: this.$route.query.gasstationId,
@@ -31,7 +31,7 @@ export default {
           }
         },
         list: {
-          url: 'websocket/printer/list',
+          url: 'message/printer/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
