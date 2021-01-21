@@ -162,10 +162,12 @@ export default {
         this.$refs.addInfo.$refs.addInfoForm.validate((valid) => {
           if (valid) {
             const params = {
-              catalogsId: row.catalogsId,
-              content: row.content,
-              sortOrder: row.sortOrder,
-              title: row.title
+              qaContent: {
+                catalogsId: row.catalogsId,
+                content: row.content,
+                sortOrder: row.sortOrder,
+                title: row.title
+              }
             }
 
             $qaContentAddInfo(params).then(response => {
