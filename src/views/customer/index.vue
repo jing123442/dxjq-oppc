@@ -77,6 +77,10 @@ export default {
         name: '发布管理'
       },
       dialogAddInfoVisible: false,
+      currMenuInfo: {
+        parentId: '',
+        catalogsId: ''
+      },
       addInfoRow: {
         parentId: '',
         catalogsId: ''
@@ -133,6 +137,7 @@ export default {
           this.dialogClientVisible = true
         })
       } else if (type === 'add_info') {
+        this.addInfoRow = Object.assign({}, { parentId: this.currMenuInfo.parentId, catalogsId: this.currMenuInfo.catalogsId })
         this.addInfoRow._btn = custFormBtnList()
         this.dialogAddInfoVisible = true
       }
@@ -205,8 +210,8 @@ export default {
     reloadTableList(data) {
       if (data.parentId !== 0) {
         // 增值分类默认选择
-        this.addInfoRow.parentId = data.parentId
-        this.addInfoRow.catalogsId = data.id
+        this.currMenuInfo.parentId = data.parentId
+        this.currMenuInfo.catalogsId = data.id
 
         this.$refs.tables.finds = { catalogsId: data.id }
         this.$refs.tables.initDataList()

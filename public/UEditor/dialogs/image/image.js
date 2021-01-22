@@ -728,6 +728,7 @@
                         json = utils.str2json(responseText);
                     if (json.code === 0) {
                         json.url = json.data;
+                        window.UE.uploadImageList.push(json.data)
                         _this.imageList.push(json);
                         $file.append('<span class="success"></span>');
                     } else {

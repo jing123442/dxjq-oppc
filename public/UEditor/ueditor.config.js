@@ -494,7 +494,8 @@
   }
 
   window.UE = {
-    getUEBasePath: getUEBasePath
+    getUEBasePath: getUEBasePath,
+    uploadImageList: []
   }
 
 })()
