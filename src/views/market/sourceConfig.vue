@@ -85,7 +85,6 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
-      console.log(type)
       if (type === 'price') {
         this.priceRowEvent(row)
       } else if (type === 'editSelf') {
