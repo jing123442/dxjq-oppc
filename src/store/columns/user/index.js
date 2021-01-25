@@ -22,7 +22,12 @@ const getters = {
   user_cashier_select_list: item => select.cashier,
 
   // 选择企业
-  user_business_column: item => columns.business
+  user_business_column: item => columns.business,
+  //
+  user_intention_mode_list: item => item.app.modeDefault,
+  user_intention_page_status: item => item.app.listDefault,
+  user_intention_column: item => columns.intention,
+  user_intention_select_list: item => select.intention
 }
 
 export default {

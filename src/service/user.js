@@ -54,3 +54,7 @@ export async function $userOrgAddPic (data) {
 export async function $userOrgDeletePic (data) {
   return await R({ url: 'user/org_pic/delete_org_pic', method: 'POST', data })
 }
+
+export async function $userRegisterExport (data) {
+  return await R({ url: 'user/register_manage/export', method: 'POST', data, responseType: 'blob' })
+}

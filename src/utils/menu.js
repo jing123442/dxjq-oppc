@@ -19,6 +19,7 @@ export function menuList() {
     name: 'user',
     meta: { title: '用户管理', icon: 'icon-yonghuguanli', class: 'em-iconfont', noCache: false },
     children: [
+      { path: '/userIntention', name: 'userIntention', meta: { title: '意向个人车主', noCache: false } },
       { path: '/userIndex', name: 'userIndex', meta: { title: '平台用户管理', noCache: false } },
       { path: '/userCarrier', name: 'userCarrier', meta: { title: '物流用户管理', noCache: false } },
       { path: '/userCashier', name: 'userCashier', meta: { title: '加气站用户管理', noCache: false } }
