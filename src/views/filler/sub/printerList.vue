@@ -56,7 +56,7 @@ export default {
       response_success: 'response_success'
     })
   },
-  created: function () { console.log(this.page_status) },
+  created: function () { },
   methods: {
     onListEvent(type, row) {},
     onReqParams(type, _this, callback) {
