@@ -40,7 +40,7 @@ const columns = {
   ],
   intention: [
     { field: 'id', name: '客户ID', fixed: 'left', nameSpan: 5, detail: { type: 'span', placeholder: '客户ID' } },
-    { field: 'userName', name: '客户姓名', nameSpan: 5, show: { type: 'text', placeholder: '请输入客户姓名' }, search: { type: 'text', style: 'width: 200px;', placeholder: '请输入客户姓名' }, detail: { type: 'span', placeholder: '客户姓名' }, rules: [{ required: true, message: '请输入终端号', trigger: 'blur' }] },
+    { field: 'userName', name: '客户姓名', nameSpan: 5, show: { type: 'text', placeholder: '请输入客户姓名' }, search: { type: 'text', style: 'width: 200px;', placeholder: '请输入客户姓名' }, detail: { type: 'span', placeholder: '客户姓名' }, rules: [{ required: true, message: '请输入客户姓名', trigger: 'blur' }] },
     { field: 'mobile', name: '手机号', nameSpan: 5, show: { type: 'text', placeholder: '请输入手机号' }, detail: { type: 'span', placeholder: '手机号' }, search: { type: 'text', style: 'width: 200px;', placeholder: '请输入手机号' }, rules: [{ required: true, message: '请输入手机号', trigger: 'blur' }, { validator: 'isValidateMobile', message: '请输入正确格式的手机号', trigger: 'blur' }] },
     { field: 'createChannel', name: '登记渠道', nameSpan: 5, hide: true, formatter: 'channel', show: { type: 'span', model: 'select', obj: 'channel', placeholder: '请选择登记渠道', value: 1, dataType: 'number' }, detail: { type: 'span', model: 'select', obj: 'channel', placeholder: '' } },
     { field: 'status', name: '类型', nameSpan: 5, hide: true, formatter: 'status', detail: { type: 'span', model: 'select', obj: 'status', placeholder: '类型' } },
