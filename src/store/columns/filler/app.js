@@ -19,7 +19,7 @@ const app = {
     price: 13,
     updatePrice: 13,
     gasStockList: 13,
-    printerList: 4,
+    printList: 4,
     lngPlan: 13
   }
 }

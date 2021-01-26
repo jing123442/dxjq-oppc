@@ -34,7 +34,7 @@ export default {
           url: 'message/printer/list',
           method: 'post',
           parse: {
-            tableData: ['data', 'records'],
+            tableData: ['data'],
             totalCount: ['data', 'total']
           }
         },
@@ -56,7 +56,7 @@ export default {
       response_success: 'response_success'
     })
   },
-  created: function () { },
+  created: function () { console.log(this.page_status) },
   methods: {
     onListEvent(type, row) {},
     onReqParams(type, _this, callback) {

@@ -94,7 +94,7 @@ const columns = {
     { field: 'mobile', hide: true, name: '加气站联系电话', nameSpan: 6, show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加气站联系电话', util: '<div style="font-size: 12px;color: #efab10;">此联系电话将在加气站名片和物流公司的订单详情中显示</div>' }, rules: [{ validator: 'isValidateMobile', message: '请输入正确的加气站联系电话', trigger: 'blur' }] },
     { field: 'fillingMachineNum', hide: true, name: '加注机数量', nameSpan: 6, show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加注机数量' } },
     { field: 'cashierNum', hide: true, name: '收银员数量', nameSpan: 6, show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入收银员数量' } },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 150, list: [{ type: 'edit', name: '编辑' }, { type: 'printer', name: '打印机' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 150, list: [{ type: 'edit', name: '编辑' }, { type: 'printer', name: '小票机' }] }
   ],
   printList: [
     { field: 'id', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { noShow: 1 } },
