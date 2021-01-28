@@ -59,8 +59,7 @@ export default {
       woporg: 'woporg'
     })
   },
-  mounted() {
-  },
+  created: function () { },
   methods: {
     onListEvent(type, row) {
       if (type == 'delete') {

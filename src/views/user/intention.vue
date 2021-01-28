@@ -65,6 +65,20 @@ export default {
     onListEvent(type, row) {
       if (type === 'download') {
         const params = this.currParams
+        params.excelData = {
+          titles: {
+            客户ID: 'id',
+            姓名: 'userName',
+            手机号: 'mobile',
+            常住地址: 'address',
+            挂靠物流公司名称: 'carrierOrgName',
+            常跑路线: 'frequentLine',
+            常去加气站: 'frequentGasstation',
+            了解平台渠道: 'fromChannel',
+            备注: 'remark',
+            创建时间: 'createDate'
+          }
+        }
         $userRegisterExport(params).then(response => {
           const fileName = '意向个人车主' + Date.parse(new Date()) + '.xls'
 
