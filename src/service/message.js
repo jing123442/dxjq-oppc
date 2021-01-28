@@ -37,3 +37,10 @@ export async function $qaClientList (data) {
 export async function $contentToclientList (data) {
   return await R({ url: 'message/qa_content/find_client_ids', data })
 }
+
+export async function $printerStatus (data) {
+  return await R({ url: 'message/printer/status', data })
+}
+export async function $printerDel (data) {
+  return await R({ url: 'message/printer/del', data })
+}

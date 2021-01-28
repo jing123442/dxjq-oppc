@@ -219,6 +219,12 @@ export function utilsTradeType() {
     { value: 13, label: '服务费退回' }
   ]
 }
+export function utilsPrintPaper() {
+  return [
+    { value: 0, label: '不打印' },
+    { value: 1, label: '打印' }
+  ]
+}
 
 export function utilsPayType() {
   return [

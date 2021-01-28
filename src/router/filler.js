@@ -23,7 +23,7 @@ export default [
         hidden: true,
         meta: { title: '加气站列表', icon: 'icon-gongnengguanli', noCache: false },
         children: [
-          { path: 'printerList', component: inImport('filler/sub/printerList'), name: 'printerList', meta: { title: '打印机列表', icon: 'icon-gongnengguanli', noCache: false } }
+          { path: 'printerList', component: inImport('filler/sub/printerList'), name: 'printerList', meta: { title: '小票机列表', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       },
       {

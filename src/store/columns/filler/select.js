@@ -1,4 +1,4 @@
-import { utilsStatus, utilsAuthStatus, utilsPlanStatus, utilsSource, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus, utilsIdentityType, utilsTradeType, utilsBankList } from '@/utils/select'
+import { utilsStatus, utilsAuthStatus, utilsPlanStatus, utilsSource, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus, utilsIdentityType, utilsTradeType, utilsBankList, utilsPrintPaper } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
@@ -40,7 +40,7 @@ const select = {
   },
   printerList: {
     printStatus: utilsPrintStatus(),
-    status: utilsStatus(),
+    printPaper: utilsPrintPaper(),
     voiceStatus: utilsVoiceStatus()
   },
   lngPlan: {

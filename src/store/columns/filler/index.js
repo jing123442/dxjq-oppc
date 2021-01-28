@@ -22,8 +22,9 @@ const getters = {
   filler_info_select_list: item => select.info,
   // 加气站列表--打印机列表
   filler_printList_page_status: item => app.list.printList,
-  filler_printList_select_list: item => select.printList,
+  filler_printList_select_list: item => select.printerList,
   filler_printList_column: item => columns.printList,
+  filler_printList_modeList: item => item.app.printList,
   // 加气站资金账户管理
   filler_account_mode_list: item => item.app.modeDefault,
   filler_account_page_status: item => app.list.account,
