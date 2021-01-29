@@ -39,7 +39,7 @@ export default {
             totalCount: ['data', 'total']
           }
         },
-        name: '小票机列表'
+        name: '小票机'
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '添加小票机' }],
       axios: axiosRequestParams(this),
