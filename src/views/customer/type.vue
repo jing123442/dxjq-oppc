@@ -1,17 +1,31 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="tables" :tableListName="'order'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'id'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" v-if="reloadChildStatus" :tableListName="'order'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'id'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog :title="childrenTitle" :visible.sync="dialogAddChildVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogAddChildVisible" ref="addChild" :formRef="'addChildForm'" :rowData="addChildRow" :inputType="'show-child'" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventAddChild"></nt-form>
     </el-dialog>
     <el-dialog title="子分类详情" :visible.sync="dialogDetailChildVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogDetailChildVisible" ref="detailChild" :formRef="'detailChildForm'" :rowData="detailChildRow" :inputType="'detail-child'" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventDetailChild"></nt-form>
     </el-dialog>
+    <el-dialog title="删除子分类" :visible.sync="dialogDelChildVisible" :width="del_dialog" :append-to-body="true">
+      <el-form v-if="dialogDelChildVisible" ref="form" label-width="80px" size="small" :label-position="'left'">
+        <div>
+          <div style="padding: 30px 0;font-weight: bold;">{{removeRow.message}}</div>
+        </div>
+        <!-- 按钮 -->
+        <el-form-item class="el-del-btn-item">
+          <div class="btn-item-footer">
+            <el-button type="info" size="small" icon="el-icon-close" @click="onListEventReomveChild('cancel', removeRow)">取消</el-button>
+            <el-button type="primary" size="small" icon="el-icon-check" @click="onListEventReomveChild('ok', removeRow)">确认</el-button>
+          </div>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 <script>
 import { axiosRequestParams, callbackPagesInfo, custFormBtnList } from '@/utils/tools'
-import { $addQACatalogs, $editQACatalogs, $childQACatalogsList } from '@/service/message'
+import { $addQACatalogs, $editQACatalogs, $qaCatalogsDelete/* , $childQACatalogsList */ } from '@/service/message'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -66,7 +80,10 @@ export default {
       childrenTitle: '新增子分类',
       dialogAddChildVisible: false,
       detailChildRow: {},
-      dialogDetailChildVisible: false
+      dialogDetailChildVisible: false,
+      reloadChildStatus: true,
+      removeRow: {},
+      dialogDelChildVisible: false
     }
   },
   computed: {
@@ -93,13 +110,31 @@ export default {
         this.childrenTitle = type === 'add-child' ? '新增子分类' : '编辑子分类'
         this.addChildRow._btn = custFormBtnList()
         this.dialogAddChildVisible = true
+      } else if (type === 'del-child') {
+        this.removeRow = row
+        this.removeRow.message = `确定删除【${row.name}】记录。`
+        this.dialogDelChildVisible = true
       }
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { parentId: 0 } })
-
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
+    },
+    onListEventReomveChild(btn, row) {
+      if (btn == 'ok') {
+        const params = {
+          id: row.id,
+          parentId: row.parentId
+        }
+
+        $qaCatalogsDelete(params).then(response => {
+          this.$message.success(response.message)
+
+          this.reloadChildList(row.parentId)
+        })
+      }
+      this.dialogDelChildVisible = false
     },
     onListEventAddChild(btn, row) {
       if (btn.type == 'ok') {
@@ -134,17 +169,19 @@ export default {
       }
     },
     reloadChildList(parentId) {
-      const params = { parentId: parentId }
+      this.reloadChildStatus = false
+      this.$nextTick(() => {
+        /* const params = { parentId: parentId }
+        $childQACatalogsList(params).then(response => {
+          const list = response.data
 
-      $childQACatalogsList(params).then(response => {
-        const list = response.data
-
-        this.$refs.tables.tableData.forEach(item => {
-          if (item.id === parentId) {
-            item.children = list
-            return true
-          }
-        })
+          this.$refs.tables.tableData.forEach((item, index) => {
+            if (item.id === parentId) {
+              this.$set(this.$refs.tables.$data.tableData[index], 'children', list)
+            }
+          })
+        }) */
+        this.reloadChildStatus = true
       })
     },
     onListEventDetailChild() {

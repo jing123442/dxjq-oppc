@@ -38,9 +38,17 @@ export async function $contentToclientList (data) {
   return await R({ url: 'message/qa_content/find_client_ids', data })
 }
 
+// 删除客户
+export async function $qaCatalogsDelete (data) {
+  return await R({ url: 'message/qa_catalogs/delete', data })
+}
+
+// 打印机状态更新
 export async function $printerStatus (data) {
   return await R({ url: 'message/printer/status', data })
 }
+
+// 删除打印机
 export async function $printerDel (data) {
   return await R({ url: 'message/printer/del', data })
 }
