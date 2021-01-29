@@ -82,8 +82,11 @@ export default {
     },
     setPrintStatus(response) {
       if (response.code == 0) {
-        response.data.forEach(async item => {
-          item.status = await this.getPrintStatus(item)
+        response.data.forEach(item => {
+          setTimeout(async () => {
+            // 延迟一秒，否则接口调用频繁会报错
+            item.status = await this.getPrintStatus(item)
+          }, 1000)
         })
       }
     },
