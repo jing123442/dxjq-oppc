@@ -99,9 +99,9 @@ const columns = {
   printList: [
     { field: 'id', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { type: 'hide', noShow: 1 } },
     { field: 'printName', name: '小票机名称', fixed: 'left', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入小票机名称' }, rules: [{ required: true, message: '请输入小票机名称', trigger: 'blur' }] },
-    { field: 'machineCode', name: '终端号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入终端号' }, rules: [{ required: true, message: '请输入终端号', trigger: 'blur' }] },
-    { field: 'msign', name: '密钥', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入密钥' }, rules: [{ required: true, message: '请输入密钥', trigger: 'blur' }] },
-    { field: 'phone', name: '流量卡号', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入流量卡号' }, rules: [{ required: true, message: '请输入流量卡号', trigger: 'blur' }] },
+    { field: 'machineCode', name: '终端号', show: { type: 'text', isDisabled: true, style: 'width: 90%;', placeholder: '请输入终端号' }, rules: [{ required: true, message: '请输入终端号', trigger: 'blur' }] },
+    { field: 'msign', name: '密钥', show: { type: 'text', isDisabled: true, style: 'width: 90%;', placeholder: '请输入密钥' }, rules: [{ required: true, message: '请输入密钥', trigger: 'blur' }] },
+    { field: 'phone', name: '流量卡号', show: { type: 'text', isDisabled: true, style: 'width: 90%;', placeholder: '请输入流量卡号' }, rules: [{ required: true, message: '请输入流量卡号', trigger: 'blur' }] },
     { field: 'status', name: '状态', formatter: 'printStatus', show: { noShow: 3 } },
     // { field: 'print', name: '打印小票', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入打印小票' }, rules: [{ required: true, message: '请输入打印小票', trigger: 'blur' }] },
     // { field: 'voice', name: '音量', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入音量' }, rules: [{ required: true, message: '请输入音量', trigger: 'blur' }] },
