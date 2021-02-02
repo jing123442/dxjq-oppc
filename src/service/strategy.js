@@ -60,17 +60,22 @@ export async function $configGasFreight (data) {
 }
 
 // LNG提报计划-确认订单
-export async function $orderConfirm (data) {
+export async function $strategyOrderConfirm (data) {
   return await R({ url: 'strategy/purchase/confirm', data })
 }
 
+// LNG提报计划-锁定前取消订单
+export async function $strategyBeforeOrderCancel (data) {
+  return await R({ url: 'strategy/purchase/cancel_by_gasstation', data })
+}
+
 // LNG提报计划-取消订单
-export async function $orderCancel (data) {
+export async function $strategyOrderCancel (data) {
   return await R({ url: 'strategy/purchase/cancel', data })
 }
 
 // LNG提报计划-订单出港
-export async function $purchaseLeave(data) {
+export async function $strategyPurchaseLeave(data) {
   return await R({ url: 'strategy/purchase/leave', data })
 }
 
@@ -142,4 +147,39 @@ export async function $exportDataFile (data) {
 // 设置气价调节
 export async function $gasstationUpdatePrice (data) {
   return await R({ url: 'strategy/gasstation/gas_price_edit', method: 'POST', data })
+}
+
+// LNG变更处理
+export async function $strategyModifyPurchase (data) {
+  return await R({ url: 'strategy/purchase/modify_handle', method: 'POST', data })
+}
+
+// LNG变更处理
+export async function $strategyLastChangePurchase (data) {
+  return await R({ url: 'strategy/purchase/find_latest', method: 'POST', data })
+}
+
+// LNG核对
+export async function $strategyCheckReachPurchase (data) {
+  return await R({ url: 'strategy/purchase/check_reach', method: 'POST', data })
+}
+
+// LNG异常处理
+export async function $strategyExceptionPurchase (data) {
+  return await R({ url: 'strategy/purchase_exception/exception_handle', method: 'POST', data })
+}
+
+// LNG获取异常订单信息
+export async function $strategyExceptionFindPurchase (data) {
+  return await R({ url: 'strategy/purchase_exception/find', method: 'POST', data })
+}
+
+// LNG详情信息
+export async function $strategyPurchaseFind (data) {
+  return await R({ url: 'strategy/purchase/find', method: 'POST', data })
+}
+
+// LNG下载入库明细
+export async function $strategyPurchaseExport (data) {
+  return await R({ url: 'strategy/purchase/download_lng', method: 'GET', data, responseType: 'blob' })
 }

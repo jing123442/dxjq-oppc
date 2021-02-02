@@ -160,10 +160,13 @@ export function utilsPlanStatus() {
   return [
     { value: 0, label: '已取消' },
     { value: 1, label: '已下单' },
+    { value: 6, label: '已锁定' },
     { value: 2, label: '已确认' },
     { value: 3, label: '已出港' },
     { value: 4, label: '已签收' },
-    { value: 5, label: '已完成' }
+    { value: 5, label: '已完成' },
+    { value: 7, label: '变更待处理' },
+    { value: 8, label: '异常待处理' }
   ]
 }
 export function utilsAutoAccount() {
@@ -231,6 +234,51 @@ export function utilsPayType() {
     { value: 0, label: '余额' },
     { value: 1, label: '微信' },
     { value: 2, label: '微信+余额' }
+  ]
+}
+
+export function utilsHandleType() {
+  return [
+    { value: '1', label: '同意' },
+    { value: '2', label: '驳回' }
+  ]
+}
+
+export function utilsCheckType() {
+  return [
+    { value: '1', label: '磅单确认' },
+    { value: '2', label: '磅单退回' }
+  ]
+}
+
+export function utilsModifyApplyType() {
+  return [
+    { value: 1, label: '修改申请' },
+    { value: 2, label: '取消申请' },
+    { value: 3, label: '异常申请' }
+  ]
+}
+
+export function utilsBearType() {
+  return [
+    { value: 1, label: '加气站承担' },
+    { value: 2, label: '平台承担' },
+    { value: 3, label: '修正出港数据' }
+  ]
+}
+
+export function utilsLNGDataSearch() {
+  return [
+    { value: 'planTime', label: '期望到站日期' },
+    { value: 'createTime', label: '提报时间' },
+    { value: 'lockTime', label: '锁定时间' },
+    { value: 'modifyApplyTime', label: '变更提报时间' },
+    { value: 'confirmTime', label: '确认时间' },
+    { value: 'uploadTime', label: '出港磅单录入时间' },
+    { value: 'reachTime', label: '签收时间' },
+    { value: 'completeTime', label: '完成时间' },
+    { value: 'cancelTime', label: '取消时间' },
+    { value: 'exceptionApplyTime', label: '异常提报时间' }
   ]
 }
 

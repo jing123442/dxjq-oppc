@@ -11,14 +11,35 @@ const app = {
       { ou: 1, name: '机构代码信息', status: 3 },
       { ou: 2, name: '企业基本信息', status: 3 }
     ],
-    printList: []
+    printList: [],
+    lngPlan: [
+      { ou: 1, name: '计划详情', status: 3 }
+    ],
+    lngPlanChange: [
+      { ou: 1, name: '计划详情', status: 3 },
+      { ou: 2, name: '变更详情', status: 3 }
+    ],
+    lngPlanInfo: [
+      { ou: 1, name: '计划确认', status: 3 }
+    ],
+    lngPlanLeaveInfo: [
+      { ou: 1, name: '计划详情', status: 3 },
+      { ou: 2, name: '录入出港磅单', status: 3 }
+    ],
+    lngPlanCheckInfo: [
+      { ou: 1, name: '计划详情', status: 3 },
+      { ou: 2, name: '核对到站榜单', status: 3 }
+    ],
+    lngPlanAnomalousInfo: [
+      { ou: 1, name: '计划详情', status: 3 },
+      { ou: 2, name: '异常申报处理', status: 3 }
+    ]
   },
   list: {
     firmList: 13,
     info: 13,
     account: 13,
     price: 13,
-    updatePrice: 13,
     gasStockList: 13,
     printList: 4,
     lngPlan: 13

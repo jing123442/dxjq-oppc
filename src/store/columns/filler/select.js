@@ -1,4 +1,4 @@
-import { utilsStatus, utilsAuthStatus, utilsPlanStatus, utilsSource, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus, utilsIdentityType, utilsTradeType, utilsBankList, utilsPrintPaper } from '@/utils/select'
+import { utilsStatus, utilsAuthStatus, utilsPlanStatus, utilsSource, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus, utilsIdentityType, utilsTradeType, utilsBankList, utilsPrintPaper, utilsHandleType, utilsModifyApplyType, utilsCheckType, utilsBearType, utilsLNGDataSearch } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
@@ -35,9 +35,6 @@ const select = {
       { value: 3, label: '库存调整' }
     ]
   },
-  updatePrice: {
-    orgId: utilsDyOrgList(1)
-  },
   printerList: {
     printStatus: utilsPrintStatus(),
     printPaper: utilsPrintPaper(),
@@ -45,7 +42,12 @@ const select = {
   },
   lngPlan: {
     source: utilsSource(),
-    planStatus: utilsPlanStatus()
+    checkType: utilsCheckType(),
+    handleType: utilsHandleType(),
+    planStatus: utilsPlanStatus(),
+    modifyApplyType: utilsModifyApplyType(),
+    bearType: utilsBearType(),
+    currLNGDataSearch: utilsLNGDataSearch()
   }
 }
 

@@ -1,4 +1,6 @@
 import file from '../../modules/file'
+import { buttonLNGPlanList } from '@/utils/button'
+import { monthTimeArea } from '@/utils/tools'
 
 const columns = {
   firmList: [
@@ -146,13 +148,6 @@ const columns = {
     { field: 'createDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'createrName', name: '操作人' }
   ],
-  updatePrice: [
-    { field: 'orgId', nameSpan: 5, name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'orgName', nameSpan: 5, name: '加气站企业名称', stype: 'mapping', mapping: 'orgName', search: { type: 'text', placeholder: '请输入加气站企业名称' } },
-    { field: 'gasstationName', nameSpan: 5, name: '加气站名称', search: { type: 'text', placeholder: '请输入加气站名称' } },
-    { field: 'listPrice', nameSpan: 5, name: '当前挂牌价（元/公斤）' },
-    { field: 'useropts', nameSpan: 5, stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 260, list: [{ type: 'record', name: '变更记录' }] }
-  ],
   lngUpdatePrice: [
     { field: 'orgName', name: '加气站企业名称', fixed: 'left' },
     { field: 'gasstationName', name: '加气站名称' },
@@ -179,62 +174,122 @@ const columns = {
     { field: 'note', name: '摘要' }
   ],
   lngPlan: [
-    { field: 'gasstationName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
-    { field: 'planTime', name: '期望到站日期' },
-    { field: 'createTime', name: '提报时间' },
-    { field: 'status', name: '状态', formatter: 'planStatus', search: { type: 'select', obj: 'planStatus', placeholder: '请选择状态' } },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: params => lngPlan(params) }
+    { field: 'id', name: '计划编号', fixed: 'left', nameSpan: 6, width: 140, detail: { type: 'span', serial: 1, ou: 1 } },
+    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, width: 140, search: { type: 'text', placeholder: '请输入加气站名称' }, detail: { type: 'span', serial: 3, ou: 1 } },
+    { field: 'planTime', name: '期望到站日期', nameSpan: 6, width: 140, detail: { type: 'span', serial: 4, ou: 1 } },
+    { field: 'status', name: '订单状态', formatter: 'planStatus', nameSpan: 6, search: { type: 'select', obj: 'planStatus', placeholder: '请选择状态' }, detail: { type: 'span', model: 'select', obj: 'planStatus', serial: 2, ou: 1 } },
+    { field: 'createTime', name: '提报时间', nameSpan: 6, width: 140, search: { type: 'date-picker', placeholder: '', style: 'width: 350px;', findField: 'createTime', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', subField: 'createDateName', hideName: true, obj: 'currLNGDataSearch', value: 'planTime' } },
+    { field: 'lockTime', name: '锁定时间', width: 140 },
+    { field: 'modifyApplyTime', name: '变更提报时间', width: 140 },
+    { field: 'confirmTime', name: '确认时间', width: 140 },
+    { field: 'leaveTime', name: '出港时间', width: 140 },
+    { field: 'uploadTime', name: '出港磅单录入时间', width: 140 },
+    { field: 'reachTime', name: '签收时间', width: 140 },
+    { field: 'completeTime', name: '完成时间', width: 140 },
+    { field: 'cancelTime', name: '取消时间', width: 140 },
+    { field: 'exceptionApplyTime', name: '异常提报时间', width: 140 },
+    { field: 'downloadContactName', name: '卸车联系人', hide: true, nameSpan: 6, detail: { type: 'span', serial: 5, ou: 1 } },
+    { field: 'downloadContactPhone', name: '卸车人联系电话', hide: true, nameSpan: 6, detail: { type: 'span', serial: 6, ou: 1 } },
+    { field: 'createNote', name: '提报备注', hide: true, nameSpan: 6, detail: { type: 'span', serial: 7, ou: 1 } },
+    { field: 'lngFromName', name: '液原地', hide: true, nameSpan: 6, detail: { type: 'span', serial: 8, ou: 1 } },
+    { field: 'uploadWeight', name: '出港量(公斤)', hide: true, nameSpan: 6, detail: { type: 'span', serial: 9, ou: 1 } },
+    { field: 'uploadTime', name: '出港时间', hide: true, nameSpan: 6, detail: { type: 'span', serial: 10, ou: 1 } },
+    { field: 'checkWeight', name: '核准气量(公斤)', hide: true, nameSpan: 6, detail: { type: 'span', serial: 11, ou: 1 } },
+    { field: 'gasstationName', name: '签收时间', hide: true, nameSpan: 6, detail: { type: 'span', serial: 12, ou: 1 } },
+    { field: 'driverName', name: '驾驶员', hide: true, nameSpan: 6, detail: { type: 'span', serial: 13, ou: 1 } },
+    { field: 'driverPhone', name: '驾驶员联系方式', hide: true, nameSpan: 6, detail: { type: 'span', serial: 14, ou: 1 } },
+    { field: 'carNumber', name: '车牌号', hide: true, nameSpan: 6, detail: { type: 'span', serial: 15, ou: 1 } },
+    { field: 'trailerNumber', name: '挂牌号', hide: true, nameSpan: 6, detail: { type: 'span', serial: 16, ou: 1 } },
+    { field: 'uploadUrl', name: '出港磅单', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 17, ou: 1 } },
+    { field: 'downloadUrl', name: '到站榜单', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 18, ou: 1 } },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: params => buttonLNGPlanList(params) }
   ],
-  lngPlanDetail: [
-    /* { field: 'orgName', nameSpan: 6, name: '加气站企业名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } }, */
-    { field: 'gasstationName', nameSpan: 3, lg: 24, xl: 24, inputSpan: 21, name: '加气站名称', show: { type: 'text', isDisabled: true, style: 'width: 96%;' } },
-    { field: 'downloadContactName', nameSpan: 6, name: '卸车联系人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'downloadContactPhone', nameSpan: 6, name: '卸车联系人电话', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'planTime', nameSpan: 6, name: '期望送达时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'createTime', nameSpan: 6, name: '提报时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'businessContactName', nameSpan: 6, name: '平台联系人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'businessContactPhone', nameSpan: 6, name: '平台联系电话', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'lngFromName', nameSpan: 6, name: '液源地', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'uploadWeight', nameSpan: 6, name: '出港量(公斤)', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'downloadWeight', nameSpan: 6, name: '实际到站量(公斤)', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'id', nameSpan: 6, name: '订单编号', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'confirmTime', nameSpan: 6, name: '确认时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'confirmerName', nameSpan: 6, name: '确认操作人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'leaveTime', nameSpan: 6, name: '出港时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'leaverName', nameSpan: 6, name: '出港操作人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'reachTime', nameSpan: 6, name: '签收时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'reacherName', nameSpan: 6, name: '签收操作人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'completeTime', nameSpan: 6, name: '完成时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'completerName', nameSpan: 6, name: '完成操作人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'cancelTime', nameSpan: 6, name: '取消时间', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'cancelerName', nameSpan: 6, name: '取消操作人', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },
-    { field: 'uploadUrl', nameSpan: 6, name: '出港重量图片', show: { type: 'file', action: '/', isDialog: true, isDisabled: true, style: 'width: 90%;' } },
-    { field: 'downloadUrl', nameSpan: 6, name: '到站重量图片', show: { type: 'file', action: '/', isDialog: true, isDisabled: true, style: 'width: 90%;' } }
+  lngPlanLeaveInfo: [
+    { field: 'id', name: '计划编号', fixed: 'left', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'status', name: '订单状态', nameSpan: 6, show: { type: 'span', model: 'select', obj: 'planStatus', ou: 1 } },
+    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'planTime', name: '期望送达时间', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'createNote', name: '提报备注', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'uploadWeight', name: '出港重量(公斤)', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入出港重量' }, rules: [{ required: true, message: '请输入出港重量', trigger: 'blur' }] },
+    { field: 'driverName', name: '驾驶员', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入出港重量' }, rules: [{ required: true, message: '请输入驾驶员', trigger: 'blur' }] },
+    { field: 'lngFromCode', name: '液原地', nameSpan: 6, show: { type: 'select', subField: 'lngFromName', ou: 2, obj: 'source', placeholder: '请选择液原地' }, rules: [{ required: true, message: '请选择液原地', trigger: 'blur' }] },
+    { field: 'driverPhone', name: '驾驶员联系方式', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入驾驶员联系方式' }, rules: [{ required: true, message: '请输入驾驶员联系方式', trigger: 'blur' }, { validator: 'isValidateMobile', message: '请输入正确格式的驾驶员联系方式', trigger: 'blur' }] },
+    { field: 'uploadTime', name: '出港时间(装车结束时间)', nameSpan: 6, show: { type: 'date-picker', model: 'datetime', ou: 2, placeholder: '请选择出港时间' }, rules: [{ required: true, message: '请选择出港时间', trigger: 'blur' }] },
+    { field: 'carNumber', name: '车牌号', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入车牌号' }, rules: [{ required: true, message: '请输入车牌号', trigger: 'blur' }] },
+    { field: 'uploadUrl', name: '上传出港磅单', nameSpan: 6, filefield: 'file', show: { type: 'file', ou: 2, iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传出港磅单', node: [] }, rules: [{ required: true, message: '请上传出港磅单！', trigger: 'change' }] },
+    { field: 'trailerNumber', name: '挂车号', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入出港重量' }, rules: [{ required: true, message: '请输入挂车号', trigger: 'blur' }] }
   ],
-  lngPlanDepartures: [
-    { field: 'uploadUrl', name: '上传出港磅单', filefield: 'file', nameSpan: 6, serial: 9, show: { type: 'file', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传出港磅单', node: [], rules: [{ required: true, message: '请上传出港磅单！', trigger: 'change' }] } },
-    { field: 'uploadWeight', name: '出港重量(公斤)', nameSpan: 6, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入出港重量' }, rules: [{ required: true, message: '请输入出港重量', trigger: 'blur' }] },
-    { field: 'lngFromCode', name: '液源地', nameSpan: 6, formatter: 'source', show: { type: 'select', subField: 'lngFromName', obj: 'source', style: 'width: 90%;', placeholder: '请选择' } }
+  lngPlanCheckInfo: [
+    { field: 'id', name: '计划编号', fixed: 'left', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'status', name: '订单状态', nameSpan: 6, show: { type: 'span', model: 'select', obj: 'planStatus', ou: 1 } },
+    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'planTime', name: '期望送达时间', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'createNote', name: '提报备注', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'lngFromName', name: '液原地', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'uploadWeight', name: '出港重量(公斤)', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'uploadTime', name: '出港时间(装车结束时间)', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'driverName', name: '驾驶员', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'driverPhone', name: '驾驶员联系方式', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'carNumber', name: '车牌号', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'trailerNumber', name: '挂车号', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'uploadUrl', name: '出港磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
+    { field: 'downloadUrl', name: '到港磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
+    { field: 'checkType', name: '核对磅单', nameSpan: 6, show: { type: 'select', clearable: false, obj: 'checkType', cascaderList: [{ value: 1, fields: ['note'] }], ou: 2 }, rules: [{ required: true, message: '请选择核对磅单', trigger: 'blur' }] },
+    { field: 'note', name: '退回原因', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入退回原因', trigger: 'blur' }] }
   ],
-  lngPlanComplete: [
-    { field: 'downloadUrl', name: '出港磅单图片', filefield: 'file', nameSpan: 6, serial: 9, show: { type: 'file', isDialog: true, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, isDisabled: true, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', placeholder: '请上传出港磅单图片', node: [], rules: [{ required: true, message: '请上传出港磅单图片！', trigger: 'change' }] } },
-    { field: 'downloadWeight', name: '到站重量(公斤)', nameSpan: 6, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入到站重量' }, rules: [{ required: true, message: '请输入到站重量', trigger: 'blur' }] }
+  lngPlanAnomalousInfo: [
+    { field: 'id', name: '计划编号', fixed: 'left', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'status', name: '订单状态', nameSpan: 6, show: { type: 'span', model: 'select', obj: 'planStatus', ou: 1 } },
+    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'planTime', name: '期望送达时间', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'createNote', name: '提报备注', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'lngFromName', name: '液原地', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'uploadWeight', name: '出港重量(公斤)', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'uploadTime', name: '出港时间(装车结束时间)', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'driverName', name: '驾驶员', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'driverPhone', name: '驾驶员联系方式', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'carNumber', name: '车牌号', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'trailerNumber', name: '挂车号', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'uploadUrl', name: '出港磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
+    { field: 'downloadUrl', name: '到港磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
+    { field: 'exceptionApplyTime', name: '异常申报时间', nameSpan: 6, show: { type: 'span', ou: 2 } },
+    { field: 'exceptionApplyNote', name: '申报原因', nameSpan: 6, show: { type: 'span', ou: 2 } },
+    { field: 'bearType', name: '处理方式', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 3, inputSpan: 9, show: { type: 'select', clearable: false, obj: 'bearType', ou: 2, cascaderList: [{ value: 1, fields: ['exceptionHandleUrl', 'exceptionUploadUrl', 'exceptionUploadWeight', 'exceptionLngFromCode'] }, { value: 2, fields: ['exceptionUploadUrl', 'exceptionUploadWeight', 'exceptionLngFromCode'] }, { value: 3, fields: ['exceptionHandleUrl', 'exceptionCheckWeight', 'exceptionCheckNote'] }] }, rules: [{ required: true, message: '请输入处理方式', trigger: 'blur' }] },
+    { field: 'exceptionUploadUrl', name: '修正出港磅单', nameSpan: 6, show: { type: 'file', ou: 2, iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传修正出港磅单', node: [] }, rules: [{ required: true, message: '请输入修正出港磅单', trigger: 'blur' }] },
+    { field: 'exceptionUploadWeight', name: '出港重量(公斤)', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入出港重量', trigger: 'blur' }] },
+    { field: 'exceptionLngFromCode', name: '液原地', nameSpan: 6, show: { type: 'select', subField: 'exceptionLngFromName', ou: 2, obj: 'source', placeholder: '请选择液原地' }, rules: [{ required: true, message: '请选择液原地', trigger: 'blur' }] },
+    { field: 'exceptionHandleUrl', name: '上传凭证附件', nameSpan: 6, show: { type: 'file', ou: 2, iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传上传凭证附件', node: [] }, rules: [{ required: true, message: '请输入上传凭证附件', trigger: 'blur' }] },
+    { field: 'exceptionCheckWeight', name: '核准气量(公斤)', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入核准气量', trigger: 'blur' }] },
+    { field: 'exceptionCheckNote', name: '处理答复', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入处理答复', trigger: 'blur' }] }
+  ],
+  lngPlanChange: [
+    { field: 'id', name: '计划编号', fixed: 'left', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'status', name: '订单状态', nameSpan: 6, show: { type: 'span', model: 'select', obj: 'planStatus', ou: 1 } },
+    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'planTime', name: '期望送达时间', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'createNote', name: '提报备注', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'modifyCreateTime', name: '变更提报时间', nameSpan: 6, show: { type: 'span', ou: 2 } },
+    { field: 'modifyCreateNote', name: '变更发起原因', nameSpan: 6, show: { type: 'span', ou: 2 } },
+    { field: 'modifyApplyType', name: '变更类型', nameSpan: 6, show: { type: 'span', model: 'select', obj: 'modifyApplyType', ou: 2 } },
+    { field: 'modifyPlanTime', name: '期望送达时间', nameSpan: 6, show: { type: 'span', ou: 2 } },
+    { field: 'handleType', name: '处理方式', nameSpan: 6, show: { type: 'select', clearable: false, obj: 'handleType', cascaderList: [{ value: 1, fields: ['rejectNote'] }], ou: 2, placeholder: '请选择处理方式' }, rules: [{ required: true, message: '请选择处理方式', trigger: 'blur' }] },
+    { field: 'rejectNote', name: '驳回描述', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入驳回描述' }, rules: [{ required: true, message: '请输入驳回描述', trigger: 'blur' }] }
+  ],
+  lngPlanInfo: [
+    { field: 'id', name: '计划编号', fixed: 'left', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'status', name: '订单状态', nameSpan: 6, show: { type: 'span', model: 'select', obj: 'planStatus', ou: 1 } },
+    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'planTime', name: '期望送达时间', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'downloadContactName', name: '卸车联系人', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'downloadContactPhone', name: '卸车联系电话', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'createNote', name: '提报备注', nameSpan: 6, show: { type: 'span', ou: 1 } }
+  ],
+  lngPlanChangeInfo: [
+    { field: 'operatorTime', name: '操作时间', width: 140, fixed: 'left', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'operatorName', name: '操作人', width: 100 },
+    { field: 'typeName', name: '操作类型', width: 120 },
+    { field: 'content', name: '操作内容' }
   ]
-}
-
-// LNG计划管理状态函数
-const lngPlan = (params) => {
-  const status = params.row.status
-  const list = [{ type: 'detail', name: '详情' }]
-  if (status === 1 || status === 2 || status === 3 || status === 4) {
-    list.unshift({ type: 'cancel', name: '取消' })
-  }
-  if (status === 2) {
-    list.unshift({ type: 'write', name: '录入磅单' })
-  } else if (status === 1 || status === 4) {
-    list.unshift({ type: (status == 1 ? 'enter' : 'complete'), name: '确认' })
-  }
-  return list
 }
 
 export default columns

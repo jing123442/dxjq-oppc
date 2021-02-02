@@ -42,11 +42,6 @@ const getters = {
   filler_price_log_column: item => columns.priceLog,
   // 服务费设置--服务费变更记录
   filler_serviceChangeRecord_column: item => columns.serviceChangeRecord,
-  // 气价维护
-  filler_updatePrice_mode_list: item => item.app.modeDefault,
-  filler_updatePrice_page_status: item => app.list.updatePrice,
-  filler_updatePrice_column: item => columns.updatePrice,
-  filler_updatePrice_select_list: item => select.updatePrice,
   // 气价维护--气价变更记录
   filler_lngUpdatePrice_column: item => columns.lngUpdatePrice,
 
@@ -61,16 +56,27 @@ const getters = {
   filler_gas_update_stock_column: item => columns.gasUpdateStock,
 
   // LNG计划管理
-  filler_lngPlan_mode_list: item => item.app.modeDefault,
+  filler_lngPlan_mode_list: item => app.mode.lngPlan,
   filler_lngPlan_page_status: item => app.list.lngPlan,
   filler_lngPlan_column: item => columns.lngPlan,
   filler_lngPlan_select_list: item => select.lngPlan,
-  // LNG计划管理--详情
-  filler_lngPlanDetail_column: item => columns.lngPlanDetail,
+  // LNG计划管理--变更记录
+  filler_lng_plan_change_list_column: item => columns.lngPlanChangeInfo,
+  // LNG计划管理--变更计划
+  filler_lng_plan_change_mode_list: item => app.mode.lngPlanChange,
+  filler_lng_plan_change_column: item => columns.lngPlanChange,
+  // LNG计划管理--确认
+  filler_lng_plan_info_mode_list: item => app.mode.lngPlanInfo,
+  filler_lng_plan_info_column: item => columns.lngPlanInfo,
   // LNG计划管理--出港录入
-  filler_lngPlanDepartures_column: item => columns.lngPlanDepartures,
-  // LNG计划管理--确认到站重量
-  filler_lngPlanComplete_column: item => columns.lngPlanComplete
+  filler_lng_plan_leave_mode_list: item => app.mode.lngPlanLeaveInfo,
+  filler_lng_plan_leave_column: item => columns.lngPlanLeaveInfo,
+  // LNG计划管理--核对磅单计划
+  filler_lng_plan_check_mode_list: item => app.mode.lngPlanCheckInfo,
+  filler_lng_plan_check_column: item => columns.lngPlanCheckInfo,
+  // LNG计划管理--异常处理
+  filler_lng_plan_anomalous_mode_list: item => app.mode.lngPlanAnomalousInfo,
+  filler_lng_plan_anomalous_column: item => columns.lngPlanAnomalousInfo
 }
 
 export default {
