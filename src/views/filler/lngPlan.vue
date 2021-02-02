@@ -388,40 +388,100 @@ export default {
         this.dialogAnomalousVisible = false
       }
     },
+    // 详情信息操作记录
+    operateEvent(data) {
+      const tmpDetailCol = []
+      const tmpDetailInfo = {}
+
+      if (data.operateList && data.operateList.length > 0) { // 操作信息详情
+        data.operateList.forEach((item, index) => {
+          this.detailModeList(item.type, index)
+          if (item.type == 55 || item.type == 60 || item.type == 80 || item.type == 90) {
+            tmpDetailCol.push({ field: 'operatorType' + item.type + '_' + index, name: '变更处理', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
+            tmpDetailInfo['operatorType' + item.type + '_' + index] = item.typeName
+          } else if (item.type == 130 || item.type == 140) {
+            tmpDetailCol.push({ field: 'operatorType' + item.type + '_' + index, name: '核对处理', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
+            tmpDetailInfo['operatorType' + item.type + '_' + index] = item.typeName
+          }
+          tmpDetailCol.push({ field: 'operatorName' + item.type + '_' + index, name: item.typeName, hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
+          tmpDetailCol.push({ field: 'operatorTime' + item.type + '_' + index, name: item.operateTimeName, hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index, formatFun: 'formateTData all', stype: 'format' } })
+
+          tmpDetailInfo['operatorName' + item.type + '_' + index] = item.operatorName
+          tmpDetailInfo['operatorTime' + item.type + '_' + index] = item.operatorTime
+
+          if (item.type == 60 || item.type == 90 || item.type == 130) {
+            tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: item.typeName, hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
+            tmpDetailInfo['note' + item.type + '_' + index] = item.note
+          }
+        })
+      }
+
+      return {
+        col: tmpDetailCol,
+        info: tmpDetailInfo
+      }
+    },
+    // 异常处理操作记录
+    exceptionEvent(data) {
+      const tmpDetailCol = []
+      const tmpDetailInfo = {}
+      const ouIndex = 1000 + '_' + 1
+
+      if (data.purchaseException) {
+        const exceptionInfo = data.purchaseException
+        tmpDetailCol.push({ field: 'exceptionBearTypeName', name: '处理方式', hide: true, nameSpan: 6, detail: { type: 'span', serial: 100, ou: ouIndex } })
+        tmpDetailCol.push({ field: 'exceptionApplyTime', name: '异常申报时间', hide: true, nameSpan: 6, detail: { type: 'span', serial: 101, ou: ouIndex, formatFun: 'formateTData all', stype: 'format' } })
+        tmpDetailCol.push({ field: 'exceptionApplyNote', name: '申报原因', hide: true, nameSpan: 6, detail: { type: 'span', serial: 102, ou: ouIndex } })
+
+        tmpDetailInfo.exceptionApplyTime = exceptionInfo.exceptionApplyTime
+        tmpDetailInfo.exceptionApplyNote = exceptionInfo.exceptionApplyNote
+
+        this.detailModeList(1000, 1)
+        if (exceptionInfo.bearType == 1) {
+          tmpDetailCol.push({ field: 'exceptionCheckWeight', name: '核准气量(公斤)', hide: true, nameSpan: 6, detail: { type: 'span', serial: 103, ou: ouIndex } })
+          tmpDetailCol.push({ field: 'exceptionCheckNote', name: '处理答复', hide: true, nameSpan: 6, detail: { type: 'span', serial: 104, ou: ouIndex } })
+          tmpDetailInfo.exceptionCheckWeight = exceptionInfo.checkWeight
+          tmpDetailInfo.exceptionCheckNote = exceptionInfo.checkNote
+
+          tmpDetailInfo.exceptionBearTypeName = '加气站承担'
+        } else if (exceptionInfo.bearType == 2) {
+          tmpDetailCol.push({ field: 'exceptionCheckWeight', name: '核准气量(公斤)', hide: true, nameSpan: 6, detail: { type: 'span', serial: 104, ou: ouIndex } })
+          tmpDetailCol.push({ field: 'exceptionHandleUrl', name: '上传凭证附件', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 103, ou: ouIndex } })
+          tmpDetailCol.push({ field: 'exceptionCheckNote', name: '处理答复', hide: true, nameSpan: 6, detail: { type: 'span', serial: 105, ou: ouIndex } })
+          tmpDetailInfo.exceptionCheckWeight = exceptionInfo.checkWeight
+          tmpDetailInfo.exceptionHandleUrl = exceptionInfo.exceptionHandleUrl
+          tmpDetailInfo.exceptionCheckNote = exceptionInfo.checkNote
+
+          tmpDetailInfo.exceptionBearTypeName = '平台承担'
+        } else if (exceptionInfo.bearType == 3) {
+          tmpDetailCol.push({ field: 'uploadWeight', name: '出港重量(公斤)', hide: true, nameSpan: 6, detail: { type: 'span', serial: 104, ou: ouIndex } })
+          tmpDetailCol.push({ field: 'uploadUrl', name: '修正出港磅单', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 103, ou: ouIndex } })
+          tmpDetailCol.push({ field: 'lngFromName', name: '液原地', hide: true, nameSpan: 6, detail: { type: 'span', serial: 105, ou: ouIndex } })
+
+          tmpDetailInfo.exceptionBearTypeName = '修正出港数据'
+        }
+      }
+
+      return {
+        col: tmpDetailCol,
+        info: tmpDetailInfo
+      }
+    },
     // 详情信息显示
     detailEvent(row) {
       $strategyPurchaseFind({ id: row.id }).then(response => {
         const data = response.data || {}
-        const tmpDetailCol = []
-        const tmpDetailInfo = {}
 
         this.detail_mode_list.push(...this.mode_list)
         this.page_detail_column.push(...this.page_column)
-        if (data.operateList && data.operateList.length > 0) {
-          data.operateList.forEach((item, index) => {
-            this.detailModeList(item.type, index)
-            if (item.type == 55 || item.type == 60 || item.type == 80 || item.type == 90) {
-              tmpDetailCol.push({ field: 'operatorType' + item.type + '_' + index, name: '变更处理', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
-              tmpDetailInfo['operatorType' + item.type + '_' + index] = item.typeName
-            } else if (item.type == 130 || item.type == 140) {
-              tmpDetailCol.push({ field: 'operatorType' + item.type + '_' + index, name: '核对处理', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
-              tmpDetailInfo['operatorType' + item.type + '_' + index] = item.typeName
-            }
-            tmpDetailCol.push({ field: 'operatorName' + item.type + '_' + index, name: item.typeName, hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
-            tmpDetailCol.push({ field: 'operatorTime' + item.type + '_' + index, name: item.operateTimeName, hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index, formatFun: 'formateTData all', stype: 'format' } })
 
-            tmpDetailInfo['operatorName' + item.type + '_' + index] = item.operatorName
-            tmpDetailInfo['operatorTime' + item.type + '_' + index] = item.operatorTime
+        const operation = this.operateEvent(data)
+        const exception = this.exceptionEvent(data)
 
-            if (item.type == 60 || item.type == 90 || item.type == 130) {
-              tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: item.typeName, hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
-              tmpDetailInfo['note' + item.type + '_' + index] = item.note
-            }
-          })
-        }
-        this.page_detail_column.push(...tmpDetailCol) // 动态生成detail信息
+        this.page_detail_column.push(...operation.col) // 动态生成detail信息
+        this.page_detail_column.push(...exception.col) // 动态生成detail信息
 
-        this.detailRow = Object.assign({}, data.purchase, tmpDetailInfo)
+        this.detailRow = Object.assign({}, data.purchase, operation.info, exception.info)
         this.detailRow._btn = custFormBtnList(1)
         this.dialogDetailVisible = true
       })
@@ -447,7 +507,8 @@ export default {
         150: '异常申报',
         160: '异常处理',
         170: '取消计划',
-        180: '完成计划'
+        180: '完成计划',
+        1000: '异常申报处理'
       }
 
       this.detail_mode_list.push({ ou: type + '_' + index, name: typeInfo[type], status: 3 })
