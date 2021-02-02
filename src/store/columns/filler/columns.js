@@ -175,10 +175,10 @@ const columns = {
   ],
   lngPlan: [
     { field: 'id', name: '计划编号', fixed: 'left', nameSpan: 6, width: 140, detail: { type: 'span', serial: 1, ou: 1 } },
-    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, width: 140, search: { type: 'text', placeholder: '请输入加气站名称' }, detail: { type: 'span', serial: 3, ou: 1 } },
+    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, width: 140, search: { type: 'text', nameSpan: 0, placeholder: '请输入加气站名称' }, detail: { type: 'span', serial: 3, ou: 1 } },
     { field: 'planTime', name: '期望到站日期', nameSpan: 6, width: 140, detail: { type: 'span', serial: 4, ou: 1 } },
-    { field: 'status', name: '订单状态', formatter: 'planStatus', nameSpan: 6, search: { type: 'select', obj: 'planStatus', placeholder: '请选择状态' }, detail: { type: 'span', model: 'select', obj: 'planStatus', serial: 2, ou: 1 } },
-    { field: 'createTime', name: '提报时间', nameSpan: 6, width: 140, search: { type: 'date-picker', placeholder: '', style: 'width: 350px;', findField: 'createTime', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', subField: 'createDateName', hideName: true, obj: 'currLNGDataSearch', value: 'planTime' } },
+    { field: 'status', name: '订单状态', formatter: 'planStatus', nameSpan: 6, search: { type: 'select', nameSpan: 0, obj: 'planStatus', placeholder: '请选择状态' }, detail: { type: 'span', model: 'select', obj: 'planStatus', serial: 2, ou: 1 } },
+    { field: 'createTime', name: '提报时间', nameSpan: 6, width: 140, search: { type: 'date-picker', nameSpan: 0, placeholder: '', style: 'width: 350px;', findField: 'createTime', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', nameSpan: 0, subField: 'createDateName', hideName: true, obj: 'currLNGDataSearch', value: 'planTime' } },
     { field: 'lockTime', name: '锁定时间', width: 140 },
     { field: 'modifyApplyTime', name: '变更提报时间', width: 140 },
     { field: 'confirmTime', name: '确认时间', width: 140 },
@@ -202,7 +202,7 @@ const columns = {
     { field: 'trailerNumber', name: '挂牌号', hide: true, nameSpan: 6, detail: { type: 'span', serial: 16, ou: 1 } },
     { field: 'uploadUrl', name: '出港磅单', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 17, ou: 1 } },
     { field: 'downloadUrl', name: '到站榜单', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 18, ou: 1 } },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: params => buttonLNGPlanList(params) }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 250, list: params => buttonLNGPlanList(params) }
   ],
   lngPlanLeaveInfo: [
     { field: 'id', name: '计划编号', fixed: 'left', nameSpan: 6, show: { type: 'span', ou: 1 } },

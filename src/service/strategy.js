@@ -181,5 +181,5 @@ export async function $strategyPurchaseFind (data) {
 
 // LNG下载入库明细
 export async function $strategyPurchaseExport (data) {
-  return await R({ url: 'strategy/purchase/download_lng', method: 'GET', data, responseType: 'blob' })
+  return await R({ url: 'strategy/purchase/download_lng', method: 'POST', data, responseType: 'blob' })
 }

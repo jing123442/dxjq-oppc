@@ -410,7 +410,7 @@ export default {
           tmpDetailInfo['operatorTime' + item.type + '_' + index] = item.operatorTime
 
           if (item.type == 60 || item.type == 90 || item.type == 130) {
-            tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: item.typeName, hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
+            tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: '驳回原因', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
             tmpDetailInfo['note' + item.type + '_' + index] = item.note
           }
         })
@@ -524,7 +524,7 @@ export default {
       const params = this.currParams
 
       $strategyPurchaseExport(params).then(response => {
-        const fileName = 'LNG提报计划' + Date.parse(new Date()) + '.xlsx'
+        const fileName = 'LNG提报计划' + Date.parse(new Date()) + '.xls'
 
         exportBlobToFiles(response, fileName)
       })
