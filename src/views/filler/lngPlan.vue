@@ -28,7 +28,7 @@
 <script>
 import { axiosRequestParams, isTypeof, messageBox, callbackPagesInfo, custFormBtnList, exportBlobToFiles } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $strategyOrderConfirm, $strategyBeforeOrderCancel, $strategyOrderCancel, $strategyPurchaseLeave, $purchaseComplete, $strategyLastChangePurchase, $strategyModifyPurchase, $strategyCheckReachPurchase, $strategyExceptionPurchase, $strategyExceptionFindPurchase, $strategyPurchaseFind, $strategyPurchaseExport } from '@/service/strategy'
+import { $strategyOrderConfirm, $strategyBeforeOrderCancel, $strategyOrderCancel, $strategyPurchaseLeave, $purchaseComplete, $strategyModifyPurchase, $strategyCheckReachPurchase, $strategyExceptionPurchase, $strategyExceptionFindPurchase, $strategyPurchaseFind, $strategyPurchaseExport, $strategyDuplicatePurchase } from '@/service/strategy'
 
 export default {
   name: 'lngPlan',
@@ -119,8 +119,8 @@ export default {
   methods: {
     onListEvent(type, row) {
       if (type === 'enter') {
-        $strategyLastChangePurchase({ gasstationId: row.gasstationId }).then(response => {
-          this.lngInfoRow = response.data
+        $strategyPurchaseFind({ id: row.id }).then(response => {
+          this.lngInfoRow = response.data && response.data.purchase
           this.lngInfoRow._btn = custFormBtnList(2)
           this.dialogInfoVisible = true
         })
@@ -148,13 +148,13 @@ export default {
       } else if (type === 'detail-info') {
         this.detailEvent(row)
       } else if (type === 'leave' || type === 'update') {
-        $strategyLastChangePurchase({ gasstationId: row.gasstationId }).then(response => {
-          const tmpData = Object.assign({}, row, response.data)
+        $strategyPurchaseFind({ id: row.id }).then(response => {
+          const tmpData = Object.assign({}, row, response.data && response.data.purchase)
           this.leaveEvent(tmpData)
         })
       } else if (type === 'check') {
-        $strategyLastChangePurchase({ gasstationId: row.gasstationId }).then(response => {
-          const tmpData = Object.assign({}, row, response.data)
+        $strategyPurchaseFind({ id: row.id }).then(response => {
+          const tmpData = Object.assign({}, row, response.data && response.data.purchase)
           this.checkEvent(tmpData)
         })
       } else if (type === 'complete') {
@@ -171,7 +171,7 @@ export default {
     },
     // 存在计划变更，处理变更记录
     changeEvent(row) {
-      $strategyLastChangePurchase({ gasstationId: row.gasstationId }).then(response => {
+      $strategyDuplicatePurchase({ id: row.id }).then(response => {
         const data = response.data
         row.modifyCreateTime = data.createTime
         row.modifyCreateNote = data.createNote

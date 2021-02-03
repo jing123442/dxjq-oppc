@@ -155,8 +155,8 @@ export async function $strategyModifyPurchase (data) {
 }
 
 // LNG变更处理
-export async function $strategyLastChangePurchase (data) {
-  return await R({ url: 'strategy/purchase/find_latest', method: 'POST', data })
+export async function $strategyDuplicatePurchase (data) {
+  return await R({ url: 'strategy/purchase_duplicate/find', method: 'POST', data })
 }
 
 // LNG核对
