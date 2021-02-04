@@ -171,13 +171,24 @@ export default {
     },
     // 存在计划变更，处理变更记录
     changeEvent(row) {
-      $strategyDuplicatePurchase({ id: row.id }).then(response => {
-        const data = response.data
-        row.modifyCreateTime = data.createTime
-        row.modifyCreateNote = data.createNote
-        row.modifyApplyType = data.modifyApplyType
-        row.modifyPlanTime = data.planTime
-        this.changeRow = row
+      $strategyPurchaseFind({ id: row.id }).then(response => {
+        const purchase = response.data && response.data.purchase
+        const operateList = response.data && response.data.operateList
+        const purchaseDuplicate = response.data && response.data.purchaseDuplicate
+        if (operateList.length > 0) {
+          operateList.forEach(item => {
+            if (item.type == 40) {
+              row.modifyCreateTime = item.operatorTime
+            }
+          })
+        }
+
+        row.modifyCreateNote = purchaseDuplicate.createNote
+        row.modifyApplyType = purchaseDuplicate.modifyApplyType
+        row.modifyPlanTime = purchaseDuplicate.planTime
+        row.modifyDownloadContactName = purchaseDuplicate.downloadContactName
+        row.modifyDownloadContactPhone = purchaseDuplicate.downloadContactPhone
+        this.changeRow = Object.assign({}, row, purchase)
         this.changeRow._btn = custFormBtnList()
         // eslint-disable-next-line no-prototype-builtins
         if (!this.changeRow.hasOwnProperty('handleType')) {
@@ -306,31 +317,6 @@ export default {
       this.completeRow._btn = custFormBtnList()
       this.dialogAnomalousVisible = true
     },
-    // 提交完成计划
-    onListEventComplete(btnObj, row) {
-      if (btnObj.type === 'ok') {
-        this.$refs.complete.$refs.completeForm.validate((valid) => {
-          if (valid) {
-            const params = {
-              id: row.id,
-              downloadWeight: row.downloadWeight
-            }
-
-            $purchaseComplete(params).then(response => {
-              this.$message.success('成功!')
-
-              this.$refs.lngPlan.initDataList()
-            })
-            this.dialogCompleteVisible = false
-          } else {
-            console.log('error submit!!')
-            return false
-          }
-        })
-      } else {
-        this.dialogCompleteVisible = false
-      }
-    },
     // 异常处理
     anomalousEvent(row) {
       $strategyExceptionFindPurchase({ purchaseId: row.id }).then(response => {
@@ -416,6 +402,10 @@ export default {
             tmpDetailInfo.operatorReachTime = item.operatorTime
           }
 
+          if (item.type == 20) {
+            tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: '计划修改备注', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
+            tmpDetailInfo['note' + item.type + '_' + index] = item.note
+          }
           if (item.type == 60 || item.type == 90 || item.type == 130) {
             tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: '驳回原因', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
             tmpDetailInfo['note' + item.type + '_' + index] = item.note

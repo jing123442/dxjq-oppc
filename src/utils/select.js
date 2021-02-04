@@ -253,8 +253,8 @@ export function utilsCheckType() {
 
 export function utilsModifyApplyType() {
   return [
-    { value: 1, label: '修改申请' },
-    { value: 2, label: '取消申请' },
+    { value: 1, label: '计划变更' },
+    { value: 2, label: '计划取消' },
     { value: 3, label: '异常申请' }
   ]
 }
