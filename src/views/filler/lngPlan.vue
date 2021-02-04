@@ -243,7 +243,7 @@ export default {
                 lngFromCode: row.lngFromCode,
                 lngFromName: row.lngFromName,
                 driverPhone: row.driverPhone,
-                uploadTime: row.uploadTime,
+                leaveTime: row.leaveTime,
                 carNumber: row.carNumber,
                 trailerNumber: row.trailerNumber
               }
@@ -334,9 +334,13 @@ export default {
     // 异常处理
     anomalousEvent(row) {
       $strategyExceptionFindPurchase({ purchaseId: row.id }).then(response => {
-        this.anomalousRow = row
+        this.anomalousRow = Object.assign({}, row, response.data.purchase)
         this.anomalousRow._btn = custFormBtnList()
-        this.anomalousRow.exceptionId = response.data && response.data.id
+        if (response.data && response.data.purchaseException) {
+          this.anomalousRow.exceptionId = response.data.purchaseException.id
+          this.anomalousRow.exceptionApplyNote = response.data.purchaseException.exceptionApplyNote
+          this.anomalousRow.exceptionApplyTime = response.data.purchaseException.exceptionApplyTime
+        }
         // eslint-disable-next-line no-prototype-builtins
         if (!this.anomalousRow.hasOwnProperty('bearType')) {
           this.$set(this.anomalousRow, 'bearType', 1)
@@ -403,11 +407,14 @@ export default {
             tmpDetailCol.push({ field: 'operatorType' + item.type + '_' + index, name: '核对处理', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
             tmpDetailInfo['operatorType' + item.type + '_' + index] = item.typeName
           }
-          tmpDetailCol.push({ field: 'operatorName' + item.type + '_' + index, name: item.typeName, hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
+          tmpDetailCol.push({ field: 'operatorName' + item.type + '_' + index, name: '操作人', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
           tmpDetailCol.push({ field: 'operatorTime' + item.type + '_' + index, name: item.operateTimeName, hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index, formatFun: 'formateTData all', stype: 'format' } })
 
           tmpDetailInfo['operatorName' + item.type + '_' + index] = item.operatorName
           tmpDetailInfo['operatorTime' + item.type + '_' + index] = item.operatorTime
+          if (item.type == 120) {
+            tmpDetailInfo.operatorReachTime = item.operatorTime
+          }
 
           if (item.type == 60 || item.type == 90 || item.type == 130) {
             tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: '驳回原因', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
@@ -561,9 +568,11 @@ export default {
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (k == 'planTime' || k == 'createTime' || k == 'lockTime' || k == 'modifyApplyTime' || k == 'confirmTime' || k == 'leaveTime' || k == 'uploadTime' || k == 'reachTime' || k == 'completeTime' || k == 'cancelTime' || k == 'exceptionApplyTime') {
-            querys.param.dateType = dateTypeInfo[k]
-            querys.param.dateParam.createDateFrom = v[0]
-            querys.param.dateParam.createDateTo = v[1]
+            if (v) {
+              querys.param.dateType = dateTypeInfo[k]
+              querys.param.dateParam.createDateFrom = v[0]
+              querys.param.dateParam.createDateTo = v[1]
+            }
           } else {
             if (v !== '') querys.param.purchase[k] = v
           }

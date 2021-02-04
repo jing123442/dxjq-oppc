@@ -159,7 +159,7 @@ export function utilsIdentityType() {
 export function utilsPlanStatus() {
   return [
     { value: 0, label: '已取消' },
-    { value: 1, label: '已下单' },
+    { value: 1, label: '已提报' },
     { value: 6, label: '已锁定' },
     { value: 2, label: '已确认' },
     { value: 3, label: '已出港' },
