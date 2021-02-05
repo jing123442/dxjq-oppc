@@ -179,11 +179,11 @@ export default {
           operateList.forEach(item => {
             if (item.type == 40) {
               row.modifyCreateTime = item.operatorTime
+              row.modifyCreateNote = item.note
             }
           })
         }
 
-        row.modifyCreateNote = purchaseDuplicate.createNote
         row.modifyApplyType = purchaseDuplicate.modifyApplyType
         row.modifyPlanTime = purchaseDuplicate.planTime
         row.modifyDownloadContactName = purchaseDuplicate.downloadContactName
@@ -355,12 +355,12 @@ export default {
             } else if (row.bearType == 2) {
               params.purchaseException.checkWeight = row.exceptionCheckWeight
               params.purchaseException.checkNote = row.exceptionCheckNote
-              params.purchaseException.exceptionHandleUrl = row.exceptionHandleUrl
+              params.purchaseException.exceptionHandleUrl = row.exceptionHandleUrl[0].url
             } else if (row.bearType == 3) {
               params.purchase.uploadWeight = row.exceptionUploadWeight
               params.purchase.lngFromCode = row.exceptionLngFromCode
               params.purchase.lngFromName = row.exceptionLngFromName
-              params.purchase.uploadUrl = row.exceptionUploadUrl
+              params.purchase.uploadUrl = row.exceptionUploadUrl[0].url
             }
 
             $strategyExceptionPurchase(params).then(response => {
@@ -410,6 +410,10 @@ export default {
             tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: '驳回原因', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
             tmpDetailInfo['note' + item.type + '_' + index] = item.note
           }
+          if (item.type == 150) {
+            tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: '申报原因', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
+            tmpDetailInfo['note' + item.type + '_' + index] = item.note
+          }
         })
       }
 
@@ -422,40 +426,43 @@ export default {
     exceptionEvent(data) {
       const tmpDetailCol = []
       const tmpDetailInfo = {}
-      const ouIndex = 1000 + '_' + 1
 
-      if (data.purchaseException) {
-        const exceptionInfo = data.purchaseException
-        tmpDetailCol.push({ field: 'exceptionBearTypeName', name: '处理方式', hide: true, nameSpan: 6, detail: { type: 'span', serial: 100, ou: ouIndex } })
-        tmpDetailCol.push({ field: 'exceptionApplyTime', name: '异常申报时间', hide: true, nameSpan: 6, detail: { type: 'span', serial: 101, ou: ouIndex, formatFun: 'formateTData all', stype: 'format' } })
-        tmpDetailCol.push({ field: 'exceptionApplyNote', name: '申报原因', hide: true, nameSpan: 6, detail: { type: 'span', serial: 102, ou: ouIndex } })
+      if (data.purchase && data.purchase.status != 8) {
+        const ouIndex = 1000 + '_' + 1
 
-        tmpDetailInfo.exceptionApplyTime = exceptionInfo.exceptionApplyTime
-        tmpDetailInfo.exceptionApplyNote = exceptionInfo.exceptionApplyNote
+        if (data.purchaseException) {
+          const exceptionInfo = data.purchaseException
+          tmpDetailCol.push({ field: 'exceptionBearTypeName', name: '处理方式', hide: true, nameSpan: 6, detail: { type: 'span', serial: 100, ou: ouIndex } })
+          tmpDetailCol.push({ field: 'exceptionApplyTime', name: '异常申报时间', hide: true, nameSpan: 6, detail: { type: 'span', serial: 101, ou: ouIndex, formatFun: 'formateTData all', stype: 'format' } })
+          tmpDetailCol.push({ field: 'exceptionApplyNote', name: '申报原因', hide: true, nameSpan: 6, detail: { type: 'span', serial: 102, ou: ouIndex } })
 
-        this.detailModeList(1000, 1)
-        if (exceptionInfo.bearType == 1) {
-          tmpDetailCol.push({ field: 'exceptionCheckWeight', name: '核准气量(公斤)', hide: true, nameSpan: 6, detail: { type: 'span', serial: 103, ou: ouIndex } })
-          tmpDetailCol.push({ field: 'exceptionCheckNote', name: '处理答复', hide: true, nameSpan: 6, detail: { type: 'span', serial: 104, ou: ouIndex } })
-          tmpDetailInfo.exceptionCheckWeight = exceptionInfo.checkWeight
-          tmpDetailInfo.exceptionCheckNote = exceptionInfo.checkNote
+          tmpDetailInfo.exceptionApplyTime = exceptionInfo.exceptionApplyTime
+          tmpDetailInfo.exceptionApplyNote = exceptionInfo.exceptionApplyNote
 
-          tmpDetailInfo.exceptionBearTypeName = '加气站承担'
-        } else if (exceptionInfo.bearType == 2) {
-          tmpDetailCol.push({ field: 'exceptionCheckWeight', name: '核准气量(公斤)', hide: true, nameSpan: 6, detail: { type: 'span', serial: 104, ou: ouIndex } })
-          tmpDetailCol.push({ field: 'exceptionHandleUrl', name: '上传凭证附件', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 103, ou: ouIndex } })
-          tmpDetailCol.push({ field: 'exceptionCheckNote', name: '处理答复', hide: true, nameSpan: 6, detail: { type: 'span', serial: 105, ou: ouIndex } })
-          tmpDetailInfo.exceptionCheckWeight = exceptionInfo.checkWeight
-          tmpDetailInfo.exceptionHandleUrl = exceptionInfo.exceptionHandleUrl
-          tmpDetailInfo.exceptionCheckNote = exceptionInfo.checkNote
+          this.detailModeList(1000, 1)
+          if (exceptionInfo.bearType == 1) {
+            tmpDetailCol.push({ field: 'exceptionCheckWeight', name: '核准气量(公斤)', hide: true, nameSpan: 6, detail: { type: 'span', serial: 103, ou: ouIndex } })
+            tmpDetailCol.push({ field: 'exceptionCheckNote', name: '处理答复', hide: true, nameSpan: 6, detail: { type: 'span', serial: 104, ou: ouIndex } })
+            tmpDetailInfo.exceptionCheckWeight = exceptionInfo.checkWeight
+            tmpDetailInfo.exceptionCheckNote = exceptionInfo.checkNote
 
-          tmpDetailInfo.exceptionBearTypeName = '平台承担'
-        } else if (exceptionInfo.bearType == 3) {
-          tmpDetailCol.push({ field: 'uploadWeight', name: '出港重量(公斤)', hide: true, nameSpan: 6, detail: { type: 'span', serial: 104, ou: ouIndex } })
-          tmpDetailCol.push({ field: 'uploadUrl', name: '修正出港磅单', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 103, ou: ouIndex } })
-          tmpDetailCol.push({ field: 'lngFromName', name: '液原地', hide: true, nameSpan: 6, detail: { type: 'span', serial: 105, ou: ouIndex } })
+            tmpDetailInfo.exceptionBearTypeName = '加气站承担'
+          } else if (exceptionInfo.bearType == 2) {
+            tmpDetailCol.push({ field: 'exceptionCheckWeight', name: '核准气量(公斤)', hide: true, nameSpan: 6, detail: { type: 'span', serial: 104, ou: ouIndex } })
+            tmpDetailCol.push({ field: 'exceptionHandleUrl', name: '上传凭证附件', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 103, ou: ouIndex } })
+            tmpDetailCol.push({ field: 'exceptionCheckNote', name: '处理答复', hide: true, nameSpan: 6, detail: { type: 'span', serial: 105, ou: ouIndex } })
+            tmpDetailInfo.exceptionCheckWeight = exceptionInfo.checkWeight
+            tmpDetailInfo.exceptionHandleUrl = exceptionInfo.exceptionHandleUrl
+            tmpDetailInfo.exceptionCheckNote = exceptionInfo.checkNote
 
-          tmpDetailInfo.exceptionBearTypeName = '修正出港数据'
+            tmpDetailInfo.exceptionBearTypeName = '平台承担'
+          } else if (exceptionInfo.bearType == 3) {
+            tmpDetailCol.push({ field: 'uploadWeight', name: '出港重量(公斤)', hide: true, nameSpan: 6, detail: { type: 'span', serial: 104, ou: ouIndex } })
+            tmpDetailCol.push({ field: 'uploadUrl', name: '修正出港磅单', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 103, ou: ouIndex } })
+            tmpDetailCol.push({ field: 'lngFromName', name: '液原地', hide: true, nameSpan: 6, detail: { type: 'span', serial: 105, ou: ouIndex } })
+
+            tmpDetailInfo.exceptionBearTypeName = '修正出港数据'
+          }
         }
       }
 
