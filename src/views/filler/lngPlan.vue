@@ -528,7 +528,7 @@ export default {
       const params = this.currParams
 
       $strategyPurchaseExport(params).then(response => {
-        const fileName = 'LNG提报计划' + Date.parse(new Date()) + '.xls'
+        const fileName = 'LNG_' + Date.parse(new Date()) + '.xlsx'
 
         exportBlobToFiles(response, fileName)
       })
