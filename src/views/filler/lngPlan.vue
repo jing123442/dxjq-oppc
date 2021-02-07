@@ -177,7 +177,7 @@ export default {
         const purchaseDuplicate = response.data && response.data.purchaseDuplicate
         if (operateList.length > 0) {
           operateList.forEach(item => {
-            if (item.type == 40) {
+            if (item.type == 40 || item.type == 70) {
               row.modifyCreateTime = item.operatorTime
               row.modifyCreateNote = item.note
             }
