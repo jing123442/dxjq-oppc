@@ -21,7 +21,8 @@ const getters = {
   order_filler_detail_column: item => columns.fillerDetail,
   // 加气站提现明细
   order_filler_withdraw_column: item => columns.fillerWithdraw,
-
+  // 加气站入库明细
+  order_filler_stockDetail_column: item => columns.stockDetail,
   // 物流公司结算订单
   order_carrier_mode_list: item => item.app.modeDefault,
   order_carrier_page_status: item => app.list.carrier,

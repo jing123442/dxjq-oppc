@@ -183,3 +183,12 @@ export async function $strategyPurchaseFind (data) {
 export async function $strategyPurchaseExport (data) {
   return await R({ url: 'strategy/purchase/download_lng', method: 'POST', data, responseType: 'blob' })
 }
+
+// 某个账期下加气站入库明细汇总
+export async function $strategyPurchaseStockTotal(data) {
+  return await R({ url: 'strategy/purchase/get_store_total', data })
+}
+// 下载某个账期的入库明细
+export async function $strategyPurchaseDownloadStock(data) {
+  return await R({ url: 'strategy/purchase/download_store_list', data, responseType: 'blob' })
+}
