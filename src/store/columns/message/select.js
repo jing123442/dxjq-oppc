@@ -7,6 +7,10 @@ const select = {
       { value: 1, label: '实时发布' },
       { value: 2, label: '定时发布' }
     ],
+    searchPublishType: [
+      { value: 1, label: '实时发布' },
+      { value: 2, label: '定时发布' }
+    ],
     publishStatus: [
       { value: 1, label: '编辑中' },
       { value: 2, label: '发布中' },

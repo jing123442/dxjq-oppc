@@ -106,6 +106,7 @@ export default {
     },
     onReqParams(type, _this, callback) {
       _this.tableListResponse = ''
+      console.log(_this.finds)
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { mcMessage: {}, queryDateType: 1, startDate: '', endDate: '' } })
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
@@ -130,7 +131,6 @@ export default {
               params.param.endDate = v[1]
             }
           } else {
-            delete params.param.queryDateType
             if (v !== '') params.param.mcMessage[k] = v
           }
         }
