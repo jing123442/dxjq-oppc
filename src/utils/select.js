@@ -293,6 +293,22 @@ export function utilsDriverList() {
     }
   }
 }
+export function utilsRoleList() {
+  return {
+    url: 'user/role/list',
+    node: ['data', 'records'],
+    params: {
+      page: 1,
+      size: 100,
+      param: {}
+    },
+    filter: ['长城奥扬 / 长城奥扬管理员', '运营管理 / 大象加气管理员', '运营管理 / 大象加气运营人员'],
+    props: {
+      value: ['roleId', 'clientId'],
+      label: ['clientName', 'roleName']
+    }
+  }
+}
 
 export function utilsSource() {
   return {

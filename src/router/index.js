@@ -11,6 +11,7 @@ import User from './user.js'
 import Mine from './mine.js'
 import Business from './business.js'
 import Setting from './setting.js'
+import Message from './message.js'
 import Order from './order.js'
 import Customer from './customer.js'
 Vue.use(VueRouter)
@@ -42,7 +43,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Market, ...Settlement, ...Setting, ...Order, ...Customer]
+  routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Market, ...Settlement, ...Setting, ...Order, ...Message, ...Customer]
 })
 router.beforeEach((to, from, next) => {
   const woptoken = getLocalStorage('woptoken')

@@ -246,7 +246,6 @@ export function custFormBtnList(type = 3) {
 
   return bottonList
 }
-
 // blob导出excel文件
 export function exportBlobToFiles(content, fileName, fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
   try {

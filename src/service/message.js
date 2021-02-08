@@ -52,3 +52,6 @@ export async function $printerStatus (data) {
 export async function $printerDel (data) {
   return await R({ url: 'message/printer/del', data })
 }
+export async function $messageDel (data) {
+  return await R({ url: 'message/mc_message/del_batch', data })
+}
