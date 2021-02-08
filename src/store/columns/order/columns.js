@@ -118,11 +118,11 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: params => { return params.row.status == 2 && [{ type: 'down', name: '下载' }] } }
   ],
   stockDetail: [
-    { field: 'gasOrderId', name: 'LNG计划编号', fixed: 'left', nameSpan: 6 },
-    { field: 'createDate', name: '入库时间', formatFun: 'formateTData all', stype: 'format' },
+    { field: 'id', name: 'LNG计划编号', fixed: 'left', nameSpan: 6 },
+    { field: 'completeTime', name: '入库时间', formatFun: 'formateTData all', stype: 'format' },
     { field: 'carNumber', name: '车牌号' },
     { field: 'lngFromName', name: '气源' },
-    { field: 'quantity', name: '入库重量(公斤)' },
+    { field: 'storeWeight', name: '入库重量(公斤)' },
     { field: 'gasstationName', name: '加气站名称' }
   ]
 }
