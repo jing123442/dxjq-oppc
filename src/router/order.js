@@ -26,6 +26,7 @@ export default [
         children: [
           { path: 'fillerDetailList', component: inImport('order/sub/detailList'), name: 'fillerDetailList', meta: { title: '结算明细', noCache: false } },
           { path: 'fillerWithdrawList', component: inImport('order/sub/withdrawList'), name: 'fillerWithdrawList', meta: { title: '提现明细', noCache: false } },
+          { path: 'fillerStockDetail', component: inImport('order/sub/stockDetail'), name: 'fillerStockDetail', meta: { title: '入库明细', noCache: false } },
           { path: 'fillerDownList', component: inImport('order/sub/download'), name: 'fillerDownList', meta: { title: '下载', noCache: false } }
         ]
       },

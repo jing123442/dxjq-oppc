@@ -54,6 +54,14 @@ const truckToDriverList = (value) => {
 
   return result.join(' | ')
 }
+const roleList = (value) => {
+  console.log(value)
+  const result = []
+  value.forEach(item => {
+    result.push(item.title)
+  })
+  return result.join(' | ')
+}
 
 const formateTData = (date, fmt) => {
   return formateTSData(date, fmt)
@@ -103,5 +111,6 @@ export {
   formatContent,
   tableStatusToLabel,
   formatCardNumber,
-  truckToDriverList
+  truckToDriverList,
+  roleList
 }

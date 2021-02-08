@@ -31,7 +31,7 @@ const columns = {
     { field: 'profitTotal', note: '区间内加气站服务费总金额', name: '加气站利润金额' },
     { field: 'withdrawTotal', note: '区间内提现金额', name: '本期提现金额' },
     { field: 'endProfitBalance', note: '期末可提现金额', name: '期末利润余额' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 200, list: [{ type: 'detail', name: '结算明细' }, { type: 'withdraw', name: '提现明细' }, { type: 'down', name: '下载' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 230, list: [{ type: 'detail', name: '结算明细' }, { type: 'withdraw', name: '提现明细' }, { type: 'stock', name: '入库明细' }, { type: 'down', name: '下载' }] }
   ],
   fillerDetail: [
     { field: 'orderId', name: '订单编号', fixed: 'left' },
@@ -116,6 +116,14 @@ const columns = {
     { field: 'genDate', name: '文件生成时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
     { field: 'note', name: '描述' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: params => { return params.row.status == 2 && [{ type: 'down', name: '下载' }] } }
+  ],
+  stockDetail: [
+    { field: 'id', name: 'LNG计划编号', fixed: 'left', nameSpan: 6 },
+    { field: 'completeTime', name: '入库时间', formatFun: 'formateTData all', stype: 'format' },
+    { field: 'carNumber', name: '车牌号' },
+    { field: 'lngFromName', name: '气源' },
+    { field: 'storeWeight', name: '入库重量(公斤)' },
+    { field: 'gasstationName', name: '加气站名称' }
   ]
 }
 

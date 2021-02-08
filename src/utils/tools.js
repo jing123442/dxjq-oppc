@@ -246,7 +246,6 @@ export function custFormBtnList(type = 3) {
 
   return bottonList
 }
-
 // blob导出excel文件
 export function exportBlobToFiles(content, fileName, fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
   try {
@@ -285,5 +284,13 @@ export function routeImport() {
     return './product.js'
   } else {
     return './development.js'
+  }
+}
+
+export function settlePeriodInterval(periodYear, periodMonth) {
+  if (periodMonth == 1) {
+    return `${(periodYear - 1)}年12月25日 00:00:00至${periodYear}年${periodMonth}月24日 23:59:59`
+  } else {
+    return `${periodYear}年${(periodMonth - 1)}月25日 00:00:00至${periodYear}年${periodMonth}月24日 23:59:59`
   }
 }

@@ -100,6 +100,11 @@ export default {
           path: 'orderFiller/fillerWithdrawList',
           query: params
         })
+      } else if (type === 'stock') {
+        this.$router.push({
+          path: 'orderFiller/fillerStockDetail',
+          query: params
+        })
       } else if (type === 'down') {
         this.exportRow = Object.assign(this.exportRow, row)
         this.exportRow.period = formatPeriodDateTime(row.periodYear, row.periodMonth)
