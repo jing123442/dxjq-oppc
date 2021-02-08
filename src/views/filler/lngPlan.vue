@@ -402,20 +402,21 @@ export default {
             tmpDetailInfo.operatorReachTime = item.operatorTime
           }
 
-          if (item.type == 20) {
-            tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: '计划修改备注', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
-            tmpDetailInfo['note' + item.type + '_' + index] = item.note
-          }
-          if (item.type == 40) {
-            tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: '提报变更备注', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
-            tmpDetailInfo['note' + item.type + '_' + index] = item.note
-          }
-          if (item.type == 60 || item.type == 90 || item.type == 130) {
-            tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: '驳回原因', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
-            tmpDetailInfo['note' + item.type + '_' + index] = item.note
-          }
-          if (item.type == 150) {
-            tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: '申报原因', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
+          if (item.type == 20 || item.type == 40 || item.type == 60 || item.type == 70 || item.type == 90 || item.type == 130 || item.type == 150) {
+            let fieldName = ''
+            if (item.type == 20) {
+              fieldName = '计划修改备注'
+            } else if (item.type == 40) {
+              fieldName = '提报变更备注'
+            } else if (item.type == 70) {
+              fieldName = '提报取消备注'
+            } else if (item.type == 150) {
+              fieldName = '申报原因'
+            } else if (item.type == 60 || item.type == 90 || item.type == 130) {
+              fieldName = '驳回原因'
+            }
+
+            tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: fieldName, hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
             tmpDetailInfo['note' + item.type + '_' + index] = item.note
           }
         })
