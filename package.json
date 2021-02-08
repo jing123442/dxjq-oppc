@@ -13,10 +13,6 @@
   "dependencies": {
     "axios": "^0.19.2",
     "element-ui": "^2.13.2",
-<<<<<<< HEAD
-    "em-element-ui": "^1.2.22",
-=======
->>>>>>> local
     "js-cookie": "^2.2.1",
     "stompjs": "^2.3.3",
     "vue": "^2.6.11",
