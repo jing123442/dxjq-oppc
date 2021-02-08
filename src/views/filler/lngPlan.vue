@@ -398,12 +398,16 @@ export default {
 
           tmpDetailInfo['operatorName' + item.type + '_' + index] = item.operatorName
           tmpDetailInfo['operatorTime' + item.type + '_' + index] = item.operatorTime
-          if (item.type == 120) {
+          if (item.type == 125) {
             tmpDetailInfo.operatorReachTime = item.operatorTime
           }
 
           if (item.type == 20) {
             tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: '计划修改备注', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
+            tmpDetailInfo['note' + item.type + '_' + index] = item.note
+          }
+          if (item.type == 40) {
+            tmpDetailCol.push({ field: 'note' + item.type + '_' + index, name: '提报变更备注', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
             tmpDetailInfo['note' + item.type + '_' + index] = item.note
           }
           if (item.type == 60 || item.type == 90 || item.type == 130) {
@@ -506,6 +510,7 @@ export default {
         100: '出港录入',
         110: '出港修改',
         120: '到站录入',
+        125: '签收计划',
         130: '核对退回',
         140: '核对确认',
         150: '异常申报',

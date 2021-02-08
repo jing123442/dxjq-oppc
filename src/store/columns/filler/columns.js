@@ -293,7 +293,7 @@ const columns = {
     { field: 'operatorTime', name: '操作时间', width: 140, fixed: 'left', stype: 'format', formatFun: 'formateTData all' },
     { field: 'operatorName', name: '操作人', width: 100 },
     { field: 'typeName', name: '操作类型', width: 120 },
-    { field: 'content', name: '操作内容' }
+    { field: 'content', name: '操作内容', stype: 'v-html' }
   ]
 }
 
