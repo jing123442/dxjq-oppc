@@ -61,10 +61,10 @@ export default {
       })
     },
     userInfoUpdate(evt) {
-      let path = '/mine/index'
+      let path = '/mine/mineIndex'
 
       if (evt === 'pwd') {
-        path = '/mine/editPassword'
+        path = '/mine/mineEditPassword'
       }
 
       this.$router.push({ path: path })
