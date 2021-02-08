@@ -186,7 +186,7 @@ export async function $strategyPurchaseExport (data) {
 
 // 某个账期下加气站入库明细汇总
 export async function $strategyPurchaseStockTotal(data) {
-  return await R({ url: 'strategy/purchase/get_store_total', data })
+  return await R({ url: 'strategy/stock_log/get_store_total', data })
 }
 // 下载某个账期的入库明细
 export async function $strategyPurchaseDownloadStock(data) {
