@@ -4,7 +4,7 @@ const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : requir
 export default [
   {
     path: '/message',
-    name: 'message',
+    name: '',
     component: Layout,
     redirect: '/message/msgCenter',
     meta: { title: '消息中心' },

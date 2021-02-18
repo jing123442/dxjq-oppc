@@ -12,6 +12,7 @@ const file = {
       UEDITOR_HOME_URL: './UEditor/',
       serverUrl: process.env.VUE_APP_BASE_URL + 'message/upload/image',
       imageActionName: 'file',
+      imageMaxSize: 1048576, // 最大限制1M
       imageAllowFiles: ['.png', '.jpg', '.jpeg', '.gif', '.bmp'],
       imageUrlPrefix: process.env.VUE_APP_FILE_HOST,
       headers: {
