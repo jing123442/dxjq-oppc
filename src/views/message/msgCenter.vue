@@ -1,12 +1,6 @@
 <template>
   <div class="template-main">
     <em-table-list ref="msgCenter" :tableListName="'msgCenter'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue"></em-table-list>
-     <!-- <el-dialog title="添加消息" :visible.sync="addMsgVisible" :width="add_edit_dialog" :append-to-body="true">
-      <nt-form v-if="addMsgVisible" ref="addMsg" :formRef="'bindForm'" :rowData="addMsgRow" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventEditMsg"></nt-form>
-    </el-dialog>
-    <el-dialog title="编辑消息" :visible.sync="editMsgVisible" :width="add_edit_dialog" :append-to-body="true">
-      <nt-form v-if="editMsgVisible" ref="editMsg" :formRef="'bindForm'" :rowData="editMsgRow" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventEditMsg"></nt-form>
-    </el-dialog> -->
   </div>
 </template>
 <script>
@@ -161,3 +155,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  >>> img {
+    max-width: 100%;
+  }
+</style>

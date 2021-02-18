@@ -125,7 +125,7 @@ export function menuList() {
       { path: '/customerIndex', name: 'customerIndex', meta: { title: 'QA发布管理', noCache: false } },
       { path: '/customerType', name: 'customerType', meta: { title: 'QA分类管理', noCache: false } }
     ]
-  }/* , {
+  }, {
     path: '/message',
     name: 'message',
     meta: { title: '消息中心', icon: 'el-icon-chat-line-round', noCache: false },
@@ -133,5 +133,5 @@ export function menuList() {
       { path: '/msgCenter', name: 'msgCenter', meta: { title: '消息中心', noCache: false } },
       { path: '/index', name: 'index', hidden: true, meta: { title: '暂不使用', noCache: false } }
     ]
-  } */]
+  }]
 }
