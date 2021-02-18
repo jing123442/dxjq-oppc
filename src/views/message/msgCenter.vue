@@ -124,6 +124,8 @@ export default {
               params.param.startDate = v[0]
               params.param.endDate = v[1]
             }
+          } else if (k == 'keyword') {
+            if (v !== '') params.param[k] = v
           } else {
             if (v !== '') params.param.mcMessage[k] = v
           }
@@ -156,7 +158,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  >>> img {
-    max-width: 100%;
+  .el-form-box {
+    /deep/ img {
+      max-width: 100%;
+    }
   }
 </style>

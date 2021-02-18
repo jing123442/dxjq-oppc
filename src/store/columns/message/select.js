@@ -3,7 +3,7 @@ const select = {
   message: {
     roleList: utilsRoleList(),
     publishType: [
-      { value: '', label: '选择发布方式' },
+      { value: ' ', label: '选择发布方式' },
       { value: 1, label: '实时发布' },
       { value: 2, label: '定时发布' }
     ],
