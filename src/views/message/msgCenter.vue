@@ -158,9 +158,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .el-form-box {
-    /deep/ img {
-      max-width: 100%;
-    }
-  }
+.el-picker-panel .el-picker-panel__footer .el-button--text.el-picker-panel__link-btn {
+  display: none;
+}
 </style>

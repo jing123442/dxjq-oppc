@@ -11,17 +11,17 @@ const roleSelectRules = function(rule, value, callback) {
 const timeOptions = {
   disabledDate(time) {
     const _now = Date.now()
-    const seven = 7 * 24 * 60 * 60 * 1000
+    const seven = 6 * 24 * 60 * 60 * 1000
     const sevenDays = _now + seven
     // 大于当前的禁止，小于7天前的禁止
-    return time.getTime() < _now || time.getTime() > sevenDays
+    return time.getTime() < _now - 24 * 60 * 60 * 1000 || time.getTime() > sevenDays
   }
 }
 const columns = {
   message: [
     { field: 'id', hide: true, show: { type: 'hide', serial: 10, noshow: 1, parent: 'mcMessage' } },
     { field: 'createTime', name: '创建时间', fixed: 'left', ispush: false, stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', placeholder: '', style: 'width: 350px;', findField: 'createTime', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', subField: 'createDateName', hideName: true, obj: 'currDateSearch', value: 'createTime' } },
-    { field: 'publishTime', name: '发布时间', formatFun: 'formateTData all', stype: 'format', show: { type: 'date-picker', serial: 8, parent: 'mcMessage', format: 'yyyy-MM-dd HH:00:00', valueFormat: 'timestamp', model: 'datetime', placeholder: '选择发布时间', timeOptions: timeOptions }, detail: { type: 'span', isDisabled: true, serial: 3, formatFun: 'formateTData all', stype: 'format' } },
+    { field: 'publishTime', name: '发布时间', formatFun: 'formateTData all', stype: 'format', show: { type: 'date-picker', serial: 8, parent: 'mcMessage', format: 'yyyy-MM-dd HH', model: 'datetime', placeholder: '选择发布时间', timeOptions: timeOptions, className: 'date-time-picker' }, detail: { type: 'span', isDisabled: true, serial: 3, formatFun: 'formateTData all', stype: 'format' } },
     { field: 'title', name: '标题', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 2, show: { type: 'text', serial: 1, style: 'width: 98%', placeholder: '请输入标题', parent: 'mcMessage' }, detail: { type: 'span', serial: 1, isDisabled: 'true' }, rules: [{ required: true, message: '请输入标题！', trigger: 'blur' }] },
     { field: 'keyword', hide: true, show: { type: 'hide', serial: 25 }, search: { type: 'text', placeholder: '请输入标题关键字' } },
     { field: 'content', name: '内容', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 2, hide: true, show: { type: 'ueditor', serial: 2, style: 'width: 98%', parent: 'mcMessage', placeholder: '请输入内容', config: file.state.fileUEditorConfig }, detail: { type: 'span', serial: 2, model: 'html', style: 'width: 97%;overflow: hidden;display: block;' }, rules: [{ required: true, message: '请输入内容！', trigger: 'blur' }] },
