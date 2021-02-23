@@ -1,6 +1,8 @@
+import app from './app'
 import { $login, $logout } from '@/service/main'
+import { $menuTree } from '@/service/user'
 import { menuList } from '@/utils/menu'
-import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage'
+import { setLocalStorage, getLocalStorage, removeSelfAllLocalStorage } from '@/utils/storage'
 
 const Base64 = require('js-base64').Base64
 
@@ -11,7 +13,7 @@ const user = {
     wopuser: JSON.parse(getLocalStorage('wopuser')) || {},
     woprole: getLocalStorage('woprole') || '',
     woporg: getLocalStorage('woporg') || '',
-    routers: menuList()
+    routers: JSON.parse(getLocalStorage('menu_tree')) || []
   },
 
   mutations: {
@@ -29,6 +31,9 @@ const user = {
     },
     setwoporg: (state, payload) => {
       state.woporg = payload
+    },
+    setrouters: (state, payload) => {
+      state.routers = payload
     }
   },
   actions: {
@@ -43,6 +48,14 @@ const user = {
             const identifier = Base64.encode(
               'woperation:' + orgId + ':' + user.user_id + ':' + roleId
             )
+            // 用户登录唯一性
+            sessionStorage.setItem(process.env.VUE_APP_SESSION_ID, user.user_id)
+            // 当前菜单树
+            $menuTree({ clientId: 'woperation', roleId: roleId }).then(response => {
+              const menuData = app.state.menuType ? response.data : menuList()
+              setLocalStorage('menu_tree', JSON.stringify(menuData))
+              commit('setrouters', menuData)
+            })
 
             setLocalStorage('woptoken', token)
             setLocalStorage('wopuser', JSON.stringify(user))
@@ -75,15 +88,11 @@ const user = {
       return new Promise((resolve, reject) => {
         const data = {
           client_id: 'woperation',
-          user_id: state.wopuser.user_id
+          user_id: sessionStorage.getItem(process.env.VUE_APP_SESSION_ID)
         }
         $logout(data).then(response => {
-          removeLocalStorage('woptoken')
-          removeLocalStorage('wopuser')
-          removeLocalStorage('wopidntf')
-          removeLocalStorage('woporg')
-          removeLocalStorage('woprole')
-          removeLocalStorage('location_pointer')
+          removeSelfAllLocalStorage()
+
           commit('setwoptoken')
           commit('setwopidntf')
           commit('setwopuser')
@@ -98,12 +107,8 @@ const user = {
     },
     clear({ commit, state }) {
       return new Promise((resolve, reject) => {
-        removeLocalStorage('woptoken')
-        removeLocalStorage('wopuser')
-        removeLocalStorage('wopidntf')
-        removeLocalStorage('woporg')
-        removeLocalStorage('woprole')
-        removeLocalStorage('location_pointer')
+        removeSelfAllLocalStorage()
+
         commit('setwoptoken')
         commit('setwopidntf')
         commit('setwopuser')

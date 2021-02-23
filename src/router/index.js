@@ -13,7 +13,8 @@ import Business from './business.js'
 import Setting from './setting.js'
 import Message from './message.js'
 import Order from './order.js'
-import Customer from './customer.js'
+import Authority from './authority.js'
+import Stock from './stock.js'
 Vue.use(VueRouter)
 
 const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : require('./_development')
@@ -43,7 +44,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Market, ...Settlement, ...Setting, ...Order, ...Message, ...Customer]
+  routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Market, ...Settlement, ...Setting, ...Order, ...Message, ...Authority, ...Stock]
 })
 router.beforeEach((to, from, next) => {
   const woptoken = getLocalStorage('woptoken')

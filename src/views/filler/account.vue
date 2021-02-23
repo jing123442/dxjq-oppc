@@ -1,17 +1,16 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'fillerAccount'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'fillerAccount'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { initVueDataOptions, queryDefaultParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'fillerAccount',
   data() {
-    return {
-      isShow: false,
+    return initVueDataOptions(this, {
       queryCustURL: {
         list: {
           url: '/account/org_account/list',
@@ -23,9 +22,8 @@ export default {
         },
         name: '加气站资金账户管理'
       },
-      axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 1 } })
-    }
+    })
   },
   computed: {
     ...mapGetters({

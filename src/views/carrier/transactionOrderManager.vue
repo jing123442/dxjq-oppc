@@ -1,20 +1,19 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'transactionOrderManager'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'transactionOrderManager'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="交易订单详情" :visible.sync="dialogDetailVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogDetailVisible" :rowData="detailRow" :pageColumn="page_column_detail" :modeList="mode_list_detail" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn" @onListEvent="onListEventDialogDetail"></nt-form>
     </el-dialog>
   </div>
 </template>
 <script>
-import { axiosRequestParams, isTypeof, callbackPagesInfo } from '@/utils/tools'
+import { initVueDataOptions, isTypeof, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'transactionOrderManager',
   data() {
-    return {
-      isShow: false,
+    return initVueDataOptions(this, {
       queryCustURL: {
         list: {
           url: 'pay/gas_order/list_withtime',
@@ -26,11 +25,9 @@ export default {
         },
         name: '加气订单管理'
       },
-      axios: axiosRequestParams(this),
-      queryParams: Function,
       dialogDetailVisible: false,
       detailRow: {}
-    }
+    })
   },
   computed: {
     ...mapGetters({

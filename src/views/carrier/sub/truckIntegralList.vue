@@ -1,16 +1,16 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'truckAccountList'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'truckAccountList'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, callbackPagesInfo } from '@/utils/tools'
+import { initVueDataOptions, queryDefaultParams, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'truckAccountList',
   data() {
-    return {
+    return initVueDataOptions(this, {
       queryCustURL: {
         list: {
           url: 'account/truck_account_log/list',
@@ -22,9 +22,8 @@ export default {
         },
         name: '流水列表'
       },
-      axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgId: this.$route.query.orgId, accountId: this.$route.query.accountId, truckId: this.$route.query.truckId, acountType: 1 } })
-    }
+    })
   },
   computed: {
     ...mapGetters({

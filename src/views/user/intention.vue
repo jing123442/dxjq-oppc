@@ -4,6 +4,7 @@
       ref="tables"
       :tableListName="'intention'"
       :mode_list="mode_list"
+      :authButtonList="authButtonList"
       :axios="axios"
       :queryCustURL="queryCustURL"
       :responseSuccess="response_success"
@@ -18,15 +19,14 @@
   </div>
 </template>
 <script>
-import { isTypeof, axiosRequestParams, exportBlobToFiles, callbackPagesInfo } from '@/utils/tools'
+import { isTypeof, initVueDataOptions, exportBlobToFiles, callbackPagesInfo } from '@/utils/tools'
 import { $userRegisterExport } from '@/service/user'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'intention',
   data() {
-    return {
-      isShow: false,
+    return initVueDataOptions(this, {
       queryCustURL: {
         add: {
           url: 'user/register_manage/add_driver',
@@ -42,10 +42,8 @@ export default {
         },
         name: '意向个人车主'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'download', name: '导出' }],
-      axios: axiosRequestParams(this),
-      queryParams: Function
-    }
+      buttonsList: [{ type: 'primary', icon: '', event: 'download', name: '导出' }]
+    })
   },
   computed: {
     ...mapGetters({

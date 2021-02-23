@@ -1,22 +1,21 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'release'" ref="tables" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'release'" ref="tables" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog title="变更记录" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
-      <em-table-list v-if="dialogChangeVisible" :tableListName="'releaseLog'" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
+      <em-table-list v-if="dialogChangeVisible" :tableListName="'releaseLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
   </div>
 </template>
 <script>
-import { axiosRequestParams, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { $priceReleaseAudit } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'release',
   data() {
-    return {
-      isShow: false,
+    return initVueDataOptions(this, {
       logRow: [],
       dialogChangeVisible: false,
       queryCustURL: {
@@ -40,10 +39,8 @@ export default {
           }
         },
         name: ''
-      },
-      axios: axiosRequestParams(this),
-      queryParams: Function
-    }
+      }
+    })
   },
   computed: {
     ...mapGetters({

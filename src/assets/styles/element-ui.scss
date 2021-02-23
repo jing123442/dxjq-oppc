@@ -173,3 +173,10 @@
 .checkbox-client {
   width: 40%;
 }
+
+.nt-cascader-panel {
+  height: 360px;
+  .el-cascader-menu__wrap {
+    height: 100%;
+  }
+}

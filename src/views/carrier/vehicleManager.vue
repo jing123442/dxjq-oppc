@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="tables" :tableListName="'vehicleManager'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" :tableListName="'vehicleManager'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="车辆资金归集" :visible.sync="dialogTruckCollectVisible" :width="'50%'" :append-to-body="true">
       <nt-form v-if="dialogTruckCollectVisible" ref="collect" :formRef="'collectForm'" :rowData="collectRow" :pageColumn="collect_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventCollect"></nt-form>
     </el-dialog>
@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo } from '@/utils/tools'
+import { initVueDataOptions, queryDefaultParams, callbackPagesInfo } from '@/utils/tools'
 import { $strategyTruckInfo, $strategyDriverList, $strategyTruckDriverAdd, $strategyTruckDriverDel } from '@/service/strategy'
 import { $truckCollect } from '@/service/pay'
 import { mapGetters } from 'vuex'
@@ -18,8 +18,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'vehicleManager',
   data() {
-    return {
-      isShow: false,
+    return initVueDataOptions(this, {
       collectRow: {},
       dialogTruckCollectVisible: false,
       bindRow: {},
@@ -49,10 +48,8 @@ export default {
         },
         name: '车辆管理'
       },
-      axios: axiosRequestParams(this),
-      bottonList: custFormBtnList(),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 0 } })
-    }
+    })
   },
   computed: {
     ...mapGetters({
@@ -83,7 +80,7 @@ export default {
       $strategyTruckInfo({ truckId: row.truckId }).then(response => {
         const data = response.data
 
-        row._btn = this.bottonList
+        row._btn = this.formBtnList
         this.$set(row, 'amount', data.balance == null ? '未绑定账户' : data.balance)
         row.balance = data.balance == null ? '未绑定账户' : data.balance
         row.balanceInfo = data.balance == null ? '未绑定账户' : '账号余额：' + data.balance + ' 元'
@@ -108,7 +105,7 @@ export default {
 
       const truckInfo = []
 
-      row._btn = this.bottonList
+      row._btn = this.formBtnList
       row.truckDriverList && row.truckDriverList.forEach(item => {
         truckInfo.push(item.driverId)
       })

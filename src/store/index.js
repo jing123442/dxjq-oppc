@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import app from './modules/app'
-import file from './modules/file'
 import user from './modules/user'
+import file from './modules/file'
 import tagsView from './modules/tagsView'
 
 // columns
@@ -18,6 +18,7 @@ import setting from './columns/setting/index'
 import message from './columns/message/index'
 import order from './columns/order/index'
 import customer from './columns/customer/index'
+import authority from './columns/authority/index'
 
 const PAGE_CONFIG = {
   // localstorage
@@ -43,14 +44,14 @@ const PAGE_CONFIG = {
   query_params: state => state.app.queryParams,
   response_success: state => state.app.responseSuccess
 }
-const getters = Object.assign(PAGE_CONFIG, mine.getters, userList.getters, business.getters, filler.getters, carrier.getters, price.getters, settlement.getters, market.getters, setting.getters, message.getters, order.getters, customer.getters)
+const getters = Object.assign(PAGE_CONFIG, mine.getters, userList.getters, business.getters, filler.getters, carrier.getters, price.getters, settlement.getters, market.getters, setting.getters, message.getters, order.getters, customer.getters, authority.getters)
 
 Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
     app,
-    file,
     user,
+    file,
     tagsView,
     mine,
     userList,
@@ -60,8 +61,11 @@ export default new Vuex.Store({
     price,
     market,
     settlement,
+    setting,
+    message,
     order,
-    customer
+    customer,
+    authority
   },
   getters: getters
 })

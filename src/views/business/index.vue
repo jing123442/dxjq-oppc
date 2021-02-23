@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'busorg'" ref="tables" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'busorg'" ref="tables" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="添加平台公司" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog" :append-to-body="true">
       <div v-if="isAuthInfo" class="auth-status" :class="authColor"><span class="auth-status__dot" :class="authColor"></span>
         {{authRow.authStatus == 2 ? '已认证' : (authRow.authStatus == 1 ? '认证中' : (authRow.authStatus == 3 ? '认证失败' : '未认证'))}}
@@ -38,7 +38,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, custFormBtnList, isTypeof, callbackPagesInfo } from '@/utils/tools'
+import { initVueDataOptions, isTypeof, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth, $signContract, $signBalanceProtocol, $sendVerificationCode, $bindPhone, $unbindPhone } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
@@ -46,12 +46,11 @@ import { $userOrgAdd, $userOrgEdit } from '@/service/user'
 export default {
   name: 'busorg',
   data() {
-    return {
+    return initVueDataOptions(this, {
       active: '2',
       isAuthInfo: false,
       tabDisabled: false,
       authColor: 'off',
-      isShow: false,
       queryCustURL: {
         list: {
           url: 'user/org/list',
@@ -64,8 +63,6 @@ export default {
         name: '企业管理'
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '添加公司' }],
-      axios: axiosRequestParams(this),
-      queryParams: Function,
       dialogAddGasStationVisible: false,
       authRow: {},
       auth_page_column: [],
@@ -82,9 +79,8 @@ export default {
       formBindTelRules: {
         tel: [{ required: true, message: '请输入手机号码！', trigger: 'blur' }],
         code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
-      },
-      formBtnList: custFormBtnList()
-    }
+      }
+    })
   },
   computed: {
     ...mapGetters({

@@ -4,12 +4,14 @@ const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : requir
 export default [
   {
     path: '/message',
-    name: '',
+    name: 'message',
     component: Layout,
     redirect: '/message/msgCenter',
     meta: { title: '消息中心' },
     children: [
-      { path: 'msgCenter', component: inImport('message/msgCenter'), name: 'msgCenter', meta: { title: '消息中心', icon: '', noCache: false } }
+      { path: 'msgCenter', component: inImport('message/msgCenter'), name: 'msgCenter', meta: { title: '消息中心', icon: '', noCache: false } },
+      { path: 'customerIndex', component: inImport('message/index'), name: 'customerIndex', meta: { title: 'QA发布管理', noCache: false } },
+      { path: 'customerType', component: inImport('message/type'), name: 'customerType', meta: { title: 'QA分类管理', noCache: false } }
     ]
   }
 ]

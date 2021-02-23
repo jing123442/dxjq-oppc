@@ -27,3 +27,14 @@ export function buttonLNGPlanList(scope) {
 
   return list
 }
+
+export function buttonMenuList(scope) {
+  const list = []
+  // const row = scope.row
+
+  list.push({ type: 'add-child', name: '增加子菜单' })
+
+  list.push({ type: 'edit', name: '编辑' })
+
+  return list
+}

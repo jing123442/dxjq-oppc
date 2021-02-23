@@ -57,7 +57,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch('logout').then(() => {
-        location.reload() // In order to re-instantiate the vue-router object to avoid bugs
+        // location.reload() // In order to re-instantiate the vue-router object to avoid bugs
       })
     },
     userInfoUpdate(evt) {

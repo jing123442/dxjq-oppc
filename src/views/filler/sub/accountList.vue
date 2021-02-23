@@ -1,17 +1,16 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'accountList'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'accountList'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'accountList',
   data() {
-    return {
-      isShow: false,
+    return initVueDataOptions(this, {
       queryCustURL: {
         list: {
           url: 'account/org_account_log/list_withtime',
@@ -22,10 +21,8 @@ export default {
           }
         },
         name: ''
-      },
-      axios: axiosRequestParams(this),
-      queryParams: Function
-    }
+      }
+    })
   },
   computed: {
     ...mapGetters({

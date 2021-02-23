@@ -1,20 +1,20 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'vehicleCircle'" ref="vehicleCircle" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'vehicleCircle'" ref="vehicleCircle" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="圈存" :visible.sync="dialogCircleVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogCircleVisible" :rowData="circleRow" :pageColumn="page_column_circle_event" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventCircle"></nt-form>
     </el-dialog>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, callbackPagesInfo } from '@/utils/tools'
+import { initVueDataOptions, queryDefaultParams, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orderShow, $transferOrderAdd } from '@/service/pay'
 
 export default {
   name: 'vehicleCircle',
   data() {
-    return {
+    return initVueDataOptions(this, {
       queryCustURL: {
         list: {
           url: 'account/truck_account/list',
@@ -26,11 +26,10 @@ export default {
         },
         name: '车辆圈存'
       },
-      axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { accountType: 0, orgId: this.$route.query.orgId } }),
       dialogCircleVisible: false,
       circleRow: {}
-    }
+    })
   },
   computed: {
     ...mapGetters({
@@ -41,7 +40,8 @@ export default {
       select_list: 'carrier_inventoryManager_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
-      response_success: 'response_success'
+      response_success: 'response_success',
+      wopuser: 'wopuser'
     })
   },
   created: function () {},
@@ -65,8 +65,8 @@ export default {
               amount: '',
               balance: res.data.orgAccountInfo.balance,
               thuckBalance: res.data.truckAccountInfo.balance,
-              creater: JSON.parse(localStorage.getItem('wopuser')).user_id,
-              createrName: JSON.parse(localStorage.getItem('wopuser')).user_name
+              creater: this.wopuser.user_id,
+              createrName: this.wopuser.user_name
             }
             console.log(self.circleRow)
             self.circleRow._btn = {

@@ -1,16 +1,16 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'accountList'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'accountList'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, callbackPagesInfo } from '@/utils/tools'
+import { initVueDataOptions, queryDefaultParams, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'accountList',
   data() {
-    return {
+    return initVueDataOptions(this, {
       queryCustURL: {
         list: {
           url: 'account/org_account_log/list',
@@ -23,9 +23,8 @@ export default {
         name: '账户流水'
       },
       buttonsList: [/* { type: 'primary', icon: '', event: 'export', name: '导出流水' } */],
-      axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgId: this.$route.query.orgId, accountId: this.$route.query.accountId } })
-    }
+    })
   },
   computed: {
     ...mapGetters({

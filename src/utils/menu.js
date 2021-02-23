@@ -90,15 +90,7 @@ export function menuList() {
       { path: '/marketingManager', name: 'marketingManager', meta: { title: '营销合作经理配置', noCache: false } },
       { path: '/marketSourceConfig', name: 'marketSourceConfig', meta: { title: '液源地配置', noCache: false } }
     ]
-  }, /* {
-    path: '/settlement',
-    name: 'settlement',
-    meta: { title: '结算管理', icon: 'icon-jiesuanguanli', class: 'em-iconfont', noCache: false },
-    children: [
-      { path: '/settIndex', name: 'settIndex', meta: { title: '加气站服务汇总', noCache: false } },
-      { path: '/logisticsSettlement', name: 'logisticsSettlement', meta: { title: '物流公司加气费汇总', noCache: false } }
-    ]
-  }, */{
+  }, {
     path: '/order',
     name: 'order',
     meta: { title: '订单中心', icon: 'icon-jiesuanguanli', class: 'em-iconfont', noCache: false },
@@ -132,6 +124,16 @@ export function menuList() {
     children: [
       { path: '/msgCenter', name: 'msgCenter', meta: { title: '消息中心', noCache: false } },
       { path: '/index', name: 'index', hidden: true, meta: { title: '暂不使用', noCache: false } }
+    ]
+  }, {
+    path: '/authority',
+    name: 'authority',
+    meta: { title: '权限管理', icon: 'el-icon-setting', noCache: false },
+    children: [
+      { path: '/authMenu', name: 'authMenu', meta: { title: '菜单', noCache: false } },
+      { path: '/authButton', name: 'authButton', meta: { title: '按钮', noCache: false } },
+      { path: '/authRole', name: 'authRole', meta: { title: '角色', noCache: false } },
+      { path: '/authUser', name: 'authUser', meta: { title: '用户', noCache: false } }
     ]
   }]
 }

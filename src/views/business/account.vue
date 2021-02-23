@@ -1,6 +1,6 @@
 <template>
   <el-form class="template-main">
-    <em-table-list :tableListName="'account'" ref="tables" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'account'" ref="tables" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog :title="'提现-' + orgTitle" :visible.sync="dialogWithdrawVisible" width="60%" :append-to-body="true" @close="backAccountList()">
       <el-steps :active="active" simple style="margin: 20px 30px 30px 30px;">
@@ -77,7 +77,7 @@
   </el-form>
 </template>
 <script>
-import { axiosRequestParams, isTypeof, callbackPagesInfo, custFormBtnList } from '@/utils/tools'
+import { isTypeof, callbackPagesInfo, initVueDataOptions } from '@/utils/tools'
 import { $userOrgFind } from '@/service/user'
 import { $orgWithdraw, $getWithdrawInfo } from '@/service/pay'
 import { $verifySendMessage } from '@/service/message'
@@ -86,9 +86,8 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'account',
   data() {
-    return {
+    return initVueDataOptions(this, {
       active: 1,
-      isShow: false,
       statusIcon: {
         1: require('@/assets/images/business/clock@2x.png'),
         2: require('@/assets/images/business/clock@2x.png'),
@@ -114,9 +113,6 @@ export default {
         },
         name: '公司资金账户管理 '
       },
-      queryParams: Function,
-      axios: axiosRequestParams(this),
-      formBtnList: custFormBtnList(),
       orgTitle: '',
       codeBtn: {
         text: '获取验证码',
@@ -133,7 +129,7 @@ export default {
         verificationCode: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
       },
       dialogWithdrawVisible: false
-    }
+    })
   },
   computed: {
     ...mapGetters({

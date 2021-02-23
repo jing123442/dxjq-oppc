@@ -18,7 +18,8 @@ export default {
   computed: {
     ...mapGetters({
       page_column: 'mine_passwordChange_column',
-      response_success: 'response_success'
+      response_success: 'response_success',
+      wopuser: 'wopuser'
     })
   },
   created() {
@@ -41,7 +42,7 @@ export default {
     },
     onListEvent(obj) {
       const params = {
-        userId: JSON.parse(localStorage.getItem('wopuser')).user_id,
+        userId: this.wopuser.user_id,
         ...this.row
       }
       const self = this

@@ -3,7 +3,7 @@
     <div v-if="tabsList.length <= 0" class="text-content">请先配置液源地</div>
     <el-tabs v-else v-model="active" type="card" @tab-click="handleClick">
       <el-tab-pane v-for="(item, index) in tabsList" :key="index" :label="item.name" :name="index.toString()">
-        <em-table-list v-if="active == index && nextTick" ref="tables" :tableListName="'preferential'" :axios="axios" :buttonsList="buttonsList" :queryCustURL="queryCustURL" :responseSuccess="response_success" :composeParam="composeParam" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+        <em-table-list v-if="active == index && nextTick" ref="tables" :tableListName="'preferential'" :authButtonList="authButtonList" :axios="axios" :buttonsList="buttonsList" :queryCustURL="queryCustURL" :responseSuccess="response_success" :composeParam="composeParam" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
       </el-tab-pane>
     </el-tabs>
     <el-dialog title="配置" :visible.sync="dialogConfigVisible" :width="add_edit_dialog" :append-to-body="true">
@@ -15,14 +15,14 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, custFormBtnList, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { initVueDataOptions, custFormBtnList, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { $lngFormList, $configAreaBenefit, $configAreaEditBenefit } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'preferential',
   data() {
-    return {
+    return initVueDataOptions(this, {
       active: '0',
       tabsList: [],
       nextTick: false,
@@ -48,10 +48,8 @@ export default {
           }
         },
         name: ''
-      },
-      axios: axiosRequestParams(this),
-      queryParams: Function
-    }
+      }
+    })
   },
   computed: {
     ...mapGetters({

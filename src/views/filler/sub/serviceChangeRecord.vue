@@ -1,17 +1,16 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'serviceChangeRecord'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'serviceChangeRecord'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { initVueDataOptions, queryDefaultParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'serviceChangeRecord',
   data() {
-    return {
-      isShow: false,
+    return initVueDataOptions(this, {
       queryCustURL: {
         list: {
           url: 'gasstation/service_fee_log/list',
@@ -23,9 +22,8 @@ export default {
         },
         name: '服务费变更记录'
       },
-      axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { gasstationId: this.$route.query.gasstationId, orgName: this.$route.query.orgName } })
-    }
+    })
   },
   computed: {
     ...mapGetters({

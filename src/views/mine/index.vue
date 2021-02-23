@@ -19,7 +19,8 @@ export default {
   computed: {
     ...mapGetters({
       page_column: 'mine_personal_column',
-      response_success: 'response_success'
+      response_success: 'response_success',
+      wopuser: 'wopuser'
     })
   },
   created() {
@@ -28,7 +29,7 @@ export default {
   methods: {
     getUser() {
       const params = {
-        userId: JSON.parse(localStorage.getItem('wopuser')).user_id
+        userId: this.wopuser.user_id
       }
       $userFind(params).then(res => {
         if (res.code === 0) {

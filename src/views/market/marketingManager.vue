@@ -2,24 +2,23 @@
   <div class="template-main">
      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane label="物流公司" name="carrier">
-        <em-table-list :tableListName="'carrierConfig'" :axios="axios" :queryCustURL="carrierConfig.queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="carrier_mode_list" :page_status="carrier_page_status" :page_column="carrier_page_column" :select_list="carrier_select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+        <em-table-list :tableListName="'carrierConfig'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="carrierConfig.queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="carrier_mode_list" :page_status="carrier_page_status" :page_column="carrier_page_column" :select_list="carrier_select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
       </el-tab-pane>
       <el-tab-pane label="加气站" name="gasstation">
-         <em-table-list :tableListName="'gasstationConfig'" :axios="axios" :queryCustURL="gasstationConfig.queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="gasstation_mode_list" :page_status="gasstation_page_status" :page_column="gasstation_page_column" :select_list="gasstation_select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+         <em-table-list :tableListName="'gasstationConfig'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="gasstationConfig.queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="gasstation_mode_list" :page_status="gasstation_page_status" :page_column="gasstation_page_column" :select_list="gasstation_select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams } from '@/utils/tools'
+import { initVueDataOptions, queryDefaultParams } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'marketingManager',
   data() {
-    return {
+    return initVueDataOptions(this, {
       activeName: 'carrier',
-      isShow: false,
       carrierConfig: {
         queryCustURL: {
           edit: {
@@ -54,9 +53,8 @@ export default {
           name: '营销合作经理配置'
         }
       },
-      axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { purchase: {} } })
-    }
+    })
   },
   computed: {
     ...mapGetters({

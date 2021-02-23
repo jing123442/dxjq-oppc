@@ -61,3 +61,33 @@ export async function $userOrgDeletePic (data) {
 export async function $userRegisterExport (data) {
   return await R({ url: 'user/register_manage/export', method: 'POST', data, responseType: 'blob' })
 }
+
+// 菜单树
+export async function $menuTree (data) {
+  return await R({ url: 'user/menu/menu_tree', method: 'POST', data })
+}
+
+// 菜单树
+export async function $menuListTree (data) {
+  return await R({ url: 'user/menu/menu_list', method: 'POST', data })
+}
+
+// 菜单增加
+export async function $menuAdd (data) {
+  return await R({ url: 'user/menu/add', method: 'POST', data })
+}
+
+// 按钮增加
+export async function $buttonAdd (data) {
+  return await R({ url: 'user/button/add', method: 'POST', data })
+}
+
+// 根据菜单获取button列表
+export async function $menuToButtonList (data) {
+  return await R({ url: 'user/button/button_list', method: 'POST', data })
+}
+
+// 根据角色配置权限
+export async function $roleToMenuList (data) {
+  return await R({ url: 'user/role_menu/add_list', method: 'POST', data })
+}

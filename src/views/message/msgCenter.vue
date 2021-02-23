@@ -1,17 +1,17 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="msgCenter" :tableListName="'msgCenter'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue"></em-table-list>
+    <em-table-list ref="msgCenter" :tableListName="'msgCenter'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $userRoleList } from '@/service/user'
 
 export default {
   name: 'msgCenter',
   data() {
-    return {
+    return initVueDataOptions(this, {
       addMsgVisible: false,
       editMsgVisible: false,
       editMsgRow: {},
@@ -42,11 +42,8 @@ export default {
         },
         name: '消息'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '消息发布' }],
-      axios: axiosRequestParams(this),
-      bottonList: '',
-      queryParams: Function
-    }
+      buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '消息发布' }]
+    })
   },
   computed: {
     ...mapGetters({

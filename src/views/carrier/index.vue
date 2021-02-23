@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'carrier'" ref="tables" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'carrier'" ref="tables" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog title="物流公司" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog" :append-to-body="true">
       <div v-if="isAuthInfo" class="auth-status" :class="authColor"><span class="auth-status__dot" :class="authColor"></span>
@@ -65,7 +65,7 @@
  </div>
 </template>
 <script>
-import { axiosRequestParams, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles, isTypeof, toolsFileHeaders, formatDate } from '@/utils/tools'
+import { initVueDataOptions, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles, isTypeof, toolsFileHeaders, formatDate } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
@@ -74,12 +74,11 @@ import { $strategyTruckAdd, $importDownloadFile, $exportDataFile } from '@/servi
 export default {
   name: 'carrier',
   data() {
-    return {
+    return initVueDataOptions(this, {
       active: '2',
       isAuthInfo: false,
       tabDisabled: false,
       authColor: 'off',
-      isShow: false,
       queryCustURL: {
         list: {
           url: 'user/org/list',
@@ -93,8 +92,6 @@ export default {
       },
       headers: {},
       buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '添加公司' }],
-      axios: axiosRequestParams(this),
-      queryParams: Function,
       dialogAddGasStationVisible: false,
       authRow: {},
       auth_page_column: [],
@@ -103,7 +100,7 @@ export default {
       dialogExportCarVisible: false,
       exportCarRow: {},
       exportRules: {}
-    }
+    })
   },
   computed: {
     ...mapGetters({

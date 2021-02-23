@@ -1,6 +1,7 @@
 const app = {
   state: {
     debug: false,
+    menuType: true,
     sidebar: {
       opened: true// !+sessionStorage.getItem('sidebarStatus')
     },

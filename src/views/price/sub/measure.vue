@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'release'" ref="tables" :axios="axios" :buttonsList="buttonsList" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'release'" ref="tables" :authButtonList="authButtonList" :axios="axios" :buttonsList="buttonsList" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog title="气价调节" :visible.sync="dialogMeasureVisible" width="50%" :append-to-body="true">
       <nt-form v-if="dialogMeasureVisible" ref="from" :formRef="'measureForm'" :rowData="measureRow" :pageColumn="measure_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onMeasureEventFrom"></nt-form>
@@ -8,15 +8,14 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, callbackPagesInfo, isTypeof, custFormBtnList, queryDefaultParams } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof, custFormBtnList, queryDefaultParams } from '@/utils/tools'
 import { $gasstationUpdatePrice } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'measure',
   data() {
-    return {
-      isShow: false,
+    return initVueDataOptions(this, {
       measureRow: [],
       dialogMeasureVisible: false,
       buttonsList: [{ type: 'primary', icon: '', event: 'measure', name: '设置气价调节金额' }],
@@ -31,9 +30,8 @@ export default {
         },
         name: '气价调节'
       },
-      axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this)
-    }
+    })
   },
   computed: {
     ...mapGetters({

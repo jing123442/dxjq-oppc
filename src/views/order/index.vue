@@ -1,11 +1,11 @@
 <template>
   <div class="template-main">
     <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 108px;'"></table-total-data>
-    <em-table-list ref="tables" :tableListName="'order'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" :tableListName="'order'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
 
@@ -13,7 +13,7 @@ export default {
   name: 'order',
   components: { TableTotalData },
   data() {
-    return {
+    return initVueDataOptions(this, {
       queryCustURL: {
         list: {
           url: 'pay/gas_order/list_withtime',
@@ -35,10 +35,8 @@ export default {
         unit: ' 公斤'
       }],
       totalInfo: { totalGas: 0, amount: 0, totalServiceFee: 0 },
-      buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */],
-      axios: axiosRequestParams(this),
-      queryParams: Function
-    }
+      buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */]
+    })
   },
   computed: {
     ...mapGetters({

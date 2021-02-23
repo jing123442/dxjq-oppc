@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="tables" :tableListName="'filler'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @checkboxStatus="checkboxStatus"></em-table-list>
+    <em-table-list ref="tables" :tableListName="'filler'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @checkboxStatus="checkboxStatus"></em-table-list>
     <el-dialog title="添加加气站" :visible.sync="dialogAddGasStationVisible" :width="add_edit_dialog" :append-to-body="true">
       <div v-if="isAuthInfo" class="auth-status" :class="authColor"><span class="auth-status__dot" :class="authColor"></span>
         {{authRow.authStatus == 2 ? '已认证' : (authRow.authStatus == 1 ? '认证中' : (authRow.authStatus == 3 ? '认证失败' : '未认证'))}}
@@ -15,12 +15,12 @@
       </el-tabs>
     </el-dialog>
     <el-dialog title="收银员信息" :visible.sync="dialogFillerUserVisible" :width="add_edit_dialog" :append-to-body="true">
-      <em-table-list v-if="dialogFillerUserVisible" ref="recordList" :tableListName="'recordList'" :custTableTitle="'收银员列表'" :axios="axios" :queryCustURL="queryCustURLUser" :responseSuccess="response_success" :queryParam="queryParamsUser" :mode_list="mode_list" :page_status="page_status" :page_column="page_user_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
+      <em-table-list v-if="dialogFillerUserVisible" ref="recordList" :tableListName="'recordList'" :custTableTitle="'收银员列表'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURLUser" :responseSuccess="response_success" :queryParam="queryParamsUser" :mode_list="mode_list" :page_status="page_status" :page_column="page_user_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { initVueDataOptions, queryDefaultParams, custFormBtnList, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
@@ -28,12 +28,11 @@ import { $userOrgAdd, $userOrgEdit } from '@/service/user'
 export default {
   name: 'filler',
   data() {
-    return {
+    return initVueDataOptions(this, {
       active: '2',
       isAuthInfo: false,
       tabDisabled: false,
       authColor: 'off',
-      isShow: false,
       queryCustURL: {
         list: {
           url: 'user/org/list',
@@ -57,14 +56,12 @@ export default {
         name: '加气站企业'
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '增加企业' }],
-      axios: axiosRequestParams(this),
-      queryParams: Function,
       queryParamsUser: null,
       dialogAddGasStationVisible: false,
       authRow: {},
       auth_page_column: [],
       dialogFillerUserVisible: false
-    }
+    })
   },
   computed: {
     ...mapGetters({

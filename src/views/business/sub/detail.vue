@@ -1,7 +1,7 @@
 <template>
   <div class="template-main">
     <table-total-data :dataList="dataList" :rowData="totalInfo"></table-total-data>
-    <em-table-list :tableListName="'accountDetail'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'accountDetail'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog :title="'提现'" :visible.sync="dialogWithdrawDetailVisible" width="60%" :append-to-body="true">
       <el-form size="small" class="result-info" style="padding: 30px 30px 20px;">
@@ -21,7 +21,7 @@
   </div>
 </template>
 <script>
-import { axiosRequestParams, isTypeof, callbackPagesInfo } from '@/utils/tools'
+import { initVueDataOptions, isTypeof, callbackPagesInfo } from '@/utils/tools'
 import { $withdrawTotalAmount } from '@/service/pay'
 import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
@@ -30,7 +30,7 @@ export default {
   name: 'accountDetail',
   components: { TableTotalData },
   data() {
-    return {
+    return initVueDataOptions(this, {
       queryCustURL: {
         list: {
           url: 'pay/withdraw_order/list',
@@ -63,11 +63,9 @@ export default {
       }],
       totalInfo: { total: 0, bankProcessingTotal: 0, sucessTotal: 0 },
       orderInfo: {},
-      buttonsList: [],
-      axios: axiosRequestParams(this),
       queryParams: Function,
       dialogWithdrawDetailVisible: false
-    }
+    })
   },
   computed: {
     ...mapGetters({

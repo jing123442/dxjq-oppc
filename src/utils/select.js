@@ -29,10 +29,10 @@ export function utilsBaseRole(arrs) {
     { value: 0, label: '其他' },
     { value: 1, label: '平台管理员' },
     { value: 2, label: '平台运营人员' },
-    { value: 3, label: '加气企业管理者' },
-    { value: 4, label: '收银员' },
-    { value: 5, label: '物流公司管理者' },
-    { value: 6, label: '司机' },
+    { value: 'filler', label: '加气企业管理者' },
+    { value: 'cashier', label: '收银员' },
+    { value: 'carrier', label: '物流公司管理者' },
+    { value: 'driver', label: '司机' },
     { value: 7, label: '平台业务经理' }
   ]
 
@@ -306,6 +306,33 @@ export function utilsDyOrgList(type = null) {
     props: {
       value: 'orgId',
       label: 'orgName'
+    }
+  }
+}
+
+export function utilsOrgRoleList() {
+  return {
+    url: 'user/role/role_list',
+    isNotInit: true,
+    node: ['data'],
+    params: Function,
+    props: {
+      value: 'roleId',
+      label: 'roleName'
+    }
+  }
+}
+
+export function utilsBaseRoleList() {
+  return {
+    url: 'user/role/role_list',
+    node: ['data'],
+    params: {
+      clientId: 'woperation'
+    },
+    props: {
+      value: 'roleId',
+      label: 'roleName'
     }
   }
 }

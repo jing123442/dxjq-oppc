@@ -5,10 +5,10 @@
       <el-tab-pane v-for="(item, index) in tabsList" :key="index" :label="item.name" :name="index.toString()">
         <el-row :gutter="10" style="margin: 0">
           <el-col :span="12">
-            <em-table-list v-if="active == index && nextTick" :tableListName="'freight'" :source="'data'" :sourceData="freightData" :buttonsList="buttonsList" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent"></em-table-list>
+            <em-table-list v-if="active == index && nextTick" :tableListName="'freight'" :authButtonList="authButtonList" :source="'data'" :sourceData="freightData" :buttonsList="buttonsList" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent"></em-table-list>
           </el-col>
           <el-col :span="12" style="background-color: #ffffff;border-radius: 5px;" >
-            <em-table-list v-if="active == index && nextTick" :custTableTitle="'变更记录'" :tableListName="'freightLog'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="log_page_status" :page_column="log_page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+            <em-table-list v-if="active == index && nextTick" :custTableTitle="'变更记录'" :tableListName="'freightLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="log_page_status" :page_column="log_page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
           </el-col>
         </el-row>
       </el-tab-pane>
@@ -57,22 +57,21 @@
       </div>
     </el-dialog>
     <el-dialog title="变更记录" :visible.sync="dialogPriceLogVisible" :width="'70%'" :append-to-body="true">
-      <em-table-list v-if="dialogPriceLogVisible" :tableListName="'freightLogInfo'" style="padding-bottom: 20px;" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+      <em-table-list v-if="dialogPriceLogVisible" :tableListName="'freightLogInfo'" style="padding-bottom: 20px;" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
   </div>
 </template>
 <script>
-import { custFormBtnList, axiosRequestParams, callbackPagesInfo } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo } from '@/utils/tools'
 import { $lngFormList, $configPriceList, $saveConfigPriceList } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'freight',
   data() {
-    return {
+    return initVueDataOptions(this, {
       active: '0',
       tabsList: [],
-      isShow: false,
       loading: false,
       nextTick: false,
       rangeSign: ' ≤ X < ',
@@ -81,7 +80,6 @@ export default {
       dialogPriceLogVisible: false,
       freightData: [],
       freightDialogData: [],
-      formBtnList: custFormBtnList(),
       buttonsList: [{ type: 'primary', icon: '', event: 'config', name: '配置运费' }],
       queryCustURL: {
         list: {
@@ -104,10 +102,8 @@ export default {
           }
         },
         name: ''
-      },
-      axios: axiosRequestParams(this),
-      queryParams: Function
-    }
+      }
+    })
   },
   computed: {
     ...mapGetters({

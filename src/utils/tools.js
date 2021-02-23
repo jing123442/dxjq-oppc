@@ -1,3 +1,5 @@
+import { getLocalStorage } from '@/utils/storage'
+
 export function formateTData(date, fmt) { // 字符串
   if (date) {
     if (fmt == 'date') {
@@ -210,11 +212,39 @@ export function messageBox(_this, params) {
   }).catch(() => {})
 }
 
+// 获取授权按钮数组
+function authButtonInfo(sign = '$') {
+  const buttons = getLocalStorage('curr_auth_button_' + sessionStorage.getItem('curr_auth_route_name'))
+
+  return buttons && isTypeof(buttons) === 'string' ? buttons.split(sign) : []
+}
+
+// vue data默认值初始化
+export function initVueDataOptions(_this, options) {
+  let result = {}
+  const option = {
+    authButtonList: authButtonInfo(),
+    axios: axiosRequestParams(_this),
+    buttonsList: [],
+    formBtnList: custFormBtnList(),
+    queryParams: Function,
+    queryCustURL: {}
+  }
+
+  if (options && isTypeof(options) === 'object') {
+    result = Object.assign({}, option, options)
+  }
+
+  return result
+}
+
 // 新增默认参数
 export function createParams() {
+  const userInfo = JSON.parse(getLocalStorage('wopuser'))
+
   return {
-    creater: JSON.parse(localStorage.getItem('wopuser')).user_id,
-    createrName: JSON.parse(localStorage.getItem('wopuser')).user_name
+    creater: userInfo.user_id,
+    createrName: userInfo.user_name
   }
 }
 

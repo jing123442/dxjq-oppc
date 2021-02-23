@@ -1,112 +1,79 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="truckOrderListTables" :tableListName="'truckOrderList'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" :tableListName="'orderFiller'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams, isTypeof, exportBlobToFiles, callbackPagesInfo } from '@/utils/tools'
-import { $excelDownload } from '@/service/settle'
+import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { $generateDownloadFile } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'truckOrderList',
+  name: 'orderFiller',
   data() {
-    return {
-      isShow: false,
+    return initVueDataOptions(this, {
       queryCustURL: {
         list: {
-          url: '/settle/gas_order/list_withtime',
+          url: 'settle/gas_order/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
         },
-        name: '加气站对账单'
+        query: this.$route.query,
+        name: '加气站企业'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'export', name: '导出' }],
-      axios: axiosRequestParams(this),
-      queryParams: Function
-    }
+      currParams: {},
+      buttonsList: [{ type: 'primary', icon: '', event: 'download', name: '导出' }],
+      dataList: [{
+        name: '加气量总额：',
+        field: 'gasQtyTotal',
+        unit: ' 公斤'
+      }, {
+        name: '服务费总金额：',
+        field: 'profitTotal',
+        unit: ' 元'
+      }],
+      totalInfo: { gasQtyTotal: 0, profitTotal: 0 }
+    })
   },
   computed: {
     ...mapGetters({
-      mode_list: 'settlement_gasPrice_mode_list',
-      page_status: 'settlement_gasPrice_page_status',
-      page_column: 'settlement_gasPriceTruckOrderList_column',
-      select_list: 'settlement_gasPrice_select_list',
+      mode_list: 'order_filler_mode_list',
+      page_status: 'order_filler_page_status',
+      page_column: 'order_carrier_truck_order_column',
+      select_list: 'order_filler_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
     })
   },
-  created: function () { console.log(this.page_status) },
+  created: function () {},
   methods: {
     onListEvent(type, row) {
-      if (type === 'export') {
-        this.excelDownload()
+      if (type === 'download') {
+        const params = [{
+          exportParam: JSON.stringify(this.currParams),
+          type: 4
+        }]
+        $generateDownloadFile(params).then(response => {
+          this.$alert('您选择的下载内容已申请，请在下载中心下载。', '下载提示')
+        })
       }
-    },
-    excelDownload() {
-      const finds = this.$refs.truckOrderListTables.finds
-      const pageList = this.$refs.truckOrderListTables.pages
-      const params = {
-        datas: {
-          orderId: '订单编号',
-          driverName: '司机',
-          gasQty: '加气量(公斤)',
-          actualPrice: '单价(元/公斤)',
-          amount: '金额',
-          discountAmount: '优惠金额',
-          gasstationName: '加气站',
-          updateDate: '支付时间'
-        },
-        fileName: '订单',
-        interfaceName: '/settle/gas_order/list_withtime',
-        pageParam: this.parseSearch(finds, pageList.currentPage, pageList.pageSize)
-      }
-      $excelDownload(params).then(response => {
-        const fileName = '订单' + Date.parse(new Date()) + '.xlsx'
-
-        exportBlobToFiles(response, fileName)
-      })
     },
     onReqParams(type, _this, callback) {
-      const params = this.parseSearch(_this)
-
-      // eslint-disable-next-line standard/no-callback-literal
-      callback(params)
-    },
-    parseSearch(_this) {
-      const selfQuery = this.$route.query
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { truckId: selfQuery.truckId }, dateParam: {} } })
-
-      if (isTypeof(selfQuery) === 'object') {
-        for (var [k, v] of Object.entries(selfQuery)) {
-          if (k == 'dataPicker') {
-            if (selfQuery.dataPicker === null) {
-              params.param.dateParam.createDateFrom = ''
-              params.param.dateParam.createDateTo = ''
-            } else {
-              params.param.dateParam.createDateFrom = v[0]
-              params.param.dateParam.createDateTo = v[1]
-            }
-          }
-        }
-      }
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { carrierOrgId: this.$route.query.orgId, carNumber: this.$route.query.carNumber }, dateParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth } } })
 
       if (isTypeof(_this.finds) === 'object') {
-        // eslint-disable-next-line no-redeclare
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (!v) {
-            delete params.param.gasOrder[k]
-          } else {
-            params.param.gasOrder[k] = v
-          }
+          if (v !== '') params.param.gasOrder[k] = v
         }
       }
 
-      return params
+      this.currParams = params.param
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
     }
   }
 }

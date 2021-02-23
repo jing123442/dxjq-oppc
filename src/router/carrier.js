@@ -14,9 +14,9 @@ export default [
       { path: 'vehicleManager', component: inImport('carrier/vehicleManager'), name: 'vehicleManager', meta: { title: '车辆管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'truckAccountManager', component: inImport('carrier/truckAccountManager'), name: 'truckAccountManager', meta: { title: '卡车资金账户管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'truckIntegral', component: inImport('carrier/truckIntegral'), name: 'truckIntegral', meta: { title: '卡车积分账户管理', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'rechargeRecord', component: inImport('carrier/rechargeRecord'), name: 'rechargeRecord', meta: { title: '充值记录', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'inventoryManager', component: inImport('carrier/inventoryManager'), name: 'inventoryManager', meta: { title: '圈存管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'transactionOrderManager', component: inImport('carrier/transactionOrderManager'), name: 'transactionOrderManager', meta: { title: '加气订单管理', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'userCarrier', component: inImport('carrier/user'), name: 'userCarrier', meta: { title: '物流用户管理', icon: 'icon-gongnengguanli', noCache: false } },
       {
         path: 'logisticsAccountManager',
         name: 'subLogisticsAccountManager',

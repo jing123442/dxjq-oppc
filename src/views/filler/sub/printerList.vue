@@ -1,19 +1,18 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="table" :tableListName="'printer'" :custTableTitle="'小票机列表-' + gasstationName" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="table" :tableListName="'printer'" :custTableTitle="'小票机列表-' + gasstationName" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { axiosRequestParams } from '@/utils/tools'
+import { initVueDataOptions } from '@/utils/tools'
 import { $printerDel, $printerStatus } from '@/service/message'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'printer',
   data() {
-    return {
+    return initVueDataOptions(this, {
       gasstationName: this.$route.query.gasstationName,
-      isShow: false,
       queryCustURL: {
         add: {
           url: 'message/printer/add',
@@ -41,10 +40,8 @@ export default {
         },
         name: '小票机'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '添加小票机' }],
-      axios: axiosRequestParams(this),
-      queryParams: Function
-    }
+      buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '添加小票机' }]
+    })
   },
   computed: {
     ...mapGetters({

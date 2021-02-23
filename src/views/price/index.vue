@@ -1,6 +1,6 @@
 <template>
   <div class="template-main" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="正在计算平台挂牌价，请等待...">
-    <em-table-list :tableListName="'listing'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" ref="tables" :page_status="page_status" :buttonsList="buttonsList" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'listing'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" ref="tables" :page_status="page_status" :buttonsList="buttonsList" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog title="发布申请" :visible.sync="dialogReleaseVisible" width="50%" :append-to-body="true">
       <nt-form v-if="dialogReleaseVisible" ref="release" :formRef="'releaseForm'" :rowData="releaseRow" :pageColumn="release_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventRelease"></nt-form>
@@ -12,20 +12,19 @@
       <nt-form v-if="dialogMeasureVisible" ref="from" :formRef="'measureForm'" :rowData="measureRow" :pageColumn="measure_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onMeasureEventFrom"></nt-form>
     </el-dialog>
     <el-dialog title="变更记录" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
-      <em-table-list v-if="dialogChangeVisible" :tableListName="'listingLog'" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
+      <em-table-list v-if="dialogChangeVisible" :tableListName="'listingLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
   </div>
 </template>
 <script>
-import { axiosRequestParams, callbackPagesInfo, isTypeof, custFormBtnList, formatDate } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof, custFormBtnList, formatDate } from '@/utils/tools'
 import { $priceRelease, $listingPriceAlg, $updateGasstationPriceConfig, $gasstationUpdatePrice } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'listing',
   data() {
-    return {
-      isShow: false,
+    return initVueDataOptions(this, {
       releaseRow: [],
       dialogReleaseVisible: false,
       fromRow: {},
@@ -57,10 +56,8 @@ export default {
         },
         name: ''
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'alg', name: '平台挂牌价计算' }, { type: 'primary', icon: '', event: 'release', name: '发布申请' }],
-      axios: axiosRequestParams(this),
-      queryParams: Function
-    }
+      buttonsList: [{ type: 'primary', icon: '', event: 'alg', name: '平台挂牌价计算' }, { type: 'primary', icon: '', event: 'release', name: '发布申请' }]
+    })
   },
   computed: {
     ...mapGetters({

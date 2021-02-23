@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="withdrawConfig" :tableListName="'withdrawConfig'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="withdrawConfig" :tableListName="'withdrawConfig'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog :title="orgTitle" :visible.sync="dialogWithdrawVisible" width="40%" :append-to-body="true" @close="closeWithdrawDialog()">
       <el-form size="small" :model="formWithdraw" label-width="120px" ref="formWithdraw" v-if="dialogWithdrawVisible" :rules="formWithdrawRules">
@@ -24,20 +24,19 @@
       </el-form>
     </el-dialog>
     <el-dialog title="变更记录" :visible.sync="dialogWithdrawChangeVisible" :width="'70%'" :append-to-body="true">
-      <em-table-list v-if="dialogWithdrawChangeVisible" :custTableTitle="'变更记录信息'" :tableListName="'withdrawChange'" style="padding-bottom: 20px;" :axios="axios" :queryCustURL="queryChangeCustURL" :responseSuccess="response_success" :queryParam="queryChangeParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column_log" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+      <em-table-list v-if="dialogWithdrawChangeVisible" :custTableTitle="'变更记录信息'" :tableListName="'withdrawChange'" style="padding-bottom: 20px;" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryChangeCustURL" :responseSuccess="response_success" :queryParam="queryChangeParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column_log" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
   </div>
 </template>
 <script>
-import { axiosRequestParams, queryDefaultParams, custFormBtnList } from '@/utils/tools'
+import { initVueDataOptions, queryDefaultParams } from '@/utils/tools'
 import { $updateWithdrawConfig } from '@/service/pay'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'withdrawConfig',
   data() {
-    return {
-      isShow: false,
+    return initVueDataOptions(this, {
       queryCustURL: {
         list: {
           url: 'pay/withdraw_quota_config/list',
@@ -68,12 +67,9 @@ export default {
       },
       dialogWithdrawVisible: false,
       dialogWithdrawChangeVisible: false,
-      formBtnList: custFormBtnList(),
-      buttonsList: [],
-      axios: axiosRequestParams(this),
       queryParams: queryDefaultParams(this),
       queryChangeParams: []
-    }
+    })
   },
   computed: {
     ...mapGetters({

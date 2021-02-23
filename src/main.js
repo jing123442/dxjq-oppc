@@ -8,9 +8,16 @@ import emElementUI from 'em-element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/styles/index.scss' // global css
 import * as filters from '@/utils/filters' // 过滤器
+import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage'
+
 Vue.use(ElementUI)
 Vue.use(emElementUI)
 Vue.config.productionTip = false
+
+// 注册全局函数
+Vue.prototype.$setLocalStorage = setLocalStorage
+Vue.prototype.$getLocalStorage = getLocalStorage
+Vue.prototype.$removeLocalStorage = removeLocalStorage
 
 // 加载全局过滤器
 Object.keys(filters).forEach(key => {
