@@ -67,7 +67,8 @@ export default {
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success',
-      woporg: 'woporg'
+      woporg: 'woporg',
+      permission_routers: 'permission_routers'
     })
   },
   created: function () {
@@ -75,7 +76,7 @@ export default {
   },
   methods: {
     initData() {
-      this.initMenuTree = this.$getSessionStorage('menu_tree')
+      this.initMenuTree = Array(...new Set(this.permission_routers))
       this.parseInitDataMenuTree(this.initMenuTree)
     },
     onListEvent(type, row) {
@@ -101,7 +102,6 @@ export default {
             }
           }
         })
-        console.log(row.roleList)
         this.configRow = row
         this.configRow._btn = custFormBtnList()
         this.dialogConfigVisible = true
