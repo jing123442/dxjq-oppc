@@ -7,7 +7,7 @@ export default [
     name: 'settlement',
     component: Layout,
     redirect: '/settlement/settIndex',
-    meta: { title: '结算管理' },
+    meta: { title: '结算中心' },
     children: [
       { path: 'orderFiller', component: inImport('settlement/filler'), name: 'orderFiller', meta: { title: '加气站结算订单', noCache: false } },
       { path: 'orderCarrier', component: inImport('settlement/carrier'), name: 'orderCarrier', meta: { title: '物流公司结算订单', noCache: false } },

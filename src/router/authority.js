@@ -9,10 +9,10 @@ export default [
     redirect: '/authority/menu',
     meta: { title: '权限管理' },
     children: [
-      { path: 'authMenu', component: inImport('authority/menu'), name: 'authMenu', meta: { title: '菜单', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'authRole', component: inImport('authority/role'), name: 'authRole', meta: { title: '角色', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'authButton', component: inImport('authority/button'), name: 'authButton', meta: { title: '按钮', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'authUser', component: inImport('authority/user'), name: 'authUser', meta: { title: '用户', icon: 'icon-gongnengguanli', noCache: false } }
+      { path: 'authMenu', component: inImport('authority/menu'), name: 'authMenu', meta: { title: '菜单列表', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'authRole', component: inImport('authority/role'), name: 'authRole', meta: { title: '角色列表', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'authButton', component: inImport('authority/button'), name: 'authButton', meta: { title: '菜单-按钮', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'authUser', component: inImport('authority/user'), name: 'authUser', meta: { title: '平台用户列表', icon: 'icon-gongnengguanli', noCache: false } }
     ]
   }
 ]

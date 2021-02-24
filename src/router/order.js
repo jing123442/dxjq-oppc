@@ -9,8 +9,8 @@ export default [
     redirect: '/order/index',
     meta: { title: '订单中心' },
     children: [
-      { path: 'orderIndex', component: inImport('order/index'), name: 'orderIndex', meta: { title: '加气订单', noCache: false } },
-      { path: 'rechargeRecord', component: inImport('order/rechargeRecord'), name: 'rechargeRecord', meta: { title: '充值记录', icon: 'icon-gongnengguanli', noCache: false } }
+      { path: 'orderIndex', component: inImport('order/index'), name: 'orderIndex', meta: { title: '加气订单列表', noCache: false } },
+      { path: 'rechargeRecord', component: inImport('order/rechargeRecord'), name: 'rechargeRecord', meta: { title: '充值订单记录', icon: 'icon-gongnengguanli', noCache: false } }
     ]
   }
 ]

@@ -7,7 +7,7 @@ export default [
     name: 'setting',
     component: Layout,
     redirect: '/setting/withdraw',
-    meta: { title: '系统设置' },
+    meta: { title: '配置中心' },
     children: [
       { path: 'withdraw', component: inImport('setting/withdraw'), name: 'withdraw', meta: { title: '账户余额限定', icon: 'icon-gongnengguanli', noCache: false } }
     ]
