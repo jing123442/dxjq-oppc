@@ -72,6 +72,11 @@ export async function $menuListTree (data) {
   return await R({ url: 'user/menu/menu_list', method: 'POST', data })
 }
 
+// 获取某个角色的菜单树
+export async function $menuListCheckTree (data) {
+  return await R({ url: 'user/menu/menu_tree_no_check', method: 'POST', data })
+}
+
 // 菜单增加
 export async function $menuAdd (data) {
   return await R({ url: 'user/menu/add', method: 'POST', data })

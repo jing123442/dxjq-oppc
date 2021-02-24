@@ -9,14 +9,10 @@
         </div>
       </el-col>
       <el-col :xs="4" :sm="3" :md="1">
-        <div class="user-header">
-          <el-dropdown>
-            <div class="avatar-wrapper" @click="userInfoUpdate('download')">
-              <el-badge class="sub item">
-                <img class="user-avatar" src="@/assets/images/home/download.png">
-              </el-badge>
-            </div>
-          </el-dropdown>
+        <div class="download-header">
+          <div class="avatar-wrapper-down" @click="userInfoUpdate('download')">
+            <img class="download-avatar" src="@/assets/images/home/download.png">
+          </div>
         </div>
       </el-col>
       <el-col :xs="4" :sm="3" :md="1">
@@ -68,7 +64,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch('logout').then(() => {
-        // location.reload() // In order to re-instantiate the vue-router object to avoid bugs
+        location.reload() // In order to re-instantiate the vue-router object to avoid bugs
       })
     },
     userInfoUpdate(evt) {
@@ -80,7 +76,9 @@ export default {
         path = '/settlement/orderDownload'
       }
 
-      this.$router.push({ path: path })
+      if (path !== this.$route.path) {
+        this.$router.path({ path: path })
+      }
     }
   },
   computed: {
@@ -128,7 +126,7 @@ export default {
         color: $navRightHover;
       }
     }
-    .user-header {
+    .user-header, .download-header {
       line-height: 10px;
       padding-top: 7px;
       font-size: 12px;
@@ -190,11 +188,11 @@ export default {
   }
 
   //头像
-  .avatar-wrapper {
+  .avatar-wrapper, .avatar-wrapper-down {
     cursor: pointer;
     margin-top: 5px;
     position: relative;
-    .user-avatar {
+    .user-avatar, .download-avatar {
       width: 40px;
       height: 40px;
       border-radius: 20px;
