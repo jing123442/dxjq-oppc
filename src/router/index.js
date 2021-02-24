@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Layout from '@/views/layout/Layout'
-import { getLocalStorage } from '@/utils/storage'
+import { getSessionStorage } from '@/utils/storage'
 import VueRouter from 'vue-router'
 import Carrier from './carrier.js'
 import Filler from './filler.js'
@@ -47,13 +47,13 @@ const router = new VueRouter({
   routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Market, ...Settlement, ...Setting, ...Order, ...Message, ...Authority, ...Stock]
 })
 router.beforeEach((to, from, next) => {
-  const woptoken = getLocalStorage('woptoken')
+  const woptoken = getSessionStorage('woptoken')
 
   if (to.meta.title) { // 每页增加title
     document.title = to.meta.title
   }
   if (woptoken) {
-    if (to.name === 'main') return next('/' + getLocalStorage('woprole'))
+    if (to.name === 'main') return next('/' + getSessionStorage('woprole'))
     return next()
   }
   if (to.name === 'login' || to.name === 'agreement') return next()

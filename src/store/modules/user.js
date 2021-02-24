@@ -2,18 +2,18 @@ import app from './app'
 import { $login, $logout } from '@/service/main'
 import { $menuTree } from '@/service/user'
 import { menuList } from '@/utils/menu'
-import { setLocalStorage, getLocalStorage, removeSelfAllLocalStorage } from '@/utils/storage'
+import { setSessionStorage, getSessionStorage, clearSessionStorage } from '@/utils/storage'
 
 const Base64 = require('js-base64').Base64
 
 const user = {
   state: {
-    woptoken: getLocalStorage('woptoken') || '',
-    wopidntf: getLocalStorage('wopidntf') || '',
-    wopuser: JSON.parse(getLocalStorage('wopuser')) || {},
-    woprole: getLocalStorage('woprole') || '',
-    woporg: getLocalStorage('woporg') || '',
-    routers: JSON.parse(getLocalStorage('menu_tree')) || []
+    woptoken: getSessionStorage('woptoken') || '',
+    wopidntf: getSessionStorage('wopidntf') || '',
+    wopuser: JSON.parse(getSessionStorage('wopuser')) || {},
+    woprole: getSessionStorage('woprole') || '',
+    woporg: getSessionStorage('woporg') || '',
+    routers: JSON.parse(getSessionStorage('menu_tree')) || []
   },
 
   mutations: {
@@ -48,20 +48,18 @@ const user = {
             const identifier = Base64.encode(
               'woperation:' + orgId + ':' + user.user_id + ':' + roleId
             )
-            // 用户登录唯一性
-            sessionStorage.setItem(process.env.VUE_APP_SESSION_ID, user.user_id)
             // 当前菜单树
             $menuTree({ clientId: 'woperation', roleId: roleId }).then(response => {
               const menuData = app.state.menuType ? response.data : menuList()
-              setLocalStorage('menu_tree', JSON.stringify(menuData))
+              setSessionStorage('menu_tree', JSON.stringify(menuData))
               commit('setrouters', menuData)
             })
 
-            setLocalStorage('woptoken', token)
-            setLocalStorage('wopuser', JSON.stringify(user))
-            setLocalStorage('wopidntf', identifier)
-            setLocalStorage('woporg', orgId)
-            setLocalStorage('woprole', roleId)
+            setSessionStorage('woptoken', token)
+            setSessionStorage('wopuser', JSON.stringify(user))
+            setSessionStorage('wopidntf', identifier)
+            setSessionStorage('woporg', orgId)
+            setSessionStorage('woprole', roleId)
             commit('setwoptoken', token)
             commit('setwopidntf', identifier)
             commit('setwopuser', user)
@@ -88,10 +86,10 @@ const user = {
       return new Promise((resolve, reject) => {
         const data = {
           client_id: 'woperation',
-          user_id: sessionStorage.getItem(process.env.VUE_APP_SESSION_ID)
+          user_id: state.wopuser.user_id
         }
         $logout(data).then(response => {
-          removeSelfAllLocalStorage()
+          clearSessionStorage()
 
           commit('setwoptoken')
           commit('setwopidntf')
@@ -107,7 +105,7 @@ const user = {
     },
     clear({ commit, state }) {
       return new Promise((resolve, reject) => {
-        removeSelfAllLocalStorage()
+        clearSessionStorage()
 
         commit('setwoptoken')
         commit('setwopidntf')

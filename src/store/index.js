@@ -21,7 +21,6 @@ import customer from './columns/customer/index'
 import authority from './columns/authority/index'
 
 const PAGE_CONFIG = {
-  // localstorage
   debug: state => state.app.debug,
   woptoken: state => state.user.woptoken,
   wopidntf: state => state.user.wopidntf,

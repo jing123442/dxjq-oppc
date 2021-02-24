@@ -1,12 +1,12 @@
-import { getLocalStorage } from '@/utils/storage'
+import { getSessionStorage } from '@/utils/storage'
 
 const file = {
   state: {
     fileHost: process.env.VUE_APP_FILE_HOST,
     fileUrl: process.env.VUE_APP_BASE_URL + 'message/upload/image',
     fileHeaders: {
-      Authorization: 'Bearer ' + getLocalStorage('woptoken'),
-      Identifier: getLocalStorage('wopidntf')
+      Authorization: 'Bearer ' + getSessionStorage('woptoken'),
+      Identifier: getSessionStorage('wopidntf')
     },
     fileUEditorConfig: {
       UEDITOR_HOME_URL: './UEditor/',
@@ -16,8 +16,8 @@ const file = {
       imageAllowFiles: ['.png', '.jpg', '.jpeg', '.gif', '.bmp'],
       imageUrlPrefix: process.env.VUE_APP_FILE_HOST,
       headers: {
-        Authorization: 'Bearer ' + getLocalStorage('woptoken'),
-        Identifier: getLocalStorage('wopidntf')
+        Authorization: 'Bearer ' + getSessionStorage('woptoken'),
+        Identifier: getSessionStorage('wopidntf')
       }
     },
     fileSuccess: {
@@ -40,8 +40,8 @@ const file = {
         timeout: 30000,
         baseURL: process.env.VUE_APP_BASE_URL,
         headers: {
-          Authorization: 'Bearer ' + getLocalStorage('woptoken'),
-          Identifier: getLocalStorage('wopidntf')
+          Authorization: 'Bearer ' + getSessionStorage('woptoken'),
+          Identifier: getSessionStorage('wopidntf')
         }
       }
     },
@@ -57,8 +57,8 @@ const file = {
         timeout: 30000,
         baseURL: process.env.VUE_APP_BASE_URL,
         headers: {
-          Authorization: 'Bearer ' + getLocalStorage('woptoken'),
-          Identifier: getLocalStorage('wopidntf')
+          Authorization: 'Bearer ' + getSessionStorage('woptoken'),
+          Identifier: getSessionStorage('wopidntf')
         }
       }
     }

@@ -8,7 +8,7 @@
 </template>
 <script>
 import { $menuAdd } from '@/service/user'
-import { initVueDataOptions, custFormBtnList, isTypeof } from '@/utils/tools'
+import { initVueDataOptions, custFormBtnList } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {

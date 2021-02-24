@@ -1,4 +1,4 @@
-import { getLocalStorage } from '@/utils/storage'
+import { getSessionStorage } from '@/utils/storage'
 
 export function formateTData(date, fmt) { // 字符串
   if (date) {
@@ -214,7 +214,7 @@ export function messageBox(_this, params) {
 
 // 获取授权按钮数组
 function authButtonInfo(sign = '$') {
-  const buttons = getLocalStorage('curr_auth_button_' + sessionStorage.getItem('curr_auth_route_name'))
+  const buttons = getSessionStorage('curr_auth_button')
 
   return buttons && isTypeof(buttons) === 'string' ? buttons.split(sign) : []
 }
@@ -240,7 +240,7 @@ export function initVueDataOptions(_this, options) {
 
 // 新增默认参数
 export function createParams() {
-  const userInfo = JSON.parse(getLocalStorage('wopuser'))
+  const userInfo = JSON.parse(getSessionStorage('wopuser'))
 
   return {
     creater: userInfo.user_id,

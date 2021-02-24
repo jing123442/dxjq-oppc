@@ -85,8 +85,7 @@ export default {
       this.$store.dispatch('toggleSideBar')
     },
     routerLinkButton(item) {
-      sessionStorage.setItem('curr_auth_route_name', item.routeName)
-      this.$setLocalStorage('curr_auth_button_' + item.routeName, item.buttons)
+      this.$setSessionStorage('curr_auth_button', item.buttons)
     }
   }
 }

@@ -2,10 +2,21 @@
   <div class="header">
     <el-row :gutter="10">
       <!--Logo area-->
-      <el-col :xs="20" :sm="21" :md="{span:23,offset:0}">
+      <el-col :xs="16" :sm="18" :md="{span:22,offset:0}">
         <div class="logo">
           <span class="logo_prefix">{{prefix}}</span>
           <span class="logo_suffix">{{suffix}}</span>
+        </div>
+      </el-col>
+      <el-col :xs="4" :sm="3" :md="1">
+        <div class="user-header">
+          <el-dropdown>
+            <div class="avatar-wrapper" @click="userInfoUpdate('download')">
+              <el-badge class="sub item">
+                <img class="user-avatar" src="@/assets/images/home/download.png">
+              </el-badge>
+            </div>
+          </el-dropdown>
         </div>
       </el-col>
       <el-col :xs="4" :sm="3" :md="1">
@@ -65,6 +76,8 @@ export default {
 
       if (evt === 'pwd') {
         path = '/mine/mineEditPassword'
+      } else if (evt === 'download') {
+        path = '/settlement/orderDownload'
       }
 
       this.$router.push({ path: path })
@@ -185,6 +198,9 @@ export default {
       width: 40px;
       height: 40px;
       border-radius: 20px;
+      &:hover {
+        background-color: rgba(255, 255, 255, .2);
+      }
     }
     i {
       position: absolute;
