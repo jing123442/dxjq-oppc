@@ -20,7 +20,7 @@
     </div>
 </template>
 <script>
-import { $menuTree, $menuListTree, $menuToButtonList, $roleToMenuList } from '@/service/user'
+import { $menuListCheckTree, $menuToButtonList, $roleToMenuList } from '@/service/user'
 import { initVueDataOptions, callbackPagesInfo, custFormBtnList, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
@@ -54,8 +54,7 @@ export default {
       props: {
         multiple: true,
         value: 'menuId',
-        label: 'menuName',
-        lazyLoad: (node, resolve) => this.lazyLoad(node, resolve)
+        label: 'menuName'
       }
     })
   },
@@ -72,14 +71,15 @@ export default {
     })
   },
   created: function () {
-    $menuListTree({ clientId: 'woperation' }).then(response => {
-      this.initMenuTree = response.data || []
-      this.parseInitDataMenuTree(this.initMenuTree)
-    })
+    this.initData()
   },
   methods: {
+    initData() {
+      this.initMenuTree = this.$getSessionStorage('menu_tree')
+      this.parseInitDataMenuTree(this.initMenuTree)
+    },
     onListEvent(type, row) {
-      $menuTree({ clientId: row.clientId, roleId: row.roleId }).then(response => {
+      $menuListCheckTree({ clientId: row.clientId, roleId: row.roleId }).then(response => {
         const tmpRoleList = []
         this.parseMenuTree(response.data, tmpRoleList)
 
@@ -218,28 +218,6 @@ export default {
         }
       } else {
         this.dialogConfigVisible = false
-      }
-    },
-    lazyLoad(node, resolve) {
-      if (node.level > 0) {
-        const nodeData = node.data
-        if (nodeData.children && nodeData.children.length > 0) {
-          resolve([])
-        } else {
-          $menuToButtonList({ menuId: nodeData.menuId }).then(response => {
-            const resData = response.data || []
-            resData.forEach(item => {
-              item.menuId = 'b#0' + item.button
-              item.menuName = item.buttonName
-              item.leaf = 'leaf'
-            })
-            resolve(resData)
-          })
-        }
-      } else {
-        $menuListTree({ clientId: 'woperation' }).then(response => {
-          resolve(response.data)
-        })
       }
     },
     onReqParams(type, _this, callback) {
