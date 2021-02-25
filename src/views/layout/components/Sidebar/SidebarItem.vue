@@ -4,7 +4,7 @@
     <i v-else @click="toggleSideBar" class="iconfont em-opened el-icon-arrow-right"></i>
     <div v-for="(item, index) in routes" :key="index">
       <template v-if="item.children">
-        <router-link v-if="item.children.length===0" :to="item.routePath + '/index'" @click.native="routerLinkButton(item)" :key="item.routeName">
+        <router-link v-if="item.children.length===0" :to="{}" @click.native="routerLinkButton(item, item.routePath + '/index')" :key="item.routeName">
           <el-menu-item :index="item.routePath + '/index'" :class="{'submenu-title-noDropdown':!isNest}">
             <i v-if="item.menuIcon" :class="[(item.menuIconFont ? item.menuIconFont : 'iconfont'),item.menuIcon]"></i>
             <span v-if="item.menuName">{{item.menuName}}</span>
@@ -18,7 +18,7 @@
           <div v-for="(child, childIndex) in item.children" :key="childIndex">
             <template v-if="!child.hidden">
               <sidebar-item :is-nest="true" class="nest-menu" v-if="child.children&&child.children.length>0" :routes="[child]" :key="child.routePath"></sidebar-item>
-              <router-link v-else :to="item.routePath+child.routePath" :key="child.routeName" @click.native="routerLinkButton(child)">
+              <router-link v-else :to="{}" :key="child.routeName" @click.native="routerLinkButton(child, item.routePath+child.routePath)">
                 <el-menu-item :index="item.routePath+child.routePath">
                   <i v-if="item.children[0].menuIcon" :class="[(child.menuIconFont ? child.menuIconFont : 'iconfont'), child.menuIcon]"></i>
                   <span v-if="child.menuName">{{child.menuName}}</span>
@@ -84,8 +84,12 @@ export default {
     toggleSideBar() {
       this.$store.dispatch('toggleSideBar')
     },
-    routerLinkButton(item) {
+    routerLinkButton(item, path) {
       this.$setSessionStorage('curr_auth_button', item.buttons)
+
+      if (path !== this.$route.path) {
+        this.$router.push({ path: path })
+      }
     }
   }
 }

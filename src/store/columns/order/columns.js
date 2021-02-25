@@ -19,7 +19,7 @@ const columns = {
     { field: 'cashierName', name: '收银员姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 5 } },
     { field: 'orderStatus', name: '订单状态', width: 70, formatter: 'orderStatus', search: { type: 'select', obj: 'orderStatus', placeholder: '订单状态' }, detail: { type: 'span', model: 'select', isDisabled: true, obj: 'orderStatus', style: 'width: 85%', serial: 14 } },
     { field: 'payType', name: '支付方式', width: 90, formatter: 'payType', search: { type: 'select', obj: 'payType', placeholder: '支付方式', value: '' }, detail: { type: 'span', model: 'select', isDisabled: true, obj: 'payType', style: 'width: 85%', serial: 12 } },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 80, list: [{ type: 'details', name: '详情' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 80, list: [{ type: 'detail', name: '详情' }] }
   ],
   fillerOrder: [
     { field: 'gasstationName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
@@ -31,7 +31,7 @@ const columns = {
     { field: 'profitTotal', note: '区间内加气站服务费总金额', name: '加气站利润金额' },
     { field: 'withdrawTotal', note: '区间内提现金额', name: '本期提现金额' },
     { field: 'endProfitBalance', note: '期末可提现金额', name: '期末利润余额' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 230, list: [{ type: 'detail', name: '结算明细' }, { type: 'withdraw', name: '提现明细' }, { type: 'stock', name: '入库明细' }, { type: 'down', name: '下载' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 230, list: [{ type: 'settle_list', name: '结算明细' }, { type: 'withdraw_list', name: '提现明细' }, { type: 'stock_list', name: '入库明细' }, { type: 'download', name: '下载' }] }
   ],
   fillerDetail: [
     { field: 'orderId', name: '订单编号', fixed: 'left' },
@@ -56,15 +56,14 @@ const columns = {
     { field: 'gasQtyTotal', name: '加气量汇总(公斤)' },
     { field: 'amountTotal', name: '加气金额汇总(元)' },
     { field: 'discountTotal', name: '优惠金额汇总(元)' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'recharge', name: '充值对账' }, { type: 'settlement', name: '结算订单' }, { type: 'truck', name: '卡车汇总' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'recharge_list', name: '充值对账' }, { type: 'settle_order_list', name: '结算订单' }, { type: 'truck_list', name: '卡车汇总' }] }
   ],
   carrierToFiller: [
     { field: 'gasstationName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
-    /* { field: 'period', name: '', hide: true, search: { type: 'date-picker', model: 'month', placeholder: '请选择账期' } }, */
     { field: 'gasQtyTotal', name: '加气量' },
     { field: 'amountTotal', note: '物流公司付款金额', name: '平台结算金额' },
     { field: 'discountTotal', name: '优惠金额' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'detail', name: '结算明细' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: [{ type: 'list', name: '结算明细' }] }
   ],
   carrierToFillerDetail: [
     { field: 'orderId', name: '订单编号', fixed: 'left' },

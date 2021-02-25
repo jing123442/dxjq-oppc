@@ -48,7 +48,7 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
-      if (type == 'resetpwd') {
+      if (type == 'reset_pwd') {
         $resetPassword({ userId: row.userId }).then(response => {
           this.$message({
             message: response.message,

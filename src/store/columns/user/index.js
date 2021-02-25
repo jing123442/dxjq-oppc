@@ -1,7 +1,8 @@
 import columns from './columns'
 import select from './select'
+import app from './app'
 
-const state = Object.assign({}, { columns: columns }, { select: select })
+const state = Object.assign({}, { app: app }, { columns: columns }, { select: select })
 
 const getters = {
   // 平台用户管理

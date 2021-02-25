@@ -5,6 +5,7 @@
 </template>
 <script>
 import { initVueDataOptions, queryDefaultParams } from '@/utils/tools'
+import { $resetPassword } from '@/service/user'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -14,7 +15,8 @@ export default {
       queryCustURL: {
         add: {
           url: '/user/user/add',
-          method: 'post'
+          method: 'post',
+          demandList: ['roleList']
         },
         edit: {
           url: '/user/user/edit',
@@ -47,7 +49,13 @@ export default {
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) {},
+    onListEvent(type, row) {
+      if (type == 'reset_pwd') {
+        $resetPassword({ userId: row.userId }).then(response => {
+          this.$message.success(response.message)
+        })
+      }
+    },
     onReqParams(type, _this, callback) {
       if (type === 'roleList') {
         // eslint-disable-next-line standard/no-callback-literal

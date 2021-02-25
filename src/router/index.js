@@ -5,7 +5,6 @@ import VueRouter from 'vue-router'
 import Carrier from './carrier.js'
 import Filler from './filler.js'
 import Price from './price.js'
-import Market from './market.js'
 import Settlement from './settlement.js'
 import User from './user.js'
 import Mine from './mine.js'
@@ -40,11 +39,20 @@ const routes = [
     children: [
       { path: 'index', component: inImport('home/index'), meta: { title: '首页', icon: 'icon-gongnengguanli', noCache: false } }
     ]
+  },
+  {
+    path: '/settlement',
+    name: 'settlementOrderDownload',
+    component: Layout,
+    meta: { title: '下载中心', noCache: false },
+    children: [
+      { path: 'orderDownload', component: inImport('settlement/download'), meta: { title: '下载中心', icon: 'icon-gongnengguanli', noCache: false } }
+    ]
   }
 ]
 
 const router = new VueRouter({
-  routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Market, ...Settlement, ...Setting, ...Order, ...Message, ...Authority, ...Stock]
+  routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Settlement, ...Setting, ...Order, ...Message, ...Authority, ...Stock]
 })
 router.beforeEach((to, from, next) => {
   const woptoken = getSessionStorage('woptoken')

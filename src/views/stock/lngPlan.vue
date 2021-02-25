@@ -142,9 +142,9 @@ export default {
           },
           renderList: (self) => { self.$refs.lngPlan.initDataList() }
         })
-      } else if (type === 'detail-info') {
+      } else if (type === 'self_detail') {
         this.detailEvent(row)
-      } else if (type === 'leave' || type === 'update') {
+      } else if (type === 'in_weight' || type === 'update_weight') {
         $strategyPurchaseFind({ id: row.id }).then(response => {
           const tmpData = Object.assign({}, row, response.data && response.data.purchase)
           this.leaveEvent(tmpData)
@@ -158,11 +158,11 @@ export default {
         this.completeEvent(row)
       } else if (type === 'change') {
         this.changeEvent(row)
-      } else if (type === 'anomalous') {
+      } else if (type === 'exception') {
         this.anomalousEvent(row)
       } else if (type === 'export') {
         this.exportEvent(row)
-      } else if (type === 'change-list') {
+      } else if (type === 'change_list') {
         this.changeInfoList(row)
       }
     },

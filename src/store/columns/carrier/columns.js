@@ -1,3 +1,5 @@
+import { buttonOrgCarrierList } from '@/utils/button'
+
 const columns = {
   logistics: [
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { noShow: 1 } },
@@ -10,27 +12,8 @@ const columns = {
     { field: 'regnumStatus', name: '营业执照认证', formatter: 'authStatus' },
     { field: 'idcardStatus', name: '法人证件认证', formatter: 'authStatus' },
     { field: 'bindPhone', name: '验证码手机号', width: 110 },
-    { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140, search: { type: 'date-picker', placeholder: ''/* , value: () => { return ['2020-01-01 00:00:00', '2020-10-01 00:00:00'] } */ } },
-    {
-      field: 'useropts',
-      stype: 'opt',
-      ispush: false,
-      name: '操作',
-      fixed: 'right',
-      width: 200,
-      list: params => {
-        const row = params.row
-        const optList = []
-
-        row.authStatus != 2 && optList.push({ type: 'gedit', name: '编辑' })
-        optList.push({ type: 'detail', name: '详情' })
-        row.authStatus != 2 && optList.push({ type: 'auth', name: '认证' })
-        row.authStatus == 2 && optList.push({ type: 'addCar', name: '添加车辆' })
-        row.authStatus == 2 && optList.push({ type: 'exportCar', name: '导入车辆' })
-
-        return optList
-      }
-    }
+    { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140, search: { type: 'date-picker', placeholder: '' } },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 200, list: params => buttonOrgCarrierList(params) }
   ],
   addCar: [
     { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', show: { type: 'text', isDisabled: true, remote: true, style: 'width: 90%;', placeholder: '请输入公司名称' } },
@@ -64,17 +47,13 @@ const columns = {
     { field: 'orgName', stype: 'mapping', name: '公司名称', ispush: false, mapping: 'orgName', fixed: 'left', show: { type: 'text', isDisabled: true, remote: true, subField: 'orgName', obj: 'orgId', style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
     { field: 'accountId', name: '账户' },
     { field: 'balance', name: '账户余额（元）', ispush: false },
-    // { field: 'autoAccount', name: '是否自动圈存', formatter: 'autoAccount', nameSpan: 5, show: { type: 'radio', value: 0, obj: 'autoAccount', placeholder: '请选择是否自动圈存' }, rules: [{ required: true, message: '请选择账号状态！', trigger: 'blur' }] },
-    // { field: 'createDate', name: '创建时间', ispush: false, formatFun: 'formateTData all', width: 140, stype: 'format' },
     { field: 'accountPassword', hide: true },
     { field: 'updater', hide: true },
     { field: 'updaterName', hide: true },
-    // { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'load', name: '圈存' }, { type: 'accState', name: '流水列表' }, { type: 'edit', name: '编辑' }] }
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'accState', name: '流水列表' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'list', name: '流水列表' }] }
   ],
   firmAccountList: [
     { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: 'daterange' } },
-    /* { field: 'billId', name: '交易单号', show: { type: 'text' }, search: { type: 'text', placeholder: '请输入交易单号' } }, */
     { field: 'type', name: '交易类型', formatter: 'type' },
     { field: 'anotherAccount', name: '对方账号' },
     { field: 'anotherName', name: '对方账户名称' },
@@ -120,8 +99,7 @@ const columns = {
     { field: 'autoAccount', name: '圈存方式', hide: true, show: { type: 'radio', obj: 'autoAccount', value: 0, placeholder: '请选择圈存方式' }, rules: [{ required: true, message: '请选择圈存方式', trigger: 'blur' }] },
     { field: 'truckDriverList', name: '当前绑定司机', ispush: false, formatter: '', stype: 'list-tag', porps: { name: 'driverName' }, detail: { type: 'span', name: '绑定司机', formatFun: 'truckToDriverList', stype: 'format', serial: 10, ou: 1, isDisabled: true } },
     { field: 'balance', name: '账户余额', ispush: false, hide: true, detail: { type: 'span', serial: 11, ou: 2, isDisabled: true, defaultValue: 0 } },
-    // { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 240, list: [{ type: 'bind', name: '绑定司机' }, { type: 'edit', name: '编辑' }, { type: 'detail', name: '详情' }, { type: 'money', name: '资金归集' }] }
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 240, list: [{ type: 'bind', name: '绑定司机' }, { type: 'edit', name: '编辑' }, { type: 'details', name: '详情' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 240, list: [{ type: 'bind', name: '绑定司机' }, { type: 'edit', name: '编辑' }, { type: 'detail', name: '详情' }] }
   ],
   vehicle_collect: [
     { field: 'amount', name: '归集金额', lg: 24, xl: 24, show: { type: 'text', placeholder: '请输入归集金额' }, rules: [{ required: true, message: '请输入归集金额', trigger: 'blur' }] },
@@ -139,7 +117,7 @@ const columns = {
     { field: 'carNumber', name: '车牌号', search: { type: 'text', placeholder: '请输入车牌号' } },
     { field: 'balance', name: '余额' },
     { field: 'createDate', name: '创建时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'detail', name: '流水列表' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'list', name: '流水列表' }] }
   ],
   truckAccountList: [
     { field: 'createDate', name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format' },
@@ -157,7 +135,7 @@ const columns = {
     { field: 'carNumber', name: '车牌号', search: { type: 'text', placeholder: '请输入车牌号' } },
     { field: 'balance', name: '积分' },
     { field: 'createDate', name: '创建时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'detail', name: '流水列表' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'list', name: '流水列表' }] }
   ],
   truckIntegralList: [
     { field: 'createDate', name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format' },
@@ -211,7 +189,7 @@ const columns = {
     { field: 'cashierName', name: '收银员' },
     { field: 'orderStatus', name: '订单状态', formatter: 'orderStatus', search: { type: 'select', obj: 'orderStatus', placeholder: '请选择订单状态' } },
     { field: 'createDate', name: '创建日期', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', field: 'datePicker', placeholder: '' } },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'detaila', name: '详情' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'list', name: '详情' }] }
   ],
   orderManagerDetail: [
     { field: 'orderId', name: '订单号', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },

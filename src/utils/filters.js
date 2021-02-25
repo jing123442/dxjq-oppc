@@ -55,7 +55,6 @@ const truckToDriverList = (value) => {
   return result.join(' | ')
 }
 const roleList = (value) => {
-  console.log(value)
   const result = []
   value.forEach(item => {
     result.push(item.title)

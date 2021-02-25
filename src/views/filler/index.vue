@@ -84,7 +84,7 @@ export default {
   methods: {
     onListEvent(type, row) {
       this.currType = type
-      if (type == 'search') {
+      if (type == 'cashier_list') {
         this.authRow._btn = {}
         this.queryParamsUser = queryDefaultParams(this, { type: 2, key: 'param', value: { userType: 1, baseRole: 4, orgId: row.orgId } })
         this.dialogFillerUserVisible = true
@@ -99,10 +99,10 @@ export default {
         // 是否显示dialog
         this.dialogAddGasStationVisible = true
         this.authRow = row
-        if (type === 'add_info' || type === 'gedit' || type === 'auth') {
+        if (type === 'add_info' || type === 'self_edit' || type === 'cert') {
           this.authRow._btn = custFormBtnList()
         } else {
-          this.authRow._btn = {}
+          this.authRow._btn = custFormBtnList(1)
         }
       }
     },
@@ -115,7 +115,7 @@ export default {
       } else {
         this.auth_page_column = this.page_s_auth_column
       }
-      if (this.currType == 'auth' || this.currType == 'detail') {
+      if (this.currType == 'cert' || this.currType == 'self_detail') {
         this.tabDisabled = true
         this.isAuthInfo = true
         this.auth_page_column.forEach(item => {
@@ -160,7 +160,7 @@ export default {
     },
     onFormEvent(obj, row) {
       if (obj.type === 'ok') {
-        if (this.currType === 'add_info' || this.currType === 'gedit') {
+        if (this.currType === 'add_info' || this.currType === 'self_edit') {
           this.onListEventAddGasStation(row)
         } else {
           this.orgAuthEvent(row)

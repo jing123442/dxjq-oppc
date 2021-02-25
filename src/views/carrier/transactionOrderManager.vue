@@ -45,7 +45,7 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
-      if (type === 'detaila') {
+      if (type === 'list') {
         this.detailRow = row
         this.detailRow._btn = {
           iShow: true,

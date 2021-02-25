@@ -1,5 +1,5 @@
 import file from '../../modules/file'
-import { buttonLNGPlanList } from '@/utils/button'
+import { buttonLNGPlanList, buttonOrgFillerList } from '@/utils/button'
 import { monthTimeArea } from '@/utils/tools'
 
 const columns = {
@@ -16,25 +16,7 @@ const columns = {
     { field: 'idcardStatus', name: '法人证件认证', formatter: 'authStatus' },
     { field: 'bindPhone', name: '绑定验证手机号', width: 110 },
     { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
-    {
-      field: 'useropts',
-      stype: 'opt',
-      ispush: false,
-      name: '操作',
-      fixed: 'right',
-      width: 200,
-      list: params => {
-        const row = params.row
-        const optList = []
-
-        row.authStatus != 2 && optList.push({ type: 'gedit', name: '编辑' })
-        optList.push({ type: 'detail', name: '详情' })
-        row.authStatus != 2 && optList.push({ type: 'auth', name: '认证' })
-        optList.push({ type: 'search', name: '查看收银员' })
-
-        return optList
-      }
-    }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 200, list: params => buttonOrgFillerList(params) }
   ],
   fillerAuth: [
     { field: 'taxpayer', name: '统一社会信用代码', nameSpan: 6, show: { type: 'text', ou: 1 } },
@@ -105,8 +87,6 @@ const columns = {
     { field: 'msign', name: '密钥', show: { type: 'text', isDisabled: true, style: 'width: 90%;', placeholder: '请输入密钥' }, rules: [{ required: true, message: '请输入密钥', trigger: 'blur' }] },
     { field: 'phone', name: '流量卡号', show: { type: 'text', isDisabled: true, style: 'width: 90%;', placeholder: '请输入流量卡号' }, rules: [{ required: true, message: '请输入流量卡号', trigger: 'blur' }] },
     { field: 'status', name: '状态', formatter: 'printStatus', show: { noShow: 3 } },
-    // { field: 'print', name: '打印小票', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入打印小票' }, rules: [{ required: true, message: '请输入打印小票', trigger: 'blur' }] },
-    // { field: 'voice', name: '音量', show: { type: 'text', style: 'width: 90%;', placeholder: '请输入音量' }, rules: [{ required: true, message: '请输入音量', trigger: 'blur' }] },
     { field: 'print', name: '打印小票', formatter: 'printPaper', show: { type: 'radio', value: 0, obj: 'printPaper', placeholder: '请选择打印小票' }, rules: [{ required: true, message: '请选择打印小票！', trigger: 'blur' }] },
     { field: 'voice', name: '音量', formatter: 'voiceStatus', show: { type: 'radio', value: 0, obj: 'voiceStatus', placeholder: '请选择音量' }, rules: [{ required: true, message: '请选择音量！', trigger: 'blur' }] },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 90, list: [{ type: 'edit', name: '编辑' }, { type: 'delete', name: '删除' }] }
@@ -116,7 +96,7 @@ const columns = {
     { field: 'orgName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'accountId', name: '账号' },
     { field: 'balance', name: '账户余额' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 100, list: [{ type: 'check', name: '流水列表' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 100, list: [{ type: 'list', name: '流水列表' }] }
   ],
   accountList: [
     { field: 'createDate', name: '交易时间', fixed: 'left', stype: 'format', formatFun: 'formateTData all', width: 140, search: { type: 'date-picker', model: 'daterange' } },
@@ -158,7 +138,7 @@ const columns = {
   gasStockList: [
     { field: 'gasstationName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'stock', name: '库存量(公斤)' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'record', name: '库存记录' }, { type: 'update', name: '库存调整' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'list', name: '库存记录' }, { type: 'update', name: '库存调整' }] }
   ],
   gasUpdateStock: [
     { field: 'gasstationId', name: '', nameSpan: 6, show: { type: 'hide', isDisabled: true } },

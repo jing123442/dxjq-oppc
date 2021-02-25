@@ -18,7 +18,7 @@ export default {
     return initVueDataOptions(this, {
       measureRow: [],
       dialogMeasureVisible: false,
-      buttonsList: [{ type: 'primary', icon: '', event: 'measure', name: '设置气价调节金额' }],
+      buttonsList: [{ type: 'primary', icon: '', event: 'config', name: '设置气价调节金额' }],
       queryCustURL: {
         list: {
           url: 'strategy/gway_gasprice_log/list',

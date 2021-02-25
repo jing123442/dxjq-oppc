@@ -1,5 +1,5 @@
 <template>
-  <div class="template-main">
+  <div class="template-main" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="正在计算平台挂牌价，请等待...">
     <em-table-list :tableListName="'release'" ref="tables" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog title="变更记录" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
@@ -9,7 +9,7 @@
 </template>
 <script>
 import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
-import { $priceReleaseAudit } from '@/service/strategy'
+import { $priceReleaseAudit, $strategyPublishPrice } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -18,6 +18,7 @@ export default {
     return initVueDataOptions(this, {
       logRow: [],
       dialogChangeVisible: false,
+      fullscreenLoading: false,
       queryCustURL: {
         list: {
           url: 'strategy/release_manage/list',
@@ -68,6 +69,18 @@ export default {
             status: type === 'pass' ? 2 : 3
           }
           $priceReleaseAudit(params).then(response => {
+            this.$message.success('成功！')
+            this.$refs.tables.initDataList()
+          })
+        }).catch(() => {})
+      } else if (type === 'publish') {
+        this.$confirm('请确认是否实时发布价格', '提示', {
+          confirmButtonText: '确认',
+          cancelButtonText: '取消'
+        }).then(() => {
+          this.fullscreenLoading = true
+          $strategyPublishPrice({ params: '' }).then(response => {
+            this.fullscreenLoading = false
             this.$message.success('成功！')
             this.$refs.tables.initDataList()
           })

@@ -1,3 +1,5 @@
+import { buttonPublishReleaseList } from '@/utils/button'
+
 const columns = {
   listing: [
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
@@ -9,7 +11,7 @@ const columns = {
     { field: 'profit', name: '加气站利润(元/公斤)' },
     { field: 'gasprice', name: '气价调节(元/吨)' },
     { field: 'lngFromName', name: '液源地' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 230, fixed: 'right', list: [{ type: 'from', name: '液源地选择' }, { type: 'change', name: '变更记录' }, { type: 'measure', name: '气价调节' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 230, fixed: 'right', list: [{ type: 'config_source', name: '液源地选择' }, { type: 'list', name: '变更记录' }, { type: 'config_gas_price', name: '气价调节' }] }
   ],
   listingLog: [
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
@@ -29,23 +31,23 @@ const columns = {
     { field: 'measureMoney', name: '设置气价调节金额', nameSpan: 6, lg: 23, xl: 23, show: { type: 'text', placeholder: '请输入设置气价调节金额', util: ' 元/吨', style: 'width: 80%;' }, rules: [{ required: true, message: '请输入设置气价调节金额', trigger: 'blur' }] }
   ],
   listingRelease: [
-    { field: 'releaseTime', name: '发布时间', nameSpan: 7, show: { type: 'date-picker', model: 'date' }, rules: [{ required: true, message: '请选择发布时间', trigger: 'blur' }] }
+    { field: 'releaseTime', name: '发布时间', nameSpan: 7, show: { type: 'date-picker', model: 'date', vformat: 'yyyy-MM-dd HH:mm:ss', dataType: 'datetime' }, rules: [{ required: true, message: '请选择发布时间', trigger: 'blur' }] }
   ],
   departure: [
     { field: 'operatorName', name: '操作人', fixed: 'left', ispush: false },
-    { field: 'operatorDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData all', width: 140 },
+    { field: 'operatorDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData all' },
     { field: 'harbourPrice', name: '长城奥扬出港价(元/吨)', nameSpan: 8, show: { type: 'text' } }
   ],
   measure: [
     { field: 'operatorName', name: '操作人', fixed: 'left', ispush: false },
-    { field: 'operatorDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData all', width: 140 },
+    { field: 'operatorDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData all' },
     { field: 'gasprice', name: '气价调节(元/吨)', nameSpan: 8 }
   ],
   preferential: [
     { field: 'areaList', name: '地区(省市)', fixed: 'left', stype: 'fields', fieldList: ['province', 'city'], show: { type: 'cascader', obj: 'addressList', mulField: { province: 0, city: 1 }, props: { label: 'label', value: 'label', multiple: true } }, search: { type: 'text', field: 'keyWord', placeholder: '请输入省或市' } },
     { field: 'lngFromId', name: '', hide: true },
     { field: 'benefit', name: '优惠(元/吨)', show: { type: 'text' } },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'edit-s', name: '编辑' }, { type: 'del', name: '删除' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'self_edit', name: '编辑' }, { type: 'del', name: '删除' }] }
   ],
   preferentialEdit: [
     { field: 'areaList', name: '地区(省市)', fixed: 'left', stype: 'fields', fieldList: ['province', 'city'], show: { type: 'cascader', obj: 'addressList', mulField: { province: 0, city: 1 }, isDisabled: true, props: { label: 'label', value: 'label', multiple: true } }, search: { type: 'text', field: 'keyWord', placeholder: '请选择地区(省市)' } },
@@ -63,7 +65,7 @@ const columns = {
     { field: 'freight', name: '配置运费(元/吨)', nameSpan: 10, show: { type: 'text' }, rules: [{ required: true, message: '请输入配置运费', trigger: 'blur' }] },
     { field: 'calFreight', name: '计算运费(元/吨)', ispush: false },
     { field: 'mileage', name: '距液源地里程(公里)', ispush: false },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 140, fixed: 'right', list: [{ type: 'config', name: '配置' }, { type: 'change', name: '变更记录' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 140, fixed: 'right', list: [{ type: 'config', name: '配置' }, { type: 'list', name: '变更记录' }] }
   ],
   estimateLog: [
     { field: 'operatorName', name: '操作人', fixed: 'left' },
@@ -80,16 +82,14 @@ const columns = {
   ],
   freightLog: [
     { field: 'operatorName', name: '操作人', fixed: 'left' },
-    { field: 'operatorDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'search', name: '查看' }] }
+    { field: 'operatorDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'list', name: '查看' }] }
   ],
   mileage: [
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
     { field: 'address', name: '加气站地址', search: { type: 'text', field: 'keyWord', placeholder: '请输入加气站名称' } },
     { field: 'mileage', name: '距液源地里程(公里)', nameSpan: 7, show: { type: 'text' } },
-    /* { field: 'operatorDate', name: '操作人' },
-    { field: 'operatorDate', name: '操作时间' }, */
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'edit', name: '配置' }, { type: 'change', name: '变更记录' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'edit', name: '配置' }, { type: 'list', name: '变更记录' }] }
   ],
   mileageLog: [
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
@@ -104,23 +104,7 @@ const columns = {
     { field: 'status', name: '状态', formatter: 'status' },
     { field: 'auditName', name: '审核人' },
     { field: 'auditDate', name: '审核时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
-    {
-      field: 'useropts',
-      stype: 'opt',
-      ispush: false,
-      name: '操作',
-      fixed: 'right',
-      width: 130,
-      align: 'left',
-      list: (scope) => {
-        const btnList = [{ type: 'search', name: '查看' }]
-        if (scope.row.status == 1) {
-          btnList.push({ type: 'pass', name: '通过' })
-          btnList.push({ type: 'reject', name: '驳回' })
-        }
-        return btnList
-      }
-    }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 130, align: 'left', list: (scope) => buttonPublishReleaseList(scope) }
   ],
   releaseLog: [
     { field: 'gasstationName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },

@@ -41,7 +41,7 @@ export default {
     onListEvent(type, row) {
       const orgId = row.orgId
       const accountId = row.accountId
-      if (type === 'check') {
+      if (type === 'list') {
         this.$router.push(`fillerAccount/accountList?orgId=${orgId}&accountId=${accountId}`)
       }
     },

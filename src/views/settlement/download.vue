@@ -21,8 +21,7 @@ export default {
           }
         },
         name: '下载中心'
-      },
-      buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */]
+      }
     })
   },
   computed: {

@@ -1,7 +1,7 @@
 <template>
   <div class="template-main">
     <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 108px;'" :detailInfo="'结算订单为成功支付后订单'"></table-total-data>
-    <em-table-list ref="tables" :tableListName="'orderFiller'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" :tableListName="'orderFiller'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
@@ -62,7 +62,7 @@ export default {
       this.query.orgName = row.carrierOrgName
       this.query.fillerName = row.gasstationName
       this.query.id = row.id
-      if (type == 'detail') {
+      if (type == 'list') {
         this.$router.push({
           path: 'carrierSettlementList/carrierSettlementOrderList',
           query: this.query
@@ -71,7 +71,6 @@ export default {
     },
     initTotalData(params) {
       $carrierGasstationOrderTotal(params).then(response => {
-        console.log(response)
         this.totalInfo = response.data
       })
     },

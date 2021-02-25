@@ -90,7 +90,7 @@ export default {
         case 'config':
           this.configInfo(row)
           break
-        case 'change':
+        case 'list':
           this.logChangeInfo(row)
           break
       }

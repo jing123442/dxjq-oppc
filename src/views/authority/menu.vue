@@ -59,12 +59,12 @@ export default {
   methods: {
     onListEvent(type, row) {
       this.currType = type
-      if (type === 'add-child' || type === 'edit-child') {
-        this.addChildRow = type === 'add-child' ? { parentId: row.menuId } : row
-        this.childrenTitle = type === 'add-child' ? '新增子分类' : '编辑子分类'
+      if (type === 'add_child' || type === 'edit_child') {
+        this.addChildRow = type === 'add_child' ? { parentId: row.menuId } : row
+        this.childrenTitle = type === 'add_child' ? '新增子分类' : '编辑子分类'
         this.addChildRow._btn = custFormBtnList()
         this.dialogAddChildVisible = true
-      } else if (type === 'del-child') {
+      } else if (type === 'del_child') {
         this.removeRow = row
         this.removeRow.message = `确定删除【${row.name}】记录。`
         this.dialogDelChildVisible = true

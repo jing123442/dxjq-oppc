@@ -80,7 +80,7 @@ export default {
         },
         name: '物流用户管理'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'export', name: '批量导入' }],
+      buttonsList: [{ type: 'primary', icon: '', event: 'import', name: '批量导入' }],
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { userType: 2 } }),
       dialogExportCarVisible: false,
       exportCarrierUserRow: {},
@@ -107,14 +107,14 @@ export default {
   },
   methods: {
     onListEvent(type, row) {
-      if (type == 'resetpwd') {
+      if (type == 'reset_pwd') {
         $resetPassword({ userId: row.userId }).then(response => {
           this.$message({
             message: response.message,
             type: 'success'
           })
         })
-      } else if (type == 'export') {
+      } else if (type == 'import') {
         this.selectCarrierUser(row)
       }
     },

@@ -1,4 +1,5 @@
 import file from '../../modules/file'
+import { buttonOrgBusinessList } from '@/utils/button'
 
 const columns = {
   org: [
@@ -12,26 +13,7 @@ const columns = {
     { field: 'regnumStatus', name: '营业执照认证', formatter: 'authStatus' },
     { field: 'idcardStatus', name: '法人证件认证', formatter: 'authStatus' },
     { field: 'bindPhone', name: '验证码手机号' },
-    {
-      field: 'useropts',
-      stype: 'opt',
-      ispush: false,
-      name: '操作',
-      fixed: 'right',
-      width: 230,
-      list: params => {
-        const row = params.row
-        const optList = []
-
-        row.authStatus != 2 && optList.push({ type: 'gedit', name: '编辑' })
-        optList.push({ type: 'detail', name: '详情' })
-        optList.push({ type: 'auth', name: '认证' })
-        if (row.bindPhone) optList.push({ type: 'unbind', name: '解绑手机号' })
-        else optList.push({ type: 'bind', name: '绑定手机号' })
-
-        return optList
-      }
-    }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 230, list: params => buttonOrgBusinessList(params) }
   ],
   orgAutn: [
     { field: 'taxpayerPic', name: '', ispush: false, filefield: 'file', xs: 8, sm: 8, md: 8, lg: 8, xl: 8, nameSpan: 2, hide: true, show: { type: 'file', ou: 3, props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传营业执照图片', node: [], rules: [{ required: true, message: '请上传营业执照图片！', trigger: 'change' }] } },
@@ -55,7 +37,7 @@ const columns = {
     { field: 'accountId', nameSpan: 5, name: '账号' },
     { field: 'accountType', nameSpan: 5, name: '资金账户类型', formatter: 'accountType' },
     { field: 'balance', nameSpan: 5, name: '账户余额(元)' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 190, list: [{ type: 'check', name: '流水列表' }, { type: 'cash', name: '提现' }, { type: 'cashdetail', name: '提现明细' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 190, list: [{ type: 'list', name: '流水列表' }, { type: 'withdraw', name: '提现' }, { type: 'withdraw_list', name: '提现明细' }] }
   ],
   accountList: [
     { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format' },

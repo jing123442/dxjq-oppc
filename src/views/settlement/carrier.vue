@@ -27,7 +27,7 @@ export default {
         name: '加气站企业'
       },
       currParams: {},
-      buttonsList: [{ type: 'primary', icon: '', event: 'download', name: '导出' }],
+      buttonsList: [{ type: 'primary', icon: '', event: 'export', name: '导出' }],
       dataList: [{
         name: '充值总额：',
         field: 'rechargeTotal',
@@ -64,22 +64,22 @@ export default {
     onListEvent(type, row) {
       const params = { orgId: row.carrierOrgId, periodYear: row.periodYear, periodMonth: row.periodMonth }
 
-      if (type === 'recharge') {
+      if (type === 'recharge_list') {
         this.$router.push({
           path: 'orderCarrier/carrierRechargeList',
           query: params
         })
-      } else if (type === 'settlement') {
+      } else if (type === 'settle_order_list') {
         this.$router.push({
           path: 'orderCarrier/carrierSettlementList',
           query: params
         })
-      } else if (type === 'truck') {
+      } else if (type === 'truck_list') {
         this.$router.push({
           path: 'orderCarrier/carrierTruckList',
           query: params
         })
-      } else if (type === 'download') {
+      } else if (type === 'export') {
         const params = [{
           exportParam: JSON.stringify(this.currParams),
           type: 3

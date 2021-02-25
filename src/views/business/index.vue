@@ -38,7 +38,7 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, isTypeof, callbackPagesInfo } from '@/utils/tools'
+import { initVueDataOptions, isTypeof, callbackPagesInfo, custFormBtnList } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth, $signContract, $signBalanceProtocol, $sendVerificationCode, $bindPhone, $unbindPhone } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit } from '@/service/user'
@@ -117,7 +117,7 @@ export default {
             window.open(response.data)
           }
         })
-      } else if (type === 'auth') {
+      } else if (type === 'cert') {
         this.$router.push(`index/auth?orgId=${row.orgId}`)
       } else {
         // 重置page_column值
@@ -130,10 +130,10 @@ export default {
         // 是否显示dialog
         this.dialogAddGasStationVisible = true
         this.authRow = row
-        if (type === 'add_info' || type === 'gedit') {
+        if (type === 'add_info' || type === 'self_edit') {
           this.authRow._btn = this.formBtnList
         } else {
-          this.authRow._btn = {}
+          this.authRow._btn = custFormBtnList(1)
         }
       }
     },
@@ -207,7 +207,7 @@ export default {
       } else {
         this.auth_page_column = this.page_s_auth_column
       }
-      if (this.currType == 'auth' || this.currType == 'detail') {
+      if (this.currType == 'cert' || this.currType == 'self_detail') {
         this.tabDisabled = true
         this.isAuthInfo = true
         this.auth_page_column.forEach(item => {
@@ -238,7 +238,7 @@ export default {
     },
     onFormEvent(obj, row) {
       if (obj.type === 'ok') {
-        if (this.currType === 'add_info' || this.currType === 'gedit') {
+        if (this.currType === 'add_info' || this.currType === 'self_edit') {
           this.onListEventAddGasStation(row)
         } else {
           this.orgAuthEvent(row)

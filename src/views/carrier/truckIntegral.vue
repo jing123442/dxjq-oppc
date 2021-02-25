@@ -39,7 +39,7 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
-      if (type === 'detail') {
+      if (type === 'list') {
         const orgId = row.orgId
         const accountId = row.accountId
         const truckId = row.truckId

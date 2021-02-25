@@ -68,7 +68,7 @@ export default {
       dialogPriceLogVisible: false,
       rebateData: [],
       rebateDialogData: [],
-      buttonsList: [/* { type: 'primary', icon: '', event: 'config', name: '配置' } */],
+      buttonsList: [{ type: 'primary', icon: '', event: 'config', name: '配置' }],
       queryCustURL: {
         list: {
           url: 'strategy/rebate_log/list',
@@ -146,7 +146,7 @@ export default {
     onListEvent(type, row) {
       if (type == 'config') {
         this.dialogConfigRebateVisible = true
-      } else if (type == 'search') {
+      } else if (type == 'list') {
         this.currSearchId = row.id
         this.dialogPriceLogVisible = true
       }

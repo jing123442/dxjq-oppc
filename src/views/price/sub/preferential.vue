@@ -88,7 +88,7 @@ export default {
         case 'config':
           this.configInfo(row)
           break
-        case 'edit-s':
+        case 'self_edit':
           this.configEditInfo(row)
           break
       }

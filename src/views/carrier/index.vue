@@ -123,10 +123,10 @@ export default {
   methods: {
     onListEvent(type, row) {
       row._btn = {}
-      if (type === 'exportCar') {
+      if (type === 'import') {
         // 批量导入车辆
         this.exportCarEvent(row)
-      } else if (type === 'addCar') {
+      } else if (type === 'add_truck') {
         // 添加车辆
         this.addCarEvent(row)
       } else {
@@ -141,9 +141,9 @@ export default {
         // 是否显示dialog
         this.dialogAddGasStationVisible = true
         this.authRow = row
-        if (type === 'add_info' || type === 'gedit') {
+        if (type === 'add_info' || type === 'self_edit') {
           this.authRow._btn = custFormBtnList()
-        } else if (type === 'auth') {
+        } else if (type === 'cert') {
           this.authRow._btn = {
             iShow: true,
             list: [
@@ -152,7 +152,7 @@ export default {
             ]
           }
         } else {
-          this.authRow._btn = {}
+          this.authRow._btn = custFormBtnList(1)
         }
       }
     },
@@ -246,7 +246,7 @@ export default {
       } else {
         this.auth_page_column = this.page_s_auth_column
       }
-      if (this.currType == 'auth' || this.currType == 'detail') {
+      if (this.currType == 'cert' || this.currType == 'self_detail') {
         this.tabDisabled = true
         this.isAuthInfo = true
         this.auth_page_column.forEach(item => {
@@ -266,7 +266,7 @@ export default {
     },
     onFormEvent(obj, row) {
       if (obj.type === 'ok') {
-        if (this.currType === 'add_info' || this.currType === 'gedit') {
+        if (this.currType === 'add_info' || this.currType === 'self_edit') {
           this.onListEventAddGasStation(row)
         } else {
           this.orgAuthEvent(row)

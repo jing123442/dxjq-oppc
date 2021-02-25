@@ -5,7 +5,7 @@
       <nt-form v-if="dialogConfigVisible" ref="config" :formRef="'configForm'" :rowData="configRow" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventConfig"></nt-form>
     </el-dialog>
     <el-dialog title="变更记录" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
-      <em-table-list v-if="dialogChangeVisible" :tableListName="'profitLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
+      <em-table-list v-if="dialogChangeVisible" :custTableTitle="'变更记录'" :tableListName="'profitLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
   </div>
 </template>
@@ -66,7 +66,7 @@ export default {
         case 'config':
           this.configInfo(row)
           break
-        case 'change':
+        case 'list':
           this.logChangeInfo(row)
           break
       }

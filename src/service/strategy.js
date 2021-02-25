@@ -192,3 +192,7 @@ export async function $strategyPurchaseStockTotal(data) {
 export async function $strategyPurchaseDownloadStock(data) {
   return await R({ url: 'strategy/purchase/download_store_list', data, responseType: 'blob' })
 }
+// 实时发布接口
+export async function $strategyPublishPrice(data) {
+  return await R({ url: 'strategy/release_manage/publish', data, responseType: 'blob' })
+}

@@ -7,7 +7,7 @@
       </el-tab-pane>
     </el-tabs>
     <el-dialog title="变更记录" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
-      <em-table-list v-if="dialogChangeVisible" :tableListName="'mileageLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
+      <em-table-list v-if="dialogChangeVisible" :custTableTitle="'变更记录'" :tableListName="'mileageLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
   </div>
 </template>

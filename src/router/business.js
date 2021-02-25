@@ -11,6 +11,7 @@ export default [
     children: [
       { path: 'businessIndex', component: inImport('business/index'), name: 'businessIndex', meta: { title: '平台公司', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'businessAccount', component: inImport('business/account'), name: 'businessAccount', meta: { title: '公司资金账户', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'businessManager', component: inImport('business/manager'), name: 'businessManager', meta: { title: '客户经理配置', icon: 'icon-gongnengguanli', noCache: false } },
       {
         path: 'account',
         name: 'account',

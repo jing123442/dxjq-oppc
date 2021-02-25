@@ -20,7 +20,7 @@
     </div>
 </template>
 <script>
-import { $menuListCheckTree, $menuToButtonList, $roleToMenuList } from '@/service/user'
+import { $menuListTree, $menuListCheckTree, $menuToButtonList, $roleToMenuList } from '@/service/user'
 import { initVueDataOptions, callbackPagesInfo, custFormBtnList, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
@@ -68,7 +68,7 @@ export default {
       del_dialog: 'del_dialog_form',
       response_success: 'response_success',
       woporg: 'woporg',
-      permission_routers: 'permission_routers'
+      woprole: 'woprole'
     })
   },
   created: function () {
@@ -76,8 +76,16 @@ export default {
   },
   methods: {
     initData() {
-      this.initMenuTree = Array(...new Set(this.permission_routers))
-      this.parseInitDataMenuTree(this.initMenuTree)
+      if (this.woprole === 'administor') {
+        $menuListTree({ clientId: 'woperation' }).then(response => {
+          this.initMenuTree = response.data || []
+          this.parseInitDataMenuTree(this.initMenuTree)
+        })
+      } else {
+        const menuString = JSON.parse(this.$getSessionStorage('menu_tree'))
+        this.initMenuTree = [...menuString]
+        this.parseInitDataMenuTree(this.initMenuTree)
+      }
     },
     onListEvent(type, row) {
       $menuListCheckTree({ clientId: row.clientId, roleId: row.roleId }).then(response => {

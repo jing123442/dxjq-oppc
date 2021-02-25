@@ -168,7 +168,7 @@ export default {
     onListEvent(type, row) {
       if (type == 'config') {
         this.dialogConfigPriceVisible = true
-      } else if (type == 'search') {
+      } else if (type == 'list') {
         this.currSearchId = row.id
         this.dialogPriceLogVisible = true
       }

@@ -56,22 +56,10 @@ export default {
       response_success: 'response_success'
     })
   },
-  mounted: function () {
-    console.log(this.$refs.msgCenter)
-  },
+  mounted: function () {},
   methods: {
-    // onListEventEditMsg(btnObj, row) {
-    //   console.log(btnObj, row)
-    //   if (btnObj.type == 'ok') {
-    //     // 保存
-    //   } else if (btnObj.type == 'publish') {
-    //     // 实时发布
-    //   }
-    // },
-    onListEvent(type, row) {
-    },
+    onListEvent(type, row) {},
     updateColumnValue(tableData, callback) {
-      console.log(tableData)
       $userRoleList({
         page: 1,
         size: 100,
@@ -91,13 +79,12 @@ export default {
           row.clientRoleTableList = row.clientRoleList
           row.clientRoleList = tmpRoleList
         })
-        console.log(tableData)
+
         callback(tableData)
       })
     },
     onReqParams(type, _this, callback) {
       _this.tableListResponse = ''
-      console.log(_this.finds)
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { mcMessage: {}, queryDateType: 1, startDate: '', endDate: '' } })
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
@@ -131,7 +118,6 @@ export default {
       var t = setInterval(() => {
         if (_this.tableListResponse) {
           clearInterval(t)
-          console.log(_this.tableListResponse)
           // this.tableDataHandle(_this.tableListResponse)
         }
       }, 100)

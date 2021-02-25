@@ -12,7 +12,6 @@ export default [
       { path: 'orderFiller', component: inImport('settlement/filler'), name: 'orderFiller', meta: { title: '加气站结算订单', noCache: false } },
       { path: 'orderCarrier', component: inImport('settlement/carrier'), name: 'orderCarrier', meta: { title: '物流公司结算订单', noCache: false } },
       { path: 'orderBusiness', component: inImport('settlement/business'), name: 'orderBusiness', meta: { title: '象群科技结算订单', noCache: false } },
-      { path: 'orderDownload', component: inImport('settlement/download'), name: 'orderDownload', meta: { title: '下载中心', noCache: false } },
       {
         path: 'orderFiller',
         name: 'orderSubFiller',

@@ -12,7 +12,7 @@
       <nt-form v-if="dialogMeasureVisible" ref="from" :formRef="'measureForm'" :rowData="measureRow" :pageColumn="measure_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onMeasureEventFrom"></nt-form>
     </el-dialog>
     <el-dialog title="变更记录" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
-      <em-table-list v-if="dialogChangeVisible" :tableListName="'listingLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
+      <em-table-list v-if="dialogChangeVisible" :custTableTitle="'变更记录'" :tableListName="'listingLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
   </div>
 </template>
@@ -56,7 +56,7 @@ export default {
         },
         name: ''
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'alg', name: '平台挂牌价计算' }, { type: 'primary', icon: '', event: 'release', name: '发布申请' }]
+      buttonsList: [{ type: 'primary', icon: '', event: 'calc_rate', name: '平台挂牌价计算' }, { type: 'primary', icon: '', event: 'release', name: '发布申请' }]
     })
   },
   computed: {
@@ -78,19 +78,19 @@ export default {
   methods: {
     onListEvent(type, row) {
       row._btn = {}
-      if (type == 'alg') {
+      if (type == 'calc_rate') {
         this.algListingPrice()
       } else if (type == 'release') {
         row._btn = custFormBtnList()
         this.$set(row, 'releaseTime', new Date())
         this.releaseRow = row
         this.dialogReleaseVisible = true
-      } else if (type == 'from') {
+      } else if (type == 'config_source') {
         row._btn = custFormBtnList()
         this.fromOldRow = Object.assign({}, row)
         this.fromRow = row
         this.dialogFromVisible = true
-      } else if (type == 'measure') {
+      } else if (type == 'config_gas_price') {
         row._btn = custFormBtnList()
         this.measureRow = row
         this.dialogMeasureVisible = true
@@ -129,6 +129,7 @@ export default {
               row.benefit = data.benefit
               row.freight = data.freight
               row.profit = data.profit
+              row.gasprice = data.gasprice
             })
           } else {
             console.log('error submit!!')

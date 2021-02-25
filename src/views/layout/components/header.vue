@@ -77,7 +77,7 @@ export default {
       }
 
       if (path !== this.$route.path) {
-        this.$router.path({ path: path })
+        this.$router.push({ path: path })
       }
     }
   },

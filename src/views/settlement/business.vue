@@ -51,7 +51,7 @@ export default {
         },
         name: '加气站企业'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'download', name: '导出' }],
+      buttonsList: [{ type: 'primary', icon: '', event: 'export', name: '导出' }],
       dataList: [{
         name: '加气量总额：',
         field: 'gasQtyTotal',
@@ -86,7 +86,7 @@ export default {
   created: function () { },
   methods: {
     onListEvent(type, row) {
-      if (type === 'download') {
+      if (type === 'export') {
         this.exportRow = Object.assign(this.exportRow, row)
         this.exportRow.period = formatPeriodDateTime(this.currParams.dateParam.periodYear, this.currParams.dateParam.periodMonth)
         this.exportRow._btn = this.formBtnList

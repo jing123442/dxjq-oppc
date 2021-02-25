@@ -1,7 +1,8 @@
 import file from '@/store/modules/file'
 import { monthTimeArea } from '@/utils/tools'
+import { buttonMessageManageList } from '@/utils/button'
+
 const roleSelectRules = function(rule, value, callback) {
-  console.log(value, callback)
   if (value.length === 0) {
     callback(new Error('请选择一个接收角色'))
   } else {
@@ -29,35 +30,8 @@ const columns = {
     { field: 'clientRoleList', hide: true, stype: 'list-tag', porps: { name: 'title' }, name: '接收角色', show: { type: 'select', mulField: { clientId: 1, roleId: 0 }, serial: 3, multiple: true, obj: 'roleList', placeholder: '请选择要接收的角色' }, rules: [{ required: true, validator: roleSelectRules, trigger: 'focus' }] },
     { field: 'publishType', name: '发布方式', formatter: 'publishType', show: { type: 'select', value: '', serial: 4, obj: 'publishType', cascaderList: [{ value: 1, fields: ['publishTime'] }, { value: ' ', fields: ['publishTime'] }, { value: '', fields: ['publishTime'] }], parent: 'mcMessage', placeholder: '请选择发布类型' }, detail: { type: 'span', model: 'select', isDisabled: true, serail: 4, obj: 'publishType' }, search: { type: 'select', obj: 'searchPublishType', placeholder: '发布类型' } },
     { field: 'publishStatus', name: '发布状态', ispush: false, formatter: 'publishStatus', value: '', search: { type: 'select', obj: 'publishStatus', placeholder: '发布状态' } },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: item => msgOpt(item.row) }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: item => buttonMessageManageList(item) }
   ]
-}
-
-const msgOpt = (row) => {
-  // 发布状态：1 编辑中，2 发布中，3 已发布
-  const status = row.publishStatus
-  let list = []
-  switch (status) {
-    case 1:
-      list = [
-        { type: 'edit', name: '编辑' },
-        { type: 'del', name: '删除' }
-      ]
-      break
-    case 2:
-      list = [
-        { type: 'edit', name: '编辑' }
-      ]
-      break
-    case 3:
-      list = [
-        { type: 'details', name: '查看' }
-      ]
-      break
-    default:
-      break
-  }
-  return list
 }
 
 export default columns

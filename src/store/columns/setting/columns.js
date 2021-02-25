@@ -3,7 +3,7 @@ const columns = {
     { field: 'orgTypeName', name: '账户类型', fixed: 'left' },
     { field: 'currentQuota', name: '现行余额限定(元)' },
     { field: 'note', name: '修改说明', hide: true },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'config', name: '修改' }, { type: 'change', name: '变更记录' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'config', name: '修改' }, { type: 'list', name: '变更记录' }] }
   ],
   withdrawLog: [
     { field: 'updateDate', name: '修改时间', fixed: 'left', stype: 'format', formatFun: 'formateTData all', width: 140 },

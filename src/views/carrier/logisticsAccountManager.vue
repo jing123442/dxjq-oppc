@@ -53,7 +53,7 @@ export default {
     onListEvent(type, row) {
       if (type === 'recharge') {
         this.rechargeEvent(row)
-      } else if (type === 'accState') {
+      } else if (type === 'list') {
         this.accountListEvent(row)
       } else if (type === 'load') {
         this.vehicleCircleEvent(row)

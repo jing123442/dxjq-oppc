@@ -2,7 +2,7 @@
   <div class="template-main">
     <table-total-data :dataList="detailList" :rowData="detailInfo" :headerClass="'top-detail'"></table-total-data>
     <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 98px;'"></table-total-data>
-    <em-table-list ref="tables" :tableListName="'orderFiller'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" :tableListName="'orderFiller'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="导出下载" :visible.sync="dialogExportDownVisible" :width="add_edit_dialog" :append-to-body="true">
       <el-form ref="exportDown" v-if="dialogExportDownVisible" :model="exportRow" :rules="exportRowRules" size="small" label-position="left">
         <el-form-item prop="modelList" style="margin-bottom: 50px;">

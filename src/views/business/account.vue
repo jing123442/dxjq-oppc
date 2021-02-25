@@ -146,9 +146,9 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
-      if (type === 'check') {
+      if (type === 'list') {
         this.$router.push(`account/accountList?orgId=${row.orgId}&accountId=${row.accountId}`)
-      } else if (type === 'cashdetail') {
+      } else if (type === 'withdraw_list') {
         this.$router.push(`account/accountDetail?orgId=${row.orgId}`)
       } else {
         $userOrgFind({ orgId: row.orgId }).then(response => {

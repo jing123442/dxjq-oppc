@@ -50,7 +50,7 @@ export default {
         },
         name: '加气站企业'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'download', name: '导出' }],
+      buttonsList: [{ type: 'primary', icon: '', event: 'export', name: '导出' }],
       dataList: [{
         name: '加气量总额：',
         field: 'gasQtyTotal',
@@ -83,32 +83,31 @@ export default {
       wopuser: 'wopuser'
     })
   },
-  created: function () { console.log(this.wopuser) },
+  created: function () { },
   methods: {
     onListEvent(type, row) {
       const params = { orgId: row.gasstationId, periodYear: row.periodYear, periodMonth: row.periodMonth }
-      console.log(this.wopuser)
-      if (type === 'detail') {
+      if (type === 'settle_list') {
         this.$router.push({
           path: 'orderFiller/fillerDetailList',
           query: params
         })
-      } else if (type === 'withdraw') {
+      } else if (type === 'withdraw_list') {
         this.$router.push({
           path: 'orderFiller/fillerWithdrawList',
           query: params
         })
-      } else if (type === 'stock') {
+      } else if (type === 'stock_list') {
         this.$router.push({
           path: 'orderFiller/fillerStockDetail',
           query: params
         })
-      } else if (type === 'down') {
+      } else if (type === 'download') {
         this.exportRow = Object.assign(this.exportRow, row)
         this.exportRow.period = formatPeriodDateTime(row.periodYear, row.periodMonth)
         this.exportRow._btn = this.formBtnList
         this.dialogExportDownVisible = true
-      } else if (type === 'download') {
+      } else if (type === 'export') {
         const params = [{
           exportParam: JSON.stringify(this.currParams),
           type: 8

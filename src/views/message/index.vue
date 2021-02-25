@@ -120,7 +120,7 @@ export default {
       utilsQATreeList(node, resolve)
     },
     onListEvent(type, row) {
-      if (type === 'client') {
+      if (type === 'config_client') {
         $contentToclientList({ id: row.id }).then(response => {
           const data = response.data || []
 
