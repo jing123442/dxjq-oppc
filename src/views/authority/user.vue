@@ -60,6 +60,7 @@ export default {
           this.$message.success(response.message)
         })
       } else if (type === 'config_role') {
+        // 弹出加载select
         this.$refs.tables.initSelectList(['roleList'])
         this.configRoleRow = row
         this.configRoleRow._btn = this.formBtnList
@@ -67,21 +68,18 @@ export default {
       }
     },
     onListEventConfigRole(btn, row) {
-      console.log(row)
       if (btn.type === 'ok') {
         this.$refs.configRole.$refs.configRoleForm.validate((valid) => {
           if (valid) {
             const params = {
               userId: row.userId,
-              userCode: row.userCode,
-              userName: row.userName,
               status: row.status,
-              mobile: row.mobile,
+              userType: 0,
               baseRole: row.baseRole
             }
 
             $userConfigRole(params).then((res) => {
-              this.$message.success(res.message)
+              this.$message.success('成功')
 
               this.$refs.tables.initDataList()
             })
