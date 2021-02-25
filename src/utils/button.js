@@ -112,7 +112,7 @@ export function buttonPublishReleaseList(scope) {
     btnList.push({ type: 'reject', name: '驳回' })
   }
 
-  if (formateTData(scope.row.releaseTime, 'date') === formateTData(new Date(), 'date')) {
+  if (scope.row.status == 2 && formateTData(scope.row.releaseTime, 'date') === formateTData(new Date(), 'date')) {
     btnList.push({ type: 'publish', name: '实时发布' })
   }
 
