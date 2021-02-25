@@ -96,3 +96,8 @@ export async function $menuToButtonList (data) {
 export async function $roleToMenuList (data) {
   return await R({ url: 'user/role_menu/add_list', method: 'POST', data })
 }
+
+// 根据角色配置权限
+export async function $userConfigRole (data) {
+  return await R({ url: 'user/role_menu/add_list', method: 'POST', data })
+}
