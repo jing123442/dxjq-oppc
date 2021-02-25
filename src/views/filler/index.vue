@@ -86,7 +86,7 @@ export default {
       this.currType = type
       if (type == 'cashier_list') {
         this.authRow._btn = {}
-        this.queryParamsUser = queryDefaultParams(this, { type: 2, key: 'param', value: { userType: 1, baseRole: 4, orgId: row.orgId } })
+        this.queryParamsUser = queryDefaultParams(this, { type: 2, key: 'param', value: { userType: 1, baseRole: 'cashier', orgId: row.orgId } })
         this.dialogFillerUserVisible = true
       } else {
         // 重置page_column值
