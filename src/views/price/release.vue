@@ -1,5 +1,5 @@
 <template>
-  <div class="template-main" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="正在计算平台挂牌价，请等待...">
+  <div class="template-main" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="正在发布平台挂牌价，请等待...">
     <em-table-list :tableListName="'release'" ref="tables" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog title="变更记录" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
@@ -84,7 +84,9 @@ export default {
             this.$message.success('成功！')
             this.$refs.tables.initDataList()
           })
-        }).catch(() => {})
+        }).catch(() => {
+          this.fullscreenLoading = false
+        })
       } else {
         this.currRow = row
         this.dialogChangeVisible = true
