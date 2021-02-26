@@ -194,5 +194,5 @@ export async function $strategyPurchaseDownloadStock(data) {
 }
 // 实时发布接口
 export async function $strategyPublishPrice(data) {
-  return await R({ url: 'strategy/release_manage/publish', data, responseType: 'blob' })
+  return await R({ url: 'strategy/release_manage/publish', data })
 }
