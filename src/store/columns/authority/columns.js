@@ -13,7 +13,7 @@ const columns = {
     { field: 'menuIconFont', name: '图标样式', hide: true, show: { type: 'text', serial: 8, placeholder: '请输入图标样式' } },
     { field: 'rank', name: '序号', show: { type: 'text', serial: 4, placeholder: '请输入序号', dataType: 'number' } },
     { field: 'noCache', name: '是否缓存', hide: true, show: { type: 'radio', obj: 'noCache', serial: 10, value: 0, dataType: 'boolean' } },
-    { field: 'menuopts', stype: 'opt', ispush: false, name: '操作', align: 'center', fixed: 'right', list: params => buttonMenuList(params) }
+    { field: 'menuopts', stype: 'opt', ispush: false, name: '操作', align: 'center', width: 160, fixed: 'right', list: params => buttonMenuList(params) }
   ],
   role: [
     { field: 'id', name: 'ID', fixed: 'left', hide: true, show: { type: 'hide' } },

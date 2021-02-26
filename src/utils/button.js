@@ -78,6 +78,7 @@ export function buttonMenuList(scope) {
   list.push({ type: 'add_child', name: '增加子菜单' })
 
   list.push({ type: 'edit', name: '编辑' })
+  list.push({ type: 'del', name: '删除' })
 
   return list
 }

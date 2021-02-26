@@ -24,6 +24,14 @@ export default {
           url: 'user/menu/update',
           method: 'post'
         },
+        del: {
+          url: 'user/menu/del',
+          method: 'post',
+          name: 'menuName',
+          props: {
+            menuId: 'menuId'
+          }
+        },
         list: {
           url: 'user/menu/menu_list',
           method: 'post',
@@ -33,7 +41,7 @@ export default {
         },
         name: '菜单'
       },
-      composeParam: ['id', 'parentId'],
+      composeParam: ['menuId'],
       buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '新建菜单' }],
       addChildRow: {},
       childrenTitle: '新增子菜单',
