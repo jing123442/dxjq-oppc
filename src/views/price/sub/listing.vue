@@ -168,7 +168,7 @@ export default {
       if (btnObj.type == 'ok') {
         this.$refs.release.$refs.releaseForm.validate((valid) => {
           if (valid) {
-            var releaseTime = formatDate(row.releaseTime, 'yyyy-MM-dd')
+            var releaseTime = formatDate(row.releaseTime, 'yyyy-MM-dd') + '00:00:00'
 
             const params = {
               releaseTime: releaseTime
