@@ -79,7 +79,7 @@ export default {
           cancelButtonText: '取消'
         }).then(() => {
           this.fullscreenLoading = true
-          $strategyPublishPrice({ params: '' }).then(response => {
+          $strategyPublishPrice({ id: row.id }).then(response => {
             this.fullscreenLoading = false
             this.$message.success('成功！')
             this.$refs.tables.initDataList()
