@@ -83,10 +83,10 @@ export default {
             this.fullscreenLoading = false
             this.$message.success('成功！')
             this.$refs.tables.initDataList()
+          }).catch(() => {
+            this.fullscreenLoading = false
           })
-        }).catch(() => {
-          this.fullscreenLoading = false
-        })
+        }).catch(() => {})
       } else {
         this.currRow = row
         this.dialogChangeVisible = true
