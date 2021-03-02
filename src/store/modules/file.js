@@ -4,9 +4,13 @@ const file = {
   state: {
     fileHost: process.env.VUE_APP_FILE_HOST,
     fileUrl: process.env.VUE_APP_BASE_URL + 'message/upload/image',
-    fileHeaders: {
-      Authorization: 'Bearer ' + getSessionStorage('woptoken'),
-      Identifier: getSessionStorage('wopidntf')
+    fileHeaders: function() {
+      return function() {
+        return {
+          Authorization: 'Bearer ' + getSessionStorage('woptoken'),
+          Identifier: getSessionStorage('wopidntf')
+        }
+      }
     },
     fileUEditorConfig: {
       UEDITOR_HOME_URL: './UEditor/',
@@ -15,9 +19,11 @@ const file = {
       imageMaxSize: 1048576, // 最大限制1M
       imageAllowFiles: ['.png', '.jpg', '.jpeg', '.gif', '.bmp'],
       imageUrlPrefix: process.env.VUE_APP_FILE_HOST,
-      headers: {
-        Authorization: 'Bearer ' + getSessionStorage('woptoken'),
-        Identifier: getSessionStorage('wopidntf')
+      headers: function() {
+        return  {
+          Authorization: 'Bearer ' + getSessionStorage('woptoken'),
+          Identifier: getSessionStorage('wopidntf')
+        }
       }
     },
     fileSuccess: {
