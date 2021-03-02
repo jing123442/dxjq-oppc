@@ -20,7 +20,7 @@ const file = {
       imageAllowFiles: ['.png', '.jpg', '.jpeg', '.gif', '.bmp'],
       imageUrlPrefix: process.env.VUE_APP_FILE_HOST,
       headers: function() {
-        return  {
+        return {
           Authorization: 'Bearer ' + getSessionStorage('woptoken'),
           Identifier: getSessionStorage('wopidntf')
         }
