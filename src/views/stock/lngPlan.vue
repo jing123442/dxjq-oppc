@@ -552,7 +552,6 @@ export default {
     onReqParams(type, _this, callback) {
       const querys = { param: { dateParam: { createDateFrom: '', createDateTo: '' }, purchase: {} } }
       const dateTypeInfo = {
-        planTime: 1,
         createTime: 2,
         lockTime: 3,
         modifyApplyTime: 4,
@@ -567,11 +566,21 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k == 'planTime' || k == 'createTime' || k == 'lockTime' || k == 'modifyApplyTime' || k == 'confirmTime' || k == 'leaveTime' || k == 'uploadTime' || k == 'reachTime' || k == 'completeTime' || k == 'cancelTime' || k == 'exceptionApplyTime') {
+          if (k == 'createTime' || k == 'lockTime' || k == 'modifyApplyTime' || k == 'confirmTime' || k == 'leaveTime' || k == 'uploadTime' || k == 'reachTime' || k == 'completeTime' || k == 'cancelTime' || k == 'exceptionApplyTime') {
             if (v) {
-              querys.param.dateType = dateTypeInfo[k]
+              querys.param.operateDateType = dateTypeInfo[k]
               querys.param.dateParam.createDateFrom = v[0]
               querys.param.dateParam.createDateTo = v[1]
+            }
+          } else if (k == 'leaveTime') {
+            if (v) {
+              querys.param.leaveTimeFrom = v[0]
+              querys.param.leaveTimeTo = v[1]
+            }
+          } else if (k == 'planTime') {
+            if (v) {
+              querys.param.planTimeFrom = v[0]
+              querys.param.planTimeTo = v[1]
             }
           } else {
             if (v !== '') querys.param.purchase[k] = v

@@ -269,7 +269,7 @@ export function utilsBearType() {
 
 export function utilsLNGDataSearch() {
   return [
-    { value: 'planTime', label: '期望到站日期' },
+    /* { value: 'planTime', label: '期望到站日期' }, */
     { value: 'createTime', label: '提报时间' },
     { value: 'lockTime', label: '锁定时间' },
     { value: 'modifyApplyTime', label: '变更提报时间' },
