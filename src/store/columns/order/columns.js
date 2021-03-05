@@ -114,7 +114,7 @@ const columns = {
     { field: 'createDate', name: '申请时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', serial: 1, placeholder: '', style: 'width: 350px;', findField: 'createDate', value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) } },
     { field: 'genDate', name: '文件生成时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
     { field: 'note', name: '描述' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: params => { return params.row.status == 2 && [{ type: 'down', name: '下载' }] } }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: params => { return params.row.status == 2 ? [{ type: 'down', name: '下载' }] : [] } }
   ],
   stockDetail: [
     { field: 'id', name: 'LNG计划编号', fixed: 'left', nameSpan: 6 },

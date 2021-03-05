@@ -73,6 +73,7 @@ export default {
       if (evt === 'pwd') {
         path = '/mine/mineEditPassword'
       } else if (evt === 'download') {
+        this.$setSessionStorage('curr_auth_button', 'query$reset$down')
         path = '/settlement/orderDownload'
       }
 
