@@ -1,10 +1,11 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="tables" :tableListName="'orderDownload'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" :tableListName="'orderDownload'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
-import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof, exportBlobToFiles } from '@/utils/tools'
+import { $generateDownloadCenterFile } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -38,7 +39,11 @@ export default {
   created: function () { },
   methods: {
     onListEvent(type, row) {
-      window.location.href = this.$store.state.file.fileHost + row.filePath
+      if (type === 'download') {
+        $generateDownloadCenterFile({ id: row.id, orgId: row.orgId }).then(response => {
+          exportBlobToFiles(response, row.fileName)
+        })
+      }
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { generateFile: { }, dateParam: { } } })

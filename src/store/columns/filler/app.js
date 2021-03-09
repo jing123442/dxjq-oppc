@@ -22,6 +22,10 @@ const app = {
     lngPlanInfo: [
       { ou: 1, name: '计划确认', status: 3 }
     ],
+    lngPlanCancelInfo: [
+      { ou: 1, name: '计划确认', status: 3 },
+      { ou: 2, name: '计划取消', status: 3 }
+    ],
     lngPlanLeaveInfo: [
       { ou: 1, name: '计划详情', status: 3 },
       { ou: 2, name: '录入出港磅单', status: 3 }

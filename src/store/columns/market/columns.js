@@ -57,16 +57,16 @@ const columns = {
   ],
   carrierManConfig: [
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', hide: true, width: 50 },
-    { field: 'orgName', name: '物流公司名称', nameSpan: 5, fixed: 'left', ispush: false, search: { type: 'text', placeholder: '请输入物流公司名称' }, show: { type: 'text', isDisabled: true, style: 'width: 90%;', placeholder: '请输入物流公司名称' } },
-    { field: 'managerInfo', name: '营销合作经理', stype: 'mapping', mapping: 'managerName', nameSpan: 5, show: { type: 'select', obj: 'userList', mulField: { managerId: 0, managerName: 1, managerPhone: 2 }, iType: 'string', placeholder: '请选择' }, search: { type: 'text', placeholder: '请输入营销合作经理' } },
+    { field: 'orgName', name: '物流公司名称', nameSpan: 5, fixed: 'left', ispush: false, search: { type: 'text', placeholder: '请输入物流公司名称', nameSpan: 0 }, show: { type: 'text', isDisabled: true, style: 'width: 90%;', placeholder: '请输入物流公司名称' } },
+    { field: 'managerInfo', name: '营销合作经理', stype: 'mapping', mapping: 'managerName', nameSpan: 5, show: { type: 'select', obj: 'userList', mulField: { managerId: 0, managerName: 1, managerPhone: 2 }, iType: 'string', placeholder: '请选择' }, search: { type: 'text', placeholder: '请输入营销合作经理', nameSpan: 0 } },
     { field: 'managerPhone', name: '营销合作经理电话', ispush: false },
     { field: 'operateDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'edit', name: '配置合作经理' }] }
   ],
   gasstationConfig: [
     { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50 },
-    { field: 'gasstationName', nameSpan: 5, name: '加气站名称', ispush: false, search: { type: 'text', placeholder: '请输入加气站名称' }, show: { type: 'text', isDisabled: true, style: 'width: 90%;', placeholder: '请输入加气站名称' } },
-    { field: 'managerInfo', name: '营销合作经理', stype: 'mapping', mapping: 'managerName', nameSpan: 5, show: { type: 'select', obj: 'userList', mulField: { managerId: 0, managerName: 1, managerPhone: 2 }, iType: 'string', placeholder: '请选择' }, search: { type: 'text', placeholder: '请输入营销合作经理' } },
+    { field: 'gasstationName', nameSpan: 5, name: '加气站名称', ispush: false, search: { type: 'text', placeholder: '请输入加气站名称', nameSpan: 0 }, show: { type: 'text', isDisabled: true, style: 'width: 90%;', placeholder: '请输入加气站名称' } },
+    { field: 'managerInfo', name: '营销合作经理', stype: 'mapping', mapping: 'managerName', nameSpan: 5, show: { type: 'select', obj: 'userList', mulField: { managerId: 0, managerName: 1, managerPhone: 2 }, iType: 'string', placeholder: '请选择' }, search: { type: 'text', placeholder: '请输入营销合作经理', nameSpan: 0 } },
     { field: 'managerPhone', name: '营销合作经理电话', ispush: false },
     { field: 'operateDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'edit', name: '配置合作经理' }] }
