@@ -65,7 +65,7 @@ const columns = {
   ],
   info: [
     { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { type: 'hide', isNode: true, parent: 'gasstationVO' } },
-    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, fixed: 'left', show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' }, search: { type: 'text', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
+    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, fixed: 'left', show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' }, search: { type: 'text', nameSpan: 0, placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
     { field: 'listPrice', name: '加气站挂牌价(元/公斤)', ispush: false },
     { field: 'platformPrice', name: '平台挂牌价(元/公斤)', ispush: false },
     { field: 'qrcode', name: '收款码类型', formatter: 'qrcodeType', ispush: false },
@@ -155,14 +155,14 @@ const columns = {
   ],
   lngPlan: [
     { field: 'id', name: '计划编号', fixed: 'left', nameSpan: 6, width: 140, detail: { type: 'span', serial: 1, ou: 1 } },
-    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, width: 140, search: { type: 'text', serial: 1, nameSpan: 0, placeholder: '请输入加气站名称' }, detail: { type: 'span', serial: 3, ou: 1 } },
-    { field: 'planTime', name: '期望到站日期', nameSpan: 6, width: 140, stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', serial: 3, nameSpan: 0, placeholder: '', style: 'width: 350px;', findField: 'planTime', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', nameSpan: 0, subField: 'createDateName', hideName: true, obj: 'currLNGDataSearch', value: 'planTime' }, detail: { type: 'span', serial: 4, ou: 1, stype: 'format', formatFun: 'formateTData all' } },
-    { field: 'status', name: '订单状态', formatter: 'planStatus', nameSpan: 6, search: { type: 'select', serial: 2, nameSpan: 0, obj: 'planStatus', placeholder: '请选择状态' }, detail: { type: 'span', model: 'select', obj: 'planStatus', serial: 2, ou: 1 } },
-    { field: 'createTime', name: '提报时间', nameSpan: 6, width: 140, stype: 'format', formatFun: 'formateTData all' },
+    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, width: 140, search: { type: 'text', serial: 1, findStyle: 'width: 18%;', style: 'width: 100%', nameSpan: 0, placeholder: '请输入加气站名称' }, detail: { type: 'span', serial: 3, ou: 1 } },
+    { field: 'planTime', name: '期望到站日期', nameSpan: 6, width: 140, stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', serial: 3, findStyle: 'width: 32%;', style: 'width: 100%', nameSpan: 0, placeholder: { start: '期望到站开始时间', end: '期望到站结束时间' } }, detail: { type: 'span', serial: 4, ou: 1, stype: 'format', formatFun: 'formateTData all' } },
+    { field: 'status', name: '订单状态', formatter: 'planStatus', nameSpan: 6, search: { type: 'select', serial: 2, nameSpan: 0, obj: 'planStatus', placeholder: '请选择状态', style: 'width: 100%', findStyle: 'width: 18%;' }, detail: { type: 'span', model: 'select', obj: 'planStatus', serial: 2, ou: 1 } },
+    { field: 'createTime', name: '提报时间', nameSpan: 6, width: 140, stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', serial: 5, nameSpan: 0, placeholder: '', style: 'width: 100%', findField: 'createTime', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', nameSpan: 0, style: 'width: 100%', subField: 'createDateName', hideName: true, obj: 'currLNGDataSearch', value: 'createTime' } },
     { field: 'lockTime', name: '锁定时间', width: 140, stype: 'format', formatFun: 'formateTData all' },
     { field: 'modifyApplyTime', name: '变更提报时间', width: 140, stype: 'format', formatFun: 'formateTData all' },
     { field: 'confirmTime', name: '确认时间', width: 140, stype: 'format', formatFun: 'formateTData all' },
-    { field: 'leaveTime', name: '出港时间', width: 140, stype: 'format', formatFun: 'formateTData all' },
+    { field: 'leaveTime', name: '出港时间', width: 140, stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', serial: 4, style: 'width: 100%', findStyle: 'width: 32%;', placeholder: { start: '出港开始时间', end: '出港结束时间' } } },
     { field: 'uploadTime', name: '出港磅单录入时间', width: 140, stype: 'format', formatFun: 'formateTData all' },
     { field: 'reachTime', name: '签收时间', width: 140, stype: 'format', formatFun: 'formateTData all' },
     { field: 'completeTime', name: '完成时间', width: 140, stype: 'format', formatFun: 'formateTData all' },
@@ -184,6 +184,16 @@ const columns = {
     { field: 'downloadUrl', name: '到站榜单', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 18, ou: 1 } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 250, list: params => buttonLNGPlanList(params) }
   ],
+  lngPlanCancelInfo: [
+    { field: 'id', name: '计划编号', fixed: 'left', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'status', name: '订单状态', nameSpan: 6, show: { type: 'span', model: 'select', obj: 'planStatus', ou: 1 } },
+    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'planTime', name: '期望送达时间', nameSpan: 6, show: { type: 'span', ou: 1, stype: 'format', formatFun: 'formateTData all' } },
+    { field: 'downloadContactName', name: '卸车联系人', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'downloadContactPhone', name: '卸车联系电话', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'createNote', name: '提报备注', nameSpan: 6, show: { type: 'span', ou: 1 } },
+    { field: 'note', name: '计划取消原因', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入计划取消原因', trigger: 'blur' }] }
+  ],
   lngPlanLeaveInfo: [
     { field: 'id', name: '计划编号', fixed: 'left', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'status', name: '订单状态', nameSpan: 6, show: { type: 'span', model: 'select', obj: 'planStatus', ou: 1 } },
@@ -196,7 +206,7 @@ const columns = {
     { field: 'driverPhone', name: '驾驶员联系方式', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入驾驶员联系方式' }, rules: [{ required: true, message: '请输入驾驶员联系方式', trigger: 'blur' }, { validator: 'isValidateMobile', message: '请输入正确格式的驾驶员联系方式', trigger: 'blur' }] },
     { field: 'leaveTime', name: '出港时间(装车结束时间)', nameSpan: 6, show: { type: 'date-picker', model: 'datetime', ou: 2, placeholder: '请选择出港时间' }, rules: [{ required: true, message: '请选择出港时间', trigger: 'blur' }] },
     { field: 'carNumber', name: '车牌号', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入车牌号' }, rules: [{ required: true, message: '请输入车牌号', trigger: 'blur' }] },
-    { field: 'uploadUrl', name: '上传出港磅单', nameSpan: 6, filefield: 'file', show: { type: 'file', ou: 2, iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传出港磅单', node: [] }, rules: [{ required: true, message: '请上传出港磅单！', trigger: 'change' }] },
+    { field: 'uploadUrl', name: '上传出港磅单', nameSpan: 6, filefield: 'file', show: { type: 'file', ou: 2, iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传出港磅单', node: [] } },
     { field: 'trailerNumber', name: '挂车号', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入挂车号' }, rules: [{ required: true, message: '请输入挂车号', trigger: 'blur' }] }
   ],
   lngPlanCheckInfo: [

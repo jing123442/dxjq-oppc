@@ -111,7 +111,8 @@ export function utilsDownloadType() {
     { value: 9, label: '加气站与长城奥扬对账单' },
     { value: 10, label: '加气站提现明细' },
     { value: 11, label: '象群科技订单列表' },
-    { value: 12, label: '象群科技与长城奥扬对账函' }
+    { value: 12, label: '象群科技与长城奥扬对账函' },
+    { value: 14, label: '日结算订单' }
   ]
 }
 export function utilsCheck() {
@@ -269,7 +270,7 @@ export function utilsBearType() {
 
 export function utilsLNGDataSearch() {
   return [
-    { value: 'planTime', label: '期望到站日期' },
+    /* { value: 'planTime', label: '期望到站日期' }, */
     { value: 'createTime', label: '提报时间' },
     { value: 'lockTime', label: '锁定时间' },
     { value: 'modifyApplyTime', label: '变更提报时间' },

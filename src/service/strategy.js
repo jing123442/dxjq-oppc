@@ -64,11 +64,6 @@ export async function $strategyOrderConfirm (data) {
   return await R({ url: 'strategy/purchase/confirm', data })
 }
 
-// LNG提报计划-锁定前取消订单
-export async function $strategyBeforeOrderCancel (data) {
-  return await R({ url: 'strategy/purchase/cancel_by_gasstation', data })
-}
-
 // LNG提报计划-取消订单
 export async function $strategyOrderCancel (data) {
   return await R({ url: 'strategy/purchase/cancel', data })

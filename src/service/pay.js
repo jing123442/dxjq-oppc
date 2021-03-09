@@ -1,5 +1,6 @@
 import R from '@/utils/request'
 
+// 企业认证
 export async function $orgAuth (data) {
   return await R({ url: 'pay/allinpay/verifyAccount', data })
 }

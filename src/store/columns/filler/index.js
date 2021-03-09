@@ -68,6 +68,9 @@ const getters = {
   // LNG计划管理--确认
   filler_lng_plan_info_mode_list: item => app.mode.lngPlanInfo,
   filler_lng_plan_info_column: item => columns.lngPlanInfo,
+  // LNG计划管理--取消
+  filler_lng_plan_cancel_mode_list: item => app.mode.lngPlanCancelInfo,
+  filler_lng_plan_cancel_column: item => columns.lngPlanCancelInfo,
   // LNG计划管理--出港录入
   filler_lng_plan_leave_mode_list: item => app.mode.lngPlanLeaveInfo,
   filler_lng_plan_leave_column: item => columns.lngPlanLeaveInfo,

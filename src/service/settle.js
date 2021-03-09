@@ -43,3 +43,8 @@ export async function $gasstationWithdrawTotal (data) {
 export async function $generateDownloadFile (data) {
   return await R({ url: 'settle/generate_file/add', data })
 }
+
+// 下载文件
+export async function $generateDownloadCenterFile (data) {
+  return await R({ url: 'settle/generate_file/download', data, responseType: 'blob' })
+}

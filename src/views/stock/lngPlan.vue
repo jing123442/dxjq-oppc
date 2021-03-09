@@ -7,6 +7,9 @@
     <el-dialog title="变更申请处理" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogChangeVisible" ref="change" :formRef="'changeForm'" :rowData="changeRow" :pageColumn="page_column_change" :selectList="select_list" :axios="axios" :modeList="mode_change_list" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventChange"></nt-form>
     </el-dialog>
+    <el-dialog title="LNG计划取消" :visible.sync="dialogCancelVisible" :width="add_edit_dialog" :append-to-body="true">
+      <nt-form v-if="dialogCancelVisible" ref="cancel" :formRef="'cancelForm'" :rowData="cancelRow" :pageColumn="page_column_cancel" :selectList="select_list" :axios="axios" :modeList="mode_cancel_list" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListCancelLeave"></nt-form>
+    </el-dialog>
     <el-dialog title="出港磅单录入" :visible.sync="dialogLeaveVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogLeaveVisible" ref="leave" :formRef="'leaveForm'" :rowData="leaveRow" :pageColumn="page_column_leave" :selectList="select_list" :axios="axios" :modeList="mode_leave_list" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventLeave"></nt-form>
     </el-dialog>
@@ -26,9 +29,9 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, isTypeof, messageBox, callbackPagesInfo, custFormBtnList, exportBlobToFiles } from '@/utils/tools'
+import { initVueDataOptions, isTypeof, callbackPagesInfo, custFormBtnList, exportBlobToFiles } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $strategyOrderConfirm, $strategyBeforeOrderCancel, $strategyOrderCancel, $strategyPurchaseLeave, $strategyModifyPurchase, $strategyCheckReachPurchase, $strategyExceptionPurchase, $strategyExceptionFindPurchase, $strategyPurchaseFind, $strategyPurchaseExport } from '@/service/strategy'
+import { $strategyOrderConfirm, $strategyOrderCancel, $strategyPurchaseLeave, $strategyModifyPurchase, $strategyCheckReachPurchase, $strategyExceptionPurchase, $strategyExceptionFindPurchase, $strategyPurchaseFind, $strategyPurchaseExport } from '@/service/strategy'
 
 export default {
   name: 'lngPlan',
@@ -78,6 +81,8 @@ export default {
       dialogChangeVisible: false,
       lngInfoRow: {},
       dialogInfoVisible: false,
+      cancelRow: {},
+      dialogCancelVisible: false,
       leaveRow: {},
       dialogLeaveVisible: false,
       checkRow: {},
@@ -96,12 +101,14 @@ export default {
       mode_change_list: 'filler_lng_plan_change_mode_list',
       mode_info_list: 'filler_lng_plan_info_mode_list',
       mode_leave_list: 'filler_lng_plan_leave_mode_list',
+      mode_cancel_list: 'filler_lng_plan_cancel_mode_list',
       mode_check_list: 'filler_lng_plan_check_mode_list',
       mode_anomalous_list: 'filler_lng_plan_anomalous_mode_list',
       page_status: 'filler_lngPlan_page_status',
       page_column: 'filler_lngPlan_column',
       page_column_change: 'filler_lng_plan_change_column',
       page_column_info: 'filler_lng_plan_info_column',
+      page_column_cancel: 'filler_lng_plan_cancel_column',
       page_column_leave: 'filler_lng_plan_leave_column',
       page_column_check: 'filler_lng_plan_check_column',
       page_column_anomalous: 'filler_lng_plan_anomalous_column',
@@ -122,25 +129,10 @@ export default {
           this.dialogInfoVisible = true
         })
       } else if (type === 'cancel') {
-        messageBox(this, {
-          title: '提示',
-          message: '确认取消计划？',
-          confirmButtonText: '确认',
-          cancelButtonText: '取消',
-          type: 'warning',
-          cb: () => {
-            const params = { purchase: { id: row.id } }
-            if (row.status == 1) {
-              return $strategyBeforeOrderCancel(params).then((response) => {
-                return response
-              })
-            } else {
-              return $strategyOrderCancel(params).then((response) => {
-                return response
-              })
-            }
-          },
-          renderList: (self) => { self.$refs.lngPlan.initDataList() }
+        $strategyPurchaseFind({ id: row.id }).then(response => {
+          this.cancelRow = response.data && response.data.purchase
+          this.cancelRow._btn = custFormBtnList()
+          this.dialogCancelVisible = true
         })
       } else if (type === 'self_detail') {
         this.detailEvent(row)
@@ -236,6 +228,28 @@ export default {
       this.leaveRow = row
       this.leaveRow._btn = custFormBtnList()
       this.dialogLeaveVisible = true
+    },
+    // LNG计划取消
+    onListCancelLeave(btnObj, row) {
+      if (btnObj.type === 'ok') {
+        this.$refs.cancel.$refs.cancelForm.validate((valid) => {
+          if (valid) {
+            const params = { note: row.note, purchase: { id: row.id } }
+
+            $strategyOrderCancel(params).then(response => {
+              this.$message.success('成功!')
+
+              this.$refs.lngPlan.initDataList()
+            })
+            this.dialogCancelVisible = false
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      } else {
+        this.dialogCancelVisible = false
+      }
     },
     // 提交录入磅单信息
     onListEventLeave(btnObj, row) {
@@ -552,7 +566,6 @@ export default {
     onReqParams(type, _this, callback) {
       const querys = { param: { dateParam: { createDateFrom: '', createDateTo: '' }, purchase: {} } }
       const dateTypeInfo = {
-        planTime: 1,
         createTime: 2,
         lockTime: 3,
         modifyApplyTime: 4,
@@ -567,14 +580,24 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k == 'planTime' || k == 'createTime' || k == 'lockTime' || k == 'modifyApplyTime' || k == 'confirmTime' || k == 'leaveTime' || k == 'uploadTime' || k == 'reachTime' || k == 'completeTime' || k == 'cancelTime' || k == 'exceptionApplyTime') {
+          if (k == 'createTime' || k == 'lockTime' || k == 'modifyApplyTime' || k == 'confirmTime' || k == 'uploadTime' || k == 'reachTime' || k == 'completeTime' || k == 'cancelTime' || k == 'exceptionApplyTime') {
             if (v) {
-              querys.param.dateType = dateTypeInfo[k]
+              querys.param.operateDateType = dateTypeInfo[k]
               querys.param.dateParam.createDateFrom = v[0]
               querys.param.dateParam.createDateTo = v[1]
             }
+          } else if (k == 'leaveTime') {
+            if (v) {
+              querys.param.leaveTimeFrom = v[0]
+              querys.param.leaveTimeTo = v[1]
+            }
+          } else if (k == 'planTime') {
+            if (v) {
+              querys.param.planTimeFrom = v[0]
+              querys.param.planTimeTo = v[1]
+            }
           } else {
-            if (v !== '') querys.param.purchase[k] = v
+            if (v !== '') querys.param[k] = v
           }
         }
       }

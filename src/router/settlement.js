@@ -9,6 +9,7 @@ export default [
     redirect: '/settlement/settIndex',
     meta: { title: '结算中心' },
     children: [
+      { path: 'orderDay', component: inImport('settlement/day'), name: 'orderDay', meta: { title: '日结算订单', noCache: false } },
       { path: 'orderFiller', component: inImport('settlement/filler'), name: 'orderFiller', meta: { title: '加气站结算订单', noCache: false } },
       { path: 'orderCarrier', component: inImport('settlement/carrier'), name: 'orderCarrier', meta: { title: '物流公司结算订单', noCache: false } },
       { path: 'orderBusiness', component: inImport('settlement/business'), name: 'orderBusiness', meta: { title: '象群科技结算订单', noCache: false } },

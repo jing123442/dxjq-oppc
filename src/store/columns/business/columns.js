@@ -33,7 +33,7 @@ const columns = {
   ],
   account: [
     { field: 'orgId', nameSpan: 5, name: '', stype: 'checkbox', align: 'center', fixed: 'left', hide: true, width: 50 },
-    { field: 'orgName', nameSpan: 5, name: '公司名称', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称！', trigger: 'blur' }] },
+    { field: 'orgName', nameSpan: 5, name: '公司名称', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称', nameSpan: 0 }, rules: [{ required: true, message: '请输入公司名称！', trigger: 'blur' }] },
     { field: 'accountId', nameSpan: 5, name: '账号' },
     { field: 'accountType', nameSpan: 5, name: '资金账户类型', formatter: 'accountType' },
     { field: 'balance', nameSpan: 5, name: '账户余额(元)' },

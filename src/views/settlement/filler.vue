@@ -63,7 +63,7 @@ export default {
       totalInfo: { gasQtyTotal: 0, profitTotal: 0 },
       dialogExportDownVisible: false,
       exportRow: {
-        modelList: []
+        modelList: ['7', '9', '10']
       },
       exportRowRules: {
         modelList: [{ type: 'array', required: true, message: '请至少选择一个下载内容', trigger: 'change' }]

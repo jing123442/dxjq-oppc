@@ -19,6 +19,8 @@ const getters = {
 
   // 加气站结算明细
   order_filler_detail_column: item => columns.fillerDetail,
+  // 日结算订单
+  order_day_column: item => columns.orderDay,
   // 加气站提现明细
   order_filler_withdraw_column: item => columns.fillerWithdraw,
   // 加气站入库明细
