@@ -155,9 +155,9 @@ const columns = {
   ],
   lngPlan: [
     { field: 'id', name: '计划编号', fixed: 'left', nameSpan: 6, width: 140, detail: { type: 'span', serial: 1, ou: 1 } },
-    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, width: 140, search: { type: 'text', serial: 1, findStyle: 'width: 18%;', style: 'width: 100%', nameSpan: 0, placeholder: '请输入加气站名称' }, detail: { type: 'span', serial: 3, ou: 1 } },
+    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, width: 140, search: { type: 'text', serial: 1, findStyle: 'width: 18%;height: 50px;', style: 'width: 100%', nameSpan: 0, placeholder: '请输入加气站名称' }, detail: { type: 'span', serial: 3, ou: 1 } },
     { field: 'planTime', name: '期望到站日期', nameSpan: 6, width: 140, stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', serial: 3, findStyle: 'width: 32%;', style: 'width: 100%', nameSpan: 0, placeholder: { start: '期望到站开始时间', end: '期望到站结束时间' } }, detail: { type: 'span', serial: 4, ou: 1, stype: 'format', formatFun: 'formateTData all' } },
-    { field: 'status', name: '订单状态', formatter: 'planStatus', nameSpan: 6, search: { type: 'select', serial: 2, nameSpan: 0, obj: 'planStatus', placeholder: '请选择状态', style: 'width: 100%', findStyle: 'width: 18%;' }, detail: { type: 'span', model: 'select', obj: 'planStatus', serial: 2, ou: 1 } },
+    { field: 'status', name: '订单状态', formatter: 'planStatus', nameSpan: 6, search: { type: 'select', serial: 2, nameSpan: 0, obj: 'planStatus', placeholder: '请选择状态', style: 'width: 100%', findStyle: 'width: 18%;height: 50px;' }, detail: { type: 'span', model: 'select', obj: 'planStatus', serial: 2, ou: 1 } },
     { field: 'createTime', name: '提报时间', nameSpan: 6, width: 140, stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', serial: 5, nameSpan: 0, placeholder: '', style: 'width: 100%', findField: 'createTime', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', nameSpan: 0, style: 'width: 100%', subField: 'createDateName', hideName: true, obj: 'currLNGDataSearch', value: 'createTime' } },
     { field: 'lockTime', name: '锁定时间', width: 140, stype: 'format', formatFun: 'formateTData all' },
     { field: 'modifyApplyTime', name: '变更提报时间', width: 140, stype: 'format', formatFun: 'formateTData all' },
