@@ -1,12 +1,12 @@
 <template>
   <div class="home-page-wrapper">
-    <div>
+    <!--<div>
       <div>交易金额(元)</div>
       <div>3,015,869</div>
       <div>前一日 2,015,869 <span>1.90%</span></div>
     </div>
-    <nt-charts :webUIType="'map'" :chartOptions="charts"></nt-charts>
-    <!--<img class='home-page-bg' src='@/assets/images/home/home_bg.jpg' alt='>-->
+    <nt-charts :webUIType="'map'" :chartOptions="charts"></nt-charts>-->
+    <img class="home-page-bg" src="@/assets/images/home/home_bg.jpg" alt="">
   </div>
 </template>
 
