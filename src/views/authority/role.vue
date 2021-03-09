@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     initData() {
-      if (this.woprole === 'administor') {
+      if (this.woprole === 'administrator') {
         $menuListTree({ clientId: 'woperation' }).then(response => {
           this.initMenuTree = response.data || []
           this.parseInitDataMenuTree(this.initMenuTree)

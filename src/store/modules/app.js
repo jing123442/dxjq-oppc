@@ -5,7 +5,7 @@ const app = {
     sidebar: {
       opened: true// !+sessionStorage.getItem('sidebarStatus')
     },
-    systemprefix: '运营管理平台',
+    systemprefix: '运维管理系统',
     systemsuffix: '',
     listDefault: 29,
     modeDefault: [],
