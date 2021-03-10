@@ -367,12 +367,12 @@ export default {
             } else if (row.bearType == 2) {
               params.purchaseException.checkWeight = row.exceptionCheckWeight
               params.purchaseException.checkNote = row.exceptionCheckNote
-              params.purchaseException.exceptionHandleUrl = row.exceptionHandleUrl[0].url
+              params.purchaseException.exceptionHandleUrl = row.exceptionHandleUrl && row.exceptionHandleUrl[0] ? row.exceptionHandleUrl[0].url : ''
             } else if (row.bearType == 3) {
               params.purchase.uploadWeight = row.exceptionUploadWeight
               params.purchase.lngFromCode = row.exceptionLngFromCode
               params.purchase.lngFromName = row.exceptionLngFromName
-              params.purchase.uploadUrl = row.exceptionUploadUrl[0].url
+              params.purchase.uploadUrl = row.exceptionUploadUrl && row.exceptionUploadUrl[0] ? row.exceptionUploadUrl[0].url : ''
             }
 
             $strategyExceptionPurchase(params).then(response => {

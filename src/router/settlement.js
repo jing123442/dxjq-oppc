@@ -16,7 +16,7 @@ export default [
       {
         path: 'orderFiller',
         name: 'orderSubFiller',
-        redirect: '/order/orderFiller',
+        redirect: '/settlement/orderFiller',
         component: {
           render (c) { return c('router-view') }
         },
@@ -32,7 +32,7 @@ export default [
       {
         path: 'orderCarrier',
         name: 'orderSubCarrier',
-        redirect: '/order/orderCarrier',
+        redirect: '/settlement/orderCarrier',
         component: {
           render (c) { return c('router-view') }
         },
@@ -56,7 +56,7 @@ export default [
           },
           {
             path: 'carrierSettlementList',
-            redirect: '/order/orderCarrier/carrierSettlementList',
+            redirect: '/settlement/orderCarrier/carrierSettlementList',
             component: {
               render (c) { return c('router-view') }
             },

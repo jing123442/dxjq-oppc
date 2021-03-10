@@ -40,9 +40,9 @@ const columns = {
     { field: 'carrierOrgName', name: '物流公司' },
     { field: 'carNumber', name: '车牌号' },
     { field: 'gasQty', name: '加气量' },
-    { field: 'gasamount', note: '加气站结算金额', name: '加气站结算金额' },
-    { field: 'amount', note: '平台结算金额', name: '平台结算金额' },
-    { field: 'serviceFee', note: '加气站利润金额', name: '加气站利润金额' }
+    { field: 'gasamount', note: '长城奥扬收款金额', name: '加气站结算金额' },
+    { field: 'amount', note: '物流公司付款金额', name: '平台结算金额' },
+    { field: 'serviceFee', note: '加气站服务费金额', name: '加气站利润金额' }
   ],
   fillerDetail: [
     { field: 'orderId', name: '订单编号', fixed: 'left' },
