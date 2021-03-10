@@ -256,10 +256,11 @@ export default {
       if (btnObj.type === 'ok') {
         this.$refs.leave.$refs.leaveForm.validate((valid) => {
           if (valid) {
+            console.log(row)
             const params = {
               purchase: {
                 id: row.id,
-                uploadUrl: row.uploadUrl[0].url,
+                uploadUrl: (row.uploadUrl && row.uploadUrl[0]) ? row.uploadUrl[0].url : '',
                 uploadWeight: row.uploadWeight,
                 driverName: row.driverName,
                 lngFromCode: row.lngFromCode,
