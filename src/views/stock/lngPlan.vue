@@ -583,7 +583,7 @@ export default {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (k == 'createTime' || k == 'lockTime' || k == 'modifyApplyTime' || k == 'confirmTime' || k == 'uploadTime' || k == 'reachTime' || k == 'completeTime' || k == 'cancelTime' || k == 'exceptionApplyTime') {
             if (v) {
-              querys.param.operateDateType = dateTypeInfo[k]
+              querys.param.operateTimeType = dateTypeInfo[k]
               querys.param.dateParam.createDateFrom = v[0]
               querys.param.dateParam.createDateTo = v[1]
             }
