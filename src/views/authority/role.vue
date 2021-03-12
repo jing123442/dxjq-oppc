@@ -1,7 +1,7 @@
 <template>
     <div class="template-main">
       <em-table-list ref="tables" :tableListName="'settingrole'" :mode_list="mode_list" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :page_column="page_column" :select_list="select_list" :page_status="page_status" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-      <el-dialog title="权限配置" :visible.sync="dialogConfigVisible" :width="add_edit_dialog" :append-to-body="true">
+      <el-dialog title="权限配置查看" :visible.sync="dialogConfigVisible" :width="add_edit_dialog" :append-to-body="true">
         <el-form ref="configRow" v-if="dialogConfigVisible" size="small" label-position="left">
           <el-form-item prop="roleList" style="margin-bottom: 50px;">
             <el-cascader-panel ref="cascader" v-model="configRow.roleList" :options="initMenuTree" :props="props" class="nt-cascader-panel"></el-cascader-panel>
@@ -111,7 +111,7 @@ export default {
           }
         })
         this.configRow = row
-        this.configRow._btn = custFormBtnList()
+        this.configRow._btn = custFormBtnList(1)
         this.dialogConfigVisible = true
       })
     },

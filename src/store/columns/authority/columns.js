@@ -22,7 +22,7 @@ const columns = {
     { field: 'orgId', name: '组织名称', stype: 'mapping', mapping: 'orgName', show: { type: 'select', subField: 'orgName', obj: 'orgId', placeholder: '请选择组织名称' }, rules: [{ required: true, message: '请选择组织名称', tigger: 'blur' }] },
     { field: 'roleId', name: '角色ID', show: { type: 'text', placeholder: '请输入角色ID' }, search: { type: 'text', placeholder: '请输入角色ID' }, rules: [{ required: true, message: '请输入角色ID', tigger: 'blur' }] },
     { field: 'roleName', name: '角色名称', show: { type: 'text', placeholder: '请输入角色名称' }, rules: [{ required: true, message: '请输入角色名称', tigger: 'blur' }] },
-    { field: 'roleopts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'config', name: '配置权限' }, { type: 'edit', name: '编辑' }] }
+    { field: 'roleopts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'config', name: '权限查看' }, { type: 'edit', name: '编辑' }] }
   ],
   button: [
     { field: 'id', name: 'ID', fixed: 'left', hide: true, show: { type: 'hide' } },
