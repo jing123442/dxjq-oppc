@@ -4,7 +4,8 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof, exportBlobToFiles } from '@/utils/tools'
+import { $generateDownloadCenterFile } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -38,7 +39,11 @@ export default {
   created: function () { },
   methods: {
     onListEvent(type, row) {
-      window.location.href = this.$store.state.file.fileHost + row.filePath
+      if (type === 'download') {
+        $generateDownloadCenterFile({ id: row.id, orgId: row.orgId }).then(response => {
+          exportBlobToFiles(response, row.fileName)
+        })
+      }
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { generateFile: { }, dateParam: { } } })

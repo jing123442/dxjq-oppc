@@ -96,4 +96,7 @@ export async function $findDayFundSum (data) {
 // 最新五条订单
 export async function $findLatestGasorders (data) {
   return await R({ url: 'settle/statistics/find_latest_gasorders', data })
+// 下载文件
+export async function $generateDownloadCenterFile (data) {
+  return await R({ url: 'settle/generate_file/download', data, responseType: 'blob' })
 }
