@@ -26,11 +26,20 @@ const app = {
       value: 0,
       message: 'message',
       logout: '2814'
-    }
+    },
+    subPageFullScreen: false
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
       state.sidebar.opened = !state.sidebar.opened
+    },
+    TOGGLE_FULL_SCREEN: (state, doc) => {
+      if (state.subPageFullScreen) {
+        document.exitFullscreen()
+      } else {
+        doc.requestFullscreen()
+      }
+      state.subPageFullScreen = !state.subPageFullScreen
     }
   },
   actions: {

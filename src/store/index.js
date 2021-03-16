@@ -41,7 +41,9 @@ const PAGE_CONFIG = {
 
   // list 参数
   query_params: state => state.app.queryParams,
-  response_success: state => state.app.responseSuccess
+  response_success: state => state.app.responseSuccess,
+
+  subpage_full_screen: state => state.app.subPageFullScreen
 }
 const getters = Object.assign(PAGE_CONFIG, mine.getters, userList.getters, business.getters, filler.getters, carrier.getters, price.getters, settlement.getters, market.getters, setting.getters, message.getters, order.getters, customer.getters, authority.getters)
 

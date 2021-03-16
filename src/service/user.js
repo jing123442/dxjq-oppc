@@ -101,3 +101,8 @@ export async function $roleToMenuList (data) {
 export async function $userConfigRole (data) {
   return await R({ url: 'user/user/edit_plat_user', method: 'POST', data })
 }
+
+// 获取区域列表
+export async function $districtList (data) {
+  return await R({ url: 'user/district/list', method: 'POST', data })
+}

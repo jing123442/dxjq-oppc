@@ -23,6 +23,8 @@ export function formatDate(date, fmt) { // date对象
     tmpDate = tmpDate.replace(/T/g, ' ')
 
     date = new Date(tmpDate)
+  } else if (isTypeof(date) == 'number') {
+    date = new Date(date)
   }
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
@@ -297,6 +299,12 @@ export function exportBlobToFiles(content, fileName, fileType = 'application/vnd
     }
   } catch (e) {
     console.error(e)
+  }
+}
+
+export function formateParams(param) {
+  if (typeof(param) == 'string' || typeof(param) == 'number') {
+    return parseFloat(param).toLocaleString()
   }
 }
 /*

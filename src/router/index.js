@@ -14,6 +14,7 @@ import Message from './message.js'
 import Order from './order.js'
 import Authority from './authority.js'
 import Stock from './stock.js'
+import Cockpit from './cockpit'
 Vue.use(VueRouter)
 
 const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : require('./_development')
@@ -52,7 +53,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Settlement, ...Setting, ...Order, ...Message, ...Authority, ...Stock]
+  routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Settlement, ...Setting, ...Order, ...Message, ...Authority, ...Stock, ...Cockpit]
 })
 router.beforeEach((to, from, next) => {
   const woptoken = getSessionStorage('woptoken')
