@@ -193,8 +193,12 @@
   </div>
 </template>
 <script>
+import { $strategyGasstationDistrictList } from '@/service/strategy'
 import { formateTData, formateParams } from '@/utils/tools'
 import { $districtList } from '@/service/user'
+import { mapJsonData } from '@/mock/map'
+import { markIconImage } from '@/mock/mark'
+import { mapAreaList } from '@/mock/area'
 import { $findTradeSumList, $findGasstationStockSum, $findFundSum, $findTruckTrendList, $findGasstationTrendList, $findCarrierTrendList, $findTradeRankGasstationList, $findTradeRankCarrierList, $findDayTruckSum, $findDayStockSum, $findDayTradeSum, $findDayFundSum, $findLatestGasorders } from '@/service/settle'
 export default {
   data() {
@@ -378,6 +382,7 @@ export default {
     }
   },
   created() {
+    console.log(this.currDate)
     this.currDateNotYear = this.currDate.split('-').slice(1, 3).join('-')
     this.initData()
     this.initTopData()
@@ -1388,6 +1393,7 @@ $mainBlack: "#14121F";
     margin-top: 2.4rem;
     width: 183rem;
     .block-first-map {
+      position: relative;
       width: 96.5rem;
       height: 41.7rem;
       background: #fff;
