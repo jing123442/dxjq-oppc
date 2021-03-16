@@ -101,3 +101,18 @@ export async function $findLatestGasorders (data) {
 export async function $generateDownloadCenterFile (data) {
   return await R({ url: 'settle/generate_file/download', data, responseType: 'blob' })
 }
+
+// 数据统计加气站详情
+export async function $settleStatisticsInfo (data) {
+  return await R({ url: 'settle/statistics/find_gasstation_trade_sum', data })
+}
+
+// 全区域价格
+export async function $settleFullDistrictPrice (data) {
+  return await R({ url: 'settle/statistics/find_statistics_full_district_price', data })
+}
+
+// 各个区域价格
+export async function $settleStatisticsDistrictPriceList (data) {
+  return await R({ url: 'settle/statistics/find_statistics_district_price_list', data })
+}

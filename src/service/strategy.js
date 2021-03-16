@@ -191,3 +191,8 @@ export async function $strategyPurchaseDownloadStock(data) {
 export async function $strategyPublishPrice(data) {
   return await R({ url: 'strategy/release_manage/publish', data })
 }
+
+// 获取加气站经纬度信息
+export async function $strategyGasstationDistrictList(data) {
+  return await R({ url: 'strategy/gasstation/get_district_gasstation_list', data })
+}
