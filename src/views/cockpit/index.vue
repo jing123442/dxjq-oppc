@@ -103,10 +103,16 @@
       </div>
     </div>
     <div class="block-echarts">
+      <div class="ec-item" v-if="currDistrict !== ''">
+        <div class="ec-title">价格变动趋势</div>
+        <div class="ec00-line-bar">
+          <nt-charts :webUIType="webUIType" :chartOptions="ec00LineBarOptions" style="height: 100%"></nt-charts>
+        </div>
+      </div>
       <div class="ec-item">
         <div class="ec-title">交易数据统计</div>
-        <div class="ec01-line">
-          <nt-charts :webUIType="webUIType" :chartOptions="ec01LineOptions" style="height: 100%"></nt-charts>
+        <div class="ec01-line" id="ec01Line">
+          <nt-charts :webUIType="webUIType" :chartOptions="ec01LineOptions" style="height: 100%" :chartsId="'ec01Line'"></nt-charts>
         </div>
       </div>
       <div class="ec-item">
@@ -115,7 +121,7 @@
           <nt-charts :webUIType="webUIType" :chartOptions="ec02BarOptions" style="height: 100%"></nt-charts>
         </div>
       </div>
-      <div class="ec-item">
+      <div class="ec-item" v-if="currDistrict === ''">
         <div class="ec-title">资金流动趋势</div>
         <div class="ec03-bar-line">
           <nt-charts :webUIType="webUIType" :chartOptions="ec03BarLineOptions" style="height: 100%"></nt-charts>
@@ -199,7 +205,7 @@ import { $districtList } from '@/service/user'
 import { mapJsonData } from '@/mock/map'
 import { markIconImage } from '@/mock/mark'
 import { mapAreaList } from '@/mock/area'
-import { $findTradeSumList, $findGasstationStockSum, $findFundSum, $findTruckTrendList, $findGasstationTrendList, $findCarrierTrendList, $findTradeRankGasstationList, $findTradeRankCarrierList, $findDayTruckSum, $findDayStockSum, $findDayTradeSum, $findDayFundSum, $findLatestGasorders } from '@/service/settle'
+import { $settleStatisticsInfo, $findTradeSumList, $findGasstationStockSum, $findFundSum, $findTruckTrendList, $findGasstationTrendList, $findCarrierTrendList, $findTradeRankGasstationList, $findTradeRankCarrierList, $findDayTruckSum, $findDayStockSum, $findDayTradeSum, $findDayFundSum, $findLatestGasorders, $findDistrictPriceTrendList } from '@/service/settle'
 export default {
   data() {
     return {
@@ -327,6 +333,11 @@ export default {
         }
       },
       webUIType: '',
+      ec00LineBarOptions: {
+        data: {
+          status: 0
+        }
+      },
       ec01LineOptions: {
         data: {
           status: 0
@@ -367,7 +378,7 @@ export default {
           status: 0
         }
       },
-      currDate: formateTData('2020-10-08', 'date'),
+      currDate: formateTData('2021-01-08', 'date'),
       currDateNotYear: '',
       districtList: [],
       currDistrict: '',
@@ -382,10 +393,8 @@ export default {
     }
   },
   created() {
-    console.log(this.currDate)
     this.currDateNotYear = this.currDate.split('-').slice(1, 3).join('-')
     this.initData()
-    this.initTopData()
     this.getDistrictList()
     this.findTradeSumList()
     this.getGasstationSupply()
@@ -401,6 +410,7 @@ export default {
     this.findDayFundSum()
     this.findLatestGasorders()
     this.toDayEvent()
+    this.findDistrictPriceTrendList()
   },
   mounted() {
     this.windowResize()
@@ -412,8 +422,15 @@ export default {
       if (nowTimestamp == currTimestamp) {
         // 今天
         this.isToday = true
+        const that = this
+        this.t = setInterval(() => {
+          that.findLatestGasorders()
+        }, 3000)
       } else {
         this.isToday = false
+        if (this.t) {
+          clearInterval(this.t)
+        }
       }
     },
     changeCurrDate() {
@@ -423,6 +440,7 @@ export default {
       this.dataGas = []
       this.dataTruck = []
       this.orderSettleList = []
+      this.toDayEvent()
       this.findTradeSumList()
       this.getGasstationSupply()
       this.findFundSum()
@@ -436,6 +454,7 @@ export default {
       this.findDayTradeSum()
       this.findDayFundSum()
       this.findLatestGasorders()
+      this.findDistrictPriceTrendList()
     },
     changeCurrDistrict() {
       this.dataAmount = []
@@ -451,6 +470,12 @@ export default {
       this.findDayTradeSum()
       this.findDayFundSum()
       this.findLatestGasorders()
+      this.findDistrictPriceTrendList()
+      if (this.currDistrict == '') {
+        this.findCarrierTrendList()
+        this.findTradeRankCarrierList()
+        this.findTruckTrendList()
+      }
     },
     gasstationRankChange(type) {
       this.gasstationRankActive = type
@@ -472,10 +497,10 @@ export default {
     },
     findLatestGasorders() {
       // 最新五条订单数
-      this.orderRecent = []
       const params = { date: this.currDate, districtId: this.currDistrict }
       $findLatestGasorders(params).then(res => {
         if (res.code == 0) {
+          this.orderRecent = []
           res.data.forEach(item => {
             this.orderRecent.push({
               updateDate: item.updateDate ? item.updateDate.split('T')[1] : '',
@@ -853,9 +878,39 @@ export default {
         }
       })
     },
+    findDistrictPriceTrendList() {
+      // 价格变动趋势
+      if (this.currDistrict == '') { return }
+      this.ec00LineBarOptions = { data: { status: 0 } }
+      const params = { date: this.currDate, districtId: this.currDistrict }
+      $findDistrictPriceTrendList(params).then(res => {
+        if (res.code == 0) {
+          this.ec00LineBarOptions = {
+            xAxis: {
+              data: []
+            },
+            data: {
+              status: 2,
+              series: [{
+                name: '平台结算周均价',
+                type: 'bar',
+                field: 'weekAverageActualPrice',
+                data: []
+              }, {
+                name: '活跃车辆数',
+                type: 'line',
+                field: 'liveTruckTotal',
+                data: []
+              }]
+            }
+          }
+          this.commonOptions(this.ec00LineBarOptions, res.data, 'xAxis')
+        }
+      })
+    },
     findTradeSumList() {
       // 查询交易汇总列表
-      this.ec01LineOptions.data.status = 0
+      this.ec01LineOptions = { data: { status: 0 } }
       $findTradeSumList({ date: this.currDate, districtId: this.currDistrict }).then(res => {
         if (res.code == 0) {
           let series = []
@@ -877,16 +932,19 @@ export default {
               name: '加气金额(万)',
               type: 'line',
               field: 'amountTotal',
+              yAxisIndex: 0,
               data: []
             }, {
               name: '加气量(吨)',
               type: 'line',
+               yAxisIndex: 0,
               field: 'gasQtyTotal',
               data: []
             }, {
               name: '周活(%)',
               type: 'line',
               field: 'weekLive',
+               yAxisIndex: 1,
               isPercent: true,
               data: []
             }]
@@ -897,9 +955,41 @@ export default {
               boundaryGap: false,
               data: []
             },
-            yAxis: {
-              type: 'value'
-            },
+            yAxis: [{
+              type: 'value',
+              axisTick: {
+                show: false
+              },
+              axisLabel: {
+                show: false
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  color: '#333',
+                  opacity: 0.1
+                }
+              }
+            }, {
+              type: 'value',
+              axisTick: {
+                show: false
+              },
+              axisLabel: {
+                show: false
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  color: '#333',
+                  opacity: 0.1
+                }
+              }
+            }],
             data: {
               series
             }
@@ -911,6 +1001,7 @@ export default {
     },
     getGasstationSupply() {
       // 加气站供气统计
+      this.ec02BarOptions = { data: { status: 0 } }
       $findGasstationStockSum({ date: this.currDate, districtId: this.currDistrict }).then(res => {
         if (res.code == 0) {
           this.ec02BarOptions = {
@@ -955,9 +1046,16 @@ export default {
     },
     findFundSum() {
       // 获取资金变化趋势
+      this.ec03BarLineOptions = { data: { status: 0 } }
       $findFundSum({ date: this.currDate }).then(res => {
         if (res.code == 0) {
           this.ec03BarLineOptions = {
+            legend: {
+              type: 'scroll',
+              left: '8%',
+              right: '8%',
+              itemGap: 20
+            },
             xAxis: {
               data: []
             },
@@ -992,9 +1090,16 @@ export default {
     },
     findTruckTrendList() {
       // 车辆变化趋势
+      this.ec04BarLineOptions = { data: { status: 0 } }
       $findTruckTrendList({ date: this.currDate }).then(res => {
         if (res.code == 0) {
           this.ec04BarLineOptions = {
+            legend: {
+              type: 'scroll',
+              left: '8%',
+              right: '8%',
+              itemGap: 20
+            },
             xAxis: {
               data: []
             },
@@ -1034,6 +1139,7 @@ export default {
     },
     findGasstationTrendList() {
       // 加气站变化趋势
+      this.ec05BarLineOptions = { data: { status: 0 } }
       $findGasstationTrendList({ date: this.currDate, orgType: 1, districtId: this.currDistrict }).then(res => {
         if (res.code == 0) {
           this.ec05BarLineOptions = {
@@ -1060,13 +1166,13 @@ export default {
             }
           }
           this.commonOptions(this.ec05BarLineOptions, res.data, 'xAxis')
-          console.log(this.ec05BarLineOptions)
           this.ec05BarLineOptions.data.status = 2
         }
       })
     },
     findCarrierTrendList() {
       // 物流公司变化趋势
+      this.ec06BarLineOptions = { data: { status: 0 } }
       $findCarrierTrendList({ date: this.currDate, orgType: 2 }).then(res => {
         if (res.code == 0) {
           this.ec06BarLineOptions = {
@@ -1108,7 +1214,8 @@ export default {
       let field = ''
       let seriesName = ''
       field = type == 1 ? 'gasQtyTotal' : type == 2 ? 'amountTotal' : 'orderTotal'
-      seriesName = type == 1 ? '加气总量；2' : type == 2 ? '加气总金额；3' : '订单总数'
+      seriesName = type == 1 ? '加气总量' : type == 2 ? '加气总金额' : '订单总数'
+      this.ec07BarOptions = { data: { status: 0 } }
       $findTradeRankGasstationList(params).then(res => {
         if (res.code == 0) {
            this.ec07BarOptions = {
@@ -1171,6 +1278,7 @@ export default {
       let seriesName = ''
       field = type == 1 ? 'gasQtyTotal' : type == 2 ? 'amountTotal' : 'orderTotal'
       seriesName = type == 1 ? '加气总量；2' : type == 2 ? '加气总金额；3' : '订单总数'
+      this.ec08BarOptions = { data: { status: 0 } }
       $findTradeRankCarrierList(params).then(res => {
         if (res.code == 0) {
            this.ec08BarOptions = {
@@ -1200,6 +1308,7 @@ export default {
               data: []
             },
             data: {
+              status: 2,
               series: [{
                 name: seriesName,
                 type: 'bar',
@@ -1217,7 +1326,6 @@ export default {
             }
           }
           this.commonOptions(this.ec08BarOptions, res.data, 'yAxis', 'carrierName')
-          this.ec08BarOptions.data.status = 2
         }
       })
     },
@@ -1253,8 +1361,6 @@ export default {
         }
         return 0
       })
-    },
-    initTopData() {
     },
     initData() {
       // $userDistrictAreaInfo({}).then(response => {
@@ -1520,7 +1626,7 @@ $mainBlack: "#14121F";
       margin: 0 3rem 0 5rem;
     }
   }
-  .ec01-line, .ec02-bar, .ec03-bar-line, .ec04-bar-line, .ec05-bar-line, .ec06-bar-line, .ec07-bar, .ec08-bar {
+  .ec00-line-bar, .ec01-line, .ec02-bar, .ec03-bar-line, .ec04-bar-line, .ec05-bar-line, .ec06-bar-line, .ec07-bar, .ec08-bar {
     position: relative;
     height: 36rem;
   }

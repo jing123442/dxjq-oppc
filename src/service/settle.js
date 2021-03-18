@@ -116,3 +116,7 @@ export async function $settleFullDistrictPrice (data) {
 export async function $settleStatisticsDistrictPriceList (data) {
   return await R({ url: 'settle/statistics/find_statistics_district_price_list', data })
 }
+// 区域下价格变动趋势
+export async function $findDistrictPriceTrendList (data) {
+  return await R({ url: 'settle/statistics/find_district_price_trend_list', data })
+}
