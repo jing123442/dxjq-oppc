@@ -303,7 +303,7 @@ export function exportBlobToFiles(content, fileName, fileType = 'application/vnd
 }
 
 export function formateParams(param) {
-  if (typeof(param) == 'string' || typeof(param) == 'number') {
+  if (isTypeof(param) === 'string' || isTypeof(param) === 'number') {
     return parseFloat(param).toLocaleString()
   }
 }

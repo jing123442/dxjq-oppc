@@ -5,28 +5,9 @@
         <div class="title">大象加气 · 大数据中心 · 管理驾驶舱</div>
       </div>
       <div class="right-controller">
-        <el-date-picker
-          class="date-picker"
-          v-model="currDate"
-          type="date"
-          placeholder="选择日期"
-          @change="changeCurrDate"
-        >
-        </el-date-picker>
-        <el-select
-          v-model="currDistrict"
-          placeholder="全区域"
-          class="district-select"
-          :popper-append-to-body="false"
-          @change="changeCurrDistrict"
-        >
-          <el-option
-            v-for="item in districtList"
-            :key="item.districtId"
-            :label="item.districtName"
-            :value="item.districtId"
-          >
-          </el-option>
+        <el-date-picker class="date-picker" v-model="currDate" type="date" placeholder="选择日期" @change="changeCurrDate"></el-date-picker>
+        <el-select v-model="currDistrict" placeholder="全区域" class="district-select" :popper-append-to-body="false" @change="changeCurrDistrict">
+          <el-option v-for="item in districtList" :key="item.districtId" :label="item.districtName" :value="item.districtId"></el-option>
         </el-select>
         <div class="full-screen" @click="subpageFullScreen">
           <img src="@/assets/images/cockpit/fullScreen.png" alt="" />
@@ -34,38 +15,20 @@
       </div>
     </div>
     <div class="data-box">
-      <div class="data-amount">
-        <div class="img-box">
-          <img src="@/assets/images/cockpit/icon-amount.png" alt="" />
-        </div>
-        <nt-card
-          v-for="(item, index) in dataAmount"
-          :key="index"
-          :dataObj="item"
-          class="card-item"
-        ></nt-card>
+      <div class="data-group">
+        <nt-card :data="cardsData.amountTotal" :options="cards.amountTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
+        <nt-card :data="cardsData.rechargeTotal" :options="cards.rechargeTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
+        <nt-card :data="cardsData.balnaceTotal" :options="cards.balnaceTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
       </div>
-      <div class="data-gas">
-        <div class="img-box">
-          <img src="@/assets/images/cockpit/icon-gas.png" alt="" />
-        </div>
-        <nt-card
-          v-for="(item, index) in dataGas"
-          :key="index"
-          :dataObj="item"
-          class="card-item"
-        ></nt-card>
+      <div class="data-group">
+        <nt-card :data="cardsData.gasQtyTotal" :options="cards.gasQtyTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
+        <nt-card :data="cardsData.storeTotal" :options="cards.storeTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
+        <nt-card :data="cardsData.stockTotal" :options="cards.stockTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
+        <nt-card :data="cardsData.wayTotal" :options="cards.wayTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
       </div>
-      <div class="data-truck">
-        <div class="img-box">
-          <img src="@/assets/images/cockpit/icon-truck.png" alt="" />
-        </div>
-        <nt-card
-          v-for="(item, index) in dataTruck"
-          :key="index"
-          :dataObj="item"
-          class="card-item"
-        ></nt-card>
+      <div class="data-group">
+        <nt-card :data="cardsData.liveTruckTotal" :options="cards.liveTruckTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
+        <nt-card :data="cardsData.addTruckTotal" :options="cards.addTruckTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
       </div>
     </div>
     <div class="block-first">
@@ -81,12 +44,10 @@
       </div>
       <div class="block-first-right">
         <div class="order-settle">
-          <nt-card
-            v-for="(item, index) in orderSettleList"
-            :key="index"
-            :dataObj="item"
-            class="settle-item"
-          ></nt-card>
+          <nt-card :data="cardsData.orderTotal" :options="cards.orderTotal" :isNotShow="isToday" :myClass="'justify-content__center align-items__center settle-item'"></nt-card>
+          <nt-card :data="cardsData.nopayOrderTotal" :options="cards.nopayOrderTotal" :isNotShow="isToday" :myClass="'justify-content__center align-items__center settle-item'"></nt-card>
+          <nt-card :data="cardsData.successOrderTotal" :options="cards.successOrderTotal" :isNotShow="isToday" :myClass="'justify-content__center align-items__center settle-item'"></nt-card>
+          <nt-card :data="cardsData.cancelOrderTotal" :options="cards.cancelOrderTotal" :isNotShow="isToday" :myClass="'justify-content__center align-items__center settle-item'"></nt-card>
         </div>
         <div class="order-list">
           <div class="order-item" v-for="(item, index) in orderRecent" :key="index">
@@ -205,10 +166,13 @@ import { $districtList } from '@/service/user'
 import { mapJsonData } from '@/mock/map'
 import { markIconImage } from '@/mock/mark'
 import { mapAreaList } from '@/mock/area'
-import { $settleStatisticsInfo, $findTradeSumList, $findGasstationStockSum, $findFundSum, $findTruckTrendList, $findGasstationTrendList, $findCarrierTrendList, $findTradeRankGasstationList, $findTradeRankCarrierList, $findDayTruckSum, $findDayStockSum, $findDayTradeSum, $findDayFundSum, $findLatestGasorders, $findDistrictPriceTrendList } from '@/service/settle'
+import * as cardInfo from '@/mock/card'
+import { $findTradeSumList, $findGasstationStockSum, $findFundSum, $findTruckTrendList, $findGasstationTrendList, $findCarrierTrendList, $findTradeRankGasstationList, $findTradeRankCarrierList, $findDayTruckSum, $findDayStockSum, $findDayTradeSum, $findDayFundSum, $findLatestGasorders, $findDistrictPriceTrendList, $settleStatisticsInfo, $settleFullDistrictPrice, $settleStatisticsDistrictPriceList } from '@/service/settle'
 export default {
   data() {
     return {
+      cards: cardInfo,
+      cardsData: {},
       charts: {
         id: 'chart-id',
         class: 'charts',
@@ -261,7 +225,7 @@ export default {
               borderWidth: 0,
               backgroundColor: '#ffffff',
               formatter: function (params, ticket, callback) {
-                $settleStatisticsInfo({ date: '2020-10-08', gasstationId: params.value[3] }).then(response => {
+                $settleStatisticsInfo({ date: '2021-01-08', gasstationId: params.value[3] }).then(response => {
                   const data = response.data
                   const tmpHtml = `<div class="nt-echarts map-mark-gasstation"><div class="title">${data.gasstationName}</div><div class="tag"><div class="area-district">${data.districtName} ${data.districtRank}</div><div class="all-district">平台 ${data.allDistrictRank}</div></div><div class="number"><div><div class="sign">￥</div><div class="price">${data.actualPrice}</div></div><div class="truck"><div>${data.liveTruckTotal} 辆</div></div></div><div class="box-info"><div><div class="box-iconfont">进</div><div class="box-text">${data.gasQtyTotal} 吨</div></div><div><div class="box-iconfont">加</div><div class="box-text">${data.storeTotal} 吨</div></div><div><div class="box-iconfont">存</div><div class="box-text">${data.stockTotal} 吨</div></div><div><div class="box-iconfont">途</div><div class="box-text">${data.wayTotal} 吨</div></div></div></div>`
 
@@ -477,6 +441,14 @@ export default {
         this.findTruckTrendList()
       }
     },
+    cardStatisticsData(total, contrast, rate, title = '') {
+      return {
+        title: title,
+        total: total,
+        contrast: contrast,
+        rate: rate
+      }
+    },
     gasstationRankChange(type) {
       this.gasstationRankActive = type
       this.findTradeRankGasstationList(type)
@@ -530,45 +502,10 @@ export default {
           const yesterdayBalnaceTotal = formateParams(res.data.yesterdayBalnaceTotal)
           const balnaceTotalRate = res.data.balnaceTotalRate
 
-          this.dataAmount.push({
-            dShow: this.currDistrict === '',
-            dTitle: {
-              text: '充值金额(元)'
-            },
-            dValue: {
-              value: rechargeTotal,
-              style: {
-                fontFamily: 'AGENCYFB_0',
-                fontSize: '3.4rem'
-              }
-            },
-            contrast: {
-              label: '前一日',
-              value: yesterdayRechargeTotal
-            },
-            rate: rechargeTotalRate,
-            rateShow: !this.isToday
-          },
-          {
-            dShow: this.currDistrict === '',
-            dTitle: {
-              text: '账户余额(元)'
-            },
-            dValue: {
-              value: balnaceTotal,
-              style: {
-                fontSize: '3.4rem',
-                fontFamily: 'AGENCYFB_0',
-                color: '#FF9845'
-              }
-            },
-            contrast: {
-              label: '前一日',
-              value: yesterdayBalnaceTotal
-            },
-            rate: balnaceTotalRate,
-            rateShow: !this.isToday
-          })
+          // 充值金额
+          this.cardsData.rechargeTotal = this.cardStatisticsData(rechargeTotal, yesterdayRechargeTotal, rechargeTotalRate)
+          // 账户余额
+          this.cardsData.balnaceTotal = this.cardStatisticsData(balnaceTotal, yesterdayBalnaceTotal, balnaceTotalRate)
         }
       })
     },
@@ -602,139 +539,24 @@ export default {
           const cancelOrderTotalRate = res.data.cancelOrderTotalRate
           const yesterdayCancelOrderTotal = formateParams(res.data.yesterdayCancelOrderTotal)
 
-          this.dataAmount.unshift({
-            dTitle: {
-              text: '交易金额(元)',
-              style: {
-                fontWeight: 600
-              }
-            },
-            dValue: {
-              value: amountTotal,
-              style: {
-                fontSize: '4.2rem',
-                fontFamily: 'AGENCYFB'
-              }
-            },
-            contrast: {
-              label: '前一日',
-              value: yesterdayAmountTotal
-            },
-            rate: amountTotalRate,
-            rateShow: !this.isToday
-          })
+          // 交易金额
 
-          this.dataGas.unshift({
-            dTitle: {
-              text: '加气量(公斤)',
-              style: {
-                fontWeight: 600
-              }
-            },
-            dValue: {
-              value: gasQtyTotal,
-              style: {
-                fontSize: '4.2rem',
-                fontFamily: 'AGENCYFB'
-              }
-            },
-            contrast: {
-              label: '前一日',
-              value: yesterdayGasQtyTotal
-            },
-            rate: gasQtyTotalRate,
-            rateShow: !this.isToday
-          })
+          this.cardsData.amountTotal = this.cardStatisticsData(amountTotal, yesterdayAmountTotal, amountTotalRate)
 
-          this.orderSettleList.push({
-            style: {
-              alignItems: 'center'
-            },
-            dTitle: {
-              text: '总订单'
-            },
-            dValue: {
-              icon: require('@/assets/images/cockpit/icon-order-total.png'),
-              value: orderTotal,
-              style: {
-                fontSize: '4.2rem',
-                fontFamily: 'AGENCYFB'
-              }
-            },
-            contrast: {
-              label: '前一日',
-              value: yesterdayOrderTotal
-            },
-            rate: orderTotalRate,
-            rateShow: !this.isToday
-          },
-          {
-            style: {
-              alignItems: 'center'
-            },
-            dTitle: {
-              text: '待支付'
-            },
-            dValue: {
-              icon: require('@/assets/images/cockpit/icon-order-unpaid.png'),
-              value: nopayOrderTotal,
-              style: {
-                fontFamily: 'AGENCYFB',
-                fontSize: '3.4rem',
-                color: '#FF9845'
-              }
-            },
-            contrast: {
-              label: '前一日',
-              value: yesterdayNopayOrderTotal
-            },
-            rate: nopayOrderTotalRate,
-            rateShow: !this.isToday
-          },
-          {
-            style: {
-              alignItems: 'center'
-            },
-            dTitle: {
-              text: '已支付'
-            },
-            dValue: {
-              icon: require('@/assets/images/cockpit/icon-order-paid.png'),
-              value: successOrderTotal,
-              style: {
-                fontFamily: 'AGENCYFB',
-                fontSize: '3.4rem'
-              }
-            },
-            contrast: {
-              label: '前一日',
-              value: yesterdaySuccessOrderTotal
-            },
-            rate: successOrderTotalRate,
-            rateShow: !this.isToday
-          },
-          {
-            style: {
-              alignItems: 'center'
-            },
-            dTitle: {
-              text: '已取消'
-            },
-            dValue: {
-              icon: require('@/assets/images/cockpit/icon-order-cancel.png'),
-              value: cancelOrderTotal,
-              style: {
-                fontFamily: 'AGENCYFB',
-                fontSize: '3.4rem'
-              }
-            },
-            contrast: {
-              label: '前一日',
-              value: yesterdayCancelOrderTotal
-            },
-            rate: cancelOrderTotalRate,
-            rateShow: !this.isToday
-          })
+          // 加气统计
+          this.cardsData.gasQtyTotal = this.cardStatisticsData(gasQtyTotal, yesterdayGasQtyTotal, gasQtyTotalRate)
+
+          // 总订单
+          this.cardsData.orderTotal = this.cardStatisticsData(orderTotal, yesterdayOrderTotal, orderTotalRate)
+
+          // 待支付
+          this.cardsData.nopayOrderTotal = this.cardStatisticsData(nopayOrderTotal, yesterdayNopayOrderTotal, nopayOrderTotalRate)
+
+          // 已支付
+          this.cardsData.successOrderTotal = this.cardStatisticsData(successOrderTotal, yesterdaySuccessOrderTotal, successOrderTotalRate)
+
+          // 已取消
+          this.cardsData.cancelOrderTotal = this.cardStatisticsData(cancelOrderTotal, yesterdayCancelOrderTotal, cancelOrderTotalRate)
         }
       })
     },
@@ -749,46 +571,11 @@ export default {
           const addTruckTotal = formateParams(res.data.addTruckTotal)
           const addTruckTotalRate = res.data.addTruckTotalRate
           const yesterdayAddTruckTotal = formateParams(res.data.yesterdayAddTruckTotal)
-          this.dataTruck.push({
-            dTitle: {
-              text: '活跃车辆数',
-              style: {
-                fontWeight: 600
-              }
-            },
-            dValue: {
-              value: liveTruckTotal,
-              style: {
-                fontSize: '4.2rem',
-                fontFamily: 'AGENCYFB'
-              }
-            },
-            contrast: {
-              label: '前一日',
-              value: yesterdayLiveTruckTotal
-            },
-            rate: liveTruckTotalRate,
-            rateShow: !this.isToday
-          },
-          {
-            dShow: this.currDistrict === '',
-            dTitle: {
-              text: '新增车辆数'
-            },
-            dValue: {
-              value: addTruckTotal,
-              style: {
-                fontFamily: 'AGENCYFB_0',
-                fontSize: '3.4rem'
-              }
-            },
-            contrast: {
-              label: '前一日',
-              value: yesterdayAddTruckTotal
-            },
-            rate: addTruckTotalRate,
-            rateShow: !this.isToday
-          })
+
+          // 活跃车辆数
+          this.cardsData.liveTruckTotal = this.cardStatisticsData(liveTruckTotal, yesterdayLiveTruckTotal, liveTruckTotalRate)
+          // 新增车辆数
+          this.cardsData.addTruckTotal = this.cardStatisticsData(addTruckTotal, yesterdayAddTruckTotal, addTruckTotalRate)
         }
       })
     },
@@ -809,60 +596,13 @@ export default {
           const wayTotal = formateParams(res.data.wayTotal)
           const yesterdayWayTotal = formateParams(res.data.yesterdayWayTotal)
           const wayTotalRate = res.data.wayTotalRate
-          this.dataGas.push({
-            dTitle: {
-              text: '进气量(公斤)'
-            },
-            dValue: {
-              value: storeTotal,
-              style: {
-                fontFamily: 'AGENCYFB_0',
-                fontSize: '3.4rem'
-              }
-            },
-            contrast: {
-              label: '前一日',
-              value: yesterdayStoreTotal
-            },
-            rate: storeTotalRate,
-            rateShow: !this.isToday
-          },
-          {
-            dTitle: {
-              text: '站端库存(公斤)'
-            },
-            dValue: {
-              value: stockTotal,
-              style: {
-                fontSize: '3.4rem',
-                fontFamily: 'AGENCYFB_0'
-              }
-            },
-            contrast: {
-              label: '前一日',
-              value: yesterdayStockTotal
-            },
-            rate: stockTotalRate,
-            rateShow: !this.isToday
-          },
-          {
-            dTitle: {
-              text: '在途库存(公斤)'
-            },
-            dValue: {
-              value: wayTotal,
-              style: {
-                fontSize: '3.4rem',
-                fontFamily: 'AGENCYFB_0'
-              }
-            },
-            contrast: {
-              label: '前一日',
-              value: yesterdayWayTotal
-            },
-            rate: wayTotalRate,
-            rateShow: !this.isToday
-          })
+
+          // 进气量
+          this.cardsData.storeTotal = this.cardStatisticsData(storeTotal, yesterdayStoreTotal, storeTotalRate)
+          // 站端库存
+          this.cardsData.stockTotal = this.cardStatisticsData(stockTotal, yesterdayStockTotal, stockTotalRate)
+          // 在途库存
+          this.cardsData.wayTotal = this.cardStatisticsData(wayTotal, yesterdayWayTotal, wayTotalRate)
         }
       })
     },
@@ -937,14 +677,14 @@ export default {
             }, {
               name: '加气量(吨)',
               type: 'line',
-               yAxisIndex: 0,
+              yAxisIndex: 0,
               field: 'gasQtyTotal',
               data: []
             }, {
               name: '周活(%)',
               type: 'line',
               field: 'weekLive',
-               yAxisIndex: 1,
+              yAxisIndex: 1,
               isPercent: true,
               data: []
             }]
@@ -1218,7 +958,7 @@ export default {
       this.ec07BarOptions = { data: { status: 0 } }
       $findTradeRankGasstationList(params).then(res => {
         if (res.code == 0) {
-           this.ec07BarOptions = {
+          this.ec07BarOptions = {
             grid: {
               left: '18%',
               top: '5%',
@@ -1281,7 +1021,7 @@ export default {
       this.ec08BarOptions = { data: { status: 0 } }
       $findTradeRankCarrierList(params).then(res => {
         if (res.code == 0) {
-           this.ec08BarOptions = {
+          this.ec08BarOptions = {
             grid: {
               left: '18%',
               top: '5%',
@@ -1363,14 +1103,14 @@ export default {
       })
     },
     initData() {
-      // $userDistrictAreaInfo({}).then(response => {
-      // })
-      // $settleFullDistrictPrice({ date: '2021-03-15' }).then(response => {
-      //   console.log(response)
-      // })
-      // $settleStatisticsDistrictPriceList({ date: '2021-03-15' }).then(response => {
-      //   console.log(response)
-      // })
+      $districtList({}).then(response => {
+      })
+
+      $settleStatisticsDistrictPriceList({ date: '2021-03-15' }).then(response => {
+        $settleFullDistrictPrice({ date: '2021-03-15' }).then(response => {
+          console.log(response)
+        })
+      })
       this.gasstationListInfo()
     },
     gasstationListInfo() {
@@ -1415,11 +1155,14 @@ $mainBlack: "#14121F";
       align-items: center;
       .date-picker {
         margin-right: 20px;
-        width: 14.4rem;
+        width: 16rem;
         height: 3.8rem;
         font-size: 1.4rem;
         /deep/ input {
           height: 3.8rem;
+          &.el-input__inner {
+            padding-right: 15px;
+          }
         }
         /deep/ .el-input__icon {
           line-height: 1;
@@ -1457,16 +1200,15 @@ $mainBlack: "#14121F";
   }
   .data-box {
     overflow: hidden;
+    padding: 0 1.5rem;
     height: 15rem;
     margin: 0 auto;
     width: 183rem;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     background: #fff;
     border-radius: 8px;
-    .data-amount,
-    .data-gas,
-    .data-truck {
+    .data-group {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -1519,6 +1261,7 @@ $mainBlack: "#14121F";
         height: 19.8rem;
         background: #fff;
         border-radius: 8px;
+        text-align: center;
         .settle-item {
           margin-top: 2rem;
           padding-top: 2rem;

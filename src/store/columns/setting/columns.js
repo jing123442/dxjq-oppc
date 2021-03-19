@@ -1,4 +1,8 @@
 const columns = {
+  district: [
+    { field: 'districtName', name: '区域名称', fixed: 'left', show: { type: 'text', placeholder: '请输入区域名称' }, rules: [{ required: true, message: '请输入区域名称', trigger: 'blur' }] },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'config', name: '配置' }, { type: 'edit', name: '修改' }, { type: 'del', name: '删除' }] }
+  ],
   withdraw: [
     { field: 'orgTypeName', name: '账户类型', fixed: 'left' },
     { field: 'currentQuota', name: '现行余额限定(元)' },

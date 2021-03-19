@@ -5,6 +5,12 @@ import app from './app'
 const state = Object.assign({}, { app: app }, { columns: columns }, { select: select })
 
 const getters = {
+  // 区域配置
+  setting_district_mode_list: item => item.app.modeDefault,
+  setting_district_page_status: item => app.list.district,
+  setting_district_column: item => columns.district,
+  setting_district_select_list: item => item.app.selectDefault,
+
   // 账户余额配置
   setting_withdraw_mode_list: item => item.app.modeDefault,
   setting_withdraw_page_status: item => app.list.withdraw,
