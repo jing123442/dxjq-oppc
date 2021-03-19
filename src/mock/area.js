@@ -1,8 +1,8 @@
 const colors = {
-  1: 'rgba(56, 137, 255, .2)',
-  2: 'rgba(156, 137, 255, .2)',
-  3: 'rgba(56, 237, 255, .2)',
-  4: 'rgba(56, 237, 155, .2)'
+  1: '#bdd3ff',
+  2: '#d7ffd7',
+  3: '#ffdeb4',
+  4: '#ffb5ad'
 }
 
 const MAP_AREA_LIST = [
