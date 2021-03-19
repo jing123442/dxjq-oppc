@@ -35,10 +35,7 @@
       <div class="block-first-map">
         <nt-charts :webUIType="'map'" :chartOptions="charts">
           <div slot="legend" class="legend">
-            <div class="legend-line"><div class="name">全区域</div><div class="price">￥4.62/￥6.87</div></div>
-            <div class="legend-line"><div class="name">鲁东</div><div class="price">￥4.62/￥6.87</div></div>
-            <div class="legend-line"><div class="name">鲁西</div><div class="price">￥4.62/￥6.87</div></div>
-            <div class="legend-line"><div class="name">豫南</div><div class="price">￥4.62/￥6.87</div></div>
+            <div class="legend-line" v-for="(item, index) in charts.areaPriceList" :key="index"><div class="name">{{item.districtName}}</div><div class="price">{{item.actualPrice | currency}}</div></div>
           </div>
         </nt-charts>
       </div>
@@ -161,7 +158,7 @@
 </template>
 <script>
 import { $strategyGasstationDistrictList } from '@/service/strategy'
-import { formateTData, formateParams } from '@/utils/tools'
+import { formateTData, formateParams, isTypeof } from '@/utils/tools'
 import { $districtList } from '@/service/user'
 import { mapJsonData } from '@/mock/map'
 import { markIconImage } from '@/mock/mark'
@@ -177,6 +174,7 @@ export default {
         id: 'chart-id',
         class: 'charts',
         bgColor: '#ffffff',
+        areaPriceList: [],
         data: {
           status: 0,
           series: [{
@@ -200,17 +198,11 @@ export default {
             type: 'scatter',
             roam: true,
             coordinateSystem: 'geo',
-            symbol: function (value) {
-              return markIconImage(value)
-            },
+            symbol: value => markIconImage(value),
             symbolSize: [16, 20],
             label: {
               normal: {
-                show: false,
-                textStyle: {
-                  color: '#fff',
-                  fontSize: 9
-                }
+                show: false
               }
             },
             itemStyle: {},
@@ -224,8 +216,8 @@ export default {
               padding: 0,
               borderWidth: 0,
               backgroundColor: '#ffffff',
-              formatter: function (params, ticket, callback) {
-                $settleStatisticsInfo({ date: '2021-01-08', gasstationId: params.value[3] }).then(response => {
+              formatter: (params, ticket, callback) => {
+                $settleStatisticsInfo({ date: this.currDate, gasstationId: params.value[3] }).then(response => {
                   const data = response.data
                   const tmpHtml = `<div class="nt-echarts map-mark-gasstation"><div class="title">${data.gasstationName}</div><div class="tag"><div class="area-district">${data.districtName} ${data.districtRank}</div><div class="all-district">平台 ${data.allDistrictRank}</div></div><div class="number"><div><div class="sign">￥</div><div class="price">${data.actualPrice}</div></div><div class="truck"><div>${data.liveTruckTotal} 辆</div></div></div><div class="box-info"><div><div class="box-iconfont">进</div><div class="box-text">${data.gasQtyTotal} 吨</div></div><div><div class="box-iconfont">加</div><div class="box-text">${data.storeTotal} 吨</div></div><div><div class="box-iconfont">存</div><div class="box-text">${data.stockTotal} 吨</div></div><div><div class="box-iconfont">途</div><div class="box-text">${data.wayTotal} 吨</div></div></div></div>`
 
@@ -233,6 +225,32 @@ export default {
                 })
 
                 return 'Loading'
+              }
+            }
+          }, {
+            name: '',
+            type: 'effectScatter',
+            coordinateSystem: 'geo',
+            zlevel: 10,
+            data: [],
+            rippleEffect: {
+              period: 1,
+              scale: 3,
+              brushType: 'stroke'
+            },
+            label: {
+              normal: {
+                show: false
+              }
+            },
+            tooltip: {
+              show: false
+            },
+            itemStyle: {
+              normal: {
+                color: 'red',
+                shadowBlur: 5,
+                shadowColor: '#ffffff'
               }
             }
           }]
@@ -342,14 +360,10 @@ export default {
           status: 0
         }
       },
-      currDate: formateTData('2021-01-08', 'date'),
+      currDate: formateTData(new Date(), 'date'),
       currDateNotYear: '',
       districtList: [],
       currDistrict: '',
-      dataAmount: [],
-      dataGas: [],
-      dataTruck: [],
-      orderSettleList: [],
       gasstationRankActive: 1,
       carrierRankActive: 1,
       orderRecent: [],
@@ -358,28 +372,45 @@ export default {
   },
   created() {
     this.currDateNotYear = this.currDate.split('-').slice(1, 3).join('-')
-    this.initData()
-    this.getDistrictList()
-    this.findTradeSumList()
-    this.getGasstationSupply()
-    this.findFundSum()
-    this.findTruckTrendList()
-    this.findGasstationTrendList()
-    this.findCarrierTrendList()
-    this.findTradeRankGasstationList()
-    this.findTradeRankCarrierList()
-    this.findDayTruckSum()
-    this.findDayStockSum()
-    this.findDayTradeSum()
-    this.findDayFundSum()
-    this.findLatestGasorders()
-    this.toDayEvent()
-    this.findDistrictPriceTrendList()
+    this.initData('init')
   },
   mounted() {
     this.windowResize()
   },
   methods: {
+    initData(type = null) {
+      // 不是切换区域操作时
+      if (type !== 'district') {
+        this.toDayEvent()
+      }
+      this.initDistrictData()
+      // 初始化使用
+      if (type === 'init') {
+        this.getDistrictList()
+      }
+      this.findTradeSumList()
+      this.getGasstationSupply()
+
+      // 不是切换区域操作时
+      if (type !== 'district') {
+        this.findFundSum()
+      }
+      // 不是切换区域操作时 或切换后currDistrict为全区域
+      if (type !== 'district' || (type === 'district' && this.currDistrict == '')) {
+        this.findTruckTrendList()
+        this.findCarrierTrendList()
+        this.findTradeRankCarrierList()
+      }
+
+      this.findGasstationTrendList()
+      this.findTradeRankGasstationList()
+      this.findDayTruckSum()
+      this.findDayStockSum()
+      this.findDayTradeSum()
+      this.findDayFundSum()
+      this.findLatestGasorders()
+      this.findDistrictPriceTrendList()
+    },
     toDayEvent() {
       const nowTimestamp = new Date(formateTData(Date.now(), 'date')).getTime()
       const currTimestamp = new Date(this.currDate).getTime()
@@ -400,46 +431,10 @@ export default {
     changeCurrDate() {
       this.currDate = formateTData(this.currDate, 'date')
       this.currDateNotYear = this.currDate.split('-').slice(1, 3).join('-')
-      this.dataAmount = []
-      this.dataGas = []
-      this.dataTruck = []
-      this.orderSettleList = []
-      this.toDayEvent()
-      this.findTradeSumList()
-      this.getGasstationSupply()
-      this.findFundSum()
-      this.findTruckTrendList()
-      this.findGasstationTrendList()
-      this.findCarrierTrendList()
-      this.findTradeRankGasstationList()
-      this.findTradeRankCarrierList()
-      this.findDayTruckSum()
-      this.findDayStockSum()
-      this.findDayTradeSum()
-      this.findDayFundSum()
-      this.findLatestGasorders()
-      this.findDistrictPriceTrendList()
+      this.initData()
     },
     changeCurrDistrict() {
-      this.dataAmount = []
-      this.dataGas = []
-      this.dataTruck = []
-      this.orderSettleList = []
-      this.findTradeSumList()
-      this.getGasstationSupply()
-      this.findGasstationTrendList()
-      this.findTradeRankGasstationList()
-      this.findDayTruckSum()
-      this.findDayStockSum()
-      this.findDayTradeSum()
-      this.findDayFundSum()
-      this.findLatestGasorders()
-      this.findDistrictPriceTrendList()
-      if (this.currDistrict == '') {
-        this.findCarrierTrendList()
-        this.findTradeRankCarrierList()
-        this.findTruckTrendList()
-      }
+      this.initData('district')
     },
     cardStatisticsData(total, contrast, rate, title = '') {
       return {
@@ -1097,19 +1092,20 @@ export default {
         return 0
       })
     },
-    initData() {
-      $districtList({}).then(response => {
-      })
-
-      $settleStatisticsDistrictPriceList({ date: '2021-03-15' }).then(response => {
-        $settleFullDistrictPrice({ date: '2021-03-15' }).then(response => {
-          console.log(response)
+    initDistrictData() {
+      this.charts.areaPriceList = []
+      $settleStatisticsDistrictPriceList({ date: this.currDate }).then(response => {
+        this.charts.areaPriceList.push(...new Set(response.data))
+        $settleFullDistrictPrice({ date: this.currDate }).then(res => {
+          this.charts.areaPriceList.unshift(res.data)
         })
       })
       this.gasstationListInfo()
     },
     gasstationListInfo() {
-      $strategyGasstationDistrictList({ date: '2021-03-15' }).then(response => {
+      const params = { date: this.currDate, districtId: this.currDistrict }
+      this.charts.data.status = 0
+      $strategyGasstationDistrictList(params).then(response => {
         const tmpGasList = []
         Array.isArray(response.data) && response.data.forEach(item => {
           tmpGasList.push({
@@ -1119,8 +1115,21 @@ export default {
           })
         })
         this.charts.data.series[1].data = tmpGasList
+        // this.setInTime()
         this.charts.data.status = 2
       })
+    },
+    setInTime() {
+      setInterval(() => {
+        this.charts.data.series[2].data = [{
+          name: Math.random(100, 200),
+          type: 'normal',
+          value: ['114.991786', '38.750811', 98884.53, '700136540667789312']
+        }]
+        setTimeout(() => {
+          this.charts.data.series[2].data = []
+        }, 3000)
+      }, 10000)
     }
   }
 }
@@ -1241,6 +1250,7 @@ $mainBlack: "#14121F";
       height: 41.7rem;
       background: #fff;
       border-radius: 8px;
+      padding: 8px;
     }
     .block-first-right {
       height: 41.7rem;

@@ -5,7 +5,7 @@ const amountTotal = [{
   class: '',
   style: '',
   list: [
-    { type: 1, key: null, isNotShow: true, value: require('@/assets/images/cockpit/icon-amount.png'), style: '', class: 'card-images' }
+    { type: 1, key: null, value: require('@/assets/images/cockpit/icon-amount.png'), style: '', class: 'card-images' }
   ]
 }, {
   class: 'text__color',
@@ -44,7 +44,7 @@ const gasQtyTotal = [{
   class: '',
   style: '',
   list: [
-    { type: 1, key: null, isNotShow: true, value: require('@/assets/images/cockpit/icon-gas.png'), style: '', class: 'card-images' }
+    { type: 1, key: null, value: require('@/assets/images/cockpit/icon-gas.png'), style: '', class: 'card-images' }
   ]
 }, {
   class: 'text__color',
@@ -94,7 +94,7 @@ const liveTruckTotal = [{
   class: '',
   style: '',
   list: [
-    { type: 1, key: null, isNotShow: true, value: require('@/assets/images/cockpit/icon-truck.png'), style: '', class: 'card-images' }
+    { type: 1, key: null, value: require('@/assets/images/cockpit/icon-truck.png'), style: '', class: 'card-images' }
   ]
 }, {
   class: 'text__color',

@@ -458,7 +458,7 @@ div.el-dialog__body {
 }
 
 .map-charts.charts {
-  height: 41.7rem;
+  height: 100%;
   width: 100%;
 }
 
@@ -492,7 +492,7 @@ div.el-dialog__body {
     padding: 10px;
     border-radius: 4px;
     color: #333333;
-    width: 180px;
+    width: 220px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.45);
     .title {
       font-weight: bold;
