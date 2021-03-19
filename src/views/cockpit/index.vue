@@ -724,10 +724,7 @@ export default {
                 show: false
               },
               splitLine: {
-                lineStyle: {
-                  color: '#333',
-                  opacity: 0.1
-                }
+                show: false
               }
             }],
             data: {
@@ -793,8 +790,7 @@ export default {
             legend: {
               type: 'scroll',
               left: '8%',
-              right: '8%',
-              itemGap: 20
+              right: '8%'
             },
             xAxis: {
               data: []
@@ -837,8 +833,7 @@ export default {
             legend: {
               type: 'scroll',
               left: '8%',
-              right: '8%',
-              itemGap: 20
+              right: '8%'
             },
             xAxis: {
               data: []
