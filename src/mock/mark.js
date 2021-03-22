@@ -4,7 +4,7 @@ const MAP_MARK_ICON_WARNING = 'image://data:image/png;base64,iVBORw0KGgoAAAANSUh
 export function markIconImage(value) {
   const tmpValue = value[2] ? value[2] : (value[2] === 0 ? 0 : 99999)
 
-  if (tmpValue < 1000) {
+  if (tmpValue < 5000) {
     return MAP_MARK_ICON_WARNING
   } else {
     return MAP_MARK_ICON_NORMAL
