@@ -219,7 +219,7 @@ export default {
               formatter: (params, ticket, callback) => {
                 $settleStatisticsInfo({ date: this.currDate, gasstationId: params.value[3] }).then(response => {
                   const data = response.data
-                  const tmpHtml = `<div class="nt-echarts map-mark-gasstation"><div class="title">${data.gasstationName}</div><div class="tag"><div class="area-district">${data.districtName} ${data.districtRank}</div><div class="all-district">平台 ${data.allDistrictRank}</div></div><div class="number"><div><div class="sign">￥</div><div class="price">${data.actualPrice}</div></div><div class="truck"><div>${data.liveTruckTotal} 辆</div></div></div><div class="box-info"><div><div class="box-iconfont">进</div><div class="box-text">${data.gasQtyTotal} 吨</div></div><div><div class="box-iconfont">加</div><div class="box-text">${data.storeTotal} 吨</div></div><div><div class="box-iconfont">存</div><div class="box-text">${data.stockTotal} 吨</div></div><div><div class="box-iconfont">途</div><div class="box-text">${data.wayTotal} 吨</div></div></div></div>`
+                  const tmpHtml = `<div class="nt-echarts map-mark-gasstation"><div class="title">${data.gasstationName}</div><div class="tag"><div class="area-district">${data.districtName} ${data.districtRank}</div><div class="all-district">平台 ${data.allDistrictRank}</div></div><div class="number"><div><div class="sign">￥</div><div class="price">${data.actualPrice}</div></div><div class="truck"><div>${data.liveTruckTotal} 辆</div></div></div><div class="box-info"><div><div class="box-iconfont">进</div><div class="box-text">${data.gasQtyTotal} 公斤</div></div><div><div class="box-iconfont">加</div><div class="box-text">${data.storeTotal} 公斤</div></div><div><div class="box-iconfont">存</div><div class="box-text">${data.stockTotal} 公斤</div></div><div><div class="box-iconfont">途</div><div class="box-text">${data.wayTotal} 公斤</div></div></div></div>`
 
                   callback(ticket, tmpHtml)
                 })
@@ -657,7 +657,7 @@ export default {
               field: 'amountTotal',
               data: []
             }, {
-              name: '加气量(吨)',
+              name: '加气量(公斤)',
               type: 'line',
               field: 'gasQtyTotal',
               data: []
@@ -670,7 +670,7 @@ export default {
               yAxisIndex: 0,
               data: []
             }, {
-              name: '加气量(吨)',
+              name: '加气量(公斤)',
               type: 'line',
               yAxisIndex: 0,
               field: 'gasQtyTotal',
@@ -749,7 +749,7 @@ export default {
             },
             data: {
               series: [{
-                name: '进气量(吨)',
+                name: '进气量(公斤)',
                 type: 'bar',
                 stack: '总量',
                 showBackground: true,
@@ -757,14 +757,14 @@ export default {
                 data: []
               },
               {
-                name: '存量(吨)',
+                name: '存量(公斤)',
                 type: 'bar',
                 stack: '总量',
                 field: 'stockTotal',
                 data: []
               },
               {
-                name: '加气量(吨)',
+                name: '加气量(公斤)',
                 type: 'bar',
                 field: 'gasOrderTotal',
                 data: []
