@@ -1,0 +1,366 @@
+.map-charts.charts {
+  height: 100%;
+  width: 100%;
+}
+
+.nt-charts {
+  .legend {
+    top: 0;
+    left: 5px;
+    padding: 10px;
+    position: absolute;
+    background-color: rgba(255, 255, 255, .85);
+    .legend-line {
+      display: flex;
+      line-height: 30px;
+      font-family: Microsoft YaHei;
+      .name {
+        font-weight: bold;
+        color: #5B8FF9;
+        font-size: 14px;
+        width: 60px;
+      }
+      .price {
+        font-weight: normal;
+        color: #333333;
+      }
+    }
+  }
+}
+
+.nt-echarts {
+  &.map-mark-gasstation {
+    padding: 10px;
+    border-radius: 4px;
+    color: #333333;
+    width: 220px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.45);
+    .title {
+      font-weight: bold;
+      font-size: 16px;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-family: Microsoft YaHei;
+    }
+    .tag {
+      display: flex;
+      font-size: 12px;
+      padding-top: 5px;
+      & > div {
+        height: 16px;
+        line-height: 16px;
+        padding: 0 10px;
+        border-radius: 2px;
+        &:first-child {
+          margin-right: 5px;
+        }
+      }
+      .area-district {
+        color: #5B8FF9;
+        background: rgba(91, 143, 249, 0.2);
+      }
+      .all-district {
+        color: #F6BD16;
+        background: rgba(246, 189, 22, 0.2);
+      }
+    }
+    .number {
+      padding: 10px 0;
+      display: flex;
+      font-family: AGENCYFB;
+      color: #5B8FF9;
+      font-weight: bold;
+      align-items: baseline;
+      justify-content: space-between;
+      & > div {
+        display: flex;
+        align-items: baseline;
+        .sign {
+          padding: 0;
+          font-size: 12px;
+        }
+        .price {
+          font-size: 20px;
+        }
+      }
+      .truck {
+        background-size: 14px auto;
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-image: url(../images/home/truck.png);
+        div {
+          color: #333333;
+          padding-left: 20px;
+          font-weight: normal;
+        }
+      }
+    }
+    .box-info {
+      padding: 8px;
+      border-radius: 2px;
+      background-color: #EDF1F9;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* 相当于 1fr 1fr 1fr */
+      grid-template-rows: repeat(2, 1fr); /* fr单位可以将容器分为几等份 */
+      grid-column-gap: 5px;
+      grid-row-gap: 8px;
+      grid-auto-flow: row;
+      div {
+        font-size: 12px;
+        display: flex;
+        height: 16px;
+        line-height: 16px;
+        .box-iconfont {
+          font-size: 12px;
+          width: 16px;
+          color: #5B8FF9;
+          border-radius: 50%;
+          padding: 0 1px;
+          border: 1px solid #5B8FF9;
+        }
+        .box-text {
+          margin-left: 2px;
+        }
+      }
+    }
+  }
+}
+
+.cockpit {
+  overflow: auto;
+  background: #edf1f9;
+  min-width: 1300px;
+  .tool-bar {
+    margin: 3.3rem 4.6rem;
+    height: 3.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .left-title {
+      .title {
+        font-size: 3.5rem;
+        color: $mainBlack;
+        font-weight: 600;
+      }
+    }
+    .right-controller {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      .date-picker {
+        margin-right: 20px;
+        width: 16rem;
+        height: 3.8rem;
+        font-size: 1.4rem;
+        input {
+          height: 3.8rem;
+          &.el-input__inner {
+            padding-right: 15px;
+          }
+        }
+        .el-input__icon {
+          line-height: 1;
+        }
+      }
+      .district-select {
+        margin-right: 2rem;
+        width: 12.4rem;
+        height: 3.8rem;
+        .el-input input {
+          width: 12.4rem;
+          height: 3.8rem;
+          font-size: 1.6rem;
+          color: $mainBlack;
+          padding-right: 2.8rem;
+        }
+        .el-input__icon {
+          line-height: 1;
+        }
+      }
+      .full-screen {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 3.8rem;
+        height: 3.8rem;
+        background: #fff;
+        cursor: pointer;
+        img {
+          width: 2.4rem;
+          height: 2.4rem;
+        }
+      }
+    }
+  }
+  .data-box {
+    overflow: hidden;
+    padding: 0 1.5rem;
+    height: 15rem;
+    margin: 0 auto;
+    width: 183rem;
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 8px;
+    .data-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .card-item {
+        margin-right: 4.6rem;
+      }
+      .card-item:first-child {
+        margin-right: 6.6rem;
+      }
+    }
+    .img-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 1.3rem;
+      width: 6rem;
+      height: 6rem;
+      border-radius: 50%;
+      background: #5b8ff9;
+      img {
+        width: 3.4rem;
+      }
+    }
+  }
+  .block-first {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 2.4rem;
+    width: 183rem;
+    .block-first-map {
+      position: relative;
+      width: 96.5rem;
+      height: 41.7rem;
+      background: #fff;
+      border-radius: 8px;
+      padding: 8px;
+    }
+    .block-first-right {
+      height: 41.7rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      .order-settle {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 83.5rem;
+        height: 19.8rem;
+        background: #fff;
+        border-radius: 8px;
+        text-align: center;
+        .settle-item {
+          margin-top: 2rem;
+          padding-top: 2rem;
+          height: 90%;
+          width: 20%;
+          background: url('../../assets/images/cockpit/icon-arch-in.png') no-repeat center 10%/92%, url('../../assets/images/cockpit/icon-arch-out.png') no-repeat center 0/100%;
+        }
+      }
+    }
+  }
+  .block-echarts {
+    margin: 0 auto;
+    margin-top: 2.7rem;
+    margin-bottom: 5.7rem;
+    display: grid;
+    grid-template-columns: repeat(3, 58.8rem);
+    grid-row-gap: 3.3rem;
+    justify-content: space-between;
+    width: 183rem;
+    .ec-item {
+      height: 45.3rem;
+      background: #fff;
+      border-radius: 8px;
+    }
+  }
+  .ec-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem;
+    font-size: 2.4rem;
+    color: #333;
+    font-weight: 600;
+    .curr-date-rank {
+      margin-left: 1rem;
+      font-size: 1.4rem;
+      color: #333;
+      opacity: 0.5;
+    }
+    .tab {
+      display: flex;
+      align-items: center;
+      border-radius: 4px;
+      .tab-item {
+        padding: .2rem .5rem;
+        color: #333;
+        font-size: 1.2rem;
+        font-weight: 400;
+        background: #1e202415;
+        cursor: pointer;
+        // opacity: 0.1;
+      }
+      .active {
+        color: #fff;
+        background: #5B8FF9;
+        opacity: 1;
+      }
+    }
+  }
+  .label-rank {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .rank-icon, .rank-gasstationname {
+      font-size: 1.4rem;
+      color: #333;
+      opacity: 0.5;
+    }
+    .rank-icon {
+      margin: 0 3rem 0 5rem;
+    }
+  }
+  .ec00-line-bar, .ec01-line, .ec02-bar, .ec03-bar-line, .ec04-bar-line, .ec05-bar-line, .ec06-bar-line, .ec07-bar, .ec08-bar {
+    position: relative;
+    height: 36rem;
+  }
+  .rank-icon-content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    .rank-item {
+      margin: 3rem 4.8rem 0.3rem;
+      width: 3.2rem;
+      height: 3.2rem;
+      text-align: center;
+      line-height: 3.2rem;
+      border-radius: 50%;
+      color: #fff;
+      font-weight: 600;
+      background: url('../../assets/images/cockpit/rank-others.png') no-repeat center center/100% 100%;
+    }
+    .rank-first {
+      background: url('../../assets/images/cockpit/rank-first.png') no-repeat center center/100% 100%;
+    }
+    .rank-second {
+      background: url('../../assets/images/cockpit/rank-second.png') no-repeat center center/100% 100%;
+    }
+    .rank-third {
+      background: url('../../assets/images/cockpit/rank-third.png') no-repeat center center/100% 100%;
+    }
+  }
+  .chart01_bar {
+    width: 600px;
+  }
+}

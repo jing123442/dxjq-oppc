@@ -97,7 +97,7 @@ const columns = {
     { field: 'manufacturer', name: '生产厂家', hide: true, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入生产厂家' }, detail: { type: 'span', serial: 9, ou: 0, isDisabled: true } },
     { field: 'status', name: '车辆状态', formatter: 'status', show: { type: 'radio', value: 0, obj: 'status', placeholder: '请选择车辆状态' }, search: { type: 'select', obj: 'status', placeholder: '请选择车辆状态' }, detail: { type: 'span', model: 'select', obj: 'status', serial: 12, ou: 2, isDisabled: true }, rules: [{ required: true, message: '请选择车辆状态！', trigger: 'blur' }] },
     { field: 'autoAccount', name: '圈存方式', hide: true, show: { type: 'radio', obj: 'autoAccount', value: 0, placeholder: '请选择圈存方式' }, rules: [{ required: true, message: '请选择圈存方式', trigger: 'blur' }] },
-    { field: 'truckDriverList', name: '当前绑定司机', ispush: false, formatter: '', stype: 'list-tag', porps: { name: 'driverName' }, detail: { type: 'span', name: '绑定司机', formatFun: 'truckToDriverList', stype: 'format', serial: 10, ou: 1, isDisabled: true } },
+    { field: 'truckDriverList', name: '当前绑定司机', ispush: false, formatter: '', stype: 'list-tag', action: { name: 'driverName' }, detail: { type: 'span', name: '绑定司机', formatFun: 'truckToDriverList', stype: 'format', serial: 10, ou: 1, isDisabled: true } },
     { field: 'balance', name: '账户余额', ispush: false, hide: true, detail: { type: 'span', serial: 11, ou: 2, isDisabled: true, defaultValue: 0 } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 240, list: [{ type: 'bind', name: '绑定司机' }, { type: 'edit', name: '编辑' }, { type: 'detail', name: '详情' }] }
   ],

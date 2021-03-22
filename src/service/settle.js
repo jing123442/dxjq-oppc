@@ -120,3 +120,8 @@ export async function $settleStatisticsDistrictPriceList (data) {
 export async function $findDistrictPriceTrendList (data) {
   return await R({ url: 'settle/statistics/find_district_price_trend_list', data })
 }
+
+// 获取实时加气站是否存在订单
+export async function $settleTradeGasstationsOrderInfo (data) {
+  return await R({ url: 'settle/gas_order/get_trade_gasstations', data })
+}
