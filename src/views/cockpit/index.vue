@@ -985,7 +985,9 @@ export default {
                   show: true,
                   position: ['0.5%', '15%'],
                   color: '#fff',
-                  fontSize: 14
+                  fontSize: 14,
+                  textBorderColor: '#5b8ff9',
+                  textBorderWidth: 2
                 },
                 data: []
               }]
@@ -1007,7 +1009,7 @@ export default {
       let field = ''
       let seriesName = ''
       field = type == 1 ? 'gasQtyTotal' : type == 2 ? 'amountTotal' : 'orderTotal'
-      seriesName = type == 1 ? '加气总量；2' : type == 2 ? '加气总金额；3' : '订单总数'
+      seriesName = type == 1 ? '加气总量' : type == 2 ? '加气总金额' : '订单总数'
       this.ec08BarOptions = { data: { status: 0 } }
       $findTradeRankCarrierList(params).then(res => {
         if (res.code == 0) {
@@ -1049,7 +1051,9 @@ export default {
                   show: true,
                   position: ['0.5%', '15%'],
                   color: '#fff',
-                  fontSize: 14
+                  fontSize: 14,
+                  textBorderColor: '#5b8ff9',
+                  textBorderWidth: 2
                 },
                 data: []
               }]
