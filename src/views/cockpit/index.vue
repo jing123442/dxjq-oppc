@@ -885,8 +885,8 @@ export default {
       }
       let field = ''
       let seriesName = ''
-      field = type == 1 ? 'gasQtyTotal' : type == 2 ? 'amountTotal' : 'orderTotal'
-      seriesName = type == 1 ? '加气总量' : type == 2 ? '加气总金额' : '订单总数'
+      field = type == 1 ? 'gasQtyTotal' : type == 2 ? 'amountTotal' : 'successOrderTotal'
+      seriesName = type == 1 ? '加气总量' : type == 2 ? '加气总金额' : '加气订单'
       this.ec07BarOptions = { data: { status: 0 } }
       $findTradeRankGasstationList(params).then(res => {
         this.ec07BarOptions = {
@@ -948,8 +948,8 @@ export default {
       }
       let field = ''
       let seriesName = ''
-      field = type == 1 ? 'gasQtyTotal' : type == 2 ? 'amountTotal' : 'orderTotal'
-      seriesName = type == 1 ? '加气总量' : type == 2 ? '加气总金额' : '订单总数'
+      field = type == 1 ? 'gasQtyTotal' : type == 2 ? 'amountTotal' : 'successOrderTotal'
+      seriesName = type == 1 ? '加气总量' : type == 2 ? '加气总金额' : '加气订单'
       this.ec08BarOptions = { data: { status: 0 } }
       $findTradeRankCarrierList(params).then(res => {
         this.ec08BarOptions = {
