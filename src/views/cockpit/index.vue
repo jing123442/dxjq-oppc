@@ -37,7 +37,10 @@
         <nt-charts :webUIType="'map'" :chartOptions="charts">
           <!--区域价格-->
           <div slot="legend" class="legend" v-if="charts.areaPriceStatus">
-            <div class="legend-line" v-for="(item, index) in charts.areaPriceList" :key="index"><div class="name">{{item.districtName}}</div><div class="price">{{item.actualPrice | currency}}</div></div>
+            <div class="legend-line" v-for="(item, index) in charts.areaPriceList" :key="index">
+              <div class="name">{{item.districtName}}</div>
+              <div class="price">{{item.actualPrice | currency}}</div>
+            </div>
           </div>
         </nt-charts>
       </div>
@@ -60,42 +63,22 @@
         </div>
       </div>
       <div class="ec-item">
-        <div class="ec-title">交易数据统计</div>
-        <div class="ec01-line" id="ec01Line">
-          <nt-charts :webUIType="webUIType" :chartOptions="ec01LineOptions" style="height: 100%" :chartsId="'ec01Line'"></nt-charts>
-        </div>
+        <nt-charts :webUIType="webUIType" :chartOptions="ec01LineOptions" :chartTitle="'交易数据统计'" :titleClass="'ec-title'" :className="'ec01-line'" :chartsId="'ec01Line'"></nt-charts>
       </div>
       <div class="ec-item">
-        <div class="ec-title">加气站供气统计</div>
-        <div class="ec02-bar">
-          <nt-charts :webUIType="webUIType" :chartOptions="ec02BarOptions" style="height: 100%"></nt-charts>
-        </div>
+        <nt-charts :webUIType="webUIType" :chartOptions="ec02BarOptions" :chartTitle="'加气站供气统计'" :titleClass="'ec-title'" :className="'ec02-bar'"></nt-charts>
       </div>
       <div class="ec-item" v-if="currDistrict === ''">
-        <div class="ec-title">资金流动趋势</div>
-        <div class="ec03-bar-line">
-          <nt-charts :webUIType="webUIType" :chartOptions="ec03BarLineOptions" style="height: 100%"></nt-charts>
-        </div>
+        <nt-charts :webUIType="webUIType" :chartOptions="ec03BarLineOptions" :chartTitle="'资金流动趋势'" :titleClass="'ec-title'" :className="'ec03-bar-line'"></nt-charts>
       </div>
       <div class="ec-item" v-if="currDistrict === ''">
-        <div class="ec-title">车辆变化趋势</div>
-        <div class="ec04-bar-line">
-          <nt-charts :webUIType="webUIType" :chartOptions="ec04BarLineOptions" style="height: 100%"></nt-charts>
-        </div>
+        <nt-charts :webUIType="webUIType" :chartOptions="ec04BarLineOptions" :chartTitle="'车辆变化趋势'" :titleClass="'ec-title'" :className="'ec04-bar-line'"></nt-charts>
       </div>
       <div class="ec-item">
-        <div class="ec-title">加气站变化趋势</div>
-        <div class="ec05-bar-line">
-          <nt-charts :webUIType="webUIType" :chartOptions="ec05BarLineOptions" style="height: 100%"></nt-charts>
-        </div>
+        <nt-charts :webUIType="webUIType" :chartOptions="ec05BarLineOptions" :chartTitle="'加气站变化趋势'" :titleClass="'ec-title'" :className="'ec05-bar-line'"></nt-charts>
       </div>
       <div class="ec-item" v-if="currDistrict === ''">
-        <div class="ec-title">
-          <span>物流公司变化趋势</span>
-        </div>
-        <div class="ec06-bar-line">
-          <nt-charts :webUIType="webUIType" :chartOptions="ec06BarLineOptions" style="height: 100%"></nt-charts>
-        </div>
+        <nt-charts :webUIType="webUIType" :chartOptions="ec06BarLineOptions" :chartTitle="'物流公司变化趋势'" :titleClass="'ec-title'" :className="'ec06-bar-line'"></nt-charts>
       </div>
       <div class="ec-item">
         <div class="ec-title">
@@ -1109,7 +1092,7 @@ export default {
     formatterEchartTooltip(data) {
       let str = ''
       data.forEach(item => {
-        str += `${item.seriesName} : ${Math.abs(item.value)} </br>` 
+        str += `${item.seriesName} : ${Math.abs(item.value)} </br>`
       })
       return data[0].axisValue + '<br />' + str
     },

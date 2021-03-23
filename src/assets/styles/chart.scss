@@ -18,9 +18,10 @@
         font-weight: bold;
         color: #5B8FF9;
         font-size: 14px;
-        width: 60px;
+        flex: 1;
       }
       .price {
+        padding-left: 15px;
         font-weight: normal;
         color: #333333;
       }
@@ -332,8 +333,8 @@
     }
   }
   .ec00-line-bar, .ec01-line, .ec02-bar, .ec03-bar-line, .ec04-bar-line, .ec05-bar-line, .ec06-bar-line, .ec07-bar, .ec08-bar {
-    position: relative;
-    height: 36rem;
+    position: relative !important;
+    height: 36rem !important;
   }
   .rank-icon-content {
     position: absolute;
