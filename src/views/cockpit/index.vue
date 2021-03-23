@@ -652,28 +652,40 @@ export default {
           if (this.currDistrict) {
             // 如果按区域差 不显示周活
             series = [{
-              name: '加气金额(万)',
+              name: '加气金额(元)',
               type: 'line',
               field: 'amountTotal',
+              showSymbol: false,
+              symbol: 'emptyCircle',
+              symbolSize: 8,
               data: []
             }, {
               name: '加气量(公斤)',
               type: 'line',
               field: 'gasQtyTotal',
+              showSymbol: false,
+              symbol: 'emptyCircle',
+              symbolSize: 8,
               data: []
             }]
           } else {
             series = [{
-              name: '加气金额(万)',
+              name: '加气金额(元)',
               type: 'line',
               field: 'amountTotal',
               yAxisIndex: 0,
+              showSymbol: false,
+              symbol: 'emptyCircle',
+              symbolSize: 8,
               data: []
             }, {
               name: '加气量(公斤)',
               type: 'line',
               yAxisIndex: 0,
               field: 'gasQtyTotal',
+              showSymbol: false,
+              symbol: 'emptyCircle',
+              symbolSize: 8,
               data: []
             }, {
               name: '周活(%)',
@@ -681,6 +693,9 @@ export default {
               field: 'weekLive',
               yAxisIndex: 1,
               isPercent: true,
+              showSymbol: false,
+              symbol: 'emptyCircle',
+              symbolSize: 8,
               data: []
             }]
           }
@@ -737,6 +752,9 @@ export default {
       $findGasstationStockSum({ date: this.currDate, districtId: this.currDistrict }).then(res => {
         if (res.code == 0) {
           this.ec02BarOptions = {
+            tooltip: {
+              formatter: (data) => this.formatterEchartTooltip(data)
+            },
             grid: {
               left: '13%',
               top: 0
@@ -751,7 +769,7 @@ export default {
               series: [{
                 name: '进气量(公斤)',
                 type: 'bar',
-                stack: '总量',
+                stack: '堆叠',
                 showBackground: true,
                 field: 'storeTotal',
                 data: []
@@ -759,7 +777,6 @@ export default {
               {
                 name: '存量(公斤)',
                 type: 'bar',
-                stack: '总量',
                 field: 'stockTotal',
                 data: []
               },
@@ -767,6 +784,7 @@ export default {
                 name: '加气量(公斤)',
                 type: 'bar',
                 field: 'gasOrderTotal',
+                stack: '堆叠',
                 data: []
               }]
             }
@@ -777,11 +795,14 @@ export default {
       })
     },
     findFundSum() {
-      // 获取资金变化趋势
+      // 资金流动趋势
       this.ec03BarLineOptions = { data: { status: 0 } }
       $findFundSum({ date: this.currDate }).then(res => {
         if (res.code == 0) {
           this.ec03BarLineOptions = {
+            tooltip: {
+              formatter: (data) => this.formatterEchartTooltip(data)
+            },
             legend: {
               type: 'scroll',
               left: '8%',
@@ -825,6 +846,9 @@ export default {
       $findTruckTrendList({ date: this.currDate }).then(res => {
         if (res.code == 0) {
           this.ec04BarLineOptions = {
+            tooltip: {
+              formatter: (data) => this.formatterEchartTooltip(data)
+            },
             legend: {
               type: 'scroll',
               left: '8%',
@@ -837,21 +861,25 @@ export default {
               series: [{
                 name: '自营绑定数',
                 type: 'bar',
+                stack: '自营堆叠',
                 field: 'bindOwnTotal',
                 data: []
               }, {
                 name: '自营解绑数',
                 type: 'bar',
+                stack: '自营堆叠',
                 field: 'unbindOwnTotal',
                 data: []
               }, {
                 name: '其他绑定数',
                 type: 'bar',
+                stack: '其他堆叠',
                 field: 'bindLinkTotal',
                 data: []
               }, {
                 name: '其他解绑数',
                 type: 'bar',
+                stack: '其他堆叠',
                 field: 'unbindLinkTotal',
                 data: []
               }, {
@@ -1070,8 +1098,14 @@ export default {
           if (se.isPercent) {
             se.data.unshift(item[se.field].replace('%', ''))
           } else {
-            se.data.unshift(item[se.field])
+            if (se.field == 'withdrawTotal' || se.field == 'unbindOwnTotal' || se.field == 'unbindLinkTotal' || se.field == 'gasOrderTotal') {
+              // 提现金额 自营解绑数，其他解绑数 加气量显示在0轴下方
+              se.data.unshift(item[se.field] * -1)
+            } else {
+              se.data.unshift(item[se.field])
+            }
           }
+
           if (seIndex === options.data.series.length - 1) {
             if (item.curDate) {
               item.curDate = item.curDate.split('-').slice(1, 3).join('-')
@@ -1134,6 +1168,13 @@ export default {
           this.charts.data.series[2].data = []
         }, 3000)
       }, 10000)
+    },
+    formatterEchartTooltip(data) {
+      let str = ''
+      data.forEach(item => {
+        str += `${item.seriesName} : ${Math.abs(item.value)} </br>` 
+      })
+      return data[0].axisValue + '<br />' + str
     }
   }
 }
