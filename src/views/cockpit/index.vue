@@ -404,6 +404,8 @@ export default {
       this.findLatestGasorders()
       this.findDistrictPriceTrendList()
       this.queryTimeOrderData()
+      this.gasstationRankActive = 1
+      this.carrierRankActive = 1
     },
     toDayEvent() {
       const nowTimestamp = new Date(formateTData(Date.now(), 'date')).getTime()
@@ -666,8 +668,8 @@ export default {
             series
           }
         }
-        this.commonOptions(this.ec01LineOptions, res.data, 'xAxis')
         this.ec01LineOptions.data.status = 2
+        this.commonOptions(this.ec01LineOptions, res.data, 'xAxis')
       })
     },
     getGasstationSupply() {
@@ -712,8 +714,8 @@ export default {
             }]
           }
         }
-        this.commonOptions(this.ec02BarOptions, res.data, 'yAxis')
         this.ec02BarOptions.data.status = 2
+        this.commonOptions(this.ec02BarOptions, res.data, 'yAxis')
       })
     },
     findFundSum() {
@@ -756,8 +758,8 @@ export default {
             }]
           }
         }
-        this.commonOptions(this.ec03BarLineOptions, res.data, 'xAxis')
         this.ec03BarLineOptions.data.status = 2
+        this.commonOptions(this.ec03BarLineOptions, res.data, 'xAxis')
       })
     },
     findTruckTrendList() {
@@ -766,7 +768,7 @@ export default {
       $findTruckTrendList({ date: this.currDate }).then(res => {
         this.ec04BarLineOptions = {
           tooltip: {
-            formatter: (data) => this.formatterEchartTooltip(data)
+            formatter: (data) => this.formatterEchartTooltip(data, ['变化数'])
           },
           legend: {
             type: 'scroll',
@@ -809,8 +811,8 @@ export default {
             }]
           }
         }
-        this.commonOptions(this.ec04BarLineOptions, res.data, 'xAxis')
         this.ec04BarLineOptions.data.status = 2
+        this.commonOptions(this.ec04BarLineOptions, res.data, 'xAxis')
       })
     },
     findGasstationTrendList() {
@@ -840,8 +842,8 @@ export default {
             }]
           }
         }
-        this.commonOptions(this.ec05BarLineOptions, res.data, 'xAxis')
         this.ec05BarLineOptions.data.status = 2
+        this.commonOptions(this.ec05BarLineOptions, res.data, 'xAxis')
       })
     },
     findCarrierTrendList() {
@@ -871,8 +873,8 @@ export default {
             }]
           }
         }
-        this.commonOptions(this.ec06BarLineOptions, res.data, 'xAxis')
         this.ec06BarLineOptions.data.status = 2
+        this.commonOptions(this.ec06BarLineOptions, res.data, 'xAxis')
       })
     },
     findTradeRankGasstationList(type = 1) {
@@ -934,8 +936,8 @@ export default {
             }]
           }
         }
-        this.commonOptions(this.ec07BarOptions, res.data, 'yAxis', 'gasstationName')
         this.ec07BarOptions.data.status = 2
+        this.commonOptions(this.ec07BarOptions, res.data, 'yAxis', 'gasstationName')
       })
     },
     findTradeRankCarrierList(type = 1) {
@@ -1003,6 +1005,10 @@ export default {
     },
     commonOptions(options, data, axis, axisField = 'curDate') {
       // 公共option方法
+      if (data.length == 0) {
+        options.data.status = 1
+        return
+      }
       options.data.series.forEach((se, seIndex) => {
         data.length > 0 && data.forEach(item => {
           if (se.isPercent) {
@@ -1025,6 +1031,17 @@ export default {
         })
         Reflect.deleteProperty(se, 'field')
       })
+      if (options[axis].data.length < 5) {
+        // 排名数据不满5个时
+        const temp = new Array(5 - options[axis].data.length).fill('')
+        options[axis].data.unshift(temp)
+        options[axis].data = options[axis].data.flat()
+
+        options.data.series.forEach(se => {
+          se.data.unshift(temp)
+          se.data = se.data.flat()
+        })
+      }
     },
     subpageFullScreen() {
       this.$store.commit('TOGGLE_FULL_SCREEN', this.$refs.cockpit)
@@ -1067,10 +1084,14 @@ export default {
         this.charts.data.status = 2
       })
     },
-    formatterEchartTooltip(data) {
+    formatterEchartTooltip(data, notAbs = []) {
       let str = ''
       data.forEach(item => {
-        str += `${item.seriesName} : ${Math.abs(item.value)} </br>`
+        if (notAbs.length > 0 && notAbs.includes(item.seriesName)) {
+          str += `${item.seriesName} : ${item.value} </br>`
+        } else {
+          str += `${item.seriesName} : ${Math.abs(item.value)} </br>`
+        }
       })
       return data[0].axisValue + '<br />' + str
     },
