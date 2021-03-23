@@ -30,9 +30,10 @@ const select = {
   price: {},
   gasStockList: {
     stockType: [
-      { value: 1, label: '入库' },
-      { value: 2, label: '出库' },
-      { value: 3, label: '库存调整' }
+      { value: 1, label: '入库气量' },
+      { value: 2, label: '销售气量' },
+      { value: 3, label: '库存调整' },
+      { value: 4, label: '库存调整' }
     ]
   },
   printerList: {
