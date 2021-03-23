@@ -453,21 +453,19 @@ export default {
       // 最新五条订单数
       const params = { date: this.currDate, districtId: this.currDistrict }
       $findLatestGasorders(params).then(res => {
-        if (res.code == 0) {
-          this.orderRecent = []
-          res.data.forEach(item => {
-            this.orderRecent.push({
-              updateDate: item.updateDate ? item.updateDate.split('T')[1] : '',
-              orderId: item.orderId,
-              gasQty: item.gasQty + 'kg',
-              amount: '￥' + item.amount,
-              carNumber: item.carNumber,
-              carrierOrgName: item.carrierOrgName,
-              gasstationName: item.gasstationName,
-              orderStatus: item.orderStatus
-            })
+        this.orderRecent = []
+        res.data.forEach(item => {
+          this.orderRecent.push({
+            updateDate: item.updateDate ? item.updateDate.split('T')[1] : '',
+            orderId: item.orderId,
+            gasQty: item.gasQty + 'kg',
+            amount: '￥' + item.amount,
+            carNumber: item.carNumber,
+            carrierOrgName: item.carrierOrgName,
+            gasstationName: item.gasstationName,
+            orderStatus: item.orderStatus
           })
-        }
+        })
       })
     },
     findDayFundSum() {
@@ -536,13 +534,11 @@ export default {
     getDistrictList() {
       // 获取区域列表
       $districtList().then((res) => {
-        if (res.code == 0) {
-          this.districtList = res.data
-          res.data.unshift({
-            districtId: '',
-            districtName: '全区域'
-          })
-        }
+        this.districtList = res.data
+        res.data.unshift({
+          districtId: '',
+          districtName: '全区域'
+        })
       })
     },
     findDistrictPriceTrendList() {
@@ -551,346 +547,332 @@ export default {
       this.ec00LineBarOptions = { data: { status: 0 } }
       const params = { date: this.currDate, districtId: this.currDistrict }
       $findDistrictPriceTrendList(params).then(res => {
-        if (res.code == 0) {
-          this.ec00LineBarOptions = {
-            xAxis: {
+        this.ec00LineBarOptions = {
+          xAxis: {
+            data: []
+          },
+          data: {
+            status: 2,
+            series: [{
+              name: '平台结算周均价',
+              type: 'bar',
+              field: 'weekAverageActualPrice',
               data: []
-            },
-            data: {
-              status: 2,
-              series: [{
-                name: '平台结算周均价',
-                type: 'bar',
-                field: 'weekAverageActualPrice',
-                data: []
-              }, {
-                name: '活跃车辆数',
-                type: 'line',
-                field: 'liveTruckTotal',
-                data: []
-              }]
-            }
+            }, {
+              name: '活跃车辆数',
+              type: 'line',
+              field: 'liveTruckTotal',
+              data: []
+            }]
           }
-          this.commonOptions(this.ec00LineBarOptions, res.data, 'xAxis')
         }
+        this.commonOptions(this.ec00LineBarOptions, res.data, 'xAxis')
       })
     },
     findTradeSumList() {
       // 查询交易汇总列表
       this.ec01LineOptions = { data: { status: 0 } }
       $findTradeSumList({ date: this.currDate, districtId: this.currDistrict }).then(res => {
-        if (res.code == 0) {
-          let series = []
-          if (this.currDistrict) {
-            // 如果按区域差 不显示周活
-            series = [{
-              name: '加气金额(元)',
-              type: 'line',
-              field: 'amountTotal',
-              showSymbol: false,
-              symbol: 'emptyCircle',
-              symbolSize: 8,
-              data: []
-            }, {
-              name: '加气量(公斤)',
-              type: 'line',
-              field: 'gasQtyTotal',
-              showSymbol: false,
-              symbol: 'emptyCircle',
-              symbolSize: 8,
-              data: []
-            }]
-          } else {
-            series = [{
-              name: '加气金额(元)',
-              type: 'line',
-              field: 'amountTotal',
-              yAxisIndex: 0,
-              showSymbol: false,
-              symbol: 'emptyCircle',
-              symbolSize: 8,
-              data: []
-            }, {
-              name: '加气量(公斤)',
-              type: 'line',
-              yAxisIndex: 0,
-              field: 'gasQtyTotal',
-              showSymbol: false,
-              symbol: 'emptyCircle',
-              symbolSize: 8,
-              data: []
-            }, {
-              name: '周活(%)',
-              type: 'line',
-              field: 'weekLive',
-              yAxisIndex: 1,
-              isPercent: true,
-              showSymbol: false,
-              symbol: 'emptyCircle',
-              symbolSize: 8,
-              data: []
-            }]
-          }
-          this.ec01LineOptions = {
-            xAxis: {
-              type: 'category',
-              boundaryGap: false,
-              data: []
-            },
-            yAxis: [{
-              type: 'value',
-              axisTick: {
-                show: false
-              },
-              axisLabel: {
-                show: false
-              },
-              axisLine: {
-                show: false
-              },
-              splitLine: {
-                lineStyle: {
-                  color: '#333',
-                  opacity: 0.1
-                }
-              }
-            }, {
-              type: 'value',
-              axisTick: {
-                show: false
-              },
-              axisLabel: {
-                show: false
-              },
-              axisLine: {
-                show: false
-              },
-              splitLine: {
-                show: false
-              }
-            }],
-            data: {
-              series
-            }
-          }
-          this.commonOptions(this.ec01LineOptions, res.data, 'xAxis')
-          this.ec01LineOptions.data.status = 2
+        let series = []
+        if (this.currDistrict) {
+          // 如果按区域差 不显示周活
+          series = [{
+            name: '加气金额(元)',
+            type: 'line',
+            field: 'amountTotal',
+            showSymbol: false,
+            symbol: 'emptyCircle',
+            symbolSize: 8,
+            data: []
+          }, {
+            name: '加气量(公斤)',
+            type: 'line',
+            field: 'gasQtyTotal',
+            showSymbol: false,
+            symbol: 'emptyCircle',
+            symbolSize: 8,
+            data: []
+          }]
+        } else {
+          series = [{
+            name: '加气金额(元)',
+            type: 'line',
+            field: 'amountTotal',
+            yAxisIndex: 0,
+            showSymbol: false,
+            symbol: 'emptyCircle',
+            symbolSize: 8,
+            data: []
+          }, {
+            name: '加气量(公斤)',
+            type: 'line',
+            yAxisIndex: 0,
+            field: 'gasQtyTotal',
+            showSymbol: false,
+            symbol: 'emptyCircle',
+            symbolSize: 8,
+            data: []
+          }, {
+            name: '周活(%)',
+            type: 'line',
+            field: 'weekLive',
+            yAxisIndex: 1,
+            isPercent: true,
+            showSymbol: false,
+            symbol: 'emptyCircle',
+            symbolSize: 8,
+            data: []
+          }]
         }
+        this.ec01LineOptions = {
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: []
+          },
+          yAxis: [{
+            type: 'value',
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              show: false
+            },
+            axisLine: {
+              show: false
+            },
+            splitLine: {
+              lineStyle: {
+                color: '#333',
+                opacity: 0.1
+              }
+            }
+          }, {
+            type: 'value',
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              show: false
+            },
+            axisLine: {
+              show: false
+            },
+            splitLine: {
+              show: false
+            }
+          }],
+          data: {
+            series
+          }
+        }
+        this.commonOptions(this.ec01LineOptions, res.data, 'xAxis')
+        this.ec01LineOptions.data.status = 2
       })
     },
     getGasstationSupply() {
       // 加气站供气统计
       this.ec02BarOptions = { data: { status: 0 } }
       $findGasstationStockSum({ date: this.currDate, districtId: this.currDistrict }).then(res => {
-        if (res.code == 0) {
-          this.ec02BarOptions = {
-            tooltip: {
-              formatter: (data) => this.formatterEchartTooltip(data)
+        this.ec02BarOptions = {
+          tooltip: {
+            formatter: (data) => this.formatterEchartTooltip(data)
+          },
+          grid: {
+            left: '13%',
+            top: 0
+          },
+          xAxis: { type: 'value', splitLine: { show: true, lineStyle: { color: '#333', opacity: '0.1' } }, axisLabel: { show: false } },
+          yAxis: {
+            type: 'category',
+            data: [],
+            axisLabel: { show: true }
+          },
+          data: {
+            series: [{
+              name: '进气量(公斤)',
+              type: 'bar',
+              stack: '堆叠',
+              showBackground: true,
+              field: 'storeTotal',
+              data: []
             },
-            grid: {
-              left: '13%',
-              top: 0
+            {
+              name: '存量(公斤)',
+              type: 'bar',
+              field: 'stockTotal',
+              data: []
             },
-            xAxis: { type: 'value', splitLine: { show: true, lineStyle: { color: '#333', opacity: '0.1' } }, axisLabel: { show: false } },
-            yAxis: {
-              type: 'category',
-              data: [],
-              axisLabel: { show: true }
-            },
-            data: {
-              series: [{
-                name: '进气量(公斤)',
-                type: 'bar',
-                stack: '堆叠',
-                showBackground: true,
-                field: 'storeTotal',
-                data: []
-              },
-              {
-                name: '存量(公斤)',
-                type: 'bar',
-                field: 'stockTotal',
-                data: []
-              },
-              {
-                name: '加气量(公斤)',
-                type: 'bar',
-                field: 'gasOrderTotal',
-                stack: '堆叠',
-                data: []
-              }]
-            }
+            {
+              name: '加气量(公斤)',
+              type: 'bar',
+              field: 'gasOrderTotal',
+              stack: '堆叠',
+              data: []
+            }]
           }
-          this.commonOptions(this.ec02BarOptions, res.data, 'yAxis')
-          this.ec02BarOptions.data.status = 2
         }
+        this.commonOptions(this.ec02BarOptions, res.data, 'yAxis')
+        this.ec02BarOptions.data.status = 2
       })
     },
     findFundSum() {
       // 资金流动趋势
       this.ec03BarLineOptions = { data: { status: 0 } }
       $findFundSum({ date: this.currDate }).then(res => {
-        if (res.code == 0) {
-          this.ec03BarLineOptions = {
-            tooltip: {
-              formatter: (data) => this.formatterEchartTooltip(data)
-            },
-            legend: {
-              type: 'scroll',
-              left: '8%',
-              right: '8%'
-            },
-            xAxis: {
+        this.ec03BarLineOptions = {
+          tooltip: {
+            formatter: (data) => this.formatterEchartTooltip(data)
+          },
+          legend: {
+            type: 'scroll',
+            left: '8%',
+            right: '8%'
+          },
+          xAxis: {
+            data: []
+          },
+          data: {
+            series: [{
+              name: '充值金额(元)',
+              type: 'bar',
+              field: 'rechargeTotal',
               data: []
-            },
-            data: {
-              series: [{
-                name: '充值金额(元)',
-                type: 'bar',
-                field: 'rechargeTotal',
-                data: []
-              }, {
-                name: '提现金额(元)',
-                type: 'bar',
-                field: 'withdrawTotal',
-                data: []
-              }, {
-                name: '消费金额(元)',
-                type: 'bar',
-                field: 'amountTotal',
-                data: []
-              }, {
-                name: '总余额(元)',
-                type: 'line',
-                field: 'balanceTotal',
-                data: []
-              }]
-            }
+            }, {
+              name: '提现金额(元)',
+              type: 'bar',
+              field: 'withdrawTotal',
+              data: []
+            }, {
+              name: '消费金额(元)',
+              type: 'bar',
+              field: 'amountTotal',
+              data: []
+            }, {
+              name: '总余额(元)',
+              type: 'line',
+              field: 'balanceTotal',
+              data: []
+            }]
           }
-          this.commonOptions(this.ec03BarLineOptions, res.data, 'xAxis')
-          this.ec03BarLineOptions.data.status = 2
         }
+        this.commonOptions(this.ec03BarLineOptions, res.data, 'xAxis')
+        this.ec03BarLineOptions.data.status = 2
       })
     },
     findTruckTrendList() {
       // 车辆变化趋势
       this.ec04BarLineOptions = { data: { status: 0 } }
       $findTruckTrendList({ date: this.currDate }).then(res => {
-        if (res.code == 0) {
-          this.ec04BarLineOptions = {
-            tooltip: {
-              formatter: (data) => this.formatterEchartTooltip(data)
-            },
-            legend: {
-              type: 'scroll',
-              left: '8%',
-              right: '8%'
-            },
-            xAxis: {
+        this.ec04BarLineOptions = {
+          tooltip: {
+            formatter: (data) => this.formatterEchartTooltip(data)
+          },
+          legend: {
+            type: 'scroll',
+            left: '8%',
+            right: '8%'
+          },
+          xAxis: {
+            data: []
+          },
+          data: {
+            series: [{
+              name: '自营绑定数',
+              type: 'bar',
+              stack: '自营堆叠',
+              field: 'bindOwnTotal',
               data: []
-            },
-            data: {
-              series: [{
-                name: '自营绑定数',
-                type: 'bar',
-                stack: '自营堆叠',
-                field: 'bindOwnTotal',
-                data: []
-              }, {
-                name: '自营解绑数',
-                type: 'bar',
-                stack: '自营堆叠',
-                field: 'unbindOwnTotal',
-                data: []
-              }, {
-                name: '其他绑定数',
-                type: 'bar',
-                stack: '其他堆叠',
-                field: 'bindLinkTotal',
-                data: []
-              }, {
-                name: '其他解绑数',
-                type: 'bar',
-                stack: '其他堆叠',
-                field: 'unbindLinkTotal',
-                data: []
-              }, {
-                name: '变化数',
-                type: 'line',
-                field: 'truckChangeTotal',
-                data: []
-              }]
-            }
+            }, {
+              name: '自营解绑数',
+              type: 'bar',
+              stack: '自营堆叠',
+              field: 'unbindOwnTotal',
+              data: []
+            }, {
+              name: '其他绑定数',
+              type: 'bar',
+              stack: '其他堆叠',
+              field: 'bindLinkTotal',
+              data: []
+            }, {
+              name: '其他解绑数',
+              type: 'bar',
+              stack: '其他堆叠',
+              field: 'unbindLinkTotal',
+              data: []
+            }, {
+              name: '变化数',
+              type: 'line',
+              field: 'truckChangeTotal',
+              data: []
+            }]
           }
-          this.commonOptions(this.ec04BarLineOptions, res.data, 'xAxis')
-          this.ec04BarLineOptions.data.status = 2
         }
+        this.commonOptions(this.ec04BarLineOptions, res.data, 'xAxis')
+        this.ec04BarLineOptions.data.status = 2
       })
     },
     findGasstationTrendList() {
       // 加气站变化趋势
       this.ec05BarLineOptions = { data: { status: 0 } }
       $findGasstationTrendList({ date: this.currDate, orgType: 1, districtId: this.currDistrict }).then(res => {
-        if (res.code == 0) {
-          this.ec05BarLineOptions = {
-            xAxis: {
+        this.ec05BarLineOptions = {
+          xAxis: {
+            data: []
+          },
+          data: {
+            series: [{
+              name: '认证数(个)',
+              type: 'bar',
+              field: 'authTotal',
               data: []
-            },
-            data: {
-              series: [{
-                name: '认证数(个)',
-                type: 'bar',
-                field: 'authTotal',
-                data: []
-              }, {
-                name: '签约数(个)',
-                type: 'bar',
-                field: 'signTotal',
-                data: []
-              }, {
-                name: '活跃数(个)',
-                type: 'line',
-                field: 'tradeTotal',
-                data: []
-              }]
-            }
+            }, {
+              name: '签约数(个)',
+              type: 'bar',
+              field: 'signTotal',
+              data: []
+            }, {
+              name: '活跃数(个)',
+              type: 'line',
+              field: 'tradeTotal',
+              data: []
+            }]
           }
-          this.commonOptions(this.ec05BarLineOptions, res.data, 'xAxis')
-          this.ec05BarLineOptions.data.status = 2
         }
+        this.commonOptions(this.ec05BarLineOptions, res.data, 'xAxis')
+        this.ec05BarLineOptions.data.status = 2
       })
     },
     findCarrierTrendList() {
       // 物流公司变化趋势
       this.ec06BarLineOptions = { data: { status: 0 } }
       $findCarrierTrendList({ date: this.currDate, orgType: 2 }).then(res => {
-        if (res.code == 0) {
-          this.ec06BarLineOptions = {
-            xAxis: {
+        this.ec06BarLineOptions = {
+          xAxis: {
+            data: []
+          },
+          data: {
+            series: [{
+              name: '认证数(个)',
+              type: 'bar',
+              field: 'authTotal',
               data: []
-            },
-            data: {
-              series: [{
-                name: '认证数(个)',
-                type: 'bar',
-                field: 'authTotal',
-                data: []
-              }, {
-                name: '签约数(个)',
-                type: 'bar',
-                field: 'signTotal',
-                data: []
-              }, {
-                name: '活跃数(个)',
-                type: 'line',
-                field: 'tradeTotal',
-                data: []
-              }]
-            }
+            }, {
+              name: '签约数(个)',
+              type: 'bar',
+              field: 'signTotal',
+              data: []
+            }, {
+              name: '活跃数(个)',
+              type: 'line',
+              field: 'tradeTotal',
+              data: []
+            }]
           }
-          this.commonOptions(this.ec06BarLineOptions, res.data, 'xAxis')
-          this.ec06BarLineOptions.data.status = 2
         }
+        this.commonOptions(this.ec06BarLineOptions, res.data, 'xAxis')
+        this.ec06BarLineOptions.data.status = 2
       })
     },
     findTradeRankGasstationList(type = 1) {
@@ -907,55 +889,53 @@ export default {
       seriesName = type == 1 ? '加气总量' : type == 2 ? '加气总金额' : '订单总数'
       this.ec07BarOptions = { data: { status: 0 } }
       $findTradeRankGasstationList(params).then(res => {
-        if (res.code == 0) {
-          this.ec07BarOptions = {
-            grid: {
-              left: '18%',
-              top: '5%',
-              bottom: '4%'
-            },
-            legend: {
+        this.ec07BarOptions = {
+          grid: {
+            left: '18%',
+            top: '5%',
+            bottom: '4%'
+          },
+          legend: {
+            show: false
+          },
+          xAxis: {
+            type: 'value',
+            axisLabel: {
               show: false
+            }
+          },
+          yAxis: {
+            type: 'category',
+            axisLabel: {
+              show: true,
+              inside: true,
+              verticalAlign: 'bottom',
+              margin: 0,
+              padding: [0, 0, 12, 0]
             },
-            xAxis: {
-              type: 'value',
-              axisLabel: {
-                show: false
-              }
-            },
-            yAxis: {
-              type: 'category',
-              axisLabel: {
+            data: []
+          },
+          data: {
+            series: [{
+              name: seriesName,
+              type: 'bar',
+              field,
+              barWidth: 15,
+              showBackground: true,
+              label: {
                 show: true,
-                inside: true,
-                verticalAlign: 'bottom',
-                margin: 0,
-                padding: [0, 0, 12, 0]
+                position: ['0.5%', '15%'],
+                color: '#fff',
+                fontSize: 14,
+                textBorderColor: '#5b8ff9',
+                textBorderWidth: 2
               },
               data: []
-            },
-            data: {
-              series: [{
-                name: seriesName,
-                type: 'bar',
-                field,
-                barWidth: 15,
-                showBackground: true,
-                label: {
-                  show: true,
-                  position: ['0.5%', '15%'],
-                  color: '#fff',
-                  fontSize: 14,
-                  textBorderColor: '#5b8ff9',
-                  textBorderWidth: 2
-                },
-                data: []
-              }]
-            }
+            }]
           }
-          this.commonOptions(this.ec07BarOptions, res.data, 'yAxis', 'gasstationName')
-          this.ec07BarOptions.data.status = 2
         }
+        this.commonOptions(this.ec07BarOptions, res.data, 'yAxis', 'gasstationName')
+        this.ec07BarOptions.data.status = 2
       })
     },
     findTradeRankCarrierList(type = 1) {
@@ -972,55 +952,53 @@ export default {
       seriesName = type == 1 ? '加气总量' : type == 2 ? '加气总金额' : '订单总数'
       this.ec08BarOptions = { data: { status: 0 } }
       $findTradeRankCarrierList(params).then(res => {
-        if (res.code == 0) {
-          this.ec08BarOptions = {
-            grid: {
-              left: '18%',
-              top: '5%',
-              bottom: '4%'
-            },
-            legend: {
+        this.ec08BarOptions = {
+          grid: {
+            left: '18%',
+            top: '5%',
+            bottom: '4%'
+          },
+          legend: {
+            show: false
+          },
+          xAxis: {
+            type: 'value',
+            axisLabel: {
               show: false
+            }
+          },
+          yAxis: {
+            type: 'category',
+            axisLabel: {
+              show: true,
+              inside: true,
+              verticalAlign: 'bottom',
+              margin: 0,
+              padding: [0, 0, 12, 0]
             },
-            xAxis: {
-              type: 'value',
-              axisLabel: {
-                show: false
-              }
-            },
-            yAxis: {
-              type: 'category',
-              axisLabel: {
+            data: []
+          },
+          data: {
+            status: 2,
+            series: [{
+              name: seriesName,
+              type: 'bar',
+              field,
+              barWidth: 15,
+              showBackground: true,
+              label: {
                 show: true,
-                inside: true,
-                verticalAlign: 'bottom',
-                margin: 0,
-                padding: [0, 0, 12, 0]
+                position: ['0.5%', '15%'],
+                color: '#fff',
+                fontSize: 14,
+                textBorderColor: '#5b8ff9',
+                textBorderWidth: 2
               },
               data: []
-            },
-            data: {
-              status: 2,
-              series: [{
-                name: seriesName,
-                type: 'bar',
-                field,
-                barWidth: 15,
-                showBackground: true,
-                label: {
-                  show: true,
-                  position: ['0.5%', '15%'],
-                  color: '#fff',
-                  fontSize: 14,
-                  textBorderColor: '#5b8ff9',
-                  textBorderWidth: 2
-                },
-                data: []
-              }]
-            }
+            }]
           }
-          this.commonOptions(this.ec08BarOptions, res.data, 'yAxis', 'carrierName')
         }
+        this.commonOptions(this.ec08BarOptions, res.data, 'yAxis', 'carrierName')
       })
     },
     commonOptions(options, data, axis, axisField = 'curDate') {
