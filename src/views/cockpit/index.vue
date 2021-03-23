@@ -5,7 +5,7 @@
         <div class="title">大象加气 · 大数据中心 · 管理驾驶舱</div>
       </div>
       <div class="right-controller">
-        <el-date-picker class="date-picker" v-model="currDate" type="date" placeholder="选择日期" @change="changeCurrDate"></el-date-picker>
+        <el-date-picker class="date-picker" v-model="currDate" type="date" placeholder="选择日期" :clearable="false" @change="changeCurrDate"></el-date-picker>
         <el-select v-model="currDistrict" placeholder="全区域" class="district-select" :popper-append-to-body="false" @change="changeCurrDistrict">
           <el-option v-for="item in districtList" :key="item.districtId" :label="item.districtName" :value="item.districtId"></el-option>
         </el-select>
@@ -15,6 +15,7 @@
       </div>
     </div>
     <div class="data-box">
+      <!--分三块区域：第一块：交易金额、充值金额、账户余额；第二块：加气量、进气量、站端库存、在途库存；第三块：活跃车辆数、新增车辆数-->
       <div class="data-group">
         <nt-card :data="cardsData.amountTotal" :options="cards.amountTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
         <nt-card :data="cardsData.rechargeTotal" :options="cards.rechargeTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
@@ -34,7 +35,8 @@
     <div class="block-first">
       <div class="block-first-map">
         <nt-charts :webUIType="'map'" :chartOptions="charts">
-          <div slot="legend" class="legend">
+          <!--区域价格-->
+          <div slot="legend" class="legend" v-if="charts.areaPriceStatus">
             <div class="legend-line" v-for="(item, index) in charts.areaPriceList" :key="index"><div class="name">{{item.districtName}}</div><div class="price">{{item.actualPrice | currency}}</div></div>
           </div>
         </nt-charts>
@@ -46,18 +48,8 @@
           <nt-card :data="cardsData.successOrderTotal" :options="cards.successOrderTotal" :isNotShow="isToday" :myClass="'justify-content__center align-items__center settle-item'"></nt-card>
           <nt-card :data="cardsData.cancelOrderTotal" :options="cards.cancelOrderTotal" :isNotShow="isToday" :myClass="'justify-content__center align-items__center settle-item'"></nt-card>
         </div>
-        <div class="order-list">
-          <div class="order-item" v-for="(item, index) in orderRecent" :key="index">
-            <span class="updateDate">{{item.updateDate}}</span>
-            <span class="orderId">{{item.orderId}}</span>
-            <span class="gasQty">{{item.gasQty}}</span>
-            <span class="amount">{{item.amount}}</span>
-            <span class="carNumber">{{item.carNumber}}</span>
-            <span class="carrierOrgName">{{item.carrierOrgName}}</span>
-            <span class="gasstationName">{{item.gasstationName}}</span>
-            <span :class="item.orderStatus == 1 ? 'unpaid' : item.orderStatus == 2 ? 'paid' : 'payCancel'">{{item.orderStatus == 1 ? '待支付' : item.orderStatus == 2 ? '已支付' : item.orderStatus == 3 ? '已取消' : '未知'}}</span>
-          </div>
-        </div>
+        <!--实时订单信息-->
+        <table-list :data="orderRecent"></table-list>
       </div>
     </div>
     <div class="block-echarts">
@@ -164,17 +156,34 @@ import { mapJsonData } from '@/mock/map'
 import { markIconImage } from '@/mock/mark'
 import { mapAreaList } from '@/mock/area'
 import * as cardInfo from '@/mock/card'
-import { $findTradeSumList, $findGasstationStockSum, $findFundSum, $findTruckTrendList, $findGasstationTrendList, $findCarrierTrendList, $findTradeRankGasstationList, $findTradeRankCarrierList, $findDayTruckSum, $findDayStockSum, $findDayTradeSum, $findDayFundSum, $findLatestGasorders, $findDistrictPriceTrendList, $settleStatisticsInfo, $settleFullDistrictPrice, $settleStatisticsDistrictPriceList } from '@/service/settle'
+import { TableList } from '@/components/index'
+import { $findTradeSumList, $findGasstationStockSum, $findFundSum, $findTruckTrendList, $findGasstationTrendList, $findCarrierTrendList, $findTradeRankGasstationList, $findTradeRankCarrierList, $findDayTruckSum, $findDayStockSum, $findDayTradeSum, $findDayFundSum, $findLatestGasorders, $findDistrictPriceTrendList, $settleStatisticsInfo, $settleFullDistrictPrice, $settleStatisticsDistrictPriceList, $settleTradeGasstationsOrderInfo } from '@/service/settle'
 export default {
+  components: { TableList },
   data() {
     return {
       cards: cardInfo,
-      cardsData: {},
+      cardsData: {
+        amountTotal: { title: '', total: 0, contrast: 0, rate: 0 },
+        gasQtyTotal: { title: '', total: 0, contrast: 0, rate: 0 },
+        orderTotal: { title: '', total: 0, contrast: 0, rate: 0 },
+        nopayOrderTotal: { title: '', total: 0, contrast: 0, rate: 0 },
+        successOrderTotal: { title: '', total: 0, contrast: 0, rate: 0 },
+        cancelOrderTotal: { title: '', total: 0, contrast: 0, rate: 0 },
+        liveTruckTotal: { title: '', total: 0, contrast: 0, rate: 0 },
+        addTruckTotal: { title: '', total: 0, contrast: 0, rate: 0 },
+        storeTotal: { title: '', total: 0, contrast: 0, rate: 0 },
+        stockTotal: { title: '', total: 0, contrast: 0, rate: 0 },
+        wayTotal: { title: '', total: 0, contrast: 0, rate: 0 },
+        rechargeTotal: { title: '', total: 0, contrast: 0, rate: 0 },
+        balnaceTotal: { title: '', total: 0, contrast: 0, rate: 0 }
+      },
       charts: {
         id: 'chart-id',
         class: 'charts',
         bgColor: '#ffffff',
         areaPriceList: [],
+        areaPriceStatus: false,
         data: {
           status: 0,
           series: [{
@@ -211,7 +220,7 @@ export default {
               brushType: 'stroke'
             },
             hoverAnimation: true,
-            zlevel: 1,
+            zlevel: 2,
             tooltip: {
               padding: 0,
               borderWidth: 0,
@@ -231,8 +240,9 @@ export default {
             name: '',
             type: 'effectScatter',
             coordinateSystem: 'geo',
-            zlevel: 10,
+            zlevel: 1,
             data: [],
+            symbolOffset: [0, 8],
             rippleEffect: {
               period: 1,
               scale: 3,
@@ -248,8 +258,8 @@ export default {
             },
             itemStyle: {
               normal: {
-                color: 'red',
-                shadowBlur: 5,
+                color: 'rgba(255, 0, 0, .3)',
+                shadowBlur: 3,
                 shadowColor: '#ffffff'
               }
             }
@@ -410,6 +420,7 @@ export default {
       this.findDayFundSum()
       this.findLatestGasorders()
       this.findDistrictPriceTrendList()
+      this.queryTimeOrderData()
     },
     toDayEvent() {
       const nowTimestamp = new Date(formateTData(Date.now(), 'date')).getTime()
@@ -417,15 +428,8 @@ export default {
       if (nowTimestamp == currTimestamp) {
         // 今天
         this.isToday = true
-        const that = this
-        this.t = setInterval(() => {
-          that.findLatestGasorders()
-        }, 3000)
       } else {
         this.isToday = false
-        if (this.t) {
-          clearInterval(this.t)
-        }
       }
     },
     changeCurrDate() {
@@ -439,8 +443,8 @@ export default {
     cardStatisticsData(total, contrast, rate, title = '') {
       return {
         title: title,
-        total: total,
-        contrast: contrast,
+        total: formateParams(total),
+        contrast: formateParams(contrast),
         rate: rate
       }
     },
@@ -487,118 +491,63 @@ export default {
       // 平台一天的汇总数据，包含充值总金额、账户余额
       const params = { date: this.currDate }
       $findDayFundSum(params).then(res => {
-        if (res.code == 0) {
-          // 充值
-          const rechargeTotal = formateParams(res.data.rechargeTotal)
-          const yesterdayRechargeTotal = formateParams(res.data.yesterdayRechargeTotal)
-          const rechargeTotalRate = res.data.rechargeTotalRate
-          // 余额
-          const balnaceTotal = formateParams(res.data.balnaceTotal)
-          const yesterdayBalnaceTotal = formateParams(res.data.yesterdayBalnaceTotal)
-          const balnaceTotalRate = res.data.balnaceTotalRate
+        const data = res.data
 
-          // 充值金额
-          this.cardsData.rechargeTotal = this.cardStatisticsData(rechargeTotal, yesterdayRechargeTotal, rechargeTotalRate)
-          // 账户余额
-          this.cardsData.balnaceTotal = this.cardStatisticsData(balnaceTotal, yesterdayBalnaceTotal, balnaceTotalRate)
-        }
+        // 充值金额
+        this.cardsData.rechargeTotal = this.cardStatisticsData(data.rechargeTotal, data.yesterdayRechargeTotal, data.rechargeTotalRate)
+        // 账户余额
+        this.cardsData.balnaceTotal = this.cardStatisticsData(data.balnaceTotal, data.yesterdayBalnaceTotal, data.balnaceTotalRate)
       })
     },
     findDayTradeSum() {
       // 平台一天的交易汇总数据，包含交易金额、交易量、订单总量、待支付、已支付、已取消数
       const params = { date: this.currDate, districtId: this.currDistrict }
       $findDayTradeSum(params).then(res => {
-        if (res.code == 0) {
-          // 交易金额
-          const amountTotal = formateParams(res.data.amountTotal)
-          const amountTotalRate = res.data.amountTotalRate
-          const yesterdayAmountTotal = formateParams(res.data.yesterdayAmountTotal)
-          // 加气量
-          const gasQtyTotal = formateParams(res.data.gasQtyTotal)
-          const gasQtyTotalRate = res.data.gasQtyTotalRate
-          const yesterdayGasQtyTotal = formateParams(res.data.yesterdayGasQtyTotal)
-          // 订单总数
-          const orderTotal = formateParams(res.data.orderTotal)
-          const orderTotalRate = res.data.orderTotalRate
-          const yesterdayOrderTotal = formateParams(res.data.yesterdayOrderTotal)
-          // 待支付订单
-          const nopayOrderTotal = formateParams(res.data.nopayOrderTotal)
-          const nopayOrderTotalRate = res.data.nopayOrderTotalRate
-          const yesterdayNopayOrderTotal = formateParams(res.data.yesterdayNopayOrderTotal)
-          // 已支付
-          const successOrderTotal = formateParams(res.data.successOrderTotal)
-          const successOrderTotalRate = res.data.successOrderTotalRate
-          const yesterdaySuccessOrderTotal = formateParams(res.data.yesterdaySuccessOrderTotal)
-          // 已取消
-          const cancelOrderTotal = formateParams(res.data.cancelOrderTotal)
-          const cancelOrderTotalRate = res.data.cancelOrderTotalRate
-          const yesterdayCancelOrderTotal = formateParams(res.data.yesterdayCancelOrderTotal)
+        const data = res.data
 
-          // 交易金额
+        // 交易金额
+        this.cardsData.amountTotal = this.cardStatisticsData(data.amountTotal, data.yesterdayAmountTotal, data.amountTotalRate)
 
-          this.cardsData.amountTotal = this.cardStatisticsData(amountTotal, yesterdayAmountTotal, amountTotalRate)
+        // 加气统计
+        this.cardsData.gasQtyTotal = this.cardStatisticsData(data.gasQtyTotal, data.yesterdayGasQtyTotal, data.gasQtyTotalRate)
 
-          // 加气统计
-          this.cardsData.gasQtyTotal = this.cardStatisticsData(gasQtyTotal, yesterdayGasQtyTotal, gasQtyTotalRate)
+        // 总订单
+        this.cardsData.orderTotal = this.cardStatisticsData(data.orderTotal, data.yesterdayOrderTotal, data.orderTotalRate)
 
-          // 总订单
-          this.cardsData.orderTotal = this.cardStatisticsData(orderTotal, yesterdayOrderTotal, orderTotalRate)
+        // 待支付
+        this.cardsData.nopayOrderTotal = this.cardStatisticsData(data.nopayOrderTotal, data.yesterdayNopayOrderTotal, data.nopayOrderTotalRate)
 
-          // 待支付
-          this.cardsData.nopayOrderTotal = this.cardStatisticsData(nopayOrderTotal, yesterdayNopayOrderTotal, nopayOrderTotalRate)
+        // 已支付
+        this.cardsData.successOrderTotal = this.cardStatisticsData(data.successOrderTotal, data.yesterdaySuccessOrderTotal, data.successOrderTotalRate)
 
-          // 已支付
-          this.cardsData.successOrderTotal = this.cardStatisticsData(successOrderTotal, yesterdaySuccessOrderTotal, successOrderTotalRate)
-
-          // 已取消
-          this.cardsData.cancelOrderTotal = this.cardStatisticsData(cancelOrderTotal, yesterdayCancelOrderTotal, cancelOrderTotalRate)
-        }
+        // 已取消
+        this.cardsData.cancelOrderTotal = this.cardStatisticsData(data.cancelOrderTotal, data.yesterdayCancelOrderTotal, data.cancelOrderTotalRate)
       })
     },
     findDayTruckSum() {
       // 获取日车辆汇总
       const params = { date: this.currDate, districtId: this.currDistrict }
       $findDayTruckSum(params).then(res => {
-        if (res.code == 0) {
-          const liveTruckTotal = formateParams(res.data.liveTruckTotal)
-          const liveTruckTotalRate = res.data.liveTruckTotalRate
-          const yesterdayLiveTruckTotal = formateParams(res.data.yesterdayLiveTruckTotal)
-          const addTruckTotal = formateParams(res.data.addTruckTotal)
-          const addTruckTotalRate = res.data.addTruckTotalRate
-          const yesterdayAddTruckTotal = formateParams(res.data.yesterdayAddTruckTotal)
+        const data = res.data
 
-          // 活跃车辆数
-          this.cardsData.liveTruckTotal = this.cardStatisticsData(liveTruckTotal, yesterdayLiveTruckTotal, liveTruckTotalRate)
-          // 新增车辆数
-          this.cardsData.addTruckTotal = this.cardStatisticsData(addTruckTotal, yesterdayAddTruckTotal, addTruckTotalRate)
-        }
+        // 活跃车辆数
+        this.cardsData.liveTruckTotal = this.cardStatisticsData(data.liveTruckTotal, data.yesterdayLiveTruckTotal, data.liveTruckTotalRate)
+        // 新增车辆数
+        this.cardsData.addTruckTotal = this.cardStatisticsData(data.addTruckTotal, data.yesterdayAddTruckTotal, data.addTruckTotalRate)
       })
     },
     findDayStockSum() {
       // 获取日库存汇总
       const params = { date: this.currDate, districtId: this.currDistrict }
       $findDayStockSum(params).then(res => {
-        if (res.code == 0) {
-          // 进气量
-          const storeTotal = formateParams(res.data.storeTotal)
-          const yesterdayStoreTotal = formateParams(res.data.yesterdayStoreTotal)
-          const storeTotalRate = res.data.storeTotalRate
-          // 站端库存
-          const stockTotal = formateParams(res.data.stockTotal)
-          const yesterdayStockTotal = formateParams(res.data.yesterdayStockTotal)
-          const stockTotalRate = res.data.stockTotalRate
-          // 在途库存
-          const wayTotal = formateParams(res.data.wayTotal)
-          const yesterdayWayTotal = formateParams(res.data.yesterdayWayTotal)
-          const wayTotalRate = res.data.wayTotalRate
+        const data = res.data
 
-          // 进气量
-          this.cardsData.storeTotal = this.cardStatisticsData(storeTotal, yesterdayStoreTotal, storeTotalRate)
-          // 站端库存
-          this.cardsData.stockTotal = this.cardStatisticsData(stockTotal, yesterdayStockTotal, stockTotalRate)
-          // 在途库存
-          this.cardsData.wayTotal = this.cardStatisticsData(wayTotal, yesterdayWayTotal, wayTotalRate)
-        }
+        // 进气量
+        this.cardsData.storeTotal = this.cardStatisticsData(data.storeTotal, data.yesterdayStoreTotal, data.storeTotalRate)
+        // 站端库存
+        this.cardsData.stockTotal = this.cardStatisticsData(data.stockTotal, data.yesterdayStockTotal, data.stockTotalRate)
+        // 在途库存
+        this.cardsData.wayTotal = this.cardStatisticsData(data.wayTotal, data.yesterdayWayTotal, data.wayTotalRate)
       })
     },
     getDistrictList() {
@@ -1136,7 +1085,8 @@ export default {
         this.charts.areaPriceList.push(...new Set(response.data))
         $settleFullDistrictPrice({ date: this.currDate }).then(res => {
           this.charts.areaPriceList.unshift(res.data)
-        })
+          this.charts.areaPriceStatus = true
+        }).catch(() => { this.charts.areaPriceStatus = true })
       })
       this.gasstationListInfo()
     },
@@ -1153,21 +1103,8 @@ export default {
           })
         })
         this.charts.data.series[1].data = tmpGasList
-        // this.setInTime()
         this.charts.data.status = 2
       })
-    },
-    setInTime() {
-      setInterval(() => {
-        this.charts.data.series[2].data = [{
-          name: Math.random(100, 200),
-          type: 'normal',
-          value: ['114.991786', '38.750811', 98884.53, '700136540667789312']
-        }]
-        setTimeout(() => {
-          this.charts.data.series[2].data = []
-        }, 3000)
-      }, 10000)
     },
     formatterEchartTooltip(data) {
       let str = ''
@@ -1175,300 +1112,52 @@ export default {
         str += `${item.seriesName} : ${Math.abs(item.value)} </br>` 
       })
       return data[0].axisValue + '<br />' + str
+    },
+    queryTimeOrderData() {
+      if (this.orderTime) {
+        clearInterval(this.orderTime)
+      }
+      if (this.isToday) {
+        this.orderTime = setInterval(() => {
+          $settleTradeGasstationsOrderInfo({ seconds: 10 }).then(response => {
+            if (response.data && isTypeof(response.data) === 'array') {
+              response.data.forEach(item => {
+                this.charts.data.series[2].data.push({
+                  name: item.gasstationName,
+                  type: 'normal',
+                  value: [item.longitude, item.latitude, 0, item.gasstationId]
+                })
+              })
+            }
+
+            setTimeout(() => {
+              this.charts.data.series[2].data = []
+            }, 2000)
+          })
+          this.findLatestGasorders()
+        }, 10000)
+      }
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-$mainBlack: "#14121F";
-.cockpit {
-  overflow: auto;
-  background: #edf1f9;
-  min-width: 1300px;
-  .tool-bar {
-    margin: 3.3rem 4.6rem;
-    height: 3.8rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .left-title {
-      .title {
-        font-size: 3.5rem;
-        color: $mainBlack;
-        font-weight: 600;
-      }
-    }
-    .right-controller {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      .date-picker {
-        margin-right: 20px;
-        width: 16rem;
-        height: 3.8rem;
-        font-size: 1.4rem;
-        /deep/ input {
-          height: 3.8rem;
-          &.el-input__inner {
-            padding-right: 15px;
-          }
-        }
-        /deep/ .el-input__icon {
-          line-height: 1;
-        }
-      }
-      .district-select {
-        margin-right: 2rem;
-        width: 12.4rem;
-        height: 3.8rem;
-        /deep/ .el-input input {
-          width: 12.4rem;
-          height: 3.8rem;
-          font-size: 1.6rem;
-          color: $mainBlack;
-          padding-right: 2.8rem;
-        }
-        /deep/ .el-input__icon {
-          line-height: 1;
-        }
-      }
-      .full-screen {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 3.8rem;
-        height: 3.8rem;
-        background: #fff;
-        cursor: pointer;
-        img {
-          width: 2.4rem;
-          height: 2.4rem;
-        }
-      }
-    }
+  div::-webkit-scrollbar{
+    width: 8px;
+    height: 5px;
   }
-  .data-box {
-    overflow: hidden;
-    padding: 0 1.5rem;
-    height: 15rem;
-    margin: 0 auto;
-    width: 183rem;
-    display: flex;
-    justify-content: space-between;
-    background: #fff;
-    border-radius: 8px;
-    .data-group {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .card-item {
-        margin-right: 4.6rem;
-      }
-      .card-item:first-child {
-        margin-right: 6.6rem;
-      }
-    }
-    .img-box {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-right: 1.3rem;
-      width: 6rem;
-      height: 6rem;
-      border-radius: 50%;
-      background: #5b8ff9;
-      img {
-        width: 3.4rem;
-      }
-    }
+  div::-webkit-scrollbar-track{
+    background: rgb(239, 239, 239);
+    border-radius: 2px;
   }
-  .block-first {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 auto;
-    margin-top: 2.4rem;
-    width: 183rem;
-    .block-first-map {
-      position: relative;
-      width: 96.5rem;
-      height: 41.7rem;
-      background: #fff;
-      border-radius: 8px;
-      padding: 8px;
-    }
-    .block-first-right {
-      height: 41.7rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      .order-settle {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        width: 83.5rem;
-        height: 19.8rem;
-        background: #fff;
-        border-radius: 8px;
-        text-align: center;
-        .settle-item {
-          margin-top: 2rem;
-          padding-top: 2rem;
-          height: 90%;
-          width: 20%;
-          background: url('../../assets/images/cockpit/icon-arch-in.png') no-repeat center 10%/92%, url('../../assets/images/cockpit/icon-arch-out.png') no-repeat center 0/100%;
-        }
-      }
-      .order-list {
-        padding: 1rem 0;
-        overflow-y: auto;
-        width: 83.5rem;
-        height: 19.5rem;
-        background: #fff;
-        border-radius: 8px;
-        .order-item {
-          margin: 1.2rem auto;
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
-          width: 78.4rem;
-          height: 4.2rem;
-          background: #EDF1F9;
-          font-size: 1.4rem;
-          color: #1D1919;
-          border-radius: 8px;
-          .carrierOrgName, .gasstationName {
-            width: 9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-          .unpaid {
-            color: #F6BD16;
-          }
-          .paid {
-            color: #5B8FF9;
-          }
-          .payCancel {
-            color: #1D1919;
-          }
-        }
-      }
-    }
+  div::-webkit-scrollbar-thumb{
+    background: #bfbfbf;
+    border-radius: 10px;
   }
-  .block-echarts {
-    margin: 0 auto;
-    margin-top: 2.7rem;
-    margin-bottom: 5.7rem;
-    display: grid;
-    grid-template-columns: repeat(3, 58.8rem);
-    grid-row-gap: 3.3rem;
-    justify-content: space-between;
-    width: 183rem;
-    .ec-item {
-      height: 45.3rem;
-      background: #fff;
-      border-radius: 8px;
-    }
+  div::-webkit-scrollbar-thumb:hover{
+    background: #333;
   }
-  .ec-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 3rem;
-    font-size: 2.4rem;
-    color: #333;
-    font-weight: 600;
-    .curr-date-rank {
-      margin-left: 1rem;
-      font-size: 1.4rem;
-      color: #333;
-      opacity: 0.5;
-    }
-    .tab {
-      display: flex;
-      align-items: center;
-      border-radius: 4px;
-      .tab-item {
-        padding: .2rem .5rem;
-        color: #333;
-        font-size: 1.2rem;
-        font-weight: 400;
-        background: #1e202415;
-        cursor: pointer;
-        // opacity: 0.1;
-      }
-      .active {
-        color: #fff;
-        background: #5B8FF9;
-        opacity: 1;
-      }
-    }
+  div::-webkit-scrollbar-corner{
+    background: #179a16;
   }
-  .label-rank {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    .rank-icon, .rank-gasstationname {
-      font-size: 1.4rem;
-      color: #333;
-      opacity: 0.5;
-    }
-    .rank-icon {
-      margin: 0 3rem 0 5rem;
-    }
-  }
-  .ec00-line-bar, .ec01-line, .ec02-bar, .ec03-bar-line, .ec04-bar-line, .ec05-bar-line, .ec06-bar-line, .ec07-bar, .ec08-bar {
-    position: relative;
-    height: 36rem;
-  }
-  .rank-icon-content {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    .rank-item {
-      margin: 3rem 4.8rem 0.3rem;
-      width: 3.2rem;
-      height: 3.2rem;
-      text-align: center;
-      line-height: 3.2rem;
-      border-radius: 50%;
-      color: #fff;
-      font-weight: 600;
-      background: url('../../assets/images/cockpit/rank-others.png') no-repeat center center/100% 100%;
-    }
-    .rank-first {
-      background: url('../../assets/images/cockpit/rank-first.png') no-repeat center center/100% 100%;
-    }
-    .rank-second {
-      background: url('../../assets/images/cockpit/rank-second.png') no-repeat center center/100% 100%;
-    }
-    .rank-third {
-      background: url('../../assets/images/cockpit/rank-third.png') no-repeat center center/100% 100%;
-    }
-  }
-  .chart01_bar {
-    width: 600px;
-  }
-}
-
-div::-webkit-scrollbar{
-  width: 8px;
-  height: 5px;
-}
-div::-webkit-scrollbar-track{
-  background: rgb(239, 239, 239);
-  border-radius: 2px;
-}
-div::-webkit-scrollbar-thumb{
-  background: #bfbfbf;
-  border-radius: 10px;
-}
-div::-webkit-scrollbar-thumb:hover{
-  background: #333;
-}
-div::-webkit-scrollbar-corner{
-  background: #179a16;
-}
 </style>
