@@ -18,8 +18,8 @@
       <!--分三块区域：第一块：交易金额、充值金额、账户余额；第二块：加气量、进气量、站端库存、在途库存；第三块：活跃车辆数、新增车辆数-->
       <div class="data-group">
         <nt-card :data="cardsData.amountTotal" :options="cards.amountTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
-        <nt-card :data="cardsData.rechargeTotal" :options="cards.rechargeTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
-        <nt-card :data="cardsData.balnaceTotal" :options="cards.balnaceTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
+        <nt-card v-if="!isRegional" :data="cardsData.rechargeTotal" :options="cards.rechargeTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
+        <nt-card v-if="!isRegional" :data="cardsData.balnaceTotal" :options="cards.balnaceTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
       </div>
       <div class="data-group">
         <nt-card :data="cardsData.gasQtyTotal" :options="cards.gasQtyTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
@@ -29,7 +29,7 @@
       </div>
       <div class="data-group">
         <nt-card :data="cardsData.liveTruckTotal" :options="cards.liveTruckTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
-        <nt-card :data="cardsData.addTruckTotal" :options="cards.addTruckTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
+        <nt-card v-if="!isRegional" :data="cardsData.addTruckTotal" :options="cards.addTruckTotal" :isNotShow="isToday" :myClass="'align-items__center card-item'"></nt-card>
       </div>
     </div>
     <div class="block-first">
@@ -360,7 +360,8 @@ export default {
       gasstationRankActive: 1,
       carrierRankActive: 1,
       orderRecent: [],
-      isToday: true
+      isToday: true,
+      isRegional: false //是否是分区域
     }
   },
   created() {
@@ -389,15 +390,18 @@ export default {
       this.findTradeSumList()
       this.getGasstationSupply()
 
-      // 不是切换区域操作时
-      if (type !== 'district') {
-        this.findFundSum()
-      }
       // 不是切换区域操作时 或切换后currDistrict为全区域
       if (type !== 'district' || (type === 'district' && this.currDistrict == '')) {
+        this.findFundSum()
         this.findTruckTrendList()
         this.findCarrierTrendList()
         this.findTradeRankCarrierList()
+      }
+      // 切换分区域操作
+      if (type === 'district' && this.currDistrict !== '') {
+        this.isRegional = true
+      } else if (type === 'district' && this.currDistrict === '') {
+        this.isRegional = false
       }
 
       this.findGasstationTrendList()
