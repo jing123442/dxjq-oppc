@@ -137,7 +137,6 @@ import { formateTData, formateParams, isTypeof } from '@/utils/tools'
 import { $districtList } from '@/service/user'
 import { mapJsonData } from '@/mock/map'
 import { markIconImage } from '@/mock/mark'
-import { mapAreaList } from '@/mock/area'
 import * as cardInfo from '@/mock/card'
 import { TableList } from '@/components/index'
 import { $findTradeSumList, $findGasstationStockSum, $findFundSum, $findTruckTrendList, $findGasstationTrendList, $findCarrierTrendList, $findTradeRankGasstationList, $findTradeRankCarrierList, $findDayTruckSum, $findDayStockSum, $findDayTradeSum, $findDayFundSum, $findLatestGasorders, $findDistrictPriceTrendList, $settleStatisticsInfo, $settleFullDistrictPrice, $settleStatisticsDistrictPriceList, $settleTradeGasstationsOrderInfo } from '@/service/settle'
@@ -303,7 +302,7 @@ export default {
                 borderWidth: 0.1
               }
             },
-            regions: mapAreaList()
+            regions: this.mapAreaList()
           }
         }
       },
@@ -381,11 +380,11 @@ export default {
       if (type !== 'district') {
         this.toDayEvent()
       }
-      this.initDistrictData()
       // 初始化使用
       if (type === 'init') {
         this.getDistrictList()
       }
+      this.initDistrictData()
       this.findTradeSumList()
       this.getGasstationSupply()
 
@@ -429,6 +428,30 @@ export default {
     },
     changeCurrDistrict() {
       this.initData('district')
+    },
+    mapAreaList() {
+      const tmpAreaList = []
+      $districtList().then((res) => {
+        const districtList = res.data
+
+        if (districtList && Array.isArray(districtList)) {
+          districtList.forEach((item, index) => {
+            const areaList = item.districtCitys.split(',')
+            areaList.forEach(area => {
+              tmpAreaList.push({
+                name: area,
+                value: index,
+                itemStyle: {
+                  areaColor: '#bdd3ff'
+                }
+              })
+            })
+          })
+        }
+        this.charts.options.geo.regions = tmpAreaList
+      })
+
+      return tmpAreaList
     },
     cardStatisticsData(total, contrast, rate, title = '') {
       return {
@@ -542,6 +565,7 @@ export default {
       // 获取区域列表
       $districtList().then((res) => {
         this.districtList = res.data
+
         res.data.unshift({
           districtId: '',
           districtName: '全区域'

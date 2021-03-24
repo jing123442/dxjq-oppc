@@ -3,7 +3,7 @@ import { isTypeof, inArray } from '@/utils/tools'
 // 地图下载json数据地址：https://hxkj.vip/demo/echartsMap/
 const china = require('./china.json')
 
-const MODEL_MAP_JSON = ['china', 'hebei', 'henan', 'shandong']
+const MODEL_MAP_JSON = ['china', 'hebei', 'henan', 'shandong', 'anhui', 'jiangsu']
 
 // 获取地图json数据
 export function mapJsonData(model) {

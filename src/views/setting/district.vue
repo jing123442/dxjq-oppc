@@ -1,36 +1,28 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="withdrawConfig" :tableListName="'district'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :composeParam="composeParam" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" :tableListName="'district'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :composeParam="composeParam" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
-    <el-dialog :title="orgTitle" :visible.sync="dialogWithdrawVisible" width="40%" :append-to-body="true" @close="closeWithdrawDialog()">
-      <el-form size="small" :model="formWithdraw" label-width="120px" ref="formWithdraw" v-if="dialogWithdrawVisible" :rules="formWithdrawRules">
-        <el-form-item label="设置余额限定" prop="currentQuota" style="width: 90%;">
-          <el-input v-model="formWithdraw.currentQuota"></el-input>
-          <span>现行的余额限定为 <span>{{formWithdraw.balance}}</span> 元</span>
-        </el-form-item>
-        <el-form-item label="修改说明" prop="note" style="width: 90%;">
-          <el-input v-model="formWithdraw.note" type="textarea" :rows="4" placeholder="请输入修改说明">
-          </el-input>
+    <el-dialog title="配置加气站" :visible.sync="dialogConfigVisible" width="60%" :append-to-body="true">
+      <el-form size="small" :model="formConfigRow" ref="formConfig" label-position="top" v-if="dialogConfigVisible" :rules="formConfigRules">
+        <el-form-item label="加气站配置" prop="fillerList" style="width: 90%;">
+          <el-transfer v-model="formConfigRow.fillerList" :titles="['加气站列表', '已选加气站']" :props="{ key: 'orgId', label: 'orgName' }" :data="fillerAllList"></el-transfer>
         </el-form-item>
         <!-- 按钮 -->
         <el-form-item class="el-del-btn-item">
           <div class="btn-item-footer">
             <el-button v-for="(btnItem, index) in formBtnList.list" :key="index" :type="btnItem.bType"
                        size="small"
-                       :icon="btnItem.icon" @click="btnClickEvent(btnItem)">{{btnItem.label}}
+                       :icon="btnItem.icon" @click="btnClickEvent(btnItem, formConfigRow)">{{btnItem.label}}
             </el-button>
           </div>
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog title="变更记录" :visible.sync="dialogWithdrawChangeVisible" :width="'70%'" :append-to-body="true">
-      <em-table-list v-if="dialogWithdrawChangeVisible" :custTableTitle="'变更记录信息'" :tableListName="'withdrawChange'" style="padding-bottom: 20px;" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryChangeCustURL" :responseSuccess="response_success" :queryParam="queryChangeParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column_log" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    </el-dialog>
   </div>
 </template>
 <script>
 import { initVueDataOptions, queryDefaultParams } from '@/utils/tools'
-import { $updateWithdrawConfig } from '@/service/pay'
+import { $userOrgList, $districtGasstationList, $districtGasstationAdd, $districtGasstationDelete } from '@/service/user'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -63,26 +55,17 @@ export default {
         },
         name: '区域管理'
       },
-      queryChangeCustURL: {
-        list: {
-          url: 'pay/withdraw_quota_log/list_by_orgType',
-          method: 'post',
-          parse: {
-            tableData: ['data', 'records'],
-            totalCount: ['data', 'total']
-          }
-        },
-        name: '余额限定变更记录'
+      fillerAllList: [],
+      selectFillerList: [],
+      oldFillerList: [],
+      formConfigRow: {
+        fillerList: []
       },
-      orgTitle: '',
-      formWithdraw: {},
       composeParam: ['districtId'],
-      formWithdrawRules: {
-        currentQuota: [{ required: true, message: '请输入余额限定！', trigger: 'blur' }],
-        note: [{ required: true, message: '请输入备注！', trigger: 'blur' }]
+      formConfigRules: {
+        fillerList: [{ required: true, message: '请至少选择一个加气站！', trigger: 'blur' }]
       },
-      dialogWithdrawVisible: false,
-      dialogWithdrawChangeVisible: false,
+      dialogConfigVisible: false,
       queryParams: queryDefaultParams(this),
       queryChangeParams: []
     })
@@ -98,49 +81,102 @@ export default {
       response_success: 'response_success'
     })
   },
-  mounted: function () {},
+  created() {
+    this.initData()
+  },
   methods: {
+    initData() {
+      const params = {
+        page: 1,
+        size: 500,
+        param: { org: { orgType: 1 }, dateParam: { createDateFrom: '', createDateTo: '' } }
+      }
+      $userOrgList(params).then(response => {
+        this.fillerAllList = [...new Set(response.data.records || [])]
+      })
+    },
     onListEvent(type, row) {
       if (type === 'config') {
-        this.orgTitle = row.orgTypeName
-        this.dialogWithdrawVisible = true
-        this.formWithdraw = row
-        this.$set(this.formWithdraw, 'note', '')
-        this.$set(this.formWithdraw, 'balance', row.currentQuota)
-      } else {
-        this.queryChangeParams = queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: row.orgType } })
-        this.dialogWithdrawChangeVisible = true
+        this.oldFillerList = []
+        $districtGasstationList({}).then(response => {
+          const data = response.data || []
+          const tmpList = []
+
+          data.forEach(item => {
+            if (row.districtId === item.districtId) {
+              this.oldFillerList.push(item)
+              tmpList.push(item.orgId)
+            } else {
+              this.fillerAllList.filter((node, index) => {
+                if (item.orgId === node.orgId) {
+                  this.fillerAllList.splice(index, 1)
+                }
+              })
+            }
+          })
+          this.formConfigRow = Object.assign({ fillerList: tmpList }, row)
+          this.dialogConfigVisible = true
+        })
       }
     },
-    btnClickEvent(btnObj) {
+    async btnClickEvent(btnObj, row) {
       if (btnObj.type == 'ok') {
-        this.$refs.formWithdraw.validate(valid => {
+        await this.$refs.formConfig.validate(async (valid) => {
           if (valid) {
+            const addList = []
             const params = {
-              id: this.formWithdraw.id,
-              note: this.formWithdraw.note,
-              orgType: this.formWithdraw.orgType,
-              orgTypeName: this.formWithdraw.orgTypeName,
-              updateQuota: this.formWithdraw.currentQuota
+              districtId: row.districtId,
+              districtName: row.districtName
             }
 
-            $updateWithdrawConfig(params).then(response => {
-              this.$message.success('成功！')
-
-              this.dialogWithdrawVisible = false
-              this.$refs.withdrawConfig.initDataList()
+            row.fillerList && row.fillerList.forEach(item => {
+              let isFlag = false
+              this.oldFillerList.forEach((node, index) => {
+                if (node.orgId === item) {
+                  isFlag = true
+                  this.oldFillerList.splice(index, 1)
+                }
+              })
+              if (!isFlag) {
+                this.fillerAllList.forEach(node => {
+                  console.log(node.orgId, item)
+                  if (node.orgId === item) {
+                    addList.push({
+                      gasstationId: node.orgId,
+                      gasstationName: node.orgName
+                    })
+                  }
+                })
+              }
             })
+
+            // 增加加气站
+            if (addList.length > 0) {
+              params.list = addList
+
+              await $districtGasstationAdd(params).then(() => {})
+            }
+
+            // 删除加气站
+            if (this.oldFillerList.length > 0) {
+              params.list = []
+              this.oldFillerList.forEach(item => {
+                params.list.push({ gasstationId: item.orgId })
+              })
+              await $districtGasstationDelete(params).then(() => {})
+            }
+
+            this.$message.success('成功！')
+            this.dialogConfigVisible = false
+            this.$refs.tables.initDataList()
+            this.initData()
           } else {
             return null
           }
         })
       } else {
-        this.$refs.withdrawConfig.initDataList()
-        this.dialogWithdrawVisible = false
+        this.dialogConfigVisible = false
       }
-    },
-    closeWithdrawDialog() {
-      this.$refs.withdrawConfig.initDataList()
     },
     onReqParams(type, _this, callback) {}
   }
