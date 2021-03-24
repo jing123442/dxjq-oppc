@@ -1,7 +1,10 @@
 const columns = {
   district: [
+    { field: 'districtId', name: 'id', hide: true, show: { type: 'hide' } },
     { field: 'districtName', name: '区域名称', fixed: 'left', show: { type: 'text', placeholder: '请输入区域名称' }, rules: [{ required: true, message: '请输入区域名称', trigger: 'blur' }] },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'config', name: '配置' }, { type: 'edit', name: '修改' }, { type: 'del', name: '删除' }] }
+    { field: 'districtLeader', name: '管理员', show: { type: 'text', placeholder: '请输入管理员' }, rules: [{ required: true, message: '请输入管理员', trigger: 'blur' }] },
+    { field: 'districtCitys', name: '区域城市', show: { type: 'textarea', placeholder: '请输入区域城市' }, rules: [{ required: true, message: '请输入区域城市', trigger: 'blur' }] },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'config', name: '配置加气站' }, { type: 'edit', name: '修改' }, { type: 'del', name: '删除' }] }
   ],
   withdraw: [
     { field: 'orgTypeName', name: '账户类型', fixed: 'left' },

@@ -106,3 +106,18 @@ export async function $userConfigRole (data) {
 export async function $districtList (data) {
   return await R({ url: 'user/district/list', method: 'POST', data })
 }
+
+// 获取加气站列表
+export async function $districtGasstationList (data) {
+  return await R({ url: 'user/district_gasstation/list', method: 'POST', data })
+}
+
+// 区域增加加气站
+export async function $districtGasstationAdd (data) {
+  return await R({ url: 'user/district_gasstation/add', method: 'POST', data })
+}
+
+// 区域删除加气站
+export async function $districtGasstationDelete (data) {
+  return await R({ url: 'user/district_gasstation/delete', method: 'POST', data })
+}
