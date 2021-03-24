@@ -370,6 +370,11 @@ export default {
   mounted() {
     this.windowResize()
   },
+  beforeDestroy() {
+    if (this.orderTime) {
+      clearInterval(this.orderTime)
+    }
+  },
   methods: {
     initData(type = null) {
       // 不是切换区域操作时
