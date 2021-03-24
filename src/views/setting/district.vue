@@ -63,7 +63,7 @@ export default {
       },
       composeParam: ['districtId'],
       formConfigRules: {
-        fillerList: [{ required: true, message: '请至少选择一个加气站！', trigger: 'blur' }]
+        // fillerList: [{ required: true, message: '请至少选择一个加气站！', trigger: 'blur' }]
       },
       dialogConfigVisible: false,
       queryParams: queryDefaultParams(this),
