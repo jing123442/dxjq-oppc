@@ -360,11 +360,11 @@ export default {
       gasstationRankActive: 1,
       carrierRankActive: 1,
       orderRecent: [],
-      isToday: false
+      isToday: true
     }
   },
   created() {
-    this.currDateNotYear = this.currDate.split('-').slice(1, 3).join('-')
+    this.currDateNotYear = this.isToday ? formateTData((new Date().getTime() - 1000 * 60 * 60 * 24), 'date').split('-').slice(1, 3).join('-') : this.currDate.split('-').slice(1, 3).join('-')
     this.initData('init')
   },
   mounted() {
@@ -424,7 +424,7 @@ export default {
     },
     changeCurrDate() {
       this.currDate = formateTData(this.currDate, 'date')
-      this.currDateNotYear = this.currDate.split('-').slice(1, 3).join('-')
+      this.currDateNotYear = this.isToday ? formateTData((new Date().getTime() - 1000 * 60 * 60 * 24), 'date').split('-').slice(1, 3).join('-') : this.currDate.split('-').slice(1, 3).join('-')
       this.initData()
     },
     changeCurrDistrict() {
