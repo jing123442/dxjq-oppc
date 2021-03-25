@@ -164,6 +164,7 @@ export default {
         id: 'chart-id',
         class: 'charts',
         bgColor: '#ffffff',
+        mouseEvent: true,
         areaPriceList: [],
         areaPriceStatus: false,
         data: {
@@ -275,7 +276,7 @@ export default {
               },
               emphasis: {
                 show: true,
-                color: '#828282' // 字的颜色
+                color: '#f2f2f2' // 字的颜色
               }
             },
             itemStyle: {
@@ -298,7 +299,7 @@ export default {
                 }
               },
               emphasis: {
-                areaColor: 'rgba(252, 248, 240, .8)',
+                areaColor: '#97a9cc',
                 borderWidth: 0.1
               }
             },
@@ -360,7 +361,7 @@ export default {
       carrierRankActive: 1,
       orderRecent: [],
       isToday: true,
-      isRegional: false //是否是分区域
+      isRegional: false // 是否是分区域
     }
   },
   created() {
@@ -442,8 +443,12 @@ export default {
               tmpAreaList.push({
                 name: area,
                 value: index,
+                parentName: item.districtName,
                 itemStyle: {
                   areaColor: '#bdd3ff'
+                },
+                emphasis: {
+                  areaColor: '#97a9cc'
                 }
               })
             })
