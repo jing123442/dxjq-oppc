@@ -29,7 +29,7 @@ export default {
   methods: {
     handleScroll(e) {
       const eventPath = e.path
-      if(eventPath.some(this.pathCheck)) {
+      if (eventPath.some(this.pathCheck)) {
         return
       }
       const eventDelta = e.wheelDelta || -e.deltaY * 3
