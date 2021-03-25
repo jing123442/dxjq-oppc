@@ -424,8 +424,9 @@ export default {
       }
     },
     changeCurrDate() {
-      this.toDayEvent()
+      // 代码顺序不能变 先去掉时分秒再比较是否是今天，然后再根据结果判断
       this.currDate = formateTData(this.currDate, 'date')
+      this.toDayEvent()
       this.currDateNotYear = this.isToday ? formateTData((new Date().getTime() - 1000 * 60 * 60 * 24), 'date').split('-').slice(1, 3).join('-') : this.currDate.split('-').slice(1, 3).join('-')
       this.initData()
     },
