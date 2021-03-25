@@ -377,10 +377,6 @@ export default {
   },
   methods: {
     initData(type = null) {
-      // 不是切换区域操作时
-      if (type !== 'district') {
-        this.toDayEvent()
-      }
       // 初始化使用
       if (type === 'init') {
         this.getDistrictList()
@@ -426,6 +422,7 @@ export default {
       }
     },
     changeCurrDate() {
+      this.toDayEvent()
       this.currDate = formateTData(this.currDate, 'date')
       this.currDateNotYear = this.isToday ? formateTData((new Date().getTime() - 1000 * 60 * 60 * 24), 'date').split('-').slice(1, 3).join('-') : this.currDate.split('-').slice(1, 3).join('-')
       this.initData()
