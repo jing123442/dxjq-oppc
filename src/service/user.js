@@ -121,3 +121,8 @@ export async function $districtGasstationAdd (data) {
 export async function $districtGasstationDelete (data) {
   return await R({ url: 'user/district_gasstation/delete', method: 'POST', data })
 }
+
+// 注册用户详情
+export async function $userFindRegister(data) {
+  return await R({ url: 'user/user/find_register', method: 'POST', data })
+}

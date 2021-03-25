@@ -20,7 +20,7 @@
 </template>
 <script>
 import { isTypeof, initVueDataOptions, exportBlobToFiles, callbackPagesInfo } from '@/utils/tools'
-import { $userRegisterExport } from '@/service/user'
+import { $userRegisterExport, $userFindRegister } from '@/service/user'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -28,21 +28,22 @@ export default {
   data() {
     return initVueDataOptions(this, {
       queryCustURL: {
-        add: {
-          url: 'user/register_manage/add_driver',
-          method: 'post'
-        },
+        // add: {
+        //   url: 'user/register_manage/add_driver',
+        //   method: 'post'
+        // },
         list: {
-          url: 'user/register_manage/list',
+          url: 'user/user/page_list_register',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
         },
-        name: '意向个人车主'
+        name: '平台用户管理'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'download', name: '导出' }]
+      buttonsList: []
+      // buttonsList: [{ type: 'primary', icon: '', event: 'download', name: '导出' }]
     })
   },
   computed: {
@@ -83,23 +84,17 @@ export default {
           exportBlobToFiles(response, fileName)
         })
       }
+      if (type === 'detail') {
+        $userFindRegister({ userId: row.user_id }).then(res => {
+        })
+      }
     },
     onReqParams(type, _this, callback) {
-      const query = { param: { startDate: '', endDate: '' } }
+      const query = { param: {} }
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k == 'createDate') {
-            if (_this.finds.createDate === null) {
-              query.param.startDate = ''
-              query.param.endDate = ''
-            } else {
-              query.param.startDate = v[0]
-              query.param.endDate = v[1]
-            }
-          } else {
-            if (v !== '') query.param[k] = v
-          }
+          if (v !== '') query.param[k] = v
         }
       }
 

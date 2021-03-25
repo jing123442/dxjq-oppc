@@ -9,7 +9,7 @@ export default [
     redirect: '/user/userIndex',
     meta: { title: '用户管理' },
     children: [
-      { path: 'userIntention', component: inImport('user/intention'), name: 'userIntention', meta: { title: '意向个人车主', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'userRegister', component: inImport('user/intention'), name: 'userIntention', meta: { title: '平台用户管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'userIndex', component: inImport('user/index'), name: 'userIndex', meta: { title: '平台用户管理', icon: 'icon-gongnengguanli', noCache: false } }
     ]
   }
