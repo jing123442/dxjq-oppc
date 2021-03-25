@@ -5,7 +5,7 @@
     <el-dialog title="配置加气站" :visible.sync="dialogConfigVisible" width="60%" :append-to-body="true">
       <el-form size="small" :model="formConfigRow" ref="formConfig" label-position="top" v-if="dialogConfigVisible" :rules="formConfigRules">
         <el-form-item label="加气站配置" prop="fillerList" style="width: 90%;">
-          <el-transfer v-model="formConfigRow.fillerList" :titles="['加气站列表', '已选加气站']" :props="{ key: 'orgId', label: 'orgName' }" :data="fillerAllList"></el-transfer>
+          <el-transfer v-model="formConfigRow.fillerList" :filterable="true" :titles="['加气站列表', '已选加气站']" :props="{ key: 'orgId', label: 'orgName' }" :data="fillerAllList"></el-transfer>
         </el-form-item>
         <!-- 按钮 -->
         <el-form-item class="el-del-btn-item">

@@ -270,13 +270,14 @@ export default {
           },
           geo: {
             label: {
+              fontSize: 12,
               normal: {
                 show: false,
                 color: '#999999' // 字的颜色
               },
               emphasis: {
                 show: true,
-                color: '#f2f2f2' // 字的颜色
+                color: '#fff' // 字的颜色
               }
             },
             itemStyle: {
@@ -445,10 +446,10 @@ export default {
                 value: index,
                 parentName: item.districtName,
                 itemStyle: {
-                  areaColor: '#bdd3ff'
+                  areaColor: '#9db1fb'
                 },
                 emphasis: {
-                  areaColor: '#97a9cc'
+                  areaColor: '#6e88ea'
                 }
               })
             })
