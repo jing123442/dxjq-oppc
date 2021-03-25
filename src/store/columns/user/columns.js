@@ -39,8 +39,8 @@ const columns = {
     { field: 'orgId', stype: 'mapping', name: '企业名称', nameSpan: 6, mapping: 'orgName', show: { type: 'select', remote: true, findKey: 'orgName', paramKey: 'param', subField: 'orgName', ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请选择企业名称' }, rules: [{ required: true, message: '请选择企业名称！', trigger: 'blur' }] }
   ],
   intention: [
-    { field: 'id', name: '客户ID', fixed: 'left', nameSpan: 5, detail: { type: 'span', placeholder: '客户ID' } },
-    { field: 'userName', name: '客户姓名', nameSpan: 5, show: { type: 'text', placeholder: '请输入客户姓名' }, search: { type: 'text', style: 'width: 200px;', placeholder: '请输入客户姓名' }, detail: { type: 'span', placeholder: '客户姓名' }, rules: [{ required: true, message: '请输入客户姓名', trigger: 'blur' }] },
+    { field: 'userId', name: '客户ID', fixed: 'left', nameSpan: 5, detail: { type: 'span', placeholder: '客户ID' } },
+    { field: 'userName', name: '客户姓名', nameSpan: 5, show: { type: 'text', placeholder: '请输入客户姓名' }, search: { type: 'text', style: 'width: 200px;', placeholder: '请输入                                                                                                                           姓名' }, detail: { type: 'span', placeholder: '客户姓名' }, rules: [{ required: true, message: '请输入客户姓名', trigger: 'blur' }] },
     { field: 'mobile', name: '手机号', nameSpan: 5, show: { type: 'text', placeholder: '请输入手机号' }, detail: { type: 'span', placeholder: '手机号' }, search: { type: 'text', style: 'width: 200px;', placeholder: '请输入手机号' }, rules: [{ required: true, message: '请输入手机号', trigger: 'blur' }, { validator: 'isValidateMobile', message: '请输入正确格式的手机号', trigger: 'blur' }] },
     { field: 'createChannel', name: '登记渠道', nameSpan: 5, hide: true, formatter: 'channel', show: { type: 'span', model: 'select', obj: 'channel', placeholder: '请选择登记渠道', value: 1, dataType: 'number' }, detail: { type: 'span', model: 'select', obj: 'channel', placeholder: '' } },
     { field: 'status', name: '类型', nameSpan: 5, hide: true, formatter: 'status', detail: { type: 'span', model: 'select', obj: 'status', placeholder: '类型' } },
@@ -50,7 +50,7 @@ const columns = {
     { field: 'frequentGasstation', name: '常去加气站', nameSpan: 5, hide: true, show: { type: 'text', placeholder: '请输入常去加气站' }, detail: { type: 'span', placeholder: '类型' }, rules: [{ required: true, message: '请输入常去加气站', trigger: 'blur' }] },
     { field: 'fromChannel', name: '了解渠道', nameSpan: 5, hide: true, show: { type: 'text', placeholder: '请输入了解渠道' }, detail: { type: 'span', placeholder: '类型' } },
     { field: 'remark', name: '备注', nameSpan: 5, hide: true, show: { type: 'textarea', placeholder: '请输入备注' }, detail: { type: 'span', placeholder: '类型' } },
-    { field: 'createDate', name: '创建时间', nameSpan: 5, stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', style: 'width: 350px;', placeholder: '' }, detail: { type: 'span', stype: 'format', formatFun: 'formateTData all' } },
+    { field: 'createDate', name: '创建时间', nameSpan: 5, stype: 'format', formatFun: 'formateTData all', detail: { type: 'span', stype: 'format', formatFun: 'formateTData all' } },
     {
       field: 'useropts',
       stype: 'opt',
