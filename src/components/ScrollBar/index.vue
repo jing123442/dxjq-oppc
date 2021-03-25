@@ -1,5 +1,5 @@
 <template>
-  <div class="scroll-container" ref="scrollContainer" @wheel.prevent="handleScroll">
+  <div class="scroll-container" ref="scrollContainer" @wheel="handleScroll">
     <div class="scroll-wrapper" ref="scrollWrapper" :style="{top: top + 'px'}">
       <slot></slot>
     </div>
@@ -28,6 +28,10 @@ export default {
   },
   methods: {
     handleScroll(e) {
+      const eventPath = e.path
+      if(eventPath.some(this.pathCheck)) {
+        return
+      }
       const eventDelta = e.wheelDelta || -e.deltaY * 3
       const $container = this.$refs.scrollContainer
       const $containerHeight = $container.offsetHeight
@@ -44,6 +48,9 @@ export default {
           this.top = 0
         }
       }
+    },
+    pathCheck(item) {
+      return item.className == 'order-list' || item.className == 'el-scrollbar'
     }
   }
 }
