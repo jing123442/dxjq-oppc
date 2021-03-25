@@ -207,11 +207,12 @@ export default {
             tooltip: {
               padding: 0,
               borderWidth: 0,
-              backgroundColor: '#ffffff',
+              textStyle: { color: 'rgba(0, 0, 0, 0)' },
+              backgroundColor: 'rgba(0, 0, 0, 0)',
               formatter: (params, ticket, callback) => {
                 $settleStatisticsInfo({ date: this.currDate, gasstationId: params.value[3] }).then(response => {
                   const data = response.data
-                  const tmpHtml = `<div class="nt-echarts map-mark-gasstation"><div class="title">${data.gasstationName}</div><div class="tag"><div class="area-district">${data.districtName} ${data.districtRank}</div><div class="all-district">平台 ${data.allDistrictRank}</div></div><div class="number"><div><div class="sign">￥</div><div class="price">${data.actualPrice}</div></div><div class="truck"><div>${data.liveTruckTotal} 辆</div></div></div><div class="box-info"><div><div class="box-iconfont">进</div><div class="box-text">${data.gasQtyTotal} 公斤</div></div><div><div class="box-iconfont">加</div><div class="box-text">${data.storeTotal} 公斤</div></div><div><div class="box-iconfont">存</div><div class="box-text">${data.stockTotal} 公斤</div></div><div><div class="box-iconfont">途</div><div class="box-text">${data.wayTotal} 公斤</div></div></div></div>`
+                  const tmpHtml = `<div class="nt-echarts map-mark-gasstation"><div class="title">${data.gasstationName}</div><div class="tag"><div class="area-district">${data.districtName} ${data.districtRank}</div><div class="all-district">平台 ${data.allDistrictRank}</div></div><div class="number"><div><div class="sign">￥</div><div class="price">${data.actualPrice}</div></div><div class="truck"><div>${data.liveTruckTotal} 辆</div></div></div><div class="box-info"><div><div class="box-iconfont">进</div><div class="box-text">${data.storeTotal} 公斤</div></div><div><div class="box-iconfont">加</div><div class="box-text">${data.gasQtyTotal} 公斤</div></div><div><div class="box-iconfont">存</div><div class="box-text">${data.stockTotal} 公斤</div></div><div><div class="box-iconfont">途</div><div class="box-text">${data.wayTotal} 公斤</div></div></div></div>`
 
                   callback(ticket, tmpHtml)
                 })
