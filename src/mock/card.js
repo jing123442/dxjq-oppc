@@ -134,7 +134,7 @@ const nopayOrderTotal = [{
   style: '',
   list: [
     { type: 9, key: null, value: '待支付', style: '', class: 'title__size history-info__text-8' },
-    { type: 5, key: 'total', icon: require('@/assets/images/cockpit/icon-order-unpaid.png'), value: '0', style: 'colro: #FF9845;', class: 'text__size font-family__fb' },
+    { type: 5, key: 'total', icon: require('@/assets/images/cockpit/icon-order-unpaid.png'), value: '0', style: 'color: #FF9845;', class: 'text__size font-family__fb' },
     { type: 3, key: 'contrast', curr: '前一日 ', value: 0, style: '', class: 'small__size history-info__text' },
     { type: 4, key: 'rate', isNotShow: true, value: '0', sign: '%', style: '', class: 'small__size rate' }
   ]
