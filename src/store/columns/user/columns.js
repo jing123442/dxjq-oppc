@@ -59,7 +59,7 @@ const columns = {
       align: 'center',
       fixed: 'right',
       list: [
-        { type: 'details', size: 'small', icon: '', style: '', name: '详情' }
+        { type: 'detail', size: 'small', icon: '', style: '', name: '详情' }
       ]
     }
   ]
