@@ -114,7 +114,8 @@ export default {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
 
       if (_this.tableListName == 'profitLog') {
-        params.param.gasstationId = this.currRow.gasstationId
+        params.param.dateParam = {}
+        params.param.profitQuotaLog = { gasstationId: this.currRow.gasstationId }
       }
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
