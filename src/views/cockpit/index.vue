@@ -5,7 +5,11 @@
         <div class="title">大象加气 · 大数据中心 · 管理驾驶舱</div>
       </div>
       <div class="right-controller">
-        <el-date-picker class="date-picker" v-model="currDate" type="date" placeholder="选择日期" :clearable="false" @change="changeCurrDate"></el-date-picker>
+        <div class="datePick">
+          <div :class="isToday ? 'today active' : 'today'" @click="changeCurrDate('today')">今日</div>
+          <div :class="isToday ? 'yesterday' : 'yesterday active'" @click="changeCurrDate('yesterday')">昨日</div>
+        </div>
+        <!-- <el-date-picker class="date-picker" v-model="currDate" type="date" placeholder="选择日期" :clearable="false" @change="changeCurrDate"></el-date-picker> -->
         <el-select v-model="currDistrict" placeholder="全区域" class="district-select" :popper-append-to-body="false" @change="changeCurrDistrict">
           <el-option v-for="item in districtList" :key="item.districtId" :label="item.districtName" :value="item.districtId"></el-option>
         </el-select>
@@ -414,20 +418,15 @@ export default {
       this.gasstationRankActive = 1
       this.carrierRankActive = 1
     },
-    toDayEvent() {
-      const nowTimestamp = new Date(formateTData(Date.now(), 'date')).getTime()
-      const currTimestamp = new Date(this.currDate).getTime()
-      if (nowTimestamp == currTimestamp) {
-        // 今天
+    changeCurrDate(dateString) {
+      // 代码顺序不能变 先去掉时分秒再比较是否是今天，然后再根据结果判断
+      if (dateString == 'today') {
+        this.currDate = formateTData(new Date(), 'date')
         this.isToday = true
-      } else {
+      } else if (dateString == 'yesterday') {
+        this.currDate = formateTData((new Date().getTime() - 1000 * 60 * 60 * 24), 'date')
         this.isToday = false
       }
-    },
-    changeCurrDate() {
-      // 代码顺序不能变 先去掉时分秒再比较是否是今天，然后再根据结果判断
-      this.currDate = formateTData(this.currDate, 'date')
-      this.toDayEvent()
       this.currDateNotYear = this.isToday ? formateTData((new Date().getTime() - 1000 * 60 * 60 * 24), 'date').split('-').slice(1, 3).join('-') : this.currDate.split('-').slice(1, 3).join('-')
       this.initData()
     },
