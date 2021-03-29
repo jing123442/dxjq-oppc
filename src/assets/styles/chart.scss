@@ -153,6 +153,30 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
+      .datePick {
+        display: flex;
+        align-items: center;
+        .today, .yesterday {
+          margin-right: 2rem;
+          width: 10rem;
+          height: 4rem;
+          line-height: 4rem;
+          text-align: center;
+          background: #fff;
+          border: solid 1px #edf1f9;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 1.6rem;
+          &:hover {
+            background: #5b8ff9;
+            color: #fff;
+          }
+        }
+        .active {
+          background: #5b8ff9;
+          color: #fff;
+        }
+      }
       .date-picker {
         margin-right: 20px;
         width: 16rem;
