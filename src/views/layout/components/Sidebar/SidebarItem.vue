@@ -132,7 +132,7 @@ export default {
     font-size: 14px;
   }
 
-  a.router-link-active .el-menu-item i.iconfont, a.router-link-active .el-menu-item i.em-iconfont {
+  .el-menu-item.is-active i.iconfont, .el-menu-item.is-active i.em-iconfont {
     color: $navActiveTextColor;
   }
 

@@ -33,11 +33,13 @@ const app = {
     TOGGLE_SIDEBAR: state => {
       state.sidebar.opened = !state.sidebar.opened
     },
-    TOGGLE_FULL_SCREEN: (state, doc) => {
-      if (state.subPageFullScreen) {
-        document.exitFullscreen()
-      } else {
-        doc.requestFullscreen()
+    TOGGLE_FULL_SCREEN: (state, payload) => {
+      if (!payload.flag) {
+        if (state.subPageFullScreen) {
+          document.exitFullscreen()
+        } else {
+          payload.doc.requestFullscreen()
+        }
       }
       state.subPageFullScreen = !state.subPageFullScreen
     }

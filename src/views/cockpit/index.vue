@@ -376,6 +376,7 @@ export default {
   },
   mounted() {
     this.windowResize()
+    this.escEvent()
   },
   beforeDestroy() {
     if (this.orderTime) {
@@ -383,6 +384,16 @@ export default {
     }
   },
   methods: {
+    escEvent() {
+      const _this = this
+      window.onresize = function() {
+        let isFull = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement
+        if (isFull === undefined) isFull = false
+        if (!isFull) {
+          _this.$store.commit('TOGGLE_FULL_SCREEN', { doc: _this.$refs.cockpit, flag: true })
+        }
+      }
+    },
     initData(type = null) {
       // 初始化使用
       if (type === 'init') {
@@ -1081,7 +1092,7 @@ export default {
       }
     },
     subpageFullScreen() {
-      this.$store.commit('TOGGLE_FULL_SCREEN', this.$refs.cockpit)
+      this.$store.commit('TOGGLE_FULL_SCREEN', { doc: this.$refs.cockpit })
     },
     sortAarray(arr) {
       arr.length > 0 && arr.sort((x, y) => {

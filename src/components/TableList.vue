@@ -7,8 +7,12 @@
       <span class="gasQty">{{item.gasQty}}</span>
       <span class="amount">{{item.amount}}</span>
       <span class="carNumber">{{item.carNumber}}</span>
-      <span class="carrierOrgName">{{item.carrierOrgName}}</span>
-      <span class="gasstationName">{{item.gasstationName}}</span>
+      <el-tooltip class="item" effect="dark" :content="item.carrierOrgName" placement="top">
+        <span class="carrierOrgName">{{item.carrierOrgName}}</span>
+      </el-tooltip>
+      <el-tooltip class="item" effect="dark" :content="item.gasstationName" placement="top">
+        <span class="gasstationName">{{item.gasstationName}}</span>
+      </el-tooltip>
       <span :class="item.orderStatus == 1 ? 'unpaid' : item.orderStatus == 2 ? 'paid' : 'payCancel'">{{item.orderStatus == 1 ? '待支付' : item.orderStatus == 2 ? '已支付' : item.orderStatus == 3 ? '已取消' : '未知'}}</span>
     </div>
   </div>
