@@ -18,14 +18,11 @@ const select = {
     orgId: utilsDyOrgList(1)
   },
   intention: {
-    status: [
-      { value: 0, label: '未处理' },
-      { value: 1, label: '已分配' },
-      { value: 2, label: '已处理' }
-    ],
-    channel: [
-      { value: 0, label: '自主登记' },
-      { value: 1, label: '运营登记' }
+    status: utilsStatus(),
+    baseRole: utilsBaseRole(['carrier', 'driver', 'filler', 'register']),
+    sex: [
+      { value: 1, label: '男' },
+      { value: 2, label: '女' }
     ]
   }
 }

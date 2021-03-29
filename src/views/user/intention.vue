@@ -15,6 +15,7 @@
       :page_status="page_status"
       @onListEvent="onListEvent"
       @onReqParams="onReqParams"
+      @onListFormEvent="onListFormEvent"
     ></em-table-list>
   </div>
 </template>
@@ -32,6 +33,13 @@ export default {
         //   url: 'user/register_manage/add_driver',
         //   method: 'post'
         // },
+        detail: {
+          url: 'user/user/find_register',
+          parse: ['data'],
+          key: 'userId',
+          value: 'userId',
+          concat: ['user', 'userInfo']
+        },
         list: {
           url: 'user/user/page_list_register',
           method: 'post',
@@ -88,6 +96,9 @@ export default {
         $userFindRegister({ userId: row.user_id }).then(res => {
         })
       }
+    },
+    onListFormEvent(type, row) {
+      console.log(type, row)
     },
     onReqParams(type, _this, callback) {
       const query = { param: {} }

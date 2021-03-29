@@ -1,3 +1,4 @@
+/* eslint-disable */
 const columns = {
   op: [
     { field: 'userId', name: '', stype: 'checkbox', align: 'center', hide: true, fixed: 'left', width: 50 },
@@ -39,28 +40,64 @@ const columns = {
     { field: 'orgId', stype: 'mapping', name: '企业名称', nameSpan: 6, mapping: 'orgName', show: { type: 'select', remote: true, findKey: 'orgName', paramKey: 'param', subField: 'orgName', ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请选择企业名称' }, rules: [{ required: true, message: '请选择企业名称！', trigger: 'blur' }] }
   ],
   intention: [
-    { field: 'userId', name: '客户ID', fixed: 'left', nameSpan: 5, detail: { type: 'span', placeholder: '客户ID' } },
-    { field: 'userName', name: '客户姓名', nameSpan: 5, show: { type: 'text', placeholder: '请输入客户姓名' }, search: { type: 'text', style: 'width: 200px;', placeholder: '请输入                                                                                                                           姓名' }, detail: { type: 'span', placeholder: '客户姓名' }, rules: [{ required: true, message: '请输入客户姓名', trigger: 'blur' }] },
-    { field: 'mobile', name: '手机号', nameSpan: 5, show: { type: 'text', placeholder: '请输入手机号' }, detail: { type: 'span', placeholder: '手机号' }, search: { type: 'text', style: 'width: 200px;', placeholder: '请输入手机号' }, rules: [{ required: true, message: '请输入手机号', trigger: 'blur' }, { validator: 'isValidateMobile', message: '请输入正确格式的手机号', trigger: 'blur' }] },
-    { field: 'createChannel', name: '登记渠道', nameSpan: 5, hide: true, formatter: 'channel', show: { type: 'span', model: 'select', obj: 'channel', placeholder: '请选择登记渠道', value: 1, dataType: 'number' }, detail: { type: 'span', model: 'select', obj: 'channel', placeholder: '' } },
-    { field: 'status', name: '类型', nameSpan: 5, hide: true, formatter: 'status', detail: { type: 'span', model: 'select', obj: 'status', placeholder: '类型' } },
-    { field: 'address', name: '常住地址', nameSpan: 5, hide: true, show: { type: 'text', placeholder: '请输入常住地址' }, detail: { type: 'span', placeholder: '类型' }, rules: [{ required: true, message: '请输入常住地址', trigger: 'blur' }] },
-    { field: 'carrierOrgName', name: '挂靠物流公司', nameSpan: 5, hide: true, show: { type: 'text', placeholder: '请输入挂靠物流公司' }, detail: { type: 'span', placeholder: '类型' } },
-    { field: 'frequentLine', name: '常跑路线', nameSpan: 5, hide: true, show: { type: 'text', placeholder: '请输入常跑路线' }, detail: { type: 'span', placeholder: '类型' }, rules: [{ required: true, message: '请输入常跑路线', trigger: 'blur' }] },
-    { field: 'frequentGasstation', name: '常去加气站', nameSpan: 5, hide: true, show: { type: 'text', placeholder: '请输入常去加气站' }, detail: { type: 'span', placeholder: '类型' }, rules: [{ required: true, message: '请输入常去加气站', trigger: 'blur' }] },
-    { field: 'fromChannel', name: '了解渠道', nameSpan: 5, hide: true, show: { type: 'text', placeholder: '请输入了解渠道' }, detail: { type: 'span', placeholder: '类型' } },
-    { field: 'remark', name: '备注', nameSpan: 5, hide: true, show: { type: 'textarea', placeholder: '请输入备注' }, detail: { type: 'span', placeholder: '类型' } },
-    { field: 'createDate', name: '创建时间', nameSpan: 5, stype: 'format', formatFun: 'formateTData all', detail: { type: 'span', stype: 'format', formatFun: 'formateTData all' } },
     {
-      field: 'useropts',
-      stype: 'opt',
-      ispush: false,
-      name: '操作',
-      align: 'center',
-      fixed: 'right',
-      list: [
-        { type: 'detail', size: 'small', icon: '', style: '', name: '详情' }
-      ]
+      field: 'userId', name: '客户ID', fixed: 'left', nameSpan: 6,
+      detail: { type: 'span', placeholder: '客户ID', ou: 0 }
+    }, {
+      field: 'openId', name: '微信openid', nameSpan: 6, hide: true,
+      detail: { type: 'span', placeholder: '微信openid', ou: 0 }
+    }, {
+      field: 'userName', name: '姓名(昵称)', nameSpan: 6,
+      search: { type: 'text', style: 'width: 200px;', placeholder: '请输入姓名' },
+      detail: { type: 'span', placeholder: '客户姓名', ou: 0 }
+    }, {
+      field: 'baseRole', name: '类型', nameSpan: 6, hide: true, formatter: 'baseRole',
+      detail: { type: 'span', model: 'select', obj: 'baseRole', placeholder: '类型', ou: 0 }
+    }, {
+      field: 'nickname', name: '微信昵称', nameSpan: 6, hide: true,
+      detail: { type: 'span', placeholder: '微信昵称', ou: 0 }
+    }, {
+      field: 'mobile', name: '手机号', nameSpan: 6,
+      detail: { type: 'span', placeholder: '手机号', ou: 0 },
+      search: { type: 'text', style: 'width: 200px;', placeholder: '请输入手机号' },
+      rules: [{ required: true, message: '请输入手机号', trigger: 'blur' },
+        { validator: 'isValidateMobile', message: '请输入正确格式的手机号', trigger: 'blur' }]
+    }, {
+      field: 'province', name: '省份', nameSpan: 6, hide: true,
+      detail: { type: 'span', ou: 0 }
+    }, {
+      field: 'city', name: '城市', nameSpan: 6, hide: true,
+      detail: { type: 'span', placeholder: '城市', ou: 0 }
+    }, {
+      field: 'createDate', name: '注册时间', nameSpan: 6, hide: true,
+      detail: { type: 'span', stype: 'format', formatFun: 'formateTData all', ou: 0 }
+    }, {
+      field: 'lastLoginDate', name: '最后登录时间', nameSpan: 6, stype: 'format', formatFun: 'formateTData all',
+      detail: { type: 'span', stype: 'format', formatFun: 'formateTData all', ou: 0 }
+    }, {
+      field: 'status', name: '状态', formatter: 'status', nameSpan: 6, width: 80,
+      detail: { type: 'span', model: 'select', obj: 'status', ou: 0 }
+    }, {
+      field: 'sex', name: '性别', nameSpan: 6, hide: true,
+      detail: { type: 'span', placeholder: '性别', model: 'select', obj: 'sex', ou: 0 }
+    }, {
+      field: 'realname', name: '姓名', nameSpan: 6, hide: true,
+      detail: { type: 'span', model: 'select', obj: 'sex', ou: 1 }
+    }, {
+      field: 'idcardNo', name: '身份证号', nameSpan: 6, hide: true,
+      detail: { type: 'span', placeholder: '性别', model: 'select', obj: 'sex', ou: 1 }
+    }, {
+      field: 'authDate', name: '身份认证时间', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 3, hide: true,
+      detail: { type: 'span', placeholder: '性别', model: 'select', style: 'width: 40.7%;', obj: 'sex', ou: 1 }
+    }, {
+      field: 'idcardFaceUrl', name: '身份证人物面', nameSpan: 6, hide: true,
+      detail: { type: 'span', model: 'img',vague: true, vagueURL: 'https://dwx.auyen.com/image/M00/00/1D/rB86LWBZqO6AKVymAAI6B_tpya0232.png', ou: 1 }
+    }, {
+      field: 'idcardBackUrl', name: '身份证国徽面', nameSpan: 6, hide: true,
+      detail: { type: 'span', model: 'img',vague: true, vagueURL: 'image/M00/00/1D/rB86LWBZqO6AKVymAAI6B_tpya0232.png', ou: 1 }
+    }, {
+      field: 'useropts', stype: 'opt', ispush: false, name: '操作', align: 'center', fixed: 'right',
+      list: [{ type: 'detail', size: 'small', icon: '', style: '', name: '详情' }]
     }
   ]
 }
