@@ -29,6 +29,7 @@ export function utilsBaseRole(arrs) {
     { value: 0, label: '其他' },
     { value: 1, label: '平台管理员' },
     { value: 2, label: '平台运营人员' },
+    { value: 'register', label: '平台用户' },
     { value: 'filler', label: '加气企业管理者' },
     { value: 'cashier', label: '收银员' },
     { value: 'carrier', label: '物流公司管理者' },
