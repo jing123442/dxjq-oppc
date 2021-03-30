@@ -386,12 +386,14 @@ export default {
   methods: {
     escEvent() {
       const _this = this
-      window.onresize = function() {
+      window.onresize = function(e) {
         let isFull = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement
         if (isFull === undefined) isFull = false
-        if (!isFull) {
-          _this.$store.commit('TOGGLE_FULL_SCREEN', { doc: _this.$refs.cockpit, flag: true })
-        }
+        setTimeout(() => {
+          if (!isFull && _this.$store.state.app.subPageFullScreen) {
+            _this.$store.commit('TOGGLE_FULL_SCREEN', { doc: _this.$refs.cockpit, flag: true })
+          }
+        }, 0)
       }
     },
     initData(type = null) {
@@ -1092,7 +1094,7 @@ export default {
       }
     },
     subpageFullScreen() {
-      this.$store.commit('TOGGLE_FULL_SCREEN', { doc: this.$refs.cockpit })
+      this.$store.commit('TOGGLE_FULL_SCREEN', { doc: this.$refs.cockpit, flag: false })
     },
     sortAarray(arr) {
       arr.length > 0 && arr.sort((x, y) => {
