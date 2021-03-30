@@ -742,24 +742,23 @@ export default {
           },
           data: {
             series: [{
-              name: '进气量(公斤)',
+              name: '加气量(公斤)',
               type: 'bar',
               stack: '堆叠',
+              field: 'gasOrderTotal',
+              data: []
+            }, {
+              name: '进气量(公斤)',
+              type: 'bar',
               showBackground: true,
               field: 'storeTotal',
+              stack: '堆叠',
               data: []
             },
             {
               name: '存量(公斤)',
               type: 'bar',
               field: 'stockTotal',
-              data: []
-            },
-            {
-              name: '加气量(公斤)',
-              type: 'bar',
-              field: 'gasOrderTotal',
-              stack: '堆叠',
               data: []
             }]
           }
