@@ -296,6 +296,51 @@
           background: url('../../assets/images/cockpit/icon-arch-in.png') no-repeat center 10%/92%, url('../../assets/images/cockpit/icon-arch-out.png') no-repeat center 0/100%;
         }
       }
+      .table-list-all {
+        height: 19.5rem;
+      }
+      .table-list-paid {
+        height: 36rem;
+      }
+      .order-title {
+        width: 78.4rem;
+        margin: 1.5rem auto;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        .title-word {
+          font-family: AGENCYFB_0;
+          font-size: 2rem;
+          color: #333;
+          font-weight: 600;
+        }
+        .yesterday-order-num {
+          margin-bottom: .2rem;
+          margin: 0 1rem;
+          color:rgba(20,18,31,0.5);
+          font-size: 1.4rem;
+          align-self: flex-end;
+        }
+        .rate {
+          padding-bottom: .5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          align-self: flex-end;
+          background: #C2C4D1;
+          padding: 0 5px;
+          height: 1.5rem;
+          width: fit-content;
+          font-size: 1.4rem;
+          color: #fff;
+          &.up {
+            background-color: #E86452;
+          }
+          &.down {
+            background-color: #41CC7C;
+          }
+        }
+      }
     }
   }
   .block-echarts {
@@ -392,4 +437,8 @@
   .chart01_bar {
     width: 600px;
   }
+}
+.bg-white {
+  background: #fff;
+  border-radius: 8px;
 }
