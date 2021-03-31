@@ -28,6 +28,7 @@ export default {
   },
   methods: {
     handleScroll(e) {
+      console.log(e)
       const eventPath = e.path
       if (eventPath.some(this.pathCheck)) {
         return
@@ -50,7 +51,7 @@ export default {
       }
     },
     pathCheck(item) {
-      return item.className == 'order-list' || item.className == 'el-scrollbar'
+      return item.className == 'el-scrollbar'
     }
   }
 }
