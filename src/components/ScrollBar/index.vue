@@ -28,7 +28,6 @@ export default {
   },
   methods: {
     handleScroll(e) {
-      console.log(e)
       const eventPath = e.path
       if (eventPath.some(this.pathCheck)) {
         return
