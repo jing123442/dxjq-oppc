@@ -119,7 +119,7 @@ const columns = {
       detail: { type: 'span', name: '卡车名称', serial: 2, ou: 0 },
       rules: [{ required: true, message: '请输入卡车品牌', trigger: 'blur' }] },
     { field: 'carNumber', name: '车牌号',
-      show: { type: 'text', style: 'width: 90%;', placeholder: '请输入车牌号' },
+      show: { type: 'text', style: 'width: 90%;', placeholder: '请输入车牌号', isDisabled: true },
       search: { type: 'text', placeholder: '请输入车牌号' },
       detail: { type: 'span', serial: 1, ou: 0 },
       rules: [{ required: true, message: '请输入车牌号', trigger: 'blur' }] },

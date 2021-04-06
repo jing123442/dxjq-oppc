@@ -33,7 +33,7 @@ export default {
     padding: 1rem 0;
     overflow-y: auto;
     width: 83.5rem;
-    height: 19.5rem;
+    height: 100%;
     background: #fff;
     border-radius: 8px;
     .order-data-available {

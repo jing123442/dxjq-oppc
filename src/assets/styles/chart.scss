@@ -137,7 +137,8 @@
   background: #edf1f9;
   min-width: 1300px;
   .tool-bar {
-    margin: 3.3rem 4.6rem;
+    margin: 3.3rem auto;
+    width: 183rem;
     height: 3.8rem;
     display: flex;
     justify-content: space-between;
@@ -295,6 +296,52 @@
           background: url('../../assets/images/cockpit/icon-arch-in.png') no-repeat center 10%/92%, url('../../assets/images/cockpit/icon-arch-out.png') no-repeat center 0/100%;
         }
       }
+      .table-list-all {
+        height: 19.5rem;
+      }
+      .table-list-paid {
+        height: 35.8rem;
+      }
+      .order-title {
+        width: 78.4rem;
+        margin: 3rem auto;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        .title-word {
+          font-family: AGENCYFB_0;
+          font-size: 2.4rem;
+          color: #333;
+          font-weight: 600;
+        }
+        .yesterday-order-num {
+          margin-bottom: .2rem;
+          margin: 0 1rem;
+          color:rgba(20,18,31,0.5);
+          font-size: 1.4rem;
+          align-self: flex-end;
+        }
+        .rate {
+          padding-bottom: .5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          align-self: flex-end;
+          background: #C2C4D1;
+          padding: 0 5px;
+          height: 1.8rem;
+          width: fit-content;
+          font-size: 1.2rem;
+          color: #fff;
+          &.up {
+            background-color: #E86452;
+          }
+          &.down {
+            background-color: #41CC7C;
+          }
+        }
+      }
     }
   }
   .block-echarts {
@@ -391,4 +438,8 @@
   .chart01_bar {
     width: 600px;
   }
+}
+.bg-white {
+  background: #fff;
+  border-radius: 8px;
 }

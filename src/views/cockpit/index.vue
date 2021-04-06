@@ -48,7 +48,7 @@
           </div>
         </nt-charts>
       </div>
-      <div class="block-first-right">
+      <div class="block-first-right" v-if="1 == 2">
         <div class="order-settle">
           <nt-card :data="cardsData.orderTotal" :options="cards.orderTotal" :isNotShow="isToday" :myClass="'justify-content__center align-items__center settle-item'"></nt-card>
           <nt-card :data="cardsData.nopayOrderTotal" :options="cards.nopayOrderTotal" :isNotShow="isToday" :myClass="'justify-content__center align-items__center settle-item'"></nt-card>
@@ -56,7 +56,20 @@
           <nt-card :data="cardsData.cancelOrderTotal" :options="cards.cancelOrderTotal" :isNotShow="isToday" :myClass="'justify-content__center align-items__center settle-item'"></nt-card>
         </div>
         <!--实时订单信息-->
-        <table-list :data="orderRecent"></table-list>
+        <div class="table-list-all">
+          <table-list :data="orderRecent"></table-list>
+        </div>
+      </div>
+      <div class="block-first-right bg-white" v-else-if="1 == 1">
+        <div class="order-title">
+          <div class="title-word">已支付订单 ( {{cardsData.successOrderTotal.total}} )</div>
+          <span class="yesterday-order-num">前一日 {{cardsData.successOrderTotal.contrast}}</span>
+          <span :class="rateBGColor(cardsData.successOrderTotal.rate) + ' rate'" v-if="!isToday">{{rateJudge(cardsData.successOrderTotal.rate)}}</span>
+        </div>
+         <!--实时订单信息-->
+         <div class="table-list-paid">
+          <table-list :data="orderRecent"></table-list>
+         </div>
       </div>
     </div>
     <div class="block-echarts">
@@ -386,12 +399,14 @@ export default {
   methods: {
     escEvent() {
       const _this = this
-      window.onresize = function() {
+      window.onresize = function(e) {
         let isFull = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement
         if (isFull === undefined) isFull = false
-        if (!isFull) {
-          _this.$store.commit('TOGGLE_FULL_SCREEN', { doc: _this.$refs.cockpit, flag: true })
-        }
+        setTimeout(() => {
+          if (!isFull && _this.$store.state.app.subPageFullScreen) {
+            _this.$store.commit('TOGGLE_FULL_SCREEN', { doc: _this.$refs.cockpit, flag: true })
+          }
+        }, 0)
       }
     },
     initData(type = null) {
@@ -726,7 +741,7 @@ export default {
       $findGasstationStockSum({ date: this.currDate, districtId: this.currDistrict }).then(res => {
         this.ec02BarOptions = {
           tooltip: {
-            formatter: (data) => this.formatterEchartTooltip(data)
+            formatter: (data) => this.formatterEchartTooltip(data, ['存量(公斤)'])
           },
           grid: {
             left: '13%',
@@ -740,24 +755,23 @@ export default {
           },
           data: {
             series: [{
-              name: '进气量(公斤)',
+              name: '加气量(公斤)',
               type: 'bar',
               stack: '堆叠',
+              field: 'gasOrderTotal',
+              data: []
+            }, {
+              name: '进气量(公斤)',
+              type: 'bar',
               showBackground: true,
               field: 'storeTotal',
+              stack: '堆叠',
               data: []
             },
             {
               name: '存量(公斤)',
               type: 'bar',
               field: 'stockTotal',
-              data: []
-            },
-            {
-              name: '加气量(公斤)',
-              type: 'bar',
-              field: 'gasOrderTotal',
-              stack: '堆叠',
               data: []
             }]
           }
@@ -1092,7 +1106,7 @@ export default {
       }
     },
     subpageFullScreen() {
-      this.$store.commit('TOGGLE_FULL_SCREEN', { doc: this.$refs.cockpit })
+      this.$store.commit('TOGGLE_FULL_SCREEN', { doc: this.$refs.cockpit, flag: false })
     },
     sortAarray(arr) {
       arr.length > 0 && arr.sort((x, y) => {
@@ -1167,6 +1181,28 @@ export default {
           this.findLatestGasorders()
         }, 10000)
       }
+    },
+    rateBGColor(rate) {
+      const val = parseFloat(rate)
+      if (val > 0) {
+        return 'up'
+      } else if (val < 0) {
+        return 'down'
+      } else {
+        return ''
+      }
+    },
+    rateJudge(rate) {
+      let sign = ''
+      const val = parseFloat(rate)
+      if (val > 0) {
+        sign = '↗'
+      } else if (val < 0) {
+        sign = '↘'
+      } else {
+        return 0
+      }
+      return sign + Math.abs(val) + '%'
     }
   }
 }
