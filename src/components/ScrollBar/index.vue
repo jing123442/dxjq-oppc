@@ -50,7 +50,7 @@ export default {
       }
     },
     pathCheck(item) {
-      return item.className == 'order-list' || item.className == 'el-scrollbar'
+      return item.className == 'el-scrollbar'
     }
   }
 }
