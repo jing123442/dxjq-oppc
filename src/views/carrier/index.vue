@@ -8,10 +8,10 @@
       </div>
       <el-tabs v-model="active" type="card" @tab-click="handleClick">
         <el-tab-pane label="一证" name="2" :disabled="tabDisabled">
-          <nt-form ref="addGap" v-if="active == 2 && dialogAddGasStationVisible" :rowData="authRow" :modeList="mode_list_gasstation" :pageColumn="auth_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
+          <nt-form ref="addGap" v-if="active == 2 && dialogAddGasStationVisible" :rowData="authRow" :inputType="inputType" :modeList="mode_org_manage" :pageColumn="auth_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
         </el-tab-pane>
         <el-tab-pane label="三证" name="1" :disabled="tabDisabled">
-          <nt-form ref="addGap" v-if="active == 1 && dialogAddGasStationVisible" :rowData="authRow" :modeList="mode_list_gasstation" :pageColumn="auth_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
+          <nt-form ref="addGap" v-if="active == 1 && dialogAddGasStationVisible" :rowData="authRow" :inputType="inputType" :modeList="mode_org_manage" :pageColumn="auth_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
@@ -68,7 +68,7 @@
 import { initVueDataOptions, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles, isTypeof, toolsFileHeaders, formatDate } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
-import { $userOrgAdd, $userOrgEdit } from '@/service/user'
+import { $userOrgAdd, $userOrgEdit, $userFindOrgAdmin, $userOrgPicList } from '@/service/user'
 import { $strategyTruckAdd, $importDownloadFile, $exportDataFile } from '@/service/strategy'
 
 export default {
@@ -81,7 +81,7 @@ export default {
       authColor: 'off',
       queryCustURL: {
         list: {
-          url: 'user/org/list',
+          url: 'user/org/page_list_carrier',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -109,9 +109,11 @@ export default {
       page_column: 'carrier_logistics_column',
       page_column_addCar: 'carrier_addCar_column',
       select_list: 'carrier_logistics_select_list',
-      page_auth_column: 'filler_auth_column',
-      page_s_auth_column: 'filler_s_auth_column',
-      mode_list_gasstation: 'filler_gasstation_mode_list',
+      page_auth_column: 'common_org_auth_column',
+      page_s_auth_column: 'common_org_s_auth_column',
+      page_auth_other_column: 'common_org_auth_other_column',
+      page_auth_carrier_column: 'common_org_auth_carrier_column',
+      mode_org_manage: 'carrier_org_manage_mode_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -121,7 +123,7 @@ export default {
     this.headers = toolsFileHeaders(this)
   },
   methods: {
-    onListEvent(type, row) {
+    async onListEvent(type, row) {
       row._btn = {}
       if (type === 'import') {
         // 批量导入车辆
@@ -153,8 +155,48 @@ export default {
           }
         } else {
           this.authRow._btn = custFormBtnList(1)
+          this.orgAuthList(row)
         }
       }
+    },
+    async orgAuthList(row) {
+      // 管理员信息
+      const adminData = await $userFindOrgAdmin({ orgId: row.orgId }).then(response => {
+        return response.data
+      })
+      const adminInfo = []
+      adminData.forEach(item => {
+        adminInfo.push(item.userName + '/' + item.mobile)
+      })
+      this.authRow.manageInfo = adminInfo.join(',')
+
+      // 认证图片信息
+      const params = {
+        picTypes: [1, 8, 9, 11],
+        orgId: row.orgId
+      }
+      var pathUrl = this.$store.state.file.fileHost
+      const picList = await $userOrgPicList(params).then(res => {
+        return res.data
+      })
+      picList.forEach(item => {
+        const keyList = { key: '', time: '' }
+        if (item.picType == 1) {
+          keyList.key = 'yyzzPic'
+          keyList.time = 'yyzzPicDate'
+        } else if (item.picType == 8) {
+          keyList.key = 'sfzrlPic'
+          keyList.time = 'sfzrlPicDate'
+        } else if (item.picType == 9) {
+          keyList.key = 'sfzghPic'
+          keyList.time = 'sfzghPicDate'
+        } else if (item.picType == 11) {
+          keyList.key = 'dlysPic'
+          keyList.time = 'dlysPicDate'
+        }
+        this.authRow[keyList.key] = pathUrl + item.picPath
+        this.authRow[keyList.time] = item.updateDate
+      })
     },
     exportCarEvent(row) {
       this.exportCarRow._btn = custFormBtnList()
@@ -169,18 +211,20 @@ export default {
       this.dialogAddCarVisible = true
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { org: { orgType: 2 }, dateParam: { createDateFrom: '', createDateTo: '' } } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { org: { orgType: 2 }, dateFrom: '', dateTo: '' } })
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (k == 'authDate') {
             if (_this.finds.authDate === null) {
-              params.param.dateParam.createDateFrom = ''
-              params.param.dateParam.createDateTo = ''
+              params.param.dateFrom = ''
+              params.param.dateTo = ''
             } else {
-              params.param.dateParam.createDateFrom = v[0]
-              params.param.dateParam.createDateTo = v[1]
+              params.param.dateFrom = v[0]
+              params.param.dateTo = v[1]
             }
+          } else if (k == 'keyword') {
+            if (v !== '') params.param[k] = v
           } else {
             if (v !== '') params.param.org[k] = v
           }
@@ -249,19 +293,14 @@ export default {
       if (this.currType == 'cert' || this.currType == 'self_detail') {
         this.tabDisabled = true
         this.isAuthInfo = true
-        this.auth_page_column.forEach(item => {
-          if (item.show && item.show.type != 'hide') {
-            item.show.isDisabled = true
-          }
-        })
+        this.inputType = 'detail'
+        if (this.currType == 'self_detail') {
+          this.auth_page_column = [...this.auth_page_column, ...this.page_auth_other_column, ...this.page_auth_carrier_column]
+        }
       } else {
         this.tabDisabled = false
         this.isAuthInfo = false
-        this.auth_page_column.forEach(item => {
-          if (item.show && item.show.type != 'hide') {
-            item.show.isDisabled = false
-          }
-        })
+        this.inputType = 'show'
       }
     },
     onFormEvent(obj, row) {

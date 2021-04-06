@@ -230,7 +230,8 @@ export function initVueDataOptions(_this, options) {
     buttonsList: [],
     formBtnList: custFormBtnList(),
     queryParams: Function,
-    queryCustURL: {}
+    queryCustURL: {},
+    inputType: 'show'
   }
 
   if (options && isTypeof(options) === 'object') {

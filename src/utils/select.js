@@ -261,6 +261,14 @@ export function utilsModifyApplyType() {
   ]
 }
 
+export function utilsContractStatus() {
+  return [
+    { value: 1, label: '未签约' },
+    { value: 2, label: '已签约' },
+    { value: 3, label: '已取消' }
+  ]
+}
+
 export function utilsBearType() {
   return [
     { value: 1, label: '加气站承担' },
@@ -415,4 +423,18 @@ export function utilsBankList() {
       size: 10
     }
   }
+}
+
+// select转table的filters
+export function utilsTableOptionsToFilters(func, props = { text: 'label' }) {
+  // eslint-disable-next-line no-eval
+  const optionList = eval('(' + func + ')')()
+
+  optionList.forEach(item => {
+    for (const [k, v] of Object.entries(props)) {
+      item[k] = item[v]
+    }
+  })
+
+  return optionList
 }

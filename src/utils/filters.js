@@ -1,4 +1,5 @@
 import { formatDate, formateTData as formateTSData } from '@/utils/tools'
+import { utilsContractStatus } from '@/utils/select'
 
 // 如果要使用filters，该函数必须有
 const vueFiltersInit = (value, item, scope) => {
@@ -30,6 +31,11 @@ const formatGwayPrice = value => {
 const tableStatusToLabel = value => {
   if (value) return '已签约'
   else return '未签约'
+}
+
+const tableContractStatusToLabel = value => {
+  if (value === 2) return '<a>已签约</a>'
+  return utilsContractStatus[value]
 }
 
 // 单位转换 * 1000
@@ -111,5 +117,6 @@ export {
   tableStatusToLabel,
   formatCardNumber,
   truckToDriverList,
-  roleList
+  roleList,
+  tableContractStatusToLabel
 }

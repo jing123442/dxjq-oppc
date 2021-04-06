@@ -4,6 +4,11 @@ export async function $verifySendMessage (data) {
   return await R({ url: 'message/verify_code/send', data })
 }
 
+// 短信验证
+export async function $checkVerifyCode (data) {
+  return await R({ url: 'message/verify/code', data })
+}
+
 // 增加分类信息
 export async function $addQACatalogs (data) {
   return await R({ url: 'message/qa_catalogs/add', data })
@@ -52,6 +57,7 @@ export async function $printerStatus (data) {
 export async function $printerDel (data) {
   return await R({ url: 'message/printer/del', data })
 }
+
 export async function $messageDel (data) {
   return await R({ url: 'message/mc_message/del_batch', data })
 }

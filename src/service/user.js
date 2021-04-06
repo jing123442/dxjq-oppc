@@ -126,3 +126,8 @@ export async function $districtGasstationDelete (data) {
 export async function $userFindRegister(data) {
   return await R({ url: 'user/user/find_register', method: 'POST', data })
 }
+
+// 获取企业管理员信息
+export async function $userFindOrgAdmin(data) {
+  return await R({ url: 'user/user/find_org_admin', method: 'POST', data })
+}

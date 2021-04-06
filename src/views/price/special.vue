@@ -24,17 +24,22 @@
             </div>
           </template>
         </el-table-column>
+        <el-table-column prop="level" label="星级">
+          <template slot-scope="scope">
+            <el-rate v-model="scope.row['level']" :max="3" disabled score-template="{value}"></el-rate>
+          </template>
+        </el-table-column>
         <el-table-column prop="startPrice" label="优惠金额(元/吨)">
           <template slot-scope="scope">
             <el-input v-model="scope.row['rebate']" :clearable="true" autocomplete="off"></el-input>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="130">
+        <!--<el-table-column label="操作" width="130">
           <template slot-scope="scope">
             <el-button type="text" v-if="scope.$index != rebateDialogData.length - 1 && scope.$index != 0" style="font-size: 12px;padding: 0 10px;" @click="deleteTable( scope )">删除</el-button>
             <el-button type="text" v-if="scope.$index == rebateDialogData.length - 2" style="font-size: 12px;padding: 0 10px;" @click="addTable( scope.row )">增加</el-button>
           </template>
-        </el-table-column>
+        </el-table-column>-->
       </el-table>
       <!-- 按钮 -->
       <div class="el-del-btn-item">
@@ -62,7 +67,7 @@ export default {
     return initVueDataOptions(this, {
       loading: false,
       nextTick: false,
-      rangeSign: ' ≤ X < ',
+      rangeSign: ' < X ≤ ',
       lastRangeSign: ' X ≥ ',
       dialogConfigRebateVisible: false,
       dialogPriceLogVisible: false,

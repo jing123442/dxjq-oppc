@@ -10,6 +10,7 @@ export default [
     meta: { title: '物流公司管理' },
     children: [
       { path: 'carrierIndex', component: inImport('carrier/index'), name: 'carrierIndex', meta: { title: '物流公司列表', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'carrierAuth', component: inImport('carrier/carrierAuth'), name: 'carrierAuth', meta: { title: '待审核企业', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'logisticsAccountManager', component: inImport('carrier/logisticsAccountManager'), name: 'logisticsAccountManager', meta: { title: '公司资金账户', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'vehicleManager', component: inImport('carrier/vehicleManager'), name: 'vehicleManager', meta: { title: '车辆列表', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'truckAccountManager', component: inImport('carrier/truckAccountManager'), name: 'truckAccountManager', meta: { title: '车辆资金账户', icon: 'icon-gongnengguanli', noCache: false } },

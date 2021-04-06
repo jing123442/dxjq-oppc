@@ -1,4 +1,6 @@
 /* eslint-disable */
+import file from '../../modules/file';
+
 const columns = {
   op: [
     { field: 'userId', name: '', stype: 'checkbox', align: 'center', hide: true, fixed: 'left', width: 50 },
@@ -91,10 +93,10 @@ const columns = {
       detail: { type: 'span', placeholder: '性别', model: 'select', style: 'width: 40.7%;', obj: 'sex', ou: 1 }
     }, {
       field: 'idcardFaceUrl', name: '身份证人物面', nameSpan: 6, hide: true,
-      detail: { type: 'span', model: 'img',vague: true, vagueURL: 'https://dwx.auyen.com/image/M00/00/1D/rB86LWBZqO6AKVymAAI6B_tpya0232.png', ou: 1 }
+      detail: { type: 'span', model: 'img',vague: true, vagueType: 'style', ou: 1, fileHost: file.state.fileHost }
     }, {
       field: 'idcardBackUrl', name: '身份证国徽面', nameSpan: 6, hide: true,
-      detail: { type: 'span', model: 'img',vague: true, vagueURL: 'image/M00/00/1D/rB86LWBZqO6AKVymAAI6B_tpya0232.png', ou: 1 }
+      detail: { type: 'span', model: 'img',vague: true, vagueType: 'style', ou: 1 }
     }, {
       field: 'useropts', stype: 'opt', ispush: false, name: '操作', align: 'center', fixed: 'right',
       list: [{ type: 'detail', size: 'small', icon: '', style: '', name: '详情' }]

@@ -12,8 +12,6 @@ const getters = {
   filler_firmList_select_list: item => select.firmList,
   // 加气站企业列表---添加加气站
   filler_gasstation_mode_list: item => app.mode.gasstation,
-  filler_auth_column: item => columns.fillerAuth,
-  filler_s_auth_column: item => columns.fillerSAuth,
   filler_user_column: item => columns.fillerUser,
   // 加气站列表
   filler_info_mode_list: item => app.mode.info,
