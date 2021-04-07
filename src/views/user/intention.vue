@@ -77,11 +77,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      page_column: 'user_intention_column',
-      mode_list: 'user_intention_mode_list',
-      page_status: 'user_intention_page_status',
+      page_column: 'common_user_intention_column',
+      mode_list: 'common_user_intention_mode_list',
+      page_status: 'common_user_intention_page_status',
       page_business_column: 'user_business_column',
-      select_list: 'user_intention_select_list',
+      select_list: 'common_user_intention_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success',

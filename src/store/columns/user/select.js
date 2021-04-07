@@ -16,14 +16,6 @@ const select = {
     baseRole: utilsBaseRole(['filler', 'cashier']),
     status: utilsStatus(),
     orgId: utilsDyOrgList(1)
-  },
-  intention: {
-    status: utilsStatus(),
-    baseRole: utilsBaseRole(['carrier', 'driver', 'filler', 'register']),
-    sex: [
-      { value: 1, label: '男' },
-      { value: 2, label: '女' }
-    ]
   }
 }
 

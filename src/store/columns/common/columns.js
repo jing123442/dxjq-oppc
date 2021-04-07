@@ -1,3 +1,6 @@
+import file from '../../modules/file'
+
+/* eslint-disable */
 const columns = {
   orgOAuth: [
     { field: 'taxpayer', name: '统一社会信用代码', nameSpan: 6, show: { type: 'text', ou: 1 }, detail: { type: 'span', ou: 1 } }
@@ -45,7 +48,73 @@ const columns = {
     { field: 'sfzghPic', name: '法人身份证国徽面', nameSpan: 6, detail: { type: 'span', ou: 4 } },
     { field: 'dlysPic', name: '道路运输许可证', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4 } },
     { field: 'dlysPicDate', name: '道路运输许可证认证时间', nameSpan: 6, detail: { type: 'span', ou: 4 } }
-  ]
+  ],
+  // 用户信息
+  userBaseInfo: [
+    {
+      field: 'userId', name: '客户ID', fixed: 'left', nameSpan: 6,
+      detail: { type: 'span', placeholder: '客户ID', ou: 0 }
+    }, {
+      field: 'openId', name: '微信openid', nameSpan: 6, hide: true,
+      detail: { type: 'span', placeholder: '微信openid', ou: 0 }
+    }, {
+      field: 'userName', name: '姓名(昵称)', nameSpan: 6,
+      search: { type: 'text', style: 'width: 200px;', placeholder: '请输入姓名' },
+      detail: { type: 'span', placeholder: '客户姓名', ou: 0 }
+    }, {
+      field: 'baseRole', name: '类型', nameSpan: 6, hide: true, formatter: 'baseRole',
+      detail: { type: 'span', model: 'select', obj: 'baseRole', placeholder: '类型', ou: 0 }
+    }, {
+      field: 'nickname', name: '微信昵称', nameSpan: 6, hide: true,
+      detail: { type: 'span', placeholder: '微信昵称', ou: 0 }
+    }, {
+      field: 'mobile', name: '手机号', nameSpan: 6,
+      detail: { type: 'span', placeholder: '手机号', ou: 0 },
+      search: { type: 'text', style: 'width: 200px;', placeholder: '请输入手机号' },
+      rules: [{ required: true, message: '请输入手机号', trigger: 'blur' },
+        { validator: 'isValidateMobile', message: '请输入正确格式的手机号', trigger: 'blur' }]
+    }, {
+      field: 'province', name: '省份', nameSpan: 6, hide: true,
+      detail: { type: 'span', ou: 0 }
+    }, {
+      field: 'city', name: '城市', nameSpan: 6, hide: true,
+      detail: { type: 'span', placeholder: '城市', ou: 0 }
+    }, {
+      field: 'createDate', name: '注册时间', nameSpan: 6, hide: true,
+      detail: { type: 'span', stype: 'format', formatFun: 'formateTData all', ou: 0 }
+    }, {
+      field: 'lastLoginDate', name: '最后登录时间', nameSpan: 6, stype: 'format', formatFun: 'formateTData all',
+      detail: { type: 'span', stype: 'format', formatFun: 'formateTData all', ou: 0 }
+    }, {
+      field: 'status', name: '状态', formatter: 'status', nameSpan: 6, width: 80,
+      detail: { type: 'span', model: 'select', obj: 'status', ou: 0 }
+    }, {
+      field: 'sex', name: '性别', nameSpan: 6, hide: true,
+      detail: { type: 'span', placeholder: '性别', model: 'select', obj: 'sex', ou: 0 }
+    }
+  ],
+  userAuthInfo: [
+    {
+      field: 'realname', name: '姓名', nameSpan: 6, hide: true,
+      detail: { type: 'span', model: 'select', obj: 'sex', ou: 1 }
+    }, {
+      field: 'idcardNo', name: '身份证号', nameSpan: 6, hide: true,
+      detail: { type: 'span', placeholder: '性别', model: 'select', obj: 'sex', ou: 1 }
+    }, {
+      field: 'authDate', name: '身份认证时间', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 3, hide: true,
+      detail: { type: 'span', placeholder: '性别', model: 'select', style: 'width: 40.7%;', obj: 'sex', ou: 1 }
+    }, {
+      field: 'idcardFaceUrl', name: '身份证人物面', nameSpan: 6, hide: true,
+      detail: { type: 'span', model: 'img',vague: true, vagueType: 'style', ou: 1, fileHost: file.state.fileHost }
+    }, {
+      field: 'idcardBackUrl', name: '身份证国徽面', nameSpan: 6, hide: true,
+      detail: { type: 'span', model: 'img',vague: true, vagueType: 'style', ou: 1 }
+    }
+  ],
+  userIntentionOptsInfo: [{
+      field: 'useropts', stype: 'opt', ispush: false, name: '操作', align: 'center', fixed: 'right',
+      list: [{ type: 'detail', size: 'small', icon: '', style: '', name: '详情' }]
+  }]
 }
 
 export default columns
