@@ -131,3 +131,13 @@ export async function $userFindRegister(data) {
 export async function $userFindOrgAdmin(data) {
   return await R({ url: 'user/user/find_org_admin', method: 'POST', data })
 }
+
+// 企业信息认证和驳回
+export async function $userOrgPicAudit(data) {
+  return await R({ url: 'user/org_pic/audit', method: 'POST', data })
+}
+
+// 企业状态修改
+export async function $userOrgEnterStatus(data) {
+  return await R({ url: 'user/org/enter_status_edit', method: 'POST', data })
+}

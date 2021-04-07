@@ -25,10 +25,14 @@ const columns = {
     { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 }, detail: { type: 'span', model: 'select', ou: 2, obj: 'status' } },
     { field: 'authDate', name: '认证时间', nameSpan: 6, detail: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } }
   ],
-  orgAuthOther: [
-    { field: 'manageInfo', name: '管理员', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 3, detail: { type: 'span', ou: 3, style: 'width: 97.5%' } },
+  orgAuthManageInfo: [
+    { field: 'manageInfo', name: '管理员', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 3, detail: { type: 'span', ou: 3, style: 'width: 97.5%' } }
+  ],
+  orgAuthContractInfo: [
     { field: 'contractStatus', name: '合同状态', nameSpan: 6, detail: { type: 'span', ou: 5, stype: 'format', formatFun: 'tableContractStatusToLabel' } },
-    { field: 'contractDate', name: '签约完成时间', nameSpan: 6, detail: { type: 'span', ou: 5 } },
+    { field: 'contractDate', name: '签约完成时间', nameSpan: 6, detail: { type: 'span', ou: 5 } }
+  ],
+  orgAuthOther: [
     { field: 'bindPhone', name: '提现手机号绑定', nameSpan: 6, detail: { type: 'span', ou: 6 } },
     { field: 'contractNo', name: '提现协议', nameSpan: 6, detail: { type: 'span', ou: 6, stype: 'format', formatFun: 'tableStatusToLabel' } },
     { field: 'protocolNo', name: '转账协议', nameSpan: 6, detail: { type: 'span', ou: 6, stype: 'format', formatFun: 'tableStatusToLabel' } }

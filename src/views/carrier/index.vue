@@ -112,7 +112,6 @@ export default {
       page_auth_column: 'common_org_auth_column',
       page_s_auth_column: 'common_org_s_auth_column',
       page_auth_other_column: 'common_org_auth_other_column',
-      page_auth_carrier_column: 'common_org_auth_carrier_column',
       mode_org_manage: 'carrier_org_manage_mode_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
@@ -295,7 +294,7 @@ export default {
         this.isAuthInfo = true
         this.inputType = 'detail'
         if (this.currType == 'self_detail') {
-          this.auth_page_column = [...this.auth_page_column, ...this.page_auth_other_column, ...this.page_auth_carrier_column]
+          this.auth_page_column = [...this.auth_page_column, ...this.page_auth_other_column]
         }
       } else {
         this.tabDisabled = false

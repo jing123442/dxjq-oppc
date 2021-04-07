@@ -269,6 +269,14 @@ export function utilsContractStatus() {
   ]
 }
 
+export function utilsTransportStatus() {
+  return [
+    { value: 1, label: '待认证' },
+    { value: 2, label: '已认证' },
+    { value: 3, label: '认证失败' }
+  ]
+}
+
 export function utilsBearType() {
   return [
     { value: 1, label: '加气站承担' },

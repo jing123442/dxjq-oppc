@@ -185,3 +185,11 @@
     height: 100%;
   }
 }
+
+.el-image.transport-image {
+  height: 240px;
+  border-radius: 3px;
+  .el-image__inner {
+    width: auto;
+  }
+}
