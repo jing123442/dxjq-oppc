@@ -1,5 +1,6 @@
 import file from '../../modules/file'
 import { buttonOrgBusinessList } from '@/utils/button'
+import { monthTimeArea } from '@/utils/tools'
 
 const columns = {
   org: [
@@ -40,7 +41,7 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 190, list: [{ type: 'list', name: '流水列表' }, { type: 'withdraw', name: '提现' }, { type: 'withdraw_list', name: '提现明细' }] }
   ],
   accountList: [
-    { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format' },
+    { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '', clearable: false, style: 'width: 360px;', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) } },
     /* { field: 'billId', nameSpan: 5, name: '交易单号', search: { type: 'text', placeholder: '请输入交易单号' } }, */
     { field: 'type', nameSpan: 5, name: '交易类型', formatter: 'type' },
     { field: 'anotherAccount', name: '对方账号' },

@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, queryDefaultParams, callbackPagesInfo } from '@/utils/tools'
+import { initVueDataOptions, isTypeof, callbackPagesInfo } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -21,9 +21,7 @@ export default {
           }
         },
         name: '账户流水'
-      },
-      buttonsList: [/* { type: 'primary', icon: '', event: 'export', name: '导出流水' } */],
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgId: this.$route.query.orgId, accountId: this.$route.query.accountId } })
+      }
     })
   },
   computed: {
@@ -42,7 +40,25 @@ export default {
   methods: {
     onListEvent(type, row) {},
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this))
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { dateParam: { createDateFrom: '', createDateTo: '' }, orgAccountLog: { orgId: this.$route.query.orgId, accountId: this.$route.query.accountId } } })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k == 'createDate') {
+            if (_this.finds.createDate === null) {
+              params.param.dateParam.createDateFrom = ''
+              params.param.dateParam.createDateTo = ''
+            } else {
+              params.param.dateParam.createDateFrom = v[0]
+              params.param.dateParam.createDateTo = v[1]
+            }
+          } else {
+            if (v !== '') {
+              params.param.orgAccountLog[k] = v
+            }
+          }
+        }
+      }
 
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
