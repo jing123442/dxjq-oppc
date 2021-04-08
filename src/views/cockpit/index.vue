@@ -1184,6 +1184,10 @@ export default {
       }
       if (this.isToday) {
         this.orderTime = setInterval(() => {
+          this.findDayTradeSum()
+          this.findDayTruckSum()
+          this.findDayFundSum()
+          this.findDayStockSum()
           $settleTradeGasstationsOrderInfo({ seconds: 10 }).then(response => {
             if (response.data && isTypeof(response.data) === 'array') {
               response.data.forEach(item => {
