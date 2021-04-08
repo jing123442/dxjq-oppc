@@ -259,7 +259,7 @@ export default {
             },
             itemStyle: {
               normal: {
-                color: 'rgba(255, 0, 0, .3)',
+                color: '#1562ff',
                 shadowBlur: 3,
                 shadowColor: '#ffffff'
               }
