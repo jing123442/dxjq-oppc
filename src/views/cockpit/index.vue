@@ -961,7 +961,7 @@ export default {
     findTradeRankGasstationList(type = 1) {
       // 1.加气总量；2.加气总金额；3.订单总数
       const params = {
-        date: this.currDate,
+        date: (this.isToday ? this.currDateNotYear : this.currDate),
         type,
         limit: 5,
         districtId: this.currDistrict
@@ -1024,7 +1024,7 @@ export default {
     findTradeRankCarrierList(type = 1) {
       // 1.加气总量；2.加气总金额；3.订单总数
       const params = {
-        date: this.currDate,
+        date: (this.isToday ? this.currDateNotYear : this.currDate),
         type,
         limit: 5,
         districtId: this.currDistrict
