@@ -13,24 +13,24 @@
               <div>1 星，0 吨 ≤ 单车月加气量 ＜ 1 吨</div>
             </div>
           </div>
-          <p>评级周期：每月1号 00:00:00 对 满整月入驻的车辆 评级</p>
-          <p>余额规则：按每月1号 00:00:00 平台即时加气结算均价，换算某车上月余额可购买气量，
-          与该车上月实际加气量比较，取2者最大值作为该车评级的“单车月加气量”</p>
+          <div>评级周期：每月1号 00:00:00 对 满整月入驻的车辆 评级</div>
+          <div>余额规则：按每月1号 00:00:00 平台即时加气结算均价，换算某车上月余额可购买气量，
+          与该车上月实际加气量比较，取2者最大值作为该车评级的“单车月加气量”</div>
         </div>
         <div class="special-desc" style="margin-top: 10px;">
           <div class="title">车辆星级 降级保底规则</div>
-          <p>2021.01.01 起，新上牌的车辆，最低 3 星</p>
-          <p>2021.01.01 前，上牌的自营车辆，最低 2 星</p>
-          <p>2021.01.01 前，上牌的挂靠车辆，最低 1 星</p>
+          <div>2021.01.01 起，新上牌的车辆，最低 3 星</div>
+          <div>2021.01.01 前，上牌的自营车辆，最低 2 星</div>
+          <div>2021.01.01 前，上牌的挂靠车辆，最低 1 星</div>
         </div>
       </el-col>
       <el-col :span="12" style="background-color: #ffffff;border-radius: 5px;" >
-        <em-table-list :custTableTitle="'变更记录'" :tableListName="'rebateLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="log_page_status" :page_column="log_page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+        <em-table-list :custTableTitle="'变更记录'" ref="rebateLog" :tableListName="'rebateLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="log_page_status" :page_column="log_page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
       </el-col>
     </el-row>
     <el-dialog title="专项优惠配置" :visible.sync="dialogConfigRebateVisible" :width="'40%'" :append-to-body="true">
       <el-table v-loading="loading" :data="rebateDialogData" stripe style="width:100%;margin-bottom: 20px;" ref="multipleTable" :cell-style="{padding: '5px 0'}" :header-cell-style="{padding: '7px 0',background:'#f6f6f6',color:'#999'}" border>
-        <el-table-column :label="'优惠区间(吨)'" width="260">
+        <el-table-column :label="'优惠区间(公斤)'" width="260">
           <template slot-scope="scope">
             <div style="display: flex" class="last-line" v-if="scope.$index == rebateDialogData.length - 1">
               <el-input class="last-line-first" :disabled="true" :clearable="true" autocomplete="off"></el-input>
@@ -202,6 +202,8 @@ export default {
 
           this.nextTick = false
           this.initTableList()
+
+          this.$refs.rebateLog.initDataList()
         })
       }
 
@@ -268,9 +270,13 @@ export default {
     border: 1px solid #ffe69f;
     background-color: #ffe69f;
     border-radius: 5px;
+    font-size: 12px;
     .title {
       font-size: 14px;
       font-weight: bold;
+    }
+    & > div {
+      padding: 1px;
     }
   }
 </style>
