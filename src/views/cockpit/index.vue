@@ -373,6 +373,7 @@ export default {
         }
       },
       currDate: formateTData(new Date(), 'date'),
+      beforeDayTime: formateTData((new Date().getTime() - 1000 * 60 * 60 * 24), 'date').split('-').slice(0, 3).join('-'),
       currDateNotYear: '',
       districtList: [],
       currDistrict: '',
@@ -386,6 +387,7 @@ export default {
   created() {
     this.$store.dispatch('toggleSideBar')
     this.currDateNotYear = this.isToday ? formateTData((new Date().getTime() - 1000 * 60 * 60 * 24), 'date').split('-').slice(1, 3).join('-') : this.currDate.split('-').slice(1, 3).join('-')
+    this.beforeDayTime = this.isToday ? formateTData((new Date().getTime() - 1000 * 60 * 60 * 24), 'date').split('-').slice(0, 3).join('-') : this.currDate.split('-').slice(0, 3).join('-')
     this.initData('init')
   },
   mounted() {
@@ -961,7 +963,7 @@ export default {
     findTradeRankGasstationList(type = 1) {
       // 1.加气总量；2.加气总金额；3.订单总数
       const params = {
-        date: (this.isToday ? this.currDateNotYear : this.currDate),
+        date: this.beforeDayTime,
         type,
         limit: 5,
         districtId: this.currDistrict
@@ -1024,7 +1026,7 @@ export default {
     findTradeRankCarrierList(type = 1) {
       // 1.加气总量；2.加气总金额；3.订单总数
       const params = {
-        date: (this.isToday ? this.currDateNotYear : this.currDate),
+        date: this.beforeDayTime,
         type,
         limit: 5,
         districtId: this.currDistrict
