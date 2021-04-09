@@ -10,7 +10,7 @@
           <div :class="isToday ? 'yesterday' : 'yesterday active'" @click="changeCurrDate('yesterday')">昨日</div>
         </div>
         <!-- <el-date-picker class="date-picker" v-model="currDate" type="date" placeholder="选择日期" :clearable="false" @change="changeCurrDate"></el-date-picker> -->
-        <el-select v-model="currDistrict" placeholder="全区域" class="district-select" disabled :popper-append-to-body="false" @change="changeCurrDistrict">
+        <el-select v-model="currDistrict" placeholder="全区域" class="district-select" :popper-append-to-body="false" @change="changeCurrDistrict">
           <el-option v-for="item in districtList" :key="item.districtId" :label="item.districtName" :value="item.districtId"></el-option>
         </el-select>
         <div class="full-screen" @click="subpageFullScreen">
@@ -569,10 +569,10 @@ export default {
         const data = res.data
 
         // 交易金额
-        this.cardsData.amountTotal = this.cardStatisticsData(data.amountTotal, (this.isToday ? 5467672 : data.yesterdayAmountTotal), data.amountTotalRate)
+        this.cardsData.amountTotal = this.cardStatisticsData(data.amountTotal, data.yesterdayAmountTotal, data.amountTotalRate)
 
         // 加气统计
-        this.cardsData.gasQtyTotal = this.cardStatisticsData(Number(Number(data.gasQtyTotal) / 1000).toFixed(2), (this.isToday ? 1598.23 : Number(Number(data.yesterdayGasQtyTotal) / 1000).toFixed(2)), data.gasQtyTotalRate, false)
+        this.cardsData.gasQtyTotal = this.cardStatisticsData(Number(Number(data.gasQtyTotal) / 1000).toFixed(2), Number(Number(data.yesterdayGasQtyTotal) / 1000).toFixed(2), data.gasQtyTotalRate, false)
 
         // 总订单
         this.cardsData.orderTotal = this.cardStatisticsData(data.orderTotal, data.yesterdayOrderTotal, data.orderTotalRate)
@@ -581,7 +581,7 @@ export default {
         this.cardsData.nopayOrderTotal = this.cardStatisticsData(data.nopayOrderTotal, data.yesterdayNopayOrderTotal, data.nopayOrderTotalRate)
 
         // 已支付
-        this.cardsData.successOrderTotal = this.cardStatisticsData(data.successOrderTotal, (this.isToday ? 6272 : data.yesterdaySuccessOrderTotal), data.successOrderTotalRate)
+        this.cardsData.successOrderTotal = this.cardStatisticsData(data.successOrderTotal, data.yesterdaySuccessOrderTotal, data.successOrderTotalRate)
 
         // 已取消
         this.cardsData.cancelOrderTotal = this.cardStatisticsData(data.cancelOrderTotal, data.yesterdayCancelOrderTotal, data.cancelOrderTotalRate)
@@ -594,9 +594,9 @@ export default {
         const data = res.data
 
         // 活跃车辆数
-        this.cardsData.liveTruckTotal = this.cardStatisticsData(data.liveTruckTotal, (this.isToday ? 5985 : data.yesterdayLiveTruckTotal), data.liveTruckTotalRate)
+        this.cardsData.liveTruckTotal = this.cardStatisticsData(data.liveTruckTotal, data.yesterdayLiveTruckTotal, data.liveTruckTotalRate)
         // 新增车辆数
-        this.cardsData.addTruckTotal = this.cardStatisticsData(data.addTruckTotal, (this.isToday ? 315 : data.yesterdayAddTruckTotal), data.addTruckTotalRate)
+        this.cardsData.addTruckTotal = this.cardStatisticsData(data.addTruckTotal, data.yesterdayAddTruckTotal, data.addTruckTotalRate)
       })
     },
     findDayStockSum() {
