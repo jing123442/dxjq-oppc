@@ -572,7 +572,7 @@ export default {
         this.cardsData.amountTotal = this.cardStatisticsData(data.amountTotal, data.yesterdayAmountTotal, data.amountTotalRate)
 
         // 加气统计
-        this.cardsData.gasQtyTotal = this.cardStatisticsData(Number(Number(data.gasQtyTotal) / 1000).toFixed(2), data.yesterdayGasQtyTotal, data.gasQtyTotalRate, false)
+        this.cardsData.gasQtyTotal = this.cardStatisticsData(Number(Number(data.gasQtyTotal) / 1000).toFixed(2), Number(Number(data.yesterdayGasQtyTotal) / 1000).toFixed(2), data.gasQtyTotalRate, false)
 
         // 总订单
         this.cardsData.orderTotal = this.cardStatisticsData(data.orderTotal, data.yesterdayOrderTotal, data.orderTotalRate)
@@ -606,11 +606,11 @@ export default {
         const data = res.data
 
         // 进气量
-        this.cardsData.storeTotal = this.cardStatisticsData(Number(Number(data.storeTotal) / 1000).toFixed(2), data.yesterdayStoreTotal, data.storeTotalRate, false)
+        this.cardsData.storeTotal = this.cardStatisticsData(Number(Number(data.storeTotal) / 1000).toFixed(2), Number(Number(data.yesterdayStoreTotal) / 1000).toFixed(2), data.storeTotalRate, false)
         // 站端库存
-        this.cardsData.stockTotal = this.cardStatisticsData(Number(Number(data.stockTotal) / 1000).toFixed(2), data.yesterdayStockTotal, data.stockTotalRate, false)
+        this.cardsData.stockTotal = this.cardStatisticsData(Number(Number(data.stockTotal) / 1000).toFixed(2), Number(Number(data.yesterdayStockTotal) / 1000).toFixed(2), data.stockTotalRate, false)
         // 在途库存
-        this.cardsData.wayTotal = this.cardStatisticsData(Number(Number(data.wayTotal) / 1000).toFixed(2), data.yesterdayWayTotal, data.wayTotalRate, false)
+        this.cardsData.wayTotal = this.cardStatisticsData(Number(Number(data.wayTotal) / 1000).toFixed(2), Number(Number(data.yesterdayWayTotal) / 1000).toFixed(2), data.wayTotalRate, false)
       })
     },
     getDistrictList() {
