@@ -2,7 +2,7 @@
   <div class="cockpit" ref="cockpit">
     <div class="tool-bar">
       <div class="left-title">
-        <div class="title">大象加气 · 大数据中心 · 管理驾驶舱</div>
+        <div class="title">大象加气 · 管理驾驶舱</div>
       </div>
       <div class="right-controller">
         <div class="datePick">
@@ -259,7 +259,7 @@ export default {
             },
             itemStyle: {
               normal: {
-                color: 'rgba(255, 0, 0, .3)',
+                color: '#1562ff',
                 shadowBlur: 3,
                 shadowColor: '#ffffff'
               }
@@ -318,7 +318,7 @@ export default {
                 }
               },
               emphasis: {
-                areaColor: '#97a9cc',
+                areaColor: 'rgba(0, 0, 0, .1)',
                 borderWidth: 0.1
               }
             },
@@ -373,6 +373,7 @@ export default {
         }
       },
       currDate: formateTData(new Date(), 'date'),
+      beforeDayTime: formateTData((new Date().getTime() - 1000 * 60 * 60 * 24), 'date').split('-').slice(0, 3).join('-'),
       currDateNotYear: '',
       districtList: [],
       currDistrict: '',
@@ -384,7 +385,9 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch('toggleSideBar')
     this.currDateNotYear = this.isToday ? formateTData((new Date().getTime() - 1000 * 60 * 60 * 24), 'date').split('-').slice(1, 3).join('-') : this.currDate.split('-').slice(1, 3).join('-')
+    this.beforeDayTime = this.isToday ? formateTData((new Date().getTime() - 1000 * 60 * 60 * 24), 'date').split('-').slice(0, 3).join('-') : this.currDate.split('-').slice(0, 3).join('-')
     this.initData('init')
   },
   mounted() {
@@ -459,6 +462,21 @@ export default {
     changeCurrDistrict() {
       this.initData('district')
     },
+    mapAreaBgColor(index) {
+      const bgColorArray = ['#c5ffde', '#ffecb3', '#ffd3cd', '#d1e6ff']
+
+      if (index >= 4) {
+        if (index === 4) {
+          return bgColorArray[3]
+        } else if (index === 5) {
+          return bgColorArray[0]
+        } else if (index === 6) {
+          return bgColorArray[3]
+        }
+      } else {
+        return bgColorArray[index]
+      }
+    },
     mapAreaList() {
       const tmpAreaList = []
       $districtList().then((res) => {
@@ -473,10 +491,10 @@ export default {
                 value: index,
                 parentName: item.districtName,
                 itemStyle: {
-                  areaColor: '#9db1fb'
+                  areaColor: this.mapAreaBgColor(index)
                 },
                 emphasis: {
-                  areaColor: '#6e88ea'
+                  areaColor: this.mapAreaBgColor(index)
                 }
               })
             })
@@ -487,11 +505,11 @@ export default {
 
       return tmpAreaList
     },
-    cardStatisticsData(total, contrast, rate, title = '') {
+    cardStatisticsData(total, contrast, rate, type = true, title = '') {
       return {
         title: title,
-        total: formateParams(total),
-        contrast: formateParams(contrast),
+        total: formateParams(total, type),
+        contrast: formateParams(contrast, type),
         rate: rate
       }
     },
@@ -554,7 +572,7 @@ export default {
         this.cardsData.amountTotal = this.cardStatisticsData(data.amountTotal, data.yesterdayAmountTotal, data.amountTotalRate)
 
         // 加气统计
-        this.cardsData.gasQtyTotal = this.cardStatisticsData(data.gasQtyTotal, data.yesterdayGasQtyTotal, data.gasQtyTotalRate)
+        this.cardsData.gasQtyTotal = this.cardStatisticsData(Number(Number(data.gasQtyTotal) / 1000).toFixed(2), Number(Number(data.yesterdayGasQtyTotal) / 1000).toFixed(2), data.gasQtyTotalRate, false)
 
         // 总订单
         this.cardsData.orderTotal = this.cardStatisticsData(data.orderTotal, data.yesterdayOrderTotal, data.orderTotalRate)
@@ -588,11 +606,11 @@ export default {
         const data = res.data
 
         // 进气量
-        this.cardsData.storeTotal = this.cardStatisticsData(data.storeTotal, data.yesterdayStoreTotal, data.storeTotalRate)
+        this.cardsData.storeTotal = this.cardStatisticsData(Number(Number(data.storeTotal) / 1000).toFixed(2), Number(Number(data.yesterdayStoreTotal) / 1000).toFixed(2), data.storeTotalRate, false)
         // 站端库存
-        this.cardsData.stockTotal = this.cardStatisticsData(data.stockTotal, data.yesterdayStockTotal, data.stockTotalRate)
+        this.cardsData.stockTotal = this.cardStatisticsData(Number(Number(data.stockTotal) / 1000).toFixed(2), Number(Number(data.yesterdayStockTotal) / 1000).toFixed(2), data.stockTotalRate, false)
         // 在途库存
-        this.cardsData.wayTotal = this.cardStatisticsData(data.wayTotal, data.yesterdayWayTotal, data.wayTotalRate)
+        this.cardsData.wayTotal = this.cardStatisticsData(Number(Number(data.wayTotal) / 1000).toFixed(2), Number(Number(data.yesterdayWayTotal) / 1000).toFixed(2), data.wayTotalRate, false)
       })
     },
     getDistrictList() {
@@ -622,7 +640,10 @@ export default {
               name: '平台结算周均价',
               type: 'bar',
               field: 'weekAverageActualPrice',
-              data: []
+              data: [],
+              itemStyle: {
+                color: 'red'
+              }
             }, {
               name: '活跃车辆数',
               type: 'line',
@@ -942,7 +963,7 @@ export default {
     findTradeRankGasstationList(type = 1) {
       // 1.加气总量；2.加气总金额；3.订单总数
       const params = {
-        date: this.currDate,
+        date: this.beforeDayTime,
         type,
         limit: 5,
         districtId: this.currDistrict
@@ -1005,7 +1026,7 @@ export default {
     findTradeRankCarrierList(type = 1) {
       // 1.加气总量；2.加气总金额；3.订单总数
       const params = {
-        date: this.currDate,
+        date: this.beforeDayTime,
         type,
         limit: 5,
         districtId: this.currDistrict
@@ -1163,6 +1184,10 @@ export default {
       }
       if (this.isToday) {
         this.orderTime = setInterval(() => {
+          this.findDayTradeSum()
+          this.findDayTruckSum()
+          this.findDayFundSum()
+          this.findDayStockSum()
           $settleTradeGasstationsOrderInfo({ seconds: 10 }).then(response => {
             if (response.data && isTypeof(response.data) === 'array') {
               response.data.forEach(item => {

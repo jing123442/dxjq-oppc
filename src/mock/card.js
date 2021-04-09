@@ -1,5 +1,5 @@
 const UTIL_MONEY = '元'
-const UTIL_KILO = '公斤'
+const UTIL_KILO = '吨'
 
 const amountTotal = [{
   class: '',
