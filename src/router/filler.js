@@ -11,6 +11,7 @@ export default [
     children: [
       { path: 'fillerIndex', component: inImport('filler/index'), name: 'fillerIndex', meta: { title: '加气站列表', icon: 'icon', noCache: false } },
       { path: 'fillerInfo', component: inImport('filler/fillerInfo'), name: 'fillerInfo', meta: { title: '加气站信息维护', icon: 'icon-', noCache: false } },
+      { path: 'fillerAuth', component: inImport('filler/fillerAuth'), name: 'fillerAuth', meta: { title: '待审核加气站', icon: 'icon-', noCache: false } },
       { path: 'fillerAccount', component: inImport('filler/account'), name: 'fillerAccount', meta: { title: '加气站资金账户', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'fillerPrice', component: inImport('filler/price'), name: 'fillerPrice', meta: { title: '加气站挂牌价查询', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'userCashier', component: inImport('filler/user'), name: 'userCashier', meta: { title: '账号管理', icon: 'icon-gongnengguanli', noCache: false } },

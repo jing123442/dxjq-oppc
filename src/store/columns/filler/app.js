@@ -4,6 +4,14 @@ const app = {
       { ou: 1, name: '企业名称', status: 3 },
       { ou: 2, name: '账务基本信息', status: 3 }
     ],
+    orgManageInfo: [
+      { ou: 1, name: '机构代码信息', status: 3 },
+      { ou: 2, name: '企业基本信息', status: 3 },
+      { ou: 3, name: '管理员信息', status: 3 },
+      { ou: 4, name: '企业认证', status: 3 },
+      { ou: 5, name: '平台合同', status: 3 },
+      { ou: 6, name: '账号授权', status: 3 }
+    ],
     info: [
       { ou: 2, name: '加气站基本信息', status: 3 }
     ],

@@ -357,3 +357,14 @@ export function settlePeriodInterval(periodYear, periodMonth) {
     return `${periodYear}年${(periodMonth - 1)}月25日 00:00:00至${periodYear}年${periodMonth}月24日 23:59:59`
   }
 }
+
+// 司机上传行驶证提示信息
+export function truckUploadMessageInfo() {
+  return '<ul class="warning-message-box" style="width: 70%;">' +
+    '<li class="title">请按以下要求准备行驶证照片</li>' +
+    '<li>* 证件四角齐全，无遮挡</li>' +
+    '<li>* 将证件从保护套中拿出，避免反光</li>' +
+    '<li>* 第一页、第二页请单独上传，不要在一张照片里</li>' +
+    '<li>* 请保证证件边框完整，字体清晰，文件大小不超过10M</li>' +
+    '</ul>'
+}

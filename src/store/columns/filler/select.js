@@ -1,4 +1,4 @@
-import { utilsStatus, utilsAuthStatus, utilsPlanStatus, utilsSource, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus, utilsIdentityType, utilsTradeType, utilsBankList, utilsPrintPaper, utilsHandleType, utilsModifyApplyType, utilsCheckType, utilsBearType, utilsLNGDataSearch } from '@/utils/select'
+import { utilsStatus, utilsAuthStatus, utilsPlanStatus, utilsSource, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus, utilsIdentityType, utilsTradeType, utilsBankList, utilsPrintPaper, utilsHandleType, utilsModifyApplyType, utilsCheckType, utilsBearType, utilsLNGDataSearch, utilsFillerParentList } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
@@ -8,7 +8,8 @@ const select = {
     status: utilsStatus(),
     authStatus: utilsAuthStatus(),
     identityType: utilsIdentityType(),
-    bankList: utilsBankList()
+    bankList: utilsBankList(),
+    fillerParent: utilsFillerParentList()
   },
   info: {
     orgId: utilsDyOrgList(1),

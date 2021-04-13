@@ -23,20 +23,21 @@ export function buttonOrgCarrierList(scope) {
   // row.authStatus != 2 && optList.push({ type: 'cert', name: '认证' })
   row.authStatus == 2 && optList.push({ type: 'add_truck', name: '添加车辆' })
   row.authStatus == 2 && optList.push({ type: 'import', name: '导入车辆' })
-  optList.push({ type: 'record', name: '信息补录' })
+  // optList.push({ type: 'record', name: '信息补录' })
 
   return optList
 }
 
 // 加气站公司企业
 export function buttonOrgFillerList(scope) {
-  const row = scope.row
+  // const row = scope.row
   const optList = []
 
-  row.authStatus != 2 && optList.push({ type: 'self_edit', name: '编辑' })
+  // row.authStatus != 2 && optList.push({ type: 'self_edit', name: '编辑' })
   optList.push({ type: 'self_detail', name: '详情' })
-  row.authStatus != 2 && optList.push({ type: 'cert', name: '认证' })
+  // row.authStatus != 2 && optList.push({ type: 'cert', name: '认证' })
   optList.push({ type: 'cashier_list', name: '查看收银员' })
+  // optList.push({ type: 'record', name: '信息补录' })
 
   return optList
 }

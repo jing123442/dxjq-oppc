@@ -1,5 +1,5 @@
 import { buttonOrgCarrierList } from '@/utils/button'
-import { utilsTableOptionsToFilters, utilsContractStatus, utilsTransportStatus } from '@/utils/select'
+import { utilsTableOptionsToFilters, utilsContractStatus, utilsCommonAuthStatus } from '@/utils/select'
 
 /* eslint-disable */
 const columns = {
@@ -37,7 +37,7 @@ const columns = {
     { field: 'authStatus', name: '认证状态', formatter: 'authStatus', filters: utilsTableOptionsToFilters('utilsAuthStatus') },
     { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140,
       search: { type: 'date-picker', placeholder: '' } },
-    { field: 'roadTransportStatus', name: '道路运输许可证', stype: 'link-status', value: [1], obj: utilsTransportStatus() },
+    { field: 'roadTransportStatus', name: '道路运输许可证', stype: 'link-status', value: [1], obj: utilsCommonAuthStatus() },
     { field: 'contractStatus', name: '合同签约状态', stype: 'link-status', value: [1], obj: utilsContractStatus() },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 100, list: [{ type: 'self_detail', name: '详情' }] }
   ],

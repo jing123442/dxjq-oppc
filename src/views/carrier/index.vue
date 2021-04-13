@@ -8,10 +8,10 @@
       </div>
       <el-tabs v-model="active" type="card" @tab-click="handleClick">
         <el-tab-pane label="一证" name="2" :disabled="tabDisabled">
-          <nt-form ref="addGap" v-if="active == 2 && dialogAddGasStationVisible" :rowData="authRow" :inputType="inputType" :modeList="mode_org_manage" :pageColumn="auth_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
+          <nt-form ref="addGap" v-if="active == 2 && dialogAddGasStationVisible" :rowData="authRow" :inputType="inputType" :modeList="auth_page_mode" :pageColumn="auth_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
         </el-tab-pane>
         <el-tab-pane label="三证" name="1" :disabled="tabDisabled">
-          <nt-form ref="addGap" v-if="active == 1 && dialogAddGasStationVisible" :rowData="authRow" :inputType="inputType" :modeList="mode_org_manage" :pageColumn="auth_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
+          <nt-form ref="addGap" v-if="active == 1 && dialogAddGasStationVisible" :rowData="authRow" :inputType="inputType" :modeList="auth_page_mode" :pageColumn="auth_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
@@ -68,7 +68,7 @@
 import { initVueDataOptions, custFormBtnList, callbackPagesInfo, createParams, exportBlobToFiles, isTypeof, toolsFileHeaders, formatDate } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
-import { $userOrgAdd, $userOrgEdit, $userFindOrgAdmin, $userOrgPicList } from '@/service/user'
+import { $userOrgAdd, $userOrgEdit, $userFindOrgAdmin, $userOrgPicList, $userCarrierTranPicUpload, $userExportCarrierInfo } from '@/service/user'
 import { $strategyTruckAdd, $importDownloadFile, $exportDataFile } from '@/service/strategy'
 
 export default {
@@ -91,9 +91,10 @@ export default {
         name: '物流公司'
       },
       headers: {},
-      buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '添加公司' }],
+      buttonsList: [{ type: 'primary', icon: '', event: 'add_info', name: '添加公司' }, { type: 'primary', icon: '', event: 'export', name: '导出' }],
       dialogAddGasStationVisible: false,
       authRow: {},
+      auth_page_mode: [],
       auth_page_column: [],
       dialogAddCarVisible: false,
       addCarRow: {},
@@ -112,7 +113,8 @@ export default {
       page_auth_column: 'common_org_auth_column',
       page_s_auth_column: 'common_org_s_auth_column',
       page_auth_other_column: 'common_org_auth_other_column',
-      mode_org_manage: 'carrier_org_manage_mode_list',
+      mode_add_org_manage: 'carrier_org_manage_mode_list',
+      mode_detail_org_manage: 'carrier_org_detail_mode_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -130,6 +132,9 @@ export default {
       } else if (type === 'add_truck') {
         // 添加车辆
         this.addCarEvent(row)
+      } else if (type === 'export') {
+        // 导出
+        this.exportCarrierInfo(row)
       } else {
         this.currType = type
         // 重置page_column值
@@ -143,6 +148,7 @@ export default {
         this.dialogAddGasStationVisible = true
         this.authRow = row
         if (type === 'add_info' || type === 'self_edit') {
+          this.auth_page_mode = this.mode_add_org_manage
           this.authRow._btn = custFormBtnList()
         } else if (type === 'cert') {
           this.authRow._btn = {
@@ -153,7 +159,8 @@ export default {
             ]
           }
         } else {
-          this.authRow._btn = custFormBtnList(1)
+          this.auth_page_mode = this.mode_detail_org_manage
+          this.authRow._btn = custFormBtnList()
           this.orgAuthList(row)
         }
       }
@@ -167,14 +174,14 @@ export default {
       adminData.forEach(item => {
         adminInfo.push(item.userName + '/' + item.mobile)
       })
-      this.authRow.manageInfo = adminInfo.join(',')
+      this.authRow.manageInfo = adminInfo.join(' | ')
 
       // 认证图片信息
+      let picTypeStatus = false
       const params = {
         picTypes: [1, 8, 9, 11],
         orgId: row.orgId
       }
-      var pathUrl = this.$store.state.file.fileHost
       const picList = await $userOrgPicList(params).then(res => {
         return res.data
       })
@@ -190,11 +197,24 @@ export default {
           keyList.key = 'sfzghPic'
           keyList.time = 'sfzghPicDate'
         } else if (item.picType == 11) {
+          picTypeStatus = true
           keyList.key = 'dlysPic'
           keyList.time = 'dlysPicDate'
         }
-        this.authRow[keyList.key] = pathUrl + item.picPath
-        this.authRow[keyList.time] = item.updateDate
+
+        this.authRow[keyList.key] = item.picPath
+        this.authRow[keyList.time] = item.updateDate || item.createDate
+      })
+      // 如果未传道路许可证，用户可以上传图片
+      this.auth_page_column.forEach(item => {
+        if (item.field === 'dlysPic') {
+          if (picTypeStatus) {
+            item.detail = item.detail_d
+          } else {
+            this.authRow.dlysPic = []
+            item.detail = item.detail_u
+          }
+        }
       })
     },
     exportCarEvent(row) {
@@ -203,6 +223,13 @@ export default {
       this.exportCarRow.orgName = row.orgName
       this.dialogExportCarVisible = true
     },
+    exportCarrierInfo(row) {
+      $userExportCarrierInfo(this.currParams).then(response => {
+        const fileName = '物流公司列表' + '_' + (new Date().getTime()) + '.xlsx'
+
+        exportBlobToFiles(response, fileName)
+      })
+    },
     addCarEvent(row) {
       this.addCarRow._btn = custFormBtnList()
       this.addCarRow.orgId = row.orgId
@@ -210,25 +237,28 @@ export default {
       this.dialogAddCarVisible = true
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { org: { orgType: 2 }, dateFrom: '', dateTo: '' } })
+      const query = { param: { dateFrom: '', dateTo: '' } }
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (k == 'authDate') {
             if (_this.finds.authDate === null) {
-              params.param.dateFrom = ''
-              params.param.dateTo = ''
+              query.param.dateFrom = ''
+              query.param.dateTo = ''
             } else {
-              params.param.dateFrom = v[0]
-              params.param.dateTo = v[1]
+              query.param.dateFrom = v[0]
+              query.param.dateTo = v[1]
             }
           } else if (k == 'keyword') {
-            if (v !== '') params.param[k] = v
+            if (v !== '') query.param[k] = v
           } else {
-            if (v !== '') params.param.org[k] = v
+            if (v !== '') query.param.org[k] = v
           }
         }
       }
+      this.currParams = query.param
+
+      const params = Object.assign({}, callbackPagesInfo(_this), query)
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     },
@@ -306,12 +336,29 @@ export default {
       if (obj.type === 'ok') {
         if (this.currType === 'add_info' || this.currType === 'self_edit') {
           this.onListEventAddGasStation(row)
+        } else if (this.currType === 'self_detail') {
+          this.orgTranUploadPic(row)
+          this.dialogAddGasStationVisible = false
         } else {
           this.orgAuthEvent(row)
           this.dialogAddGasStationVisible = false
         }
       } else {
         this.dialogAddGasStationVisible = false
+      }
+    },
+    orgTranUploadPic(row) {
+      if (row.dlysPic && row.dlysPic[0].url) {
+        const params = {
+          orgId: row.orgId,
+          picPath: row.dlysPic ? row.dlysPic[0].url : '',
+          picType: 11
+        }
+        $userCarrierTranPicUpload(params).then(res => {
+          this.$message.success('成功！')
+
+          this.$refs.tables.initDataList()
+        })
       }
     },
     orgAuthEvent(row) {

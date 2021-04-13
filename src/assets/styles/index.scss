@@ -458,6 +458,24 @@ div.el-dialog__body {
   overflow: hidden;
 }
 
+.warning-message-box {
+  padding: 0 10px 10px;
+  margin: 0;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 140, 30, .25);
+  background-color: rgba(255, 140, 30, .15);
+  li {
+    height: 23px;
+    list-style: none;
+    font-size: 13px;
+    padding-left: 20px;
+    &.title {
+      padding-left: 10px;
+      font-weight: bold;
+    }
+  }
+}
+
 
 
 

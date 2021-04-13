@@ -103,15 +103,16 @@ export default {
           const tmpList = []
 
           data.forEach(item => {
+            this.fillerAllList.filter((node, index) => {
+              if (item.orgId === node.orgId) {
+                this.fillerAllList.splice(index, 1)
+              }
+            })
             if (row.districtId === item.districtId) {
               this.oldFillerList.push(item)
               tmpList.push(item.orgId)
-            } else {
-              this.fillerAllList.filter((node, index) => {
-                if (item.orgId === node.orgId) {
-                  this.fillerAllList.splice(index, 1)
-                }
-              })
+
+              this.fillerAllList.push(item)
             }
           })
           this.formConfigRow = Object.assign({ fillerList: tmpList }, row)
@@ -119,9 +120,9 @@ export default {
         })
       }
     },
-    async btnClickEvent(btnObj, row) {
+    btnClickEvent(btnObj, row) {
       if (btnObj.type == 'ok') {
-        await this.$refs.formConfig.validate(async (valid) => {
+        this.$refs.formConfig.validate(async (valid) => {
           if (valid) {
             const addList = []
             const params = {

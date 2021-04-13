@@ -1,11 +1,13 @@
 import file from '../../modules/file'
 import { buttonLNGPlanList, buttonOrgFillerList } from '@/utils/button'
 import { monthTimeArea } from '@/utils/tools'
+import { utilsTableOptionsToFilters, utilsCommonAuthStatus, utilsContractStatus } from '@/utils/select'
 
 const columns = {
   firmList: [
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { noShow: 1 } },
-    { field: 'orgName', name: '企业名称', fixed: 'left', show: { type: 'text', ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请输入企业名称' }, search: { type: 'text', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'orgName', name: '加气站名称', fixed: 'left', show: { type: 'text', ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请输入加气站名称' }, search: { type: 'text', field: 'keyword', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
+    // { field: 'orgShortName', name: '加气站名称' },
     { field: 'address', name: '地址', show: { type: 'cascader', fieldList: ['address', 'areas'], formatter: 'address', obj: 'cascaderAddress', props: { value: 'label', label: 'label' }, iType: 'string', sign: '', ou: 1, noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'change' }] },
     { field: 'areas', name: '详细地址', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址！', trigger: 'blur' }] },
     { field: 'status', name: '状态', formatter: 'status', width: 60 },
@@ -18,6 +20,28 @@ const columns = {
     { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 200, list: params => buttonOrgFillerList(params) }
   ],
+  fillerAuthList: [
+    { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true },
+    { field: 'orgName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
+    // { field: 'orgShortName', name: '加气站名称' },
+    { field: 'address', name: '地址' },
+    { field: 'mobile', name: '管理员手机号', width: 110 },
+    { field: 'status', name: '状态', formatter: 'status', width: 60 },
+    { field: 'authStatus', name: '认证状态', formatter: 'authStatus', filters: utilsTableOptionsToFilters('utilsAuthStatus') },
+    { field: 'gasBusinessStatus', name: '燃气经营状态', stype: 'link-status', value: [1], obj: utilsCommonAuthStatus() },
+    { field: 'gasFillingStatus', name: '气瓶充装状态', stype: 'link-status', value: [1], obj: utilsCommonAuthStatus() },
+    { field: 'fireControlStatus', name: '消防验收', stype: 'link-status', value: [1], obj: utilsCommonAuthStatus() },
+    { field: 'envImpactStatus', name: '环评报告', stype: 'link-status', value: [1], obj: utilsCommonAuthStatus() },
+    { field: 'contractStatus', name: '合同签约', stype: 'link-status', value: [1], obj: utilsContractStatus() },
+    { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140, search: { type: 'date-picker', placeholder: '' } },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 100, list: [{ type: 'self_detail', name: '详情' }] }
+  ],
+  fillerChild: [
+    { field: 'orgId', name: '企业名称', fixed: 'left', show: { type: 'select', ou: 1, obj: 'fillerParent', style: 'width: 90%;', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'orgShortName', name: '加气站名称', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
+    { field: 'adminName', name: '姓名', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入姓名' } },
+    { field: 'adminMobile', name: '手机号', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入手机号' } }
+  ],
   fillerUser: [
     { field: 'userName', name: '用户姓名', fixed: 'left' },
     { field: 'userCode', name: '登录账号' },
@@ -27,13 +51,14 @@ const columns = {
   ],
   info: [
     { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { type: 'hide', isNode: true, parent: 'gasstationVO' } },
-    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, fixed: 'left', show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' }, search: { type: 'text', nameSpan: 0, placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
+    { field: 'gasstationName', name: '加气站名称', nameSpan: 6, fixed: 'left', show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称', isDisabled: true }, search: { type: 'text', nameSpan: 0, placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
+    // { field: 'nickName', name: '加气站名称', nameSpan: 6, show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' } },
     { field: 'listPrice', name: '加气站挂牌价(元/公斤)', ispush: false },
     { field: 'platformPrice', name: '平台挂牌价(元/公斤)', ispush: false },
     { field: 'qrcode', name: '收款码类型', formatter: 'qrcodeType', ispush: false },
     { field: 'selectedOptions', hide: true, name: '所在地区', nameSpan: 6, show: { type: 'cascader', parent: 'gasstationVO', iType: 'string', ou: 2, mulField: { province: 0, city: 1, region: 2 }, props: { value: 'label', label: 'label' }, obj: 'cascaderAddress', style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
-    { field: 'address', hide: true, name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
-    { field: 'pointAddress', name: '经纬度', hide: true, nameSpan: 6, show: { type: 'map', ou: 2, parent: 'gasstationVO', mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 90%;', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
+    { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
+    { field: 'pointAddress', name: '经纬度', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, hide: true, nameSpan: 3, show: { type: 'map', ou: 2, parent: 'gasstationVO', mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 40.5%', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
     { field: 'url', name: '加气站头像', filefield: 'file', hide: true, nameSpan: 6, show: { type: 'file', ou: 2, parent: 'gasstationVO', iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传加气站头像', node: [], rules: [{ required: true, message: '请上传加气站头像！', trigger: 'change' }] } },
     { field: 'orgPics', name: '加气站形象图', filefield: 'file', ispush: false, hide: true, nameSpan: 6, show: { type: 'file', ou: 2, limit: 6, size: 1024, iType: 'string', btnType: true, paramField: 'url', props: { url: 'picPath', name: 'picPath' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传加气站形象图', node: [], successAxios: file.state.successAxios, deleteAxios: file.state.deleteAxios, rules: [{ required: true, message: '请上传加气站形象图！', trigger: 'change' }] } },
     { field: 'introduce', hide: true, name: '加气站宣传文案', nameSpan: 6, show: { type: 'textarea', ou: 2, maxlength: 400, isWordLimit: true, style: 'width: 90%;', placeholder: '请输入加气站宣传文案' } },

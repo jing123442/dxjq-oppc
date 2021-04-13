@@ -5,6 +5,10 @@ const app = {
       { ou: 1, name: '加气站信息', status: 3 },
       { ou: 2, name: '订单详情', status: 3 }
     ],
+    orgAddManageInfo: [
+      { ou: 1, name: '机构代码信息', status: 3 },
+      { ou: 2, name: '企业基本信息', status: 3 }
+    ],
     orgManageInfo: [
       { ou: 1, name: '机构代码信息', status: 3 },
       { ou: 2, name: '企业基本信息', status: 3 },

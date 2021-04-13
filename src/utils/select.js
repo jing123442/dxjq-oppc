@@ -261,6 +261,7 @@ export function utilsModifyApplyType() {
   ]
 }
 
+// 签约状态
 export function utilsContractStatus() {
   return [
     { value: 1, label: '未签约' },
@@ -269,7 +270,8 @@ export function utilsContractStatus() {
   ]
 }
 
-export function utilsTransportStatus() {
+// 认证状态公用对象
+export function utilsCommonAuthStatus() {
   return [
     { value: 1, label: '待认证' },
     { value: 2, label: '已认证' },
@@ -321,6 +323,18 @@ export function utilsDyOrgList(type = null) {
         dateParam: { createDateFrom: '', createDateTo: '' }
       }
     },
+    props: {
+      value: 'orgId',
+      label: 'orgName'
+    }
+  }
+}
+
+export function utilsFillerParentList(type = null) {
+  return {
+    url: 'user/org/list_parent_filler',
+    node: ['data'],
+    params: {},
     props: {
       value: 'orgId',
       label: 'orgName'

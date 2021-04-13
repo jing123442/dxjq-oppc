@@ -141,3 +141,38 @@ export async function $userOrgPicAudit(data) {
 export async function $userOrgEnterStatus(data) {
   return await R({ url: 'user/org/enter_status_edit', method: 'POST', data })
 }
+
+// 查询司机详情信息
+export async function $userDriverDetailInfo(data) {
+  return await R({ url: 'user/driver/find_detail', method: 'POST', data })
+}
+
+// 增加平行加气站
+export async function $userAddChildFiller(data) {
+  return await R({ url: 'user/org/add_child_filler', method: 'POST', data })
+}
+
+// 能增加平行加气站列表
+export async function $userParentFillerList(data) {
+  return await R({ url: 'user/org/list_parent_filler', method: 'POST', data })
+}
+
+// 获取用户基本详情信息
+export async function $userFindBaseDetail(data) {
+  return await R({ url: 'user/user/find_detail', method: 'POST', data })
+}
+
+// 物流公司道路许可证图片上传
+export async function $userCarrierTranPicUpload(data) {
+  return await R({ url: 'user/org_pic/add_by_system_admin', method: 'POST', data })
+}
+
+// 导出物流公司列表
+export async function $userExportCarrierInfo(data) {
+  return await R({ url: 'user/org/export/carrier', method: 'POST', data, responseType: 'blob' })
+}
+
+// 导出加气站列表
+export async function $userExportFillerInfo(data) {
+  return await R({ url: 'user/org/export/filler', method: 'POST', data, responseType: 'blob' })
+}

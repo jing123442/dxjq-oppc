@@ -9,14 +9,18 @@ const getters = {
   filler_firmList_mode_list: item => app.mode.firmList,
   filler_firmList_page_status: item => app.list.firmList,
   filler_firmList_column: item => columns.firmList,
+  filler_filler_child_column: item => columns.fillerChild,
   filler_firmList_select_list: item => select.firmList,
   // 加气站企业列表---添加加气站
+  filler_manage_mode_list: item => app.mode.orgManageInfo,
   filler_gasstation_mode_list: item => app.mode.gasstation,
   filler_user_column: item => columns.fillerUser,
   // 加气站列表
   filler_info_mode_list: item => app.mode.info,
   filler_info_page_status: item => app.list.info,
   filler_info_column: item => columns.info,
+  // 加气站认证列表
+  filler_auth_list_column: item => columns.fillerAuthList,
   filler_info_select_list: item => select.info,
   // 加气站列表--打印机列表
   filler_printList_page_status: item => app.list.printList,

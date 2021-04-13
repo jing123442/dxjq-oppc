@@ -1,6 +1,10 @@
 <template>
   <div class="template-main">
     <em-table-list :tableListName="'usercashier'" ref="tables" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent"></em-table-list>
+
+    <el-dialog title="详情" :visible.sync="dialogDetailCarrierVisible" :width="add_edit_dialog" :append-to-body="true">
+      <nt-form v-if="dialogDetailCarrierVisible" ref="carrierUser" :formRef="'carrierUserForm'" :rowData="detailRow" :modeList="mode_curr_detail_list" :pageColumn="page_curr_detail_column" :selectList="select_list" :axios="axios" :inputType="'detail'" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="btnDetailClickEvent"></nt-form>
+    </el-dialog>
     <el-dialog title="请选择需要批量导入用户的企业" :visible.sync="dialogExportCarrierVisible" width="50%" :append-to-body="true">
       <nt-form v-if="dialogExportCarrierVisible" ref="carrierUser" :formRef="'carrierUserForm'" :rowData="businessRow" :pageColumn="page_business_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="btnUserClickEvent"></nt-form>
     </el-dialog>
@@ -52,7 +56,7 @@
 </template>
 <script>
 import { initVueDataOptions, queryDefaultParams, exportBlobToFiles, toolsFileHeaders } from '@/utils/tools'
-import { $resetPassword, $importCarrierDownloadFile, $exportCarrierUserFile, $userOrgList } from '@/service/user'
+import { $resetPassword, $importCarrierDownloadFile, $exportCarrierUserFile, $userOrgList, $userFindBaseDetail } from '@/service/user'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -85,7 +89,11 @@ export default {
       exportCarrierUserRow: {},
       exportCarrierUserRules: {},
       dialogExportCarrierVisible: false,
-      businessRow: {}
+      businessRow: {},
+      detailRow: {},
+      dialogDetailCarrierVisible: false,
+      page_curr_detail_column: [],
+      mode_curr_detail_list: []
     })
   },
   computed: {
@@ -93,6 +101,8 @@ export default {
       mode_list: 'user_cashier_mode_list',
       page_status: 'user_cashier_page_status',
       page_column: 'user_cashier_column',
+      mode_detail_list: 'common_user_carrier_mode_list',
+      page_detail_column: 'common_user_carrier_column',
       page_business_column: 'user_business_column',
       select_list: 'user_cashier_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
@@ -105,16 +115,32 @@ export default {
     this.headers = toolsFileHeaders(this)
   },
   methods: {
-    onListEvent(type, row) {
-      if (type == 'reset_pwd') {
+    async onListEvent(type, row) {
+      if (type === 'reset_pwd') {
         $resetPassword({ userId: row.userId }).then(response => {
           this.$message({
             message: response.message,
             type: 'success'
           })
         })
-      } else if (type == 'import') {
+      } else if (type === 'import') {
         this.selectCarrierUser(row)
+      } else if (type === 'self_detail') {
+        this.detailRow = row
+        this.detailRow._btn = this.formBtnList
+        this.mode_curr_detail_list = [...this.mode_detail_list]
+        this.page_curr_detail_column = this.page_detail_column
+        this.mode_curr_detail_list.pop()
+        const userInfo = await $userFindBaseDetail({ userId: row.userId }).then(response => {
+          return response.data
+        })
+        // 用户基本信息
+        this.detailRow = Object.assign({}, this.detailRow, userInfo.user)
+        // 用户认证信息
+        if (userInfo.userInfo) {
+          this.detailRow = Object.assign({}, this.detailRow, userInfo.userInfo)
+        }
+        this.dialogDetailCarrierVisible = true
       }
     },
     selectCarrierUser(row) {
@@ -132,6 +158,9 @@ export default {
 
         exportBlobToFiles(response, fileName)
       })
+    },
+    btnDetailClickEvent(btnObj, row) {
+      this.dialogDetailCarrierVisible = false
     },
     btnUserClickEvent(btnObj, row) {
       if (btnObj.type === 'ok') {
