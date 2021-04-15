@@ -1,12 +1,11 @@
 module.exports = {
   publicPath: './',
-  lintOnSave: false,
   devServer: {
     port: 8888,
     open: true,
     proxy: {
       '/api': {
-        target: 'https://dapi.auyen.com',
+        target: 'https://tapi.auyen.com',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'

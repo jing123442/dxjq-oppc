@@ -239,9 +239,23 @@
       align-items: center;
       .card-item {
         margin-right: 4.6rem;
+        &:first-child {
+          margin-right: 6.6rem;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
       }
-      .card-item:first-child {
-        margin-right: 6.6rem;
+      &.data-line:after {
+        content: '';
+        height: 70px;
+        width: 1px;
+        margin-left: 70px;
+        background-color: #e2e2e2;
+      }
+      &.data-line:last-child:after {
+        width: 0;
+        margin-left: 0px;
       }
     }
     .img-box {

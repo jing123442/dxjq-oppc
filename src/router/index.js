@@ -42,12 +42,12 @@ const routes = [
     ]
   },
   {
-    path: '/settlement',
-    name: 'settlementOrderDownload',
+    path: '/download',
+    name: 'downloadName',
     component: Layout,
     meta: { title: '下载中心', noCache: false },
     children: [
-      { path: 'orderDownload', component: inImport('settlement/download'), meta: { title: '下载中心', icon: 'icon-gongnengguanli', noCache: false } }
+      { path: 'downloadIndex', component: inImport('download/index'), meta: { title: '下载中心', icon: 'icon-gongnengguanli', noCache: false } }
     ]
   }
 ]
