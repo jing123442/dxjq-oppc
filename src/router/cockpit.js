@@ -9,7 +9,8 @@ export default [
     redirect: '/cockpit/cockpitIndex',
     meta: { title: '数据中心' },
     children: [
-      { path: 'cockpitIndex', component: inImport('cockpit/index'), name: 'cockpitIndex', meta: { title: '数据驾驶舱', icon: 'icon-gongnengguanli', noCache: false } }
+      { path: 'cockpitIndex', component: inImport('cockpit/index'), name: 'cockpitIndex', meta: { title: '数据驾驶舱', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'cockpitSinopec', component: inImport('cockpit/sinopec'), name: 'cockpitSinopec', meta: { title: '数据驾驶舱1.2', icon: 'icon-gongnengguanli', noCache: false } }
     ]
   }
 ]

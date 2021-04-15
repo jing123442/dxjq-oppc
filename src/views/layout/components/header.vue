@@ -2,19 +2,19 @@
   <div class="header">
     <el-row :gutter="10">
       <!--Logo area-->
-      <el-col :xs="16" :sm="18" :md="{span:22,offset:0}">
+      <el-col :xs="20" :sm="21" :md="{span:23,offset:0}">
         <div class="logo">
           <span class="logo_prefix">{{prefix}}</span>
           <span class="logo_suffix">{{suffix}}</span>
         </div>
       </el-col>
-      <el-col :xs="4" :sm="3" :md="1">
+      <!--<el-col :xs="4" :sm="3" :md="1">
         <div class="download-header">
           <div class="avatar-wrapper-down" @click="userInfoUpdate('download')">
             <img class="download-avatar" src="@/assets/images/home/download.png">
           </div>
         </div>
-      </el-col>
+      </el-col>-->
       <el-col :xs="4" :sm="3" :md="1">
         <div class="user-header">
           <el-dropdown trigger="click">
