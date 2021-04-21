@@ -37,7 +37,7 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 100, list: [{ type: 'self_detail', name: '详情' }] }
   ],
   fillerChild: [
-    { field: 'orgId', name: '企业名称', fixed: 'left', show: { type: 'select', ou: 1, obj: 'fillerParent', style: 'width: 90%;', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'orgId', name: '企业名称', fixed: 'left', show: { type: 'select', ou: 1, findKey: 'orgName', remote: true, obj: 'fillerParent', style: 'width: 90%;', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
     { field: 'orgShortName', name: '加气站名称', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
     { field: 'adminName', name: '姓名', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入姓名' } },
     { field: 'adminMobile', name: '手机号', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入手机号' } }
