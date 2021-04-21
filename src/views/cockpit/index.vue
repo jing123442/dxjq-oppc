@@ -1,5 +1,5 @@
 <template>
-  <div class="cockpit" ref="cockpit">
+  <div :class="isBrowser ? 'cockpit' : 'cockpit-px'" ref="cockpit">
     <div class="tool-bar">
       <div class="left-title">
         <div class="title">大象加气 · 管理驾驶舱</div>
@@ -150,7 +150,7 @@
 </template>
 <script>
 import { $strategyGasstationDistrictList } from '@/service/strategy'
-import { formateTData, formateParams, isTypeof } from '@/utils/tools'
+import { formateTData, formateParams, isTypeof, browserRedirect } from '@/utils/tools'
 import { $districtList } from '@/service/user'
 import { mapJsonData } from '@/mock/map'
 import { markIconImage } from '@/mock/mark'
@@ -162,6 +162,7 @@ export default {
   data() {
     return {
       cards: cardInfo,
+      isBrowser: browserRedirect(),
       cardsData: {
         amountTotal: { title: '', total: 0, contrast: 0, rate: 0 },
         gasQtyTotal: { title: '', total: 0, contrast: 0, rate: 0 },
