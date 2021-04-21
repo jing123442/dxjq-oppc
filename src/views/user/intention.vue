@@ -35,7 +35,7 @@
 </template>
 <script>
 import { isTypeof, initVueDataOptions, callbackPagesInfo } from '@/utils/tools'
-import { $verifySendMessage, $checkVerifyCode } from '@/service/message'
+import { $checkVerifyCode } from '@/service/message'
 import { InputVerifyCode } from '@/components/'
 import { mapGetters } from 'vuex'
 

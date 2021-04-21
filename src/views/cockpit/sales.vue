@@ -1,20 +1,24 @@
 <template>
-    <div class="template-main">
-      <em-table-list ref="tables" :tableListName="'settingmenu'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'menuId'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :options="{ lazy: false }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-      <el-dialog :title="childrenTitle" :visible.sync="dialogAddChildVisible" :width="add_edit_dialog" :append-to-body="true">
-        <nt-form v-if="dialogAddChildVisible" ref="addChild" :formRef="'addChildForm'" :rowData="addChildRow" :inputType="'show'" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventAddChild"></nt-form>
-      </el-dialog>
-    </div>
+  <div class="template-main">
+    <el-tabs v-model="active" type="card" @tab-click="handleClick">
+      <el-tab-pane label="今日实时" name="0">
+        <em-table-list ref="tables" :tableListName="'timeday'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'menuId'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :options="{ lazy: false }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+      </el-tab-pane>
+      <el-tab-pane label="历史时段" name="1">
+        <em-table-list ref="tables" :tableListName="'timehistory'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'menuId'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :options="{ lazy: false }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 <script>
-import { $menuAdd } from '@/service/user'
-import { initVueDataOptions, custFormBtnList } from '@/utils/tools'
+import { initVueDataOptions } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'settingmenu',
+  name: 'salestime',
   data() {
     return initVueDataOptions(this, {
+      active: 0,
       queryCustURL: {
         add: {
           url: 'user/menu/add',
@@ -33,7 +37,7 @@ export default {
           }
         },
         list: {
-          url: 'user/menu/menu_list',
+          url: 'settle/gasstation_monitor/full_district_list',
           method: 'post',
           parse: {
             tableData: ['data']
@@ -52,10 +56,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      page_column: 'authority_menu_column',
-      mode_list: 'authority_menu_mode_list',
-      page_status: 'authority_menu_page_status',
-      select_list: 'authority_menu_select_list',
+      page_column: 'cockpit_sales_column',
+      mode_list: 'cockpit_sales_mode_list',
+      mode_history_list: 'cockpit_history_column',
+      page_status: 'cockpit_sales_page_status',
+      select_list: 'cockpit_sales_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success',
@@ -66,45 +71,10 @@ export default {
   mounted: function () {},
   methods: {
     onListEvent(type, row) {
-      this.currType = type
-      if (type === 'add_child' || type === 'edit_child') {
-        this.addChildRow = type === 'add_child' ? { parentId: row.menuId } : row
-        this.childrenTitle = type === 'add_child' ? '新增子分类' : '编辑子分类'
-        this.addChildRow._btn = custFormBtnList()
-        this.dialogAddChildVisible = true
-      } else if (type === 'del_child') {
-        this.removeRow = row
-        this.removeRow.message = `确定删除【${row.name}】记录。`
-        this.dialogDelChildVisible = true
-      }
-    },
-    onListEventAddChild(btn, row) {
-      if (btn.type == 'ok') {
-        this.$refs.addChild.$refs.addChildForm.validate((valid) => {
-          if (valid) {
-            const params = {
-              clientId: row.clientId,
-              clientName: row.clientName,
-              menuIcon: row.menuIcon,
-              menuIconFont: row.menuIconFont,
-              menuId: row.menuId,
-              menuName: row.menuName,
-              noCache: Boolean(row.noCache),
-              parentId: row.parentId,
-              rank: Number(row.rank),
-              routeName: row.routeName,
-              routePath: row.routePath
-            }
 
-            $menuAdd(params).then((res) => {
-              this.$message.success(res.message)
-            })
-            this.dialogAddChildVisible = false
-          }
-        })
-      } else {
-        this.dialogAddChildVisible = false
-      }
+    },
+    handleClick() {
+
     },
     onReqParams(type, _this, callback) {
       const params = { clientId: 'woperation' }

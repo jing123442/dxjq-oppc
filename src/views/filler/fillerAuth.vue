@@ -73,6 +73,7 @@ export default {
       page_column: 'filler_auth_list_column',
       page_auth_column: 'common_org_auth_column',
       page_s_auth_column: 'common_org_s_auth_column',
+      page_sort_filler_column: 'common_org_gasstation_auth_column',
       page_unauth_other_column: 'common_org_filler_unauth_other_column',
       select_list: 'filler_firmList_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
@@ -87,9 +88,9 @@ export default {
       if (type === 'self_detail') {
         // 三证合一和三证认证方式
         if (row && row.authType == '1') {
-          this.auth_page_column = this.page_s_auth_column
+          this.auth_page_column = [...this.page_s_auth_column, ...this.page_sort_filler_column]
         } else {
-          this.auth_page_column = this.page_auth_column
+          this.auth_page_column = [...this.page_auth_column, ...this.page_sort_filler_column]
         }
         this.inputType = 'detail'
         this.auth_page_column = [...this.auth_page_column, ...this.page_unauth_other_column]

@@ -79,6 +79,7 @@ export default {
       page_auth_column: 'common_org_auth_column',
       page_s_auth_column: 'common_org_s_auth_column',
       page_auth_filler_column: 'common_org_filler_auth_other_column',
+      page_sort_filler_column: 'common_org_gasstation_auth_column',
       page_user_column: 'filler_user_column',
       page_filler_column: 'filler_filler_child_column',
       select_list: 'filler_firmList_select_list',
@@ -224,9 +225,9 @@ export default {
     },
     resetAuthPageCol() {
       if (this.active == '2') {
-        this.auth_page_column = this.page_auth_column
+        this.auth_page_column = [...this.page_auth_column, ...this.page_sort_filler_column]
       } else {
-        this.auth_page_column = this.page_s_auth_column
+        this.auth_page_column = [...this.page_s_auth_column, ...this.page_sort_filler_column]
       }
       if (this.currType == 'cert' || this.currType == 'self_detail') {
         this.tabDisabled = true

@@ -10,6 +10,7 @@ const getters = {
   // 企业信息，分一证和三证
   common_org_auth_column: item => [...columns.orgOAuth, ...columns.orgAuthInfo],
   common_org_s_auth_column: item => [...columns.orgSAuth, ...columns.orgAuthInfo],
+  common_org_gasstation_auth_column: item => [...columns.gasstationFieldInfo],
   // 物流公司
   common_org_auth_other_column: item => [...columns.orgAuthManageInfo, ...columns.orgAuthCarrierInfo, ...columns.orgAuthContractInfo, ...columns.orgAuthOther],
   common_org_unauth_other_column: item => [...columns.orgAuthManageInfo, ...columns.orgAuthCarrierInfo],

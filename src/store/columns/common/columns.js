@@ -3,30 +3,33 @@ import file from '../../modules/file'
 /* eslint-disable */
 const columns = {
   orgOAuth: [
-    { field: 'taxpayer', name: '统一社会信用代码', nameSpan: 6, show: { type: 'text', ou: 1 }, detail: { type: 'span', ou: 1 } }
+    { field: 'taxpayer', name: '统一社会信用代码', nameSpan: 6, show: { type: 'text', ou: 1, placeholder: '请输入统一社会信用代码' }, detail: { type: 'span', ou: 1 } }
   ],
   orgSAuth: [
-    { field: 'businessLicense', name: '营业执照号', nameSpan: 6, show: { type: 'text', ou: 1 }, detail: { type: 'span', ou: 1 } },
-    { field: 'taxRegister', name: '税务登记证', nameSpan: 6, show: { type: 'text', ou: 1 }, detail: { type: 'span', ou: 1 } },
-    { field: 'organizationCode', name: '组机机构代码', nameSpan: 6, show: { type: 'text', ou: 1 }, detail: { type: 'span', ou: 1 } }
+    { field: 'businessLicense', name: '营业执照号', nameSpan: 6, show: { type: 'text', ou: 1, placeholder: '请输入营业执照号' }, detail: { type: 'span', ou: 1 } },
+    { field: 'taxRegister', name: '税务登记证', nameSpan: 6, show: { type: 'text', ou: 1, placeholder: '请输入税务登记证' }, detail: { type: 'span', ou: 1 } },
+    { field: 'organizationCode', name: '组机机构代码', nameSpan: 6, show: { type: 'text', ou: 1, placeholder: '请输入组机机构代码' }, detail: { type: 'span', ou: 1 } }
   ],
   orgAuthInfo: [
-    { field: 'orgName', name: '企业名称', nameSpan: 6, show: { type: 'text', ou: 2 }, detail: { type: 'span', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
-    { field: 'legalperson', name: '法人姓名', nameSpan: 6, show: { type: 'text', ou: 2 }, detail: { type: 'span', ou: 2 } },
-    { field: 'legalPhone', name: '法人联系电话', nameSpan: 6, show: { type: 'text', ou: 2 }, detail: { type: 'span', ou: 2 }, rules: [{ validator: 'isValidateMobile', message: '请输入正确格式的法人联系电话', trigger: 'blur' }] },
-    { field: 'identityType', name: '法人证件类型', nameSpan: 6, show: { type: 'select', ou: 2, obj: 'identityType' }, detail: { type: 'span', model: 'select', obj: 'identityType', ou: 2 } },
-    { field: 'legalIds', name: '法人证件号', nameSpan: 6, show: { type: 'text', ou: 2 }, detail: { type: 'span', ou: 2 } },
-    { field: 'taxpayer', name: '纳税人识别号', nameSpan: 6, show: { type: 'text', ou: 2 }, detail: { type: 'span', ou: 2 } },
-    { field: 'account', name: '企业对公账户', nameSpan: 6, show: { type: 'text', ou: 2 }, detail: { type: 'span', ou: 2 } },
-    { field: 'bank', name: '开户银行名称', nameSpan: 6, show: { type: 'select', obj: 'bankList', ou: 2 }, detail: { type: 'span', ou: 2 } },
-    { field: 'bankName', name: '开户行支行名称', nameSpan: 6, show: { type: 'text', ou: 2 }, detail: { type: 'span', ou: 2 } },
-    { field: 'unionBank', name: '支行行号', nameSpan: 6, show: { type: 'text', ou: 2 }, detail: { type: 'span', ou: 2 }, rules: [{ validator: 'isValidateUnionBank', message: '请输入正确格式的支行行号', trigger: 'blur' }] },
-    { field: 'contacts', name: '联系人', nameSpan: 6, show: { type: 'text', ou: 2 }, detail: { type: 'span', ou: 2 } },
-    { field: 'mobile', name: '联系电话', nameSpan: 6, show: { type: 'text', ou: 2 }, detail: { type: 'span', ou: 2 }, rules: [{ validator: 'isValidateMobile', message: '请输入正确格式的联系电话', trigger: 'blur' }] },
-    { field: 'email', name: '邮箱', nameSpan: 6, show: { type: 'text', ou: 2 }, detail: { type: 'span', ou: 2 } },
-    { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2 }, detail: { type: 'span', ou: 2 } },
+    { field: 'orgName', name: '企业名称', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入企业名称' }, detail: { type: 'span', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'legalperson', name: '法人姓名', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入法人姓名' }, detail: { type: 'span', ou: 2 } },
+    { field: 'legalPhone', name: '法人联系电话', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入法人联系电话' }, detail: { type: 'span', ou: 2 }, rules: [{ validator: 'isValidateMobile', message: '请输入正确格式的法人联系电话', trigger: 'blur' }] },
+    { field: 'identityType', name: '法人证件类型', nameSpan: 6, show: { type: 'select', ou: 2, obj: 'identityType', placeholder: '请选择法人证件类型' }, detail: { type: 'span', model: 'select', obj: 'identityType', ou: 2 } },
+    { field: 'legalIds', name: '法人证件号', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入法人证件号' }, detail: { type: 'span', ou: 2 } },
+    { field: 'taxpayer', name: '纳税人识别号', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入纳税人识别号' }, detail: { type: 'span', ou: 2 } },
+    { field: 'account', name: '企业对公账户', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入企业对公账户' }, detail: { type: 'span', ou: 2 } },
+    { field: 'bank', name: '开户银行名称', nameSpan: 6, show: { type: 'select', obj: 'bankList', ou: 2, placeholder: '请选择开户银行名称' }, detail: { type: 'span', ou: 2 } },
+    { field: 'bankName', name: '开户行支行名称', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入开户行支行名称' }, detail: { type: 'span', ou: 2 } },
+    { field: 'unionBank', name: '支行行号', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入支行行号' }, detail: { type: 'span', ou: 2 }, rules: [{ validator: 'isValidateUnionBank', message: '请输入正确格式的支行行号', trigger: 'blur' }] },
+    { field: 'contacts', name: '联系人', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入联系人' }, detail: { type: 'span', ou: 2 } },
+    { field: 'mobile', name: '联系电话', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入联系电话' }, detail: { type: 'span', ou: 2 }, rules: [{ validator: 'isValidateMobile', message: '请输入正确格式的联系电话', trigger: 'blur' }] },
+    { field: 'email', name: '邮箱', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入邮箱' }, detail: { type: 'span', ou: 2 } },
+    { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入详细地址' }, detail: { type: 'span', ou: 2 } },
     { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 }, detail: { type: 'span', model: 'select', ou: 2, obj: 'status' } },
     { field: 'authDate', name: '认证时间', nameSpan: 6, detail: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } }
+  ],
+  gasstationFieldInfo: [
+    { field: 'orgShortName', name: '加气站名称', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入加气站名称' }, detail: { type: 'span', ou: 2 }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
   ],
   orgAuthManageInfo: [
     { field: 'manageInfo', name: '管理员', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 3, detail: { type: 'span', ou: 3, style: 'width: 97.5%' } }

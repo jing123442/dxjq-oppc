@@ -6,8 +6,8 @@ import { utilsTableOptionsToFilters, utilsCommonAuthStatus, utilsContractStatus 
 const columns = {
   firmList: [
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { noShow: 1 } },
-    { field: 'orgName', name: '加气站名称', fixed: 'left', show: { type: 'text', ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请输入加气站名称' }, search: { type: 'text', field: 'keyword', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
-    // { field: 'orgShortName', name: '加气站名称' },
+    { field: 'orgName', name: '企业名称', fixed: 'left', show: { type: 'text', ou: 1, obj: 'orgId', style: 'width: 90%;', placeholder: '请输入企业名称' }, search: { type: 'text', field: 'keyword', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'orgShortName', name: '加气站名称' },
     { field: 'address', name: '地址', show: { type: 'cascader', fieldList: ['address', 'areas'], formatter: 'address', obj: 'cascaderAddress', props: { value: 'label', label: 'label' }, iType: 'string', sign: '', ou: 1, noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'change' }] },
     { field: 'areas', name: '详细地址', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址！', trigger: 'blur' }] },
     { field: 'status', name: '状态', formatter: 'status', width: 60 },
@@ -22,8 +22,8 @@ const columns = {
   ],
   fillerAuthList: [
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true },
-    { field: 'orgName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
-    // { field: 'orgShortName', name: '加气站名称' },
+    { field: 'orgName', name: '企业名称', fixed: 'left', search: { type: 'text', placeholder: '请输入企业名称' } },
+    { field: 'orgShortName', name: '加气站名称' },
     { field: 'address', name: '地址' },
     { field: 'mobile', name: '管理员手机号', width: 110 },
     { field: 'status', name: '状态', formatter: 'status', width: 60 },
@@ -80,7 +80,7 @@ const columns = {
   ],
   account: [
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', hide: true, width: 50 },
-    { field: 'orgName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
+    { field: 'orgName', name: '企业名称', fixed: 'left', search: { type: 'text', placeholder: '请输入企业名称' } },
     { field: 'accountId', name: '账号' },
     { field: 'balance', name: '账户余额' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 100, list: [{ type: 'list', name: '流水列表' }] }

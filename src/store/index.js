@@ -20,6 +20,7 @@ import order from './columns/order/index'
 import customer from './columns/customer/index'
 import authority from './columns/authority/index'
 import common from './columns/common/index'
+import cockpit from './columns/cockpit/index'
 
 const PAGE_CONFIG = {
   debug: state => state.app.debug,
@@ -46,7 +47,7 @@ const PAGE_CONFIG = {
 
   subpage_full_screen: state => state.app.subPageFullScreen
 }
-const getters = Object.assign(PAGE_CONFIG, mine.getters, userList.getters, business.getters, filler.getters, carrier.getters, price.getters, settlement.getters, market.getters, setting.getters, message.getters, order.getters, customer.getters, authority.getters, common.getters)
+const getters = Object.assign(PAGE_CONFIG, mine.getters, userList.getters, business.getters, filler.getters, carrier.getters, price.getters, settlement.getters, market.getters, setting.getters, message.getters, order.getters, customer.getters, authority.getters, common.getters, cockpit.getters)
 
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -67,7 +68,8 @@ export default new Vuex.Store({
     message,
     order,
     customer,
-    authority
+    authority,
+    cockpit
   },
   getters: getters
 })
