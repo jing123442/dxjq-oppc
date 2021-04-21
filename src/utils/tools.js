@@ -356,3 +356,22 @@ export function settlePeriodInterval(periodYear, periodMonth) {
     return `${periodYear}年${(periodMonth - 1)}月25日 00:00:00至${periodYear}年${periodMonth}月24日 23:59:59`
   }
 }
+
+// 判断请求终端类型
+export function browserRedirect() {
+  var sUserAgent = navigator.userAgent.toLowerCase()
+  console.log(sUserAgent)
+  var bIsIpad = sUserAgent.match(/ipad/i) == 'ipad'
+  var bIsIphoneOs = sUserAgent.match(/iphone os/i) == 'iphone os'
+  var bIsMidp = sUserAgent.match(/midp/i) == 'midp'
+  var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == 'rv:1.2.3.4'
+  var bIsUc = sUserAgent.match(/ucweb/i) == 'ucweb'
+  var bIsAndroid = sUserAgent.match(/android/i) == 'android'
+  var bIsCE = sUserAgent.match(/windows ce/i) == 'windows ce'
+  var bIsWM = sUserAgent.match(/windows mobile/i) == 'windows mobile'
+  if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+    return false
+  } else {
+    return true
+  }
+}
