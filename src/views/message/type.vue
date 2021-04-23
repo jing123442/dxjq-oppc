@@ -62,9 +62,8 @@ export default {
         children: {
           url: 'message/qa_catalogs/list',
           method: 'post',
-          param: {
-            parentKey: 'parentId',
-            parentValue: 'id'
+          props: {
+            parentId: 'id'
           },
           parse: {
             tableData: ['data']

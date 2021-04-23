@@ -125,3 +125,13 @@ export async function $findDistrictPriceTrendList (data) {
 export async function $settleTradeGasstationsOrderInfo (data) {
   return await R({ url: 'settle/gas_order/get_trade_gasstations', data })
 }
+
+// 导出实时监控数据
+export async function $settleGasstationCurrentSales (data) {
+  return await R({ url: 'settle/gasstation_monitor/current_export', data, responseType: 'blob' })
+}
+
+// 导出历史监控数据
+export async function $settleGasstationHistorySales (data) {
+  return await R({ url: 'settle/gasstation_monitor/history_export', data, responseType: 'blob' })
+}
