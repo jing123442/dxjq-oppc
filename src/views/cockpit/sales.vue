@@ -95,7 +95,9 @@ export default {
       woporg: 'woporg'
     })
   },
-  created: function () {},
+  created: function () {
+    console.log(formateTData(1619156080000, 'all'))
+  },
   mounted: function () {},
   methods: {
     onListEvent(type, row) {
@@ -119,9 +121,18 @@ export default {
       this.initHistoryStatus = true
       this.page_history_status = 1
     },
+    resetTitleName(timestamp, datetime) {
+      clearInterval(this.timer)
+      this.timer = setInterval(() => {
+        timestamp = Number(timestamp) + 1000
+        this.custTodayTableTitle = '今日实时【' + datetime + '】 ' + formateTData(timestamp, 'all')
+      }, 1000)
+    },
     updateColumnValue(dataList, callback) {
       this.currDataTime = dataList[0].dateTime
-      this.custTodayTableTitle = '今日实时【' + this.currDataTime + '】'
+
+      this.custTodayTableTitle = '今日实时【' + dataList[0].queryDateTime + '】 ' + this.currDataTime
+      this.resetTitleName(Date.parse(this.currDataTime), dataList[0].queryDateTime)
       // eslint-disable-next-line standard/no-callback-literal
       callback(dataList)
     },
