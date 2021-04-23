@@ -61,11 +61,6 @@ const truckToDriverList = (value) => {
   return result.join(' | ')
 }
 
-// 格式化卡车对应多个司机
-const salesTableName = (value, field, row) => {
-  console.log(arguments)
-}
-
 const roleList = (value) => {
   const result = []
   value.forEach(item => {
@@ -124,6 +119,5 @@ export {
   formatCardNumber,
   truckToDriverList,
   roleList,
-  salesTableName,
   tableContractStatusToLabel
 }
