@@ -2,10 +2,10 @@
   <div class="template-main">
     <el-tabs v-model="active" type="card" @tab-click="handleClick">
       <el-tab-pane label="今日实时" name="0">
-        <em-table-list v-if="active == 0" ref="tables" :tableListName="'timeday'" :custTableTitle="custTodayTableTitle" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'name'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :options="{ lazy: true }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue"></em-table-list>
+        <em-table-list ref="tables1" :tableListName="'timeday'" :custTableTitle="custTodayTableTitle" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'name'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :options="{ lazy: true }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue"></em-table-list>
       </el-tab-pane>
       <el-tab-pane label="历史时段" name="1">
-        <em-table-list v-if="active == 1" ref="tables" :tableListName="'timehistory'" :custTableTitle="custYesterdayTableTitle" :authButtonList="authButtonList" :buttonsList="buttonsHistoryList" :axios="axios" :queryCustURL="queryHistoryCustURL" :composeParam="composeParam" :rowKey="'name'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_history_status" :page_column="mode_history_list" :options="{ lazy: true }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+        <em-table-list ref="tables2" :tableListName="'timehistory'" :custTableTitle="custYesterdayTableTitle" :authButtonList="authButtonList" :buttonsList="buttonsHistoryList" :axios="axios" :queryCustURL="queryHistoryCustURL" :composeParam="composeParam" :rowKey="'name'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_history_status" :page_column="mode_history_list" :options="{ lazy: true }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -95,14 +95,12 @@ export default {
       woporg: 'woporg'
     })
   },
-  created: function () {
-    console.log(formateTData(1619156080000, 'all'))
-  },
+  created: function () {},
   mounted: function () {},
   methods: {
     onListEvent(type, row) {
       if (type == 'query') {
-        this.$refs.tables.initDataList()
+        this.$refs.tables1.initDataList()
       } else if (type === 'export') {
         $settleGasstationCurrentSales({ queryDateTime: this.currDataTime }).then(response => {
           const fileName = '实时销量监控数据' + Date.parse(new Date()) + '.xls'
@@ -118,8 +116,8 @@ export default {
       }
     },
     handleClick() {
-      this.initHistoryStatus = true
-      this.page_history_status = 1
+      /* this.initHistoryStatus = true
+      this.page_history_status = 1 */
     },
     resetTitleName(timestamp, datetime) {
       clearInterval(this.timer)
@@ -131,8 +129,8 @@ export default {
     updateColumnValue(dataList, callback) {
       this.currDataTime = dataList[0].dateTime
 
-      this.custTodayTableTitle = '今日实时【' + dataList[0].queryDateTime + '】 ' + this.currDataTime
-      this.resetTitleName(Date.parse(this.currDataTime), dataList[0].queryDateTime)
+      this.custTodayTableTitle = '今日实时【' + this.currDataTime + '】'
+      // this.resetTitleName(Date.parse(this.currDataTime), dataList[0].queryDateTime) // 计时器
       // eslint-disable-next-line standard/no-callback-literal
       callback(dataList)
     },
@@ -143,7 +141,7 @@ export default {
             this.page_history_status = 13
             this.timers = setTimeout(() => {
               this.initHistoryStatus = false
-              this.$refs.tables.initDataList()
+              this.$refs.tables2.initDataList()
             }, 100)
           }
         }
