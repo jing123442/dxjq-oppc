@@ -138,7 +138,7 @@ export default {
       if (this.initHistoryStatus) {
         if (_this.tableListName === 'timehistory') {
           if (_this.finds.queryDateTime) {
-            this.page_history_status = 13
+            this.page_history_status = 5
             this.timers = setTimeout(() => {
               this.initHistoryStatus = false
               this.$refs.tables2.initDataList()

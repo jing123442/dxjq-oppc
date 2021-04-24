@@ -243,7 +243,7 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      const query = { param: { dateFrom: '', dateTo: '' } }
+      const query = { param: { } }
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {

@@ -1,6 +1,8 @@
 const app = {
   mode: {},
-  list: {}
+  list: {
+    sales: 5
+  }
 }
 
 export default app
