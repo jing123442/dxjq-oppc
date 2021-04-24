@@ -1,4 +1,4 @@
-import { utilsStatus, utilsTruckType, utilsAutoAccountType, utilsAuthStatus, utilsDyOrgList, utilsAutoAccount, utilsAccountType, utilsOrderStatus, utilsDriverList, utilsIdentityType, utilsTradeType, utilsBankList } from '@/utils/select'
+import { utilsStatus, utilsTruckType, utilsAutoAccountType, utilsAuthStatus, utilsDyOrgList, utilsAutoAccount, utilsAccountType, utilsOrderStatus, utilsDriverList, utilsIdentityType, utilsTradeType, utilsBankList, utilsOrgSubType } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
@@ -10,7 +10,8 @@ const select = {
     truckType: utilsTruckType(),
     autoAccount: utilsAutoAccountType(),
     identityType: utilsIdentityType(),
-    bankList: utilsBankList()
+    bankList: utilsBankList(),
+    orgSubType: utilsOrgSubType()
   },
   firmAccount: {
     orgId: utilsDyOrgList(2),

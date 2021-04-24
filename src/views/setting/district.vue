@@ -47,8 +47,8 @@ export default {
           }
         },
         list: {
-          url: 'user/district/list',
-          method: 'post',
+          url: 'user/district/district/list',
+          method: 'get',
           parse: {
             tableData: ['data']
           }

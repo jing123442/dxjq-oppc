@@ -22,7 +22,8 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 80, list: [{ type: 'detail', name: '详情' }] }
   ],
   fillerOrder: [
-    { field: 'gasstationName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
+    { field: 'gasstationName', name: '企业名称', fixed: 'left' },
+    { field: 'nickName', name: '加气站名称', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'period', name: '', hide: true, search: { type: 'date-picker', model: 'month', placeholder: '请选择账期', clearable: false, value: (function() { const dateObj = formatPeriodDate(); return (dateObj.periodYear + '-' + dateObj.periodMonth + '-' + '01 00:00:00') }()) } },
     { field: 'gasQtyTotal', name: '加气量' },
     { field: 'gasamountTotal', note: '长城奥扬收款总额', name: '加气站结算金额' },
@@ -36,7 +37,8 @@ const columns = {
   orderDay: [
     { field: 'orderId', name: '订单编号', fixed: 'left', search: { type: 'text', serial: 2, placeholder: '请输入内容', findField: 'orderId' }, currSearch: { type: 'select', hideName: true, obj: 'currDaySearch', value: 'orderId' } },
     { field: 'updateDate', name: '支付时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: 'date', field: 'date', serial: 1, value: (function() { return formatDate(new Date(), 'yyyy-MM-dd') }()) } },
-    { field: 'gasstationName', name: '加气站名称' },
+    { field: 'gasstationName', name: '企业名称' },
+    { field: 'nickName', name: '加气站名称' },
     { field: 'carrierOrgName', name: '物流公司' },
     { field: 'carNumber', name: '车牌号' },
     { field: 'gasQty', name: '加气量' },
@@ -70,7 +72,8 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'recharge_list', name: '充值对账' }, { type: 'settle_order_list', name: '结算订单' }, { type: 'truck_list', name: '卡车汇总' }] }
   ],
   carrierToFiller: [
-    { field: 'gasstationName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
+    { field: 'gasstationName', name: '企业名称', fixed: 'left' },
+    { field: 'nickName', name: '加气站名称', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'gasQtyTotal', name: '加气量' },
     { field: 'amountTotal', note: '物流公司付款金额', name: '平台结算金额' },
     { field: 'discountTotal', name: '优惠金额' },
@@ -111,7 +114,8 @@ const columns = {
     { field: 'orderId', name: '订单编号', fixed: 'left' },
     { field: 'period', name: '', hide: true, search: { type: 'date-picker', model: 'month', placeholder: '请选择账期', clearable: false, value: (function() { const dateObj = formatPeriodDate(); return (dateObj.periodYear + '-' + dateObj.periodMonth + '-' + '01 00:00:00') }()) } },
     { field: 'updateDate', name: '支付时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
-    { field: 'gasstationName', name: '加气站' },
+    { field: 'gasstationName', name: '企业名称' },
+    { field: 'nickName', name: '加气站' },
     { field: 'carrierOrgName', name: '物流公司' },
     { field: 'carNumber', name: '车牌号' },
     { field: 'gasQty', name: '加气量' },
@@ -133,7 +137,8 @@ const columns = {
     { field: 'carNumber', name: '车牌号' },
     { field: 'lngFromName', name: '气源' },
     { field: 'storeWeight', name: '入库重量(公斤)' },
-    { field: 'gasstationName', name: '加气站名称' }
+    { field: 'gasstationName', name: '企业名称' },
+    { field: 'nickName', name: '加气站名称' }
   ]
 }
 

@@ -38,6 +38,14 @@ const tableContractStatusToLabel = value => {
   return utilsContractStatus[value]
 }
 
+const tableFormatAreaLabel = areaList => {
+  const areaName = []
+  areaList.forEach(item => {
+    areaName.push(item.areaName)
+  })
+  return areaName.join(' / ')
+}
+
 // 单位转换 * 1000
 const kiloToTon = (value) => { return value ? Number(value) * 1000 : (value === 0 ? 0 : '') }
 
@@ -119,5 +127,6 @@ export {
   formatCardNumber,
   truckToDriverList,
   roleList,
+  tableFormatAreaLabel,
   tableContractStatusToLabel
 }

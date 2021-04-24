@@ -2,7 +2,7 @@ import { buttonPublishReleaseList } from '@/utils/button'
 
 const columns = {
   listing: [
-    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left' },
     { field: 'address', name: '加气站地址', search: { type: 'text', field: 'keyWord', placeholder: '请输入名称/地址/操作人' } },
     { field: 'platformPrice', name: '平台挂牌价(元/公斤)' },
     { field: 'harbourPrice', name: '出港价(元/吨)' },
@@ -14,7 +14,7 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 230, fixed: 'right', list: [{ type: 'config_source', name: '液源地选择' }, { type: 'list', name: '变更记录' }, { type: 'config_gas_price', name: '气价调节' }] }
   ],
   listingLog: [
-    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left' },
     { field: 'harbourPrice', name: '出港价(元/吨)' },
     { field: 'benefit', name: '区域优惠(元/吨)' },
     { field: 'freight', name: '运费(元/吨)' },
@@ -59,7 +59,7 @@ const columns = {
     { field: 'info', name: '', lg: 24, xl: 24, show: { type: 'span', value: '确认要删除该记录！' } }
   ],
   estimate: [
-    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left', search: { type: 'text', field: 'keyWord', placeholder: '请输入加气站' } },
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left', search: { type: 'text', field: 'keyWord', placeholder: '请输入加气站' } },
     { field: 'address', name: '加气站地址', ispush: false },
     { field: 'lngFromId', name: '', hide: true },
     { field: 'freight', name: '配置运费(元/吨)', nameSpan: 10, show: { type: 'text' }, rules: [{ required: true, message: '请输入配置运费', trigger: 'blur' }] },
@@ -70,7 +70,7 @@ const columns = {
   estimateLog: [
     { field: 'operatorName', name: '操作人', fixed: 'left' },
     { field: 'operatorDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
-    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName' },
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'nickName' },
     { field: 'freight', name: '配置运费(元/吨)' },
     { field: 'calFreight', name: '计算运费(元/吨)' },
     { field: 'mileage', name: '距液源地里程(公里)' }
@@ -86,13 +86,13 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'list', name: '查看' }] }
   ],
   mileage: [
-    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
-    { field: 'address', name: '加气站地址', search: { type: 'text', field: 'keyWord', placeholder: '请输入加气站名称' } },
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left', search: { type: 'text', field: 'keyWord', placeholder: '请输入加气站名称' } },
+    { field: 'address', name: '加气站地址' },
     { field: 'mileage', name: '距液源地里程(公里)', nameSpan: 7, show: { type: 'text' } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'edit', name: '配置' }, { type: 'list', name: '变更记录' }] }
   ],
   mileageLog: [
-    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left' },
     { field: 'mileage', name: '距液源地里程(公里)' },
     { field: 'operatorName', name: '操作人' },
     { field: 'operatorDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all', width: 140 }
@@ -107,7 +107,7 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 130, align: 'left', list: (scope) => buttonPublishReleaseList(scope) }
   ],
   releaseLog: [
-    { field: 'gasstationName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
+    { field: 'nickName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'platformPrice', name: '平台挂牌价(元/公斤)' },
     { field: 'harbourPrice', name: '出港价(元/吨)' },
     { field: 'benefit', name: '区域优惠(元/吨)' },

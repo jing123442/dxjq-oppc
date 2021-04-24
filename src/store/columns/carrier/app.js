@@ -9,6 +9,13 @@ const app = {
       { ou: 1, name: '机构代码信息', status: 3 },
       { ou: 2, name: '企业基本信息', status: 3 }
     ],
+    selfManageInfo: [
+      { ou: 2, name: '个人车主基本信息', status: 3 },
+      { ou: 3, name: '管理员信息', status: 3 },
+      { ou: 4, name: '企业认证', status: 3 },
+      { ou: 5, name: '平台合同', status: 3 },
+      { ou: 6, name: '账号授权', status: 3 }
+    ],
     orgManageInfo: [
       { ou: 1, name: '机构代码信息', status: 3 },
       { ou: 2, name: '企业基本信息', status: 3 },

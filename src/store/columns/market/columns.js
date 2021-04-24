@@ -18,13 +18,13 @@ const columns = {
     { field: 'market', name: '长城奥扬市场开发费用', nameSpan: 8, hide: true, show: { type: 'text', style: 'width: 80%', util: ' 元/吨' } }
   ],
   profit: [
-    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left', search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站名称' }, ispush: false },
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left', search: { type: 'text', field: 'nickName', placeholder: '请输入加气站名称' }, ispush: false },
     { field: 'profitQuota', name: '加气站利润限额(元/公斤)', nameSpan: 9, show: { type: 'text', placeholder: '请输入加气站利润限额' }, rules: [{ required: true, message: '请输入加气站利润限额', trigger: 'blur' }] },
     { field: 'profit', name: '加气站利润(元/公斤)' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 140, fixed: 'right', list: [{ type: 'config', name: '配置' }, { type: 'list', name: '变更记录' }] }
   ],
   profitLog: [
-    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left' },
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left' },
     { field: 'profitQuota', name: '加气站利润限额(元/公斤)' },
     { field: 'profit', name: '加气站利润(元/公斤)' },
     { field: 'operatorName', name: '操作人' },

@@ -13,6 +13,7 @@ const getters = {
   // 物流公司--详情orgManageInfo
   carrier_org_manage_mode_list: item => app.mode.orgAddManageInfo,
   carrier_org_detail_mode_list: item => app.mode.orgManageInfo,
+  carrier_self_detail_mode_list: item => app.mode.selfManageInfo,
   carrier_logisticsDetail_column: item => columns.logisticsDetail,
   // 待审核物流公司
   carrier_unauth_mode_list: item => app.mode.orgManageInfo,

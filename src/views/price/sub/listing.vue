@@ -104,6 +104,8 @@ export default {
       $listingPriceAlg().then(response => {
         this.fullscreenLoading = false
         this.$refs.tables.initDataList()
+      }).catch(() => {
+        this.fullscreenLoading = false
       })
     },
     onListEventFrom(btnObj, row) {

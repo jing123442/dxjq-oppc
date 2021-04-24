@@ -1,10 +1,17 @@
+import { buttonDistrictManagerList } from '@/utils/button'
+
+/* eslint-disable */
 const columns = {
   district: [
     { field: 'districtId', name: 'id', hide: true, show: { type: 'hide' } },
-    { field: 'districtName', name: '区域名称', fixed: 'left', show: { type: 'text', placeholder: '请输入区域名称' }, rules: [{ required: true, message: '请输入区域名称', trigger: 'blur' }] },
-    { field: 'districtLeader', name: '管理员', show: { type: 'text', placeholder: '请输入管理员' }, rules: [{ required: true, message: '请输入管理员', trigger: 'blur' }] },
-    { field: 'districtCitys', name: '区域城市', show: { type: 'textarea', placeholder: '请输入区域城市' }, rules: [{ required: true, message: '请输入区域城市', trigger: 'blur' }] },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'config', name: '配置加气站' }, { type: 'edit', name: '修改' }, { type: 'del', name: '删除' }] }
+    { field: 'districtName', name: '业务区域', fixed: 'left', width: 150,
+      show: { type: 'text', placeholder: '请输入区域名称' },
+      rules: [{ required: true, message: '请输入区域名称', trigger: 'blur' }] },
+    { field: 'areaParams', name: '行政区域', stype: 'format', formatFun: 'tableFormatAreaLabel' },
+    { field: 'userCount', name: '授权账号', width: 80 },
+    { field: 'gasCount', name: '加气站', width: 80 },
+    { field: 'carrierCount', name: '物流客户', width: 80 },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 460, list: params => buttonDistrictManagerList(params) }
   ],
   withdraw: [
     { field: 'orgTypeName', name: '账户类型', fixed: 'left' },

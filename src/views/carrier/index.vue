@@ -111,9 +111,12 @@ export default {
       page_column_addCar: 'carrier_addCar_column',
       select_list: 'carrier_logistics_select_list',
       page_auth_column: 'common_org_auth_column',
+      page_self_column: 'common_self_auth_column',
       page_s_auth_column: 'common_org_s_auth_column',
+      page_carrier_column: 'common_org_carrier_auth_column',
       page_auth_other_column: 'common_org_auth_other_column',
       mode_add_org_manage: 'carrier_org_manage_mode_list',
+      mode_detail_self_manage: 'carrier_self_detail_mode_list',
       mode_detail_org_manage: 'carrier_org_detail_mode_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
@@ -138,7 +141,7 @@ export default {
       } else {
         this.currType = type
         // 重置page_column值
-        this.resetAuthPageCol()
+        this.resetAuthPageCol(row)
 
         // 重置tab标签值
         this.active = row && row.authType ? '' + row.authType : '2'
@@ -159,7 +162,11 @@ export default {
             ]
           }
         } else {
-          this.auth_page_mode = this.mode_detail_org_manage
+          if (row.orgSubType == 22) {
+            this.auth_page_mode = this.mode_detail_self_manage
+          } else {
+            this.auth_page_mode = this.mode_detail_org_manage
+          }
           this.authRow._btn = custFormBtnList()
           this.orgAuthList(row)
         }
@@ -237,7 +244,7 @@ export default {
       this.dialogAddCarVisible = true
     },
     onReqParams(type, _this, callback) {
-      const query = { param: { dateFrom: '', dateTo: '' } }
+      const query = { param: { dateFrom: '', dateTo: '', org: {} } }
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
@@ -313,12 +320,17 @@ export default {
     handleClick() {
       this.resetAuthPageCol()
     },
-    resetAuthPageCol() {
-      if (this.active == '2') {
-        this.auth_page_column = this.page_auth_column
+    resetAuthPageCol(row = {}) {
+      if (row.orgSubType && row.orgSubType == 22) {
+        this.auth_page_column = [...this.page_self_column, ...this.page_carrier_column]
       } else {
-        this.auth_page_column = this.page_s_auth_column
+        if (this.active == '2') {
+          this.auth_page_column = [...this.page_auth_column, ...this.page_carrier_column]
+        } else {
+          this.auth_page_column = [...this.page_s_auth_column, ...this.page_carrier_column]
+        }
       }
+
       if (this.currType == 'cert' || this.currType == 'self_detail') {
         this.tabDisabled = true
         this.isAuthInfo = true

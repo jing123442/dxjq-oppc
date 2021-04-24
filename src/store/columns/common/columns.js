@@ -28,8 +28,19 @@ const columns = {
     { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 }, detail: { type: 'span', model: 'select', ou: 2, obj: 'status' } },
     { field: 'authDate', name: '认证时间', nameSpan: 6, detail: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } }
   ],
+  selfAuthInfo: [
+    { field: 'taxpayer', name: '统一社会信用代码', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入统一社会信用代码' }, detail: { type: 'span', ou: 2 } },
+    { field: 'orgName', name: '企业名称', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入企业名称' }, detail: { type: 'span', ou: 2 }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'legalperson', name: '经营者姓名', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入经营者姓名' }, detail: { type: 'span', ou: 2 } },
+    { field: 'identityType', name: '经营者证件类型', nameSpan: 6, show: { type: 'select', ou: 2, obj: 'identityType', placeholder: '请选择经营者证件类型' }, detail: { type: 'span', model: 'select', obj: 'identityType', ou: 2 } },
+    { field: 'legalIds', name: '经营者证件号', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入经营者证件号' }, detail: { type: 'span', ou: 2 } },
+    { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入详细地址' }, detail: { type: 'span', ou: 2 } }
+  ],
   gasstationFieldInfo: [
     { field: 'orgShortName', name: '加气站名称', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入加气站名称' }, detail: { type: 'span', ou: 2 }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
+  ],
+  carrierFieldInfo: [
+    { field: 'orgSubType', name: '客户类型', nameSpan: 6, detail: { type: 'span', model: 'select', obj: 'orgSubType', ou: 2 } },
   ],
   orgAuthManageInfo: [
     { field: 'manageInfo', name: '管理员', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 3, detail: { type: 'span', ou: 3, style: 'width: 97.5%' } }

@@ -67,7 +67,7 @@ export default {
         field: 'statusLabel'
       }, {
         name: '加气站名称：',
-        field: 'gasstationName'
+        field: 'nickName'
       }],
       headerStyle: 'position: relative;top: 0;left: 0;background-color: #f4f4f5;border-radius: 4px;',
       buttonsList: [{ type: 'primary', icon: '', event: 'export', name: '导出' }],

@@ -121,3 +121,19 @@ export function buttonPublishReleaseList(scope) {
 
   return btnList
 }
+
+// 区域管理按钮
+export function buttonDistrictManagerList(scope) {
+  const btnList = []
+
+  scope.row.isAllowChild == 0 && btnList.push({ type: 'del', name: '新增子区' })
+  btnList.push(
+    { type: 'config', name: '配置行政区域' },
+    { type: 'config', name: '授权账号' },
+    { type: 'config', name: '配置加气站' },
+    { type: 'config', name: '配置物流客户' },
+    { type: 'edit', name: '修改' },
+    { type: 'del', name: '删除' }
+  )
+  return btnList
+}

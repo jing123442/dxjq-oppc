@@ -72,6 +72,13 @@ export function utilsStatus() {
     { value: 1, label: '停用' }
   ]
 }
+// 物流公司子类
+export function utilsOrgSubType() {
+  return [
+    { value: 21, label: '物流公司' },
+    { value: 22, label: '个人车主' }
+  ]
+}
 export function utilsAuthStatus() {
   return [
     { value: 0, label: '未认证' },

@@ -6,11 +6,14 @@ const state = Object.assign({}, { app: app }, { columns: columns }, { select: se
 
 const getters = {
   common_unauth_mode_list: item => app.mode.orgInfo,
+  common_unauth_self_mode_list: item => app.mode.selfInfo,
   common_user_carrier_mode_list: item => app.mode.carrierUser,
   // 企业信息，分一证和三证
+  common_self_auth_column: item => [...columns.selfAuthInfo],
   common_org_auth_column: item => [...columns.orgOAuth, ...columns.orgAuthInfo],
   common_org_s_auth_column: item => [...columns.orgSAuth, ...columns.orgAuthInfo],
   common_org_gasstation_auth_column: item => [...columns.gasstationFieldInfo],
+  common_org_carrier_auth_column: item => [...columns.carrierFieldInfo],
   // 物流公司
   common_org_auth_other_column: item => [...columns.orgAuthManageInfo, ...columns.orgAuthCarrierInfo, ...columns.orgAuthContractInfo, ...columns.orgAuthOther],
   common_org_unauth_other_column: item => [...columns.orgAuthManageInfo, ...columns.orgAuthCarrierInfo],
