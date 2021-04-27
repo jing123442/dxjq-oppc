@@ -1,3 +1,4 @@
+import { tableTextColor } from '@/utils/tools'
 /* eslint-disable */
 const columns = {
   daySales: [
@@ -12,15 +13,15 @@ const columns = {
       } },
     { field: 'todayGasQtyTotal', name: '今日' },
     { field: 'yesterdayGasQtyTotal', name: '昨日同时' },
-    { field: 'gasGap', name: '较 昨日同时差量' },
-    { field: 'rate', name: '较 昨日同时环比' },
+    { field: 'gasGap', name: '较 昨日同时差量', stype: 'text-style', classValueName: (row, field) => tableTextColor(row, field) },
+    { field: 'rate', name: '较 昨日同时环比', stype: 'text-style', classValueName: (row, field) => tableTextColor(row, field) },
     { field: 'weekAverageGasQty', name: '前7日均' },
     { field: 'monthAverageGasQty', name: '前30日均' }
   ],
   historySales: [
     { field: 'name', name: '名称', fixed: 'left', stype: 'format',
       formatFun: function(value, row) {
-        if (!value) return ''
+        if (!value) return '-'
         if (row.districtId || row.gasstationNum > 0) {
           return '"' + value + '(' + row.gasstationNum + ' 站)"'
         } else {

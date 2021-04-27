@@ -327,6 +327,16 @@ export function currency(value, unit, currency, decimals) {
     (unit ? ' ' + unit : '')
 }
 
+export function tableTextColor(row, field) {
+  const regExp = /^-/
+  if (row[field] == 0 || row[field] == '-') return ''
+  if (regExp.test(row[field])) {
+    return 'color: #41CC7C;'
+  } else {
+    return 'color: #E86452;'
+  }
+}
+
 export function formateParams(param, type = true) {
   if (isTypeof(param) === 'string' || isTypeof(param) === 'number') {
     return type ? parseFloat(param).toLocaleString() : currency(param, '', '')

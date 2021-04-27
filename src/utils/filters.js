@@ -16,7 +16,7 @@ const vueFiltersInit = (value, item, scope) => {
     return eval('(' + formats[0] + ')')(value, ...params, scope.row)
   } else {
     // eslint-disable-next-line no-eval
-    return eval('(' + formatRules(value, scope.row) + ')')
+    return value ? eval('(' + formatRules(value, scope.row) + ')') : '暂无数据'
   }
 }
 
