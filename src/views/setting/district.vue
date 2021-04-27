@@ -117,15 +117,24 @@ export default {
       } else if (type === 'config_carrier') {
         this.initConfigCarrier(row)
       } else if (type === 'userCount') {
-
+        this.alertDistrictInfo(row.userCount, row.userDetail, '授权账号')
       } else if (type === 'gasCount') {
-
+        this.alertDistrictInfo(row.gasCount, row.gasDetail, '已配置加气站')
       } else if (type === 'carrierCount') {
-
+        this.alertDistrictInfo(row.carrierCount, row.carrierDetail, '已配置物流客户')
       } else if (type === 'add_children') {
         this.areaRow.parentId = row.districtId
         this.areaRow._btn = this.formBtnList
         this.dialogAddAreaVisible = true
+      }
+    },
+    alertDistrictInfo(number, data, title) {
+      if (Number(number) > 0) {
+        const info = []
+        data.forEach(item => {
+          info.push(item.name)
+        })
+        this.$alert(info.join(' / '), title)
       }
     },
     setConfigOptions(dialogTitle = '', label = '', titles = [], props = {}) {
@@ -256,6 +265,7 @@ export default {
       row.valueList && row.valueList.forEach(item => {
         for (let i = 0; i < this.configOptions.allList.length; i++) {
           if (item === this.configOptions.allList[i].userId) {
+            this.configOptions.allList[i].userPhone = this.configOptions.allList[i].mobile
             params.users.push(this.configOptions.allList[i])
           }
         }
