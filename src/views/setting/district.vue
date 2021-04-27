@@ -1,11 +1,14 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="tables" :tableListName="'district'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :composeParam="composeParam" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" :tableListName="'district'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :rowKey="'districtId'" :options="{ lazy: true }" :composeParam="composeParam" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
-    <el-dialog title="配置加气站" :visible.sync="dialogConfigVisible" width="60%" :append-to-body="true">
+    <el-dialog title="新增子区域" :visible.sync="dialogAddAreaVisible" :width="add_edit_dialog" :append-to-body="true">
+      <nt-form v-if="dialogAddAreaVisible" ref="add_area" :rowData="areaRow" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventAddArea"></nt-form>
+    </el-dialog>
+    <el-dialog :title="configOptions.dialogTitle" :visible.sync="dialogConfigVisible" width="775px" :append-to-body="true">
       <el-form size="small" :model="formConfigRow" ref="formConfig" label-position="top" v-if="dialogConfigVisible" :rules="formConfigRules">
-        <el-form-item label="加气站配置" prop="fillerList" style="width: 90%;">
-          <el-transfer v-model="formConfigRow.fillerList" :filterable="true" :titles="['加气站列表', '已选加气站']" :props="{ key: 'orgId', label: 'orgName' }" :data="fillerAllList"></el-transfer>
+        <el-form-item :label="configOptions.label" prop="valueList">
+          <el-transfer v-model="formConfigRow.valueList" :filterable="true" :titles="configOptions.titles" :props="configOptions.props" :data="configOptions.allList"></el-transfer>
         </el-form-item>
         <!-- 按钮 -->
         <el-form-item class="el-del-btn-item">
@@ -22,7 +25,7 @@
 </template>
 <script>
 import { initVueDataOptions, queryDefaultParams } from '@/utils/tools'
-import { $userOrgList, $districtGasstationList, $districtGasstationAdd, $districtGasstationDelete } from '@/service/user'
+import { $userConfigFiller, $userFindALLFillerList, $userFindConfigFillerList, $userFindALLAreaList, $userFindConfigAreaList, $userConfigArea, $userUserList, $userFindConfigUserList, $userConfigAuthUser, $userFindALLCarrierList, $userFindConfigCarrierList, $userConfigCarrier, $userAddChildrenDistrict } from '@/service/user'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -53,19 +56,39 @@ export default {
             tableData: ['data']
           }
         },
+        children: {
+          url: 'user/district/district/child',
+          method: 'get',
+          props: {
+            districtId: 'districtId'
+          },
+          parse: {
+            tableData: ['data']
+          },
+          tree: {
+            key: 'districtId'
+          }
+        },
         name: '区域管理'
       },
-      fillerAllList: [],
-      selectFillerList: [],
-      oldFillerList: [],
-      formConfigRow: {
-        fillerList: []
+      configOptions: {
+        dialogTitle: '',
+        label: '',
+        titles: [],
+        props: {},
+        allList: [],
+        list: []
       },
+      formConfigRow: {
+        valueList: []
+      },
+      areaRow: {},
       composeParam: ['districtId'],
       formConfigRules: {
         // fillerList: [{ required: true, message: '请至少选择一个加气站！', trigger: 'blur' }]
       },
       dialogConfigVisible: false,
+      dialogAddAreaVisible: false,
       queryParams: queryDefaultParams(this),
       queryChangeParams: []
     })
@@ -81,102 +104,229 @@ export default {
       response_success: 'response_success'
     })
   },
-  created() {
-    this.initData()
-  },
+  created() {},
   methods: {
-    initData() {
-      const params = {
-        page: 1,
-        size: 500,
-        param: { org: { orgType: 1 }, dateParam: { createDateFrom: '', createDateTo: '' } }
+    onListEvent(type, row) {
+      this.currType = type
+      if (type === 'config_filler') {
+        this.initConfigFiller(row)
+      } else if (type === 'config_area') {
+        this.initConfigArea(row)
+      } else if (type === 'config_auth') {
+        this.initConfigAuthUser(row)
+      } else if (type === 'config_carrier') {
+        this.initConfigCarrier(row)
+      } else if (type === 'userCount') {
+
+      } else if (type === 'gasCount') {
+
+      } else if (type === 'carrierCount') {
+
+      } else if (type === 'add_children') {
+        this.areaRow.parentId = row.districtId
+        this.areaRow._btn = this.formBtnList
+        this.dialogAddAreaVisible = true
       }
-      $userOrgList(params).then(response => {
-        this.fillerAllList = [...new Set(response.data.records || [])]
+    },
+    setConfigOptions(dialogTitle = '', label = '', titles = [], props = {}) {
+      this.configOptions = {
+        dialogTitle: dialogTitle,
+        label: label,
+        titles: titles,
+        props: props
+      }
+    },
+    async initConfigFiller(row) { // 配置加气站
+      this.formConfigRow = Object.assign({}, row, this.formConfigRow)
+      this.setConfigOptions('配置加气站', '加气站配置', ['加气站列表', '已选加气站'], { key: 'orgId', label: 'orgName' })
+      this.configOptions.allList = await $userFindALLFillerList({ districtId: row.districtId }).then(response => {
+        return response.data || []
+      })
+
+      this.formConfigRow.valueList = await $userFindConfigFillerList({ districtId: row.districtId }).then(response => {
+        const data = response.data || []
+        const tmpList = []
+
+        data.forEach(item => {
+          tmpList.push(item.orgId)
+          this.configOptions.allList.push(item)
+        })
+
+        return tmpList
+      })
+
+      this.dialogConfigVisible = true
+    },
+    async initConfigArea(row) { // 配置区域
+      this.formConfigRow = Object.assign({}, row, this.formConfigRow)
+      this.setConfigOptions('配置行政区域', '行政区域配置', ['行政区域列表', '已选行政区域'], { key: 'areaCode', label: 'areaName' })
+      this.configOptions.allList = await $userFindALLAreaList({ districtId: row.districtId }).then(response => {
+        return response.data || []
+      })
+
+      this.formConfigRow.valueList = await $userFindConfigAreaList({ districtId: row.districtId }).then(response => {
+        const data = response.data || []
+        const tmpList = []
+
+        data.forEach(item => {
+          tmpList.push(item.areaCode)
+          this.configOptions.allList.push(item)
+        })
+
+        return tmpList
+      })
+
+      this.dialogConfigVisible = true
+    },
+    async initConfigAuthUser(row) { // 配置用户授权
+      this.formConfigRow = Object.assign({}, row, this.formConfigRow)
+      this.setConfigOptions('配置授权账号', '授权账号配置', ['授权账号列表', '已选授权账号'], { key: 'userId', label: 'userName' })
+      this.configOptions.allList = await $userUserList({ param: { userType: 0, status: 0 }, page: 1, size: 1000 }).then(response => {
+        return response.data.records || []
+      })
+
+      this.formConfigRow.valueList = await $userFindConfigUserList({ districtId: row.districtId }).then(response => {
+        const data = response.data || []
+        const tmpList = []
+
+        data.forEach(item => {
+          tmpList.push(item.userId)
+        })
+
+        return tmpList
+      })
+
+      this.dialogConfigVisible = true
+    },
+    async initConfigCarrier(row) { // 配置物流客户
+      this.formConfigRow = Object.assign({}, row, this.formConfigRow)
+      this.setConfigOptions('配置物流客户', '物流客户配置', ['物流客户列表', '已选物流客户'], { key: 'orgId', label: 'orgName' })
+      this.configOptions.allList = await $userFindALLCarrierList({ districtId: row.districtId }).then(response => {
+        return response.data || []
+      })
+
+      this.formConfigRow.valueList = await $userFindConfigCarrierList({ districtId: row.districtId }).then(response => {
+        const data = response.data || []
+        const tmpList = []
+
+        data.forEach(item => {
+          tmpList.push(item.orgId)
+          this.configOptions.allList.push(item)
+        })
+
+        return tmpList
+      })
+
+      this.dialogConfigVisible = true
+    },
+    btnClickEventFiller(params, row) { // 配置加气站
+      params.orgs = []
+      row.valueList && row.valueList.forEach(item => {
+        for (let i = 0; i < this.configOptions.allList.length; i++) {
+          if (item === this.configOptions.allList[i].orgId) {
+            params.orgs.push(this.configOptions.allList[i])
+          }
+        }
+      })
+
+      $userConfigFiller(params).then(response => {
+        this.$message.success('成功！')
+        this.dialogConfigVisible = false
+        this.$refs.tables.initDataList()
       })
     },
-    onListEvent(type, row) {
-      if (type === 'config') {
-        this.oldFillerList = []
-        $districtGasstationList({}).then(response => {
-          const data = response.data || []
-          const tmpList = []
+    btnClickEventArea(params, row) { // 配置行政区域
+      params.areas = []
+      row.valueList && row.valueList.forEach(item => {
+        for (let i = 0; i < this.configOptions.allList.length; i++) {
+          if (item === this.configOptions.allList[i].areaCode) {
+            params.areas.push(this.configOptions.allList[i])
+          }
+        }
+      })
 
-          data.forEach(item => {
-            this.fillerAllList.filter((node, index) => {
-              if (item.orgId === node.orgId) {
-                this.fillerAllList.splice(index, 1)
-              }
-            })
-            if (row.districtId === item.districtId) {
-              this.oldFillerList.push(item)
-              tmpList.push(item.orgId)
+      $userConfigArea(params).then(response => {
+        this.$message.success('成功！')
+        this.dialogConfigVisible = false
+        this.$refs.tables.initDataList()
+      })
+    },
+    btnClickEventAuthUser(params, row) { // 配置授权用户
+      params.users = []
+      row.valueList && row.valueList.forEach(item => {
+        for (let i = 0; i < this.configOptions.allList.length; i++) {
+          if (item === this.configOptions.allList[i].userId) {
+            params.users.push(this.configOptions.allList[i])
+          }
+        }
+      })
 
-              this.fillerAllList.push(item)
-            }
-          })
-          this.formConfigRow = Object.assign({ fillerList: tmpList }, row)
-          this.dialogConfigVisible = true
-        })
-      }
+      $userConfigAuthUser(params).then(response => {
+        this.$message.success('成功！')
+        this.dialogConfigVisible = false
+        this.$refs.tables.initDataList()
+      })
+    },
+    btnClickEventCarrier(params, row) { // 配置物流客户
+      params.orgs = []
+      row.valueList && row.valueList.forEach(item => {
+        for (let i = 0; i < this.configOptions.allList.length; i++) {
+          if (item === this.configOptions.allList[i].orgId) {
+            params.orgs.push(this.configOptions.allList[i])
+          }
+        }
+      })
+
+      $userConfigCarrier(params).then(response => {
+        this.$message.success('成功！')
+        this.dialogConfigVisible = false
+        this.$refs.tables.initDataList()
+      })
     },
     btnClickEvent(btnObj, row) {
       if (btnObj.type == 'ok') {
         this.$refs.formConfig.validate(async (valid) => {
           if (valid) {
-            const addList = []
             const params = {
               districtId: row.districtId,
               districtName: row.districtName
             }
 
-            row.fillerList && row.fillerList.forEach(item => {
-              let isFlag = false
-              this.oldFillerList.forEach((node, index) => {
-                if (node.orgId === item) {
-                  isFlag = true
-                  this.oldFillerList.splice(index, 1)
-                }
-              })
-              if (!isFlag) {
-                this.fillerAllList.forEach(node => {
-                  console.log(node.orgId, item)
-                  if (node.orgId === item) {
-                    addList.push({
-                      gasstationId: node.orgId,
-                      gasstationName: node.orgName
-                    })
-                  }
-                })
-              }
-            })
-
-            // 增加加气站
-            if (addList.length > 0) {
-              params.list = addList
-
-              await $districtGasstationAdd(params).then(() => {})
+            if (this.currType === 'config_filler') {
+              this.btnClickEventFiller(params, row)
+            } else if (this.currType === 'config_area') {
+              this.btnClickEventArea(params, row)
+            } else if (this.currType === 'config_auth') {
+              this.btnClickEventAuthUser(params, row)
+            } else if (this.currType === 'config_carrier') {
+              this.btnClickEventCarrier(params, row)
             }
-
-            // 删除加气站
-            if (this.oldFillerList.length > 0) {
-              params.list = []
-              this.oldFillerList.forEach(item => {
-                params.list.push({ gasstationId: item.orgId })
-              })
-              await $districtGasstationDelete(params).then(() => {})
-            }
-
-            this.$message.success('成功！')
-            this.dialogConfigVisible = false
-            this.$refs.tables.initDataList()
-            this.initData()
           } else {
             return null
           }
         })
       } else {
         this.dialogConfigVisible = false
+      }
+    },
+    onListEventAddArea(btnObj, row) {
+      if (btnObj.type == 'ok') {
+        this.$refs.add_area.$children[0].validate(async (valid) => {
+          if (valid) {
+            const params = {
+              districtName: row.districtName,
+              parentId: row.parentId
+            }
+
+            $userAddChildrenDistrict(params).then(response => {
+              console.log(response)
+            })
+          } else {
+            return null
+          }
+        })
+      } else {
+        this.dialogAddAreaVisible = false
       }
     },
     onReqParams(type, _this, callback) {}

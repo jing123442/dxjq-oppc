@@ -176,3 +176,63 @@ export async function $userExportCarrierInfo(data) {
 export async function $userExportFillerInfo(data) {
   return await R({ url: 'user/org/export/filler', method: 'POST', data, responseType: 'blob' })
 }
+
+// 查询所有可配置加气站
+export async function $userFindALLFillerList(data) {
+  return await R({ url: 'user/district/can/gas', method: 'GET', params: data })
+}
+
+// 查询所有已配置加气站
+export async function $userFindConfigFillerList(data) {
+  return await R({ url: 'user/district/has/gas', method: 'GET', params: data })
+}
+
+// 配置加气站
+export async function $userConfigFiller(data) {
+  return await R({ url: 'user/district/bind/gasstation', method: 'POST', data })
+}
+
+// 查询所有可配置区域
+export async function $userFindALLAreaList(data) {
+  return await R({ url: 'user/district/areaList', method: 'GET', params: data })
+}
+
+// 查询所有已配置区域
+export async function $userFindConfigAreaList(data) {
+  return await R({ url: 'user/district/getAreaList', method: 'GET', params: data })
+}
+
+// 配置区域
+export async function $userConfigArea(data) {
+  return await R({ url: 'user/district/area', method: 'POST', data })
+}
+
+// 查询所有已配置账号
+export async function $userFindConfigUserList(data) {
+  return await R({ url: 'user/district/has/user', method: 'GET', params: data })
+}
+
+// 配置账号
+export async function $userConfigAuthUser(data) {
+  return await R({ url: 'user/district/bind/user', method: 'POST', data })
+}
+
+// 查询所有可配置物流客户
+export async function $userFindALLCarrierList(data) {
+  return await R({ url: 'user/district/can/carrier', method: 'GET', params: data })
+}
+
+// 查询所有已配置物流客户
+export async function $userFindConfigCarrierList(data) {
+  return await R({ url: 'user/district/has/carrier', method: 'GET', params: data })
+}
+
+// 配置物流客户
+export async function $userConfigCarrier(data) {
+  return await R({ url: 'user/district/bind/carrier', method: 'POST', data })
+}
+
+// 增加区域
+export async function $userAddChildrenDistrict(data) {
+  return await R({ url: 'user/district/add', method: 'POST', data })
+}

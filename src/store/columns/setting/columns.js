@@ -4,13 +4,14 @@ import { buttonDistrictManagerList } from '@/utils/button'
 const columns = {
   district: [
     { field: 'districtId', name: 'id', hide: true, show: { type: 'hide' } },
+    { field: 'parentId', name: '', hide: true, show: { type: 'hide', value: 0 } },
     { field: 'districtName', name: '业务区域', fixed: 'left', width: 150,
       show: { type: 'text', placeholder: '请输入区域名称' },
       rules: [{ required: true, message: '请输入区域名称', trigger: 'blur' }] },
-    { field: 'areaParams', name: '行政区域', stype: 'format', formatFun: 'tableFormatAreaLabel' },
-    { field: 'userCount', name: '授权账号', width: 80 },
-    { field: 'gasCount', name: '加气站', width: 80 },
-    { field: 'carrierCount', name: '物流客户', width: 80 },
+    { field: 'areaParams', name: '行政区域', stype: 'format', formatFun: 'tableFormatAreaLabel', ispush: false },
+    { field: 'userCount', name: '授权账号', width: 80, stype: 'link', ispush: false },
+    { field: 'gasCount', name: '加气站', width: 80, stype: 'link', ispush: false },
+    { field: 'carrierCount', name: '物流客户', width: 80, stype: 'link', ispush: false },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 460, list: params => buttonDistrictManagerList(params) }
   ],
   withdraw: [

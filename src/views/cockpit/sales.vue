@@ -2,10 +2,10 @@
   <div class="template-main">
     <el-tabs v-model="active" type="card" @tab-click="handleClick">
       <el-tab-pane label="今日实时" name="0">
-        <em-table-list ref="tables1" :tableListName="'timeday'" :custTableTitle="custTodayTableTitle" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'name'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :options="{ lazy: true }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue"></em-table-list>
+        <em-table-list ref="tables1" :tableListName="'timeday'" :custTableTitle="custTodayTableTitle" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'id'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :options="{ lazy: true }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue"></em-table-list>
       </el-tab-pane>
       <el-tab-pane label="历史时段" name="1">
-        <em-table-list ref="tables2" :tableListName="'timehistory'" :custTableTitle="custYesterdayTableTitle" :authButtonList="authButtonList" :buttonsList="buttonsHistoryList" :axios="axios" :queryCustURL="queryHistoryCustURL" :composeParam="composeParam" :rowKey="'name'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_history_status" :page_column="mode_history_list" :options="{ lazy: true }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+        <em-table-list ref="tables2" :tableListName="'timehistory'" :custTableTitle="custYesterdayTableTitle" :authButtonList="authButtonList" :buttonsList="buttonsHistoryList" :axios="axios" :queryCustURL="queryHistoryCustURL" :composeParam="composeParam" :rowKey="'id'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_history_status" :page_column="mode_history_list" :options="{ lazy: true }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
       </el-tab-pane>
     </el-tabs>
   </div>

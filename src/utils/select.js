@@ -120,7 +120,9 @@ export function utilsDownloadType() {
     { value: 10, label: '加气站提现明细' },
     { value: 11, label: '象群科技订单列表' },
     { value: 12, label: '象群科技与长城奥扬对账函' },
-    { value: 14, label: '日结算订单' }
+    { value: 14, label: '日结算订单' },
+    { value: 15, label: '长城奥扬对账zip文件' },
+    { value: 16, label: '加气站对账zip文件' }
   ]
 }
 export function utilsCheck() {

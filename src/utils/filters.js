@@ -40,7 +40,7 @@ const tableContractStatusToLabel = value => {
 
 const tableFormatAreaLabel = areaList => {
   const areaName = []
-  areaList.forEach(item => {
+  areaList && areaList.forEach(item => {
     areaName.push(item.areaName)
   })
   return areaName.join(' / ')
