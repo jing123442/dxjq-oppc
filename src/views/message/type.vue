@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="tables" v-if="reloadChildStatus" :tableListName="'order'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'id'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" v-if="reloadChildStatus" :tableListName="'order'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'id'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :options="{ lazy: true }" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog :title="childrenTitle" :visible.sync="dialogAddChildVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogAddChildVisible" ref="addChild" :formRef="'addChildForm'" :rowData="addChildRow" :inputType="'show_child'" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventAddChild"></nt-form>
     </el-dialog>
@@ -25,7 +25,7 @@
 </template>
 <script>
 import { initVueDataOptions, callbackPagesInfo, custFormBtnList } from '@/utils/tools'
-import { $addQACatalogs, $editQACatalogs, $qaCatalogsDelete/* , $childQACatalogsList */ } from '@/service/message'
+import { $addQACatalogs, $editQACatalogs, $qaCatalogsDelete, $childQACatalogsList } from '@/service/message'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -166,19 +166,15 @@ export default {
       }
     },
     reloadChildList(parentId) {
-      this.reloadChildStatus = false
       this.$nextTick(() => {
-        /* const params = { parentId: parentId }
+        const params = { parentId: parentId }
+        this.$set(this.$refs.tables.$children[2].$refs.multipleTable.store.states.lazyTreeNodeMap, parentId, [])
+
         $childQACatalogsList(params).then(response => {
           const list = response.data
 
-          this.$refs.tables.tableData.forEach((item, index) => {
-            if (item.id === parentId) {
-              this.$set(this.$refs.tables.$data.tableData[index], 'children', list)
-            }
-          })
-        }) */
-        this.reloadChildStatus = true
+          this.$refs.tables.reRenderChildrenNodeAfterAdd(parentId, list)
+        })
       })
     },
     onListEventDetailChild() {
