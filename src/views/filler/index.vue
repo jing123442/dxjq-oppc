@@ -120,7 +120,7 @@ export default {
           this.authRow._btn = custFormBtnList()
         } else {
           this.auth_page_mode = this.mode_list_gasstation
-          this.authRow._btn = custFormBtnList()
+          this.authRow._btn = custFormBtnList(1)
           this.orgAuthList(row)
         }
       }

@@ -167,7 +167,7 @@ export default {
           } else {
             this.auth_page_mode = this.mode_detail_org_manage
           }
-          this.authRow._btn = custFormBtnList()
+          this.authRow._btn = custFormBtnList(1)
           this.orgAuthList(row)
         }
       }

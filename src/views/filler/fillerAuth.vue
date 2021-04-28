@@ -40,7 +40,7 @@
 <script>
 import { initVueDataOptions, custFormBtnList, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $userFindOrgAdmin, $userOrgPicList, $userOrgEnterStatus, $userOrgPicAudit } from '@/service/user'
+import { $userFindOrgAdmin, $userOrgPicList, $userOrgEnterStatus, $userOrgPicAudit, $userOrgEdit } from '@/service/user'
 
 export default {
   name: 'filler',
@@ -98,7 +98,7 @@ export default {
         this.dialogAuthVisible = true
         this.authRow = row
 
-        this.authRow._btn = custFormBtnList(1)
+        this.authRow._btn = custFormBtnList()
         this.orgAuthList(row)
       } else if (type === 'contractStatus') {
         if (row.authStatus === 2 && row.envImpactStatus === 2 && row.fireControlStatus === 2 && row.gasFillingStatus === 2 && row.gasBusinessStatus === 2) {
@@ -268,7 +268,17 @@ export default {
     },
     onAuthEvent(btnObj, row) {
       if (btnObj.type === 'ok') {
-        this.dialogAuthVisible = false
+        const params = {}
+
+        params.orgType = 1
+        params.status = row.status
+        params.orgId = row.orgId
+        $userOrgEdit(params).then(res => {
+          this.$message.success('成功！')
+
+          this.dialogAuthVisible = false
+          this.$refs.tables.initDataList()
+        })
       } else {
         this.dialogAuthVisible = false
       }

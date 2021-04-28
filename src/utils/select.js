@@ -68,8 +68,8 @@ export function untilsAddress() {
 
 export function utilsStatus() {
   return [
-    { value: 0, label: '启用' },
-    { value: 1, label: '停用' }
+    { value: '0', label: '启用' },
+    { value: '1', label: '停用' }
   ]
 }
 // 物流公司子类

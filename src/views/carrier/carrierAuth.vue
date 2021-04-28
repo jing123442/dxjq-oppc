@@ -40,7 +40,7 @@
 </template>
 <script>
 import { initVueDataOptions, callbackPagesInfo, custFormBtnList, isTypeof } from '@/utils/tools'
-import { $userOrgPicAudit, $userOrgPicList, $userOrgEnterStatus, $userFindOrgAdmin } from '@/service/user'
+import { $userOrgPicAudit, $userOrgPicList, $userOrgEnterStatus, $userFindOrgAdmin, $userOrgEdit } from '@/service/user'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -132,9 +132,11 @@ export default {
       this.authColor = row && row.authStatus == 2 ? 'no' : 'off'
       // 是否显示dialog
       this.dialogAddGasStationVisible = true
+      this.authRow = row
       if (row.orgSubType && row.orgSubType == 22) {
         this.auth_page_mode = this.mode_detail_self_manage
         this.auth_page_column = [...this.page_self_column, ...this.page_carrier_column]
+        this.authRow._btn = custFormBtnList(1)
       } else {
         this.auth_page_mode = this.mode_list
         if (this.active == '2') {
@@ -142,10 +144,9 @@ export default {
         } else {
           this.auth_page_column = [...this.page_s_auth_column, ...this.page_carrier_column]
         }
+        this.authRow._btn = custFormBtnList()
       }
       this.auth_page_column = [...this.auth_page_column, ...this.page_unauth_other_column]
-      this.authRow = row
-      this.authRow._btn = custFormBtnList(1)
       this.orgAuthList(row)
     },
     async orgAuthList(row) {
@@ -187,8 +188,22 @@ export default {
         this.authRow[keyList.time] = item.updateDate
       })
     },
-    onFormEvent() {
-      this.dialogAddGasStationVisible = false
+    onFormEvent(btnObj, row) {
+      if (btnObj.type === 'ok') {
+        const params = {}
+
+        params.orgType = 2
+        params.status = row.status
+        params.orgId = row.orgId
+        $userOrgEdit(params).then(res => {
+          this.$message.success('成功！')
+
+          this.dialogAddGasStationVisible = false
+          this.$refs.tables.initDataList()
+        })
+      } else {
+        this.dialogAddGasStationVisible = false
+      }
     },
     authTransportInfo(row) {
       // 认证图片信息

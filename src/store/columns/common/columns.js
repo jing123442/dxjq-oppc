@@ -25,8 +25,8 @@ const columns = {
     { field: 'mobile', name: '联系电话', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入联系电话' }, detail: { type: 'span', ou: 2 }, rules: [{ validator: 'isValidateMobile', message: '请输入正确格式的联系电话', trigger: 'blur' }] },
     { field: 'email', name: '邮箱', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入邮箱' }, detail: { type: 'span', ou: 2 } },
     { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入详细地址' }, detail: { type: 'span', ou: 2 } },
-    { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 }, detail: { type: 'span', model: 'select', ou: 2, obj: 'status' } },
-    { field: 'authDate', name: '认证时间', nameSpan: 6, detail: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } }
+    { field: 'authDate', name: '认证时间', nameSpan: 6, detail: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } },
+    { field: 'status', name: '企业状态', nameSpan: 6, show: { type: 'radio', ou: 2, obj: 'status', value: 0 }, detail: { type: 'radio', ou: 2, obj: 'status', value: 0 } }
   ],
   selfAuthInfo: [
     { field: 'taxpayer', name: '统一社会信用代码', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入统一社会信用代码' }, detail: { type: 'span', ou: 2 } },
