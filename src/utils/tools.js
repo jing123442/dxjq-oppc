@@ -47,12 +47,14 @@ export function formatDate(date, fmt) { // date对象
 }
 
 // data-pick时间限制
-export function toolPickerOptions(number = 30) {
+export function toolPickerOptions(number = 1) {
   const timeOptions = {
     disabledDate: (time) => {
-      const _now = Date.now()
+      const taday = 24 * 60 * 60 * 1000
+      const data = formateTData(new Date(), 'date') + ' 00:00:00'
+      const timers = new Date(data).getTime() + taday
 
-      return time.getTime() > _now
+      return time.getTime() >= timers
     }
   }
 
