@@ -1,4 +1,4 @@
-import { tableTextColor, toolPickerOptions, dataPickerDefault } from '@/utils/tools'
+import { tableTextColor, toolPickerOptions } from '@/utils/tools'
 /* eslint-disable */
 const columns = {
   daySales: [
