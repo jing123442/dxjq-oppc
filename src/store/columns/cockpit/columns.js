@@ -28,7 +28,7 @@ const columns = {
           return '"' + value + '"'
         }
       } },
-    { field: 'queryDateTime', name: '', hide: true, search: { type: 'date-picker', dtime: ['00:00:00', '23:59:59'], timeOptions: toolPickerOptions(), value: (function() { const dateObj = dataPickerDefault(new Date()); return [dateObj.start, dateObj.end] }()), rangeNumber: 30, dataType: 'rangeType' } },
+    { field: 'queryDateTime', name: '', hide: true, search: { type: 'date-picker', dtime: ['00:00:00', '23:59:59'], timeOptions: toolPickerOptions(), rangeNumber: 30, dataType: 'rangeType' } },
     { field: 'gasQtyTotal', name: '加气量(公斤)' }
   ]
 }
