@@ -46,6 +46,19 @@ export function formatDate(date, fmt) { // date对象
   return fmt
 }
 
+// data-pick时间限制
+export function toolPickerOptions(number = 30) {
+  const timeOptions = {
+    disabledDate: (time) => {
+      const _now = Date.now()
+
+      return time.getTime() > _now
+    }
+  }
+
+  return timeOptions
+}
+
 // 获取当前账期
 export function formatPeriodDate(date, number = 24) {
   if (date) {
@@ -122,6 +135,20 @@ export function monthTimeArea(now) {
 
   var monthStartDate = new Date(nowYear, nowMonth, 1)
   var monthEndDate = new Date(nowYear, nowMonth + 1, 0)
+
+  return {
+    start: formatDate(monthStartDate, 'yyyy-MM-dd 00:00:00'),
+    end: formatDate(monthEndDate, 'yyyy-MM-dd 23:59:59')
+  }
+}
+
+export function dataPickerDefault(now, number = 30) {
+  const nowYear = now.getFullYear()
+  const nowMonth = now.getMonth()
+  const nowDate = now.getDate()
+
+  const monthStartDate = new Date(nowYear, nowMonth, (nowDate - number + 1))
+  const monthEndDate = new Date(nowYear, nowMonth, nowDate)
 
   return {
     start: formatDate(monthStartDate, 'yyyy-MM-dd 00:00:00'),

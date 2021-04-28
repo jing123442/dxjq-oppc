@@ -1,4 +1,4 @@
-import { tableTextColor } from '@/utils/tools'
+import { tableTextColor, toolPickerOptions, dataPickerDefault } from '@/utils/tools'
 /* eslint-disable */
 const columns = {
   daySales: [
@@ -11,12 +11,12 @@ const columns = {
           return '"' + value + '"'
         }
       } },
-    { field: 'todayGasQtyTotal', name: '今日' },
-    { field: 'yesterdayGasQtyTotal', name: '昨日同时' },
-    { field: 'gasGap', name: '较 昨日同时差量', stype: 'text-style', classValueName: (row, field) => tableTextColor(row, field) },
+    { field: 'todayGasQtyTotal', name: '今日(公斤)' },
+    { field: 'yesterdayGasQtyTotal', name: '昨日同时(公斤)' },
+    { field: 'gasGap', name: '较 昨日同时差量(公斤)', stype: 'text-style', classValueName: (row, field) => tableTextColor(row, field) },
     { field: 'rate', name: '较 昨日同时环比', stype: 'text-style', classValueName: (row, field) => tableTextColor(row, field) },
-    { field: 'weekAverageGasQty', name: '前7日均' },
-    { field: 'monthAverageGasQty', name: '前30日均' }
+    { field: 'weekAverageGasQty', name: '前7日均(公斤)' },
+    { field: 'monthAverageGasQty', name: '前30日均(公斤)' }
   ],
   historySales: [
     { field: 'name', name: '名称', fixed: 'left', stype: 'format',
@@ -28,8 +28,8 @@ const columns = {
           return '"' + value + '"'
         }
       } },
-    { field: 'queryDateTime', name: '', hide: true, search: { type: 'date-picker', dtime: ['00:00:00', '23:59:59'] } },
-    { field: 'gasQtyTotal', name: '加气量' }
+    { field: 'queryDateTime', name: '', hide: true, search: { type: 'date-picker', dtime: ['00:00:00', '23:59:59'], timeOptions: toolPickerOptions(), value: (function() { const dateObj = dataPickerDefault(new Date()); return [dateObj.start, dateObj.end] }()), rangeNumber: 30, dataType: 'rangeType' } },
+    { field: 'gasQtyTotal', name: '加气量(公斤)' }
   ]
 }
 
