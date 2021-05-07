@@ -236,3 +236,8 @@ export async function $userConfigCarrier(data) {
 export async function $userAddChildrenDistrict(data) {
   return await R({ url: 'user/district/add', method: 'POST', data })
 }
+
+// 获取distruct_log列表
+export async function $userDistrictLogList(data) {
+  return await R({ url: 'user/district_log/list', method: 'POST', data })
+}

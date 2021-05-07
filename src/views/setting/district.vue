@@ -69,7 +69,7 @@ export default {
             key: 'districtId'
           }
         },
-        name: '区域管理'
+        name: '业务区域管理'
       },
       configOptions: {
         dialogTitle: '',
@@ -82,6 +82,7 @@ export default {
       formConfigRow: {
         valueList: []
       },
+      buttonsList: [{ type: 'primary', icon: '', event: 'district_log', name: '变更记录' }],
       areaRow: {},
       composeParam: ['districtId'],
       formConfigRules: {

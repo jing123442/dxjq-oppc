@@ -9,7 +9,7 @@ export default [
     redirect: '/setting/withdraw',
     meta: { title: '配置中心' },
     children: [
-      { path: 'district', component: inImport('setting/district'), name: 'district', meta: { title: '区域管理', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'district', component: inImport('setting/district'), name: 'district', meta: { title: '业务区域管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'withdraw', component: inImport('setting/withdraw'), name: 'withdraw', meta: { title: '账户余额限定', icon: 'icon-gongnengguanli', noCache: false } }
     ]
   }
