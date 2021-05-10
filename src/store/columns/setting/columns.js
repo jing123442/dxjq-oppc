@@ -3,14 +3,25 @@ import { buttonDistrictManagerList } from '@/utils/button'
 /* eslint-disable */
 const columns = {
   district: [
-    { field: 'districtId', name: 'id', hide: true, show: { type: 'hide' } },
-    { field: 'parentId', name: '', hide: true, show: { type: 'hide', value: 0 } },
-    { field: 'districtName', hide: true, name: '所属父业务区域',  width: 150,
-      show: { type: 'text', placeholder: '请输入区域名称', isDisabled: true } },
-    { field: 'districtName', name: '业务区域', fixed: 'left', width: 150,
+    { field: 'districtId', name: 'id', hide: true, nameSpan: 6, show: { type: 'hide' } },
+    { field: 'parentId', name: '', hide: true, nameSpan: 6, show: { type: 'hide', value: 0 } },
+    { field: 'districtName', name: '业务区域', nameSpan: 6, fixed: 'left', width: 150,
       show: { type: 'text', placeholder: '请输入区域名称' },
       rules: [{ required: true, message: '请输入区域名称', trigger: 'blur' }] },
-    { field: 'areaParams', name: '行政区域', stype: 'format', formatFun: 'tableFormatAreaLabel', ispush: false },
+    { field: 'areaParams', name: '行政区域', stype: 'format',
+      formatFun: function(areaList, row) {
+        if (row.districtId) {
+          const areaName = []
+
+          areaList && areaList.forEach(item => {
+            areaName.push(item.areaName)
+          })
+
+          return '"' + areaName.join(' / ') + '"'
+        } else {
+          return '"共 ' + row.areaCount + ' 个区域"'
+        }
+      }, ispush: false },
     { field: 'userCount', name: '授权账号', width: 80, stype: 'link', ispush: false },
     { field: 'gasCount', name: '加气站', width: 80, stype: 'link', ispush: false },
     { field: 'carrierCount', name: '物流客户', width: 80, stype: 'link', ispush: false },
@@ -22,6 +33,10 @@ const columns = {
     { field: 'logTypeName', name: '操作类型' },
     { field: 'result', name: '操作结果' },
     { field: 'createTime', name: '操作时间' }
+  ],
+  districtParent: [
+    { field: 'parentName', hide: true, nameSpan: 6, name: '所属父业务区域',  width: 150,
+      show: { type: 'span', placeholder: '请输入父业务区域' } }
   ],
   withdraw: [
     { field: 'orgTypeName', name: '账户类型', fixed: 'left' },

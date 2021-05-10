@@ -14,6 +14,7 @@ const getters = {
   // 区域变更记录
   setting_district_log_page_status: item => app.list.districtLog,
   setting_district_log_column: item => columns.districtLog,
+  setting_district_children_column: item => [...columns.district, ...columns.districtParent],
 
   // 账户余额配置
   setting_withdraw_mode_list: item => item.app.modeDefault,

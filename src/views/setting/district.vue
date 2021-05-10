@@ -7,7 +7,7 @@
     </el-dialog>
 
     <el-dialog title="新增子区域" :visible.sync="dialogAddAreaVisible" :width="add_edit_dialog" :append-to-body="true">
-      <nt-form v-if="dialogAddAreaVisible" ref="add_area" :rowData="areaRow" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventAddArea"></nt-form>
+      <nt-form v-if="dialogAddAreaVisible" ref="add_area" :rowData="areaRow" :pageColumn="page_children_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventAddArea"></nt-form>
     </el-dialog>
     <el-dialog :title="configOptions.dialogTitle" :visible.sync="dialogConfigVisible" width="775px" :append-to-body="true">
       <el-form size="small" :model="formConfigRow" ref="formConfig" label-position="top" v-if="dialogConfigVisible" :rules="formConfigRules">
@@ -119,6 +119,7 @@ export default {
       mode_list: 'setting_district_mode_list',
       page_status: 'setting_district_page_status',
       page_column: 'setting_district_column',
+      page_children_column: 'setting_district_children_column',
       page_log_status: 'setting_district_log_page_status',
       page_log_column: 'setting_district_log_column',
       select_list: 'setting_district_select_list',
@@ -153,6 +154,7 @@ export default {
         this.dialogAreaChangeVisible = true
       } else if (type === 'add_children') {
         this.areaRow.parentId = row.districtId
+        this.areaRow.parentName = row.districtName
         this.areaRow._btn = this.formBtnList
         this.dialogAddAreaVisible = true
       }
@@ -358,7 +360,8 @@ export default {
             }
 
             $userAddChildrenDistrict(params).then(response => {
-              console.log(response)
+              this.$message.success('增加子区域成功！')
+              this.dialogAddAreaVisible = false
             })
           } else {
             return null

@@ -16,7 +16,7 @@ const vueFiltersInit = (value, item, scope) => {
     return eval('(' + formats[0] + ')')(value, ...params, scope.row)
   } else {
     // eslint-disable-next-line no-eval
-    return value ? eval('(' + formatRules(value, scope.row) + ')') : '暂无数据'
+    return eval('(' + formatRules(value, scope.row) + ')')
   }
 }
 
@@ -36,14 +36,6 @@ const tableStatusToLabel = value => {
 const tableContractStatusToLabel = value => {
   if (value === 2) return '<a>已签约</a>'
   return utilsContractStatus[value]
-}
-
-const tableFormatAreaLabel = areaList => {
-  const areaName = []
-  areaList && areaList.forEach(item => {
-    areaName.push(item.areaName)
-  })
-  return areaName.join(' / ')
 }
 
 // 单位转换 * 1000
@@ -127,6 +119,5 @@ export {
   formatCardNumber,
   truckToDriverList,
   roleList,
-  tableFormatAreaLabel,
   tableContractStatusToLabel
 }
