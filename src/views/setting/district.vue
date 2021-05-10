@@ -177,7 +177,7 @@ export default {
       }
     },
     async initConfigFiller(row) { // 配置加气站
-      this.formConfigRow = Object.assign({}, row, this.formConfigRow)
+      this.formConfigRow = Object.assign({}, this.formConfigRow, row)
       this.setConfigOptions('配置加气站', '加气站配置', ['加气站列表', '已选加气站'], { key: 'orgId', label: 'orgName' })
       this.configOptions.allList = await $userFindALLFillerList({ districtId: row.districtId }).then(response => {
         return response.data || []
@@ -198,7 +198,7 @@ export default {
       this.dialogConfigVisible = true
     },
     async initConfigArea(row) { // 配置区域
-      this.formConfigRow = Object.assign({}, row, this.formConfigRow)
+      this.formConfigRow = Object.assign({}, this.formConfigRow, row)
       this.setConfigOptions('配置行政区域', '行政区域配置', ['行政区域列表', '已选行政区域'], { key: 'areaCode', label: 'areaName' })
       this.configOptions.allList = await $userFindALLAreaList({ districtId: row.districtId }).then(response => {
         return response.data || []
@@ -219,7 +219,7 @@ export default {
       this.dialogConfigVisible = true
     },
     async initConfigAuthUser(row) { // 配置用户授权
-      this.formConfigRow = Object.assign({}, row, this.formConfigRow)
+      this.formConfigRow = Object.assign({}, this.formConfigRow, row)
       this.setConfigOptions('配置授权账号', '授权账号配置', ['授权账号列表', '已选授权账号'], { key: 'userId', label: 'userName' })
       this.configOptions.allList = await $userUserList({ param: { userType: 0, status: 0 }, page: 1, size: 1000 }).then(response => {
         return response.data.records || []
@@ -239,7 +239,7 @@ export default {
       this.dialogConfigVisible = true
     },
     async initConfigCarrier(row) { // 配置物流客户
-      this.formConfigRow = Object.assign({}, row, this.formConfigRow)
+      this.formConfigRow = Object.assign({}, this.formConfigRow, row)
       this.setConfigOptions('配置物流客户', '物流客户配置', ['物流客户列表', '已选物流客户'], { key: 'orgId', label: 'orgName' })
       this.configOptions.allList = await $userFindALLCarrierList({ districtId: row.districtId }).then(response => {
         return response.data || []
