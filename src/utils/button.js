@@ -126,14 +126,19 @@ export function buttonPublishReleaseList(scope) {
 export function buttonDistrictManagerList(scope) {
   const btnList = []
 
-  scope.row.isAllowChild == 0 && btnList.push({ type: 'add_children', name: '新增子区域' })
-  btnList.push(
-    { type: 'config_area', name: '配置行政区域' },
-    { type: 'config_auth', name: '授权账号' },
-    { type: 'config_filler', name: '配置加气站' },
-    { type: 'config_carrier', name: '配置物流客户' },
-    { type: 'edit', name: '修改' },
-    { type: 'del', name: '删除' }
-  )
+  if (scope.row.districtId === 0) {
+    btnList.push({ type: 'config_auth', name: '授权账号' })
+  } else {
+    scope.row.isAllowChild == 0 && btnList.push({ type: 'add_children', name: '新增子区域' })
+    btnList.push(
+      { type: 'config_area', name: '配置行政区域' },
+      { type: 'config_auth', name: '授权账号' },
+      { type: 'config_filler', name: '配置加气站' },
+      { type: 'config_carrier', name: '配置物流客户' },
+      { type: 'edit', name: '修改' },
+      { type: 'del', name: '删除' }
+    )
+  }
+
   return btnList
 }

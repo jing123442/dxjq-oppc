@@ -14,6 +14,13 @@ const columns = {
     { field: 'carrierCount', name: '物流客户', width: 80, stype: 'link', ispush: false },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 460, list: params => buttonDistrictManagerList(params) }
   ],
+  districtLog: [
+    { field: 'user', name: '操作账号', fixed: 'left' },
+    { field: 'district', name: '操作业务区域' },
+    { field: 'logTypeName', name: '操作类型' },
+    { field: 'result', name: '操作结果' },
+    { field: 'createTime', name: '操作时间' }
+  ],
   withdraw: [
     { field: 'orgTypeName', name: '账户类型', fixed: 'left' },
     { field: 'currentQuota', name: '现行余额限定(元)' },

@@ -2,6 +2,10 @@
   <div class="template-main">
     <em-table-list ref="tables" :tableListName="'district'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :rowKey="'districtId'" :options="{ lazy: true }" :composeParam="composeParam" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
+    <el-dialog title="变更记录" :visible.sync="dialogAreaChangeVisible" :width="add_edit_dialog" :append-to-body="true">
+      <em-table-list v-if="dialogAreaChangeVisible" ref="tables" :tableListName="'district'" :authButtonList="authButtonList" :buttonsList="buttonsChangeList" :axios="axios" :queryCustURL="queryChangeCustURL" :responseSuccess="response_success" :composeParam="composeParam" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_log_status" :page_column="page_log_column" :select_list="select_list"></em-table-list>
+    </el-dialog>
+
     <el-dialog title="新增子区域" :visible.sync="dialogAddAreaVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogAddAreaVisible" ref="add_area" :rowData="areaRow" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventAddArea"></nt-form>
     </el-dialog>
@@ -54,6 +58,9 @@ export default {
           method: 'get',
           parse: {
             tableData: ['data']
+          },
+          tree: {
+            key: 'districtId'
           }
         },
         children: {
@@ -71,6 +78,17 @@ export default {
         },
         name: '业务区域管理'
       },
+      queryChangeCustURL: {
+        list: {
+          url: 'user/district_log/list',
+          method: 'post',
+          parse: {
+            tableData: ['data', 'records'],
+            totalCount: ['data', 'total']
+          }
+        },
+        name: '变更记录'
+      },
       configOptions: {
         dialogTitle: '',
         label: '',
@@ -82,7 +100,8 @@ export default {
       formConfigRow: {
         valueList: []
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'district_log', name: '变更记录' }],
+      buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '增加' }, { type: 'primary', icon: '', event: 'log', name: '变更记录' }],
+      buttonsChangeList: [],
       areaRow: {},
       composeParam: ['districtId'],
       formConfigRules: {
@@ -90,6 +109,7 @@ export default {
       },
       dialogConfigVisible: false,
       dialogAddAreaVisible: false,
+      dialogAreaChangeVisible: false,
       queryParams: queryDefaultParams(this),
       queryChangeParams: []
     })
@@ -99,6 +119,8 @@ export default {
       mode_list: 'setting_district_mode_list',
       page_status: 'setting_district_page_status',
       page_column: 'setting_district_column',
+      page_log_status: 'setting_district_log_page_status',
+      page_log_column: 'setting_district_log_column',
       select_list: 'setting_district_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
@@ -120,9 +142,15 @@ export default {
       } else if (type === 'userCount') {
         this.alertDistrictInfo(row.userCount, row.userDetail, '授权账号')
       } else if (type === 'gasCount') {
-        this.alertDistrictInfo(row.gasCount, row.gasDetail, '已配置加气站')
+        if (row.districtId) {
+          this.alertDistrictInfo(row.gasCount, row.gasDetail, '已配置加气站')
+        }
       } else if (type === 'carrierCount') {
-        this.alertDistrictInfo(row.carrierCount, row.carrierDetail, '已配置物流客户')
+        if (row.districtId) {
+          this.alertDistrictInfo(row.carrierCount, row.carrierDetail, '已配置物流客户')
+        }
+      } else if (type === 'log') {
+        this.dialogAreaChangeVisible = true
       } else if (type === 'add_children') {
         this.areaRow.parentId = row.districtId
         this.areaRow._btn = this.formBtnList
