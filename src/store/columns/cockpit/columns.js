@@ -4,7 +4,7 @@ const columns = {
   daySales: [
     { field: 'name', name: '名称', fixed: 'left', stype: 'format',
       formatFun: function(value, row) {
-        if (!value) return '暂无数据'
+        if (!value) return '"暂无数据"'
         if (row.districtId || row.gasstationNum > 0) {
           return '"' + value + '(' + row.gasstationNum + ' 站)"'
         } else {
@@ -21,7 +21,7 @@ const columns = {
   historySales: [
     { field: 'name', name: '名称', fixed: 'left', stype: 'format',
       formatFun: function(value, row) {
-        if (!value) return '-'
+        if (!value) return '"-"'
         if (row.districtId || row.gasstationNum > 0) {
           return '"' + value + '(' + row.gasstationNum + ' 站)"'
         } else {
