@@ -101,7 +101,7 @@ export default {
         this.authRow._btn = custFormBtnList()
         this.orgAuthList(row)
       } else if (type === 'contractStatus') {
-        if (row.authStatus === 2 && row.envImpactStatus === 2 && row.fireControlStatus === 2 && row.gasFillingStatus === 2 && row.gasBusinessStatus === 2) {
+        if (row.authStatus === 2 && row.gasLicenseStatus === 2 && row.gasFillingStatus === 2 && row.gasBusinessStatus === 2) {
           this.authRow = row
           this.authRow._btn = {
             iShow: true,
@@ -117,20 +117,16 @@ export default {
             this.$message.error('企业认证状态不正确，请先去认证')
             return false
           }
+          if (row.gasLicenseStatus !== 2) {
+            this.$message.error('加气站营业执照状态不正确，请先去认证')
+            return false
+          }
           if (row.gasBusinessStatus !== 2) {
             this.$message.error('企业燃气经营许可证状态不正确，请先去认证')
             return false
           }
           if (row.gasFillingStatus !== 2) {
             this.$message.error('企业气瓶充装许可证状态不正确，请先去认证')
-            return false
-          }
-          if (row.fireControlStatus !== 2) {
-            this.$message.error('企业消防验收许可证状态不正确，请先去认证')
-            return false
-          }
-          if (row.envImpactStatus !== 2) {
-            this.$message.error('企业环评报告许可证状态不正确，请先去认证')
             return false
           }
         }
