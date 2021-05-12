@@ -28,6 +28,7 @@ const columns = {
     { field: 'mobile', name: '管理员手机号', width: 110 },
     { field: 'status', name: '状态', formatter: 'status', width: 60 },
     { field: 'authStatus', name: '认证状态', formatter: 'authStatus', filters: utilsTableOptionsToFilters('utilsAuthStatus') },
+    { field: 'gasLicenseStatus', name: '加气站执照', stype: 'link-status', value: [1], obj: utilsCommonAuthStatus() },
     { field: 'gasBusinessStatus', name: '燃气经营状态', stype: 'link-status', value: [1], obj: utilsCommonAuthStatus() },
     { field: 'gasFillingStatus', name: '气瓶充装状态', stype: 'link-status', value: [1], obj: utilsCommonAuthStatus() },
     { field: 'fireControlStatus', name: '消防验收', stype: 'link-status', value: [1], obj: utilsCommonAuthStatus() },

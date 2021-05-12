@@ -160,6 +160,10 @@ export default {
         picTypes = 12
         this.authTitle = '燃气经营审核'
         this.authStatusName = '燃气经营许可证'
+      } else if (type === 'gasLicenseStatus') {
+        picTypes = 16
+        this.authTitle = '加气站营业执照'
+        this.authStatusName = '加气站营业执照'
       }
 
       // 认证图片信息

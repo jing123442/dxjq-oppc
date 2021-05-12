@@ -56,40 +56,40 @@ const columns = {
   ],
   // 物流公司企业
   orgAuthCarrierInfo: [
-    { field: 'yyzzPic', name: '营业执照照片', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4 } },
+    { field: 'yyzzPic', name: '营业执照照片', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost } },
     { field: 'yyzzPicDate', name: '营业执照认证时间', nameSpan: 6, detail: { type: 'span', ou: 4 } },
     { field: 'sfzghPicDate', name: '法人身份证认证时间', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 3, detail: { type: 'span', ou: 4, style: 'width: 40.5%' } },
-    { field: 'sfzrlPic', name: '法人身份证人物面', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4 } },
-    { field: 'sfzghPic', name: '法人身份证国徽面', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4 } },
-    { field: 'dlysPic', name: '道路运输许可证', filefield: 'file', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4 },
+    { field: 'sfzrlPic', name: '法人身份证人物面', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost } },
+    { field: 'sfzghPic', name: '法人身份证国徽面', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost } },
+    { field: 'dlysPic', name: '道路运输许可证', filefield: 'file', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost },
       detail_d: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost },
       detail_u: { type: 'file', ou: 4, iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传道路运输许可证', node: [], rules: [{ required: true, message: '请上传道路运输许可证！', trigger: 'change' }] } },
     { field: 'dlysPicDate', name: '道路运输许可证认证时间', nameSpan: 6, detail: { type: 'span', ou: 4, style: 'margin-bottom: 94px;width: 90%;' } }
   ],
   // 加气站
   orgAuthFillerInfo: [
-    { field: 'yyzzPic', name: '营业执照照片', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4 } },
+    { field: 'yyzzPic', name: '营业执照照片', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost } },
     { field: 'yyzzPicDate', name: '营业执照认证时间', nameSpan: 6, detail: { type: 'span', ou: 4 } },
     { field: 'sfzghPicDate', name: '法人身份证认证时间', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 3, detail: { type: 'span', ou: 4, style: 'width: 40.5%' } },
-    { field: 'sfzrlPic', name: '法人身份证人物面', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4 } },
-    { field: 'sfzghPic', name: '法人身份证国徽面', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4 } },
-    { field: 'jqzyyzzPic', name: '加气站营业执照', filefield: 'file', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4 },
+    { field: 'sfzrlPic', name: '法人身份证人物面', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost } },
+    { field: 'sfzghPic', name: '法人身份证国徽面', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost } },
+    { field: 'jqzyyzzPic', name: '加气站营业执照', filefield: 'file', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost },
       detail_d: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost },
       detail_u: { type: 'file', ou: 4, iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传加气站营业执照', node: [], rules: [{ required: true, message: '请上传加气站营业执照！', trigger: 'change' }] } },
     { field: 'jqzyyzzPicDate', name: '加气站营业执照认证时间', nameSpan: 6, detail: { type: 'span', ou: 4, style: 'margin-bottom: 94px;width: 90%;' } },
-    { field: 'rqjyPic', name: '燃气经营许可证', filefield: 'file', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4 },
+    { field: 'rqjyPic', name: '燃气经营许可证', filefield: 'file', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost },
       detail_d: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost },
       detail_u: { type: 'file', ou: 4, iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传燃气经营许可证', node: [], rules: [{ required: true, message: '请上传燃气经营许可证！', trigger: 'change' }] } },
     { field: 'rqjyPicDate', name: '燃气经营许可证认证时间', nameSpan: 6, detail: { type: 'span', ou: 4, style: 'margin-bottom: 94px;width: 90%;' } },
-    { field: 'qpczPic', name: '气瓶充装许可证', filefield: 'file', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4 },
+    { field: 'qpczPic', name: '气瓶充装许可证', filefield: 'file', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost },
       detail_d: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost },
       detail_u: { type: 'file', ou: 4, iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传气瓶充装许可证', node: [], rules: [{ required: true, message: '请上传气瓶充装许可证！', trigger: 'change' }] } },
     { field: 'qpczPicDate', name: '气瓶充装许可证认证时间', nameSpan: 6, detail: { type: 'span', ou: 4, style: 'margin-bottom: 94px;width: 90%;' } },
-    { field: 'xfysPic', name: '消防验收', filefield: 'file', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4 },
+    { field: 'xfysPic', name: '消防验收', filefield: 'file', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost },
       detail_d: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost },
       detail_u: { type: 'file', ou: 4, iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传消防验收许可证', node: [], rules: [{ required: true, message: '请上传消防验收许可证！', trigger: 'change' }] } },
     { field: 'xfysPicDate', name: '消防验收认证时间', nameSpan: 6, detail: { type: 'span', ou: 4, style: 'margin-bottom: 94px;width: 90%;' } },
-    { field: 'hbpjPic', name: '环评报告', filefield: 'file', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4 },
+    { field: 'hbpjPic', name: '环评报告', filefield: 'file', nameSpan: 6, detail: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost },
       detail_d: { type: 'span', model: 'img', ou: 4, fileHost: file.state.fileHost },
       detail_u: { type: 'file', ou: 4, iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传环评报告许可证', node: [], rules: [{ required: true, message: '请上传环评报告许可证！', trigger: 'change' }] } },
     { field: 'hbpjPicDate', name: '环评报告认证时间', nameSpan: 6, detail: { type: 'span', ou: 4, style: 'margin-bottom: 94px;width: 90%;' } }
@@ -188,7 +188,7 @@ const columns = {
       detail: { type: 'span', model: 'img',/* vague: true, vagueType: 'style', */ ou: 1, serial: 15, fileHost: file.state.fileHost }
     }, {
       field: 'idcardBackUrl', name: '身份证国徽面', nameSpan: 6, hide: true,
-      detail: { type: 'span', model: 'img', serial: 16,/* vague: true, vagueType: 'style', */ ou: 1 }
+      detail: { type: 'span', model: 'img', serial: 16,/* vague: true, vagueType: 'style', */ ou: 1, fileHost: file.state.fileHost }
     }
   ],
   userTruckAuthInfo: [
