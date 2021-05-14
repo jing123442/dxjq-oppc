@@ -3,7 +3,7 @@
     <em-table-list ref="tables" :tableListName="'district'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :rowKey="'districtId'" :options="{ lazy: true }" :composeParam="composeParam" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
 
     <el-dialog title="变更记录" :visible.sync="dialogAreaChangeVisible" :width="add_edit_dialog" :append-to-body="true">
-      <em-table-list v-if="dialogAreaChangeVisible" ref="tables" :tableListName="'district'" :authButtonList="authButtonList" :buttonsList="buttonsChangeList" :axios="axios" :queryCustURL="queryChangeCustURL" :responseSuccess="response_success" :composeParam="composeParam" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_log_status" :page_column="page_log_column" :select_list="select_list"></em-table-list>
+      <em-table-list v-if="dialogAreaChangeVisible" ref="tables1" :tableListName="'district1'" :authButtonList="authButtonList" :buttonsList="buttonsChangeList" :axios="axios" :queryCustURL="queryChangeCustURL" :responseSuccess="response_success" :composeParam="composeParam" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_log_status" :page_column="page_log_column" :select_list="select_list"></em-table-list>
     </el-dialog>
 
     <el-dialog title="新增子区域" :visible.sync="dialogAddAreaVisible" :width="add_edit_dialog" :append-to-body="true">
@@ -29,7 +29,7 @@
 </template>
 <script>
 import { initVueDataOptions, queryDefaultParams } from '@/utils/tools'
-import { $userConfigFiller, $userFindALLFillerList, $userFindConfigFillerList, $userFindALLAreaList, $userFindConfigAreaList, $userConfigArea, $userUserList, $userFindConfigUserList, $userConfigAuthUser, $userFindALLCarrierList, $userFindConfigCarrierList, $userConfigCarrier, $userAddChildrenDistrict } from '@/service/user'
+import { $userConfigFiller, $userFindALLFillerList, $userFindConfigFillerList, $userFindALLAreaList, $userFindConfigAreaList, $userConfigArea, $userUserList, $userFindConfigUserList, $userConfigAuthUser, $userFindALLCarrierList, $userFindConfigCarrierList, $userConfigCarrier, $userAddChildrenDistrict, $userDistrictChildList } from '@/service/user'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -361,6 +361,8 @@ export default {
 
             $userAddChildrenDistrict(params).then(response => {
               this.$message.success('增加子区域成功！')
+
+              this.reloadChildList(row.parentId)
               this.dialogAddAreaVisible = false
             })
           } else {
@@ -370,6 +372,17 @@ export default {
       } else {
         this.dialogAddAreaVisible = false
       }
+    },
+    reloadChildList(parentId) {
+      const tmpParentId = Number(parentId)
+      const params = { districtId: tmpParentId }
+      this.$set(this.$refs.tables.$children[2].$refs.multipleTable.store.states.lazyTreeNodeMap, tmpParentId, [])
+
+      $userDistrictChildList(params).then(response => {
+        const list = response.data
+
+        this.$refs.tables.reRenderChildrenNodeAfterAdd(tmpParentId, list)
+      })
     },
     onReqParams(type, _this, callback) {}
   }

@@ -241,3 +241,8 @@ export async function $userAddChildrenDistrict(data) {
 export async function $userDistrictLogList(data) {
   return await R({ url: 'user/district_log/list', method: 'POST', data })
 }
+
+// 获取子列表
+export async function $userDistrictChildList(data) {
+  return await R({ url: 'user/district/district/child', method: 'GET', params: data })
+}
