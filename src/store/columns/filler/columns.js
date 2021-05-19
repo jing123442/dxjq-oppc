@@ -28,6 +28,7 @@ const columns = {
     { field: 'mobile', name: '管理员手机号', width: 110 },
     { field: 'status', name: '状态', formatter: 'status', width: 60 },
     { field: 'authStatus', name: '认证状态', formatter: 'authStatus', filters: utilsTableOptionsToFilters('utilsAuthStatus') },
+    { field: 'gasLicenseStatus', name: '加气站执照', stype: 'link-status', value: [1], obj: utilsCommonAuthStatus() },
     { field: 'gasBusinessStatus', name: '燃气经营状态', stype: 'link-status', value: [1], obj: utilsCommonAuthStatus() },
     { field: 'gasFillingStatus', name: '气瓶充装状态', stype: 'link-status', value: [1], obj: utilsCommonAuthStatus() },
     { field: 'fireControlStatus', name: '消防验收', stype: 'link-status', value: [1], obj: utilsCommonAuthStatus() },
@@ -39,8 +40,8 @@ const columns = {
   fillerChild: [
     { field: 'orgId', name: '企业名称', fixed: 'left', show: { type: 'select', ou: 1, findKey: 'orgName', remote: true, obj: 'fillerParent', style: 'width: 90%;', placeholder: '请输入企业名称' }, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
     { field: 'orgShortName', name: '加气站名称', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
-    { field: 'adminName', name: '姓名', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入姓名' } },
-    { field: 'adminMobile', name: '手机号', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入手机号' } }
+    { field: 'adminName', name: '姓名', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入姓名' }, rules: [{ required: true, message: '请输入姓名', trigger: 'blur' }] },
+    { field: 'adminMobile', name: '手机号', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入手机号' }, rules: [{ required: true, message: '请输入手机号', trigger: 'blur' }] }
   ],
   fillerUser: [
     { field: 'userName', name: '用户姓名', fixed: 'left' },

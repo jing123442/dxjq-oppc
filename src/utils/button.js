@@ -125,10 +125,9 @@ export function buttonPublishReleaseList(scope) {
 // 区域管理按钮
 export function buttonDistrictManagerList(scope) {
   const btnList = []
-  if (scope.row.districtId == 0) {
-    btnList.push(
-      { type: 'config_auth', name: '授权账号' }
-    )
+
+  if (scope.row.districtId === 0) {
+    btnList.push({ type: 'config_auth', name: '授权账号' })
   } else {
     scope.row.isAllowChild == 0 && btnList.push({ type: 'add_children', name: '新增子区域' })
     btnList.push(
@@ -140,5 +139,6 @@ export function buttonDistrictManagerList(scope) {
       { type: 'del', name: '删除' }
     )
   }
+
   return btnList
 }

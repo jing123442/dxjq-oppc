@@ -27,7 +27,8 @@ const app = {
     vehicle_detail: [
       { ou: 0, name: '车辆信息', status: 3 },
       { ou: 1, name: '司机信息', status: 2 },
-      { ou: 2, name: '账户状态', status: 2 }
+      { ou: 2, name: '账户状态', status: 2 },
+      { ou: 3, name: '行驶证信息', status: 2 }
     ]
   },
   list: {

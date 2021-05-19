@@ -102,7 +102,7 @@ export default {
           this.$message.error('企业认证状态不正确，请先去认证')
         }
       } else if (type === 'contractStatus') {
-        if (row.authStatus === 2 && row.roadTransportStatus === 2) {
+        if (row.authStatus === 2) {
           this.authRow = row
           this.authRow._btn = {
             iShow: true,
@@ -116,10 +116,6 @@ export default {
         } else {
           if (row.authStatus !== 2) {
             this.$message.error('企业认证状态不正确，请先去认证')
-            return false
-          }
-          if (row.roadTransportStatus !== 2) {
-            this.$message.error('企业铁道运输许可证状态不正确，请先去认证')
             return false
           }
         }

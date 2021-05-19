@@ -1,7 +1,8 @@
 const app = {
   list: {
     withdraw: 13,
-    district: 21
+    district: 5,
+    districtLog: 13
   }
 }
 

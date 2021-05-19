@@ -189,8 +189,8 @@ export function utilsAutoAccount() {
 // 圈存方式
 export function utilsAutoAccountType() {
   return [
-    { value: 0, label: '手动圈存' },
-    { value: 1, label: '自动圈存' }
+    { value: '0', label: '手动圈存' },
+    { value: '1', label: '自动圈存' }
   ]
 }
 // 开车类型
@@ -209,10 +209,10 @@ export function utilsPrintStatus() {
 }
 export function utilsVoiceStatus() {
   return [
-    { value: 0, label: '关' },
-    { value: 1, label: '低' },
-    { value: 2, label: '中' },
-    { value: 3, label: '高' }
+    { value: '0', label: '关' },
+    { value: '1', label: '低' },
+    { value: '2', label: '中' },
+    { value: '3', label: '高' }
   ]
 }
 
@@ -235,8 +235,8 @@ export function utilsTradeType() {
 }
 export function utilsPrintPaper() {
   return [
-    { value: 0, label: '不打印' },
-    { value: 1, label: '打印' }
+    { value: '0', label: '不打印' },
+    { value: '1', label: '打印' }
   ]
 }
 

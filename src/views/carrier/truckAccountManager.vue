@@ -13,7 +13,7 @@ export default {
     return initVueDataOptions(this, {
       queryCustURL: {
         list: {
-          url: 'account/truck_account/list',
+          url: 'account/truck_account/district/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],

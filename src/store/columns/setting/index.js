@@ -11,6 +11,11 @@ const getters = {
   setting_district_column: item => columns.district,
   setting_district_select_list: item => item.app.selectDefault,
 
+  // 区域变更记录
+  setting_district_log_page_status: item => app.list.districtLog,
+  setting_district_log_column: item => columns.districtLog,
+  setting_district_children_column: item => [...columns.district, ...columns.districtParent],
+
   // 账户余额配置
   setting_withdraw_mode_list: item => item.app.modeDefault,
   setting_withdraw_page_status: item => app.list.withdraw,
