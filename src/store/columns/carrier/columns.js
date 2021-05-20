@@ -152,7 +152,7 @@ const columns = {
       rules: [{ required: true, message: '请输入车牌号', trigger: 'blur' }] },
     { field: 'linked', name: '车辆类型', formatter: 'truckType', nameSpan: 5,
       show: { type: 'select', obj: 'truckType', cascaderList: [{ value: 1, fields: ['autoAccount'] }], style: 'width: 90%;', placeholder: '请选择卡车类型' },
-      detail: { type: 'span', model: 'select', obj: 'truckType', serial: 2, ou: 0 },
+      detail: { type: 'span', model: 'select', cascaderList: [{ value: 1, fields: ['autoAccount'] }], obj: 'truckType', serial: 2, ou: 0 },
       rules: [{ required: true, message: '请选择卡车类型', trigger: 'blur' }] },
     { field: 'frameNumber', name: '车架号', hide: true, nameSpan: 5,
       show: { type: 'text', style: 'width: 90%;', placeholder: '请输入车架号' },
