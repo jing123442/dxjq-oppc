@@ -40,7 +40,7 @@ const columns = {
     { field: 'orgShortName', name: '加气站名称', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入加气站名称' }, detail: { type: 'span', ou: 2 }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
   ],
   carrierFieldInfo: [
-    { field: 'orgSubType', name: '客户类型', nameSpan: 6, detail: { type: 'span', model: 'select', obj: 'orgSubType', ou: 2 } },
+    { field: 'orgSubType', name: '客户类型', nameSpan: 6, show: { type: 'hide', ou: 2, value: 21 }, detail: { type: 'span', model: 'select', obj: 'orgSubType', ou: 2 } },
   ],
   orgAuthManageInfo: [
     { field: 'manageInfo', name: '管理员', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 3, detail: { type: 'span', ou: 3, style: 'width: 97.5%' } }
