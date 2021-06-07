@@ -44,6 +44,10 @@ export default {
         name: '优惠总金额：',
         field: 'discountTotal',
         unit: ' 元'
+      }, {
+        name: '立减金额：',
+        field: 'comAmountTotal',
+        unit: ' 元'
       }],
       totalInfo: { discountTotal: 0, gasAmountTotal: 0, gasQtyTotal: 0, rechargeTotal: 0 }
     })

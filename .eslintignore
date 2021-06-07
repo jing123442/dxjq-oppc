@@ -1,0 +1,9 @@
+node_modules/**
+# 打包后的文件
+/dist
+# table列表
+/src/store/columns/**/*.js
+
+.eslintrc.js
+package-lock.json
+

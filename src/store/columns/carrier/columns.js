@@ -1,4 +1,5 @@
 import { buttonOrgCarrierList } from '@/utils/button'
+import {monthTimeArea, toolPickerOptions} from '@/utils/tools'
 import { utilsTableOptionsToFilters, utilsContractStatus, utilsCommonAuthStatus } from '@/utils/select'
 import file from '../../modules/file'
 
@@ -82,7 +83,8 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'list', name: '流水列表' }] }
   ],
   firmAccountList: [
-    { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: 'daterange' } },
+    { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format',
+      search: { type: 'date-picker', model: 'daterange', style: 'width: 350px;', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] })() } },
     { field: 'type', name: '交易类型', formatter: 'type' },
     { field: 'anotherAccount', name: '对方账号' },
     { field: 'anotherName', name: '对方账户名称' },

@@ -131,7 +131,7 @@ export function inArray(value, array) {
   return -1
 }
 
-export function monthTimeArea(now) {
+export function monthTimeArea(now, fmt = '') {
   var nowYear = now.getFullYear()
   var nowMonth = now.getMonth()
 
@@ -139,8 +139,8 @@ export function monthTimeArea(now) {
   var monthEndDate = new Date(nowYear, nowMonth + 1, 0)
 
   return {
-    start: formatDate(monthStartDate, 'yyyy-MM-dd 00:00:00'),
-    end: formatDate(monthEndDate, 'yyyy-MM-dd 23:59:59')
+    start: fmt ? formatDate(monthStartDate, fmt) : formatDate(monthStartDate, 'yyyy-MM-dd 00:00:00'),
+    end: fmt ? formatDate(monthEndDate, fmt) : formatDate(monthEndDate, 'yyyy-MM-dd 23:59:59')
   }
 }
 

@@ -69,6 +69,7 @@ const columns = {
     { field: 'gasQtyTotal', name: '加气量汇总(公斤)' },
     { field: 'amountTotal', name: '加气金额汇总(元)' },
     { field: 'discountTotal', name: '优惠金额汇总(元)' },
+    { field: 'comAmountTotal', name: '立减金额汇总(元)' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'recharge_list', name: '充值对账' }, { type: 'settle_order_list', name: '结算订单' }, { type: 'truck_list', name: '卡车汇总' }] }
   ],
   carrierToFiller: [
