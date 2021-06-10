@@ -180,6 +180,7 @@ const columns = {
       show: { type: 'radio', obj: 'autoAccount', value: 0, placeholder: '请选择圈存方式' },
       detail: { type: 'span', model: 'select', obj: 'autoAccount', serial: 13, ou: 0 },
       rules: [{ required: true, message: '请选择圈存方式', trigger: 'blur' }] },
+    { field: 'comStatus', name: '组合支付', nameSpan: 5, formatter: 'comPayType' },
     { field: 'truckDriverList', name: '当前绑定司机', ispush: false, nameSpan: 5, formatter: '', stype: 'list-tag', action: { name: 'driverName' },
       detail: { type: 'span', name: '绑定司机', formatFun: 'truckToDriverList', stype: 'format', serial: 15, ou: 1, isDisabled: true } },
     { field: 'balance', name: '账户余额', ispush: false, hide: true, nameSpan: 5,

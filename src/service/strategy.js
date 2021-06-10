@@ -196,3 +196,8 @@ export async function $strategyPublishPrice(data) {
 export async function $strategyGasstationDistrictList(data) {
   return await R({ url: 'strategy/gasstation/get_district_gasstation_list', data })
 }
+
+// 获取物流公司信息
+export async function $strategyCarrierInfo (data) {
+  return await R({ url: 'strategy/carrier/find', data })
+}

@@ -264,11 +264,20 @@ export function utilsPrintPaper() {
   ]
 }
 
+// 组合支付类型
+export function utilsComPayType() {
+  return [
+    { value: 0, label: '开启' },
+    { value: 1, label: '关闭' }
+  ]
+}
+
 export function utilsPayType() {
   return [
     { value: 0, label: '余额' },
     { value: 1, label: '微信' },
-    { value: 2, label: '微信+余额' }
+    { value: 2, label: '微信+余额' },
+    { value: 11, label: '组合支付' }
   ]
 }
 

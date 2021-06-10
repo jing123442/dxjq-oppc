@@ -12,6 +12,7 @@ import {
   utilsTradeType,
   utilsBankList,
   utilsOrgSubType,
+  utilsComPayType,
   utilsTruckAccType, utilsRechargeType
 } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
@@ -26,7 +27,8 @@ const select = {
     autoAccount: utilsAutoAccountType(),
     identityType: utilsIdentityType(),
     bankList: utilsBankList(),
-    orgSubType: utilsOrgSubType()
+    orgSubType: utilsOrgSubType(),
+    comPayType: utilsComPayType()
   },
   firmAccount: {
     orgId: utilsDyOrgList(2),
@@ -38,7 +40,8 @@ const select = {
     status: utilsStatus(),
     truckType: utilsTruckType(),
     autoAccount: utilsAutoAccountType(),
-    driverList: utilsDriverList()
+    driverList: utilsDriverList(),
+    comPayType: utilsComPayType()
   },
   truckAccount: {
     type: utilsTruckAccType()

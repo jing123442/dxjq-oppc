@@ -1,7 +1,7 @@
 <template>
   <div class="template-main">
     <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 158px;'"></table-total-data>
-    <em-table-list ref="tables" :tableListName="'order'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" :tableListName="'order'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue"></em-table-list>
   </div>
 </template>
 <script>
@@ -52,6 +52,12 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {},
+    updateColumnValue(tableData, callback) {
+      tableData.forEach(item => {
+        item.orderRealTotal = item.payType == 11 ? (Number(item.amount) - Number(item.comAmount)).toFixed(2) : ''
+      })
+      callback(tableData)
+    },
     initTotalData() {
       const loading = this.$refs.tables ? this.$refs.tables.loading : true
       const response = this.$refs.tables && this.$refs.tables.tableListResponse ? this.$refs.tables.tableListResponse : null
