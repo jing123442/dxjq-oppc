@@ -47,7 +47,7 @@ export function buttonLNGPlanList(scope) {
   const status = Number(scope.row.status)
   const list = [{ type: 'self_detail', name: '详情' }, { type: 'change_list', name: '变更记录' }]
 
-  if (status === 1 || status === 2 || status === 3 || status === 4 || status === 6 || status === 7) {
+  if (status === 1 || status === 2 || status === 3 || status === 6 || status === 7) {
     list.unshift({ type: 'cancel', name: '取消' })
   }
   if (status === 6) {
