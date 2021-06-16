@@ -3,15 +3,16 @@
              :center="center"
              :zoom="zoom"
              :scroll-wheel-zoom="true"
-             @click="getClickInfo"
              @moving="syncCenterAndZoom"
              @moveend="syncCenterAndZoom"
              @zoomend="syncCenterAndZoom">
     <bm-view style="width: 100%; height:100%;"></bm-view>
-    <bm-marker :position="{lng: center.lng, lat: center.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE"></bm-marker>
     <bm-control :offset="{width: '10px', height: '10px'}">
-      <bm-auto-complete :sugStyle="{zIndex: 999999}">
-        <input type="text" v-model="address" placeholder="请输入搜索关键字">
+      <bm-auto-complete :sugStyle="{ zIndex: 999999 }">
+        <div class="map-control-warp">
+          <span class="title">大象加气 · 作战地图</span>
+          <div class="map-card">111</div>
+        </div>
       </bm-auto-complete>
     </bm-control>
     <bm-local-search :keyword="address" :auto-viewport="true" style="width:0px;height:0px;overflow: hidden;"></bm-local-search>
@@ -71,21 +72,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.serachinput{
-  width: 200px;
-  box-sizing: border-box;
-  padding: 9px;
-  border: 1px solid #dddee1;
-  line-height: 12px;
-  font-size: 12px;
-  height: 30px;
-  color: #333;
-  outline-width: 0;
-  outline-color: rgba(0, 0, 0, 0);
-  position: relative;
-  border-radius: 4px;
-  -webkit-box-shadow: #666 0px 0px 10px;
-  -moz-box-shadow: #666 0px 0px 10px;
-  box-shadow: #666 0px 0px 10px;
-}
+  .map-control-warp {
+    padding: 15px;
+    .title {
+      font-weight: bold;
+    }
+    .map-card {
+      padding: 10px;
+      width: 260px;
+      margin-top: 10px;
+      background-color: rgba(255, 255, 255, .9);
+    }
+  }
 </style>
