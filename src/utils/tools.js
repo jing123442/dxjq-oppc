@@ -366,6 +366,92 @@ export function tableTextColor(row, field) {
   }
 }
 
+// echarts begin
+// tooltip默认值
+export function initDefaultChartsTooltip() {
+  return {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow',
+      shadowStyle: {
+        color: '#5D7092',
+        shadowColor: '#5D7092',
+        opacity: 0.1
+      }
+    }
+  }
+}
+
+// legend默认值
+export function initDefaultChartsLegend() {
+  return {
+    type: 'plain',
+    left: 'center',
+    bottom: '4%',
+    textStyle: {
+      fontSize: '1.4rem'
+    }
+  }
+}
+
+// x轴样式
+export function initDefaultChartsxAxis(obj) {
+  return {
+    axisTick: {
+      show: false
+    },
+    axisLabel: {
+      show: true,
+      interval: 0
+    },
+    axisLine: {
+      show: false
+    },
+    splitLine: {
+      show: false
+    }
+  }
+}
+
+// y轴样式
+export function initDefaultChartsyAxis(obj) {
+  return {
+    axisTick: {
+      show: false
+    },
+    axisLabel: {
+      show: false
+    },
+    axisLine: {
+      show: false
+    },
+    splitLine: {
+      lineStyle: {
+        color: '#333',
+        opacity: 0.1
+      }
+    }
+  }
+}
+
+// axisPointer
+export function initDefaultChartsAxisPointer() {
+  return {
+    show: true,
+    type: 'shadow',
+    label: {
+      show: true
+    },
+    shadowStyle: {
+      color: '#5D7092',
+      shadowColor: '#5D7092',
+      opacity: 0.1
+    }
+  }
+}
+
+// echarts end
+
 export function formateParams(param, type = true) {
   if (isTypeof(param) === 'string' || isTypeof(param) === 'number') {
     return type ? parseFloat(param).toLocaleString() : currency(param, '', '')
