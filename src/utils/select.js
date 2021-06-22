@@ -353,7 +353,7 @@ export function untilsMarketingManList() {
   // })
 }
 
-export function utilsDyOrgList(type = null) {
+export function utilsDyOrgList(type = null, key = 'orgId') {
   return {
     url: 'user/org/list',
     node: ['data', 'records'],
@@ -366,7 +366,7 @@ export function utilsDyOrgList(type = null) {
       }
     },
     props: {
-      value: 'orgId',
+      value: key,
       label: 'orgName'
     }
   }

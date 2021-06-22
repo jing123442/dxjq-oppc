@@ -50,7 +50,7 @@ export function formatDate(date, fmt) { // date对象
 export function toolPickerOptions(number = 1) {
   const timeOptions = {
     disabledDate: (time) => {
-      const taday = 24 * 60 * 60 * 1000
+      const taday = number * 24 * 60 * 60 * 1000
       const data = formateTData(new Date(), 'date') + ' 00:00:00'
       const timers = new Date(data).getTime() + taday
 
@@ -144,17 +144,17 @@ export function monthTimeArea(now, fmt = '') {
   }
 }
 
-export function dataPickerDefault(now, number = 30) {
+export function dataPickerDefault(now, number = 30, fmt = 'yyyy-MM-dd hh:mm:ss', space = 0) {
   const nowYear = now.getFullYear()
   const nowMonth = now.getMonth()
   const nowDate = now.getDate()
 
-  const monthStartDate = new Date(nowYear, nowMonth, (nowDate - number + 1))
-  const monthEndDate = new Date(nowYear, nowMonth, nowDate)
+  const monthStartDate = new Date(nowYear, nowMonth, (nowDate - number - space + 1))
+  const monthEndDate = new Date(nowYear, nowMonth, nowDate - space)
 
   return {
-    start: formatDate(monthStartDate, 'yyyy-MM-dd 00:00:00'),
-    end: formatDate(monthEndDate, 'yyyy-MM-dd 23:59:59')
+    start: formatDate(monthStartDate, fmt),
+    end: formatDate(monthEndDate, fmt)
   }
 }
 
