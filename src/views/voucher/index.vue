@@ -49,7 +49,7 @@ export default {
       const params = this.downloadParams || {}
       if (params.bizUserId) {
         $settleCashFlowAdd(params).then(response => {
-          this.$alert('您的下载申请已处理，请前往下载纪录页面进行下载。', '下载提示')
+          this.$alert('您的下载申请已处理，请前往申请记录页面进行下载。', '下载提示')
         })
       } else {
         this.$message.error('请选择企业进行下载资金流水凭证')
