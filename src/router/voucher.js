@@ -10,7 +10,7 @@ export default [
     meta: { title: '资金流水凭证' },
     children: [
       { path: 'voucherIndex', component: inImport('voucher/index'), name: 'voucherIndex', meta: { title: '凭证查询', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'voucherDownload', component: inImport('voucher/download'), name: 'voucherDownload', meta: { title: '下载记录', icon: 'icon-gongnengguanli', noCache: false } }
+      { path: 'voucherDownload', component: inImport('voucher/download'), name: 'voucherDownload', meta: { title: '申请记录', icon: 'icon-gongnengguanli', noCache: false } }
     ]
   }
 ]
