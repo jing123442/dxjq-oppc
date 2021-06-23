@@ -22,8 +22,9 @@
   </div>
 </template>
 <script>
-import { isTypeof, initVueDataOptions, callbackPagesInfo, queryDefaultParams } from '@/utils/tools'
+import { isTypeof, initVueDataOptions, callbackPagesInfo, queryDefaultParams, exportBlobToFiles } from '@/utils/tools'
 import { mapGetters } from 'vuex'
+import { $settleCashFlowDownload } from '@/service/settle'
 
 export default {
   name: 'voucherDownload',
@@ -79,10 +80,12 @@ export default {
         this.queryDetailParams[2].value.dateStart = row.startDate
         this.queryDetailParams[2].value.dateEnd = row.endDate
         this.dialogDetailVisible = true
-      } else if (type === 'down_no') {
-        window.open(process.env.VUE_APP_FILE_HOST + row.noSealFilePath)
-      } else if (type === 'down_ok') {
-        window.open(process.env.VUE_APP_FILE_HOST + row.sealFilePath)
+      } else if (type === 'down_no' || type === 'down_ok') {
+        const downType = type === 'down_no' ? 0 : 1
+
+        $settleCashFlowDownload({ id: row.id, type: downType }).then(response => {
+          exportBlobToFiles(response, row.fileName, 'application/pdf')
+        })
       }
     },
     onReqParams(type, _this, callback) {

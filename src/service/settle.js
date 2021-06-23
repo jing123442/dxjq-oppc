@@ -138,5 +138,10 @@ export async function $settleGasstationHistorySales (data) {
 
 // 申请下载资金流水凭证
 export async function $settleCashFlowAdd (data) {
-  return await R({ url: 'settle/cash_flow_apply/add', data, responseType: 'blob' })
+  return await R({ url: 'settle/cash_flow_apply/add', data })
+}
+
+// 下载资金流水凭证
+export async function $settleCashFlowDownload (data) {
+  return await R({ url: 'settle/cash_flow_apply/download', data, responseType: 'blob' })
 }
