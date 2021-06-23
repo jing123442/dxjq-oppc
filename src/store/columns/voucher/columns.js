@@ -25,10 +25,15 @@ const columns = {
     { field: 'status', name: '状态', formatter: 'voucherStatus', search: { type: 'select', obj: 'voucherStatus', placeholder: '盖章状态' } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', note: '工作日凌晨12点前申请下载的文件T+1后可下载盖章文件，需要紧急大量盖章或者异常导致的盖章失败，可下载未盖章凭证联系通联转人工处理', fixed: 'right', width: 330, list: function (scope) {
         const row = scope.row
-        const result =[{type: 'self_detail', name: '资金流水凭证明细'}, {type: 'down_no', name: '下载未盖章凭证'}]
+        const result =[{type: 'self_detail', name: '资金流水凭证明细'}]
 
-        if (scope.row.status == 1) {
-          result.push({type: 'down_ok', name: '下载已盖章凭证'})
+        if (row.noSealFilePath) {
+          result.push({type: 'down_no', name: '下载未盖章凭证'})
+        }
+        if (row.status == 1) {
+          if (row.sealFilePath) {
+            result.push({type: 'down_ok', name: '下载已盖章凭证'})
+          }
         } else {
           result.push({type: 'wait', name: '待生成', style: 'color: #333333'})
         }
