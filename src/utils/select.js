@@ -353,8 +353,8 @@ export function untilsMarketingManList() {
   // })
 }
 
-export function utilsDyOrgList(type = null, key = 'orgId') {
-  return {
+export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', authStatus = null) {
+  const result = {
     url: 'user/org/list',
     node: ['data', 'records'],
     params: {
@@ -366,10 +366,15 @@ export function utilsDyOrgList(type = null, key = 'orgId') {
       }
     },
     props: {
-      value: key,
-      label: 'orgName'
+      value: value,
+      label: label
     }
   }
+  if (authStatus !== null) {
+    result.params.param.org.authStatus = authStatus
+  }
+
+  return result
 }
 
 export function utilsFillerParentList(type = null) {

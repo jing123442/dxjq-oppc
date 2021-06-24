@@ -1,18 +1,22 @@
 <template>
-  <baidu-map style="padding: 0;padding-bottom: 40px;margin-bottom: 0;" :style="mapStyle" ref="map" class="template-main bm-view" :ak="akey"
-             :center="center"
-             :zoom="zoom"
-             :scroll-wheel-zoom="true"
-             @ready="initMap"
-             @moving="syncCenterAndZoom"
-             @moveend="syncCenterAndZoom"
-             @zoomend="syncCenterAndZoom">
-    <bm-view style="width: 100%; height:100%;"></bm-view>
-    <!--缩放按钮-->
-    <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
-    <!--marker点-->
-    <bm-marker v-for="(item, index) of gasstationList" :key="index" :position="{lng: item.longitude, lat: item.latitude}" :icon="mapMarkIcon(item)"></bm-marker>
-
+  <div class="template-main" v-loading.fullscreen.lock="mapStatus" element-loading-text="正在加载地图信息，请等待..." style="padding: 0;padding-bottom: 40px;margin-bottom: 0; height: 100%;">
+    <baidu-map :style="mapStyle" ref="map"  class="bm-view" :ak="akey"
+               :center="center"
+               :zoom="zoom"
+               :scroll-wheel-zoom="true"
+               @ready="initMap"
+               @moving="syncCenterAndZoom"
+               @moveend="syncCenterAndZoom"
+               @zoomend="syncCenterAndZoom">
+      <bm-view style="width: 100%; height:100%;"></bm-view>
+      <!--缩放按钮-->
+      <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
+      <!--marker点-->
+      <bm-marker v-for="(item, index) of gasstationList" :key="index" :position="{lng: item.longitude, lat: item.latitude}" :icon="mapMarkIcon(item)" :title="item.gasstationName">
+        <bm-label v-if="item.markerStatus" :content="markerLabelContent(item)" :labelStyle="markerLabelStyle" :offset="{width: -50, height: -57}" />
+      </bm-marker>
+      <bm-local-search :keyword="address" :auto-viewport="true" style="width:0px;height:0px;overflow: hidden;"></bm-local-search>
+    </baidu-map>
     <div class="map-control-warp">
       <span class="title">大象加气 · 作战地图</span>
       <div class="map-card">
@@ -46,7 +50,7 @@
               <div class="title">
                 <div>
                   <span class="item-name">{{item.gasstationName}}</span>
-                  <span>[{{getGasstationTypeName(item.gasType)}}]</span>
+                  <span class="item-tag">[{{getGasstationTypeName(item.gasType)}}]</span>
                 </div>
                 <div class="item-type" v-if="item.gasType === 1003">盟</div>
               </div>
@@ -73,11 +77,15 @@
         </div>
       </div>
     </div>
-    <bm-local-search :keyword="address" :auto-viewport="true" style="width:0px;height:0px;overflow: hidden;"></bm-local-search>
-  </baidu-map>
+    <div class="map-control-opt">
+      <el-checkbox v-model="markerTitleStatus" size="small" border @click.native="markerLabelEvent">地标文字</el-checkbox>
+      <el-button size="small">新增</el-button>
+      <el-button size="small">变更记录</el-button>
+    </div>
+  </div>
 </template>
 <script>
-import { BaiduMap, BmView, BmMarker, BmLocalSearch, BmNavigation, BmBoundary } from 'vue-baidu-map'
+import { BaiduMap, BmView, BmMarker, BmLocalSearch, BmNavigation, BmLabel } from 'vue-baidu-map'
 import { $gasdataGasstationList } from '@/service/gasdata'
 import { $districtList } from '@/service/user'
 export default {
@@ -86,7 +94,7 @@ export default {
     BaiduMap,
     BmView,
     BmMarker,
-    BmBoundary,
+    BmLabel,
     BmLocalSearch,
     BmNavigation
   },
@@ -96,12 +104,14 @@ export default {
       address: '',
       mapStatus: false,
       showMapComponent: false,
+      markerTitleStatus: false,
       mapStyle: {
         width: '100%',
         height: '100%'
       },
       mapHeight: '',
       center: { lng: 115.692614, lat: 35.941008 },
+      markerLabelStyle: { border: '1px solid #6E7A8F', boxShadow: '0px 0px 18px 0px rgba(0, 0, 0, 0.1)', borderRadius: '4px', fontSize: '12px', zIndex: 10000, color: '#333333' },
       zoom: 7,
       pages: {
         page: 1,
@@ -171,6 +181,22 @@ export default {
       this.districtLoading = 2
       this.addDistrictName('青岛市')
       this.addDistrictName('烟台市')
+    },
+    markerLabelContent(item) {
+      let html = ''
+
+      html += '<div class="marker-label-tag"><div class="title">' + item.gasstationName + '</div><div class="detail"><div class="number">40 吨</div><div class="money">$3.67 /公斤</div></div></div>'
+
+      return html
+    },
+    markerLabelEvent() {
+      this.mapStatus = true
+      this.$nextTick(() => {
+        this.gasstationList.forEach(item => {
+          item.markerStatus = !this.markerTitleStatus
+        })
+        this.mapStatus = false
+      })
     },
     addDistrictName(districtName) {
       // 网格渲染
@@ -293,8 +319,10 @@ export default {
         padding-bottom: 15px;
         border-bottom: 1px solid #EDEDED;
         white-space: nowrap;
+        align-items: center;
+        justify-content: space-between;
         .el-select {
-          width: 95px;
+          width: 110px;
           margin-right: 10px;
         }
         .btn-echarts {
@@ -355,6 +383,9 @@ export default {
               font-size: 12px;
               font-weight: normal;
             }
+            .item-tag {
+              white-space: nowrap;
+            }
             .item-name {
               width: 50%;
               color: #333333;
@@ -372,10 +403,9 @@ export default {
               /*伸缩盒子的子元素排列：从上到下*/
             }
             .item-type {
-              width: 15px;
               height: 15px;
               line-height: 15px;
-              text-align: center;
+              padding: 0 1.5px;
               font-size: 9px;
               border-radius: 2px;
               background-color: #22BA55;
@@ -402,6 +432,40 @@ export default {
             }
           }
         }
+      }
+    }
+  }
+  .map-control-opt {
+    top: 0;
+    right: 0;
+    padding: 15px;
+    position: absolute;
+    label {
+      padding: 5.5px;
+      margin-right: 10px;
+      background-color: #ffffff;
+    }
+    button {
+      width: 80px;
+      color: #2765E2;
+      margin-left: 10px;
+    }
+  }
+  .marker-label-tag {
+    padding: 4px 8px;
+    .title {
+      font-size: 13px;
+      font-weight: bold;
+      padding-bottom: 8px;
+    }
+    .detail {
+      font-size: 10px;
+      color: #6E7A8F;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      .number {
+        padding-right: 10px;
       }
     }
   }
