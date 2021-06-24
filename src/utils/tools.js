@@ -202,9 +202,20 @@ export function axiosRequestParams(_this) {
   }
 }
 
+// 对象深度赋值
+export function objectDepthAssignment(source) {
+  const sourceCopy = Object.prototype.toString.call(source) === '[object Array]' ? [] : {}
+
+  for (const item in source) {
+    sourceCopy[item] = typeof source[item] === 'object' ? objectDepthAssignment(source[item]) : source[item]
+  }
+
+  return sourceCopy
+}
+
 // 请求默认参数
 export function queryDefaultParams(_this, param) {
-  let queryParams = objectMerge({}, _this.$store.getters.query_params)
+  let queryParams = objectDepthAssignment(_this.$store.getters.query_params)
 
   if (isTypeof(queryParams) !== 'array') {
     queryParams = []
