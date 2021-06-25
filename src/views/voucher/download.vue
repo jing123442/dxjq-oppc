@@ -81,7 +81,7 @@ export default {
   methods: {
     onListEvent(type, row) {
       if (type === 'self_detail') {
-        this.queryDetailParams[2].value.bizUserId = row.bizUserId
+        this.queryDetailParams[2].value.orgId = row.orgId
         this.queryDetailParams[2].value.dateStart = row.startDate
         this.queryDetailParams[2].value.dateEnd = row.endDate
         this.dialogDetailVisible = true
