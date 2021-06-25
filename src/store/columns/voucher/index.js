@@ -8,13 +8,15 @@ const getters = {
   // 资金流水凭证列表
   voucher_list_mode_list: item => item.app.modeDefault,
   voucher_list_page_status: item => app.list.list,
-  voucher_list_column: item => columns.list,
+  voucher_list_cc_column: item => [...columns.listcc, ...columns.list],
+  voucher_list_xq_column: item => [...columns.listxq, ...columns.list],
   voucher_list_select_list: item => select.list,
 
   // 流水凭证下载
   voucher_download_mode_list: item => item.app.modeDefault,
   voucher_download_page_status: item => app.list.download,
-  voucher_download_column: item => columns.download,
+  voucher_download_cc_column: item => [...columns.downloadcc, ...columns.download],
+  voucher_download_xq_column: item => [...columns.downloadxq, ...columns.download],
   voucher_download_select_list: item => select.download,
 
   // 详情记录

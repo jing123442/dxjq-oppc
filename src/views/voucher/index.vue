@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="tables" :tableListName="'voucher'" :autoLoad="false" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="tables" :tableListName="'voucher'" :autoLoad="false" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="tableColumn" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
@@ -31,12 +31,18 @@ export default {
     ...mapGetters({
       mode_list: 'voucher_list_mode_list',
       page_status: 'voucher_list_page_status',
-      page_column: 'voucher_list_column',
+      page_cc_column: 'voucher_list_cc_column',
+      page_xq_column: 'voucher_list_xq_column',
       select_list: 'voucher_list_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
-      response_success: 'response_success'
-    })
+      response_success: 'response_success',
+      woporg: 'woporg',
+      wopuser: 'wopuser'
+    }),
+    tableColumn() {
+      return (this.wopuser.authorities[0].orgName && this.wopuser.authorities[0].orgName.indexOf('青岛象群') !== -1) ? this.page_xq_column : this.page_cc_column
+    }
   },
   created: function () {},
   methods: {
@@ -48,7 +54,7 @@ export default {
     downloadEvent() {
       const params = this.downloadParams || {}
       if (this.$refs.tables.tableData.length > 0) {
-        if (params.bizUserId) {
+        if (params.orgId) {
           $settleCashFlowAdd(params).then(response => {
             this.$alert('您的下载申请已处理，请前往申请记录页面进行下载。', '下载提示')
           })
@@ -60,7 +66,7 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { bizUserId: '', dateEnd: '', dateStart: '' } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { orgId: '', dateEnd: '', dateStart: '' } })
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
@@ -77,7 +83,10 @@ export default {
           }
         }
       }
-      this.downloadParams.bizUserId = params.param.bizUserId
+      if (this.wopuser.authorities[0].orgName && this.wopuser.authorities[0].orgName.indexOf('青岛象群') === -1) {
+        params.param.orgId = this.woporg
+      }
+      this.downloadParams.orgId = params.param.orgId
       this.downloadParams.startDate = params.param.dateStart
       this.downloadParams.endDate = params.param.dateEnd
 

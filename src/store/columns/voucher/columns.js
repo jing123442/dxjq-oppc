@@ -1,10 +1,17 @@
 import {dataPickerDefault, toolPickerOptions} from '@/utils/tools'
 
 const columns = {
-  list: [
+  listcc: [
     { field: 'orderNumber', name: '序号', width: 50, fixed: 'left' },
     { field: 'orderId', name: '订单编号', mapping: 'orgName' },
-    { field: 'certificateNumber', name: '凭证号', search: { type: 'select', name: '企业名称', remote: true, field: 'bizUserId', obj: 'orgId', findKey: 'orgName', paramKey: ['param', 'org'], placeholder: '企业名称', required: true } },
+    { field: 'certificateNumber', name: '凭证号' },
+  ],
+  listxq: [
+    { field: 'orderNumber', name: '序号', width: 50, fixed: 'left' },
+    { field: 'orderId', name: '订单编号', mapping: 'orgName' },
+    { field: 'certificateNumber', name: '凭证号', search: { type: 'select', name: '企业名称', remote: true, field: 'orgId', obj: 'orgId', findKey: 'orgName', paramKey: ['param', 'org'], placeholder: '企业名称', required: true } },
+  ],
+  list: [
     { field: 'serialNumber', name: '流水号' },
     { field: 'changeTime', name: '记账时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: 'daterange', dataType: 'rangeType', rangeNumber: 31, style: 'width: 350px;', format: 'yyyy-MM-dd', timeOptions: toolPickerOptions(0), value: (function() { const dateObj = dataPickerDefault(new Date(), 1, 'yyyy-MM-dd hh:mm:ss', 1); return [dateObj.start, dateObj.end] })() } },
     { field: 'happenTime', name: '发生时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
@@ -17,9 +24,14 @@ const columns = {
     { field: 'otherAccount', name: '对方账号' },
     { field: 'fundUse', name: '用途' }
   ],
-  download: [
+  downloadcc: [
+    { field: 'orgName', name: '企业名称', fixed: 'left' },
+  ],
+  downloadxq: [
     { field: 'orgName', name: '企业名称', fixed: 'left', search: { type: 'text-cache', placeholder: '请输入企业名称',
         action: { url: 'user/org/list', paramKey: ['param', 'org'], parse: ['data', 'records'], param: { page: 1, size: 10, param: { org: {} } } } } },
+  ],
+  download: [
     { field: 'orgShortName', name: '简称' },
     { field: 'changeTime', name: '期间', stype: 'fields', fieldList: ['startDate', 'endDate'], sign: ' 至 ', search: { type: 'date-picker', style: 'width: 350px;', dtime: ['00:00:00', '23:59:59'] } },
     { field: 'createTime', name: '申请时间', formatFun: 'formateTData all', stype: 'format' },

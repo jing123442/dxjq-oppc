@@ -9,7 +9,7 @@
       :queryCustURL="queryCustURL"
       :responseSuccess="response_success"
       :queryParam="queryParams"
-      :page_column="page_column"
+      :page_column="tableColumn"
       :buttonsList="buttonsList"
       :select_list="select_list"
       :page_status="page_status"
@@ -59,7 +59,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      page_column: 'voucher_download_column',
+      page_cc_column: 'voucher_download_cc_column',
+      page_xq_column: 'voucher_download_xq_column',
       mode_list: 'voucher_download_mode_list',
       page_status: 'voucher_download_page_status',
       select_list: 'voucher_download_select_list',
@@ -69,8 +70,12 @@ export default {
       select_detail_list: 'voucher_list_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
-      response_success: 'response_success'
-    })
+      response_success: 'response_success',
+      wopuser: 'wopuser'
+    }),
+    tableColumn() {
+      return (this.wopuser.authorities[0].orgName && this.wopuser.authorities[0].orgName.indexOf('青岛象群') !== -1) ? this.page_xq_column : this.page_cc_column
+    }
   },
   created: function () {},
   methods: {
