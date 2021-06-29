@@ -56,7 +56,7 @@ export default {
       if (this.$refs.tables.tableData.length > 0) {
         if (params.orgId) {
           $settleCashFlowAdd(params).then(response => {
-            this.$alert('您的下载申请已处理，请前往申请记录页面进行下载。', '下载提示')
+            this.$alert('您的下载申请已提交，请前往申请纪录页面下载。盖章文件将于24小时内可下载，非工作日顺延。', '下载提示')
           })
         } else {
           this.$message.error('企业还未认证，请先去认证')
