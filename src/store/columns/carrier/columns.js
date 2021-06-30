@@ -1,4 +1,5 @@
 import { buttonOrgCarrierList } from '@/utils/button'
+import {monthTimeArea, toolPickerOptions} from '@/utils/tools'
 import { utilsTableOptionsToFilters, utilsContractStatus, utilsCommonAuthStatus } from '@/utils/select'
 import file from '../../modules/file'
 
@@ -82,7 +83,8 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'list', name: '流水列表' }] }
   ],
   firmAccountList: [
-    { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: 'daterange' } },
+    { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format',
+      search: { type: 'date-picker', model: 'daterange', style: 'width: 350px;', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] })() } },
     { field: 'type', name: '交易类型', formatter: 'type' },
     { field: 'anotherAccount', name: '对方账号' },
     { field: 'anotherName', name: '对方账户名称' },
@@ -178,6 +180,7 @@ const columns = {
       show: { type: 'radio', obj: 'autoAccount', value: 0, placeholder: '请选择圈存方式' },
       detail: { type: 'span', model: 'select', obj: 'autoAccount', serial: 13, ou: 0 },
       rules: [{ required: true, message: '请选择圈存方式', trigger: 'blur' }] },
+    { field: 'comStatus', name: '组合支付', nameSpan: 5, formatter: 'comPayType' },
     { field: 'truckDriverList', name: '当前绑定司机', ispush: false, nameSpan: 5, formatter: '', stype: 'list-tag', action: { name: 'driverName' },
       detail: { type: 'span', name: '绑定司机', formatFun: 'truckToDriverList', stype: 'format', serial: 15, ou: 1, isDisabled: true } },
     { field: 'balance', name: '账户余额', ispush: false, hide: true, nameSpan: 5,
