@@ -63,7 +63,7 @@ export default {
     onListFormEvent(obj) {
       if (obj.type == 'ok') {
         if (this.rowData.changeType === '') { return }
-        if (this.rowData.changeAmount == 0 ) { this.$message.warning('调整数量不能为0'); return }
+        if (this.rowData.changeAmount == 0) { this.$message.warning('调整数量不能为0'); return }
         if (this.rowData.changeType == 1 && this.rowData.changeAmount > 0) {
           // 如果是减少，并且输入的金额是正数
           this.rowData.changeAmount = -1 * this.rowData.changeAmount
@@ -103,7 +103,7 @@ export default {
         params.param.userAccount = {}
         for (var [k, v] of Object.entries(_this.finds)) {
           if (k == 'mobile') {
-            params.param['keyword'] = v
+            params.param.keyword = v
           } else {
             params.param.userAccount[k] = v
           }
