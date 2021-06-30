@@ -219,6 +219,29 @@ export function utilsGoodsType() {
   return [{ value: 0, label: '实体商品' }, { value: 1, label: '充值虚拟商品' }, { value: 2, label: '抵扣券虚拟商品' }]
 }
 
+// 充值类型
+export function utilsRechargeType() {
+  return [
+    { value: 0, label: '线下支付' },
+    { value: 1, label: '微信支付' },
+    { value: 2, label: '支付宝支付' },
+    { value: 3, label: '网关支付' }
+  ]
+}
+
+// 车辆账户类型
+export function utilsTruckAccType() {
+  return [
+    { value: 1, label: '加气' },
+    { value: 2, label: '圈入/充值' },
+    { value: 3, label: '圈出' },
+    { value: 4, label: '加气退款' },
+    { value: 5, label: '加气积分' },
+    { value: 6, label: '加气积分退回' },
+    { value: 7, label: '组合圈入' }
+  ]
+}
+
 export function utilsTradeType() {
   return [
     { value: 1, label: '充值' },
@@ -233,7 +256,8 @@ export function utilsTradeType() {
     { value: 10, label: '提现退回' },
     { value: 11, label: '平台费退回' },
     { value: 12, label: '收入退回' },
-    { value: 13, label: '服务费退回' }
+    { value: 13, label: '服务费退回' },
+    { value: 14, label: '组合圈出' }
   ]
 }
 export function utilsPrintPaper() {
@@ -243,11 +267,20 @@ export function utilsPrintPaper() {
   ]
 }
 
+// 组合支付类型
+export function utilsComPayType() {
+  return [
+    { value: 0, label: '开启' },
+    { value: 1, label: '关闭' }
+  ]
+}
+
 export function utilsPayType() {
   return [
     { value: 0, label: '余额' },
     { value: 1, label: '微信' },
-    { value: 2, label: '微信+余额' }
+    { value: 2, label: '微信+余额' },
+    { value: 11, label: '组合支付' }
   ]
 }
 
@@ -323,8 +356,8 @@ export function untilsMarketingManList() {
   // })
 }
 
-export function utilsDyOrgList(type = null) {
-  return {
+export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', authStatus = null) {
+  const result = {
     url: 'user/org/list',
     node: ['data', 'records'],
     params: {
@@ -336,10 +369,15 @@ export function utilsDyOrgList(type = null) {
       }
     },
     props: {
-      value: 'orgId',
-      label: 'orgName'
+      value: value,
+      label: label
     }
   }
+  if (authStatus !== null) {
+    result.params.param.org.authStatus = authStatus
+  }
+
+  return result
 }
 export function utilsSupplierList() {
   return {

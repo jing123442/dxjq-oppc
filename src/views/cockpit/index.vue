@@ -43,7 +43,8 @@
           <div slot="legend" class="legend" v-if="charts.areaPriceStatus">
             <div class="legend-line" v-for="(item, index) in charts.areaPriceList" :key="index">
               <div class="name">{{item.districtName}}</div>
-              <div class="price">{{item.actualPrice | currency}}</div>
+              <div class="price" v-if="item.actualPrice > 0">{{item.actualPrice | currency}}</div>
+              <div class="price" v-else>-</div>
             </div>
           </div>
         </nt-charts>
@@ -150,7 +151,15 @@
 </template>
 <script>
 import { $strategyGasstationDistrictList } from '@/service/strategy'
-import { formateTData, formateParams, isTypeof, browserRedirect } from '@/utils/tools'
+import {
+  formateTData,
+  formateParams,
+  isTypeof,
+  browserRedirect,
+  initDefaultChartsTooltip,
+  initDefaultChartsLegend,
+  initDefaultChartsxAxis, initDefaultChartsyAxis
+} from '@/utils/tools'
 import { $districtList } from '@/service/user'
 import { mapJsonData } from '@/mock/map'
 import { markIconImage } from '@/mock/mark'
@@ -485,7 +494,7 @@ export default {
 
         if (districtList && Array.isArray(districtList)) {
           districtList.forEach((item, index) => {
-            const areaList = item.districtCitys.split(',')
+            const areaList = item.districtCitys ? item.districtCitys.split(',') : []
             areaList.forEach(area => {
               tmpAreaList.push({
                 name: area,
@@ -670,6 +679,7 @@ export default {
             showSymbol: false,
             symbol: 'emptyCircle',
             symbolSize: 8,
+            areaStyle: { opacity: 0 },
             data: []
           }, {
             name: '加气量(公斤)',
@@ -678,6 +688,7 @@ export default {
             showSymbol: false,
             symbol: 'emptyCircle',
             symbolSize: 8,
+            areaStyle: { opacity: 0 },
             data: []
           }]
         } else {
@@ -689,6 +700,7 @@ export default {
             showSymbol: false,
             symbol: 'emptyCircle',
             symbolSize: 8,
+            areaStyle: { opacity: 0 },
             data: []
           }, {
             name: '加气量(公斤)',
@@ -698,6 +710,7 @@ export default {
             showSymbol: false,
             symbol: 'emptyCircle',
             symbolSize: 8,
+            areaStyle: { opacity: 0 },
             data: []
           }, {
             name: '周活(%)',
@@ -708,15 +721,20 @@ export default {
             showSymbol: false,
             symbol: 'emptyCircle',
             symbolSize: 8,
+            areaStyle: { opacity: 0 },
             data: []
           }]
         }
+        // 设置xAxis
+        const tmpXAxis = Object.assign({}, initDefaultChartsxAxis(), {
+          type: 'category',
+          boundaryGap: false,
+          data: []
+        })
         this.ec01LineOptions = {
-          xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: []
-          },
+          legend: initDefaultChartsLegend(),
+          tooltip: initDefaultChartsTooltip(),
+          xAxis: tmpXAxis,
           yAxis: [{
             type: 'value',
             axisTick: {
@@ -760,21 +778,34 @@ export default {
     getGasstationSupply() {
       // 加气站供气统计
       this.ec02BarOptions = { data: { status: 0 } }
+      const tmpXAxis = Object.assign({}, initDefaultChartsxAxis(), {
+        type: 'value',
+        splitLine: {
+          show: true,
+          lineStyle: {
+            color: '#333',
+            opacity: '0.1'
+          }
+        },
+        axisLabel: { show: false }
+      })
+      const tmpYAxis = Object.assign({}, initDefaultChartsyAxis(), {
+        type: 'category',
+        data: [],
+        axisLabel: { show: true }
+      })
       $findGasstationStockSum({ date: this.currDate, districtId: this.currDistrict }).then(res => {
         this.ec02BarOptions = {
-          tooltip: {
+          legend: initDefaultChartsLegend(),
+          tooltip: Object.assign({}, initDefaultChartsTooltip(), {
             formatter: (data) => this.formatterEchartTooltip(data, ['存量(公斤)'])
-          },
+          }),
           grid: {
             left: '13%',
             top: 0
           },
-          xAxis: { type: 'value', splitLine: { show: true, lineStyle: { color: '#333', opacity: '0.1' } }, axisLabel: { show: false } },
-          yAxis: {
-            type: 'category',
-            data: [],
-            axisLabel: { show: true }
-          },
+          xAxis: tmpXAxis,
+          yAxis: tmpYAxis,
           data: {
             series: [{
               name: '加气量(公斤)',
@@ -807,17 +838,18 @@ export default {
       this.ec03BarLineOptions = { data: { status: 0 } }
       $findFundSum({ date: this.currDate }).then(res => {
         this.ec03BarLineOptions = {
-          tooltip: {
+          tooltip: Object.assign({}, initDefaultChartsTooltip(), {
             formatter: (data) => this.formatterEchartTooltip(data)
-          },
-          legend: {
+          }),
+          legend: Object.assign({}, initDefaultChartsLegend(), {
             type: 'scroll',
             left: '8%',
             right: '8%'
-          },
-          xAxis: {
+          }),
+          xAxis: Object.assign({}, initDefaultChartsxAxis(), {
             data: []
-          },
+          }),
+          yAxis: initDefaultChartsyAxis(),
           data: {
             series: [{
               name: '充值金额(元)',
@@ -838,6 +870,7 @@ export default {
               name: '总余额(元)',
               type: 'line',
               field: 'balanceTotal',
+              areaStyle: { opacity: 0 },
               data: []
             }]
           }
@@ -851,17 +884,18 @@ export default {
       this.ec04BarLineOptions = { data: { status: 0 } }
       $findTruckTrendList({ date: this.currDate }).then(res => {
         this.ec04BarLineOptions = {
-          tooltip: {
+          tooltip: Object.assign({}, initDefaultChartsTooltip(), {
             formatter: (data) => this.formatterEchartTooltip(data, ['变化数'])
-          },
-          legend: {
+          }),
+          legend: Object.assign({}, initDefaultChartsLegend(), {
             type: 'scroll',
             left: '8%',
             right: '8%'
-          },
-          xAxis: {
+          }),
+          xAxis: Object.assign({}, initDefaultChartsxAxis(), {
             data: []
-          },
+          }),
+          yAxis: initDefaultChartsyAxis(),
           data: {
             series: [{
               name: '自营绑定数',
@@ -891,6 +925,7 @@ export default {
               name: '变化数',
               type: 'line',
               field: 'truckChangeTotal',
+              areaStyle: { opacity: 0 },
               data: []
             }]
           }
@@ -904,9 +939,12 @@ export default {
       this.ec05BarLineOptions = { data: { status: 0 } }
       $findGasstationTrendList({ date: this.currDate, orgType: 1, districtId: this.currDistrict }).then(res => {
         this.ec05BarLineOptions = {
-          xAxis: {
+          tooltip: initDefaultChartsTooltip(),
+          legend: initDefaultChartsLegend(),
+          xAxis: Object.assign({}, initDefaultChartsxAxis(), {
             data: []
-          },
+          }),
+          yAxis: initDefaultChartsyAxis(),
           data: {
             series: [{
               name: '认证数(个)',
@@ -922,6 +960,7 @@ export default {
               name: '活跃数(个)',
               type: 'line',
               field: 'tradeTotal',
+              areaStyle: { opacity: 0 },
               data: []
             }]
           }
@@ -935,9 +974,12 @@ export default {
       this.ec06BarLineOptions = { data: { status: 0 } }
       $findCarrierTrendList({ date: this.currDate, orgType: 2 }).then(res => {
         this.ec06BarLineOptions = {
-          xAxis: {
+          tooltip: initDefaultChartsTooltip(),
+          legend: initDefaultChartsLegend(),
+          xAxis: Object.assign({}, initDefaultChartsxAxis(), {
             data: []
-          },
+          }),
+          yAxis: initDefaultChartsyAxis(),
           data: {
             series: [{
               name: '认证数(个)',
@@ -953,6 +995,7 @@ export default {
               name: '活跃数(个)',
               type: 'line',
               field: 'tradeTotal',
+              areaStyle: { opacity: 0 },
               data: []
             }]
           }
@@ -976,21 +1019,17 @@ export default {
       this.ec07BarOptions = { data: { status: 0 } }
       $findTradeRankGasstationList(params).then(res => {
         this.ec07BarOptions = {
-          grid: {
-            left: '18%',
-            top: '5%',
-            bottom: '4%'
-          },
-          legend: {
+          tooltip: initDefaultChartsTooltip(),
+          legend: Object.assign({}, initDefaultChartsLegend(), {
             show: false
-          },
-          xAxis: {
+          }),
+          xAxis: Object.assign({}, initDefaultChartsxAxis(), {
             type: 'value',
             axisLabel: {
               show: false
             }
-          },
-          yAxis: {
+          }),
+          yAxis: Object.assign({}, initDefaultChartsyAxis(), {
             type: 'category',
             axisLabel: {
               show: true,
@@ -1000,6 +1039,11 @@ export default {
               padding: [0, 0, 12, 0]
             },
             data: []
+          }),
+          grid: {
+            left: '18%',
+            top: '5%',
+            bottom: '4%'
           },
           data: {
             series: [{
@@ -1039,21 +1083,17 @@ export default {
       this.ec08BarOptions = { data: { status: 0 } }
       $findTradeRankCarrierList(params).then(res => {
         this.ec08BarOptions = {
-          grid: {
-            left: '18%',
-            top: '5%',
-            bottom: '4%'
-          },
-          legend: {
+          tooltip: initDefaultChartsTooltip(),
+          legend: Object.assign({}, initDefaultChartsLegend(), {
             show: false
-          },
-          xAxis: {
+          }),
+          xAxis: Object.assign({}, initDefaultChartsxAxis(), {
             type: 'value',
             axisLabel: {
               show: false
             }
-          },
-          yAxis: {
+          }),
+          yAxis: Object.assign({}, initDefaultChartsyAxis(), {
             type: 'category',
             axisLabel: {
               show: true,
@@ -1063,6 +1103,11 @@ export default {
               padding: [0, 0, 12, 0]
             },
             data: []
+          }),
+          grid: {
+            left: '18%',
+            top: '5%',
+            bottom: '4%'
           },
           data: {
             status: 2,

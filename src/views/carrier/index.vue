@@ -69,7 +69,7 @@ import { initVueDataOptions, custFormBtnList, callbackPagesInfo, createParams, e
 import { mapGetters } from 'vuex'
 import { $orgAuth } from '@/service/pay'
 import { $userOrgAdd, $userOrgEdit, $userFindOrgAdmin, $userOrgPicList, $userCarrierTranPicUpload, $userExportCarrierInfo } from '@/service/user'
-import { $strategyTruckAdd, $importDownloadFile, $exportDataFile } from '@/service/strategy'
+import { $strategyTruckAdd, $importDownloadFile, $exportDataFile, $strategyCarrierInfo } from '@/service/strategy'
 
 export default {
   name: 'carrier',
@@ -166,6 +166,10 @@ export default {
             this.auth_page_mode = this.mode_detail_self_manage
           } else {
             this.auth_page_mode = this.mode_detail_org_manage
+            const orgDetailInfo = await $strategyCarrierInfo({ orgId: row.orgId }).then(response => {
+              return response.data
+            })
+            this.authRow.comStatus = orgDetailInfo.comStatus
           }
           this.authRow._btn = custFormBtnList(1)
           this.orgAuthList(row)

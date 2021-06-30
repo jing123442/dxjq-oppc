@@ -50,7 +50,7 @@ export function formatDate(date, fmt) { // date对象
 export function toolPickerOptions(number = 1) {
   const timeOptions = {
     disabledDate: (time) => {
-      const taday = 24 * 60 * 60 * 1000
+      const taday = number * 24 * 60 * 60 * 1000
       const data = formateTData(new Date(), 'date') + ' 00:00:00'
       const timers = new Date(data).getTime() + taday
 
@@ -131,7 +131,7 @@ export function inArray(value, array) {
   return -1
 }
 
-export function monthTimeArea(now) {
+export function monthTimeArea(now, fmt = '') {
   var nowYear = now.getFullYear()
   var nowMonth = now.getMonth()
 
@@ -139,22 +139,22 @@ export function monthTimeArea(now) {
   var monthEndDate = new Date(nowYear, nowMonth + 1, 0)
 
   return {
-    start: formatDate(monthStartDate, 'yyyy-MM-dd 00:00:00'),
-    end: formatDate(monthEndDate, 'yyyy-MM-dd 23:59:59')
+    start: fmt ? formatDate(monthStartDate, fmt) : formatDate(monthStartDate, 'yyyy-MM-dd 00:00:00'),
+    end: fmt ? formatDate(monthEndDate, fmt) : formatDate(monthEndDate, 'yyyy-MM-dd 23:59:59')
   }
 }
 
-export function dataPickerDefault(now, number = 30) {
+export function dataPickerDefault(now, number = 30, fmt = 'yyyy-MM-dd hh:mm:ss', space = 0) {
   const nowYear = now.getFullYear()
   const nowMonth = now.getMonth()
   const nowDate = now.getDate()
 
-  const monthStartDate = new Date(nowYear, nowMonth, (nowDate - number + 1))
-  const monthEndDate = new Date(nowYear, nowMonth, nowDate)
+  const monthStartDate = new Date(nowYear, nowMonth, (nowDate - number - space + 1))
+  const monthEndDate = new Date(nowYear, nowMonth, nowDate - space)
 
   return {
-    start: formatDate(monthStartDate, 'yyyy-MM-dd 00:00:00'),
-    end: formatDate(monthEndDate, 'yyyy-MM-dd 23:59:59')
+    start: formatDate(monthStartDate, fmt),
+    end: formatDate(monthEndDate, fmt)
   }
 }
 
@@ -202,9 +202,20 @@ export function axiosRequestParams(_this) {
   }
 }
 
+// 对象深度赋值
+export function objectDepthAssignment(source) {
+  const sourceCopy = Object.prototype.toString.call(source) === '[object Array]' ? [] : {}
+
+  for (const item in source) {
+    sourceCopy[item] = typeof source[item] === 'object' ? objectDepthAssignment(source[item]) : source[item]
+  }
+
+  return sourceCopy
+}
+
 // 请求默认参数
 export function queryDefaultParams(_this, param) {
-  let queryParams = objectMerge({}, _this.$store.getters.query_params)
+  let queryParams = objectDepthAssignment(_this.$store.getters.query_params)
 
   if (isTypeof(queryParams) !== 'array') {
     queryParams = []
@@ -310,6 +321,48 @@ export function custFormBtnList(type = 3) {
 }
 // blob导出excel文件
 export function exportBlobToFiles(content, fileName, fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+  /*
+    // 其他类型
+    .doc     application/msword
+    .docx   application/vnd.openxmlformats-officedocument.wordprocessingml.document
+    .rtf       application/rtf
+    .xls     application/vnd.ms-excel application/x-excel
+    .xlsx    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+    .ppt     application/vnd.ms-powerpoint
+    .pptx    application/vnd.openxmlformats-officedocument.presentationml.presentation
+    .pps     application/vnd.ms-powerpoint
+    .ppsx   application/vnd.openxmlformats-officedocument.presentationml.slideshow
+    .pdf     application/pdf
+    .swf    application/x-shockwave-flash
+    .dll      application/x-msdownload
+    .exe    application/octet-stream
+    .msi    application/octet-stream
+    .chm    application/octet-stream
+    .cab    application/octet-stream
+    .ocx    application/octet-stream
+    .rar     application/octet-stream
+    .tar     application/x-tar
+    .tgz    application/x-compressed
+    .zip    application/x-zip-compressed
+    .z       application/x-compress
+    .wav   audio/wav
+    .wma   audio/x-ms-wma
+    .wmv   video/x-ms-wmv
+    .mp3 .mp2 .mpe .mpeg .mpg     audio/mpeg
+    .rm     application/vnd.rn-realmedia
+    .mid .midi .rmi     audio/mid
+    .bmp     image/bmp
+    .gif     image/gif
+    .png    image/png
+    .tif .tiff    image/tiff
+    .jpe .jpeg .jpg     image/jpeg
+    .txt      text/plain
+    .xml     text/xml
+    .html     text/html
+    .css      text/css
+    .js        text/javascript
+    .mht .mhtml   message/rfc822
+   */
   try {
     const blob = new Blob([content], { type: fileType })
 
@@ -365,6 +418,92 @@ export function tableTextColor(row, field) {
     return 'color: #E86452;'
   }
 }
+
+// echarts begin
+// tooltip默认值
+export function initDefaultChartsTooltip() {
+  return {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow',
+      shadowStyle: {
+        color: '#5D7092',
+        shadowColor: '#5D7092',
+        opacity: 0.1
+      }
+    }
+  }
+}
+
+// legend默认值
+export function initDefaultChartsLegend() {
+  return {
+    type: 'plain',
+    left: 'center',
+    bottom: '4%',
+    textStyle: {
+      fontSize: '1.4rem'
+    }
+  }
+}
+
+// x轴样式
+export function initDefaultChartsxAxis(obj) {
+  return {
+    axisTick: {
+      show: false
+    },
+    axisLabel: {
+      show: true,
+      interval: 0
+    },
+    axisLine: {
+      show: false
+    },
+    splitLine: {
+      show: false
+    }
+  }
+}
+
+// y轴样式
+export function initDefaultChartsyAxis(obj) {
+  return {
+    axisTick: {
+      show: false
+    },
+    axisLabel: {
+      show: false
+    },
+    axisLine: {
+      show: false
+    },
+    splitLine: {
+      lineStyle: {
+        color: '#333',
+        opacity: 0.1
+      }
+    }
+  }
+}
+
+// axisPointer
+export function initDefaultChartsAxisPointer() {
+  return {
+    show: true,
+    type: 'shadow',
+    label: {
+      show: true
+    },
+    shadowStyle: {
+      color: '#5D7092',
+      shadowColor: '#5D7092',
+      opacity: 0.1
+    }
+  }
+}
+
+// echarts end
 
 export function formateParams(param, type = true) {
   if (isTypeof(param) === 'string' || isTypeof(param) === 'number') {

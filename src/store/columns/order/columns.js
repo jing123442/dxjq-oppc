@@ -11,14 +11,23 @@ const columns = {
     { field: 'amount', name: '订单金额(元)', width: 90 },
     { field: 'amountTotal', name: '订单总金额', width: 90, hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 9, util: '元', value: function(row) { return (Number(row.amount) + Number(row.discountAmount)).toFixed(2) } } },
     { field: 'discountAmount', name: '优惠金额 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 10, util: '元' } },
-    { field: 'amount', name: '实付金额 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 11, util: '元' } },
+    { field: 'amount', name: '小计金额 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 11, util: '元' } },
+    { field: 'comAmount', name: '立减 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 11, util: '元' } },
+    { field: 'orderRealTotal', name: '实付金额 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 11, util: '元' } },
     { field: 'carrierOrgName', name: '物流公司', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 1 } },
     { field: 'carNumber', name: '车牌号', search: { type: 'text', placeholder: '请输入', findStyle: 'width: 45%', style: 'width: 100%;', findField: 'carNumber' }, currSearch: { type: 'select', subField: 'currFieldName', style: 'width: 100%;', hideName: true, obj: 'currFieldSearch', value: 'carNumber' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2 } },
     { field: 'driverName', name: '司机姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 4 } },
     { field: 'gasstationName', name: '加气站', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 3 } },
     { field: 'cashierName', name: '收银员姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 5 } },
     { field: 'orderStatus', name: '订单状态', width: 70, formatter: 'orderStatus', search: { type: 'select', obj: 'orderStatus', placeholder: '订单状态' }, detail: { type: 'span', model: 'select', isDisabled: true, obj: 'orderStatus', style: 'width: 85%', serial: 14 } },
-    { field: 'payType', name: '支付方式', width: 90, formatter: 'payType', search: { type: 'select', obj: 'payType', placeholder: '支付方式', value: '' }, detail: { type: 'span', model: 'select', isDisabled: true, obj: 'payType', style: 'width: 85%', serial: 12 } },
+    { field: 'payType', name: '支付方式', width: 90, formatter: 'payType',
+      search: { type: 'select', obj: 'payType', placeholder: '支付方式', value: '' },
+      detail: { type: 'span', model: 'select', isDisabled: true, obj: 'payType', style: 'width: 85%', serial: 12,
+        cascaderList: [
+          { value: 0, fields: ['comAmount', 'orderRealTotal'] },
+          { value: 1, fields: ['comAmount', 'orderRealTotal'] },
+          { value: 2, fields: ['comAmount', 'orderRealTotal'] }
+        ] } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 80, list: [{ type: 'detail', name: '详情' }] }
   ],
   fillerOrder: [
@@ -69,6 +78,7 @@ const columns = {
     { field: 'gasQtyTotal', name: '加气量汇总(公斤)' },
     { field: 'amountTotal', name: '加气金额汇总(元)' },
     { field: 'discountTotal', name: '优惠金额汇总(元)' },
+    { field: 'comAmountTotal', name: '立减金额汇总(元)' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'recharge_list', name: '充值对账' }, { type: 'settle_order_list', name: '结算订单' }, { type: 'truck_list', name: '卡车汇总' }] }
   ],
   carrierToFiller: [

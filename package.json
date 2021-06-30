@@ -13,7 +13,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "element-ui": "^2.13.2",
-    "em-element-ui": "^1.2.77",
+    "em-element-ui": "^1.2.80",
     "js-cookie": "^2.2.1",
     "stompjs": "^2.3.3",
     "vue": "^2.6.11",
@@ -48,24 +48,8 @@
     "node-sass": "^4.12.0",
     "postcss-px-to-viewport": "^1.1.1",
     "sass-loader": "^8.0.2",
+    "vue-baidu-map": "^0.21.22",
     "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/standard"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {
-      "eqeqeq": 0,
-      "space-before-function-paren": 0
-    }
   },
   "browserslist": [
     "> 1%",

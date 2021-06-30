@@ -73,6 +73,14 @@ const formateTData = (date, fmt) => {
   return formateTSData(date, fmt)
 }
 
+const formateTextDeleteNULL = (value) => {
+  return value ? (value === 'null' ? '-' : value) : '-'
+}
+
+const formateMoney = (value) => {
+  return currency(value, '', '')
+}
+
 const currency = (value, unit, currency, decimals) => {
   const digitsRE = /(\d{3})(?=\d)/g
   value = parseFloat(value)
@@ -119,5 +127,7 @@ export {
   formatCardNumber,
   truckToDriverList,
   roleList,
+  formateMoney,
+  formateTextDeleteNULL,
   tableContractStatusToLabel
 }
