@@ -1,5 +1,5 @@
 <template>
-  <div class="pointsAccount">
+  <div class="pointsAccount template-main">
     <em-table-list :custTableTitle="'积分账户'" :tableListName="'pointsAccount'" ref="pointsAccount" :axios="axios" :queryCustURL="queryTableCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onReqParams="onReqParams" @onListEvent="onListTableEvent"></em-table-list>
     <el-dialog title="积分调整" :append-to-body="true" :visible.sync="dialogVisible" :width="add_edit_dialog">
       <nt-form v-if="dialogVisible" :rowData="rowData" :pageColumn="point_change_page_column" :modeList="point_change_mode_list" :selectList="point_change_select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListFormEvent"></nt-form>

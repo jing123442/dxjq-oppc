@@ -1,5 +1,5 @@
 <template>
-  <div class="supplierManage">
+  <div class="supplierManage template-main">
     <em-table-list ref="supplierManage" :custTableTitle="'供应商列表'" :tableListName="'supplierManage'" :axios="axios" :queryCustURL="queryTableCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onReqParams="onReqParams" @onListEvent="onListTableEvent"></em-table-list>
   </div>
 </template>

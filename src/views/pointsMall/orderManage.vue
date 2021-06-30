@@ -1,5 +1,5 @@
 <template>
-  <div class="orderManage">
+  <div class="orderManage template-main">
     <em-table-list :custTableTitle="'订单列表'" :tableListName="'order'" ref="order" :axios="axios" :queryCustURL="queryTableCustURL" :responseSuccess="response_success" :buttonsList="buttonsList" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onReqParams="onReqParams" @onListEvent="onListTableEvent"></em-table-list>
     <el-dialog title="选择上传类型" :append-to-body="true" :visible.sync="dialogVisible" :width="add_edit_dialog">
       <el-form v-if="dialogVisible" size="small" label-position="left">

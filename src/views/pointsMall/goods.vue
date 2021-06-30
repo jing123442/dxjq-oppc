@@ -1,5 +1,5 @@
 <template>
-  <div class="goods">
+  <div class="goods template-main">
     <div class="left-tree">
       <el-tree :data="treeData" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
     </div>

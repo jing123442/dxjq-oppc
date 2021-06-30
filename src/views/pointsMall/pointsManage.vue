@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="basic-con">
+  <div class="template-main">
+    <div class="basic-con ">
       <div class="title">基本设置</div>
       <nt-form ref="pointsConfig" :rowData="points" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEvent"></nt-form>
     </div>
