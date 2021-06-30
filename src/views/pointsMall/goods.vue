@@ -215,7 +215,7 @@ export default {
   .left-tree {
     min-height: 500px;
     width: 200px;
-    min-width: 120px;
+    min-width: 140px;
     background: #fff;
   }
   .right-goods {
