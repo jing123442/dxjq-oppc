@@ -56,6 +56,7 @@ export default {
   methods: {
     onListEvent(obj) {
       if (obj.type == 'ok') {
+        if (!this.points.pointsValue) { return }
         this.editPoints(this.points)
       }
     },
