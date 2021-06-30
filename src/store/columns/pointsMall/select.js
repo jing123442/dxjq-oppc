@@ -5,7 +5,7 @@ const select = {
   },
   ruleList: {
     rewardType: [{ value: '8', label: '邀请好友' }, { value: '7', label: '新客注册' }],
-    ruleStatus: [{ value: 0, label: '启用' }, { value: 1, label: '停用' }]
+    ruleStatus: [{ value: '0', label: '启用' }, { value: '1', label: '停用' }]
   },
   supplier: {
     taxStatus: [{ value: '0', label: '含税' }, { value: '1', label: '不含税' }],
