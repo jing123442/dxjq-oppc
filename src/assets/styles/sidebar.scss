@@ -11,6 +11,7 @@
     .app-main {
       z-index: 0;
       position: relative;
+      top: -$mainRelativeHeight;
     }
   } // 侧边栏
   .sidebar-container {
