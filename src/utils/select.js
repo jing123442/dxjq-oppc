@@ -215,6 +215,9 @@ export function utilsVoiceStatus() {
     { value: '3', label: '高' }
   ]
 }
+export function utilsGoodsType() {
+  return [{ value: 0, label: '实体商品' }, { value: 1, label: '充值虚拟商品' }, { value: 2, label: '抵扣券虚拟商品' }]
+}
 
 export function utilsTradeType() {
   return [
@@ -335,6 +338,39 @@ export function utilsDyOrgList(type = null) {
     props: {
       value: 'orgId',
       label: 'orgName'
+    }
+  }
+}
+export function utilsSupplierList() {
+  return {
+    url: 'shop/supplier/list',
+    node: ['data', 'records'],
+    params: {
+      page: 1,
+      size: 100,
+      param: {
+        supplierStatus: 0
+      }
+    },
+    props: {
+      value: 'id',
+      label: 'supplierName'
+    }
+  }
+}
+export function utilsCategoryList() {
+  return {
+    url: 'shop/category/list',
+    node: ['data', 'records'],
+    params: {
+      page: 1,
+      size: 100,
+      param: {
+      }
+    },
+    props: {
+      value: 'id',
+      label: 'categoryName'
     }
   }
 }
