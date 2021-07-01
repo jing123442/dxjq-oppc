@@ -79,7 +79,7 @@ export default {
       points: {},
       btnList: custFormBtnList(),
       buttonsList: [{ type: 'primary', icon: '', event: 'deliveryDownload', name: '导出待发货订单' }, { type: 'primary', icon: '', event: 'batch', name: '批量下载上传模板' }],
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { } }),
+      queryParams: Function,
       dialogVisible: false,
       dialogVisibleOrderDetail: false,
       orderDetailData: {},
@@ -220,9 +220,26 @@ export default {
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
+      console.log(_this.finds)
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          params.param[k] = v
+          if (k == 'createTime') {
+            if (!_this.finds.createTime) {
+              params.param.startCreateTime = ''
+              params.param.endCreateTime = ''
+            } else {
+              params.param.startCreateTime = v[0]
+              params.param.endCreateTime = v[1]
+            }
+          } else {
+            if (!v) {
+              if (params.param.k) {
+                Reflect.deleteProperty(params.param.k)
+              }
+            } else {
+              params.param[k] = v
+            }
+          }
         }
       }
       console.log(params.param)
