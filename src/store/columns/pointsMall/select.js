@@ -21,7 +21,7 @@ const select = {
     orderStatus: [{ value: 0, label: '待发货' }, { value: 1, label: '待收货' }, { value: 2, label: '交易完成' }, { value: 3, label: '交易失败' }]
   },
   category: {
-    goodsType: utilsGoodsType(),
+    goodsType: [{ value: 0, label: '实体商品' }, { value: 1, label: '虚拟商品' }],
     categoryStatus: [{ value: 0, label: '启用' }, { value: 1, label: '停用' }]
   },
   goods: {

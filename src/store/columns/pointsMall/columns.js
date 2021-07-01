@@ -37,7 +37,7 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 180, list: item => supplierOpt(item) }
   ],
   order: [
-    { field: 'orderCode', fixed: 'left', name: '平台订单号', search: { type: 'text', dataType: 'number', placeholder: '请输入平台订单号' } },
+    { field: 'orderCode', fixed: 'left', name: '平台订单号', search: { type: 'text', placeholder: '请输入平台订单号' } },
     { field: 'supplierOrderCode', name: '供应商订单号', search: { type: 'text', dataType: 'number', placeholder: '请输入供应商订单号' } },
     { field: 'userPhone', name: '用户手机号', search: { type: 'text', dataType: 'number', placeholder: '请输入用户手机号' } },
     { field: 'goodsType', name: '商品类型', formatter: 'goodsType' },
@@ -120,7 +120,7 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 200, list: item => pointsAccoutOpt(item) }
   ],
   pointsAccountLog: [
-    { field: 'orderId', fixed: 'left', name: '流水号', search: { type: 'text', dataType: 'number', placeholder: '请输入流水号'} },
+    { field: 'id', fixed: 'left', name: '流水号', search: { type: 'text', dataType: 'number', placeholder: '请输入流水号'} },
     { field: 'type', name: '交易类型', formatter: 'accountLogType', search: { type: 'select', obj: 'accountLogType', placeholder: '交易类型' } },
     { field: 'note', name: '摘要' },
     { field: 'changeType', name: '变动类型' },
