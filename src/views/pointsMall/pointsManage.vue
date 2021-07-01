@@ -32,7 +32,8 @@ export default {
             tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
-        }
+        },
+        name: '规则配置'
       },
       points: {},
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { rewardType: '' } })
@@ -57,6 +58,10 @@ export default {
     onListEvent(obj) {
       if (obj.type == 'ok') {
         if (!this.points.pointsValue) { return }
+        if ((this.points.pointsValue).toString().length > 9) {
+          this.$message.error('积分价值字段长度或格式错误')
+          return
+        }
         this.editPoints(this.points)
       }
     },
