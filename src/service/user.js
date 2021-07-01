@@ -239,10 +239,51 @@ export async function $userAddChildrenDistrict(data) {
 
 // 获取distruct_log列表
 export async function $userDistrictLogList(data) {
-  return await R({ url: 'user/district_log/list', method: 'POST', data })
+  return await R({ url: 'user/user/district_log/list', method: 'POST', data })
 }
 
 // 获取子列表
 export async function $userDistrictChildList(data) {
   return await R({ url: 'user/district/district/child', method: 'GET', params: data })
+}
+
+// 申请印章并保存
+export async function $orgSealApply(data) {
+  return await R({ url: 'user/org_seal/seal_apply', method: 'POST', data })
+}
+
+// 企业印章停用启用
+export async function $orgSealEdit(data) {
+  return await R({ url: 'user/org_seal/edit_status', method: 'POST', data })
+}
+
+// 企业负责人印章停用启用
+export async function $userSealEdit(data) {
+  return await R({ url: 'user/user_seal/edit_status', method: 'POST', data })
+}
+
+// 企业负责人设置
+export async function $userManagerSet(data) {
+  return await R({ url: 'user/org_signer/manager_set', method: 'POST', data })
+}
+
+// 企业执行签署人设置
+export async function $userOperatorSet(data) {
+  return await R({ url: 'user/org_signer/operator_set', method: 'POST', data })
+}
+// 根据orgId查询企业负责人执行签署人信息
+export async function $orgSealFind(data) {
+  return await R({ url: 'user/org_seal/find_detail', method: 'POST', data })
+}
+// 上传模板
+export async function $userContractTemplateAdd(data) {
+  return await R({ url: 'user/contract_template/add', method: 'POST', data })
+}
+// 获取设置url
+export async function $userContractTemplateSettingUrl(data) {
+  return await R({ url: 'user/contract_template/get_component_setting_url', method: 'POST', data })
+}
+// 模板状态设置
+export async function $userContractTemplateUpdateStatus(data) {
+  return await R({ url: 'user/contract_template/update', method: 'POST', data })
 }

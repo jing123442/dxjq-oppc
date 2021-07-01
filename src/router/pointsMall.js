@@ -19,7 +19,6 @@ export default [
         component: {
           render (c) { return c('router-view') }
         },
-        hidden: true,
         meta: { title: '积分账户', icon: 'icon-gongnengguanli', noCache: false },
         children: [
           { path: 'pointsAccountLog', component: inImport('pointsMall/pointsAccountLog'), name: 'pointsAccountLog', meta: { title: '积分明细', icon: 'icon-gongnengguanli', noCache: false } }
