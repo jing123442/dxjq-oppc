@@ -37,7 +37,7 @@ const select = {
     accountType: [{ value: 0, label: '现金账户' }, { value: 1, label: '积分账户' }]
   },
   pointsAccountLog: {
-    accountLogType: [{ value: 20, label: '新客注册' }, { value: 21, label: '邀请好友' }, { value: 22, label: '积分调整' }, { value: 23, label: '系统冲正' }, { value: 24, label: '积分消费' }]
+    accountLogType: [{ value: 20, label: '新客注册' }, { value: 21, label: '邀请好友' }, { value: 22, label: '积分调整' }, { value: 23, label: '系统冲正' }, { value: 24, label: '积分商城' }]
   },
   pointChange: {
     changeType: [{ value: 0, label: '增加' }, { value: 1, label: '减少' }]

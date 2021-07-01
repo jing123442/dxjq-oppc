@@ -61,6 +61,7 @@ export default {
       }
     },
     onListFormEvent(obj) {
+      console.log(obj)
       if (obj.type == 'ok') {
         if (this.rowData.changeType === '') { return }
         if (this.rowData.changeAmount == 0) { this.$message.warning('调整数量不能为0'); return }
@@ -82,6 +83,8 @@ export default {
           this.dialogVisible = false
           this.$refs.pointsAccount.initDataList()
         })
+      } else if (obj.type == 'cancel') {
+        this.dialogVisible = false
       }
     },
     setPointsAccoutStatus(params, text) {
