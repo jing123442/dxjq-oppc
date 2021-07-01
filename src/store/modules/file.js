@@ -4,6 +4,7 @@ const file = {
   state: {
     fileHost: process.env.VUE_APP_FILE_HOST,
     fileUrl: process.env.VUE_APP_BASE_URL + 'message/upload/image',
+    fileUrl1: process.env.VUE_APP_BASE_URL + 'message/upload/file',
     fileHeaders: function() {
       return function() {
         return {
