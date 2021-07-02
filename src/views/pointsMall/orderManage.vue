@@ -232,7 +232,7 @@ export default {
               params.param.endCreateTime = v[1]
             }
           } else {
-            if (!v) {
+            if (!v && v !== 0) {
               if (params.param.k) {
                 Reflect.deleteProperty(params.param.k)
               }
