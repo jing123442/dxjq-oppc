@@ -334,8 +334,8 @@ export function utilsSealStatus() {
 // 电子签约合同状态
 export function utilsContractSignStatus() {
   return [
-    { value: 1, label: '已确认' },
-    { value: 2, label: '签约待确认' },
+    { value: 1, label: '甲方待签约' },
+    { value: 2, label: '待确认' },
     { value: 3, label: '乙方待签约' },
     { value: 4, label: '乙方个人待签约' },
     { value: 5, label: '已签约' },

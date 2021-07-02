@@ -271,19 +271,48 @@ export async function $userManagerSet(data) {
 export async function $userOperatorSet(data) {
   return await R({ url: 'user/org_signer/operator_set', method: 'POST', data })
 }
+
 // 根据orgId查询企业负责人执行签署人信息
 export async function $orgSealFind(data) {
   return await R({ url: 'user/org_seal/find_detail', method: 'POST', data })
 }
+
 // 上传模板
 export async function $userContractTemplateAdd(data) {
   return await R({ url: 'user/contract_template/add', method: 'POST', data })
 }
+
 // 获取设置url
 export async function $userContractTemplateSettingUrl(data) {
   return await R({ url: 'user/contract_template/get_component_setting_url', method: 'POST', data })
 }
+
 // 模板状态设置
 export async function $userContractTemplateUpdateStatus(data) {
   return await R({ url: 'user/contract_template/update', method: 'POST', data })
+}
+
+// 查看合同
+export async function $userContractView(data) {
+  return await R({ url: 'user/contract/view', method: 'POST', data })
+}
+
+// 合同确认
+export async function $userContractBatchConfirm(data) {
+  return await R({ url: 'user/contract/batch_confirm', method: 'POST', data })
+}
+
+// 合同撤回
+export async function $userContractCancel(data) {
+  return await R({ url: 'user/contract/cancle', method: 'POST', data })
+}
+
+// 合同下载
+export async function $userContractDownload(data) {
+  return await R({ url: 'user/contract/download', method: 'POST', data })
+}
+
+// 合同签约
+export async function $userContractToSign(data) {
+  return await R({ url: 'user/contract/to_sign_by_platform', method: 'POST', data })
 }
