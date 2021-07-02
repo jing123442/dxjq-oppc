@@ -76,6 +76,7 @@ const columns = {
     { field: 'cardPwd', hide: true, name: '卡密', show: { type: 'span', ou: 6 } }
   ],
   category: [
+    { field: 'id', hide: true, show: { type: 'hide', noShow: 1 } },
     { field: 'goodsType', fixed: 'left', name: '商品类型', formatter: 'goodsType', show: { type: 'select', obj: 'goodsType' }, search: { type: 'select', obj: 'goodsType', placeholder: '商品类型' }, rules: [{ required: true, message: '请选择商品类型', trigger: 'blur' }] },
     { field: 'categoryName', name: '商品分类', show: { type: 'text', placeholder: '请输入商品分类' }, search: { type: 'text', placeholder: '请输入商品分类' }, rules: [{ required: true, message: '请输入商品分类', trigger: 'blur' }] },
     { field: 'categoryStatus', name: '状态', formatter: 'categoryStatus' },

@@ -211,15 +211,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .goods {
-  display: flex;
+  position: relative;
   .left-tree {
+    position: absolute;
     min-height: 500px;
-    width: 200px;
-    min-width: 140px;
+    width: 140px;
     background: #fff;
   }
   .right-goods {
-    margin-left: 12px;
+    margin-left: 150px;
   }
 }
 </style>
