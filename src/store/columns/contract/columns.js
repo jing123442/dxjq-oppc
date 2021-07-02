@@ -44,7 +44,7 @@ const columns = {
   ],
   contractTemplate: [
     { field: 'type', name: '模板类型', nameSpan: 8, xs: 20, sm: 20, md: 20, lg: 20, xl: 20, fixed: 'left', formatter: 'contractType', show: { type: 'select', obj: 'contractType', placeholder: '请选择模板类型' }, rules: [{ required: true, message: '请选择模板类型', trigger: 'blur' }] },
-    { field: 'templateId', name: '模板编号'},
+    { field: 'outerTemplateId', name: '模板编号'},
     { field: 'partyaType', nameSpan: 8, xs: 20, sm: 20, md: 20, lg: 20, xl: 20, name: '甲方客户类型', width: 200, formatter: 'partyaType', show: { type: 'select', obj: 'partyaType', placeholder: '请选择甲方客户类型' }, rules: [{ required: true, message: '请选择甲方客户类型', trigger: 'blur' }] },
     { field: 'orgId', name: '乙方签署企业', nameSpan: 8, xs: 20, sm: 20, md: 20, lg: 20, xl: 20, hide: true, show: { type: 'select', subField: 'partybOrgName', obj: 'plateformOrgList', placeholder: '请选择乙方签署企业' }, rules: [{ required: true, message: '请选择乙方签署企业', trigger: 'blur' }]},
     { field: 'partybOrgName', name: '乙方签署企业' },
