@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, callbackPagesInfo, isTypeof, custFormBtnList } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof, custFormBtnList, exportBlobToFiles } from '@/utils/tools'
 import { $userContractView, $userContractDownload, $userContractToSign } from '@/service/user'
 import { mapGetters } from 'vuex'
 
@@ -101,9 +101,11 @@ export default {
       })
     },
     contractDownload(row) {
+      console.log(row)
       $userContractDownload({ id: row.contractId }).then(res => {
+        exportBlobToFiles(res, row.partyaName + '-' + row.title, res.type)
+        this.$message.success('下载成功')
         this.contractSingDialogVisible = false
-        console.log(res)
       })
     },
     dialogClose() {

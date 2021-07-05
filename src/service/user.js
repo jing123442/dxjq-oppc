@@ -309,7 +309,7 @@ export async function $userContractCancel(data) {
 
 // 合同下载
 export async function $userContractDownload(data) {
-  return await R({ url: 'user/contract/download', method: 'POST', data })
+  return await R({ url: 'user/contract/download', data, responseType: 'blob' })
 }
 
 // 合同签约
