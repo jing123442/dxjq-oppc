@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="table" :tableListName="'table'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="table" :tableListName="'table'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @checkboxStatus="checkboxStatus"></em-table-list>
     <el-dialog v-if="contractValidDialogVisible" :title="this.dialogText[this.ListEventBtnType].title" :visible.sync="contractValidDialogVisible" width="50%" :append-to-body="true" @close="dialogClose">
       <div v-if="contractValidDialogVisible" class="operation-text">{{this.dialogText[this.ListEventBtnType].text}}</div>
       <el-form v-if="contractValidDialogVisible && dialogRowData._btn">
@@ -74,6 +74,10 @@ export default {
           this.contractValidDialogVisible = true
           break
         case 'batch':
+          if (!this.$refs.table.multipleSelection) {
+            this.$message.warning('请选择要确认的合同')
+            return
+          }
           this.dialogRowData.row = row
           this.dialogRowData._btn = custFormBtnList()
           this.contractValidDialogVisible = true
@@ -110,10 +114,12 @@ export default {
       var contractList = {
         idList: []
       }
-      if (row) {
-        contractList.idList.push(row)
-      } else {
-        contractList.idList = this.$refs.table.multipleSelection
+      if (this.ListEventBtnType === 'confirm') {
+        contractList.idList.push(row.contractId)
+      } else if (this.ListEventBtnType === 'batch') {
+        this.$refs.table.multipleSelection.forEach(item => {
+          contractList.idList.push(item.contractId)
+        })
       }
       $userContractBatchConfirm(contractList).then(res => {
         this.$refs.table.initDataList()
@@ -136,6 +142,15 @@ export default {
     dialogClose() {
       this.dialogRowData = {}
       this.ListEventBtnType = ''
+    },
+    checkboxStatus(row, index, callback) {
+      const flagTrue = true
+      const flagFalse = false
+      if (row.status === 2) {
+        callback(flagTrue)
+      } else {
+        callback(flagFalse)
+      }
     },
     onReqParams(type, _this, callback) {
       _this.tableListResponse = ''

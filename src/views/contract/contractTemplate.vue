@@ -1,7 +1,7 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="table" :tableListName="'table'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue"></em-table-list>
-    <el-dialog :title="dialogTitle[this.ListEventBtnType]" :visible.sync="contractTemplateDialogVisible" width="50%" :append-to-body="true">
+    <em-table-list ref="table" :tableListName="'table'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <el-dialog :title="dialogTitle[this.ListEventBtnType]" :visible.sync="contractTemplateDialogVisible" width="50%" :append-to-body="true" @close="dialogClose">
       <nt-form v-if="contractTemplateDialogVisible && ListEventBtnType === 'upload'" :ref="'dialogForm'" :formRef="'dialogForm'" :rowData="dialogRowData" :pageColumn="page_column" :queryURL="queryCustURL" :axios="axios" :selectList="select_list" :responseSuccess="response_success" @onListEvent="onListEventFrom"></nt-form>
       <div v-else-if="contractTemplateDialogVisible && ListEventBtnType !== 'upload'">
         <div v-if="ListEventBtnType === 'updateStatus'" class="template-status">{{ dialogRowData.status == 0 ? '停用模板后，甲方不可发起本合同签约，请确认停用' : '启用模板后，甲方可发起合同签约，请确认启用' }}</div>
@@ -23,7 +23,7 @@
 <script>
 import { initVueDataOptions, custFormBtnList } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $userRoleList, $orgSealFind, $userContractTemplateAdd, $userContractTemplateSettingUrl, $userContractTemplateUpdateStatus } from '@/service/user'
+import { $orgSealFind, $userContractTemplateAdd, $userContractTemplateSettingUrl, $userContractTemplateUpdateStatus } from '@/service/user'
 
 export default {
   name: 'contractTemplate',
@@ -74,8 +74,15 @@ export default {
   mounted: function () {},
   watch: {
     'dialogRowData.orgId'(value) {
-      if (value == '') return
+      if (!value) return
       this.orgSealFind(value)
+    },
+    'dialogRowData.type'(value) {
+      if (value === 1 || value === 2) {
+        this.dialogRowData.partyaType = 1
+      } else if (value === 3) {
+        this.dialogRowData.partyaType = 2
+      }
     }
   },
   methods: {
@@ -126,6 +133,10 @@ export default {
         this.contractTemplateDialogVisible = false
       })
     },
+    dialogClose() {
+      this.dialogRowData = {}
+      this.ListEventBtnType = ''
+    },
     onListEvent(type, row) {
       this.ListEventBtnType = type
       this.dialogRowData._btn = custFormBtnList()
@@ -157,30 +168,6 @@ export default {
       } else {
         this.contractTemplateDialogVisible = false
       }
-    },
-    updateColumnValue(tableData, callback) {
-      $userRoleList({
-        page: 1,
-        size: 100,
-        param: {}
-      }).then(res => {
-        const list = res.data.records
-        tableData.forEach(row => {
-          const tmpRoleList = []
-          row.clientRoleList && row.clientRoleList.forEach(rowItem => {
-            list.forEach(item => {
-              if (item.clientId == rowItem.clientId && item.roleId == rowItem.roleId) {
-                rowItem.title = item.clientName + '-' + item.roleName
-                tmpRoleList.push(item.roleId + '#0' + item.clientId)
-              }
-            })
-          })
-          row.clientRoleTableList = row.clientRoleList
-          row.clientRoleList = tmpRoleList
-        })
-
-        callback(tableData)
-      })
     },
     onReqParams(type, _this, callback) {
       _this.tableListResponse = ''
