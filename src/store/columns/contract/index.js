@@ -10,6 +10,11 @@ const getters = {
   contract_contractValid_select_list: item => select.contractValid,
   contract_contractValid_page_status: item => app.list.contractValid,
   contract_contractValid_mode_list: item => app.mode.modeDefault,
+  // 合同签约
+  contract_contractSign_column: item => columns.contractSign,
+  contract_contractSign_select_list: item => select.contractSign,
+  contract_contractSign_page_status: item => app.list.contractSign,
+  contract_contractSign_mode_list: item => app.mode.modeDefault,
   // 合同模板
   contract_contractTemplate_column: item => columns.contractTemplate,
   contract_contractTemplate_select_list: item => select.contractTemplate,

@@ -5,6 +5,10 @@ const select = {
     contractStatus: utilsContractSignStatus(),
     contractType: utilsContractType()
   },
+  contractSign: {
+    contractStatus: utilsContractSignStatus(),
+    contractType: utilsContractType()
+  },
   contractTemplate: {
     contractType: utilsContractType(),
     plateformOrgList: utilsPlateformOrgList(),

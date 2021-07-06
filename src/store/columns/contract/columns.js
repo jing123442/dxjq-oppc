@@ -13,7 +13,7 @@ const columns = {
     { field: 'partybCompleteDate', name: '乙方签约合同日期' },
     { field: 'partybContactName', name: '业务负责人', search: { type: 'text', placeholder: '请输入业务负责人' } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 220, list: params => {
-        const optsList = [{ type: 'detail', name: '查看'}]
+        const optsList = [{ type: 'details', name: '查看'}]
         if (params.row.status === 2) {
           optsList.push({type: 'confirm', name: '确认签约'}, {type: 'recall', name: '撤回'})
         } else if (params.row.status === 5) {
@@ -22,10 +22,30 @@ const columns = {
         return optsList
       } }
   ],
+  contractSign: [
+    { field: 'contractId', name: '合同编号', hide: true},
+    { field: 'type', name: '合同类型', formatter: 'contractType', search: { type: 'select', obj: 'contractType', placeholder: '合同类型' } },
+    { field: 'code', name: '合同编号' },
+    { field: 'status', name: '合同状态', formatter: 'contractStatus', search: { type: 'select', obj: 'contractStatus', placeholder: '合同状态' } },
+    { field: 'partyaName', name: '甲方公司名称', search: { type: 'text', placeholder: '请输入甲方公司名称' } },
+    { field: 'partyaCompleteDate', name: '甲方签约合同日期' },
+    { field: 'partybName', name: '乙方公司名称', search: { type: 'text', placeholder: '请输入乙方公司名称' } },
+    { field: 'partybCompleteDate', name: '乙方签约合同日期' },
+    { field: 'partybContactName', name: '业务负责人', search: { type: 'text', placeholder: '请输入业务负责人' } },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 220, list: params => {
+        const optsList = [{ type: 'details', name: '查看'}]
+        if (params.row.status === 5) {
+          optsList.push({type: 'download', name: '下载'})
+        } else if (params.row.status === 3 || params.row.status === 4) {
+          optsList.push({type: 'sign', name: '去签约'})
+        }
+          return optsList
+      } }
+  ],
   contractTemplate: [
     { field: 'type', name: '模板类型', nameSpan: 8, xs: 20, sm: 20, md: 20, lg: 20, xl: 20, fixed: 'left', formatter: 'contractType', show: { type: 'select', obj: 'contractType', placeholder: '请选择模板类型' }, rules: [{ required: true, message: '请选择模板类型', trigger: 'blur' }] },
-    { field: 'templateId', name: '模板编号'},
-    { field: 'partyaType', nameSpan: 8, xs: 20, sm: 20, md: 20, lg: 20, xl: 20, name: '甲方客户类型', width: 200, formatter: 'partyaType', show: { type: 'select', obj: 'partyaType', placeholder: '请选择甲方客户类型' }, rules: [{ required: true, message: '请选择甲方客户类型', trigger: 'blur' }] },
+    { field: 'outerTemplateId', name: '模板编号'},
+    { field: 'partyaType', nameSpan: 8, xs: 20, sm: 20, md: 20, lg: 20, xl: 20, name: '甲方客户类型', width: 200, formatter: 'partyaType', show: { type: 'select', obj: 'partyaType', placeholder: '请选择甲方客户类型', isDisabled: true }, rules: [{ required: true, message: '请选择甲方客户类型', trigger: 'blur' }] },
     { field: 'orgId', name: '乙方签署企业', nameSpan: 8, xs: 20, sm: 20, md: 20, lg: 20, xl: 20, hide: true, show: { type: 'select', subField: 'partybOrgName', obj: 'plateformOrgList', placeholder: '请选择乙方签署企业' }, rules: [{ required: true, message: '请选择乙方签署企业', trigger: 'blur' }]},
     { field: 'partybOrgName', name: '乙方签署企业' },
     { field: 'managerName', name: '乙方企业负责人', nameSpan: 8, xs: 20, sm: 20, md: 20, lg: 20, xl: 20, hide: true,  show: { type: 'text', isDisabled: true, placeholder: '暂无乙方企业负责人' }, rules: [{ required: true, message: '暂无乙方企业负责人,请去印章管理设置', trigger: 'blur' }] },
