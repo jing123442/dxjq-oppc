@@ -117,6 +117,7 @@ export default {
         return
       }
       $userContractTemplateAdd(params).then(res => {
+        this.$message.success('上传成功')
         this.$refs.table.initDataList()
         this.contractTemplateDialogVisible = false
       })
