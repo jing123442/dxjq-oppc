@@ -137,6 +137,11 @@ const columns = {
     { field: 'changeType', name: '调整类型', ispush: false, formatter: 'changeType', show: { type: 'select', obj: 'changeType', placeholder: '请选择调整类型' }, rules: [{ required: true, message: '请选择调整类型', trigger: 'blur' }] },
     { field: 'changeAmount', name: '调整数量', show: { type: 'text', placeholder: '请输入调整数量' }, rules: [{ required: true, message: '请输入调整数量', trigger: 'blur' }, { validator: 'validateInputValueNumber', option: { max: 999999 }, message: '最大值不能超过999999', trigger: 'blur' }] },
     { field: 'note', name: '备注', show: { type: 'textarea' } }
+  ],
+  inviteRecords: [
+    { field: 'inviterMobile', fixed: 'left', name: '邀请人手机号', search: { type: 'text', dataType: 'number', placeholder: '请输入邀请人手机号' } },
+    { field: 'inviteeMobile', name: '被邀请人手机号', search: { type: 'text', dataType: 'number', placeholder: '请输入被邀请人手机号' } },
+    { field: 'inviteeRegisterDate', name: '被邀请人注册时间', stype: 'format', formatFun: 'formateTData all',  search: { type: 'date-picker', placeholder: '' } }
   ]
 }
 

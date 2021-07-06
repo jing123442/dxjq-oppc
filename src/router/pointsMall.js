@@ -27,7 +27,8 @@ export default [
       { path: 'supplierManage', component: inImport('pointsMall/supplierManage'), name: 'supplierManage', meta: { title: '供应商管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'orderManage', component: inImport('pointsMall/orderManage'), name: 'orderManage', meta: { title: '订单管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'goodsCategory', component: inImport('pointsMall/goodsCategory'), name: 'goodsCategory', meta: { title: '商品分类管理', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'goods', component: inImport('pointsMall/goods'), name: 'goods', meta: { title: '商品管理', icon: 'icon-gongnengguanli', noCache: false } }
+      { path: 'goods', component: inImport('pointsMall/goods'), name: 'goods', meta: { title: '商品管理', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'inviteRecords', component: inImport('pointsMall/inviteRecords'), name: 'inviteRecords', meta: { title: '邀请记录', icon: 'icon-gongnengguanli', noCache: false } }
     ]
   }
 ]
