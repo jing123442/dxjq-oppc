@@ -110,7 +110,11 @@ export default {
         managerName: row.managerName,
         signerId: row.signerId,
         signerName: row.signerName,
-        url: row.url[0].url
+        url: row.url.length === 0 ? '' : row.url[0].url
+      }
+      if (!params.url) {
+        this.$message.error('暂未上传模板文件')
+        return
       }
       $userContractTemplateAdd(params).then(res => {
         this.$refs.table.initDataList()
