@@ -347,6 +347,32 @@ export function utilsLNGDataSearch() {
   ]
 }
 
+export function utilSelectGasstationType(type = '') {
+  let result = [
+    { value: 2001, label: '中海油' },
+    { value: 2002, label: '中石油' },
+    { value: 2003, label: '中石化' },
+    { value: 2004, label: '社会' }
+  ]
+  if (type === 'inner') {
+    result = [
+      { value: 1001, label: '大象自营' },
+      { value: 1002, label: '大象合作' },
+      { value: 1003, label: '大象加盟' }
+    ]
+  }
+
+  if (type === 'all') {
+    result.unshift({ value: 1003, label: '大象加盟' })
+    result.unshift({ value: 1002, label: '大象合作' })
+    result.unshift({ value: 1001, label: '大象自营' })
+    result.unshift({ value: 100, label: '大象站' })
+    result.unshift({ value: null, label: '全部站点' })
+  }
+
+  return result
+}
+
 export function untilsMarketingManList() {
   // const params = {
   //   page: 1, param: { baseRole: 7, status: 0, userType: 0 }, size: 100
@@ -378,6 +404,17 @@ export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', 
   }
 
   return result
+}
+export function utilSelectAuthDistrictList() {
+  return {
+    url: 'user/district/districtSet',
+    node: ['data', 'areas'],
+    params: {},
+    props: {
+      value: 'areaCode',
+      label: 'areaName'
+    }
+  }
 }
 export function utilsSupplierList() {
   return {

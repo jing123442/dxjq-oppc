@@ -1,4 +1,24 @@
-import { utilsStatus, utilsAuthStatus, utilsPlanStatus, utilsSource, utilsDyOrgList, untilsAddress, utilsPrintStatus, utilsVoiceStatus, utilsIdentityType, utilsTradeType, utilsBankList, utilsPrintPaper, utilsHandleType, utilsModifyApplyType, utilsCheckType, utilsBearType, utilsLNGDataSearch, utilsFillerParentList } from '@/utils/select'
+import {
+  utilsStatus,
+  utilsAuthStatus,
+  utilsPlanStatus,
+  utilsSource,
+  utilsDyOrgList,
+  untilsAddress,
+  utilsPrintStatus,
+  utilsVoiceStatus,
+  utilsIdentityType,
+  utilsTradeType,
+  utilsBankList,
+  utilsPrintPaper,
+  utilsHandleType,
+  utilsModifyApplyType,
+  utilsCheckType,
+  utilsBearType,
+  utilsLNGDataSearch,
+  utilsFillerParentList,
+  utilSelectGasstationType
+} from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
 const select = {
@@ -20,7 +40,8 @@ const select = {
       { value: 0, label: '未设置' },
       { value: 1, label: '加气站二维码' },
       { value: 2, label: '收银员二维码' }
-    ]
+    ],
+    gasstationType: utilSelectGasstationType('inner')
   },
   account: {
     orgId: utilsDyOrgList(1)

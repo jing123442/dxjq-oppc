@@ -1,5 +1,6 @@
 import { tableTextColor, toolPickerOptions } from '@/utils/tools'
-/* eslint-disable */
+import file from '../../modules/file'
+
 const columns = {
   daySales: [
     { field: 'name', name: '名称', fixed: 'left', stype: 'format',
@@ -30,6 +31,105 @@ const columns = {
       } },
     { field: 'queryDateTime', name: '', hide: true, search: { type: 'date-picker', dtime: ['00:00:00', '23:59:59'], timeOptions: toolPickerOptions(), rangeNumber: 7, dataType: 'rangeType' } },
     { field: 'gasQtyTotal', name: '加气量(公斤)' }
+  ],
+  battle: [
+    { field: 'gasType', name: '站点类型',
+      show: { type: 'select', ou: 1, obj: 'gasstationType', style: 'width: 85%', placeholder: '请选择站点类型' },
+      update: { type: 'select', ou: 1, obj: 'gasstationType', style: 'width: 85%', placeholder: '请选择站点类型' },
+      info: { type: 'span', model: 'select', ou: 1, obj: 'gasstationType', style: 'width: 85%', placeholder: '请选择站点类型' },
+      dxinfo: { type: 'span', model: 'select', nameSpan: 6, ou: 1, obj: 'gasstationType', style: 'width: 85%', placeholder: '请选择站点类型' },
+      rules: [{ required: true, message: '请选择站点类型', trigger: 'change' }] },
+    { field: 'gasstationName', name: '站点名称',
+      show: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入站点名称' },
+      update: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入站点名称' },
+      info: { type: 'span', ou: 1, style: 'width: 85%', placeholder: '请输入站点名称' },
+      dxinfo: { type: 'span', nameSpan: 6, ou: 1, style: 'width: 85%', placeholder: '请输入站点名称' },
+      rules: [{ required: true, message: '请输入站点名称', trigger: 'change' }] },
+    { field: 'city', name: '行政区域',
+      show: { type: 'select', ou: 1, obj: 'districtList', style: 'width: 85%', placeholder: '请选择行政区域' },
+      update: { type: 'select', ou: 1, obj: 'districtList', style: 'width: 85%', placeholder: '请选择行政区域' },
+      info: { type: 'span', model: 'select', ou: 1, obj: 'districtList', style: 'width: 85%', placeholder: '请选择行政区域' },
+      dxinfo: { type: 'span', model: 'select', nameSpan: 6, ou: 1, obj: 'districtList', style: 'width: 85%', placeholder: '请选择行政区域' },
+      rules: [{ required: true, message: '请选择行政区域', trigger: 'change' }] },
+    { field: 'address', name: '详细地址',
+      show: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入详细地址' },
+      update: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入详细地址' },
+      info: { type: 'span', ou: 1, style: 'width: 85%', placeholder: '请输入详细地址' },
+      dxinfo: { type: 'span', nameSpan: 6, ou: 1, style: 'width: 85%', placeholder: '请输入详细地址' },
+      rules: [{ required: true, message: '请输入详细地址', trigger: 'change' }] },
+    { field: 'pointAddress', name: '经纬度', colspan: 24, nameSpan: 2,
+      show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 38.6%', placeholder: '经纬度' },
+      update: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 38.6%', placeholder: '经纬度' },
+      info: { type: 'span', ou: 2, style: 'width: 38.6%', placeholder: '经纬度' },
+      dxinfo: { type: 'span', nameSpan: 3, ou: 2, style: 'width: 36.3%', placeholder: '经纬度' } },
+    { field: 'gasQtyTotal', name: '日加气量', hide: true, ispush: false, colspan: 24, nameSpan: 2,
+      dxinfo: { type: 'span', nameSpan: 3, ou: 1, style: 'width: 36.3%', placeholder: '请输入日加气量', util: '吨' } },
+    { field: 'gasQty', name: '平台日加气量', hide: true, ispush: false,
+      dxinfo: { type: 'span', nameSpan: 6, ou: 1, style: 'width: 85%', placeholder: '请输入平台日加气量', util: '吨' } },
+    { field: 'offlineGasQty', name: '日加气量',
+      show: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入日加气量', util: '吨' },
+      update: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入日加气量', util: '吨' },
+      info: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入日加气量', util: '吨' },
+      dxinfo: { type: 'text', name: '线下日加气量', nameSpan: 6, ou: 1, style: 'width: 85%', placeholder: '请输入线下日加气量', util: '吨' },
+      rules: [{ required: true, message: '请选择站点类型', trigger: 'change' }] },
+    { field: 'price', name: '平台结算价', hide: true, ispush: false,
+      dxinfo: { type: 'span', nameSpan: 6, ou: 1, style: 'width: 85%', placeholder: '请输入平台结算价', util: '元/公斤' } },
+    { field: 'offlinePrice', name: '结算价',
+      show: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入结算价', util: '元/公斤' },
+      update: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入结算价', util: '元/公斤' },
+      info: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入结算价', util: '元/公斤' },
+      dxinfo: { type: 'text', name: '线下结算价', nameSpan: 6, ou: 1, style: 'width: 85%', placeholder: '请输入线下结算价', util: '元/公斤' },
+      rules: [{ required: true, message: '请选择站点类型', trigger: 'change' }] },
+    { field: 'credentials', name: '情报凭证', filefield: 'file',
+      show: { type: 'file', ou: 4, iType: 'string', limit: 9, btnType: true, paramField: 'url', action: file.state.fileUrl,
+        props: { url: 'data', name: 'data' },
+        params: { url: 'data', name: 'data' },
+        headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders),
+        success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;',
+        fileHost: file.state.fileHost, placeholder: '请上传情报凭证', node: [] },
+      info: { type: 'file', ou: 4, iType: 'string', limit: 9, btnType: true, paramField: 'url', action: file.state.fileUrl,
+        props: { url: 'data', name: 'data' },
+        params: { url: 'data', name: 'data' },
+        headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders),
+        success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;',
+        fileHost: file.state.fileHost, placeholder: '请上传情报凭证', node: [] },
+      dxinfo: { type: 'file', nameSpan: 6, ou: 4, iType: 'string', limit: 9, btnType: true, paramField: 'url', action: file.state.fileUrl,
+        props: { url: 'data', name: 'data' },
+        params: { url: 'data', name: 'data' },
+        headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders),
+        success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;',
+        fileHost: file.state.fileHost, placeholder: '请上传情报凭证', node: [] } }
+  ],
+  battleList: [
+    { field: 'createTime', name: '时间', fixed: 'left' },
+    { field: 'gasstationName', name: '站点名称', search: { type: 'text', placeholder: '请输入站点名称' } },
+    { field: 'gasType', name: '站点类型', formatter: 'gasstationType' },
+    { field: 'offlinePrice', name: '线下结算价' },
+    { field: 'createName', name: '操作人' },
+    { field: 'mobile', name: '电话号码' },
+    { field: 'credentials', name: '凭证信息' }
+  ],
+  battleGasList: [
+    { field: 'createTime', name: '时间', fixed: 'left' },
+    { field: 'gasstationName', name: '站点名称', search: { type: 'text', placeholder: '请输入站点名称' } },
+    { field: 'gasType', name: '站点类型', formatter: 'gasstationType' },
+    { field: 'createName', name: '操作人' },
+    { field: 'mobile', name: '电话号码' }
+  ],
+  battleItem: [
+    { field: 'createTime', name: '时间', fixed: 'left' },
+    { field: 'gasstationName', name: '站点名称' },
+    { field: 'gasType', name: '站点类型', formatter: 'gasstationType' },
+    { field: 'offlinePrice', name: '线下结算价' },
+    { field: 'createName', name: '操作人' },
+    { field: 'mobile', name: '电话号码' }
+  ],
+  battleGasItem: [
+    { field: 'createTime', name: '时间', fixed: 'left' },
+    { field: 'gasstationName', name: '站点名称' },
+    { field: 'gasType', name: '站点类型', formatter: 'gasstationType' },
+    { field: 'createName', name: '操作人' },
+    { field: 'mobile', name: '电话号码' }
   ]
 }
 

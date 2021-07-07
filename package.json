@@ -49,6 +49,7 @@
     "postcss-px-to-viewport": "^1.1.1",
     "sass-loader": "^8.0.2",
     "vue-baidu-map": "^0.21.22",
+    "vue-bmap-gl": "^0.0.17",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [

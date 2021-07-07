@@ -1,4 +1,4 @@
-import { utilsBaseRole, utilsStatus } from '@/utils/select'
+import {utilsBaseRole, utilsStatus, utilSelectGasstationType, utilSelectAuthDistrictList} from '@/utils/select'
 
 const select = {
   intention: {
@@ -8,7 +8,15 @@ const select = {
       { value: 1, label: '男' },
       { value: 2, label: '女' }
     ]
-  }
+  },
+  battle: {
+    gasstationType: utilSelectGasstationType(),
+    districtList: utilSelectAuthDistrictList()
+  },
+  battleList: {
+    gasstationType: utilSelectGasstationType('all'),
+    districtList: utilSelectAuthDistrictList()
+  },
 }
 
 export default select
