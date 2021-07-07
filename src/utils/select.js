@@ -346,9 +346,9 @@ export function utilsContractSignStatus() {
 // 电子签约合同类型
 export function utilsContractType() {
   return [
-    { value: 1, label: '加气站平台入驻协议' },
-    { value: 2, label: '加气站能源合作协议' },
-    { value: 3, label: '物流公司平台入驻协议' }
+    { value: 1, label: '加气站平台入驻合同' },
+    { value: 2, label: '加气站能源合作合同' },
+    { value: 3, label: '物流公司平台入驻合同' }
   ]
 }
 export function utilsBearType() {
@@ -594,6 +594,26 @@ export function utilsPlateformOrgList() {
     props: {
       value: 'orgId',
       label: 'orgName'
+    }
+  }
+}
+// 业务区域配置设置联系人
+export function utilsDistrictUserList(name) {
+  return {
+    url: 'user/user/list',
+    node: ['data', 'records'],
+    params: {
+      page: 1,
+      size: 10,
+      param: {
+        status: 0,
+        userType: 0,
+        keyword: name
+      }
+    },
+    props: {
+      value: ['userId', 'userName', 'mobile'],
+      label: 'userName'
     }
   }
 }
