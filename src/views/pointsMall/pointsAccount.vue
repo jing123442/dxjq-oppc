@@ -103,12 +103,12 @@ export default {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (k == 'mobile') {
             params.param.keyword = v
-          } else if (k == 'balance' && Array.isArray(v)) {
-            if (v.length == 0) {
+          } else if (k == 'balance') {
+            if ((Array.isArray(v) && v.length == 0) || v == '') {
               params.param.balanceMax = ''
               params.param.balanceMin = ''
             } else {
-              if (v[0] < v[1]) {
+              if (v[0] < v[1] || (v[0] == '' && v[1] == '')) {
                 params.param.balanceMax = v[1]
                 params.param.balanceMin = v[0]
               } else {

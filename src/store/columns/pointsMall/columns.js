@@ -117,7 +117,7 @@ const columns = {
     { field: 'status', name: '账户状态', formatter: 'pointsAccoutStatus', search: { type: 'select', obj: 'pointsAccoutStatus', placeholder: '账户状态' } },
     { field: 'createDate', name: '账户开通时间', stype: 'format', formatFun: 'formateTData all' },
     { field: 'accountType', name: '账户类型', formatter: 'accountType' },
-    { field: 'balance', name: '积分余额', search: { type: 'input-range', placeholder: '请输入积分余额' } },
+    { field: 'balance', name: '积分余额', search: { type: 'input-range', startPlaceholder: '请输入积分余额起始值', endPlaceholder: '请输入积分余额终止值' } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 200, list: item => pointsAccoutOpt(item) }
   ],
   pointsAccountLog: [
