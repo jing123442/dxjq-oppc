@@ -175,7 +175,7 @@ export default {
       }
     },
     orgSealApply() {
-      if (this.dialogRowData.lastQuarter.length >= 13) {
+      if (this.dialogRowData.lastQuarter.length > 13) {
         this.$message.error('印章下弦文必须小于等于13个字符')
         return
       }

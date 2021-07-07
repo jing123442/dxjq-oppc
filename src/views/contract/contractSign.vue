@@ -101,7 +101,6 @@ export default {
       })
     },
     contractDownload(row) {
-      console.log(row)
       $userContractDownload({ id: row.contractId }).then(res => {
         exportBlobToFiles(res, row.partyaName + '-' + row.title, res.type)
         this.$message.success('下载成功')
