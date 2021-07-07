@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <div class="basic-con">
+  <div class="template-main">
+    <div class="basic-con ">
       <div class="title">基本设置</div>
-      <nt-form ref="pointsConfig" :rowData="points" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEvent"></nt-form>
+      <nt-form ref="pointsConfig" :formRef="'pointsConfigForm'" :rowData="points" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEvent"></nt-form>
     </div>
     <div class="rule-con">
       <em-table-list :custTableTitle="'规则配置'" :tableListName="'ruleConfig'" :axios="axios" :queryCustURL="queryTableCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="rule_page_status" :page_column="rule_page_column" :select_list="rule_select_list" @onReqParams="onReqParams" @onListEvent="onListTableEvent"></em-table-list>
@@ -32,7 +32,8 @@ export default {
             tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
-        }
+        },
+        name: '规则配置'
       },
       points: {},
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { rewardType: '' } })
@@ -56,7 +57,11 @@ export default {
   methods: {
     onListEvent(obj) {
       if (obj.type == 'ok') {
-        this.editPoints(this.points)
+        this.$refs.pointsConfig.$refs.pointsConfigForm.validate((valid) => {
+          if (valid) {
+            this.editPoints(this.points)
+          }
+        })
       }
     },
     onListTableEvent(obj) {

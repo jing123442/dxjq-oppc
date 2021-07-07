@@ -1,10 +1,10 @@
 <template>
-  <div class="goods">
+  <div class="goods template-main">
     <div class="left-tree">
       <el-tree :data="treeData" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
     </div>
     <div class="right-goods">
-      <em-table-list :custTableTitle="'商品列表'" :tableListName="'goods'" ref="goods" :axios="axios" :buttonsList="buttonsList" :queryCustURL="queryTableCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onReqParams="onReqParams" @onListEvent="onListTableEvent"></em-table-list>
+      <em-table-list :custTableTitle="'商品列表'" :tableListName="'goods'" ref="goods" :axios="axios" :buttonsList="buttonsList" :queryCustURL="queryTableCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue" @onListEvent="onListTableEvent"></em-table-list>
     </div>
     <el-dialog title="批量操作" :append-to-body="true" :visible.sync="dialogVisible" :width="add_edit_dialog">
       <el-form v-if="dialogVisible" size="small" label-position="left">
@@ -131,6 +131,9 @@ export default {
         this.treeData = this.treeDataDeal(res.data.records)
       })
     },
+    updateColumnValue(dataList, callback) {
+      callback(dataList)
+    },
     treeDataDeal(data = []) {
       // 获取商品类型
       const temp = [...new Set(data.map(item => item.goodsType))]
@@ -211,15 +214,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .goods {
-  display: flex;
+  position: relative;
   .left-tree {
+    position: absolute;
     min-height: 500px;
-    width: 200px;
-    min-width: 120px;
+    width: 140px;
     background: #fff;
   }
   .right-goods {
-    margin-left: 12px;
+    margin-left: 150px;
   }
 }
 </style>

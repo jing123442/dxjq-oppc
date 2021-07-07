@@ -1,5 +1,5 @@
 <template>
-  <div class="pointsAccountDetail">
+  <div class="pointsAccountDetail template-main">
     <em-table-list :custTableTitle="'积分明细'" :tableListName="'pointsAccountDetail'" ref="pointsAccountDetail" :axios="axios" :queryCustURL="queryTableCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @updateColumnValue="updateColumnValue" @onReqParams="onReqParams" @onListEvent="onListTableEvent"></em-table-list>
   </div>
 </template>

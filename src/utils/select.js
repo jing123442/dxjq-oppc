@@ -323,7 +323,34 @@ export function utilsCommonAuthStatus() {
     { value: 3, label: '认证失败' }
   ]
 }
-
+// 电子签约印章状态
+export function utilsSealStatus() {
+  return [
+    { value: 0, label: '已启用' },
+    { value: 1, label: '已停用' },
+    { value: 2, label: '未申请' }
+  ]
+}
+// 电子签约合同状态
+export function utilsContractSignStatus() {
+  return [
+    { value: 1, label: '甲方待签约' },
+    { value: 2, label: '待确认' },
+    { value: 3, label: '乙方待签约' },
+    { value: 4, label: '乙方个人待签约' },
+    { value: 5, label: '已签约' },
+    { value: 6, label: '已撤回' },
+    { value: 7, label: '已拒绝' }
+  ]
+}
+// 电子签约合同类型
+export function utilsContractType() {
+  return [
+    { value: 1, label: '加气站平台入驻合同' },
+    { value: 2, label: '加气站能源合作合同' },
+    { value: 3, label: '物流公司平台入驻合同' }
+  ]
+}
 export function utilsBearType() {
   return [
     { value: 1, label: '加气站承担' },
@@ -579,4 +606,51 @@ export function utilsTableOptionsToFilters(func, props = { text: 'label' }) {
   })
 
   return optionList
+}
+// 印章管理查找平台用户
+export function utilsUserListBySeal(name) {
+  return {
+    url: 'user/user/list_platform_user',
+    node: ['data'],
+    param: {
+      keyword: name
+    },
+    props: {
+      value: 'idCardNo',
+      label: ['userName', 'userId']
+    }
+  }
+}
+// 查找平台方企业
+export function utilsPlateformOrgList() {
+  return {
+    url: 'user/org/plateform_org_list',
+    node: ['data'],
+    param: {
+    },
+    props: {
+      value: 'orgId',
+      label: 'orgName'
+    }
+  }
+}
+// 业务区域配置设置联系人
+export function utilsDistrictUserList(name) {
+  return {
+    url: 'user/user/list',
+    node: ['data', 'records'],
+    params: {
+      page: 1,
+      size: 10,
+      param: {
+        status: 0,
+        userType: 0,
+        keyword: name
+      }
+    },
+    props: {
+      value: ['userId', 'userName', 'mobile'],
+      label: 'userName'
+    }
+  }
 }

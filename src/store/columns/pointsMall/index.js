@@ -50,7 +50,12 @@ const getters = {
   // 积分调整
   point_change_mode_list: item => item.app.modeDefault,
   point_change_column: item => columns.pointChange,
-  point_change_select_list: item => select.pointChange
+  point_change_select_list: item => select.pointChange,
+  // 邀请记录
+  invite_records_mode_list: item => item.app.modeDefault,
+  invite_records_column: item => columns.inviteRecords,
+  invite_records_select_list: item => item.app.selectDefault,
+  invite_records_page_status: item => app.list.inviteRecords
 }
 const mutations = {
   CHANGE_MODE_ORDER_DETAIL: (state, payload) => {

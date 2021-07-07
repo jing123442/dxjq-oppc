@@ -6,7 +6,7 @@
       <em-table-list v-if="dialogAreaChangeVisible" ref="tables1" :tableListName="'district1'" :authButtonList="authButtonList" :buttonsList="buttonsChangeList" :axios="axios" :queryCustURL="queryChangeCustURL" :responseSuccess="response_success" :composeParam="composeParam" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_log_status" :page_column="page_log_column" :select_list="select_list"></em-table-list>
     </el-dialog>
 
-    <el-dialog title="新增子区域" :visible.sync="dialogAddAreaVisible" :width="add_edit_dialog" :append-to-body="true">
+    <el-dialog title="新增子区域" :visible.sync="dialogAddAreaVisible" :width="add_edit_dialog" :append-to-body="true" @close="dialogClose">
       <nt-form v-if="dialogAddAreaVisible" ref="add_area" :rowData="areaRow" :pageColumn="page_children_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventAddArea"></nt-form>
     </el-dialog>
     <el-dialog :title="configOptions.dialogTitle" :visible.sync="dialogConfigVisible" width="775px" :append-to-body="true">
@@ -153,11 +153,23 @@ export default {
       } else if (type === 'log') {
         this.dialogAreaChangeVisible = true
       } else if (type === 'add_children') {
+        this.page_children_column.forEach(item => {
+          if (item.field === 'contactInfo') {
+            item.show.type = 'hide'
+          }
+        })
         this.areaRow.parentId = row.districtId
         this.areaRow.parentName = row.districtName
         this.areaRow._btn = this.formBtnList
         this.dialogAddAreaVisible = true
       }
+    },
+    dialogClose() {
+      this.page_children_column.forEach(item => {
+        if (item.field === 'contactInfo') {
+          item.show.type = 'select'
+        }
+      })
     },
     alertDistrictInfo(number, data, title) {
       if (Number(number) > 0) {

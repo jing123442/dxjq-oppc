@@ -32,7 +32,8 @@ const app = {
     category: 29,
     goods: 29,
     pointsAccount: 13,
-    pointsAccountLog: 13
+    pointsAccountLog: 13,
+    inviteRecords: 13
   }
 }
 

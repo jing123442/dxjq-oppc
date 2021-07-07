@@ -1,5 +1,5 @@
 <template>
-  <div class="goodsCategory">
+  <div class="goodsCategory template-main">
     <em-table-list :custTableTitle="'商品分类列表'" :tableListName="'goodsCategory'" ref="goodsCategory" :axios="axios" :queryCustURL="queryTableCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onReqParams="onReqParams" @onListEvent="onListTableEvent"></em-table-list>
   </div>
 </template>

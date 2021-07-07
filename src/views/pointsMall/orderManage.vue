@@ -1,5 +1,5 @@
 <template>
-  <div class="orderManage">
+  <div class="orderManage template-main">
     <em-table-list :custTableTitle="'订单列表'" :tableListName="'order'" ref="order" :axios="axios" :queryCustURL="queryTableCustURL" :responseSuccess="response_success" :buttonsList="buttonsList" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onReqParams="onReqParams" @onListEvent="onListTableEvent"></em-table-list>
     <el-dialog title="选择上传类型" :append-to-body="true" :visible.sync="dialogVisible" :width="add_edit_dialog">
       <el-form v-if="dialogVisible" size="small" label-position="left">
@@ -59,7 +59,7 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, queryDefaultParams, isTypeof, callbackPagesInfo, exportBlobToFiles, formateTData, custFormBtnList, toolsFileHeaders } from '@/utils/tools'
+import { initVueDataOptions, isTypeof, callbackPagesInfo, exportBlobToFiles, formateTData, custFormBtnList, toolsFileHeaders } from '@/utils/tools'
 import { $shopExcelExport, $shopExcelDownload, $shopExcelImportOrder, $shopOrderDetail } from '@/service/shop'
 import { mapGetters } from 'vuex'
 export default {
@@ -79,7 +79,7 @@ export default {
       points: {},
       btnList: custFormBtnList(),
       buttonsList: [{ type: 'primary', icon: '', event: 'deliveryDownload', name: '导出待发货订单' }, { type: 'primary', icon: '', event: 'batch', name: '批量下载上传模板' }],
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { } }),
+      queryParams: Function,
       dialogVisible: false,
       dialogVisibleOrderDetail: false,
       orderDetailData: {},
@@ -220,9 +220,26 @@ export default {
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
+      console.log(_this.finds)
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          params.param[k] = v
+          if (k == 'createTime') {
+            if (!_this.finds.createTime) {
+              params.param.startCreateTime = ''
+              params.param.endCreateTime = ''
+            } else {
+              params.param.startCreateTime = v[0]
+              params.param.endCreateTime = v[1]
+            }
+          } else {
+            if (!v && v !== 0) {
+              if (params.param.k) {
+                Reflect.deleteProperty(params.param.k)
+              }
+            } else {
+              params.param[k] = v
+            }
+          }
         }
       }
       console.log(params.param)

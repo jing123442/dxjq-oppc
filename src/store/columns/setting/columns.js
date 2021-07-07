@@ -25,6 +25,7 @@ const columns = {
     { field: 'userCount', name: '授权账号', width: 80, stype: 'link', ispush: false },
     { field: 'gasCount', name: '加气站', width: 80, stype: 'link', ispush: false },
     { field: 'carrierCount', name: '物流客户', width: 80, stype: 'link', ispush: false },
+    { field: 'contactInfo', name: '联系人', nameSpan: 6,  stype: 'mapping', mapping: 'contactName', show: { type: 'select', obj: 'userList', mulField: { contactId: 0, contactName: 1, contactPhone: 2 }, placeholder: '请选择联系人' } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 460, list: params => buttonDistrictManagerList(params) }
   ],
   districtLog: [

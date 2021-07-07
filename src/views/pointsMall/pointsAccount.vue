@@ -1,8 +1,8 @@
 <template>
-  <div class="pointsAccount">
+  <div class="pointsAccount template-main">
     <em-table-list :custTableTitle="'积分账户'" :tableListName="'pointsAccount'" ref="pointsAccount" :axios="axios" :queryCustURL="queryTableCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onReqParams="onReqParams" @onListEvent="onListTableEvent"></em-table-list>
     <el-dialog title="积分调整" :append-to-body="true" :visible.sync="dialogVisible" :width="add_edit_dialog">
-      <nt-form v-if="dialogVisible" :rowData="rowData" :pageColumn="point_change_page_column" :modeList="point_change_mode_list" :selectList="point_change_select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListFormEvent"></nt-form>
+      <nt-form v-if="dialogVisible" ref="points" formRef="pointsForm" :rowData="rowData" :pageColumn="point_change_page_column" :modeList="point_change_mode_list" :selectList="point_change_select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListFormEvent"></nt-form>
     </el-dialog>
   </div>
 </template>
@@ -62,26 +62,24 @@ export default {
     },
     onListFormEvent(obj) {
       if (obj.type == 'ok') {
-        if (this.rowData.changeType === '') { return }
-        if (this.rowData.changeAmount == 0) { this.$message.warning('调整数量不能为0'); return }
-        if (this.rowData.changeType == 1 && this.rowData.changeAmount > 0) {
-          // 如果是减少，并且输入的金额是正数
-          this.rowData.changeAmount = -1 * this.rowData.changeAmount
-        } else if (this.rowData.changeType == 0 && this.rowData.changeAmount < 0) {
-          this.$message.warning('增加金额不能小于0')
-          return
-        }
-        const params = {
-          changeAmount: this.rowData.changeAmount,
-          note: this.rowData.note,
-          rewardType: 22, // 积分调整
-          userId: this.rowData.userId
-        }
-        $userAccountChangeScore(params).then(res => {
-          this.$message.success('调整成功')
-          this.dialogVisible = false
-          this.$refs.pointsAccount.initDataList()
+        // if (this.rowData.changeType === '') { this.$message.warning('请选择调整类型'); return }
+        this.$refs.points.$refs.pointsForm.validate((valid) => {
+          if (valid) {
+            const params = {
+              changeAmount: this.rowData.changeAmount,
+              note: this.rowData.note,
+              rewardType: 22, // 积分调整
+              userId: this.rowData.userId
+            }
+            $userAccountChangeScore(params).then(res => {
+              this.$message.success('调整成功')
+              this.dialogVisible = false
+              this.$refs.pointsAccount.initDataList()
+            })
+          }
         })
+      } else if (obj.type == 'cancel') {
+        this.dialogVisible = false
       }
     },
     setPointsAccoutStatus(params, text) {
@@ -97,6 +95,7 @@ export default {
       }).catch(() => {})
     },
     onReqParams(type, _this, callback) {
+      const that = this
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
       console.log(_this.finds)
       if (isTypeof(_this.finds) === 'object') {
@@ -104,6 +103,18 @@ export default {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (k == 'mobile') {
             params.param.keyword = v
+          } else if (k == 'balance' && Array.isArray(v)) {
+            if (v.length == 0) {
+              params.param.balanceMax = ''
+              params.param.balanceMin = ''
+            } else {
+              if (v[0] < v[1]) {
+                params.param.balanceMax = v[1]
+                params.param.balanceMin = v[0]
+              } else {
+                that.$message.error('余额范围设置有误，请检查')
+              }
+            }
           } else {
             params.param.userAccount[k] = v
           }
