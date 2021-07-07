@@ -9,7 +9,7 @@ const getters = {
   setting_district_mode_list: item => item.app.modeDefault,
   setting_district_page_status: item => app.list.district,
   setting_district_column: item => columns.district,
-  setting_district_select_list: item => item.app.selectDefault,
+  setting_district_select_list: item => select.district,
 
   // 区域变更记录
   setting_district_log_page_status: item => app.list.districtLog,

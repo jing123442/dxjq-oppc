@@ -14,7 +14,7 @@ export function formateTData(date, fmt) { // 字符串
   return ''
 }
 export function formatDate(date, fmt) { // date对象
-  if (!date) return ''
+  if (!date) return '-'
   var padLeftZero = function (str) {
     return ('00' + str).substr(str.length)
   }
@@ -319,6 +319,16 @@ export function custFormBtnList(type = 3) {
 
   return bottonList
 }
+
+// 校验URL地址是否是http://或https://开头的
+export function isHttpHeaderURL(url) {
+  if (url && isTypeof(url) === 'string' && (url.indexOf('http://') === 0 || url.indexOf('https://') === 0)) {
+    return true
+  }
+
+  return false
+}
+
 // blob导出excel文件
 export function exportBlobToFiles(content, fileName, fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
   /*

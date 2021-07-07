@@ -1,45 +1,58 @@
 <template>
   <div class="template-main" v-loading.fullscreen.lock="mapStatus" element-loading-text="正在加载地图信息，请等待..." style="padding: 0;padding-bottom: 40px;margin-bottom: 0; height: 100%;">
-    <el-bmap vid="bmap" :zoom="zoom" :center="center" class="bm-view" :style="mapStyle">
-      <el-bmap-marker v-for="(item, index) of gasstationList" :vid="index" :key="index" :position="[item.longitude, item.latitude]" :icon="mapMarkIcon(item)" :title="item.gasstationName" :offset="[-10, -13]" :events="{ click: () => { markerClickEvent(item) }}"></el-bmap-marker>
-      <el-bmap-label v-for="(label,index) in gasstationList" :vid="'1_' + index" :key="'1_' + index" :content="markerLabelContent(label)" :label-style="markerLabelStyle" :offset="[-130, -70]" :visible="!!label.markerStatus" :position="[label.longitude, label.latitude]"></el-bmap-label>
-      <el-bmap-info-window ref="mapWindow" vid="bmap-window" :position="currentWindow.markerWindowStatus ? [currentWindow.data.longitude, currentWindow.data.latitude] : center" :events="{ open: () => { markerPopVisibleNode() } }">
-        <template>
+    <baidu-map :style="mapStyle" ref="map"  class="bm-view" :ak="akey"
+               :center="center"
+               :zoom="zoom"
+               :dragging="true"
+               :scroll-wheel-zoom="true"
+               @touchend="syncCenterAndZoom"
+               @touchmove="syncCenterAndZoom"
+               @mousemove="syncCenterAndZoom"
+               @moving="syncCenterAndZoom"
+               @moveend="syncCenterAndZoom"
+               @zoomend="syncCenterAndZoom">
+      <bm-view style="width: 100%; height:100%;"></bm-view>
+      <!--缩放按钮-->
+      <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT" :offset="{height: 55}"></bm-navigation>
+      <!--marker点-->
+      <bm-marker v-for="(item, index) of gasstationList" :key="index" :position="{lng: item.longitude, lat: item.latitude}" :icon="mapMarkIcon(item)" :title="item.gasstationName" @click="markerClickEvent(item)">
+        <bm-label v-if="item.markerStatus" :content="markerLabelContent(item)" :labelStyle="markerLabelStyle" :offset="{width: -50, height: -57}" />
+        <bm-info-window :position="{lng: item.longitude, lat: item.latitude}" :show="item.markerWindowStatus" @close="infoWindowClose(item)" @open="infoWindowOpen(item)" style="border-width: 0;">
           <div class="bm-header">
             <div><img src="@/assets/images/logo.png" width="35" height="35" /></div>
             <div>
               <div class="title">
-                <span class="item-name text-overflow-ellipsis">{{currentWindow.data.gasstationName}}</span>
-                <span class="item-tag">[{{getGasstationTypeName(currentWindow.data.gasType)}}]</span>
+                <span class="item-name text-overflow-ellipsis">{{item.gasstationName}}</span>
+                <span class="item-tag">[{{getGasstationTypeName(item.gasType)}}]</span>
               </div>
-              <div class="address text-overflow-ellipsis">{{currentWindow.data.address}}</div>
+              <div class="address text-overflow-ellipsis">{{item.address}}</div>
             </div>
           </div>
           <div class="bm-content">
             <div class="bm-content__price">
               <div class="bm-content__price-item">
-                <div class="name">平台结算价<span class="timer">({{ currentWindow.data.priceDate | formatDate('hh:mm:ss') }})</span></div>
-                <div class="price"><span class="text-bold-number">{{ currentWindow.data.price | currency }}</span> /公斤</div>
+                <div class="name">平台结算价<span class="timer">({{ item.priceDate | formatDate('hh:mm:ss') }})</span></div>
+                <div class="price"><span class="text-bold-number">{{ item.price | currency }}</span> /公斤</div>
               </div>
               <div class="bm-content__price-item">
-                <div class="name">线下结算价<span class="timer">({{ currentWindow.data.offlinePriceDate | formatDate('hh:mm:ss') }})</span></div>
-                <div class="price"><span class="text-bold-number">{{ currentWindow.data.offlinePrice | currency }}</span> /公斤</div>
+                <div class="name">线下结算价<span class="timer">({{ item.offlinePriceDate | formatDate('hh:mm:ss') }})</span></div>
+                <div class="price"><span class="text-bold-number">{{ item.offlinePrice | currency }}</span> /公斤</div>
               </div>
               <div></div>
             </div>
           </div>
           <div class="bm-charts">
-            <div class="bm-charts__title">总加气量 <span class="text-bold-number">{{ (currentWindow.data.gasQty + currentWindow.data.offlineGasQty) }}</span> 吨</div>
-            <nt-charts v-if="currentWindow.markerWindowStatus" :webUIType="'echart'" :chartOptions="gasQtyChartOption"></nt-charts>
+            <div class="bm-charts__title">总加气量 <span class="text-bold-number">{{ (item.gasQty + item.offlineGasQty) }}</span> 吨</div>
+            <nt-charts v-if="item.markerWindowStatus" :webUIType="'echart'" :chartOptions="gasQtyChartOption"></nt-charts>
           </div>
           <div class="bm-bottom">
-            <el-button size="mini" type="primary" @click="infoWindowInfoEdit(currentWindow.data)" plain>情报编辑</el-button>
-            <el-button size="mini" type="primary" @click="infoWindowCredentials(currentWindow.data)" plain>情报凭证</el-button>
-            <el-button v-if="gasstationCheckType(currentWindow.data.gasType)" size="mini" type="primary" @click="infoWindowGasEdit(currentWindow.data)" plain>站点编辑</el-button>
+            <el-button size="mini" type="primary" plain>情报编辑</el-button>
+            <el-button size="mini" type="primary" plain>情报凭证</el-button>
           </div>
-        </template>
-      </el-bmap-info-window>
-    </el-bmap>
+        </bm-info-window>
+      </bm-marker>
+      <bm-local-search :keyword="address" :auto-viewport="true" style="width:0px;height:0px;overflow: hidden;"></bm-local-search>
+    </baidu-map>
     <div class="map-control-warp">
       <span class="title">大象加气 · 作战地图</span>
       <div class="map-card">
@@ -129,58 +142,41 @@
     </div>
     <div class="map-control-opt">
       <el-checkbox v-model="markerTitleStatus" size="small" border @click.native="markerLabelEvent">地标文字</el-checkbox>
-      <el-button size="small" @click.native="markerAddEvent">新增</el-button>
-      <el-button size="small" @click.native="markerLogEvent">变更记录</el-button>
+      <el-button size="small">新增</el-button>
+      <el-button size="small">变更记录</el-button>
     </div>
-    <el-dialog :title="battleTitle" :visible.sync="dialogBattleVisible" :width="add_edit_dialog" :append-to-body="true">
-      <battle-form v-if="dialogBattleVisible" :optType="optType" :rowData="currBattleRow" @click="dialogFormSubmit"></battle-form>
-    </el-dialog>
-    <el-dialog title="变更记录" :visible.sync="dialogBattleLogVisible" :width="add_edit_dialog" :append-to-body="true">
-      <battle-log v-if="dialogBattleLogVisible"></battle-log>
-    </el-dialog>
-    <el-dialog title="凭证信息" :visible.sync="dialogCerdListVisible" width="600px" :append-to-body="true">
-      <el-carousel height="300px">
-        <el-carousel-item v-for="item of gasstationCerdList" :key="item">
-          <el-image :src="item" class="block" :fit="'contain'" style="height: 285px" />
-        </el-carousel-item>
-      </el-carousel>
-    </el-dialog>
   </div>
 </template>
 <script>
-import 'vue-bmap-gl/dist/style.css'
-import {
-  $gasdataGasstationList,
-  $gasdataGasstationAnalyses,
-  $gasdataGasstationBazaarAnalyses
-} from '@/service/gasdata'
+import { BaiduMap, BmView, BmMarker, BmLocalSearch, BmNavigation, BmLabel, BmInfoWindow } from 'vue-baidu-map'
+import { $gasdataGasstationList, $gasdataGasstationAnalyses, $gasdataGasstationBazaarAnalyses } from '@/service/gasdata'
 import { $districtList } from '@/service/user'
 import { currency, formatDate } from '@/utils/filters'
-import { utilSelectGasstationType } from '@/utils/select'
-import { mapGetters } from 'vuex'
-import { initVueDataOptions, isHttpHeaderURL } from '@/utils/tools'
-import { BattleLog, BattleForm } from './components'
-
 export default {
   name: 'battle',
-  components: { BattleLog, BattleForm },
+  components: {
+    BaiduMap,
+    BmView,
+    BmMarker,
+    BmLabel,
+    BmLocalSearch,
+    BmNavigation,
+    BmInfoWindow
+  },
   data: function () {
-    return initVueDataOptions(this, {
+    return {
       akey: 'dfhycORtYDMz78dNLo9oNiDO1ufI2TZS',
+      address: '',
       mapStatus: false,
+      showMapComponent: false,
       markerTitleStatus: false,
-      currentWindow: {
-        data: {},
-        markerWindowStatus: false
-      },
       mapStyle: {
         width: '100%',
         height: '100%'
       },
       mapHeight: '',
-      // center: { lng: 115.692614, lat: 35.941008 },
-      center: [115.692614, 35.941008],
-      markerLabelStyle: { width: '260px', border: '1px solid #6E7A8F', boxShadow: '0px 0px 18px 0px rgba(0, 0, 0, 0.1)', borderRadius: '4px', fontSize: '12px', zIndex: 10000, color: '#333333' },
+      center: { lng: 115.692614, lat: 35.941008 },
+      markerLabelStyle: { border: '1px solid #6E7A8F', boxShadow: '0px 0px 18px 0px rgba(0, 0, 0, 0.1)', borderRadius: '4px', fontSize: '12px', zIndex: 10000, color: '#333333' },
       zoom: 7,
       pages: {
         page: 1,
@@ -195,7 +191,17 @@ export default {
       districtList: [],
       gasstationList: [],
       currGasstationList: [],
-      gasstationType: utilSelectGasstationType('all'),
+      gasstationType: [
+        { value: null, label: '全部站点' },
+        { value: 100, label: '大象站' },
+        { value: 1001, label: '大象自营' },
+        { value: 1002, label: '大象合作' },
+        { value: 1003, label: '大象加盟' },
+        { value: 2001, label: '中海油' },
+        { value: 2002, label: '中石油' },
+        { value: 2003, label: '中石化' },
+        { value: 2004, label: '社会' }
+      ],
       BMap: null,
       map: null,
       blist: [],
@@ -206,26 +212,10 @@ export default {
       priceCompareList: [],
       gasSpreadList: [],
       gasSpreadTotal: 0,
-      gasLNGSaleTotal: 0,
-      optType: '',
-      battleTitle: '',
-      currBattleRow: {},
-      dialogBattleVisible: false,
-      dialogBattleLogVisible: false,
-      gasstationCerdList: [],
-      dialogCerdListVisible: false
-    })
+      gasLNGSaleTotal: 0
+    }
   },
   computed: {
-    ...mapGetters({
-      mode_list: 'cockpit_battle_mode_list',
-      page_status: 'cockpit_battle_page_status',
-      page_column: 'cockpit_battle_column',
-      select_list: 'cockpit_battle_select_list',
-      add_edit_dialog: 'add_edit_dialog_form',
-      del_dialog: 'del_dialog_form',
-      response_success: 'response_success'
-    }),
     analysisDistrictName() {
       const districtItem = this.districtList.filter(item => this.finds.districtId === item.districtId)
 
@@ -328,52 +318,6 @@ export default {
         this.districtList.unshift({ districtId: '', districtName: '全区域' })
       })
     },
-    gasstationCheckType(type) {
-      if (type === 2001 || type === 2002 || type === 2003 || type === 2004) {
-        return true
-      }
-
-      return false
-    },
-    battleDialogStatus(type = 'add', row = {}) {
-      if (type === 'add') {
-        this.infoWindowClose()
-      }
-
-      this.optType = type
-      this.currBattleRow = row
-      this.dialogBattleVisible = true
-    },
-    // 编辑站点
-    infoWindowGasEdit(row) {
-      this.battleTitle = '编辑加气站'
-      this.battleDialogStatus('edit', row)
-    },
-    // 编辑情报
-    infoWindowInfoEdit(row) {
-      this.battleTitle = '编辑情报'
-      this.battleDialogStatus('info', row)
-    },
-    // 凭证图片走马灯
-    infoWindowCredentials(item) {
-      if (item.credentials) {
-        const credList = item.credentials.split(',')
-
-        this.gasstationCerdList = []
-        credList.forEach(node => {
-          let tmpURL = ''
-          if (isHttpHeaderURL(node)) {
-            tmpURL = node
-          } else {
-            tmpURL = this.$store.state.file.fileHost + node
-          }
-          this.gasstationCerdList.push(tmpURL)
-        })
-        this.dialogCerdListVisible = true
-      } else {
-        this.$message.warning('暂无凭证信息！')
-      }
-    },
     filterGasstationList(value) {
       this.currGasstationList = this.gasstationList.filter(item => item.gasstationName.indexOf(value) !== -1)
     },
@@ -391,6 +335,34 @@ export default {
         this.pages.total = this.gasstationList.length
       })
     },
+    initMap({ BMap, map }) {
+      this.BMap = BMap
+      this.map = map
+      this.blist = []
+      this.tmpArray = []
+
+      this.districtLoading = 2
+      // this.addDistrictName('青岛市')
+      // this.addDistrictName('烟台市')
+    },
+    addDistrictName(districtName) {
+      // 网格渲染
+      var bdary = new this.BMap.Boundary()
+      bdary.get(districtName, (rs) => { // 获取行政区域
+        const count = rs.boundaries.length // 行政区域的点有多少个
+
+        this.tmpArray.push(...rs.boundaries)
+        for (let i = 0; i < count; i++) {
+          this.blist.push({ points: rs.boundaries[i], name: districtName })
+        }
+
+        this.districtLoading--
+        if (this.districtLoading === 0) {
+          // console.log([...new Set(this.tmpArray)])
+          this.mapAeraView()
+        }
+      })
+    },
     markerLabelContent(item) {
       let html = ''
 
@@ -398,26 +370,7 @@ export default {
 
       return html
     },
-    dialogFormSubmit() {
-      this.mapStatus = true
-      this.dialogBattleVisible = false
-
-      this.initGasstationList()
-      this.$nextTick(() => {
-        this.mapStatus = false
-      })
-    },
-    markerAddEvent() {
-      this.battleTitle = '新增加气站'
-      this.battleDialogStatus('add')
-    },
-    markerLogEvent() {
-      this.infoWindowClose()
-
-      this.dialogBattleLogVisible = true
-    },
     markerLabelEvent() {
-      this.infoWindowClose()
       this.mapStatus = true
       this.$nextTick(() => {
         this.gasstationList.forEach(item => {
@@ -454,7 +407,7 @@ export default {
       } else if (item.gasType === 2004) {
         imageURL = require('@/assets/images/battle/g_map_icon_default.png')
       }
-      return { url: imageURL, size: [20, 26] }
+      return { url: imageURL, size: { width: 20, height: 26 } }
     },
     handleCurrentChange(val) {
       this.pages.page = val
@@ -638,40 +591,23 @@ export default {
     },
     // 点击某个点弹框
     markerClickEvent(item) {
-      this.infoWindowClose(item)
       this.infoWindowOpen(item)
     },
     // 关闭窗口
     infoWindowClose(item) {
-      this.currentWindow.markerWindowStatus = false
+      item.markerWindowStatus = false
     },
     // 打开窗口
     infoWindowOpen(item) {
-      this.currentWindow.markerWindowStatus = false
+      this.mapStatus = true
+
       // 统计图
       this.gasQtyChartDataChart(item)
       this.$nextTick(() => {
-        this.currentWindow.data = item
+        item.markerWindowStatus = true
 
-        this.currentWindow.markerWindowStatus = true
+        this.mapStatus = false
       })
-    },
-    markerPopVisibleNode() {
-      const dom = document.getElementsByClassName('BMap_bubble_pop')[0]
-      const shadow = document.getElementsByClassName('shadow')[0]
-      let currClass = dom.getAttribute('class')
-      let currShadowClass = shadow.getAttribute('class')
-
-      if (this.currentWindow.markerWindowStatus) {
-        currClass = currClass.replace('bmap-info-window-hide', '')
-        currShadowClass = currShadowClass.replace('bmap-info-window-hide', '')
-      } else {
-        currClass = currClass.concat(' bmap-info-window-hide')
-        currShadowClass = currShadowClass.concat(' bmap-info-window-hide')
-      }
-
-      dom.setAttribute('class', currClass)
-      shadow.setAttribute('class', currShadowClass)
     },
     syncCenterAndZoom (e) {
       console.log(e)
@@ -679,104 +615,95 @@ export default {
       this.center.lng = lng
       this.center.lat = lat
       this.zoom = e.target.getZoom()
-    },
-    onReqParams() {
-
     }
   }
 }
 </script>
 
 <style lang="scss">
-  .bmap-info-window-hide {
-    visibility: hidden;
-  }
-  .BMap_bubble_pop, .bmap-info-window-custom {
-    padding: 0 10px !important;
-    width: 322px !important;
-    /*div:nth-child(1), div:nth-child(3), div:nth-child(5), div:nth-child(7) {
+  .BMap_pop {
+    width: 330px;
+    div:nth-child(1), div:nth-child(3), div:nth-child(5), div:nth-child(7) {
       & > div {
         border-color: rgba(0, 0, 0, 0.05) !important;
       }
-    }*/
-    .BMap_bubble_top {
-      // height: 8px !important;
     }
-    /*.BMap_top, .BMap_center, .BMap_bottom {
+    div:nth-child(8) {
+      // display: none;
+    }
+    .BMap_top, .BMap_center, .BMap_bottom {
       border-color: rgba(0, 0, 0, 0.05) !important;
-    }*/
-    .BMap_bubble_content, .bmap-info-window-custom.custom {
-      width: 300px !important;
-      height: 375px !important;
     }
-    .bm-header {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      div:last-child {
-        flex: 1;
-      }
-      .title {
+    .BMap_bubble_content {
+      width: 300px !important;
+      height: 350px !important;
+      .bm-header {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        .item-tag {
-          font-size: 13px;
-          white-space: nowrap;
+        .title {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          .item-tag {
+            width: 80%;
+            font-size: 13px;
+            white-space: nowrap;
+          }
+          .item-name {
+            width: 50%;
+            color: #333333;
+            font-size: 14px;
+            font-weight: bold;
+          }
         }
-        .item-name {
-          max-width: 180px;
-          color: #333333;
-          font-size: 14px;
-          font-weight: bold;
+        .address {
+          color: #999999;
+          font-size: 12px;
         }
       }
-      .address {
-        color: #999999;
-        font-size: 12px;
-      }
-    }
-    .bm-content {
-      &__price {
-        padding: 10px;
-        margin: 10px 0;
-        background-color: #F7F7F7;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        &-item {
-          text-align: center;
-          .name {
-            color: #666666;
-            font-size: 12px;
-            .timer {
-              font-size: 10px;
-              display: inline-block;
+      .bm-content {
+        &__price {
+          padding: 10px;
+          margin: 10px 0;
+          background-color: #F7F7F7;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          &-item {
+            text-align: center;
+            .name {
+              color: #666666;
+              font-size: 12px;
+              .timer {
+                font-size: 10px;
+                display: inline-block;
+              }
+            }
+            .price {
+              color: #333333;
+              font-size: 12px;
             }
           }
-          .price {
-            color: #333333;
-            font-size: 12px;
-          }
         }
       }
-    }
-    .bm-charts {
-      height: 190px;
-      width: 300px;
-      border-bottom: 1px solid #ededed;
-      margin-bottom: 10px;
-      &__title {
-        color: #333333;
-        height: 13px;
-        line-height: 13px;
-        padding-left: 18px;
-        position: absolute;
-        margin-top: 6px;
-        font-size: 13px;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-image: url(../../assets/images/battle/g_qty_icon.png);
+      .bm-charts {
+        height: 190px;
+        width: 300px;
+        border-bottom: 1px solid #333333;
+        margin-bottom: 10px;
+        &__title {
+          color: #333333;
+          height: 13px;
+          line-height: 13px;
+          padding-left: 18px;
+          position: absolute;
+          margin-top: 6px;
+          font-size: 13px;
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-image: url(../../assets/images/battle/g_qty_icon.png);
+        }
       }
     }
   }
@@ -785,7 +712,6 @@ export default {
     left: 0;
     position: absolute;
     padding: 15px;
-    z-index: 6;
     .title {
       font-weight: bold;
     }
@@ -1049,7 +975,6 @@ export default {
   .map-control-opt {
     top: 0;
     right: 0;
-    z-index: 6;
     padding: 15px;
     position: absolute;
     label {
@@ -1084,9 +1009,6 @@ export default {
   .text-bold-number {
     color: #333333 !important;
     font-weight: bold !important;
-  }
-  .anchorBL > img {
-    display: none;
   }
   .text-overflow-ellipsis {
     display: -webkit-box;

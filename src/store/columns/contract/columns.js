@@ -93,9 +93,9 @@ const columns = {
     }
   ],
   orgSealApply: [
-    { field: 'orgName', nameSpan: 8, name: '企业名称', show: { type: 'text', placeholder: '请输入企业名称'}, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
-    { field: 'taxpayer', nameSpan: 8, name: '社会统一信用代码', show: { type: 'text', placeholder: '请输入社会统一信用代码'}, rules: [{ required: true, message: '请输入社会统一信用代码', trigger: 'blur' }] },
-    { field: 'lastQuarter', nameSpan: 8, name: '印章下弦文', show: { type: 'text', placeholder: '请输入印章下弦文'}, rules: [{ required: true, message: '请输入印章下弦文', trigger: 'blur' }] },
+    { field: 'orgName', nameSpan: 8, name: '企业名称', show: { type: 'text', placeholder: '请输入企业名称', isDisabled: true}, rules: [{ required: true, message: '请输入企业名称', trigger: 'blur' }] },
+    { field: 'taxpayer', nameSpan: 8, name: '社会统一信用代码', show: { type: 'text', placeholder: '请输入社会统一信用代码', isDisabled: true}, rules: [{ required: true, message: '请输入社会统一信用代码', trigger: 'blur' }] },
+    { field: 'lastQuarter', nameSpan: 8, name: '印章下弦文', show: { type: 'text', placeholder: '请输入印章下弦文'}},
     { field: 'applierName', nameSpan: 8, name: '申请人姓名', show: { type: 'text', placeholder: '请输入申请人姓名', isDisabled: true }, rules: [{ required: true, message: '请输入申请人姓名', trigger: 'blur' }] },
     { field: 'applierIdCard', nameSpan: 8, name: '申请人身份证', show: { type: 'text', placeholder: '请去平台用户列表维护身份证号', isDisabled: true }, rules: [{ required: true, message: '请去平台用户列表维护身份证号', trigger: 'blur' }] },
   ],

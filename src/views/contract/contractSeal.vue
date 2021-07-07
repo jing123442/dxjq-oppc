@@ -94,12 +94,20 @@ export default {
           break
         case 'orgName':
           this.dialogRowData = row
+          if (!this.dialogRowData.orgSealDetail.orgSeal) {
+            this.$message.error('暂未申请企业印章')
+            return
+          }
           this.dialogRowData.sealUrl = process.env.VUE_APP_FILE_HOST + this.dialogRowData.orgSealDetail.orgSeal.sealUrl
           this.dialogStatus = 1
           this.orgSealDialogVisible = true
           break
         case 'orgManager':
           this.dialogRowData = row
+          if (!this.dialogRowData.orgSealDetail.orgManagerSeal) {
+            this.$message.error('暂未申请企业负责人印章')
+            return
+          }
           this.dialogRowData.sealUrl = process.env.VUE_APP_FILE_HOST + this.dialogRowData.orgSealDetail.orgManagerSeal.sealUrl
           this.dialogStatus = 1
           this.orgSealDialogVisible = true
@@ -167,8 +175,13 @@ export default {
       }
     },
     orgSealApply() {
+      if (this.dialogRowData.lastQuarter.length > 13) {
+        this.$message.error('印章下弦文必须小于等于13个字符')
+        return
+      }
       $orgSealApply({ lastQuarter: this.dialogRowData.lastQuarter, orgId: this.woporg, type: 1 }).then(res => {
         if (res.code === 0) {
+          this.$message.success('申请成功')
           this.$refs.orgSeal.initDataList()
           this.orgSealDialogVisible = false
         }
@@ -226,7 +239,7 @@ export default {
       obj.orgManager = orgSealDetail.orgSealDetail.orgManager ? orgSealDetail.orgSealDetail.orgManager.userName : ''
       obj.orgSealStatus = orgSealDetail.orgSealDetail.orgSeal ? orgSealDetail.orgSealDetail.orgSeal.status : 2
       obj.orgManagerSealStatus = orgSealDetail.orgSealDetail.orgManagerSeal ? orgSealDetail.orgSealDetail.orgManagerSeal.status : 2
-      obj.orgOpeator = orgSealDetail.orgSealDetail.orgOpeator ? orgSealDetail.orgSealDetail.orgOpeator.userName : ''
+      obj.orgOpeator = orgSealDetail.orgSealDetail.orgOpeator ? orgSealDetail.orgSealDetail.orgOpeator.userName : '-'
       const orgObj = { ...obj, ...orgSealDetail }
       list.push(orgObj)
       if (this.$refs.orgSeal) {

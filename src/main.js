@@ -9,6 +9,13 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/styles/index.scss' // global css
 import * as filters from '@/utils/filters' // 过滤器
 import { setSessionStorage, removeSessionStorage, getSessionStorage, clearSessionStorage } from '@/utils/storage'
+import VueBMap from 'vue-bmap-gl'
+
+Vue.use(VueBMap)
+VueBMap.initBMapApiLoader({
+  ak: 'dfhycORtYDMz78dNLo9oNiDO1ufI2TZS',
+  v: '1.0'
+})
 
 Vue.use(ElementUI)
 Vue.use(emElementUI)

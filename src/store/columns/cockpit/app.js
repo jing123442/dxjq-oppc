@@ -1,7 +1,8 @@
 const app = {
   mode: {},
   list: {
-    sales: 5
+    sales: 5,
+    log: 13
   }
 }
 

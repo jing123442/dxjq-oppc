@@ -346,9 +346,9 @@ export function utilsContractSignStatus() {
 // 电子签约合同类型
 export function utilsContractType() {
   return [
-    { value: 1, label: '加气站平台入驻协议' },
-    { value: 2, label: '加气站能源合作协议' },
-    { value: 3, label: '物流公司平台入驻协议' }
+    { value: 1, label: '加气站平台入驻合同' },
+    { value: 2, label: '加气站能源合作合同' },
+    { value: 3, label: '物流公司平台入驻合同' }
   ]
 }
 export function utilsBearType() {
@@ -372,6 +372,32 @@ export function utilsLNGDataSearch() {
     { value: 'cancelTime', label: '取消时间' },
     { value: 'exceptionApplyTime', label: '异常提报时间' }
   ]
+}
+
+export function utilSelectGasstationType(type = '') {
+  let result = [
+    { value: 2001, label: '中海油' },
+    { value: 2002, label: '中石油' },
+    { value: 2003, label: '中石化' },
+    { value: 2004, label: '社会' }
+  ]
+  if (type === 'inner') {
+    result = [
+      { value: 1001, label: '大象自营' },
+      { value: 1002, label: '大象合作' },
+      { value: 1003, label: '大象加盟' }
+    ]
+  }
+
+  if (type === 'all') {
+    result.unshift({ value: 1003, label: '大象加盟' })
+    result.unshift({ value: 1002, label: '大象合作' })
+    result.unshift({ value: 1001, label: '大象自营' })
+    result.unshift({ value: 100, label: '大象站' })
+    result.unshift({ value: null, label: '全部站点' })
+  }
+
+  return result
 }
 
 export function untilsMarketingManList() {
@@ -405,6 +431,17 @@ export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', 
   }
 
   return result
+}
+export function utilSelectAuthDistrictList() {
+  return {
+    url: 'user/district/districtSet',
+    node: ['data', 'areas'],
+    params: {},
+    props: {
+      value: 'areaCode',
+      label: 'areaName'
+    }
+  }
 }
 export function utilsSupplierList() {
   return {
@@ -594,6 +631,26 @@ export function utilsPlateformOrgList() {
     props: {
       value: 'orgId',
       label: 'orgName'
+    }
+  }
+}
+// 业务区域配置设置联系人
+export function utilsDistrictUserList(name) {
+  return {
+    url: 'user/user/list',
+    node: ['data', 'records'],
+    params: {
+      page: 1,
+      size: 10,
+      param: {
+        status: 0,
+        userType: 0,
+        keyword: name
+      }
+    },
+    props: {
+      value: ['userId', 'userName', 'mobile'],
+      label: 'userName'
     }
   }
 }
