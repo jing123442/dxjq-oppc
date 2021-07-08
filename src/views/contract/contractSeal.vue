@@ -13,6 +13,7 @@
             <div class="btn-item-footer">
               <el-button v-for="(btnItem, index) in dialogRowData._btn.list" :key="index" :type="btnItem.bType"
                          size="small"
+                         :disabled="dialogBtnDisabled"
                          :icon="btnItem.icon" @click="onListEventFrom(btnItem, dialogRowData)">{{btnItem.label}}
               </el-button>
             </div>
@@ -44,6 +45,7 @@ export default {
       },
       dialogRowData: {},
       dialog_column: [],
+      dialogBtnDisabled: false,
       ListEventBtnType: '',
       dialogTitle: {
         orgSealApply: '企业印章申请',
@@ -179,12 +181,16 @@ export default {
         this.$message.error('印章下弦文必须小于等于13个字符')
         return
       }
+      this.dialogBtnDisabled = true
       $orgSealApply({ lastQuarter: this.dialogRowData.lastQuarter, orgId: this.woporg, type: 1 }).then(res => {
+        this.dialogBtnDisabled = false
         if (res.code === 0) {
           this.$message.success('申请成功')
           this.$refs.orgSeal.initDataList()
           this.orgSealDialogVisible = false
         }
+      }).catch(e => {
+        this.dialogBtnDisabled = false
       })
     },
     orgSealEdit(row) {
