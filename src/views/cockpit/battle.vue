@@ -1,7 +1,7 @@
 <template>
   <div class="template-main" v-loading.fullscreen.lock="mapStatus" element-loading-text="正在加载地图信息，请等待..." style="padding: 0;padding-bottom: 40px;margin-bottom: 0; height: 100%;">
     <el-bmap vid="bmap" :zoom="zoom" :center="center" class="bm-view" :style="mapStyle">
-      <el-bmap-marker v-for="(item, index) of gasstationList" :vid="index" :key="index" :position="[item.longitude, item.latitude]" :icon="mapMarkIcon(item)" :title="item.gasstationName" :offset="[-10, -13]" :events="{ click: () => { markerClickEvent(item) }}"></el-bmap-marker>
+      <el-bmap-marker v-for="(item, index) of gasstationList" :vid="index" :key="index" :position="[item.longitude, item.latitude]" :icon="mapMarkIcon(item)" :title="gasstationNickName(item)" :offset="[-10, -13]" :events="{ click: () => { markerClickEvent(item) }}"></el-bmap-marker>
       <el-bmap-label v-for="(label,index) in gasstationList" :vid="'1_' + index" :key="'1_' + index" :content="markerLabelContent(label)" :label-style="markerLabelStyle" :offset="[-130, -70]" :visible="!!label.markerStatus" :position="[label.longitude, label.latitude]"></el-bmap-label>
       <el-bmap-info-window ref="mapWindow" vid="bmap-window" :position="currentWindow.markerWindowStatus ? [currentWindow.data.longitude, currentWindow.data.latitude] : center" :events="{ open: () => { markerPopVisibleNode() } }">
         <template>
@@ -9,7 +9,7 @@
             <div><img src="@/assets/images/logo.png" width="35" height="35" /></div>
             <div>
               <div class="title">
-                <span class="item-name text-overflow-ellipsis">{{currentWindow.data.gasstationName}}</span>
+                <span class="item-name text-overflow-ellipsis">{{gasstationNickName(currentWindow.data)}}</span>
                 <span class="item-tag">[{{getGasstationTypeName(currentWindow.data.gasType)}}]</span>
               </div>
               <div class="address text-overflow-ellipsis">{{currentWindow.data.address}}</div>
@@ -377,7 +377,7 @@ export default {
       }
     },
     filterGasstationList(value) {
-      this.currGasstationList = this.gasstationList.filter(item => item.gasstationName.indexOf(value) !== -1)
+      this.currGasstationList = this.gasstationList.filter(item => item.nickName && item.nickName.indexOf(value) !== -1)
     },
     initGasstationList() {
       const params = this.finds
@@ -396,7 +396,7 @@ export default {
     markerLabelContent(item) {
       let html = ''
 
-      html += '<div class="marker-label-tag"><div class="title">' + item.gasstationName + '</div><div class="detail"><div class="number"><span class="text-bold-number">' + (item.gasQty + item.offlineGasQty) + '</span> 吨</div><div class="money"><span class="text-bold-number">' + currency(item.price) + '</span>/公斤</div></div></div>'
+      html += '<div class="marker-label-tag"><div class="title">' + this.gasstationNickName(item) + '</div><div class="detail"><div class="number"><span class="text-bold-number">' + (item.gasQty + item.offlineGasQty) + '</span> 吨</div><div class="money"><span class="text-bold-number">' + currency(item.price) + '</span>/公斤</div></div></div>'
 
       return html
     },
