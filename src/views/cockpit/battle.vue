@@ -72,10 +72,12 @@
             <li v-for="(item, index) of currGasstationList" :key="index" :class="'icon-' + (item.gasType || 2004)" @click="markerClickEvent(item)">
               <div class="title">
                 <div>
-                  <span class="item-name text-overflow-ellipsis">{{item.gasstationName}}</span>
+                  <span class="item-name text-overflow-ellipsis">{{gasstationNickName(item)}}</span>
                   <span class="item-tag">[{{getGasstationTypeName(item.gasType)}}]</span>
                 </div>
-                <div class="item-type" v-if="item.gasType === 1003">盟</div>
+                <div class="item-type" v-if="item.gasType === 1001">自</div>
+                <div class="item-type" v-else-if="item.gasType === 1002">合</div>
+                <div class="item-type" v-else-if="item.gasType === 1003">盟</div>
               </div>
               <div class="content">
                   <span>
@@ -158,7 +160,7 @@ import { $districtList } from '@/service/user'
 import { currency, formatDate } from '@/utils/filters'
 import { utilSelectGasstationType } from '@/utils/select'
 import { mapGetters } from 'vuex'
-import { initVueDataOptions, isHttpHeaderURL } from '@/utils/tools'
+import { arrayResetSort, initVueDataOptions, isHttpHeaderURL } from '@/utils/tools'
 import { BattleLog, BattleForm } from './components'
 
 export default {
@@ -166,7 +168,6 @@ export default {
   components: { BattleLog, BattleForm },
   data: function () {
     return initVueDataOptions(this, {
-      akey: 'dfhycORtYDMz78dNLo9oNiDO1ufI2TZS',
       mapStatus: false,
       markerTitleStatus: false,
       currentWindow: {
@@ -292,6 +293,7 @@ export default {
         this.priceCompareList.push(this.analysesItemOption('大象平台平均', '', analyses.onAverage || 0, 'color_3', maxTotal, false))
         this.priceCompareList.push(this.analysesItemOption('大象线下平均', '', analyses.offAverage || 0, 'color_4', maxTotal, false))
 
+        this.priceCompareList = arrayResetSort(this.priceCompareList, 'width', 'desc')
         // LNG站点分布
         const tmpTotal = (Number(analyses.dx) + Number(analyses.zhy) + Number(analyses.zsh) + Number(analyses.zsy) + Number(analyses.sh)).toFixed(0)
         this.gasSpreadTotal = tmpTotal
@@ -460,13 +462,17 @@ export default {
       this.pages.page = val
       this.initGasstationList()
     },
+    // 加气站简称
+    gasstationNickName(item) {
+      return item.nickName || '-'
+    },
     // 获取加气站类型
     getGasstationTypeName(type) {
       let name = '-'
 
       this.gasstationType.forEach(item => {
         if (type === item.value) {
-          name = item.label
+          name = this.gasstationCheckType(type) ? item.label : '大象加气'
         }
       })
 
@@ -826,12 +832,12 @@ export default {
           background-position: center;
           border: 2px solid #5B8FF9;
           &.no {
-            background-color: #5B8FF9;
-            background-image: url(../../assets/images/battle/g_ans_no.png);
-          }
-          &.ok {
             background-color: #ffffff;
             background-image: url(../../assets/images/battle/g_ans_ok.png);
+          }
+          &.ok {
+            background-color: #5B8FF9;
+            background-image: url(../../assets/images/battle/g_ans_no.png);
           }
 
         }

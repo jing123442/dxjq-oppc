@@ -122,7 +122,8 @@ const columns = {
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType' },
     { field: 'offlinePrice', name: '线下结算价' },
     { field: 'createName', name: '操作人' },
-    { field: 'mobile', name: '电话号码' }
+    { field: 'mobile', name: '电话号码' },
+    { field: 'credentials', name: '凭证信息' }
   ],
   battleGasItem: [
     { field: 'createTime', name: '时间', fixed: 'left' },

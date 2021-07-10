@@ -107,6 +107,7 @@ export default {
         } else {
           this.infoInputType = 'info'
         }
+        this.battleRow.credentials = ''
       }
     },
     onReqParams() {
