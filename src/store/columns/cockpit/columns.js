@@ -39,7 +39,7 @@ const columns = {
       info: { type: 'span', model: 'select', ou: 1, obj: 'gasstationType', style: 'width: 85%', placeholder: '请选择站点类型' },
       dxinfo: { type: 'span', model: 'select', nameSpan: 6, ou: 1, obj: 'gasstationType', style: 'width: 85%', placeholder: '请选择站点类型' },
       rules: [{ required: true, message: '请选择站点类型', trigger: 'change' }] },
-    { field: 'gasstationName', name: '站点名称',
+    { field: 'nickName', name: '站点名称',
       show: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入站点名称' },
       update: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入站点名称' },
       info: { type: 'span', ou: 1, style: 'width: 85%', placeholder: '请输入站点名称' },
@@ -102,7 +102,7 @@ const columns = {
   ],
   battleList: [
     { field: 'createTime', name: '时间', fixed: 'left' },
-    { field: 'gasstationName', name: '站点名称', search: { type: 'text', placeholder: '请输入站点名称' } },
+    { field: 'nickName', name: '站点名称', search: { type: 'text', placeholder: '请输入站点名称' } },
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType' },
     { field: 'offlinePrice', name: '线下结算价' },
     { field: 'createName', name: '操作人' },
@@ -111,14 +111,14 @@ const columns = {
   ],
   battleGasList: [
     { field: 'createTime', name: '时间', fixed: 'left' },
-    { field: 'gasstationName', name: '站点名称', search: { type: 'text', placeholder: '请输入站点名称' } },
+    { field: 'nickName', name: '站点名称', search: { type: 'text', placeholder: '请输入站点名称' } },
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType' },
     { field: 'createName', name: '操作人' },
     { field: 'mobile', name: '电话号码' }
   ],
   battleItem: [
     { field: 'createTime', name: '时间', fixed: 'left' },
-    { field: 'gasstationName', name: '站点名称' },
+    { field: 'nickName', name: '站点名称' },
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType' },
     { field: 'offlinePrice', name: '线下结算价' },
     { field: 'createName', name: '操作人' },
@@ -127,7 +127,7 @@ const columns = {
   ],
   battleGasItem: [
     { field: 'createTime', name: '时间', fixed: 'left' },
-    { field: 'gasstationName', name: '站点名称' },
+    { field: 'nickName', name: '站点名称' },
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType' },
     { field: 'createName', name: '操作人' },
     { field: 'mobile', name: '电话号码' }

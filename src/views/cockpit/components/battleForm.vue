@@ -119,7 +119,7 @@ export default {
         address: row.address,
         city: row.city,
         gasType: row.gasType,
-        gasstationName: row.gasstationName,
+        nickName: row.nickName,
         offlineGasQty: row.offlineGasQty,
         offlinePrice: row.offlinePrice,
         longitude: pointAddress[0],
@@ -132,6 +132,7 @@ export default {
           tmpList.push(item.name)
         })
         params.credentials = tmpList.join(',')
+        params.gasstationName = row.nickName
       } else {
         params.gasstationId = row.gasstationId
       }

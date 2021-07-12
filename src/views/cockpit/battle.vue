@@ -230,7 +230,7 @@ export default {
     analysisDistrictName() {
       const districtItem = this.districtList.filter(item => this.finds.districtId === item.districtId)
 
-      return districtItem ? districtItem[0].districtName : '全区域'
+      return districtItem && districtItem[0] ? districtItem[0].districtName : '全区域'
     }
   },
   watch: {
