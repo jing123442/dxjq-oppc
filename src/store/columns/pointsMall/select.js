@@ -4,7 +4,7 @@ const select = {
     pointsValidate: [{ value: '0', label: '年底清空' }]
   },
   ruleList: {
-    rewardType: [{ value: '8', label: '邀请好友' }, { value: '7', label: '新客注册' }],
+    rewardType: [{ value: '21', label: '邀请好友' }, { value: '20', label: '新客注册' }],
     ruleStatus: [{ value: '0', label: '启用' }, { value: '1', label: '停用' }]
   },
   supplier: {
