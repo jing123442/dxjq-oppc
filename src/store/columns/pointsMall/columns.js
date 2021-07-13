@@ -135,7 +135,7 @@ const columns = {
     { field: 'orderId', show: { type: 'hide' }},
     { field: 'userId', show: { type: 'hide' }},
     { field: 'changeType', name: '调整类型', ispush: false, formatter: 'changeType', show: { type: 'select', obj: 'changeType', placeholder: '请选择调整类型' }, rules: [{ required: true, message: '请选择调整类型', trigger: 'blur' }] },
-    { field: 'changeAmount', name: '调整数量', show: { type: 'text', placeholder: '请输入调整数量' }, rules: [{ required: true, message: '请输入调整数量', trigger: 'blur' }, { validator: 'validateInputValueNumber', option: { max: 999999 }, message: '最大值不能超过999999', trigger: 'blur' }] },
+    { field: 'changeAmount', name: '调整数量', show: { type: 'text', placeholder: '请输入调整数量' }, rules: [{ required: true, message: '请输入调整数量', trigger: 'blur' }, { validator: 'validateInputValueNumber', option: { min: 0, max: 999999 }, message: '范围必须在0-999999之间', trigger: 'blur' }] },
     { field: 'note', name: '备注', show: { type: 'textarea' } }
   ],
   inviteRecords: [
