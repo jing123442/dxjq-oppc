@@ -30,7 +30,7 @@ const columns = {
     { field: 'bankAccount', name: '银行账号', hide: true, show: { type: 'text', ou: 3, placeholder: '请输入银行账号' }, detail: { type: 'span', serial: 10, ou: 3 }, rules: [{ validator: 'isValidateNumber', message: '格式错误，请检查', trigger: 'blur' }] },
     { field: 'taxNo', name: '纳税号', hide: true, show: { type: 'text', ou: 3, placeholder: '请输入纳税号' }, detail: { type: 'span', serial: 11, ou: 3 } },
     { field: 'invoice', name: '发票抬头', hide: true, show: { type: 'text', ou: 3, placeholder: '请输入发票抬头' }, detail: { type: 'span', serial: 12, ou: 3 } },
-    { field: 'tax', name: '价格含税', hide: true, formatter: 'taxStatus', show: { type: 'select', ou: 4, obj: 'taxStatus', value: '0', cascaderList: [{ value: '1', fields: ['rate'] }] }, detail: { type: 'span', model: 'select', cascaderList: [{ value: '1', fields: ['rate'] }], obj: 'taxStatus', serial: 13, ou: 4 } },
+    { field: 'tax', name: '价格含税', hide: true, formatter: 'taxStatus', show: { type: 'select', ou: 4, obj: 'taxStatus', value: 0, cascaderList: [{ value: '1', fields: ['rate'] }] }, detail: { type: 'span', model: 'select', cascaderList: [{ value: '1', fields: ['rate'] }], obj: 'taxStatus', serial: 13, ou: 4 } },
     { field: 'rate', name: '税率（%）', hide: true, show: { type: 'number', ou: 4, placeholder: '请输入税率' }, detail: { type: 'span', serial: 14, ou: 4 } },
     { field: 'remark', name: '备注', hide: true, show: { type: 'textarea', ou: 5, placeholder: '请输入备注' }, detail: { type: 'span', serial: 15, ou: 5 } },
     { field: 'supplierStatus', name: '供应商状态', formatter: 'supplierStatus', show: { type: 'hide' }, search: { type: 'select', obj: 'supplierStatus', placeholder: '供应商状态', value: '' } },
