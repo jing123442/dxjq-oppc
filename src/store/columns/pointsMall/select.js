@@ -8,7 +8,7 @@ const select = {
     ruleStatus: [{ value: '0', label: '启用' }, { value: '1', label: '停用' }]
   },
   supplier: {
-    taxStatus: [{ value: '0', label: '含税' }, { value: '1', label: '不含税' }],
+    taxStatus: [{ value: 0, label: '含税' }, { value: 1, label: '不含税' }],
     supplierStatus: [{ value: 0, label: '启用' }, { value: 1, label: '停用' }]
   },
   order: {
