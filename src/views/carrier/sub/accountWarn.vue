@@ -78,14 +78,6 @@ export default {
   data() {
     return initVueDataOptions(this, {
       queryCustURL: {
-        del: {
-          url: 'user/contract_template/remove_by_id',
-          method: 'post',
-          name: 'title',
-          props: {
-            id: 'templateId'
-          }
-        },
         list: {
           url: 'strategy/carrier/warn/list',
           method: 'post',
@@ -200,10 +192,11 @@ export default {
     onListEvent(type, row) {
       if (type === 'batch') {
         this.dialogBatchVisible = true
+      } else if (type === 'delete') {
+        this.carrierWarnClose(row)
       }
     },
     onListEventDialog(type, row) {
-      console.log(row)
       if (type.type === 'ok') {
         this.$refs.warnForm.validate((valid) => {
           if (valid) {
@@ -220,7 +213,7 @@ export default {
                 this.carrierWarnConfig(row)
               }
             } else {
-              this.carrierWarnClose(row)
+              this.carrierWarnClose()
             }
           } else {
             return false
@@ -229,9 +222,16 @@ export default {
       } else {
       }
     },
-    carrierWarnClose() {
+    carrierWarnClose(row) {
       var param = {
-        carrierList: this.checkedOrgList
+        carrierList: []
+      }
+      if (row) {
+        param = {
+          carrierList: this.checkedOrgList
+        }
+      } else {
+        param.carrierList.push(row)
       }
       $strategyCarrierWarnClose(param).then(res => {
         this.$refs.accountWarn.initDataList()

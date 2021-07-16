@@ -295,7 +295,7 @@ const columns = {
     { field: 'orgName', stype: 'mapping', name: '公司名称', mapping: 'orgName', fixed: 'left', search: { type: 'text', placeholder: '请输入公司名称' }, rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
     { field: 'warnValue', name: '预警阈值' },
     { field: 'warnObject', name: '预警通知人' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'del', name: '删除' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'delete', name: '删除' }] }
   ]
 }
 
