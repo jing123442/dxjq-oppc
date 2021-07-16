@@ -81,7 +81,9 @@ const getters = {
   carrier_orderManager_select_list: item => select.orderManager,
   // 加气订单管理---详情
   carrier_orderManagerDetail_mode_list: item => app.mode.orderManagerDetail,
-  carrier_orderManagerDetail_column: item => columns.orderManagerDetail
+  carrier_orderManagerDetail_column: item => columns.orderManagerDetail,
+  // 物流公司资金预警列表
+  carrier_orgAccountWarn_column: item => columns.orgAccountWarn
 }
 
 export default {

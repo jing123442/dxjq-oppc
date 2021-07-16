@@ -107,7 +107,6 @@ const columns = {
     { field: 'idCardNo', name: '执行签署人', nameSpan: 8, stype: 'mapping', mapping: 'userName', show: { type: 'select', obj: 'userList', subField: 'userName', findKey: 'keyword', remote: true, placeholder: '请选择执行签署人' } },
     { field: 'idCardNo', name: '身份证号', nameSpan: 8, show: { type: 'text', placeholder: '执行签署人身份证号', isDisabled: true }}
   ]
-
 }
 
 export default columns

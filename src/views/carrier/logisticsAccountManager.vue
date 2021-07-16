@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'logisticsAccountManager'" ref="accountList" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'logisticsAccountManager'" ref="accountList" :buttonsList="buttonsList" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="充值" :visible.sync="dialogRechargeVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form ref="recharge" v-if="dialogRechargeVisible" :rowData="rechargeRow" :pageColumn="page_column_firmAccountRecharge" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success"  @reload="initDataList" @clear="subClearBtn" @onListEvent="onListEventDialog"></nt-form>
     </el-dialog>
@@ -33,7 +33,8 @@ export default {
       },
       queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 2 } }),
       dialogRechargeVisible: false,
-      rechargeRow: {}
+      rechargeRow: {},
+      buttonsList: [{ type: 'primary', icon: '', event: 'accountWarn', name: '资金预警' }]
     })
   },
   computed: {
@@ -57,6 +58,8 @@ export default {
         this.accountListEvent(row)
       } else if (type === 'load') {
         this.vehicleCircleEvent(row)
+      } else if (type === 'accountWarn') {
+        this.$router.push('logisticsAccountManager/accountWarn')
       }
     },
     rechargeEvent(row) {
