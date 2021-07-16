@@ -95,7 +95,9 @@ export default {
   methods: {
     initData() {
       this.battleRow = objectDepthAssignment(this.rowData)
-      this.battleRow.pointAddress = this.rowData.longitude + ',' + this.rowData.latitude
+      if (this.rowData.longitude && this.rowData.latitude) {
+        this.battleRow.pointAddress = this.rowData.longitude + ',' + this.rowData.latitude
+      }
       this.battleRow._btn = custFormBtnList()
       if (this.optType === 'edit') {
         this.battleRow._btn.list.unshift({ bType: 'danger', icon: 'el-icon-delete', type: 'delete', label: '删除' })

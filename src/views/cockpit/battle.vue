@@ -29,7 +29,7 @@
             </div>
           </div>
           <div class="bm-charts">
-            <div class="bm-charts__title">总加气量 <span class="text-bold-number">{{ (currentWindow.data.gasQty + currentWindow.data.offlineGasQty) }}</span> 吨</div>
+            <div class="bm-charts__title">总加气量 <span class="text-bold-number">{{ (currentWindow.data.gasQty + currentWindow.data.offlineGasQty) | formateZeroToBar }}</span> 吨</div>
             <nt-charts v-if="currentWindow.markerWindowStatus" :webUIType="'echart'" :chartOptions="gasQtyChartOption"></nt-charts>
           </div>
           <div class="bm-bottom">
@@ -81,15 +81,15 @@
               </div>
               <div class="content">
                   <span>
-                    <span class="text-bold-number">{{ (item.gasQty + item.offlineGasQty) }}</span>吨<span class="time">({{ item.offlineGasQtyDate | formateTData('date') }})</span>
+                    <span class="text-bold-number">{{ (item.gasQty + item.offlineGasQty) | formateZeroToBar }}</span>吨<span class="time">({{ item.offlineGasQtyDate | formateTData('date') }})</span>
                   </span>
                 <span>
-                    <span class="text-bold-number">{{ item.offlinePrice | currency }}</span>/公斤<span class="time">({{ item.offlinePriceDate | formateTData('date') }})</span>
+                    <span class="text-bold-number">{{ (gasstationCheckType(item.gasType) ? item.offlinePrice : item.price) | currency }}</span>/公斤<span class="time">({{ item.offlinePriceDate | formateTData('date') }})</span>
                   </span>
               </div>
             </li>
           </ul>
-          <div class="map-list-pagination">共 {{pages.total}} 站点</div>
+          <div class="map-list-pagination">共 {{pages.total | formateZeroToBar}} 站点</div>
         </div>
       </div>
     </div>
@@ -105,24 +105,24 @@
             <li v-for="(item, index) of priceCompareList" :key="index">
               <div class="progress-item">
                 <div class="progress-item__line" :class="item.color" :style="{width: item.width + '%'}"></div>
-                <div v-if="item.show" class="progress-item__name text-overflow-ellipsis">{{ item.name }}</div>
+                <div v-if="item.show" class="progress-item__name text-overflow-ellipsis">{{ item.width > 0 ? item.name : '-' }}</div>
               </div>
               <div class="name">{{ item.label }} <span>{{ item.number | formateMoney }}</span></div>
             </li>
           </div>
         </div>
         <div class="gasstation">
-          <div class="gasstation__title">LNG站点分布<span>(共 <span class="text-bold-number">{{ gasSpreadTotal }}</span> 站点)</span></div>
+          <div class="gasstation__title">LNG站点分布<span>(共 <span class="text-bold-number">{{ gasSpreadTotal | formateZeroToBar }}</span> 站点)</span></div>
           <div class="gasstation__content-vertical">
             <li v-for="(item, index) of gasSpreadList" :key="index">
               <div class="progress-vertical-item"><div class="gasstation-number" :class="item.color" :style="{height: item.width + '%'}"></div></div>
-              <div class="name">{{ item.number }}</div>
+              <div class="name">{{ item.number | formateZeroToBar }}</div>
               <div class="name">{{ item.label }}</div>
             </li>
           </div>
         </div>
         <div class="gasstation">
-          <div class="gasstation__title">LNG市场份额<span>(单日 <span class="text-bold-number">{{ gasLNGSaleTotal }}</span> 吨)</span></div>
+          <div class="gasstation__title">LNG市场份额<span>(单日 <span class="text-bold-number">{{ gasLNGSaleTotal | formateZeroToBar }}</span> 吨)</span></div>
           <div class="gasstation__content-chart">
             <nt-charts :webUIType="'echart'" :chartOptions="lngMarketChartOption"></nt-charts>
           </div>
@@ -626,7 +626,7 @@ export default {
               formatter: function(parmas) {
                 const dataTime = parmas.name === '平台' ? data.gasQtyDate : data.offlineGasQtyDate
 
-                return parmas.value + '吨 (' + parmas.percent + '%)\n(' + formatDate(dataTime, 'yyyy-MM-dd') + ')'
+                return (parmas.value || '-') + '吨 (' + (parmas.percent ? parmas.percent + '%' : '-') + ')\n(' + formatDate(dataTime, 'yyyy-MM-dd') + ')'
               }
             },
             labelLine: {

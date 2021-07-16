@@ -77,6 +77,10 @@ const formateTextDeleteNULL = (value) => {
   return value ? (value === 'null' ? '-' : value) : '-'
 }
 
+const formateZeroToBar = (value) => {
+  return value || '-'
+}
+
 const formateMoney = (value) => {
   return currency(value, '', '')
 }
@@ -84,7 +88,7 @@ const formateMoney = (value) => {
 const currency = (value, unit, currency, decimals) => {
   const digitsRE = /(\d{3})(?=\d)/g
   value = parseFloat(value)
-  if (!isFinite(value) || (!value && value !== 0)) return ''
+  if (!isFinite(value) || (!value && value === 0)) return '-'
   currency = currency != null ? currency : '￥'
   decimals = decimals != null ? decimals : 2
   var stringified = Math.abs(value).toFixed(decimals)
@@ -99,6 +103,7 @@ const currency = (value, unit, currency, decimals) => {
     ? stringified.slice(-1 - decimals)
     : ''
   var sign = value < 0 ? '-' : ''
+
   return sign + currency + head +
     _int.slice(i).replace(digitsRE, '$1,') +
     _float +
@@ -128,6 +133,7 @@ export {
   truckToDriverList,
   roleList,
   formateMoney,
+  formateZeroToBar,
   formateTextDeleteNULL,
   tableContractStatusToLabel
 }

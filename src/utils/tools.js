@@ -415,7 +415,7 @@ export function exportBlobToFiles(content, fileName, fileType = 'application/vnd
 export function currency(value, unit, currency, decimals) {
   const digitsRE = /(\d{3})(?=\d)/g
   value = parseFloat(value)
-  if (!isFinite(value) || (!value && value !== 0)) return ''
+  if (!isFinite(value) || (!value && value === 0)) return ''
   currency = currency != null ? currency : '￥'
   decimals = decimals != null ? decimals : 2
   var stringified = Math.abs(value).toFixed(decimals)
