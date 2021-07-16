@@ -9,7 +9,7 @@
             <div><img src="@/assets/images/logo.png" width="35" height="35" /></div>
             <div>
               <div class="title">
-                <span class="item-name text-overflow-ellipsis">{{gasstationNickName(currentWindow.data)}}</span>
+                <span class="item-name text-overflow-ellipsis" :title="currentWindow.data.nickName">{{gasstationNickName(currentWindow.data)}}</span>
                 <span class="item-tag">[{{getGasstationTypeName(currentWindow.data.gasType)}}]</span>
               </div>
               <div class="address text-overflow-ellipsis">{{currentWindow.data.address}}</div>
@@ -72,7 +72,7 @@
             <li v-for="(item, index) of currGasstationList" :key="index" :class="'icon-' + (item.gasType || 2004)" @click="markerClickEvent(item)">
               <div class="title">
                 <div>
-                  <span class="item-name text-overflow-ellipsis">{{gasstationNickName(item)}}</span>
+                  <span class="item-name text-overflow-ellipsis" :title="item.nickName">{{gasstationNickName(item)}}</span>
                   <span class="item-tag">[{{getGasstationTypeName(item.gasType)}}]</span>
                 </div>
                 <div class="item-type" v-if="item.gasType === 1001">自</div>
@@ -80,9 +80,9 @@
                 <div class="item-type" v-else-if="item.gasType === 1003">盟</div>
               </div>
               <div class="content">
-                  <span>
-                    <span class="text-bold-number">{{ (item.gasQty + item.offlineGasQty) | formateZeroToBar }}</span>吨<span class="time">({{ item.offlineGasQtyDate | formateTData('date') }})</span>
-                  </span>
+                <span>
+                  <span class="text-bold-number">{{ (item.gasQty + item.offlineGasQty) | formateZeroToBar }}</span>吨<span class="time">({{ item.offlineGasQtyDate | formateTData('date') }})</span>
+                </span>
                 <span>
                     <span class="text-bold-number">{{ (gasstationCheckType(item.gasType) ? item.offlinePrice : item.price) | currency }}</span>/公斤<span class="time">({{ item.offlinePriceDate | formateTData('date') }})</span>
                   </span>
@@ -606,7 +606,7 @@ export default {
             hoverAnimation: false,
             legendHoverLink: false,
             silent: true,
-            radius: ['40%', '60%'],
+            radius: ['30%', '45%'],
             center: ['50%', '50%'],
             itemStyle: {},
             data: [
@@ -918,8 +918,9 @@ export default {
             align-items: center;
             justify-content: flex-start;
             & > span {
+              white-space: nowrap;
               &:first-child {
-                padding-right: 15px;
+                padding-right: 8px;
               }
             }
             .time {
