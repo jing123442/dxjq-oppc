@@ -54,7 +54,8 @@ const app = {
     price: 13,
     gasStockList: 13,
     printList: 4,
-    lngPlan: 13
+    lngPlan: 13,
+    plsLog: 13
   }
 }
 

@@ -81,7 +81,24 @@ const getters = {
   filler_lng_plan_check_column: item => columns.lngPlanCheckInfo,
   // LNG计划管理--异常处理
   filler_lng_plan_anomalous_mode_list: item => app.mode.lngPlanAnomalousInfo,
-  filler_lng_plan_anomalous_column: item => columns.lngPlanAnomalousInfo
+  filler_lng_plan_anomalous_column: item => columns.lngPlanAnomalousInfo,
+  // 计划库存管理 - 加气站库存管理 - 配置计划提报限制
+  pslConfig_column: item => columns.pslConfig,
+  // 计划库存管理 - 提报限制
+  gasStationSubmitLimit_column: item => columns.gasStationSubmitLimit,
+  gasStationSubmitLimit_select_list: item => select.gasStationSubmitLimit,
+  // 计划库存管理 - 限制记录
+  limitList_column: item => columns.limitList,
+  limitList_select_list: item => select.limitList,
+  // 计划库存管理 - 加气站库存管理-库存详情
+  stockDetail_column: item => columns.stockDetail,
+  // 计划库存管理 - lng计划管理-库存详情
+  lngStockDetail_column: item => columns.lngStockDetail,
+  lngStockDetail_select_list: item => select.lngStockDetail,
+  // 配置计划提报限制 - 变更记录
+  psl_log_column: item => columns.plsLog,
+  psl_log_page_status: item => app.list.plsLog
+
 }
 
 export default {

@@ -71,6 +71,15 @@ const select = {
     modifyApplyType: utilsModifyApplyType(),
     bearType: utilsBearType(),
     currLNGDataSearch: utilsLNGDataSearch()
+  },
+  lngStockDetail: {
+    proposeType: [{ value: 1, label: '建议优先配送' }, { value: 2, label: '建议常规配送' }, { value: 3, label: '建议调整或取消' }]
+  },
+  gasStationSubmitLimit: {
+    pltStatus: [{ value: '0', label: '开启' }, { value: '1', label: '关闭' }]
+  },
+  limitList: {
+    limitStatus: [{ value: '0', label: '开启限制' }, { value: '1', label: '关闭限制' }]
   }
 }
 

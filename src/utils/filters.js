@@ -70,7 +70,7 @@ const roleList = (value) => {
 }
 
 const formateTData = (date, fmt) => {
-  return date ? (date === 'null' ? formateTSData(date, fmt) : '-') : '-'
+  return date ? (date !== 'null' ? formateTSData(date, fmt) : '-') : '-'
 }
 
 const formateTextDeleteNULL = (value) => {

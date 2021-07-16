@@ -128,7 +128,8 @@ const columns = {
   gasStockList: [
     { field: 'nickName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'stock', name: '库存量(公斤)' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'list', name: '库存记录' }, { type: 'update', name: '库存调整' }] }
+    { field: 'status_stock', name: '库存状态', stype: 'link' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 260, list: [{ type: 'list', name: '库存记录' }, { type: 'update', name: '库存调整' }, { type: 'submitLimit', name: '提报限制' }, { type: 'limitList', name: '限制记录' }] }
   ],
   gasUpdateStock: [
     { field: 'gasstationId', name: '', nameSpan: 6, show: { type: 'hide', isDisabled: true } },
@@ -148,6 +149,7 @@ const columns = {
     { field: 'gasstationName', name: '企业名称', nameSpan: 6, width: 140, detail: { type: 'span', serial: 3, ou: 1 } },
     { field: 'nickName', name: '加气站名称', nameSpan: 6, width: 140, search: { type: 'text', serial: 1, findStyle: 'width: 18%;height: 50px;', style: 'width: 100%', nameSpan: 0, placeholder: '请输入加气站名称' }, detail: { type: 'span', serial: 3, ou: 1 } },
     { field: 'planTime', name: '期望到站日期', nameSpan: 6, width: 140, stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', serial: 3, findStyle: 'width: 32%;', style: 'width: 100%', nameSpan: 0, placeholder: { start: '期望到站开始时间', end: '期望到站结束时间' } }, detail: { type: 'span', serial: 4, ou: 1, stype: 'format', formatFun: 'formateTData all' } },
+    { field: 'propose', name: '配送建议', nameSpan: 6, width: 140, stype: 'link' },
     { field: 'status', name: '订单状态', formatter: 'planStatus', nameSpan: 6, search: { type: 'select', serial: 2, nameSpan: 0, obj: 'planStatus', placeholder: '请选择状态', style: 'width: 100%', findStyle: 'width: 18%;height: 50px;' }, detail: { type: 'span', model: 'select', obj: 'planStatus', serial: 2, ou: 1 } },
     { field: 'createTime', name: '提报时间', nameSpan: 6, width: 140, stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', serial: 5, nameSpan: 0, placeholder: '', style: 'width: 100%', findField: 'createTime', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', nameSpan: 0, style: 'width: 100%', subField: 'createDateName', hideName: true, obj: 'currLNGDataSearch', value: 'createTime' } },
     { field: 'lockTime', name: '锁定时间', width: 140, stype: 'format', formatFun: 'formateTData all' },
@@ -251,7 +253,7 @@ const columns = {
     { field: 'createNote', name: '提报备注', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'modifyCreateTime', name: '变更提报时间', nameSpan: 6, show: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } },
     { field: 'modifyCreateNote', name: '变更发起原因', nameSpan: 6, show: { type: 'span', ou: 2 } },
-    { field: 'modifyApplyType', name: '变更类型', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 3, inputSpan: 9, show: { type: 'span', model: 'select', obj: 'modifyApplyType', ou: 2 } },
+    { field: 'modifyApplyType', name: '变更类型', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 6, inputSpan: 9, show: { type: 'span', model: 'select', obj: 'modifyApplyType', ou: 2 } },
     { field: 'planTime', name: '期望送达时间(前)', nameSpan: 6, show: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } },
     { field: 'modifyPlanTime', name: '期望送达时间(后)', nameSpan: 6, show: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } },
     { field: 'downloadContactName', name: '卸车联系人(前)', nameSpan: 6, show: { type: 'span', ou: 2 } },
@@ -275,6 +277,46 @@ const columns = {
     { field: 'operatorName', name: '操作人', width: 100 },
     { field: 'typeName', name: '操作类型', width: 120 },
     { field: 'content', name: '操作内容', stype: 'v-html' }
+  ],
+  pslConfig: [
+    { field: 'qtyAvgRange', name: '周日均销量区间（吨）', fixed: 'left' },
+    { field: 'rate', name: '限量存销比(存量/周日均销量)' },
+    { field: 'limitStock', name: '存量上限(吨)' },
+    { field: 'minStock', name: '存量下限(吨)' }
+  ],
+  gasStationSubmitLimit: [
+    { field: 'gasstationId', show: { type: 'hide' } },
+    { field: 'gasstationName', name: '加气站名称', ispush: false, show: { type: 'span' } },
+    { field: 'status', name: '计划提报限制', formatter: 'pltStatus', show: { type: 'radio', obj: 'pltStatus', value: '0' } },
+    { field: 'note', name: '备注', formatter: 'pltStatus', show: { type: 'textarea', placeholder: '请填写备注' }, rules: [{ required: true, message: '请填写备注', trigger: 'blur' }] },
+    { field: 'tip', name: '慎重提示', ispush: false, show: { type: 'span', value: '当计划提报限制开启时，如加气站不满足存销比设定限制，该加气站将无法提报库存计划，请谨慎设置！'} }
+  ],
+  limitList: [
+    { field: 'operateTime', name: '操作时间', fixed: 'left', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'status', name: '变更类型', formatter: 'limitStatus' },
+    { field: 'operatorName', name: '操作人' },
+    { field: 'note', name: '摘要' }
+  ],
+  lngStockDetail: [
+    { field: 'gasstationName', nameSpan: 6, name: '加气站名称', show: { type: 'span' } },
+    { field: 'weekAverageQty', nameSpan: 6, name: '加气站周日均销量(公斤)', show: { type: 'span' } },
+    { field: 'stock', nameSpan: 6, name: '加气站存量(公斤)', show: { type: 'span' } },
+    { field: 'stockMax', nameSpan: 6, name: '存量上限(公斤)', show: { type: 'span' } },
+    { field: 'stockMin', nameSpan: 6, name: '存量下限(公斤)', show: { type: 'span' } },
+    { field: 'proposeType', nameSpan: 6, name: '配送建议', formatter: 'proposeType', show: { type: 'select', isDisabled: true, obj: 'proposeType', placeholder: '-' } }
+  ],
+  stockDetail: [
+    { field: 'gasstationName', nameSpan: 6, name: '加气站名称', show: { type: 'span' } },
+    { field: 'weekAverageQty', nameSpan: 6, name: '加气站周日均销量(公斤)', show: { type: 'span' } },
+    { field: 'stock', nameSpan: 6, name: '加气站存量(公斤)', show: { type: 'span' } },
+    { field: 'stockMax', nameSpan: 6, name: '存量上限(公斤)', show: { type: 'span' } },
+    { field: 'stockMin', nameSpan: 6, name: '存量下限(公斤)', show: { type: 'span' } },
+    { field: 'propose', nameSpan: 6, name: '配送建议', show: { type: 'span' } }
+  ],
+  plsLog: [
+    { field: 'operatorName', name: '操作人', fixed: 'left' },
+    { field: 'operateTime', name: '操作时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'list', name: '查看' }] }
   ]
 }
 

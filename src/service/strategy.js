@@ -1,71 +1,71 @@
 import R from '@/utils/request'
 
 // 修改液源地信息
-export async function $priceUpdate (data) {
+export async function $priceUpdate(data) {
   return await R({ url: 'strategy/lng_from/update', data })
 }
 
 // 添加液源地
-export async function $priceAdd (data) {
+export async function $priceAdd(data) {
   return await R({ url: 'strategy/lng_from/add', data })
 }
 
 // 查询所有液源地
-export async function $lngFormList (data) {
+export async function $lngFormList(data) {
   return await R({ url: 'strategy/lng_from/all' })
 }
 
 // 根据gasstationId更新加气站基本信息
-export async function $updateGasstation (data) {
+export async function $updateGasstation(data) {
   return await R({ url: 'strategy/gasstation/edit', data })
 }
 
 // 根据gasstationId更新加气站基本信息
-export async function $updateGasstationPriceConfig (data) {
+export async function $updateGasstationPriceConfig(data) {
   return await R({ url: 'strategy/price_config/select_harbour', data })
 }
 
 // 根据港口id,查询港口价格
-export async function $configPriceList (data) {
+export async function $configPriceList(data) {
   return await R({ url: 'strategy/carriage_price/carriagePrice/' + data, method: 'get' })
 }
 
 // 批量配置运费单价
-export async function $saveConfigPriceList (data) {
+export async function $saveConfigPriceList(data) {
   return await R({ url: 'strategy/carriage_price/save_or_update_list', data })
 }
 
 // 批量设置区域优惠金额
-export async function $configAreaBenefit (data) {
+export async function $configAreaBenefit(data) {
   return await R({ url: 'strategy/area_benefit/set_area_benefit_list', data })
 }
 
 // 申请发布
-export async function $priceRelease (data) {
+export async function $priceRelease(data) {
   return await R({ url: 'strategy/release_manage/add', data })
 }
 
 // 审核;2-通过 3-驳回
-export async function $priceReleaseAudit (data) {
+export async function $priceReleaseAudit(data) {
   return await R({ url: 'strategy/release_manage/release_audit', data })
 }
 
-export async function $configAreaEditBenefit (data) {
+export async function $configAreaEditBenefit(data) {
   return await R({ url: 'strategy/area_benefit/update', data })
 }
 
 // 设置配置运费
-export async function $configGasFreight (data) {
+export async function $configGasFreight(data) {
   return await R({ url: 'strategy/freight_config/set_freight', data })
 }
 
 // LNG提报计划-确认订单
-export async function $strategyOrderConfirm (data) {
+export async function $strategyOrderConfirm(data) {
   return await R({ url: 'strategy/purchase/confirm', data })
 }
 
 // LNG提报计划-取消订单
-export async function $strategyOrderCancel (data) {
+export async function $strategyOrderCancel(data) {
   return await R({ url: 'strategy/purchase/cancel', data })
 }
 
@@ -105,77 +105,77 @@ export async function $updateStock(data) {
 }
 
 // 增加卡车
-export async function $strategyTruckAdd (data) {
+export async function $strategyTruckAdd(data) {
   return await R({ url: 'strategy/truck/add', data })
 }
 
 // 获取卡车信息
-export async function $strategyTruckInfo (data) {
+export async function $strategyTruckInfo(data) {
   return await R({ url: 'strategy/truck/find', data })
 }
 
 // 获取绑定卡车的司机list
-export async function $strategyDriverList (data) {
+export async function $strategyDriverList(data) {
   return await R({ url: 'strategy/driver/list_all', data })
 }
 
 // 卡车增加司机
-export async function $strategyTruckDriverAdd (data) {
+export async function $strategyTruckDriverAdd(data) {
   return await R({ url: 'strategy/truck_driver/add', data })
 }
 
 // 卡车删除司机
-export async function $strategyTruckDriverDel (data) {
+export async function $strategyTruckDriverDel(data) {
   return await R({ url: 'strategy/truck_driver/del', data })
 }
 
 // 下载卡车信息list
-export async function $importDownloadFile (data) {
+export async function $importDownloadFile(data) {
   return await R({ url: 'strategy/import/download_truck_tpl', method: 'get', params: data, responseType: 'blob' })
 }
 
 // 导入卡车数据
-export async function $exportDataFile (data) {
+export async function $exportDataFile(data) {
   return await R({ url: 'strategy/import/import_truck', method: 'POST', data: data.file })
 }
 
 // 设置气价调节
-export async function $gasstationUpdatePrice (data) {
+export async function $gasstationUpdatePrice(data) {
   return await R({ url: 'strategy/gasstation/gas_price_edit', method: 'POST', data })
 }
 
 // LNG变更处理
-export async function $strategyModifyPurchase (data) {
+export async function $strategyModifyPurchase(data) {
   return await R({ url: 'strategy/purchase/modify_handle', method: 'POST', data })
 }
 
 // LNG变更处理
-export async function $strategyDuplicatePurchase (data) {
+export async function $strategyDuplicatePurchase(data) {
   return await R({ url: 'strategy/purchase_duplicate/find', method: 'POST', data })
 }
 
 // LNG核对
-export async function $strategyCheckReachPurchase (data) {
+export async function $strategyCheckReachPurchase(data) {
   return await R({ url: 'strategy/purchase/check_reach', method: 'POST', data })
 }
 
 // LNG异常处理
-export async function $strategyExceptionPurchase (data) {
+export async function $strategyExceptionPurchase(data) {
   return await R({ url: 'strategy/purchase_exception/exception_handle', method: 'POST', data })
 }
 
 // LNG获取异常订单信息
-export async function $strategyExceptionFindPurchase (data) {
+export async function $strategyExceptionFindPurchase(data) {
   return await R({ url: 'strategy/purchase_exception/find', method: 'POST', data })
 }
 
 // LNG详情信息
-export async function $strategyPurchaseFind (data) {
+export async function $strategyPurchaseFind(data) {
   return await R({ url: 'strategy/purchase/find', method: 'POST', data })
 }
 
 // LNG下载入库明细
-export async function $strategyPurchaseExport (data) {
+export async function $strategyPurchaseExport(data) {
   return await R({ url: 'strategy/purchase/download_lng', method: 'POST', data, responseType: 'blob' })
 }
 
@@ -198,6 +198,36 @@ export async function $strategyGasstationDistrictList(data) {
 }
 
 // 获取物流公司信息
-export async function $strategyCarrierInfo (data) {
+export async function $strategyCarrierInfo(data) {
   return await R({ url: 'strategy/carrier/find', data })
+}
+
+// lng配置计划提报限制列表
+export async function $strategyPurchaseLimitConfigList(data) {
+  return await R({ url: 'strategy/purchase_limit_config/list', data })
+}
+
+// lng配置计划提报限制修改
+export async function $strategyGasstationLimitStatusLogAdd(data) {
+  return await R({ url: 'strategy/gasstation_limit_status_log/add', data })
+}
+
+// 获取单个加气站最新提报限制
+export async function $strategyGasstationLimitStatusLogGetLatest(data) {
+  return await R({ url: 'strategy/gasstation_limit_status_log/get_latest', data })
+}
+
+// 获取加气站日均销量存量详情
+export async function $gasstationWeekAverageQtyFind(data) {
+  return await R({ url: 'strategy/gasstation_week_average_qty/find', data })
+}
+
+// lng 计划提报详情
+export async function $purchaseProposeDetailFind(data) {
+  return await R({ url: 'strategy/purchase_propose_detail/find', data })
+}
+
+// lng 计划提报详情
+export async function $plcSaveOrUpdateList(data) {
+  return await R({ url: 'strategy/purchase_limit_config/save_or_update_list', data })
 }

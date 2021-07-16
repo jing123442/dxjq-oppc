@@ -26,12 +26,15 @@
       <nt-text-info v-if="dialogOperateVisible" :dataList="dataList" :rowData="changeInfoRow" :headerClass="'top-detail transparent'" :headerStyle="headerStyle" :boxStyle="'margin-bottom: 0;'"></nt-text-info>
       <em-table-list v-if="dialogOperateVisible" :custTableTitle="'变更记录'" ref="changeInfoList" :tableListName="'changeInfoList'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryChangeCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_change_info_column" :select_list="{}" @onReqParams="onReqChangeParams"></em-table-list>
     </el-dialog>
+    <el-dialog title="库存详情" :visible.sync="dialogStockDetailVisible" width="80%" :append-to-body="true">
+      <nt-form ref="stockDetail" v-if="dialogStockDetailVisible" :rowData="stockDetailRow" :modeList="{}" :pageColumn="page_column_stock_detail" :selectList="select_list_stock_detail" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onStockDetailFormEvent"></nt-form>
+    </el-dialog>
   </div>
 </template>
 <script>
 import { initVueDataOptions, isTypeof, callbackPagesInfo, custFormBtnList, exportBlobToFiles } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $strategyOrderConfirm, $strategyOrderCancel, $strategyPurchaseLeave, $strategyModifyPurchase, $strategyCheckReachPurchase, $strategyExceptionPurchase, $strategyExceptionFindPurchase, $strategyPurchaseFind, $strategyPurchaseExport } from '@/service/strategy'
+import { $strategyOrderConfirm, $strategyOrderCancel, $strategyPurchaseLeave, $strategyModifyPurchase, $strategyCheckReachPurchase, $strategyExceptionPurchase, $strategyExceptionFindPurchase, $strategyPurchaseFind, $strategyPurchaseExport, $purchaseProposeDetailFind } from '@/service/strategy'
 
 export default {
   name: 'lngPlan',
@@ -92,7 +95,9 @@ export default {
       dialogOperateVisible: false,
       page_detail_column: [],
       detail_mode_list: [],
-      currParams: {}
+      currParams: {},
+      dialogStockDetailVisible: false,
+      stockDetailRow: {}
     })
   },
   computed: {
@@ -113,6 +118,8 @@ export default {
       page_column_check: 'filler_lng_plan_check_column',
       page_column_anomalous: 'filler_lng_plan_anomalous_column',
       page_change_info_column: 'filler_lng_plan_change_list_column',
+      page_column_stock_detail: 'lngStockDetail_column',
+      select_list_stock_detail: 'lngStockDetail_select_list',
       select_list: 'filler_lngPlan_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
@@ -156,6 +163,10 @@ export default {
         this.exportEvent(row)
       } else if (type === 'change_list') {
         this.changeInfoList(row)
+      } else if (type == 'propose') {
+        row._btn = custFormBtnList(2)
+        this.stockDetailRow.gasstationName = row.gasstationName
+        this.stockDetailFind(row)
       }
     },
     // 存在计划变更，处理变更记录
@@ -562,6 +573,17 @@ export default {
       }
       this.changeInfoRow = row
       this.dialogOperateVisible = true
+    },
+    onStockDetailFormEvent() {
+      this.dialogStockDetailVisible = false
+    },
+    stockDetailFind(row) {
+      // 获取加气站日均销量存量详情
+      const params = { purchaseId: row.id }
+      $purchaseProposeDetailFind(params).then(res => {
+        this.dialogStockDetailVisible = true
+        Object.assign(this.stockDetailRow, res.data)
+      })
     },
     // 回调参数
     onReqParams(type, _this, callback) {
