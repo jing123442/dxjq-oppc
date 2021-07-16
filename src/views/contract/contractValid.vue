@@ -8,6 +8,7 @@
           <div class="btn-item-footer">
             <el-button v-for="(btnItem, index) in dialogRowData._btn.list" :key="index" :type="btnItem.bType"
                        size="small"
+                       :disabled="dialogBtnDisabled"
                        :icon="btnItem.icon" @click="onListEventDialog(btnItem, dialogRowData)">{{btnItem.label}}
             </el-button>
           </div>
@@ -45,7 +46,8 @@ export default {
         recall: { title: '撤回', text: '请确认撤回甲方已签署的合同，撤回后本合同作废' },
         download: { title: '下载', text: '请确认是否下载' }
       },
-      dialogRowData: {}
+      dialogRowData: {},
+      dialogBtnDisabled: false
     })
   },
   computed: {
@@ -133,10 +135,14 @@ export default {
       })
     },
     contractDownload(row) {
+      this.dialogBtnDisabled = true
       $userContractDownload({ id: row.contractId }).then(res => {
         exportBlobToFiles(res, row.partyaName + '-' + row.title, res.type)
         this.$message.success('下载成功')
+        this.dialogBtnDisabled = false
         this.contractValidDialogVisible = false
+      }).catch(e => {
+        this.dialogBtnDisabled = false
       })
     },
     dialogClose() {

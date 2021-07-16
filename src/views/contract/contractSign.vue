@@ -9,6 +9,7 @@
             <div class="btn-item-footer">
               <el-button v-for="(btnItem, index) in dialogRowData._btn.list" :key="index" :type="btnItem.bType"
                          size="small"
+                         :disabled="dialogBtnDisabled"
                          :icon="btnItem.icon" @click="onListEventDialog(btnItem, dialogRowData)">{{btnItem.label}}
               </el-button>
             </div>
@@ -45,7 +46,8 @@ export default {
         sign: { title: '合同签约', text: '请确认是否去签约' },
         download: { title: '下载', text: '请确认是否下载' }
       },
-      dialogRowData: {}
+      dialogRowData: {},
+      dialogBtnDisabled: false
     })
   },
   computed: {
@@ -95,16 +97,24 @@ export default {
       })
     },
     contractToSign(row) {
+      this.dialogBtnDisabled = true
       $userContractToSign({ id: row.contractId }).then(res => {
+        this.dialogBtnDisabled = false
         window.location.href = res.data
         this.contractSingDialogVisible = false
+      }).catch(e => {
+        this.dialogBtnDisabled = false
       })
     },
     contractDownload(row) {
+      this.dialogBtnDisabled = true
       $userContractDownload({ id: row.contractId }).then(res => {
         exportBlobToFiles(res, row.partyaName + '-' + row.title, res.type)
         this.$message.success('下载成功')
+        this.dialogBtnDisabled = false
         this.contractSingDialogVisible = false
+      }).catch(e => {
+        this.dialogBtnDisabled = false
       })
     },
     dialogClose() {

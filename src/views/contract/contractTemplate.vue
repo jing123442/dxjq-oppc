@@ -11,6 +11,7 @@
             <div class="btn-item-footer">
               <el-button v-for="(btnItem, index) in dialogRowData._btn.list" :key="index" :type="btnItem.bType"
                          size="small"
+                         :disabled="dialogBtnDisabled"
                          :icon="btnItem.icon" @click="onListEventFrom(btnItem, dialogRowData)">{{btnItem.label}}
               </el-button>
             </div>
@@ -56,7 +57,8 @@ export default {
       buttonsList: [{ type: 'primary', icon: '', event: 'upload', name: '上传模板' }],
       contractTemplateDialogVisible: false,
       ListEventBtnType: '',
-      dialogRowData: {}
+      dialogRowData: {},
+      dialogBtnDisabled: false
     })
   },
   computed: {
@@ -116,10 +118,14 @@ export default {
         this.$message.error('暂未上传模板文件')
         return
       }
+      this.dialogBtnDisabled = true
       $userContractTemplateAdd(params).then(res => {
+        this.dialogBtnDisabled = false
         this.$message.success('上传成功')
         this.$refs.table.initDataList()
         this.contractTemplateDialogVisible = false
+      }).catch(e => {
+        this.dialogBtnDisabled = false
       })
     },
     contractTemplateSettingUrl(row) {

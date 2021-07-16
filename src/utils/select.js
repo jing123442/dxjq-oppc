@@ -438,7 +438,7 @@ export function utilSelectAuthDistrictList() {
     node: ['data', 'areas'],
     params: {},
     props: {
-      value: 'areaCode',
+      value: 'areaName',
       label: 'areaName'
     }
   }

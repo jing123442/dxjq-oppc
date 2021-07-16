@@ -1,7 +1,7 @@
 <template>
   <div class="template-main" v-loading.fullscreen.lock="mapStatus" element-loading-text="正在加载地图信息，请等待..." style="padding: 0;padding-bottom: 40px;margin-bottom: 0; height: 100%;">
     <el-bmap vid="bmap" :zoom="zoom" :center="center" class="bm-view" :style="mapStyle">
-      <el-bmap-marker v-for="(item, index) of gasstationList" :vid="index" :key="index" :position="[item.longitude, item.latitude]" :icon="mapMarkIcon(item)" :title="item.gasstationName" :offset="[-10, -13]" :events="{ click: () => { markerClickEvent(item) }}"></el-bmap-marker>
+      <el-bmap-marker v-for="(item, index) of gasstationList" :vid="index" :key="index" :position="[item.longitude, item.latitude]" :icon="mapMarkIcon(item)" :title="gasstationNickName(item)" :offset="[-10, -13]" :events="{ click: () => { markerClickEvent(item) }}"></el-bmap-marker>
       <el-bmap-label v-for="(label,index) in gasstationList" :vid="'1_' + index" :key="'1_' + index" :content="markerLabelContent(label)" :label-style="markerLabelStyle" :offset="[-130, -70]" :visible="!!label.markerStatus" :position="[label.longitude, label.latitude]"></el-bmap-label>
       <el-bmap-info-window ref="mapWindow" vid="bmap-window" :position="currentWindow.markerWindowStatus ? [currentWindow.data.longitude, currentWindow.data.latitude] : center" :events="{ open: () => { markerPopVisibleNode() } }">
         <template>
@@ -9,7 +9,7 @@
             <div><img src="@/assets/images/logo.png" width="35" height="35" /></div>
             <div>
               <div class="title">
-                <span class="item-name text-overflow-ellipsis">{{currentWindow.data.gasstationName}}</span>
+                <span class="item-name text-overflow-ellipsis" :title="currentWindow.data.nickName">{{gasstationNickName(currentWindow.data)}}</span>
                 <span class="item-tag">[{{getGasstationTypeName(currentWindow.data.gasType)}}]</span>
               </div>
               <div class="address text-overflow-ellipsis">{{currentWindow.data.address}}</div>
@@ -29,7 +29,7 @@
             </div>
           </div>
           <div class="bm-charts">
-            <div class="bm-charts__title">总加气量 <span class="text-bold-number">{{ (currentWindow.data.gasQty + currentWindow.data.offlineGasQty) }}</span> 吨</div>
+            <div class="bm-charts__title">总加气量 <span class="text-bold-number">{{ (currentWindow.data.gasQty + currentWindow.data.offlineGasQty) | formateZeroToBar }}</span> 吨</div>
             <nt-charts v-if="currentWindow.markerWindowStatus" :webUIType="'echart'" :chartOptions="gasQtyChartOption"></nt-charts>
           </div>
           <div class="bm-bottom">
@@ -72,22 +72,24 @@
             <li v-for="(item, index) of currGasstationList" :key="index" :class="'icon-' + (item.gasType || 2004)" @click="markerClickEvent(item)">
               <div class="title">
                 <div>
-                  <span class="item-name text-overflow-ellipsis">{{item.gasstationName}}</span>
+                  <span class="item-name text-overflow-ellipsis" :title="item.nickName">{{gasstationNickName(item)}}</span>
                   <span class="item-tag">[{{getGasstationTypeName(item.gasType)}}]</span>
                 </div>
-                <div class="item-type" v-if="item.gasType === 1003">盟</div>
+                <div class="item-type" v-if="item.gasType === 1001">自</div>
+                <div class="item-type" v-else-if="item.gasType === 1002">合</div>
+                <div class="item-type" v-else-if="item.gasType === 1003">盟</div>
               </div>
               <div class="content">
-                  <span>
-                    <span class="text-bold-number">{{ (item.gasQty + item.offlineGasQty) }}</span>吨<span class="time">({{ item.offlineGasQtyDate | formateTData('date') }})</span>
-                  </span>
                 <span>
-                    <span class="text-bold-number">{{ item.offlinePrice | currency }}</span>/公斤<span class="time">({{ item.offlinePriceDate | formateTData('date') }})</span>
+                  <span class="text-bold-number">{{ (item.gasQty + item.offlineGasQty) | formateZeroToBar }}</span>吨<span class="time">({{ item.offlineGasQtyDate | formateTData('date') }})</span>
+                </span>
+                <span>
+                    <span class="text-bold-number">{{ (gasstationCheckType(item.gasType) ? item.offlinePrice : item.price) | currency }}</span>/公斤<span class="time">({{ item.offlinePriceDate | formateTData('date') }})</span>
                   </span>
               </div>
             </li>
           </ul>
-          <div class="map-list-pagination">共 {{pages.total}} 站点</div>
+          <div class="map-list-pagination">共 {{pages.total | formateZeroToBar}} 站点</div>
         </div>
       </div>
     </div>
@@ -103,24 +105,24 @@
             <li v-for="(item, index) of priceCompareList" :key="index">
               <div class="progress-item">
                 <div class="progress-item__line" :class="item.color" :style="{width: item.width + '%'}"></div>
-                <div v-if="item.show" class="progress-item__name text-overflow-ellipsis">{{ item.name }}</div>
+                <div v-if="item.show" class="progress-item__name text-overflow-ellipsis">{{ item.width > 0 ? item.name : '-' }}</div>
               </div>
               <div class="name">{{ item.label }} <span>{{ item.number | formateMoney }}</span></div>
             </li>
           </div>
         </div>
         <div class="gasstation">
-          <div class="gasstation__title">LNG站点分布<span>(共 <span class="text-bold-number">{{ gasSpreadTotal }}</span> 站点)</span></div>
+          <div class="gasstation__title">LNG站点分布<span>(共 <span class="text-bold-number">{{ gasSpreadTotal | formateZeroToBar }}</span> 站点)</span></div>
           <div class="gasstation__content-vertical">
             <li v-for="(item, index) of gasSpreadList" :key="index">
               <div class="progress-vertical-item"><div class="gasstation-number" :class="item.color" :style="{height: item.width + '%'}"></div></div>
-              <div class="name">{{ item.number }}</div>
+              <div class="name">{{ item.number | formateZeroToBar }}</div>
               <div class="name">{{ item.label }}</div>
             </li>
           </div>
         </div>
         <div class="gasstation">
-          <div class="gasstation__title">LNG市场份额<span>(单日 <span class="text-bold-number">{{ gasLNGSaleTotal }}</span> 吨)</span></div>
+          <div class="gasstation__title">LNG市场份额<span>(单日 <span class="text-bold-number">{{ gasLNGSaleTotal | formateZeroToBar }}</span> 吨)</span></div>
           <div class="gasstation__content-chart">
             <nt-charts :webUIType="'echart'" :chartOptions="lngMarketChartOption"></nt-charts>
           </div>
@@ -158,7 +160,7 @@ import { $districtList } from '@/service/user'
 import { currency, formatDate } from '@/utils/filters'
 import { utilSelectGasstationType } from '@/utils/select'
 import { mapGetters } from 'vuex'
-import { initVueDataOptions, isHttpHeaderURL } from '@/utils/tools'
+import { arrayResetSort, initVueDataOptions, isHttpHeaderURL } from '@/utils/tools'
 import { BattleLog, BattleForm } from './components'
 
 export default {
@@ -166,7 +168,6 @@ export default {
   components: { BattleLog, BattleForm },
   data: function () {
     return initVueDataOptions(this, {
-      akey: 'dfhycORtYDMz78dNLo9oNiDO1ufI2TZS',
       mapStatus: false,
       markerTitleStatus: false,
       currentWindow: {
@@ -229,7 +230,7 @@ export default {
     analysisDistrictName() {
       const districtItem = this.districtList.filter(item => this.finds.districtId === item.districtId)
 
-      return districtItem ? districtItem[0].districtName : '全区域'
+      return districtItem && districtItem[0] ? districtItem[0].districtName : '全区域'
     }
   },
   watch: {
@@ -292,6 +293,7 @@ export default {
         this.priceCompareList.push(this.analysesItemOption('大象平台平均', '', analyses.onAverage || 0, 'color_3', maxTotal, false))
         this.priceCompareList.push(this.analysesItemOption('大象线下平均', '', analyses.offAverage || 0, 'color_4', maxTotal, false))
 
+        this.priceCompareList = arrayResetSort(this.priceCompareList, 'width', 'desc')
         // LNG站点分布
         const tmpTotal = (Number(analyses.dx) + Number(analyses.zhy) + Number(analyses.zsh) + Number(analyses.zsy) + Number(analyses.sh)).toFixed(0)
         this.gasSpreadTotal = tmpTotal
@@ -375,7 +377,7 @@ export default {
       }
     },
     filterGasstationList(value) {
-      this.currGasstationList = this.gasstationList.filter(item => item.gasstationName.indexOf(value) !== -1)
+      this.currGasstationList = this.gasstationList.filter(item => item.nickName && item.nickName.indexOf(value) !== -1)
     },
     initGasstationList() {
       const params = this.finds
@@ -394,7 +396,7 @@ export default {
     markerLabelContent(item) {
       let html = ''
 
-      html += '<div class="marker-label-tag"><div class="title">' + item.gasstationName + '</div><div class="detail"><div class="number"><span class="text-bold-number">' + (item.gasQty + item.offlineGasQty) + '</span> 吨</div><div class="money"><span class="text-bold-number">' + currency(item.price) + '</span>/公斤</div></div></div>'
+      html += '<div class="marker-label-tag"><div class="title">' + this.gasstationNickName(item) + '</div><div class="detail"><div class="number"><span class="text-bold-number">' + (item.gasQty + item.offlineGasQty) + '</span> 吨</div><div class="money"><span class="text-bold-number">' + currency(item.price) + '</span>/公斤</div></div></div>'
 
       return html
     },
@@ -460,13 +462,17 @@ export default {
       this.pages.page = val
       this.initGasstationList()
     },
+    // 加气站简称
+    gasstationNickName(item) {
+      return item.nickName || '-'
+    },
     // 获取加气站类型
     getGasstationTypeName(type) {
       let name = '-'
 
       this.gasstationType.forEach(item => {
         if (type === item.value) {
-          name = item.label
+          name = this.gasstationCheckType(type) ? item.label : '大象加气'
         }
       })
 
@@ -600,7 +606,7 @@ export default {
             hoverAnimation: false,
             legendHoverLink: false,
             silent: true,
-            radius: ['40%', '60%'],
+            radius: ['30%', '45%'],
             center: ['50%', '50%'],
             itemStyle: {},
             data: [
@@ -620,7 +626,7 @@ export default {
               formatter: function(parmas) {
                 const dataTime = parmas.name === '平台' ? data.gasQtyDate : data.offlineGasQtyDate
 
-                return parmas.value + '吨 (' + parmas.percent + '%)\n(' + formatDate(dataTime, 'yyyy-MM-dd') + ')'
+                return (parmas.value || '-') + '吨 (' + (parmas.percent ? parmas.percent + '%' : '-') + ')\n(' + formatDate(dataTime, 'yyyy-MM-dd') + ')'
               }
             },
             labelLine: {
@@ -826,12 +832,12 @@ export default {
           background-position: center;
           border: 2px solid #5B8FF9;
           &.no {
-            background-color: #5B8FF9;
-            background-image: url(../../assets/images/battle/g_ans_no.png);
-          }
-          &.ok {
             background-color: #ffffff;
             background-image: url(../../assets/images/battle/g_ans_ok.png);
+          }
+          &.ok {
+            background-color: #5B8FF9;
+            background-image: url(../../assets/images/battle/g_ans_no.png);
           }
 
         }
@@ -912,8 +918,9 @@ export default {
             align-items: center;
             justify-content: flex-start;
             & > span {
+              white-space: nowrap;
               &:first-child {
-                padding-right: 15px;
+                padding-right: 8px;
               }
             }
             .time {

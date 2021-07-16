@@ -8,9 +8,9 @@ const columns = {
     { field: 'code', name: '合同编号' },
     { field: 'status', name: '合同状态', formatter: 'contractStatus', search: { type: 'select', obj: 'contractStatus', placeholder: '合同状态' } },
     { field: 'partyaName', name: '甲方公司名称', search: { type: 'text', placeholder: '请输入甲方公司名称' } },
-    { field: 'partyaCompleteDate', name: '甲方签约合同日期' },
+    { field: 'partyaCompleteDate',  formatFun: 'formateTData all', stype: 'format', name: '甲方签约合同日期' },
     { field: 'partybName', name: '乙方公司名称', search: { type: 'text', placeholder: '请输入乙方公司名称' } },
-    { field: 'partybCompleteDate', name: '乙方签约合同日期' },
+    { field: 'partybCompleteDate',  formatFun: 'formateTData all',  stype: 'format', name: '乙方签约合同日期' },
     { field: 'partybContactName', name: '业务负责人', search: { type: 'text', placeholder: '请输入业务负责人' } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 220, list: params => {
         const optsList = [{ type: 'details', name: '查看'}]
@@ -28,9 +28,9 @@ const columns = {
     { field: 'code', name: '合同编号' },
     { field: 'status', name: '合同状态', formatter: 'contractStatus', search: { type: 'select', obj: 'contractStatus', placeholder: '合同状态' } },
     { field: 'partyaName', name: '甲方公司名称', search: { type: 'text', placeholder: '请输入甲方公司名称' } },
-    { field: 'partyaCompleteDate', name: '甲方签约合同日期' },
+    { field: 'partyaCompleteDate',  formatFun: 'formateTData all',  stype: 'format', name: '甲方签约合同日期' },
     { field: 'partybName', name: '乙方公司名称', search: { type: 'text', placeholder: '请输入乙方公司名称' } },
-    { field: 'partybCompleteDate', name: '乙方签约合同日期' },
+    { field: 'partybCompleteDate',  formatFun: 'formateTData all', stype: 'format', name: '乙方签约合同日期' },
     { field: 'partybContactName', name: '业务负责人', search: { type: 'text', placeholder: '请输入业务负责人' } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 220, list: params => {
         const optsList = [{ type: 'details', name: '查看'}]

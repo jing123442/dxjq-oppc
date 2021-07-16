@@ -213,6 +213,23 @@ export function objectDepthAssignment(source) {
   return sourceCopy
 }
 
+// 数组根据某个字段排序
+export function arrayResetSort(sourceColumn, key = 'serial', order = 'asc') {
+  const arrayList = objectDepthAssignment(sourceColumn)
+
+  if (order == 'asc') {
+    arrayList.sort((arr1, arr2) => {
+      return Number(arr1[key]) - Number(arr2[key])
+    })
+  } else if (order == 'desc') {
+    arrayList.sort((arr1, arr2) => {
+      return Number(arr2[key]) - Number(arr1[key])
+    })
+  }
+
+  return arrayList
+}
+
 // 请求默认参数
 export function queryDefaultParams(_this, param) {
   let queryParams = objectDepthAssignment(_this.$store.getters.query_params)
@@ -398,7 +415,7 @@ export function exportBlobToFiles(content, fileName, fileType = 'application/vnd
 export function currency(value, unit, currency, decimals) {
   const digitsRE = /(\d{3})(?=\d)/g
   value = parseFloat(value)
-  if (!isFinite(value) || (!value && value !== 0)) return ''
+  if (!isFinite(value) || (!value && value === 0)) return ''
   currency = currency != null ? currency : '￥'
   decimals = decimals != null ? decimals : 2
   var stringified = Math.abs(value).toFixed(decimals)
