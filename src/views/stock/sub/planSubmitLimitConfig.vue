@@ -5,7 +5,7 @@
         <em-table-list :tableListName="'planSubmitLimitConfig'" ref="pslConfig" :axios="axios" :queryCustURL="queryPSLCustURL" :responseSuccess="response_success" :queryParam="queryParams" :buttonsList="buttonsList" :mode_list="mode_list" :page_status="page_status" :page_column="psl_page_column" :select_list="select_list" @onListEvent="onListEvent" @updateColumnValue="updatePSLColumnValue" @onReqParams="onReqParams"></em-table-list>
       </el-col>
       <el-col :span="12" style="background-color: #ffffff;border-radius: 5px;" >
-        <em-table-list :custTableTitle="'变更记录'" :tableListName="'freightLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="log_page_status" :page_column="log_page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+        <em-table-list ref="pslConfigRecord" :custTableTitle="'变更记录'" :tableListName="'freightLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="log_page_status" :page_column="log_page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
       </el-col>
     </el-row>
     <el-dialog title="配置" :visible.sync="dialogConfigPSLVisible" :width="'70%'" :append-to-body="true">
@@ -191,6 +191,7 @@ export default {
         $plcSaveOrUpdateList(this.pslDialogData).then(response => {
           this.$message.success('保存成功！')
           this.$refs.pslConfig.initDataList()
+          this.$refs.pslConfigRecord.initDataList()
         })
       }
 
