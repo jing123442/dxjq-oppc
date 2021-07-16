@@ -62,11 +62,10 @@ export default {
     },
     onListFormEvent(obj) {
       if (obj.type == 'ok') {
-        // if (this.rowData.changeType === '') { this.$message.warning('请选择调整类型'); return }
         this.$refs.points.$refs.pointsForm.validate((valid) => {
           if (valid) {
             const params = {
-              changeAmount: this.rowData.changeAmount,
+              changeAmount: this.rowData.changeType == 1 ? -1 * this.rowData.changeAmount : this.rowData.changeAmount,
               note: this.rowData.note,
               rewardType: 22, // 积分调整
               userId: this.rowData.userId

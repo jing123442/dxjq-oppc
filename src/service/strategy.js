@@ -217,11 +217,6 @@ export async function $strategyGasstationLimitStatusLogGetLatest(data) {
   return await R({ url: 'strategy/gasstation_limit_status_log/get_latest', data })
 }
 
-// 获取加气站日均销量存量详情
-export async function $gasstationWeekAverageQtyFind(data) {
-  return await R({ url: 'strategy/gasstation_week_average_qty/find', data })
-}
-
 // lng 计划提报详情
 export async function $purchaseProposeDetailFind(data) {
   return await R({ url: 'strategy/purchase_propose_detail/find', data })

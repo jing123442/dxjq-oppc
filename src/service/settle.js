@@ -145,3 +145,8 @@ export async function $settleCashFlowAdd (data) {
 export async function $settleCashFlowDownload (data) {
   return await R({ url: 'settle/cash_flow_apply/download', data, responseType: 'blob' })
 }
+
+// 获取加气站日均销量存量详情
+export async function $gasstationWeekAverageQtyFind(data) {
+  return await R({ url: 'settle/gasstation_week_average_qty/find', data })
+}

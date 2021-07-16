@@ -20,7 +20,8 @@
 </template>
 <script>
 import { initVueDataOptions, queryDefaultParams, custFormBtnList, formateTData } from '@/utils/tools'
-import { $updateStock, $strategyGasstationLimitStatusLogAdd, $strategyGasstationLimitStatusLogGetLatest, $gasstationWeekAverageQtyFind } from '@/service/strategy'
+import { $updateStock, $strategyGasstationLimitStatusLogAdd, $strategyGasstationLimitStatusLogGetLatest } from '@/service/strategy'
+import { $gasstationWeekAverageQtyFind } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
 export default {

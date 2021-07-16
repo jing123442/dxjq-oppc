@@ -217,12 +217,31 @@ export default {
   position: relative;
   .left-tree {
     position: absolute;
-    min-height: 500px;
+    height: 700px;
+    overflow: auto;
     width: 140px;
     background: #fff;
   }
   .right-goods {
     margin-left: 150px;
+  }
+  .left-tree::-webkit-scrollbar{
+    width: 4px;
+    height: 5px;
+  }
+  .left-tree::-webkit-scrollbar-track{
+    background: rgb(239, 239, 239);
+    border-radius: 2px;
+  }
+  .left-tree::-webkit-scrollbar-thumb{
+    background: #bfbfbf;
+    border-radius: 10px;
+  }
+  .left-tree::-webkit-scrollbar-thumb:hover{
+    background: #333;
+  }
+  .left-tree::-webkit-scrollbar-corner{
+    background: #179a16;
   }
 }
 </style>

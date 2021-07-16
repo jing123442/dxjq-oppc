@@ -29,6 +29,24 @@
     <el-dialog title="库存详情" :visible.sync="dialogStockDetailVisible" width="80%" :append-to-body="true">
       <nt-form ref="stockDetail" v-if="dialogStockDetailVisible" :rowData="stockDetailRow" :modeList="{}" :pageColumn="page_column_stock_detail" :selectList="select_list_stock_detail" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onStockDetailFormEvent"></nt-form>
     </el-dialog>
+    <el-dialog title="配送建议算法说明" :visible.sync="dialogSuggestVisible" width="80%" :append-to-body="true">
+      <p>定义：</p>
+      <p>1、周日均销量：</p>
+      <p style="padding-left: 20px">a、销售满一周：取7日均值，即加气站提报时间前一个零点至168小时前（七天）区间内销量除以7</p>
+      <p style="padding-left: 20px">b、销售不满一周：取销售日期日均值，即加气站提报时间前一个零点至有第一笔订单的前第一个零点除以（加气站提报日期减产生订单日期）</p>
+      <p>2、存量：</p>
+      <p style="padding-left: 20px">站端当日期初库存数+当日配送量（当日配送量=“期望到站时间”为当日的LNG计划订单出港重量）</p>
+      <p>3、存销比：</p>
+      <p style="padding-left: 20px">存量/周日均销量</p>
+      <p>计划建议判定标准：</p>
+      <p>1、“建议调整或取消”：超出周日均销量X对应的存销比系数上限</p>
+      <em-table-list :custTableTitle="'刷新获取最新配置'" :tableListName="'planSubmitLimitConfig'" ref="pslConfig" :axios="axios" :queryCustURL="queryPSLCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="4" :page_column="psl_page_column" :select_list="select_list" @onListEvent="onListEvent" @updateColumnValue="updatePSLColumnValue" @onReqParams="onReqParams"></em-table-list>
+      <p>2、“建议优先配送”：低于库存下限</p>
+      <p v-for="(item, index) in suggestArr" :key="index">({{index + 1}}) {{item}}</p>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogSuggestVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -40,6 +58,16 @@ export default {
   name: 'lngPlan',
   data() {
     return initVueDataOptions(this, {
+      queryPSLCustURL: {
+        list: {
+          url: 'strategy/purchase_limit_config/list',
+          method: 'post',
+          parse: {
+            tableData: ['data']
+          }
+        },
+        name: '计划提报限制'
+      },
       queryCustURL: {
         list: {
           url: 'strategy/purchase/list',
@@ -97,11 +125,15 @@ export default {
       detail_mode_list: [],
       currParams: {},
       dialogStockDetailVisible: false,
-      stockDetailRow: {}
+      stockDetailRow: {},
+      rangeSign: ' ≤ X < ',
+      dialogSuggestVisible: false,
+      suggestArr: []
     })
   },
   computed: {
     ...mapGetters({
+      psl_page_column: 'pslConfig_column',
       mode_list: 'filler_lngPlan_mode_list',
       mode_change_list: 'filler_lng_plan_change_mode_list',
       mode_info_list: 'filler_lng_plan_info_mode_list',
@@ -167,7 +199,36 @@ export default {
         row._btn = custFormBtnList(2)
         this.stockDetailRow.gasstationName = row.gasstationName
         this.stockDetailFind(row)
+      } else if (type == 'suggest') {
+        this.dialogSuggestVisible = true
       }
+    },
+    updatePSLColumnValue(dataList, callback) {
+      this.suggestArr = []
+      this.ruleDeal(dataList)
+      dataList.forEach(item => {
+        item.qtyAvgRange = item.qtyAvgBegin + this.rangeSign + item.qtyAvgEnd
+        item.minStock = '≤' + item.minStock
+        this.suggestArr.push(`周日均销量${item.qtyAvgRange}吨，存量${item.minStock}`)
+      })
+      callback(dataList)
+    },
+    ruleDeal(dataList) {
+      let str = ''
+      const ruleArr = []
+      dataList.length > 2 && dataList.forEach((item, index) => {
+        if (dataList.length - index > 2) {
+          str += `(${dataList[1 + index].qtyAvgEnd} - ${dataList[1 + index].qtyAvgBegin}) * ${dataList[1 + index].rate} + `
+          ruleArr.push(str)
+        }
+      })
+      dataList.length > 0 && dataList.forEach((item, index) => {
+        if (index == 0) {
+          item.limitStock = `日均销量 * ${item.rate}`
+        } else {
+          item.limitStock = `${dataList[0].qtyAvgEnd} * ${dataList[0].rate} ${ruleArr[index - 2] ? '+' + ruleArr[index - 2] : ' + '} (日均销量 - ${item.qtyAvgBegin}) * ${item.rate}`
+        }
+      })
     },
     // 存在计划变更，处理变更记录
     changeEvent(row) {
