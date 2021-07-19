@@ -298,7 +298,7 @@ const columns = {
     { field: 'note', name: '摘要' }
   ],
   lngStockDetail: [
-    { field: 'gasstationName', nameSpan: 6, name: '加气站名称', show: { type: 'span' } },
+    { field: 'nickName', nameSpan: 6, name: '加气站名称', show: { type: 'span' } },
     { field: 'weekAverageQty', nameSpan: 6, name: '加气站周日均销量(公斤)', show: { type: 'span' } },
     { field: 'stock', nameSpan: 6, name: '加气站存量(公斤)', show: { type: 'span' } },
     { field: 'stockMax', nameSpan: 6, name: '存量上限(公斤)', show: { type: 'span' } },
@@ -306,7 +306,7 @@ const columns = {
     { field: 'proposeType', nameSpan: 6, name: '配送建议', formatter: 'proposeType', show: { type: 'select', isDisabled: true, obj: 'proposeType', placeholder: '-' } }
   ],
   stockDetail: [
-    { field: 'gasstationName', nameSpan: 6, name: '加气站名称', show: { type: 'span' } },
+    { field: 'nickName', nameSpan: 6, name: '加气站名称', show: { type: 'span' } },
     { field: 'weekAverageQty', nameSpan: 6, name: '加气站周日均销量(公斤)', show: { type: 'span' } },
     { field: 'stock', nameSpan: 6, name: '加气站存量(公斤)', show: { type: 'span' } },
     { field: 'stockMax', nameSpan: 6, name: '存量上限(公斤)', show: { type: 'span' } },

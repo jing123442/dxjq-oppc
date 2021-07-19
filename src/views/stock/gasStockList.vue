@@ -114,7 +114,7 @@ export default {
         this.dialogLimitVisible = true
       } else if (type == 'status_stock') {
         this.stockDetailRow._btn = custFormBtnList(2)
-        this.stockDetailRow.gasstationName = row.gasstationName
+        this.stockDetailRow.nickName = row.nickName
         this.stockDetailFind(row)
       }
     },
