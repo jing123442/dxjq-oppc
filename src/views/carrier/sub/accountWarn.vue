@@ -1,25 +1,27 @@
 <template>
-  <div class="template-main">
+  <div class="template-main" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="正在进行资金预警配置，请等待...">
     <em-table-list :tableListName="'accountWarn'" ref="accountWarn" :buttonsList="buttonsList" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog title="批量操作" :visible.sync="dialogBatchVisible" :width="add_edit_dialog" :append-to-body="true">
-      <div class="dialog-main">
-        <div class="checkbox-main" ref="scroll" v-if="scrollView" v-infinite-scroll="onload" infinite-scroll-disabled="scrollDisabled" >
-          <el-input
-            placeholder="请输入内容"
-            prefix-icon="el-icon-search"
-            v-model="searchOrg"
-            @change="searchEvent">
-          </el-input>
-          <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-          <el-checkbox-group class="checkbox-list-main" v-model="checkedOrgList" @change="handleCheckedCitiesChange">
+    <el-dialog :title="batchSetting ? '批量操作' : '删除预警'" :visible.sync="dialogBatchVisible" :width="batchSetting ? add_edit_dialog : '40%'" :append-to-body="true" @close="dialogClose">
+      <div v-if="batchSetting" class="dialog-main">
+        <div class="checkbox-main" ref="scroll" v-if="scrollView || dialogBatchVisible" v-infinite-scroll="onload" infinite-scroll-disabled="scrollDisabled" >
+          <div style="display: flex; align-items: center; margin-bottom: 10px">
+            <el-checkbox style="margin-right: 10px" :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+            <el-input
+              placeholder="请输入内容"
+              prefix-icon="el-icon-search"
+              v-model="searchOrg"
+              @change="searchEvent">
+            </el-input>
+          </div>
+          <el-checkbox-group class="checkbox-list-main" v-model="warnInfo.carrierList" @change="handleCheckedCitiesChange">
             <el-checkbox v-for="(item, i) in orgList" :label="item" :key="i">{{item.orgName}}</el-checkbox>
           </el-checkbox-group>
         </div>
         <div class="dialog-right">
-          <div class="total-main">已选择{{checkedOrgList.length}}个物流公司</div>
+          <div class="total-main">已选择{{warnInfo.carrierList.length}}个物流公司</div>
           <div class="dialog-tag-main">
             <el-tag
-              v-for="item in checkedOrgList"
+              v-for="item in warnInfo.carrierList"
               :key="item.orgId"
               closable>
               {{item.orgName}}
@@ -38,11 +40,11 @@
               </el-form-item>
             </el-form>
             <div v-if="warnInfo.warnStatus == 1">
-              <el-form ref="warn1Form" v-for="(item, i) in warnInfo.warnObjectList" :key="i" :rules="userRules" :inline="true" :model="item" class="demo-form-inline">
-                <el-form-item label="预警接收人" prop="userName">
+              <el-form ref="warnUserForm" v-for="(item, i) in warnInfo.warnObjectList" :key="i" :rules="userRules" :inline="true" :model="item" class="demo-form-inline">
+                <el-form-item label="预警接收人" prop="warnName">
                   <el-input v-model="item.warnName" placeholder="预警接收人"></el-input>
                 </el-form-item>
-                <el-form-item label="预警接收电话" prop="mobile">
+                <el-form-item label="预警接收电话" prop="warnMobile">
                   <el-input v-model="item.warnMobile" placeholder="预警接收电话"></el-input>
                 </el-form-item>
                 <el-button v-if="warnInfo.warnObjectList.length - 1 == i" @click="plusClickEvent" plain icon="el-icon-plus">添加</el-button>
@@ -52,6 +54,7 @@
           </div>
         </div>
       </div>
+      <div class="delete-prompt" v-else>删除后将关闭该公司的资金预警，是否继续</div>
       <el-form>
         <el-form-item class="el-del-btn-item">
           <div class="btn-item-footer">
@@ -67,7 +70,7 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, queryDefaultParams, callbackPagesInfo, custFormBtnList } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, custFormBtnList, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $userOrgList } from '@/service/user'
 import { $strategyCarrierWarnClose, $strategyCarrierWarnConfig } from '@/service/strategy'
@@ -86,13 +89,12 @@ export default {
             totalCount: ['data', 'total']
           }
         },
-        name: '公司资金账户管理'
+        name: '资金预警'
       },
-      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { orgType: 2 } }),
+      queryParams: Function,
       dialogBatchVisible: false,
       buttonsList: [{ type: 'primary', icon: '', event: 'batch', name: '批量操作' }],
       checkAll: false,
-      checkedOrgList: [],
       orgList: [],
       isIndeterminate: true,
       pages: {
@@ -103,6 +105,7 @@ export default {
       warnInfo: {
         warnStatus: '1',
         warnValue: '',
+        carrierList: [],
         warnObjectList: [
           { warnMobile: '', warnName: '' }
         ]
@@ -116,7 +119,7 @@ export default {
           { required: true, message: '请选择预警状态', trigger: 'blur' }
         ],
         warnValue: [
-          { required: true, message: '请输入预警值', trigger: 'blur' }
+          { required: true, validator: this.validatorWarnValue, trigger: 'blur' }
         ]
       },
       userRules: {
@@ -124,10 +127,12 @@ export default {
           { required: true, message: '请输入姓名', trigger: 'blur' }
         ],
         warnMobile: [
-          { required: true, message: '请输入接收电话', trigger: 'blur' }
+          { required: true, validator: this.validatorPhone, trigger: 'blur' }
         ]
       },
-      validList: []
+      validList: [],
+      fullscreenLoading: false,
+      batchSetting: true
     })
   },
   computed: {
@@ -143,6 +148,25 @@ export default {
   },
   created: function () {},
   methods: {
+    validatorPhone(rule, value, callback) {
+      if (value === '') {
+        callback(new Error('手机号不能为空'))
+      } else if (!/^1\d{10}$/.test(value)) {
+        callback(new Error('手机号格式错误'))
+      } else {
+        callback()
+      }
+    },
+    validatorWarnValue(rule, value, callback) {
+      if (value === '') {
+        callback(new Error('预警值不能为空'))
+      } else if (!/^[+]{0,1}(\d+)$/.test(value)) {
+        callback(new Error('预警值只能为正整数'))
+      } else {
+        callback()
+      }
+    },
+
     searchEvent() {
       this.pages.page = 1
       this.orgList = []
@@ -162,13 +186,24 @@ export default {
       this.warnInfo.warnObjectList.splice(i, 1)
     },
     handleCheckAllChange(val) {
-      this.checkedOrgList = val ? this.orgList : []
+      this.warnInfo.carrierList = val ? this.orgList : []
       this.isIndeterminate = false
     },
     handleCheckedCitiesChange(value) {
       var checkedCount = value.length
       this.checkAll = checkedCount === this.orgList.length
       this.isIndeterminate = checkedCount > 0 && checkedCount < this.orgList.length
+    },
+    dialogClose() {
+      this.warnInfo = {
+        warnStatus: '1',
+        warnValue: '',
+        carrierList: [],
+        warnObjectList: [
+          { warnMobile: '', warnName: '' }
+        ]
+      }
+      this.checkAll = false
     },
     onload() {
       var params = {
@@ -191,34 +226,41 @@ export default {
     },
     onListEvent(type, row) {
       if (type === 'batch') {
+        this.batchSetting = true
         this.dialogBatchVisible = true
       } else if (type === 'delete') {
-        this.carrierWarnClose(row)
+        this.batchSetting = false
+        this.warnInfo = row
+        this.dialogBatchVisible = true
       }
     },
     onListEventDialog(type, row) {
       if (type.type === 'ok') {
-        this.$refs.warnForm.validate((valid) => {
-          if (valid) {
-            if (row.warnStatus == 1) {
-              this.validList = []
-              this.$refs.warn1Form.forEach(item => {
-                item.validate((valid) => {
-                  if (valid) {
-                    this.validList.push(item)
-                  }
+        if (this.batchSetting) {
+          this.$refs.warnForm.validate((valid) => {
+            if (valid) {
+              if (row.warnStatus == '1') {
+                this.validList = []
+                this.$refs.warnUserForm.forEach(item => {
+                  item.validate((valid) => {
+                    if (valid) {
+                      this.validList.push(item)
+                    }
+                  })
                 })
-              })
-              if (this.$refs.warn1Form.length == this.validList.length) {
-                this.carrierWarnConfig(row)
+                if (this.$refs.warnUserForm.length == this.validList.length) {
+                  this.carrierWarnConfig(row)
+                }
+              } else {
+                this.carrierWarnClose(row)
               }
             } else {
-              this.carrierWarnClose()
+              return false
             }
-          } else {
-            return false
-          }
-        })
+          })
+        } else {
+          this.carrierWarnClose(row)
+        }
       } else {
       }
     },
@@ -226,32 +268,40 @@ export default {
       var param = {
         carrierList: []
       }
-      if (row) {
-        param = {
-          carrierList: this.checkedOrgList
-        }
+      if (this.batchSetting) {
+        param.carrierList = row.carrierList
+        this.fullscreenLoading = true
       } else {
         param.carrierList.push(row)
       }
       $strategyCarrierWarnClose(param).then(res => {
-        this.$refs.accountWarn.initDataList()
         this.dialogBatchVisible = false
+        this.fullscreenLoading = false
+        this.$message.success('操作成功')
+        this.$refs.accountWarn.initDataList()
       })
     },
     carrierWarnConfig(row) {
       var param = {
-        carrierList: this.checkedOrgList,
+        carrierList: row.carrierList,
         warnObjectList: row.warnObjectList,
         warnValue: row.warnValue
       }
+      this.fullscreenLoading = true
       $strategyCarrierWarnConfig(param).then(res => {
-        this.$refs.accountWarn.initDataList()
         this.dialogBatchVisible = false
+        this.fullscreenLoading = false
+        this.$message.success('操作成功')
+        this.$refs.accountWarn.initDataList()
       })
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { param: '' } })
-
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (v !== '') params.param[k] = v
+        }
+      }
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     },
@@ -303,14 +353,20 @@ export default {
         .el-checkbox {
           height: 20px;
           width: 100%;
-          .el-checkbox__label{
+          overflow: hidden;
+          ::v-deep .el-checkbox__label{
+            width: 260px;
             white-space: nowrap;
-            text-overflow: ellipsis;
             overflow: hidden;
+            text-overflow: ellipsis;
             word-break: break-all;
           }
         }
       }
     }
+  }
+  .delete-prompt{
+    padding-top: 15px;
+    padding-bottom: 30px;
   }
 </style>

@@ -11,7 +11,7 @@ export default [
     children: [
       { path: 'contractValid', component: inImport('contract/contractValid'), name: 'contractValid', meta: { title: '签约确认', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'contractSign', component: inImport('contract/contractSign'), name: 'contractSign', meta: { title: '合同签约', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'contractTemplate', component: inImport('contract/contractTemplate'), name: 'contractTemplate', meta: { title: '模板管理', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'contractTemplate', component: inImport('contract/contractTemplate'), name: 'contractTemplateSetting', meta: { title: '模板管理', icon: 'icon-gongnengguanli', noCache: false } },
       {
         path: 'contractTemplate',
         name: 'contractTemplate',
