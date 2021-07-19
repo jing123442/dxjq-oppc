@@ -93,14 +93,14 @@ export default {
     },
     contractView(row) {
       $userContractView({ id: row.contractId }).then(res => {
-        window.location.href = res.data
+        window.open(res.data)
       })
     },
     contractToSign(row) {
       this.dialogBtnDisabled = true
       $userContractToSign({ id: row.contractId }).then(res => {
         this.dialogBtnDisabled = false
-        window.location.href = res.data
+        window.open(res.data)
         this.contractSingDialogVisible = false
       }).catch(e => {
         this.dialogBtnDisabled = false

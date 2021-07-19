@@ -29,7 +29,8 @@ export default [
         meta: { title: '公司资金账户管理', icon: 'icon-gongnengguanli', noCache: false },
         children: [
           { path: 'accountList', component: inImport('carrier/sub/accountList'), name: 'accountCarrierList', meta: { title: '流水列表', icon: 'icon-gongnengguanli', noCache: false } },
-          { path: 'vehicleCircle', component: inImport('carrier/sub/vehicleCircle'), name: 'vehicleCircle', meta: { title: '卡车圈存', icon: 'icon-gongnengguanli', noCache: false } }
+          { path: 'vehicleCircle', component: inImport('carrier/sub/vehicleCircle'), name: 'vehicleCircle', meta: { title: '卡车圈存', icon: 'icon-gongnengguanli', noCache: false } },
+          { path: 'accountWarn', component: inImport('carrier/sub/accountWarn'), name: 'accountCarrierWarn', meta: { title: '资金预警', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       },
       {

@@ -1,5 +1,5 @@
 <template>
-  <div class="template-main" v-loading.fullscreen.lock="mapStatus" element-loading-text="正在加载地图信息，请等待..." style="padding: 0;padding-bottom: 40px;margin-bottom: 0; height: 100%;">
+  <div class="template-main" v-if="!mapStatus" element-loading-text="正在加载地图信息，请等待..." style="padding: 0;padding-bottom: 40px;margin-bottom: 0; height: 100%;">
     <el-bmap vid="bmap" :zoom="zoom" :center="center" class="bm-view" :style="mapStyle">
       <el-bmap-marker v-for="(item, index) of gasstationList" :vid="index" :key="index" :position="[item.longitude, item.latitude]" :icon="mapMarkIcon(item)" :title="gasstationNickName(item)" :offset="[-10, -13]" :events="{ click: () => { markerClickEvent(item) }}"></el-bmap-marker>
       <el-bmap-label v-for="(label,index) in gasstationList" :vid="'1_' + index" :key="'1_' + index" :content="markerLabelContent(label)" :label-style="markerLabelStyle" :offset="[-130, -70]" :visible="!!label.markerStatus" :position="[label.longitude, label.latitude]"></el-bmap-label>

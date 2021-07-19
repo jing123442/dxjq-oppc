@@ -226,3 +226,13 @@ export async function $purchaseProposeDetailFind(data) {
 export async function $plcSaveOrUpdateList(data) {
   return await R({ url: 'strategy/purchase_limit_config/save_or_update_list', data })
 }
+
+// 关闭预警
+export async function $strategyCarrierWarnClose (data) {
+  return await R({ url: 'strategy/carrier/warn/close', data })
+}
+
+// 配置预警
+export async function $strategyCarrierWarnConfig (data) {
+  return await R({ url: 'strategy/carrier/warn/config', data })
+}
