@@ -3,7 +3,7 @@
     <em-table-list :tableListName="'accountWarn'" ref="accountWarn" :buttonsList="buttonsList" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog :title="batchSetting ? '批量操作' : '删除预警'" :visible.sync="dialogBatchVisible" :width="batchSetting ? add_edit_dialog : '40%'" :append-to-body="true" @close="dialogClose">
       <div v-if="batchSetting" class="dialog-main">
-        <div class="checkbox-main" ref="scroll" v-if="scrollView || dialogBatchVisible" v-infinite-scroll="onload" infinite-scroll-disabled="scrollDisabled" >
+        <div class="checkbox-main" ref="scroll" v-if="scrollView" v-infinite-scroll="onload" infinite-scroll-disabled="scrollDisabled" >
           <div style="display: flex; align-items: center; margin-bottom: 10px">
             <el-checkbox style="margin-right: 10px" :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
             <el-input
@@ -215,6 +215,7 @@ export default {
       }
       this.checkAll = false
       this.isIndeterminate = false
+      this.scrollView = false
     },
     onload() {
       var params = {
@@ -237,6 +238,7 @@ export default {
     },
     onListEvent(type, row) {
       if (type === 'batch') {
+        this.scrollView = true
         this.batchSetting = true
         this.dialogBatchVisible = true
       } else if (type === 'delete') {
@@ -273,6 +275,7 @@ export default {
           this.carrierWarnClose(row)
         }
       } else {
+        this.dialogBatchVisible = false
       }
     },
     carrierWarnClose(row) {
