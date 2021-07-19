@@ -10,12 +10,13 @@
               placeholder="请输入内容"
               prefix-icon="el-icon-search"
               v-model="searchOrg"
-              @change="searchEvent">
+              clearable
+              @input="searchEvent">
             </el-input>
           </div>
-          <el-checkbox-group class="checkbox-list-main" v-model="warnInfo.carrierList" @change="handleCheckedCitiesChange">
-            <el-checkbox v-for="(item, i) in orgList" :label="item" :key="i">{{item.orgName}}</el-checkbox>
-          </el-checkbox-group>
+          <div class="checkbox-list-main">
+            <el-checkbox v-for="(item, i) in orgList" :checked="item.checked" :label="item" :key="i" @change="checkboxClick(item, i)">{{item.orgName}}</el-checkbox>
+          </div>
         </div>
         <div class="dialog-right">
           <div class="total-main">已选择{{warnInfo.carrierList.length}}个物流公司</div>
@@ -148,15 +149,36 @@ export default {
     })
   },
   created: function () {},
+  watch: {
+    'orgList'(value) {
+      this.checkedActive(true)
+    }
+  },
   methods: {
     handleClose(item) {
       this.warnInfo.carrierList.splice(this.warnInfo.carrierList.indexOf(item), 1)
-      this.checkAll = false
-      if (this.warnInfo.carrierList.length === 0) {
-        this.isIndeterminate = false
-      } else {
-        this.isIndeterminate = true
+      this.scrollView = false
+      this.$nextTick(() => {
+        this.scrollView = true
+      })
+      this.orgList.forEach((item1, i) => {
+        if (item1.orgId === item.orgId) {
+          this.orgList[i].checked = false
+        }
+      })
+      this.checkedStatusHandle()
+    },
+    checkedActive(status) {
+      if (this.warnInfo.carrierList.length > 0) {
+        this.orgList.forEach((item1, i) => {
+          this.warnInfo.carrierList.forEach((item, k) => {
+            if (item.orgId === item1.orgId) {
+              this.orgList[i].checked = status
+            }
+          })
+        })
       }
+      this.checkedStatusHandle()
     },
     validatorPhone(rule, value, callback) {
       if (value === '') {
@@ -197,12 +219,44 @@ export default {
     },
     handleCheckAllChange(val) {
       this.warnInfo.carrierList = val ? [...this.orgList] : []
+      this.scrollView = false
+      this.$nextTick(() => {
+        this.scrollView = true
+      })
+      if (this.warnInfo.carrierList.length > 0) {
+        this.checkedActive(this.checkAll)
+      } else {
+        this.orgList.forEach((item, i) => {
+          this.orgList[i].checked = this.checkAll
+        })
+      }
       this.isIndeterminate = false
     },
-    handleCheckedCitiesChange(value) {
-      var checkedCount = value.length
-      this.checkAll = checkedCount === this.orgList.length
-      this.isIndeterminate = checkedCount > 0 && checkedCount < this.orgList.length
+    checkboxClick(item, i) {
+      this.orgList[i].checked = !item.checked
+      if (this.orgList[i].checked) {
+        this.warnInfo.carrierList.push(item)
+      } else {
+        this.warnInfo.carrierList.forEach((item1, i) => {
+          if (item1.orgId === item.orgId) {
+            this.warnInfo.carrierList.splice(i, 1)
+          }
+        })
+      }
+      this.checkedStatusHandle()
+    },
+    checkedStatusHandle() {
+      if (this.orgList.length === 0) return
+      if (this.orgList.length === this.warnInfo.carrierList.length) {
+        this.checkAll = true
+      } else {
+        this.checkAll = false
+        if (this.warnInfo.carrierList.length === 0) {
+          this.isIndeterminate = false
+        } else {
+          this.isIndeterminate = true
+        }
+      }
     },
     dialogClose() {
       this.warnInfo = {
@@ -216,6 +270,9 @@ export default {
       this.checkAll = false
       this.isIndeterminate = false
       this.scrollView = false
+      this.orgList = []
+      this.pages.page = 1
+      this.searchOrg = ''
     },
     onload() {
       var params = {
@@ -229,6 +286,9 @@ export default {
         }
       }
       $userOrgList(params).then(res => {
+        res.data.records.forEach((item) => {
+          item.checked = false
+        })
         this.orgList.push(...res.data.records)
         if (res.data.total <= this.orgList.length) {
           this.scrollDisabled = true
@@ -367,6 +427,8 @@ export default {
         .el-checkbox {
           height: 20px;
           width: 100%;
+          display: flex;
+          align-items: center;
           overflow: hidden;
           ::v-deep .el-checkbox__label{
             width: 260px;
