@@ -294,7 +294,7 @@ const columns = {
   orgAccountWarn: [
     { field: 'param', hide: true, search: { type: 'text', style: 'width: 350px', placeholder: '请输入公司名称、预警接收人或预警接收电话搜索' } },
     { field: 'orgName', name: '公司名称', fixed: 'left' },
-    { field: 'warnValue', name: '预警阈值' },
+    { field: 'warnValue', name: '预警值' },
     { field: 'warnObject', name: '预警接收人' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'delete', name: '删除' }] }
   ]
