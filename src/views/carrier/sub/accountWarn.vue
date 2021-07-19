@@ -23,7 +23,8 @@
             <el-tag
               v-for="item in warnInfo.carrierList"
               :key="item.orgId"
-              closable>
+              closable
+              @close="handleClose(item)">
               {{item.orgName}}
             </el-tag>
           </div>
@@ -96,7 +97,7 @@ export default {
       buttonsList: [{ type: 'primary', icon: '', event: 'batch', name: '批量操作' }],
       checkAll: false,
       orgList: [],
-      isIndeterminate: true,
+      isIndeterminate: false,
       pages: {
         page: 1,
         size: 10
@@ -148,6 +149,15 @@ export default {
   },
   created: function () {},
   methods: {
+    handleClose(item) {
+      this.warnInfo.carrierList.splice(this.warnInfo.carrierList.indexOf(item), 1)
+      this.checkAll = false
+      if (this.warnInfo.carrierList.length === 0) {
+        this.isIndeterminate = false
+      } else {
+        this.isIndeterminate = true
+      }
+    },
     validatorPhone(rule, value, callback) {
       if (value === '') {
         callback(new Error('手机号不能为空'))
@@ -186,7 +196,7 @@ export default {
       this.warnInfo.warnObjectList.splice(i, 1)
     },
     handleCheckAllChange(val) {
-      this.warnInfo.carrierList = val ? this.orgList : []
+      this.warnInfo.carrierList = val ? [...this.orgList] : []
       this.isIndeterminate = false
     },
     handleCheckedCitiesChange(value) {
@@ -204,6 +214,7 @@ export default {
         ]
       }
       this.checkAll = false
+      this.isIndeterminate = false
     },
     onload() {
       var params = {
