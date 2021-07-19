@@ -253,7 +253,7 @@ const columns = {
     { field: 'createNote', name: '提报备注', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'modifyCreateTime', name: '变更提报时间', nameSpan: 6, show: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } },
     { field: 'modifyCreateNote', name: '变更发起原因', nameSpan: 6, show: { type: 'span', ou: 2 } },
-    { field: 'modifyApplyType', name: '变更类型', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 6, inputSpan: 9, show: { type: 'span', model: 'select', obj: 'modifyApplyType', ou: 2 } },
+    { field: 'modifyApplyType', name: '变更类型', nameSpan: 6, show: { type: 'span', model: 'select', obj: 'modifyApplyType', ou: 2 } },
     { field: 'planTime', name: '期望送达时间(前)', nameSpan: 6, show: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } },
     { field: 'modifyPlanTime', name: '期望送达时间(后)', nameSpan: 6, show: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } },
     { field: 'downloadContactName', name: '卸车联系人(前)', nameSpan: 6, show: { type: 'span', ou: 2 } },
