@@ -216,7 +216,7 @@ const columns = {
     { field: 'carNumber', name: '车牌号', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'trailerNumber', name: '挂车号', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'uploadUrl', name: '出港磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
-    { field: 'downloadUrl', name: '到港磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
+    { field: 'downloadUrl', name: '到站磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
     { field: 'checkType', name: '核对磅单', nameSpan: 6, show: { type: 'select', clearable: false, obj: 'checkType', cascaderList: [{ value: 1, fields: ['note'] }], ou: 2 }, rules: [{ required: true, message: '请选择核对磅单', trigger: 'blur' }] },
     { field: 'note', name: '退回原因', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入退回原因', trigger: 'blur' }] }
   ],
@@ -234,7 +234,7 @@ const columns = {
     { field: 'carNumber', name: '车牌号', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'trailerNumber', name: '挂车号', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'uploadUrl', name: '出港磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
-    { field: 'downloadUrl', name: '到港磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
+    { field: 'downloadUrl', name: '到站磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
     { field: 'exceptionApplyTime', name: '异常申报时间', nameSpan: 6, show: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } },
     { field: 'exceptionApplyNote', name: '申报原因', nameSpan: 6, show: { type: 'span', ou: 2 } },
     { field: 'bearType', name: '处理方式', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 3, inputSpan: 9, show: { type: 'select', clearable: false, obj: 'bearType', ou: 2, cascaderList: [{ value: 1, fields: ['exceptionHandleUrl', 'exceptionUploadUrl', 'exceptionUploadWeight', 'exceptionLngFromCode'] }, { value: 2, fields: ['exceptionUploadUrl', 'exceptionUploadWeight', 'exceptionLngFromCode'] }, { value: 3, fields: ['exceptionHandleUrl', 'exceptionCheckWeight', 'exceptionCheckNote'] }] }, rules: [{ required: true, message: '请输入处理方式', trigger: 'blur' }] },
