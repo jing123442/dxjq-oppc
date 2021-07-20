@@ -6,7 +6,7 @@
       <el-bmap-info-window ref="mapWindow" vid="bmap-window" :position="currentWindow.markerWindowStatus ? [currentWindow.data.longitude, currentWindow.data.latitude] : center" :events="{ open: () => { markerPopVisibleNode() } }">
         <template>
           <div class="bm-header">
-            <div><img src="@/assets/images/logo.png" width="35" height="35" /></div>
+            <div style="padding-right: 5px;"><img :src="getWindowLogo(currentWindow.data.gasType)" width="30" height="30" /></div>
             <div>
               <div class="title">
                 <span class="item-name text-overflow-ellipsis" :title="currentWindow.data.nickName">{{gasstationNickName(currentWindow.data)}}</span>
@@ -262,6 +262,21 @@ export default {
         this.mapStatus = false
       })
     },
+    getWindowLogo(type) {
+      if (this.gasstationCheckType(type)) {
+        if (type == 2001) {
+          return require('@/assets/images/battle/g_zhy.png')
+        } else if (type == 2002) {
+          return require('@/assets/images/battle/g_zsy.png')
+        } else if (type == 2003) {
+          return require('@/assets/images/battle/g_zsh.png')
+        } else {
+          return require('@/assets/images/battle/g_sh.png')
+        }
+      } else {
+        return require('@/assets/images/battle/g_dx.png')
+      }
+    },
     async dataAnalysisEvent(type) {
       if (type === 'open') {
         if (this.markerDataAnalysisStatus) return false
@@ -452,19 +467,23 @@ export default {
       }
     },
     mapMarkIcon(item) {
+      const type = item.gasType
       let imageURL = require('@/assets/images/battle/g_map_icon_default.png')
 
-      if (item.gasType === 100 || item.gasType === 1001 || item.gasType === 1002 || item.gasType === 1003) {
+      if (this.gasstationCheckType(type)) {
+        if (type == 2001) {
+          imageURL = require('@/assets/images/battle/g_map_icon_3.png')
+        } else if (type == 2002) {
+          imageURL = require('@/assets/images/battle/g_map_icon_2.png')
+        } else if (type == 2003) {
+          imageURL = require('@/assets/images/battle/g_map_icon_4.png')
+        } else {
+          imageURL = require('@/assets/images/battle/g_map_icon_default.png')
+        }
+      } else {
         imageURL = require('@/assets/images/battle/g_map_icon_1.png')
-      } else if (item.gasType === 2001) {
-        imageURL = require('@/assets/images/battle/g_map_icon_2.png')
-      } else if (item.gasType === 2002) {
-        imageURL = require('@/assets/images/battle/g_map_icon_3.png')
-      } else if (item.gasType === 2003) {
-        imageURL = require('@/assets/images/battle/g_map_icon_4.png')
-      } else if (item.gasType === 2004) {
-        imageURL = require('@/assets/images/battle/g_map_icon_default.png')
       }
+
       return { url: imageURL, size: [20, 26] }
     },
     handleCurrentChange(val) {
@@ -882,10 +901,10 @@ export default {
             background-image: url(../../assets/images/battle/g_icon_1.png);
           }
           &.icon-2001 {
-            background-image: url(../../assets/images/battle/g_icon_2.png);
+            background-image: url(../../assets/images/battle/g_icon_3.png);
           }
           &.icon-2002 {
-            background-image: url(../../assets/images/battle/g_icon_3.png);
+            background-image: url(../../assets/images/battle/g_icon_2.png);
           }
           &.icon-2003 {
             background-image: url(../../assets/images/battle/g_icon_4.png);
