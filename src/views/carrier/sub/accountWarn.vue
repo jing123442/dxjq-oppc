@@ -15,7 +15,7 @@
             </el-input>
           </div>
           <div class="checkbox-list-main" v-if="scrollView" v-infinite-scroll="onload" infinite-scroll-disabled="scrollDisabled">
-            <div class="checkbox-list" >
+            <div class="checkbox-list">
               <el-checkbox v-for="(item, i) in orgList" :checked="item.checked" :label="item" :key="i" @change="checkboxClick(item, i)">{{item.orgName}}</el-checkbox>
             </div>
           </div>
@@ -253,6 +253,7 @@ export default {
     checkedStatusHandle() {
       if (this.orgList.length === 0) return
       if (this.orgList.length === this.warnInfo.carrierList.length) {
+        this.isIndeterminate = false
         this.checkAll = true
       } else {
         this.checkAll = false
@@ -275,6 +276,7 @@ export default {
       this.checkAll = false
       this.isIndeterminate = false
       this.scrollView = false
+      this.scrollDisabled = false
       this.orgList = []
       this.pages.page = 1
       this.searchOrg = ''
@@ -441,28 +443,27 @@ export default {
         align-items: center;
         margin-bottom: 10px;
         .el-input{
-          margin-right: 10px;
         }
       }
       .checkbox-list-main{
-        max-height: 400px;
+        max-height: 410px;
         overflow: auto;
         .checkbox-list{
           display: flex;
           flex-direction: column;
-        }
-        .el-checkbox {
-          height: 20px;
-          width: 100%;
-          display: flex;
-          align-items: center;
-          overflow: hidden;
-          ::v-deep .el-checkbox__label{
-            width: 260px;
-            white-space: nowrap;
+          .el-checkbox {
+            height: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
             overflow: hidden;
-            text-overflow: ellipsis;
-            word-break: break-all;
+            ::v-deep .el-checkbox__label{
+              width: 260px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              word-break: break-all;
+            }
           }
         }
       }
