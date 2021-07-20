@@ -128,7 +128,7 @@ const columns = {
   gasStockList: [
     { field: 'nickName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'stock', name: '库存量(公斤)' },
-    { field: 'status_stock', name: '库存状态', stype: 'link' },
+    { field: 'statusStock', name: '库存状态', stype: 'link' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 260, list: [{ type: 'list', name: '库存记录' }, { type: 'update', name: '库存调整' }, { type: 'submitLimit', name: '提报限制' }, { type: 'limitList', name: '限制记录' }] }
   ],
   gasUpdateStock: [
@@ -216,7 +216,7 @@ const columns = {
     { field: 'carNumber', name: '车牌号', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'trailerNumber', name: '挂车号', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'uploadUrl', name: '出港磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
-    { field: 'downloadUrl', name: '到港磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
+    { field: 'downloadUrl', name: '到站磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
     { field: 'checkType', name: '核对磅单', nameSpan: 6, show: { type: 'select', clearable: false, obj: 'checkType', cascaderList: [{ value: 1, fields: ['note'] }], ou: 2 }, rules: [{ required: true, message: '请选择核对磅单', trigger: 'blur' }] },
     { field: 'note', name: '退回原因', nameSpan: 6, show: { type: 'text', ou: 2 }, rules: [{ required: true, message: '请输入退回原因', trigger: 'blur' }] }
   ],
@@ -234,7 +234,7 @@ const columns = {
     { field: 'carNumber', name: '车牌号', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'trailerNumber', name: '挂车号', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'uploadUrl', name: '出港磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
-    { field: 'downloadUrl', name: '到港磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
+    { field: 'downloadUrl', name: '到站磅单', nameSpan: 6, show: { type: 'span', model: 'img', ou: 1 } },
     { field: 'exceptionApplyTime', name: '异常申报时间', nameSpan: 6, show: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } },
     { field: 'exceptionApplyNote', name: '申报原因', nameSpan: 6, show: { type: 'span', ou: 2 } },
     { field: 'bearType', name: '处理方式', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 3, inputSpan: 9, show: { type: 'select', clearable: false, obj: 'bearType', ou: 2, cascaderList: [{ value: 1, fields: ['exceptionHandleUrl', 'exceptionUploadUrl', 'exceptionUploadWeight', 'exceptionLngFromCode'] }, { value: 2, fields: ['exceptionUploadUrl', 'exceptionUploadWeight', 'exceptionLngFromCode'] }, { value: 3, fields: ['exceptionHandleUrl', 'exceptionCheckWeight', 'exceptionCheckNote'] }] }, rules: [{ required: true, message: '请输入处理方式', trigger: 'blur' }] },
@@ -253,7 +253,7 @@ const columns = {
     { field: 'createNote', name: '提报备注', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'modifyCreateTime', name: '变更提报时间', nameSpan: 6, show: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } },
     { field: 'modifyCreateNote', name: '变更发起原因', nameSpan: 6, show: { type: 'span', ou: 2 } },
-    { field: 'modifyApplyType', name: '变更类型', xs: 24, sm: 24, md: 24, lg: 24, xl: 24, nameSpan: 6, inputSpan: 9, show: { type: 'span', model: 'select', obj: 'modifyApplyType', ou: 2 } },
+    { field: 'modifyApplyType', name: '变更类型', nameSpan: 6, show: { type: 'span', model: 'select', obj: 'modifyApplyType', ou: 2 } },
     { field: 'planTime', name: '期望送达时间(前)', nameSpan: 6, show: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } },
     { field: 'modifyPlanTime', name: '期望送达时间(后)', nameSpan: 6, show: { type: 'span', ou: 2, stype: 'format', formatFun: 'formateTData all' } },
     { field: 'downloadContactName', name: '卸车联系人(前)', nameSpan: 6, show: { type: 'span', ou: 2 } },
@@ -298,20 +298,20 @@ const columns = {
     { field: 'note', name: '摘要' }
   ],
   lngStockDetail: [
-    { field: 'gasstationName', nameSpan: 6, name: '加气站名称', show: { type: 'span' } },
-    { field: 'weekAverageQty', nameSpan: 6, name: '加气站周日均销量(公斤)', show: { type: 'span' } },
-    { field: 'stock', nameSpan: 6, name: '加气站存量(公斤)', show: { type: 'span' } },
-    { field: 'stockMax', nameSpan: 6, name: '存量上限(公斤)', show: { type: 'span' } },
-    { field: 'stockMin', nameSpan: 6, name: '存量下限(公斤)', show: { type: 'span' } },
-    { field: 'proposeType', nameSpan: 6, name: '配送建议', formatter: 'proposeType', show: { type: 'select', isDisabled: true, obj: 'proposeType', placeholder: '-' } }
+    { field: 'nickName', nameSpan: 8, name: '加气站名称', show: { type: 'span' } },
+    { field: 'weekAverageQty', nameSpan: 8, name: '加气站周日均销量(公斤)', show: { type: 'span' } },
+    { field: 'stock', nameSpan: 8, name: '加气站存量(公斤)', show: { type: 'span' } },
+    { field: 'stockMax', nameSpan: 8, name: '存量上限(公斤)', show: { type: 'span' } },
+    { field: 'stockMin', nameSpan: 8, name: '存量下限(公斤)', show: { type: 'span' } },
+    { field: 'proposeType', nameSpan: 8, name: '配送建议', formatter: 'proposeType', show: { type: 'select', isDisabled: true, obj: 'proposeType', placeholder: '-' } }
   ],
   stockDetail: [
-    { field: 'gasstationName', nameSpan: 6, name: '加气站名称', show: { type: 'span' } },
-    { field: 'weekAverageQty', nameSpan: 6, name: '加气站周日均销量(公斤)', show: { type: 'span' } },
-    { field: 'stock', nameSpan: 6, name: '加气站存量(公斤)', show: { type: 'span' } },
-    { field: 'stockMax', nameSpan: 6, name: '存量上限(公斤)', show: { type: 'span' } },
-    { field: 'stockMin', nameSpan: 6, name: '存量下限(公斤)', show: { type: 'span' } },
-    { field: 'propose', nameSpan: 6, name: '配送建议', show: { type: 'span' } }
+    { field: 'nickName', nameSpan: 8, name: '加气站名称', show: { type: 'span' } },
+    { field: 'weekAverageQty', nameSpan: 8, name: '加气站周日均销量(公斤)', show: { type: 'span' } },
+    { field: 'stock', nameSpan: 8, name: '加气站存量(公斤)', show: { type: 'span' } },
+    { field: 'stockMax', nameSpan: 8, name: '存量上限(公斤)', show: { type: 'span' } },
+    { field: 'stockMin', nameSpan: 8, name: '存量下限(公斤)', show: { type: 'span' } },
+    { field: 'propose', nameSpan: 8, name: '配送建议', show: { type: 'span' } }
   ],
   plsLog: [
     { field: 'operatorName', name: '操作人', fixed: 'left' },

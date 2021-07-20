@@ -13,7 +13,7 @@
     <el-dialog title="出港磅单录入" :visible.sync="dialogLeaveVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogLeaveVisible" ref="leave" :formRef="'leaveForm'" :rowData="leaveRow" :pageColumn="page_column_leave" :selectList="select_list" :axios="axios" :modeList="mode_leave_list" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventLeave"></nt-form>
     </el-dialog>
-    <el-dialog title="核对到账磅单" :visible.sync="dialogCheckVisible" :width="add_edit_dialog" :append-to-body="true">
+    <el-dialog title="核对到站磅单" :visible.sync="dialogCheckVisible" :width="add_edit_dialog" :append-to-body="true">
       <nt-form v-if="dialogCheckVisible" ref="check" :formRef="'checkForm'" :rowData="checkRow" :pageColumn="page_column_check" :selectList="select_list" :axios="axios" :modeList="mode_check_list" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventCheck"></nt-form>
     </el-dialog>
     <el-dialog title="异常申报处理" :visible.sync="dialogAnomalousVisible" :width="add_edit_dialog" :append-to-body="true">

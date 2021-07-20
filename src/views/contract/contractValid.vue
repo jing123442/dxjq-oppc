@@ -109,7 +109,7 @@ export default {
     },
     contractView(row) {
       $userContractView({ id: row.contractId }).then(res => {
-        window.location.href = res.data
+        window.open(res.data)
       })
     },
     contractBatchConfirm(row) {

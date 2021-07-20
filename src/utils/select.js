@@ -411,7 +411,7 @@ export function untilsMarketingManList() {
 
 export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', authStatus = null) {
   const result = {
-    url: '',
+    url: 'user/org/list',
     node: ['data', 'records'],
     params: {
       page: 1,

@@ -113,8 +113,8 @@ export default {
         this.queryParamsLimit = queryDefaultParams(this, { type: 2, key: 'param', value: { gasstationId: row.gasstationId } })
         this.dialogLimitVisible = true
       } else if (type == 'status_stock') {
-        row._btn = custFormBtnList(2)
-        this.stockDetailRow = row
+        this.stockDetailRow._btn = custFormBtnList(2)
+        this.stockDetailRow.nickName = row.nickName
         this.stockDetailFind(row)
       }
     },
