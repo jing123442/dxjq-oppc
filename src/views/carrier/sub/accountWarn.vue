@@ -16,7 +16,7 @@
           </div>
           <div class="checkbox-list-main" v-if="scrollView" v-infinite-scroll="onload" infinite-scroll-disabled="scrollDisabled">
             <div class="checkbox-list">
-              <el-checkbox v-for="(item, i) in orgList" :checked="item.checked" :label="item" :key="i" @change="checkboxClick(item, i)">{{item.orgName}}</el-checkbox>
+              <el-checkbox v-for="(item, i) in orgList" v-model="item.checked" :label="item" :key="i" @change="checkboxClick(item, i)">{{item.orgName}}</el-checkbox>
             </div>
           </div>
 
@@ -26,8 +26,8 @@
             <div class="total-main">您已选择<span style="color: #00a2d4">{{warnInfo.carrierList.length}}</span>个物流公司</div>
             <div class="dialog-tag-list">
               <el-tag
-                v-for="item in warnInfo.carrierList"
-                :key="item.orgId"
+                v-for="(item, i) in warnInfo.carrierList"
+                :key="i"
                 closable
                 @close="handleClose(item)">
                 {{item.orgName}}
@@ -144,10 +144,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      mode_list: 'carrier_firmAccount_mode_list',
-      page_status: 'carrier_firmAccount_page_status',
+      mode_list: 'carrier_orgAccountWarn_mode_list',
+      page_status: 'carrier_orgAccountWarn_page_status',
       page_column: 'carrier_orgAccountWarn_column',
-      select_list: 'carrier_firmAccount_select_list',
+      select_list: 'carrier_orgAccountWarn_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -162,13 +162,9 @@ export default {
   methods: {
     handleClose(item) {
       this.warnInfo.carrierList.splice(this.warnInfo.carrierList.indexOf(item), 1)
-      this.scrollView = false
-      this.$nextTick(() => {
-        this.scrollView = true
-      })
       this.orgList.forEach((item1, i) => {
         if (item1.orgId === item.orgId) {
-          this.orgList[i].checked = false
+          this.$set(item1, 'checked', false)
         }
       })
       this.checkedStatusHandle()
@@ -178,7 +174,7 @@ export default {
         this.orgList.forEach((item1, i) => {
           this.warnInfo.carrierList.forEach((item, k) => {
             if (item.orgId === item1.orgId) {
-              this.orgList[i].checked = status
+              this.$set(item1, 'checked', status)
             }
           })
         })
@@ -224,21 +220,16 @@ export default {
     },
     handleCheckAllChange(val) {
       this.warnInfo.carrierList = val ? [...this.orgList] : []
-      this.scrollView = false
-      this.$nextTick(() => {
-        this.scrollView = true
-      })
       if (this.warnInfo.carrierList.length > 0) {
         this.checkedActive(this.checkAll)
       } else {
         this.orgList.forEach((item, i) => {
-          this.orgList[i].checked = this.checkAll
+          this.$set(item, 'checked', this.checkAll)
         })
       }
       this.isIndeterminate = false
     },
     checkboxClick(item, i) {
-      this.orgList[i].checked = !item.checked
       if (this.orgList[i].checked) {
         this.warnInfo.carrierList.push(item)
       } else {
@@ -374,6 +365,8 @@ export default {
         this.fullscreenLoading = false
         this.$message.success('操作成功')
         this.$refs.accountWarn.initDataList()
+      }).catch(() => {
+        this.fullscreenLoading = false
       })
     },
     onReqParams(type, _this, callback) {
