@@ -2,7 +2,7 @@
   <div class="template-main" v-if="!mapStatus" element-loading-text="正在加载地图信息，请等待..." style="padding: 0;padding-bottom: 40px;margin-bottom: 0; height: 100%;">
     <el-bmap vid="bmap" :zoom="zoom" :center="center" class="bm-view" :style="mapStyle">
       <el-bmap-marker v-for="(item, index) of gasstationList" :vid="index" :key="index" :position="[item.longitude, item.latitude]" :icon="mapMarkIcon(item)" :title="gasstationNickName(item)" :offset="[-10, -13]" :events="{ click: () => { markerClickEvent(item) }}"></el-bmap-marker>
-      <el-bmap-label v-for="(label,index) in gasstationList" :vid="'1_' + index" :key="'1_' + index" :content="markerLabelContent(label)" :label-style="markerLabelStyle" :offset="[-130, -70]" :visible="!!label.markerStatus" :position="[label.longitude, label.latitude]"></el-bmap-label>
+      <el-bmap-label v-for="(label,index) in gasstationList" :vid="'1_' + index" :key="'1_' + index" :content="markerLabelContent(label)" :label-style="markerLabelStyle" :offset="['-50%', -70]" :visible="markerTitleStatus" :position="[label.longitude, label.latitude]"></el-bmap-label>
       <el-bmap-info-window ref="mapWindow" vid="bmap-window" :position="currentWindow.markerWindowStatus ? [currentWindow.data.longitude, currentWindow.data.latitude] : center" :events="{ open: () => { markerPopVisibleNode() } }">
         <template>
           <div class="bm-header">
@@ -28,14 +28,14 @@
               <div></div>
             </div>
           </div>
-          <div class="bm-charts">
+          <div class="bm-charts" v-if="!gasstationCheckType(currentWindow.data.gasType)">
             <div class="bm-charts__title">总加气量 <span class="text-bold-number">{{ (currentWindow.data.gasQty + currentWindow.data.offlineGasQty) | formateZeroToBar }}</span> 吨</div>
             <nt-charts v-if="currentWindow.markerWindowStatus" :webUIType="'echart'" :chartOptions="gasQtyChartOption"></nt-charts>
           </div>
           <div class="bm-bottom">
-            <el-button size="mini" type="primary" @click="infoWindowInfoEdit(currentWindow.data)" plain>情报编辑</el-button>
+            <el-button v-if="currentWindow.data.editInfo == 0" size="mini" type="primary" @click="infoWindowInfoEdit(currentWindow.data)" plain>情报编辑</el-button>
             <el-button size="mini" type="primary" @click="infoWindowCredentials(currentWindow.data)" plain>情报凭证</el-button>
-            <el-button v-if="gasstationCheckType(currentWindow.data.gasType)" size="mini" type="primary" @click="infoWindowGasEdit(currentWindow.data)" plain>站点编辑</el-button>
+            <el-button v-if="gasstationCheckType(currentWindow.data.gasType) && currentWindow.data.editGas == 0" size="mini" type="primary" @click="infoWindowGasEdit(currentWindow.data)" plain>站点编辑</el-button>
           </div>
         </template>
       </el-bmap-info-window>
@@ -44,7 +44,7 @@
       <span class="title">大象加气 · 作战地图</span>
       <div class="map-card">
         <div class="card-input">
-          <el-select v-model="finds.districtId" @change="initGasstationList" placeholder="区域">
+          <el-select v-model="finds.districtId" @change="initGasstationList('area')" placeholder="区域">
             <el-option
               v-for="item in districtList"
               :key="item.districtId"
@@ -130,7 +130,7 @@
       </div>
     </div>
     <div class="map-control-opt">
-      <el-checkbox v-model="markerTitleStatus" size="small" border @click.native="markerLabelEvent">地标文字</el-checkbox>
+      <el-checkbox v-model="markerTitleStatus" size="small" border @change="markerLabelEvent">地标文字</el-checkbox>
       <el-button size="small" @click.native="markerAddEvent">新增</el-button>
       <el-button size="small" @click.native="markerLogEvent">变更记录</el-button>
     </div>
@@ -180,8 +180,8 @@ export default {
       },
       mapHeight: '',
       // center: { lng: 115.692614, lat: 35.941008 },
-      center: [115.692614, 35.941008],
-      markerLabelStyle: { width: '260px', border: '1px solid #6E7A8F', boxShadow: '0px 0px 18px 0px rgba(0, 0, 0, 0.1)', borderRadius: '4px', fontSize: '12px', zIndex: 10000, color: '#333333' },
+      center: [116.23228, 35.7127],
+      markerLabelStyle: { border: '1px solid #6E7A8F', boxShadow: '0px 0px 18px 0px rgba(0, 0, 0, 0.1)', borderRadius: '4px', fontSize: '12px', zIndex: 10000, color: '#333333' },
       zoom: 7,
       pages: {
         page: 1,
@@ -254,6 +254,13 @@ export default {
       this.initDistrictList()
       // 加气站list
       this.initGasstationList()
+    },
+    initDataStatus() {
+      this.mapStatus = true
+      this.$nextTick(() => {
+        this.currentWindow.markerWindowStatus = false
+        this.mapStatus = false
+      })
     },
     async dataAnalysisEvent(type) {
       if (type === 'open') {
@@ -379,9 +386,12 @@ export default {
     filterGasstationList(value) {
       this.currGasstationList = this.gasstationList.filter(item => item.nickName && item.nickName.indexOf(value) !== -1)
     },
-    initGasstationList() {
+    initGasstationList(type = '') {
       const params = this.finds
 
+      if (type === 'area') {
+        this.initDataStatus()
+      }
       this.filterGasstationName = ''
       this.dataAnalysisEvent('close')
       $gasdataGasstationList(params).then(response => {
@@ -420,12 +430,11 @@ export default {
     },
     markerLabelEvent() {
       this.infoWindowClose()
-      this.mapStatus = true
+
       this.$nextTick(() => {
         this.gasstationList.forEach(item => {
           item.markerStatus = !this.markerTitleStatus
         })
-        this.mapStatus = false
       })
     },
     mapAeraView() {
@@ -713,7 +722,6 @@ export default {
     }*/
     .BMap_bubble_content, .bmap-info-window-custom.custom {
       width: 300px !important;
-      height: 375px !important;
     }
     .bm-header {
       display: flex;
@@ -784,6 +792,9 @@ export default {
         background-size: contain;
         background-image: url(../../assets/images/battle/g_qty_icon.png);
       }
+    }
+    .bm-bottom {
+      height: 38px;
     }
   }
   .map-control-warp {
