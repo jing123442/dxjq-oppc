@@ -128,7 +128,7 @@ const columns = {
   gasStockList: [
     { field: 'nickName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'stock', name: '库存量(公斤)' },
-    { field: 'status_stock', name: '库存状态', stype: 'link' },
+    { field: 'statusStock', name: '库存状态', stype: 'link' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 260, list: [{ type: 'list', name: '库存记录' }, { type: 'update', name: '库存调整' }, { type: 'submitLimit', name: '提报限制' }, { type: 'limitList', name: '限制记录' }] }
   ],
   gasUpdateStock: [
