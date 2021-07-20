@@ -3,8 +3,8 @@
     <em-table-list :tableListName="'accountWarn'" ref="accountWarn" :buttonsList="buttonsList" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog :title="batchSetting ? '批量操作' : '删除预警'" :visible.sync="dialogBatchVisible" :width="batchSetting ? add_edit_dialog : '40%'" :append-to-body="true" @close="dialogClose">
       <div v-if="batchSetting" class="dialog-main">
-        <div class="checkbox-main" ref="scroll" v-if="scrollView" v-infinite-scroll="onload" infinite-scroll-disabled="scrollDisabled" >
-          <div style="display: flex; align-items: center; margin-bottom: 10px">
+        <div class="checkbox-main">
+          <div class="search-input-main">
             <el-checkbox style="margin-right: 10px" :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
             <el-input
               placeholder="请输入内容"
@@ -14,20 +14,25 @@
               @input="searchEvent">
             </el-input>
           </div>
-          <div class="checkbox-list-main">
-            <el-checkbox v-for="(item, i) in orgList" :checked="item.checked" :label="item" :key="i" @change="checkboxClick(item, i)">{{item.orgName}}</el-checkbox>
+          <div class="checkbox-list-main" v-if="scrollView" v-infinite-scroll="onload" infinite-scroll-disabled="scrollDisabled">
+            <div class="checkbox-list" >
+              <el-checkbox v-for="(item, i) in orgList" :checked="item.checked" :label="item" :key="i" @change="checkboxClick(item, i)">{{item.orgName}}</el-checkbox>
+            </div>
           </div>
+
         </div>
         <div class="dialog-right">
-          <div class="total-main">已选择{{warnInfo.carrierList.length}}个物流公司</div>
           <div class="dialog-tag-main">
-            <el-tag
-              v-for="item in warnInfo.carrierList"
-              :key="item.orgId"
-              closable
-              @close="handleClose(item)">
-              {{item.orgName}}
-            </el-tag>
+            <div class="total-main">您已选择<span style="color: #00a2d4">{{warnInfo.carrierList.length}}</span>个物流公司</div>
+            <div class="dialog-tag-list">
+              <el-tag
+                v-for="item in warnInfo.carrierList"
+                :key="item.orgId"
+                closable
+                @close="handleClose(item)">
+                {{item.orgName}}
+              </el-tag>
+            </div>
           </div>
           <div class="dialog-form-main">
             <el-form :inline="true" :model="warnInfo" :rules="rules" ref="warnForm" class="demo-form-inline">
@@ -74,7 +79,7 @@
 <script>
 import { initVueDataOptions, callbackPagesInfo, custFormBtnList, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $userOrgList } from '@/service/user'
+import { $userOrgCarrier } from '@/service/user'
 import { $strategyCarrierWarnClose, $strategyCarrierWarnConfig } from '@/service/strategy'
 
 
@@ -115,7 +120,7 @@ export default {
       dialogBUttonList: custFormBtnList(),
       dialogBtnDisabled: false,
       searchOrg: '',
-      scrollView: true,
+      scrollView: false,
       rules: {
         warnStatus: [
           { required: true, message: '请选择预警状态', trigger: 'blur' }
@@ -279,13 +284,13 @@ export default {
         page: this.pages.page,
         size: this.pages.size,
         param: {
+          keyword: this.searchOrg,
           org: {
-            orgType: 2,
-            orgName: this.searchOrg
+            orgSubType: 21
           }
         }
       }
-      $userOrgList(params).then(res => {
+      $userOrgCarrier(params).then(res => {
         res.data.records.forEach((item) => {
           item.checked = false
         })
@@ -298,9 +303,9 @@ export default {
     },
     onListEvent(type, row) {
       if (type === 'batch') {
-        this.scrollView = true
         this.batchSetting = true
         this.dialogBatchVisible = true
+        this.scrollView = true
       } else if (type === 'delete') {
         this.batchSetting = false
         this.warnInfo = row
@@ -392,14 +397,22 @@ export default {
       flex-grow: 1;
       .dialog-tag-main {
         height: 280px;
-        overflow: auto;
         margin-left: 10px;
-        padding-top: 5px;
         border-radius: 10px;
         border: 1px solid #6E7A8F;
-        .el-tag{
-          margin-left: 5px;
-          margin-bottom: 5px;
+        .dialog-tag-list {
+          overflow: auto;
+          height: 245px;
+          padding-right: 5px;
+          .el-tag{
+            margin-left: 5px;
+            margin-bottom: 5px;
+          }
+        }
+        .total-main {
+          text-align: right;
+          margin: 3px 0;
+          padding-right: 10px;
         }
       }
       .dialog-form-main {
@@ -408,22 +421,36 @@ export default {
           margin: 10px;
           .el-form-item {
             margin-bottom: 5px;
+            ::v-deep .el-form-item__label{
+              text-align: left;
+              width: 110px;
+            }
+            ::v-deep .el-form-item__content{
+              width: 200px;
+            }
           }
         }
-      }
-      .total-main {
-        text-align: right;
-        padding-bottom: 5px;
       }
     }
     .checkbox-main {
       flex-shrink: 0;
       width: 300px;
-      max-height: 480px;
-      overflow: auto;
-      .checkbox-list-main{
+      max-height: 460px;
+      .search-input-main{
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10px;
+        .el-input{
+          margin-right: 10px;
+        }
+      }
+      .checkbox-list-main{
+        max-height: 400px;
+        overflow: auto;
+        .checkbox-list{
+          display: flex;
+          flex-direction: column;
+        }
         .el-checkbox {
           height: 20px;
           width: 100%;

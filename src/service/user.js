@@ -316,3 +316,7 @@ export async function $userContractDownload(data) {
 export async function $userContractToSign(data) {
   return await R({ url: 'user/contract/to_sign_by_platform', method: 'POST', data })
 }
+// 分页查找物流公司
+export async function $userOrgCarrier(data) {
+  return await R({ url: 'user/org/page_list_carrier', method: 'POST', data })
+}
