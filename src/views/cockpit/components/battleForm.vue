@@ -203,3 +203,11 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.el-tabs__content {
+  overflow: inherit !important;
+  .el-del-btn-item {
+    margin: 0 !important;
+  }
+}
+</style>
