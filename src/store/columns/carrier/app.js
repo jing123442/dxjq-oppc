@@ -39,7 +39,8 @@ const app = {
     truckIntegral: 13,
     rechargeRecord: 13,
     inventoryManager: 13,
-    orderManager: 13
+    orderManager: 13,
+    orgAccountWarn: 13
   }
 }
 

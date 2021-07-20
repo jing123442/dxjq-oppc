@@ -112,7 +112,7 @@ export default {
       } else if (type == 'limitList') {
         this.queryParamsLimit = queryDefaultParams(this, { type: 2, key: 'param', value: { gasstationId: row.gasstationId } })
         this.dialogLimitVisible = true
-      } else if (type == 'status_stock') {
+      } else if (type == 'statusStock') {
         this.stockDetailRow._btn = custFormBtnList(2)
         this.stockDetailRow.nickName = row.nickName
         this.stockDetailFind(row)

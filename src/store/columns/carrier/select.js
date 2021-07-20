@@ -55,6 +55,8 @@ const select = {
   },
   orderManager: {
     orderStatus: utilsOrderStatus()
+  },
+  orgAccountWarn: {
   }
 }
 
