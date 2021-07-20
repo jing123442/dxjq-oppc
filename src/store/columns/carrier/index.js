@@ -83,7 +83,10 @@ const getters = {
   carrier_orderManagerDetail_mode_list: item => app.mode.orderManagerDetail,
   carrier_orderManagerDetail_column: item => columns.orderManagerDetail,
   // 物流公司资金预警列表
-  carrier_orgAccountWarn_column: item => columns.orgAccountWarn
+  carrier_orgAccountWarn_column: item => columns.orgAccountWarn,
+  carrier_orgAccountWarn_mode_list: item => item.app.modeDefault,
+  carrier_orgAccountWarn_page_status: item => app.list.orgAccountWarn,
+  carrier_orgAccountWarn_select_list: item => select.orgAccountWarn
 }
 
 export default {
