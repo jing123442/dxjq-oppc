@@ -14,7 +14,7 @@ export default [
       { path: 'fillerLngPlan', component: inImport('stock/lngPlan'), name: 'fillerLngPlan', meta: { title: 'LNG计划管理', icon: 'icon-gongnengguanli', noCache: false } },
       {
         path: 'fillerGasStockList',
-        name: 'fillerGasStockList',
+        name: 'subFillerGasStockList',
         redirect: '/stock/fillerGasStockList',
         component: {
           render (c) { return c('router-view') }

@@ -90,12 +90,12 @@ const columns = {
       detail: { type: 'file', iType: 'string', model: 'img', isDisabled: true, ou: 5, action: file.state.fileUrl, fileHost: file.state.fileHost }
     },
     { field: 'id', hide: true, show: { type: 'hide', noShow: 1} },
-    { field: 'goodsType', name: '商品类型', formatter: 'goodsType', 
-      show: { type: 'select', ou: 2, obj: 'goodsType', value: 0, 
+    { field: 'goodsType', name: '商品类型', formatter: 'goodsType',
+      show: { type: 'select', ou: 2, obj: 'goodsType', value: 0,
         cascaderTypeList: [{ value: 0, fields: { goodsNorm: 'text' } }, { value: 1, fields: { goodsNorm: 'select' }}],
         cascaderLoader: [
           { selectField: 'categoryList', cancelField: 'categoryId', params: { goodsType: '' } }
-        ] }, 
+        ] },
       rules: [{ required: true, message: '请选择商品类型', trigger: 'blur' }], detail: { type: 'select', isDisabled: true, obj: 'goodsType', serial: 5, ou: 2 } },
     { field: 'categoryId', name: '商品分类', stype: 'mapping', mapping: 'categoryName', show: { type: 'select', ou: 2, remote: true, obj: 'categoryList', placeholder: '请选择商品分类' }, rules: [{ required: true, message: '请输入商品分类', trigger: 'blur' }], detail: { type: 'select', isDisabled: true, obj: 'categoryList', serial: 6, ou: 2 } },
     { field: 'goodsNum', name: '商品编号', show: { type: 'text', ou: 2, placeholder: '请输入商品编号' }, rules: [{ required: true, message: '请输入商品编号', trigger: 'blur' }], detail: { type: 'span', serial: 3, ou: 2 } },

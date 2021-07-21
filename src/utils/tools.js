@@ -591,3 +591,8 @@ export function browserRedirect() {
     return true
   }
 }
+
+// 去掉前后空格
+export function trim(str) {
+  return typeof str === 'string' ? str.replace(/^\s+|\s+$/g, '') : str
+}

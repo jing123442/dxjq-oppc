@@ -1,6 +1,7 @@
 <template>
   <div class="template-main" v-if="!mapStatus" element-loading-text="正在加载地图信息，请等待..." style="padding: 0;padding-bottom: 40px;margin-bottom: 0; height: 100%;">
     <el-bmap vid="bmap" :zoom="zoom" :center="center" class="bm-view" :style="mapStyle">
+      <el-bmap-polygon v-for="(polygonItem, polygonIndex) of polygon.path" :vid="polygonIndex" :ref="`polygon${polygonIndex}`" :key="`polygon_${polygonIndex}`" stroke-color="#2765E2" :stroke-weight="0" fill-color="#2765E2" :fill-opacity="0.2" :path="polygonItem" :enable-editing="false"></el-bmap-polygon>
       <el-bmap-marker v-for="(item, index) of gasstationList" :vid="index" :key="index" :position="[item.longitude, item.latitude]" :icon="mapMarkIcon(item)" :title="gasstationNickName(item)" :offset="[-10, -13]" :events="{ click: () => { markerClickEvent(item) }}"></el-bmap-marker>
       <el-bmap-label v-for="(label,index) in gasstationList" :vid="'1_' + index" :key="'1_' + index" :content="markerLabelContent(label)" :label-style="markerLabelStyle" :offset="['-50%', -70]" :visible="markerTitleStatus" :position="[label.longitude, label.latitude]"></el-bmap-label>
       <el-bmap-info-window ref="mapWindow" vid="bmap-window" :position="currentWindow.markerWindowStatus ? [currentWindow.data.longitude, currentWindow.data.latitude] : center" :events="{ open: () => { markerPopVisibleNode() } }">
@@ -156,12 +157,13 @@ import {
   $gasdataGasstationAnalyses,
   $gasdataGasstationBazaarAnalyses
 } from '@/service/gasdata'
-import { $districtList } from '@/service/user'
+import { $districtList, $userFindConfigAreaList } from '@/service/user'
 import { currency, formatDate } from '@/utils/filters'
 import { utilSelectGasstationType } from '@/utils/select'
 import { mapGetters } from 'vuex'
-import { arrayResetSort, initVueDataOptions, isHttpHeaderURL } from '@/utils/tools'
+import { arrayResetSort, initVueDataOptions, isHttpHeaderURL, trim } from '@/utils/tools'
 import { BattleLog, BattleForm } from './components'
+import { mapJsonData } from '@/mock/map'
 
 export default {
   name: 'battle',
@@ -214,7 +216,11 @@ export default {
       dialogBattleVisible: false,
       dialogBattleLogVisible: false,
       gasstationCerdList: [],
-      dialogCerdListVisible: false
+      dialogCerdListVisible: false,
+      polygon: {
+        path: []
+      },
+      pointList: []
     })
   },
   computed: {
@@ -254,6 +260,8 @@ export default {
       this.initDistrictList()
       // 加气站list
       this.initGasstationList()
+      // 获取地图经纬度数据
+      this.pointList = mapJsonData('all')
     },
     initDataStatus() {
       this.mapStatus = true
@@ -401,11 +409,32 @@ export default {
     filterGasstationList(value) {
       this.currGasstationList = this.gasstationList.filter(item => item.nickName && item.nickName.indexOf(value) !== -1)
     },
+    districtToAreaList() {
+      $userFindConfigAreaList({ districtId: this.finds.districtId }).then(response => {
+        const tmpPointList = []
+        const data = response.data || []
+        const featuresList = this.pointList.features || []
+
+        data.forEach(item => {
+          for (let i = 0; i < featuresList.length; i++) {
+            if (trim(featuresList[i].properties.name) === trim(item.areaName)) {
+              const tmpCoordList = featuresList[i].geometry.coordinates || []
+              tmpCoordList.forEach(coord => {
+                tmpPointList.push(...new Set(coord))
+              })
+              break
+            }
+          }
+        })
+        this.polygon.path = tmpPointList
+      })
+    },
     initGasstationList(type = '') {
       const params = this.finds
 
       if (type === 'area') {
         this.initDataStatus()
+        this.districtToAreaList()
       }
       this.filterGasstationName = ''
       this.dataAnalysisEvent('close')

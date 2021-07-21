@@ -13,7 +13,7 @@ export default [
       { path: 'pointsAccount', component: inImport('pointsMall/pointsAccount'), name: 'pointsAccount', meta: { title: '积分账户', icon: 'icon-gongnengguanli', noCache: false } },
       {
         path: 'pointsAccount',
-        name: 'pointsAccount',
+        name: 'subPointsAccount',
         hidden: true,
         redirect: '/pointsMall/pointsAccount',
         component: {
