@@ -464,7 +464,10 @@ export function utilsCategoryList() {
   return {
     url: 'shop/category/list',
     node: ['data', 'records'],
-    params: Function,
+    params: {
+      page: 1,
+      size: 10
+    },
     props: {
       value: 'id',
       label: 'categoryName'
