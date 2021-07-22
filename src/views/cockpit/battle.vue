@@ -158,7 +158,7 @@ import {
   $gasdataGasstationBazaarAnalyses
 } from '@/service/gasdata'
 import { $districtList, $userFindConfigAreaList } from '@/service/user'
-import { currency, formatDate } from '@/utils/filters'
+import { currency, formatDate, formateZeroToBar } from '@/utils/filters'
 import { utilSelectGasstationType } from '@/utils/select'
 import { mapGetters } from 'vuex'
 import { arrayResetSort, initVueDataOptions, isHttpHeaderURL, trim } from '@/utils/tools'
@@ -450,7 +450,7 @@ export default {
     markerLabelContent(item) {
       let html = ''
 
-      html += '<div class="marker-label-tag"><div class="title">' + this.gasstationNickName(item) + '</div><div class="detail"><div class="number"><span class="text-bold-number">' + (item.gasQty + item.offlineGasQty) + '</span> 吨</div><div class="money"><span class="text-bold-number">' + currency(item.price) + '</span>/公斤</div></div></div>'
+      html += '<div class="marker-label-tag"><div class="title">' + this.gasstationNickName(item) + '</div><div class="detail"><div class="number"><span class="text-bold-number">' + formateZeroToBar(item.gasQty + item.offlineGasQty) + '</span> 吨</div><div class="money"><span class="text-bold-number">' + currency(item.price) + '</span>/公斤</div></div></div>'
 
       return html
     },

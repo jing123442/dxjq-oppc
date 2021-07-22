@@ -3,7 +3,7 @@
     <nt-form ref="battleForm" v-if="optType === 'add'" :rowData="battleRow" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :initSelect="true" :responseSuccess="response_success" @onListEvent="onSubmitEvent"></nt-form>
     <el-tabs v-if="optType === 'edit'" v-model="active" type="card">
       <el-tab-pane label="站点编辑">
-        <nt-form ref="battleForm" :rowData="battleRow" :inputType="'update'" :pageColumn="page_column" :selectList="select_log_list" :axios="axios" :queryURL="queryCustURL" :initSelect="true" :responseSuccess="response_success" @onListEvent="onSubmitEditEvent"></nt-form>
+        <nt-form ref="battleForm" :rowData="battleRow" :inputType="'update'" :pageColumn="page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :initSelect="true" :responseSuccess="response_success" @onListEvent="onSubmitEditEvent"></nt-form>
       </el-tab-pane>
       <el-tab-pane label="站点变更记录">
         <em-table-list v-if="active == 1" :custTableTitle="'站点变更记录'" :tableListName="'battleGasLog'" :axios="axios" :queryCustURL="queryCustGasURL" :responseSuccess="response_success" :queryParam="queryGasParams" :mode_list="mode_log_list" :page_status="page_log_status" :page_column="page_gas_log_item_column" :select_list="select_log_list" @onReqParams="onReqParams"></em-table-list>
