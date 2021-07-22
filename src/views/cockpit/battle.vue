@@ -19,22 +19,22 @@
           <div class="bm-content">
             <div class="bm-content__price" v-if="gasstationCheckType(currentWindow.data.gasType)">
               <div class="bm-content__price-item">
-                <div class="name">日加气量<span class="timer">({{ rowData.offlineGasQtyDate | formatDate('yyyy-MM-dd') }})</span></div>
-                <div class="price"><span class="text-bold-number">{{ rowData.offlineGasQty | formateZeroToBar }}</span> 吨 </div>
+                <div class="name">日加气量<span class="timer">({{ currentWindow.data.offlineGasQtyDate | formatDate('yyyy-MM-dd') }})</span></div>
+                <div class="price"><span class="text-bold-number">{{ currentWindow.data.offlineGasQty | formateZeroToBar }}</span> 吨 </div>
               </div>
               <div class="bm-content__price-item">
-                <div class="name">结算价<span class="timer">({{ rowData.offlinePriceDate | formatDate('yyyy-MM-dd') }})</span></div>
-                <div class="price"><span class="text-bold-number">{{ rowData.offlinePrice | currency }}</span> /公斤</div>
+                <div class="name">结算价<span class="timer">({{ currentWindow.data.offlinePriceDate | formatDate('yyyy-MM-dd') }})</span></div>
+                <div class="price"><span class="text-bold-number">{{ currentWindow.data.offlinePrice | currency }}</span> /公斤</div>
               </div>
             </div>
             <div class="bm-content__price" v-else>
               <div class="bm-content__price-item">
-                <div class="name">平台结算价<span class="timer">({{ rowData.priceDate | formatDate('hh:mm:ss') }})</span></div>
-                <div class="price"><span class="text-bold-number">{{ rowData.price | currency }}</span> /公斤</div>
+                <div class="name">平台结算价<span class="timer">({{ currentWindow.data.priceDate | formatDate('hh:mm:ss') }})</span></div>
+                <div class="price"><span class="text-bold-number">{{ currentWindow.data.price | currency }}</span> /公斤</div>
               </div>
               <div class="bm-content__price-item">
-                <div class="name">线下结算价<span class="timer">({{ rowData.offlinePriceDate | formatDate('hh:mm:ss') }})</span></div>
-                <div class="price"><span class="text-bold-number">{{ rowData.offlinePrice | currency }}</span> /公斤</div>
+                <div class="name">线下结算价<span class="timer">({{ currentWindow.data.offlinePriceDate | formatDate('hh:mm:ss') }})</span></div>
+                <div class="price"><span class="text-bold-number">{{ currentWindow.data.offlinePrice | currency }}</span> /公斤</div>
               </div>
             </div>
           </div>
