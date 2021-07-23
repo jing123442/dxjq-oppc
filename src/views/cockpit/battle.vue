@@ -20,7 +20,7 @@
             <div class="bm-content__price" v-if="gasstationCheckType(currentWindow.data.gasType)">
               <div class="bm-content__price-item">
                 <div class="name">日加气量<span class="timer">({{ currentWindow.data.offlineGasQtyDate | formatDate('yyyy-MM-dd') }})</span></div>
-                <div class="price"><span class="text-bold-number">{{ currentWindow.data.offlineGasQty | formateZeroToBar }}</span> 吨 </div>
+                <div class="price"><span class="text-bold-number">{{ currentWindow.data.offlineGasQty | formateZeroToBar('no') }}</span> 吨 </div>
               </div>
               <div class="bm-content__price-item">
                 <div class="name">结算价<span class="timer">({{ currentWindow.data.offlinePriceDate | formatDate('yyyy-MM-dd') }})</span></div>
@@ -39,7 +39,7 @@
             </div>
           </div>
           <div class="bm-charts" v-if="!gasstationCheckType(currentWindow.data.gasType)">
-            <div class="bm-charts__title">总加气量 <span class="text-bold-number">{{ (currentWindow.data.gasQty + currentWindow.data.offlineGasQty) | formateZeroToBar }}</span> 吨</div>
+            <div class="bm-charts__title">总加气量 <span class="text-bold-number">{{ (currentWindow.data.gasQty + currentWindow.data.offlineGasQty) | formateZeroToBar('no') }}</span> 吨</div>
             <nt-charts v-if="currentWindow.markerWindowStatus" :webUIType="'echart'" :chartOptions="gasQtyChartOption"></nt-charts>
           </div>
           <div class="bm-bottom">
@@ -91,7 +91,7 @@
               </div>
               <div class="content">
                 <span>
-                  <span class="text-bold-number">{{ (item.gasQty + item.offlineGasQty) | formateZeroToBar }}</span>吨<span class="time">({{ item.offlineGasQtyDate | formateTData('date') }})</span>
+                  <span class="text-bold-number">{{ (item.gasQty + item.offlineGasQty) | formateZeroToBar('no') }}</span>吨<span class="time">({{ item.offlineGasQtyDate | formateTData('date') }})</span>
                 </span>
                 <span>
                     <span class="text-bold-number">{{ (gasstationCheckType(item.gasType) ? item.offlinePrice : item.price) | currency }}</span>/公斤<span class="time">({{ item.offlinePriceDate | formateTData('date') }})</span>
@@ -132,7 +132,7 @@
           </div>
         </div>
         <div class="gasstation">
-          <div class="gasstation__title">LNG市场份额<span>(单日 <span class="text-bold-number">{{ gasLNGSaleTotal | formateZeroToBar }}</span> 吨)</span></div>
+          <div class="gasstation__title">LNG市场份额<span>(单日 <span class="text-bold-number">{{ gasLNGSaleTotal | formateZeroToBar('no') }}</span> 吨)</span></div>
           <div class="gasstation__content-chart">
             <nt-charts :webUIType="'echart'" :chartOptions="lngMarketChartOption"></nt-charts>
           </div>
@@ -459,7 +459,7 @@ export default {
     markerLabelContent(item) {
       let html = ''
 
-      html += '<div class="marker-label-tag"><div class="title">' + this.gasstationNickName(item) + '</div><div class="detail"><div class="number"><span class="text-bold-number">' + formateZeroToBar(item.gasQty + item.offlineGasQty) + '</span> 吨</div><div class="money"><span class="text-bold-number">' + currency(item.price) + '</span>/公斤</div></div></div>'
+      html += '<div class="marker-label-tag"><div class="title">' + this.gasstationNickName(item) + '</div><div class="detail"><div class="number"><span class="text-bold-number">' + formateZeroToBar(item.gasQty + item.offlineGasQty, 'no') + '</span> 吨</div><div class="money"><span class="text-bold-number">' + currency(item.price) + '</span>/公斤</div></div></div>'
 
       return html
     },
@@ -692,7 +692,7 @@ export default {
               formatter: function(parmas) {
                 const dataTime = parmas.name === '平台' ? data.gasQtyDate : data.offlineGasQtyDate
 
-                return (parmas.value || '-') + '吨 (' + (parmas.percent ? parmas.percent + '%' : '-') + ')\n(' + formatDate(dataTime, 'yyyy-MM-dd') + ')'
+                return formateZeroToBar(parmas.value, 'no') + '吨 (' + (parmas.percent ? parmas.percent + '%' : '-') + ')\n(' + formatDate(dataTime, 'yyyy-MM-dd') + ')'
               }
             },
             labelLine: {

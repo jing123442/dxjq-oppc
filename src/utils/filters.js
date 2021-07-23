@@ -77,8 +77,12 @@ const formateTextDeleteNULL = (value) => {
   return value ? (value === 'null' ? '-' : value) : '-'
 }
 
-const formateZeroToBar = (value) => {
-  return value || '-'
+const formateZeroToBar = (value, type = 'int') => {
+  if (type === 'int') {
+    return value || '-'
+  } else {
+    return value ? parseInt(value) : '-'
+  }
 }
 
 const formateMoney = (value) => {
