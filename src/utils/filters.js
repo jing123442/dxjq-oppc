@@ -81,7 +81,7 @@ const formateZeroToBar = (value, type = 'int') => {
   if (type === 'int') {
     return value || '-'
   } else {
-    return value ? parseInt(value) : '-'
+    return value ? (value > 0 && value < 1) ? Number(value).toFixed(2) : parseInt(value) : '-'
   }
 }
 
