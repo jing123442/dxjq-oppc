@@ -107,9 +107,9 @@ export default {
         }
         if (type === 2001 || type === 2002 || type === 2003 || type === 2004) {
           this.battleRow.gasQtyTotal = Number(Number(this.battleRow.gasQty) + Number(this.battleRow.offlineGasQty)).toFixed(2)
-          this.infoInputType = 'dxinfo'
-        } else {
           this.infoInputType = 'info'
+        } else {
+          this.infoInputType = 'dxinfo'
         }
         this.battleRow.credentials = ''
       }

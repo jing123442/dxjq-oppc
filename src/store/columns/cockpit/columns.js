@@ -103,7 +103,8 @@ const columns = {
     { field: 'createTime', name: '时间', fixed: 'left' },
     { field: 'nickName', name: '站点名称', search: { type: 'text', placeholder: '请输入站点名称' } },
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType' },
-    { field: 'offlinePrice', name: '线下结算价' },
+    { field: 'offlineGasQty', name: '线下日加气量(吨)' },
+    { field: 'offlinePrice', name: '线下结算价(元/公斤)' },
     { field: 'createName', name: '操作人' },
     { field: 'mobile', name: '电话号码' },
     { field: 'credentials', name: '凭证信息' }
@@ -119,7 +120,8 @@ const columns = {
     { field: 'createTime', name: '时间', fixed: 'left' },
     { field: 'nickName', name: '站点名称' },
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType' },
-    { field: 'offlinePrice', name: '线下结算价' },
+    { field: 'offlineGasQty', name: '线下日加气量(吨)' },
+    { field: 'offlinePrice', name: '线下结算价(元/公斤)' },
     { field: 'createName', name: '操作人' },
     { field: 'mobile', name: '电话号码' },
     { field: 'credentials', name: '凭证信息' }
