@@ -103,7 +103,7 @@ export default {
         const type = this.rowData.gasType
 
         if (this.rowData.longitude && this.rowData.latitude) {
-          this.battleRow.pointAddress = [this.rowData.longitude, this.rowData.latitude]
+          this.battleRow.pointAddress = [this.rowData.longitude, this.rowData.latitude].join(',')
         }
         if (type === 2001 || type === 2002 || type === 2003 || type === 2004) {
           this.battleRow.gasQtyTotal = Number(Number(this.battleRow.gasQty) + Number(this.battleRow.offlineGasQty)).toFixed(2)

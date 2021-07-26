@@ -466,9 +466,10 @@ export default {
     dialogFormSubmit() {
       this.mapStatus = true
       this.dialogBattleVisible = false
+      this.infoWindowClose()
 
-      this.initGasstationList()
       this.$nextTick(() => {
+        this.initGasstationList()
         this.mapStatus = false
       })
     },
