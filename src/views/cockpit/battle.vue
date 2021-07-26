@@ -29,11 +29,11 @@
             </div>
             <div class="bm-content__price" v-else>
               <div class="bm-content__price-item">
-                <div class="name">平台结算价<span class="timer">({{ currentWindow.data.priceDate | formatDate('hh:mm:ss') }})</span></div>
+                <div class="name">平台结算价<span class="timer">({{ currentWindow.data.priceDate | formateTData('date') }})</span></div>
                 <div class="price"><span class="text-bold-number">{{ currentWindow.data.price | currency }}</span> /公斤</div>
               </div>
               <div class="bm-content__price-item">
-                <div class="name">线下结算价<span class="timer">({{ currentWindow.data.offlinePriceDate | formatDate('hh:mm:ss') }})</span></div>
+                <div class="name">线下结算价<span class="timer">({{ currentWindow.data.offlinePriceDate | formateTData('date') }})</span></div>
                 <div class="price"><span class="text-bold-number">{{ currentWindow.data.offlinePrice | currency }}</span> /公斤</div>
               </div>
             </div>
@@ -91,10 +91,10 @@
               </div>
               <div class="content">
                 <span>
-                  <span class="text-bold-number">{{ (item.gasQty + item.offlineGasQty) | formateZeroToBar('no') }}</span>吨<span class="time">({{ item.offlineGasQtyDate | formateTData('date') }})</span>
+                  <span class="text-bold-number">{{ (gasstationCheckType(item.gasType) ? item.offlineGasQty : (item.gasQty + item.offlineGasQty)) | formateZeroToBar('no') }}</span>吨<span class="time">({{ (gasstationCheckType(item.gasType) ? item.offlineGasQtyDate : item.gasQtyDate) | formateTData('date') }})</span>
                 </span>
                 <span>
-                    <span class="text-bold-number">{{ (gasstationCheckType(item.gasType) ? item.offlinePrice : item.price) | currency }}</span>/公斤<span class="time">({{ item.offlinePriceDate | formateTData('date') }})</span>
+                    <span class="text-bold-number">{{ (gasstationCheckType(item.gasType) ? item.offlinePrice : item.price) | currency }}</span>/公斤<span class="time">({{ (gasstationCheckType(item.gasType) ? item.offlinePriceDate : item.priceDate) | formateTData('date') }})</span>
                   </span>
               </div>
             </li>
@@ -459,7 +459,7 @@ export default {
     markerLabelContent(item) {
       let html = ''
 
-      html += '<div class="marker-label-tag"><div class="title">' + this.gasstationNickName(item) + '</div><div class="detail"><div class="number"><span class="text-bold-number">' + formateZeroToBar(item.gasQty + item.offlineGasQty, 'no') + '</span> 吨</div><div class="money"><span class="text-bold-number">' + currency(item.price) + '</span>/公斤</div></div></div>'
+      html += '<div class="marker-label-tag"><div class="title">' + this.gasstationNickName(item) + '</div><div class="detail"><div class="number"><span class="text-bold-number">' + formateZeroToBar(item.gasQty + item.offlineGasQty, 'no') + '</span> 吨</div><div class="money"><span class="text-bold-number">' + currency((this.gasstationCheckType(item.gasType) ? item.offlinePrice : item.price)) + '</span>/公斤</div></div></div>'
 
       return html
     },
