@@ -92,7 +92,7 @@ const columns = {
     { field: 'id', hide: true, show: { type: 'hide', noShow: 1} },
     { field: 'goodsType', name: '商品类型', formatter: 'goodsType',
       show: { type: 'select', ou: 2, obj: 'goodsType', value: 0,
-        cascaderTypeList: [{ value: 0, fields: [{ goodsNorm: 'text', value: '' }] }, { value: 1, fields: [{ goodsNorm: 'select', value: '' }] }],
+        cascaderTypeList: [{ value: 0, fields: [{ goodsNorm: 'text' }] }, { value: 1, fields: [{ goodsNorm: 'select' }] }],
         cascaderLoader: [
           { selectField: 'categoryList', cancelField: 'categoryId', cover: 2, params: { param: { goodsType: '' } } }
         ] },
