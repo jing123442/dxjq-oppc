@@ -358,6 +358,13 @@ export function utilsBearType() {
     { value: 3, label: '修正出港数据' }
   ]
 }
+export function utilsOperateType() {
+  return [
+    { value: 0, label: '新增' },
+    { value: 1, label: '编辑' },
+    { value: 2, label: '删除' }
+  ]
+}
 
 export function utilsLNGDataSearch() {
   return [
