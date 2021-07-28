@@ -287,7 +287,7 @@ const columns = {
   gasStationSubmitLimit: [
     { field: 'gasstationId', show: { type: 'hide' } },
     { field: 'gasstationName', name: '加气站名称', ispush: false, show: { type: 'span' } },
-    { field: 'status', name: '计划提报限制', nameSpan: 6, formatter: 'pltStatus', show: { type: 'radio', obj: 'pltStatus', value: '0' } },
+    { field: 'status', name: '计划提报限制', nameSpan: 6, formatter: 'pltStatus', show: { type: 'radio', obj: 'pltStatus', value: '1' } },
     { field: 'note', name: '备注', formatter: 'pltStatus', show: { type: 'textarea', placeholder: '请填写备注' }, rules: [{ required: true, message: '请填写备注', trigger: 'blur' }] },
     { field: 'tip', name: '慎重提示', ispush: false, show: { type: 'span', value: '当计划提报限制开启时，如加气站不满足存销比设定限制，该加气站将无法提报库存计划，请谨慎设置！'} }
   ],
