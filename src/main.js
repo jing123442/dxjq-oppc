@@ -6,6 +6,7 @@ import store from './store'
 import ElementUI from 'element-ui'
 import emElementUI from 'em-element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import 'em-element-ui/lib/theme/index.css'
 import '@/assets/styles/index.scss' // global css
 import * as filters from '@/utils/filters' // 过滤器
 import { setSessionStorage, removeSessionStorage, getSessionStorage, clearSessionStorage } from '@/utils/storage'
