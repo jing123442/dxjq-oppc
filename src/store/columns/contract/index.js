@@ -10,6 +10,7 @@ const getters = {
   contract_contractValid_select_list: item => select.contractValid,
   contract_contractValid_page_status: item => app.list.contractValid,
   contract_contractValid_mode_list: item => app.mode.modeDefault,
+  contract_contractValid_dialog_column: item => columns.cooperationApplyDetail,
   // 合同签约
   contract_contractSign_column: item => columns.contractSign,
   contract_contractSign_select_list: item => select.contractSign,

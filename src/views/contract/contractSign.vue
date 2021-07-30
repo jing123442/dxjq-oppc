@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="table" :tableListName="'table'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list ref="table" :tableListName="'table'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"  @updateColumnValue="updateColumnValue"></em-table-list>
     <el-dialog v-if="contractSingDialogVisible" :title="this.dialogText[this.ListEventBtnType].title" :visible.sync="contractSingDialogVisible" width="50%" :append-to-body="true" @close="dialogClose">
       <div>
         <div class="operation-text">{{this.dialogText[this.ListEventBtnType].text}}</div>
@@ -78,6 +78,10 @@ export default {
           this.dialogRowData = row
           this.contractSingDialogVisible = true
           break
+        case 'cooperationApplyDetail':
+          var fileUrl = process.env.VUE_APP_FILE_HOST + row.cooperationApplyUrl
+          window.open(fileUrl)
+          break
       }
     },
     onListEventDialog(btnObj, row) {
@@ -141,6 +145,12 @@ export default {
       }, 100)
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
+    },
+    updateColumnValue(tableData, callback) {
+      tableData.forEach((item) => {
+        item.cooperationApplyDetail = item.cooperationApplyUrl ? 0 : 1
+      })
+      callback(tableData)
     }
   }
 }
