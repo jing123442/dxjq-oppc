@@ -659,3 +659,10 @@ export function utilsDistrictUserList(name) {
     }
   }
 }
+// 查看合同申请
+export function utilsCooperationApplyDetail(name) {
+  return [
+    { value: 0, label: '查看' },
+    { value: 1, label: '-' }
+  ]
+}

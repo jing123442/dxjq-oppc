@@ -1,9 +1,11 @@
 <template>
   <div class="template-main">
-    <em-table-list ref="table" :tableListName="'table'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @checkboxStatus="checkboxStatus"></em-table-list>
+    <em-table-list ref="table" :tableListName="'table'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog v-if="contractValidDialogVisible" :title="this.dialogText[this.ListEventBtnType].title" :visible.sync="contractValidDialogVisible" width="50%" :append-to-body="true" @close="dialogClose">
-      <div v-if="contractValidDialogVisible" class="operation-text">{{this.dialogText[this.ListEventBtnType].text}}</div>
-      <el-form v-if="contractValidDialogVisible && dialogRowData._btn">
+      <div v-if="contractValidDialogVisible && ListEventBtnType === 'confirm' && dialogRowData.row.type != 3" class="operation-text">确认合同无误后，请上传《合作申请审批流程》</div>
+      <div v-else-if="contractValidDialogVisible" class="operation-text">{{this.dialogText[this.ListEventBtnType].text}}</div>
+      <nt-form v-if="contractValidDialogVisible  && ListEventBtnType === 'confirm'" :ref="ListEventBtnType" :formRef="ListEventBtnType" :rowData="dialogRowData" :pageColumn="dialogRowData.row.type == 3 ? [] : dialog_column" :queryURL="queryCustURL" :axios="axios" :selectList="select_list" :responseSuccess="response_success" @onListEvent="onListEventDialog"></nt-form>
+      <el-form v-if="contractValidDialogVisible && dialogRowData._btn && ListEventBtnType !== 'confirm'">
         <el-form-item class="el-del-btn-item">
           <div class="btn-item-footer">
             <el-button v-for="(btnItem, index) in dialogRowData._btn.list" :key="index" :type="btnItem.bType"
@@ -19,7 +21,7 @@
 </template>
 <script>
 import { initVueDataOptions, callbackPagesInfo, isTypeof, custFormBtnList, exportBlobToFiles } from '@/utils/tools'
-import { $userContractView, $userContractBatchConfirm, $userContractCancel, $userContractDownload } from '@/service/user'
+import { $userContractView, $userContractConfirm, $userContractCancel, $userContractDownload } from '@/service/user'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -39,7 +41,7 @@ export default {
       },
       ListEventBtnType: '',
       contractValidDialogVisible: false,
-      buttonsList: [{ type: 'primary', icon: '', event: 'batch', name: '批量确认签约' }],
+      buttonsList: [],
       dialogText: {
         confirm: { title: '确认签约', text: '请确认甲方签约是否正确' },
         batch: { title: '批量确认签约', text: '请确认甲方签约是否正确' },
@@ -57,6 +59,7 @@ export default {
       page_column: 'contract_contractValid_column',
       select_list: 'contract_contractValid_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
+      dialog_column: 'contract_contractValid_dialog_column',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
     })
@@ -97,7 +100,7 @@ export default {
     onListEventDialog(btnObj, row) {
       if (btnObj.type === 'ok') {
         if (this.ListEventBtnType === 'confirm' || this.ListEventBtnType === 'batch') {
-          this.contractBatchConfirm(this.dialogRowData.row)
+          this.contractConfirm(this.dialogRowData)
         } else if (this.ListEventBtnType === 'recall') {
           this.contractCancel(row)
         } else if (this.ListEventBtnType === 'download') {
@@ -112,18 +115,18 @@ export default {
         window.open(res.data)
       })
     },
-    contractBatchConfirm(row) {
-      var contractList = {
-        idList: []
+    contractConfirm(row) {
+      var params = {
+        contractId: row.row.contractId
       }
-      if (this.ListEventBtnType === 'confirm') {
-        contractList.idList.push(row.contractId)
-      } else if (this.ListEventBtnType === 'batch') {
-        this.$refs.table.multipleSelection.forEach(item => {
-          contractList.idList.push(item.contractId)
-        })
+      if (row.row.type == 1 || row.row.type == 2) {
+        if (row.url && row.url.length === 0) {
+          this.$message.error('请上传合作申请审批流程')
+          return
+        }
+        params.cooperationApplyUrl = row.url[0].url
       }
-      $userContractBatchConfirm(contractList).then(res => {
+      $userContractConfirm(params).then(res => {
         this.$refs.table.initDataList()
         this.contractValidDialogVisible = false
       })
@@ -148,15 +151,6 @@ export default {
     dialogClose() {
       this.dialogRowData = {}
       this.ListEventBtnType = ''
-    },
-    checkboxStatus(row, index, callback) {
-      const flagTrue = true
-      const flagFalse = false
-      if (row.status === 2) {
-        callback(flagTrue)
-      } else {
-        callback(flagFalse)
-      }
     },
     onReqParams(type, _this, callback) {
       _this.tableListResponse = ''

@@ -297,9 +297,9 @@ export async function $userContractView(data) {
   return await R({ url: 'user/contract/view', method: 'POST', data })
 }
 
-// 合同确认
-export async function $userContractBatchConfirm(data) {
-  return await R({ url: 'user/contract/batch_confirm', method: 'POST', data })
+// 合同单个确认
+export async function $userContractConfirm(data) {
+  return await R({ url: 'user/contract/confirm', method: 'POST', data })
 }
 
 // 合同撤回
