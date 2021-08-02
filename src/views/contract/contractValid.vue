@@ -78,15 +78,6 @@ export default {
           this.dialogRowData._btn = custFormBtnList()
           this.contractValidDialogVisible = true
           break
-        case 'batch':
-          if (!this.$refs.table.multipleSelection) {
-            this.$message.warning('请选择要确认的合同')
-            return
-          }
-          this.dialogRowData.row = row
-          this.dialogRowData._btn = custFormBtnList()
-          this.contractValidDialogVisible = true
-          break
         case 'recall':
           this.dialogRowData = row
           this.contractValidDialogVisible = true
@@ -99,7 +90,7 @@ export default {
     },
     onListEventDialog(btnObj, row) {
       if (btnObj.type === 'ok') {
-        if (this.ListEventBtnType === 'confirm' || this.ListEventBtnType === 'batch') {
+        if (this.ListEventBtnType === 'confirm') {
           this.contractConfirm(this.dialogRowData)
         } else if (this.ListEventBtnType === 'recall') {
           this.contractCancel(row)

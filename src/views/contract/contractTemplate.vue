@@ -35,7 +35,6 @@ export default {
           url: 'user/contract_template/remove_by_id',
           method: 'post',
           name: 'title',
-          // dataType: 'string'
           props: {
             id: 'templateId'
           }

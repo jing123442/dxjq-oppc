@@ -12,7 +12,7 @@ const columns = {
     { field: 'partybName', name: '乙方公司名称', search: { type: 'text', placeholder: '请输入乙方公司名称' } },
     { field: 'partybCompleteDate',  formatFun: 'formateTData all',  stype: 'format', name: '乙方签约合同日期' },
     { field: 'partybContactName', name: '业务负责人', search: { type: 'text', placeholder: '请输入业务负责人' } },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 220, list: params => {
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 180, list: params => {
         const optsList = [{ type: 'details', name: '查看'}]
         if (params.row.status === 2) {
           optsList.push({type: 'confirm', name: '确认签约'}, {type: 'recall', name: '撤回'})
@@ -25,8 +25,8 @@ const columns = {
   contractSign: [
     { field: 'contractId', name: '合同编号', hide: true},
     { field: 'code', name: '合同编号', fixed: 'left' },
-    { field: 'type', name: '合同类型', formatter: 'contractType', search: { type: 'select', obj: 'contractType', placeholder: '合同类型' } },
     { field: 'status', name: '合同状态', formatter: 'contractStatus', search: { type: 'select', obj: 'contractStatus', placeholder: '合同状态' } },
+    { field: 'type', name: '合同类型', formatter: 'contractType', search: { type: 'select', obj: 'contractType', placeholder: '合同类型' } },
     { field: 'partyaName', name: '甲方公司名称', search: { type: 'text', placeholder: '请输入甲方公司名称' } },
     { field: 'partyaCompleteDate',  formatFun: 'formateTData all',  stype: 'format', name: '甲方签约合同日期' },
     { field: 'partybName', name: '乙方公司名称', search: { type: 'text', placeholder: '请输入乙方公司名称' } },
@@ -88,6 +88,8 @@ const columns = {
         const optsList = [{ type: 'orgManagerSet', name: '企业负责人管理'}, { type: 'orgOpeatorSet', name: '执行签署人管理'}]
         if (params.row.orgSealStatus === 2) {
           optsList.unshift({type: 'orgSealApply', name: '企业印章申请'})
+        } else {
+          optsList.unshift({type: 'del', name: '删除企业印章'})
         }
         return optsList
       }

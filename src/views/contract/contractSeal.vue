@@ -40,6 +40,14 @@ export default {
             tableData: ['data', 'records']
           }
         },
+        del: {
+          url: 'user/org_seal/remove_by_org_id',
+          method: 'post',
+          name: 'title',
+          props: {
+            id: 'orgId'
+          }
+        },
         name: '印章管理'
       },
       dialogRowData: {},
@@ -240,7 +248,9 @@ export default {
       const list = []
       const obj = this.$refs.orgSeal.tableListResponse.data.org
       const orgSealDetail = {
-        orgSealDetail: this.$refs.orgSeal.tableListResponse.data
+        orgSealDetail: this.$refs.orgSeal.tableListResponse.data,
+        sealId: this.$refs.orgSeal.tableListResponse.data.orgSeal ? this.$refs.orgSeal.tableListResponse.data.orgSeal.id : '',
+        title: this.$refs.orgSeal.tableListResponse.data.org.orgName + '企业印章'
       }
       obj.orgManager = orgSealDetail.orgSealDetail.orgManager ? orgSealDetail.orgSealDetail.orgManager.userName : ''
       obj.orgSealStatus = orgSealDetail.orgSealDetail.orgSeal ? orgSealDetail.orgSealDetail.orgSeal.status : 2
