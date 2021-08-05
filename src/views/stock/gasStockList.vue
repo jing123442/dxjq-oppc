@@ -124,7 +124,8 @@ export default {
           if (valid) {
             const params = {
               gasstationId: row.gasstationId,
-              increase: Number(row.increase)
+              increase: Number(row.increase),
+              note: row.note
             }
 
             $updateStock(params).then(res => {
