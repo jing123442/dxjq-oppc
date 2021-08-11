@@ -1,3 +1,5 @@
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 module.exports = {
   publicPath: './',
   devServer: {
@@ -28,6 +30,34 @@ module.exports = {
 
     if (process.env.NODE_ENV !== 'development') {
       config.output.filename('js/[name].[contenthash].js').chunkFilename('js/[name].[contenthash].js').end()
+    }
+  },
+  configureWebpack: config => {
+    if (process.env.NODE_ENV_MODE === 'analyzer') {
+      config.plugins.push(
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'static'
+        })
+      )
+    }
+    config.optimization = {
+      runtimeChunk: {
+        name: 'runtime'
+      },
+      splitChunks: {
+        chunks: 'all',
+        maxInitialRequests: Infinity,
+        minSize: 300 * 1024,
+        cacheGroups: {
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            name: (module) => {
+              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+              return `npm.${packageName.replace('@', '')}`
+            }
+          }
+        }
+      }
     }
   }
 }

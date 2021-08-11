@@ -20,7 +20,7 @@ import Voucher from './voucher'
 import Contract from './contract'
 Vue.use(VueRouter)
 
-const inImport = process.env.NODE_ENV == 'prod' ? require('./_product') : require('./_development')
+const inImport = process.env.NODE_ENV == 'production' ? require('./_product') : require('./_development')
 
 const routes = [
   {

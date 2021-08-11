@@ -56,7 +56,7 @@ const columns = {
       update: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入详细地址' },
       info: { type: 'span', ou: 1, style: 'width: 85%', placeholder: '请输入详细地址' },
       dxinfo: { type: 'span', nameSpan: 6, ou: 1, style: 'width: 85%', placeholder: '请输入详细地址' },
-      rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
+    },
     { field: 'pointAddress', name: '经纬度', colspan: 24, nameSpan: 2, mapKey: 'address',
       show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 38.6%', placeholder: '经纬度' },
       update: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 38.6%', placeholder: '经纬度' },
