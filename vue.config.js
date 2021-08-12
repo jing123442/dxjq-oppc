@@ -50,11 +50,16 @@ module.exports = {
         minSize: 300 * 1024,
         cacheGroups: {
           vendors: {
+            priority: -10,
             test: /[\\/]node_modules[\\/]/,
             name: (module) => {
               const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
               return `npm.${packageName.replace('@', '')}`
             }
+          },
+          default: {
+            priority: -20,
+            reuseExistingChunk: true
           }
         }
       }

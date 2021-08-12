@@ -10,7 +10,17 @@ module.exports = {
         ]
       }
     ],
-    ['@babel/preset-env']
+    ['@babel/preset-env', {
+      corejs: 2,
+      useBuiltIns: 'usage',
+      targets: {
+        browsers: [
+          '> 1%',
+          'last 2 versions',
+          'not ie <= 9'
+        ]
+      }
+    }]
   ],
   plugins: [
     ['@babel/plugin-transform-runtime'],
