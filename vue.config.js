@@ -1,5 +1,7 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
+const isNotDevelopment = process.env.NODE_ENV !== 'development'
+
 module.exports = {
   publicPath: './',
   devServer: {
@@ -20,6 +22,7 @@ module.exports = {
     config.plugins.delete('preload')
     config.plugins.delete('prefetch')
 
+    config.entry('main').add('babel-polyfill').end()
     config.module
       .rule('images')
       .use('url-loader')
@@ -28,7 +31,7 @@ module.exports = {
         limit: 10240
       })) // 配置图片Base64编码的阀值
 
-    if (process.env.NODE_ENV !== 'development') {
+    if (isNotDevelopment) {
       config.output.filename('js/[name].[contenthash].js').chunkFilename('js/[name].[contenthash].js').end()
     }
   },
@@ -40,26 +43,28 @@ module.exports = {
         })
       )
     }
-    config.optimization = {
-      runtimeChunk: {
-        name: 'runtime'
-      },
-      splitChunks: {
-        chunks: 'all',
-        maxInitialRequests: Infinity,
-        minSize: 300 * 1024,
-        cacheGroups: {
-          vendors: {
-            priority: -10,
-            test: /[\\/]node_modules[\\/]/,
-            name: (module) => {
-              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
-              return `npm.${packageName.replace('@', '')}`
+    if (isNotDevelopment) {
+      config.optimization = {
+        runtimeChunk: {
+          name: 'runtime'
+        },
+        splitChunks: {
+          chunks: 'all',
+          maxInitialRequests: Infinity,
+          minSize: 300 * 1024,
+          cacheGroups: {
+            vendors: {
+              priority: -10,
+              test: /[\\/]node_modules[\\/]/,
+              name: (module) => {
+                const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+                return `npm.${packageName.replace('@', '')}`
+              }
+            },
+            default: {
+              priority: -20,
+              reuseExistingChunk: true
             }
-          },
-          default: {
-            priority: -20,
-            reuseExistingChunk: true
           }
         }
       }
