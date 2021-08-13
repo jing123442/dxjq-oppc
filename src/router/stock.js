@@ -22,7 +22,9 @@ export default [
         hidden: true,
         meta: { title: '加气站库存管理', icon: 'icon-gongnengguanli', noCache: false },
         children: [
-          { path: 'planSubmitLimitConfig', component: inImport('stock/sub/planSubmitLimitConfig'), name: 'planSubmitLimitConfig', meta: { title: '配置计划提报限制', noCache: false } }
+          { path: 'planSubmitLimitConfig', component: inImport('stock/sub/planSubmitLimitConfig'), name: 'planSubmitLimitConfig', meta: { title: '配置计划提报限制', noCache: false } },
+          { path: 'gasLimitConfig', component: inImport('stock/sub/gasLimitConfig'), name: 'gasLimitConfig', meta: { title: '加气限制变更记录', noCache: false } },
+          { path: 'gasLimitDriverDetail', component: inImport('stock/sub/gasLimitDriverDetail'), name: 'gasLimitDriverDetail', meta: { title: '限制加气司机明细', noCache: false } }
         ]
       }
     ]

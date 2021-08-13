@@ -55,7 +55,8 @@ const app = {
     gasStockList: 13,
     printList: 4,
     lngPlan: 13,
-    plsLog: 13
+    plsLog: 13,
+    gasLimitDriverDetail: 13
   }
 }
 

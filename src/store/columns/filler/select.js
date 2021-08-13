@@ -56,6 +56,19 @@ const select = {
       { value: 2, label: '销售气量' },
       { value: 3, label: '库存调整' },
       { value: 4, label: '库存退回' }
+    ],
+    statusStock: [
+      { value: 4, label: '库存过低' },
+      { value: 5, label: '库存正常' },
+      { value: 6, label: '库存过高' }
+    ],
+    purchaseLimitStatus: [
+      { value: 0, label: '已开启' },
+      { value: 1, label: '已关闭' },
+    ],
+    gasLimitStatus: [
+      { value: 0, label: '已关闭' },
+      { value: 1, label: '已开启' }
     ]
   },
   printerList: {
@@ -80,6 +93,12 @@ const select = {
   },
   limitList: {
     limitStatus: [{ value: '0', label: '开启限制' }, { value: '1', label: '关闭限制' }]
+  },
+  gasLimitConfig: {
+    type: [{ value: '0', label: '关闭限制' }, { value: '1', label: '开启限制' }]
+  },
+  limitCongfigForm: {
+    type: [{ value: 0, label: '关闭限制' }, { value: 1, label: '开启限制' }]
   }
 }
 

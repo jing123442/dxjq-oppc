@@ -97,8 +97,22 @@ const getters = {
   lngStockDetail_select_list: item => select.lngStockDetail,
   // 配置计划提报限制 - 变更记录
   psl_log_column: item => columns.plsLog,
-  psl_log_page_status: item => app.list.plsLog
-
+  psl_log_page_status: item => app.list.plsLog,
+  // 加气限制配置列表
+  gas_limit_congfig_column: item => columns.gasLimitConfig,
+  gas_limit_config_page_status: item => app.list.gasLimitConfig,
+  gas_limit_config_select_list: item => select.gasLimitConfig,
+  gas_limit_config_mode_list: item => item.app.modeDefault,
+  // 加气限制配置明细
+  gas_limit_congfig_detail_column: item => columns.gasLimitConfigDetail,
+  // 配置加气限制
+  limit_congfig_form_page_column: item => columns.limitCongfigForm,
+  limit_config_form_select_list: item => select.limitCongfigForm,
+  // 加气限制司机明细
+  limit_driver_detail_page_column: item => columns.gasLimitDriverDetail,
+  limit_driver_detail_select_list: item => select.modeDefault,
+  limit_driver_detail_page_status: item => app.list.gasLimitDriverDetail,
+  limit_driver_detail_mode_list: item => item.app.modeDefault
 }
 
 export default {
