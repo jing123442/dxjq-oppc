@@ -236,3 +236,15 @@ export async function $strategyCarrierWarnClose (data) {
 export async function $strategyCarrierWarnConfig (data) {
   return await R({ url: 'strategy/carrier/warn/config', data })
 }
+// 加气站列表
+export async function $strategyGasstationStoreList (data) {
+  return await R({ url: 'strategy/gasstation/gasstation_store_list_final', data })
+}
+// 批量配置
+export async function $strategyGasLimitAdd (data) {
+  return await R({ url: 'strategy/gas_limit_config_log/add', data })
+}
+// 加气站数量库存总和
+export async function $strategyGasstoredsum (data) {
+  return await R({ url: 'strategy/gasstation/gasstation_store_list_sum', data })
+}

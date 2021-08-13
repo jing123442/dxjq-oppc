@@ -128,7 +128,10 @@ const columns = {
   gasStockList: [
     { field: 'nickName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'stock', name: '库存量(公斤)' },
-    { field: 'statusStock', name: '库存状态', stype: 'link' },
+    { field: 'statusStock', name: '库存状态', stype: 'link', search: { type: 'select', obj: 'statusStock', placeholder: '库存状态'} },
+    { field: 'purchaseLimitStatus', name: '提报限制状态',  formatter: 'purchaseLimitStatus', search: { type: 'select', obj: 'purchaseLimitStatus', placeholder: '提报限制状态'} },
+    { field: 'gasLimitStatus', name: '加气限制状态', formatter: 'gasLimitStatus', search: { type: 'select', obj: 'gasLimitStatus', placeholder: '加气限制状态'} },
+    { field: 'gasLimitStock', name: '加气限制库存' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 260, list: [{ type: 'list', name: '库存记录' }, { type: 'update', name: '库存调整' }, { type: 'submitLimit', name: '提报限制' }, { type: 'limitList', name: '限制记录' }] }
   ],
   gasUpdateStock: [
@@ -317,7 +320,34 @@ const columns = {
     { field: 'operatorName', name: '操作人', fixed: 'left' },
     { field: 'operateTime', name: '操作时间', stype: 'format', formatFun: 'formateTData all' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'list', name: '查看' }] }
-  ]
+  ],
+  gasLimitConfig: [
+    { field: 'operatorName', name: '配置人', fixed: 'left' },
+    { field: 'operateTime', name: '配置时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'type', name: '配置类型', formatter: 'type' },
+    { field: 'limitStock', name: '加气限制库存(公斤)' },
+    { field: 'gasstationNumber', name: '配置加气站数量' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'listDetail', name: '查看' }] }
+  ],
+  gasLimitConfigDetail: [
+    { field: 'operatorName', name: '配置人', fixed: 'left' },
+    { field: 'operateTime', name: '配置时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'type', name: '配置类型', formatter: 'type' },
+    { field: 'limitStock', name: '加气限制库存' },
+    { field: 'nickName', name: '加气站名称' }
+  ],
+  limitCongfigForm: [
+    { field: 'type', name: '配置类型', formatter: 'type',  nameSpan: 6, hide: true, show: { type: 'select', obj: 'type', style: 'width: 85%;', value: 0, cascaderList: [{ value: 0, fields: ['limitStock'] }], placeholder: '' }, rules: [{ required: true }] },
+    { field: 'limitStock', name: '限制库存(公斤)',  nameSpan: 6, hide: true, show: { type: 'number', value: '', style: 'width: 85%;', placeholder: '请输入加气限制库存' }, rules: [{ required: true, message: '请输入加气限制库存', trigger: 'blur' }] }
+  ],
+  gasLimitDriverDetail: [
+    { field: 'nickName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
+    { field: 'operateTime', name: '扫码时间', stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', placeholder: ''  }, },
+    { field: 'operatorName', name: '司机', search: { type: 'text', placeholder: '请输入司机姓名' } },
+    { field: 'mobile', name: '司机手机号', search: { type: 'text', placeholder: '请输入司机手机号' }},
+    { field: 'carNumber', name: '车牌号', search: { type: 'text', placeholder: '请输入车牌号' }},
+    { field: 'carrierOrgName', name: '物流公司名称', search: { type: 'text', placeholder: '请输入物流公司名称' } }
+  ],
 }
 
 export default columns
