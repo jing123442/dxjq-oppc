@@ -257,7 +257,8 @@ export function utilsTradeType() {
     { value: 11, label: '平台费退回' },
     { value: 12, label: '收入退回' },
     { value: 13, label: '服务费退回' },
-    { value: 14, label: '组合圈出' }
+    { value: 14, label: '组合圈出' },
+    { value: 15, label: '返现' }
   ]
 }
 export function utilsPrintPaper() {

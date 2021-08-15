@@ -1,6 +1,39 @@
-
 @import 'variables';
 @import 'transition';
 @import 'font/font.css';
 @import 'iconfont/iconfont.css';
 @import 'chart';
+
+// 表配置
+.item-sign {
+  white-space: nowrap;
+  padding: 0 8px;
+  line-height: 32px;
+}
+.item-last-line {
+  .last-line-first.is-disabled .el-input__inner {
+    border-color: transparent;
+    background-color: transparent;
+  }
+  &.item-sign {
+    padding-left: 22px;
+  }
+}
+
+// 配置页面增加描述信息
+.special-desc {
+  color: #2F3337;
+  padding: 15px;
+  border: 1px solid #ffe69f;
+  background-color: #ffe69f;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-top: 10px;
+  .title {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  & > div {
+    padding: 1px;
+  }
+}

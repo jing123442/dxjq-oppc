@@ -248,3 +248,19 @@ export async function $strategyGasLimitAdd (data) {
 export async function $strategyGasstoredsum (data) {
   return await R({ url: 'strategy/gasstation/gasstation_store_list_sum', data })
 }
+// 返现开关查询
+export async function $strategyCashbackStatus (data) {
+  return await R({ url: 'strategy/gway_cost/find_cashback_switch', data })
+}
+// 返现开关修改
+export async function $strategyCashbackUpdateStatus (data) {
+  return await R({ url: 'strategy/gway_cost/edit_cashback_switch', data })
+}
+// 查询返现规则
+export async function $strategyCashbackRulesList (data) {
+  return await R({ url: 'strategy/cashback_config/list', data })
+}
+// 修改返现规则
+export async function $strategyCashbackUpdateRules (data) {
+  return await R({ url: 'strategy/cashback_config/batch_update', data })
+}

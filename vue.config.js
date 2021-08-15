@@ -22,7 +22,6 @@ module.exports = {
     config.plugins.delete('preload')
     config.plugins.delete('prefetch')
 
-    config.entry('main').add('babel-polyfill').end()
     config.module
       .rule('images')
       .use('url-loader')

@@ -12,14 +12,14 @@
       <el-table v-loading="loading" :data="pslDialogData" stripe style="width:100%;margin-bottom: 20px;" ref="multipleTable" :cell-style="{padding: '5px 0'}" :header-cell-style="{padding: '7px 0',background:'#f6f6f6',color:'#999'}" border>
         <el-table-column :label="'周日均销量区间(吨)'" width="400">
           <template slot-scope="scope">
-            <div style="display: flex" class="last-line" v-if="scope.$index == pslDialogData.length - 1">
+            <div style="display: flex" class="item-last-line" v-if="scope.$index == pslDialogData.length - 1">
               <el-input class="last-line-first" :disabled="true" :clearable="true" autocomplete="off"></el-input>
-              <div class="last-line sign"> {{lastRangeSign}} </div>
+              <div class="item-last-line item-sign"> {{lastRangeSign}} </div>
               <el-input v-model="scope.row['qtyAvgBegin']" :disabled="true" :clearable="true" autocomplete="off"></el-input>
             </div>
             <div style="display: flex" v-else>
               <el-input v-model="scope.row['qtyAvgBegin']" :disabled="true" :clearable="true" autocomplete="off"></el-input>
-              <div class="sign"> {{rangeSign}} </div>
+              <div class="item-sign"> {{rangeSign}} </div>
               <el-input v-model="scope.row['qtyAvgEnd']" :clearable="true" @input="updateTable(scope)" autocomplete="off"></el-input>
             </div>
           </template>
@@ -238,20 +238,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  .sign {
-    white-space: nowrap;
-    padding: 0 8px;
-    line-height: 32px;
-  }
-  .last-line {
-    .last-line-first.is-disabled .el-input__inner {
-      border-color: transparent;
-      background-color: transparent;
-    }
-    &.sign {
-      padding-left: 22px;
-    }
-  }
-</style>

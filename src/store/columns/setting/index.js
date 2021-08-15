@@ -22,7 +22,15 @@ const getters = {
   setting_withdraw_column: item => columns.withdraw,
   setting_withdraw_select_list: item => item.app.selectDefault,
   // 变更记录
-  setting_withdraw_log_column: item => columns.withdrawLog
+  setting_withdraw_log_column: item => columns.withdrawLog,
+  // 返现规则
+  setting_cashback_mode_list: item => item.app.modeDefault,
+  setting_cashback_page_status: item => app.list.cashback,
+  setting_cashback_column: item => columns.cashback,
+  setting_cashback_select_list: item => item.app.selectDefault,
+  // 日志
+  setting_cashback_log_page_status: item => app.list.cashbackLog,
+  setting_cashback_log_column: item => columns.cashbackLog
 }
 
 export default {

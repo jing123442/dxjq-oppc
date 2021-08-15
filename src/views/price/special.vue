@@ -32,14 +32,14 @@
       <el-table v-loading="loading" :data="rebateDialogData" stripe style="width:100%;margin-bottom: 20px;" ref="multipleTable" :cell-style="{padding: '5px 0'}" :header-cell-style="{padding: '7px 0',background:'#f6f6f6',color:'#999'}" border>
         <el-table-column :label="'优惠区间(公斤)'" width="260">
           <template slot-scope="scope">
-            <div style="display: flex" class="last-line" v-if="scope.$index == rebateDialogData.length - 1">
+            <div style="display: flex" class="item-last-line" v-if="scope.$index == rebateDialogData.length - 1">
               <el-input class="last-line-first" :disabled="true" :clearable="true" autocomplete="off"></el-input>
-              <div class="last-line sign"> {{lastRangeSign}} </div>
+              <div class="item-last-line item-sign"> {{lastRangeSign}} </div>
               <el-input v-model="scope.row['beginRange']" :disabled="true" :clearable="true" autocomplete="off"></el-input>
             </div>
             <div style="display: flex" v-else>
               <el-input v-model="scope.row['beginRange']" :disabled="true" :clearable="true" autocomplete="off"></el-input>
-              <div class="sign"> {{rangeSign}} </div>
+              <div class="item-sign"> {{rangeSign}} </div>
               <el-input v-model="scope.row['endRange']" :disabled="true" :clearable="true" @input="updateTable(scope)" autocomplete="off"></el-input>
             </div>
           </template>
@@ -248,35 +248,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  .sign {
-    white-space: nowrap;
-    padding: 0 8px;
-    line-height: 32px;
-  }
-  .last-line {
-    .last-line-first.is-disabled .el-input__inner {
-      border-color: transparent;
-      background-color: transparent;
-    }
-    &.sign {
-      padding-left: 22px;
-    }
-  }
-  .special-desc {
-    color: #2F3337;
-    padding: 15px;
-    border: 1px solid #ffe69f;
-    background-color: #ffe69f;
-    border-radius: 5px;
-    font-size: 12px;
-    .title {
-      font-size: 14px;
-      font-weight: bold;
-    }
-    & > div {
-      padding: 1px;
-    }
-  }
-</style>

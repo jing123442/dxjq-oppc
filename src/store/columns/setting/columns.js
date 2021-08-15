@@ -50,7 +50,16 @@ const columns = {
     { field: 'updaterName', name: '修改人' },
     { field: 'updateQuota', name: '修改后(元)' },
     { field: 'note', name: '备注' }
-  ]
+  ],
+  cashback: [
+    { field: 'beginRange', stype: 'fields', fieldList: ['beginRange', 'endRange'], sign: ' ≤ X < ', name: '加注量区间(公斤)', fixed: 'left' },
+    { field: 'amount', name: '返现金额(元)' }
+  ],
+  cashbackLog: [
+    { field: 'operatorName', name: '操作人', fixed: 'left' },
+    { field: 'operatorDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'list', name: '查看' }] }
+  ],
 }
 
 export default columns
