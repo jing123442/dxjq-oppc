@@ -63,3 +63,12 @@ export async function $truckCollect (data) {
 export async function $withdrawTotalAmount (data) {
   return await R({ url: 'pay/withdraw_order/find_total_amount', data })
 }
+
+// B2B充值
+export async function $depositApply (data) {
+  return await R({ url: 'pay/allinpay/deposit_apply', data })
+}
+// B2B充值跳转url
+export async function $depositApplyConfirm (data) {
+  return await R({ url: 'pay/allinpay/deposit_apply_confirm', data })
+}
