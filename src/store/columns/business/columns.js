@@ -6,6 +6,7 @@ const columns = {
   org: [
     { field: 'orgId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', hide: true, width: 50, show: { noShow: 1 } },
     { field: 'orgName', name: '企业名称', fixed: 'left', search: { type: 'text', placeholder: '请输入企业名称' } },
+    { field: 'orgShortName', name: '企业简称' },
     { field: 'address', name: '地址' },
     { field: 'status', name: '企业状态', formatter: 'status' },
     { field: 'authStatus', name: '认证状态', formatter: 'authStatus' },
@@ -35,10 +36,11 @@ const columns = {
   account: [
     { field: 'orgId', nameSpan: 5, name: '', stype: 'checkbox', align: 'center', fixed: 'left', hide: true, width: 50 },
     { field: 'orgName', nameSpan: 5, name: '公司名称', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称', nameSpan: 0 }, rules: [{ required: true, message: '请输入公司名称！', trigger: 'blur' }] },
+    { field: 'orgShortName', nameSpan: 5, name: '公司简称' },
     { field: 'accountId', nameSpan: 5, name: '账号' },
     { field: 'accountType', nameSpan: 5, name: '资金账户类型', formatter: 'accountType' },
     { field: 'balance', nameSpan: 5, name: '账户余额(元)' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 190, list: [{ type: 'list', name: '流水列表' }, { type: 'withdraw', name: '提现' }, { type: 'withdraw_list', name: '提现明细' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 220, list: [{ type: 'list', name: '流水列表' }, { type: 'recharge', name: '充值' }, { type: 'withdraw', name: '提现' }, { type: 'withdraw_list', name: '提现明细' }] }
   ],
   accountList: [
     { field: 'createDate', nameSpan: 5, name: '交易时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '', clearable: false, style: 'width: 360px;', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) } },
@@ -49,7 +51,7 @@ const columns = {
     { field: 'changeAmount', nameSpan: 5, name: '变化金额(元)' },
     { field: 'accountBalance', nameSpan: 5, name: '变化后金额(元)' },
     { field: 'note', nameSpan: 5, name: '摘要' },
-    { field: 'orderId', nameSpan: 5, name: '订单编号' }
+    { field: 'orderId', nameSpan: 5, name: '订单编号', search: { type: 'text', nameSpan: 0, placeholder: '请输入订单编号' } }
   ],
   accountDetail: [
     { field: 'withdrawOrderId', name: '提现单号', fixed: 'left' },
