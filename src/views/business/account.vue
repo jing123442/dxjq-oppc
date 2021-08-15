@@ -74,12 +74,27 @@
         <el-form-item style="text-align: center;"><el-button type="primary" @click="backAccountList()">返回公司资金账户</el-button></el-form-item>
       </el-form>
     </el-dialog>
+    <el-dialog :append-to-body="true" title="充值" width="450px" :visible.sync="rechargeDialogVisible" @close="closeRechargeDialog">
+      <el-form :model="formRecharge" :rules="formRechargeRules" ref="formRecharge">
+        <el-form-item label="充值金额(元)：" prop="recharge">
+          <el-input placeholder="请输入" v-model.number="formRecharge.recharge" clearable=""></el-input>
+        </el-form-item>
+        <div class="moneyList">
+          <div class="item" v-for="(item, index) in moneyList" :class="{ 'active': moneySelectedIndex === index }" :key="index" @click="moneyItemClick(index)">{{item}}</div>
+        </div>
+        <el-form-item class="el-del-btn-item" style="border-radius: 0 0 5px 5px;">
+          <div class="btn-item-footer">
+            <el-button size="small" type="primary" @click="rechargeEvent">确认充值</el-button>
+          </div>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </el-form>
 </template>
 <script>
 import { isTypeof, callbackPagesInfo, initVueDataOptions } from '@/utils/tools'
 import { $userOrgFind } from '@/service/user'
-import { $orgWithdraw, $getWithdrawInfo } from '@/service/pay'
+import { $orgWithdraw, $getWithdrawInfo, $depositApply, $depositApplyConfirm } from '@/service/pay'
 import { $verifySendMessage } from '@/service/message'
 import { mapGetters } from 'vuex'
 
@@ -128,7 +143,19 @@ export default {
       formWithdrawNextRules: {
         verificationCode: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
       },
-      dialogWithdrawVisible: false
+      dialogWithdrawVisible: false,
+      formRecharge: {
+        recharge: 0
+      },
+      formRechargeRules: {
+        recharge: [{ required: true, message: '充值金额不能为空', trigger: 'blur' },
+          { required: true, message: '充值金额不能为空', trigger: 'change' },
+          { type: 'number', message: '充值金额必须为数字值', trigger: 'blur' },
+          { type: 'number', message: '充值金额必须为数字值', trigger: 'change' }]
+      },
+      rechargeDialogVisible: false,
+      moneySelectedIndex: '',
+      moneyList: [5000, 10000, 20000, 100000]
     })
   },
   computed: {
@@ -150,6 +177,11 @@ export default {
         this.$router.push(`account/accountList?orgId=${row.orgId}&accountId=${row.accountId}`)
       } else if (type === 'withdraw_list') {
         this.$router.push(`account/accountDetail?orgId=${row.orgId}`)
+      } else if (type === 'recharge') {
+        $userOrgFind({ orgId: row.orgId }).then(response => {
+          this.rechargeRow = response.data
+          this.rechargeDialogVisible = true
+        })
       } else {
         $userOrgFind({ orgId: row.orgId }).then(response => {
           const data = response.data
@@ -177,6 +209,48 @@ export default {
           }
         })
       }
+    },
+    closeRechargeDialog() {
+      this.formRecharge.recharge = 0
+      this.rechargeDialogVisible = false
+    },
+    rechargeEvent() {
+      const recharge = this.formRecharge.recharge
+      if (recharge < 0 || recharge > 500000) {
+        this.$message.error('充值金额必须在0-500000之间！')
+        return
+      } else if (recharge === 0) {
+        this.$message.warning('充值金额必须大于0！')
+        return
+      }
+      this.$refs.formRecharge.validate(valid => {
+        if (valid) {
+          const params = {
+            amount: recharge,
+            bizUserId: this.rechargeRow.bizUserId,
+            orgId: this.rechargeRow.orgId,
+            orgName: this.rechargeRow.orgName
+          }
+          $depositApply(params).then(res => {
+            if (res.code === 0) {
+              this.rechargeEventConfirm({ ...res.data })
+            }
+          })
+        }
+      })
+    },
+    rechargeEventConfirm(param) {
+      $depositApplyConfirm(param).then(res => {
+        if (res.code === 0) {
+          this.rechargeDialogVisible = false
+          this.formRecharge.recharge = 0
+          window.open(res.data)
+        }
+      })
+    },
+    moneyItemClick(index) {
+      this.moneySelectedIndex = index
+      this.formRecharge.recharge = this.moneyList[index]
     },
     nextWithdraw(form) {
       this.$refs[form].validate(valid => {
@@ -261,3 +335,28 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.moneyList {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  .item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 8px;
+    width: 20%;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px solid rgba(179, 179, 198, 0.7);
+    cursor: pointer;
+  }
+  .active {
+    color: #0084F4;
+    background: rgba(213, 233, 250, 0.5);
+    border: 1px solid rgba(102, 181, 248, 0.5);
+  }
+}
+</style>
