@@ -131,12 +131,14 @@ export default {
         this.$refs.config.$refs.configForm.validate(valid => {
           if (valid) {
             $strategyGasLimitAdd(params).then(response => {
+              this.dialogGasLimitConfigVisible = false
               this.$message.success('配置成功！')
               this.$refs.tables.initDataList()
             })
-            this.dialogGasLimitConfigVisible = false
           }
         })
+      } else {
+        this.dialogGasLimitConfigVisible = false
       }
     },
     dialogClose() {
