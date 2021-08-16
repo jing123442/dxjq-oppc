@@ -134,10 +134,10 @@ export default {
               this.$message.success('配置成功！')
               this.$refs.tables.initDataList()
             })
+            this.dialogGasLimitConfigVisible = false
           }
         })
       }
-      this.dialogGasLimitConfigVisible = false
     },
     dialogClose() {
       this.configRow = {}
