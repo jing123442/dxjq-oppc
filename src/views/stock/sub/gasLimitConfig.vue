@@ -128,9 +128,13 @@ export default {
         this.selectedList.forEach(item => {
           params.gasstationIds.push(item.gasstationId)
         })
-        $strategyGasLimitAdd(params).then(response => {
-          this.$message.success('配置成功！')
-          this.$refs.tables.initDataList()
+        this.$refs.config.$refs.configForm.validate(valid => {
+          if (valid) {
+            $strategyGasLimitAdd(params).then(response => {
+              this.$message.success('配置成功！')
+              this.$refs.tables.initDataList()
+            })
+          }
         })
       }
       this.dialogGasLimitConfigVisible = false
