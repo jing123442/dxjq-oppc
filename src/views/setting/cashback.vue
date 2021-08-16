@@ -19,7 +19,7 @@
         <em-table-list v-if="nextTick" :custTableTitle="'变更记录'" :tableListName="'cashbackLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="log_page_status" :page_column="log_page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
       </el-col>
     </el-row>
-    <el-dialog title="配置规则" :visible.sync="dialogConfigPriceVisible" :width="'50%'" :append-to-body="true">
+    <el-dialog title="配置规则" :visible.sync="dialogConfigPriceVisible" :width="'720px'" :append-to-body="true">
       <el-table v-loading="loading" :data="cashbackDialogData" stripe style="width:100%;margin-bottom: 20px;" ref="multipleTable" :cell-style="{padding: '5px 0'}" :header-cell-style="{padding: '7px 0',background:'#f6f6f6',color:'#999'}" border>
         <el-table-column :label="'加注量区间(公斤)'" width="400">
           <template slot-scope="scope">
@@ -37,7 +37,7 @@
         </el-table-column>
         <el-table-column prop="amount" label="返现金额(元)">
           <template slot-scope="scope">
-            <el-input v-model="scope.row['amount']" :clearable="true" autocomplete="off"></el-input>
+            <el-input-number v-model="scope.row['amount']" :precision="2" :controls="false" style="width: 125px;"></el-input-number>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="130">
@@ -185,6 +185,17 @@ export default {
     },
     btnClickEvent(item) {
       if (item.type == 'ok') {
+        let rules = false
+        for (let i = 0; i < this.cashbackDialogData.length; i++) {
+          const dataItem = this.cashbackDialogData[i]
+          if (Number(dataItem.beginRange) >= Number(dataItem.endRange) || Number(dataItem.amount) < 0) {
+            rules = true
+          }
+        }
+        if (rules) {
+          this.$message.error('输入数据有误（区间开始值不能大于等于区间结束值，或返现金额不能小于零）')
+          return false
+        }
         $strategyCashbackUpdateRules(this.cashbackDialogData).then(response => {
           this.$message.success('保存成功！')
 
@@ -192,6 +203,7 @@ export default {
           this.dialogConfigPriceVisible = false
         })
       } else {
+        this.initTableList()
         this.dialogConfigPriceVisible = false
       }
     },
@@ -203,7 +215,7 @@ export default {
       this.cashbackDialogData.push(this.initDataObject(currBegin, currEnd))
 
       lastData.beginRange = currEnd
-      lastData.endRange = 0
+      lastData.endRange = 99999999
       this.cashbackDialogData.push(lastData)
     },
     deleteTable(scope) {
