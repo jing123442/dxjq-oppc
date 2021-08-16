@@ -188,12 +188,15 @@ export default {
         let rules = false
         for (let i = 0; i < this.cashbackDialogData.length; i++) {
           const dataItem = this.cashbackDialogData[i]
-          if (Number(dataItem.beginRange) >= Number(dataItem.endRange) || Number(dataItem.amount) < 0) {
+          const beginRange = Number(dataItem.beginRange)
+          const endRange = Number(dataItem.endRange)
+          const amount = Number(dataItem.amount)
+          if (isNaN(beginRange) || isNaN(endRange) || isNaN(amount) || beginRange >= endRange || amount < 0) {
             rules = true
           }
         }
         if (rules) {
-          this.$message.error('输入数据有误（区间开始值不能大于等于区间结束值，或返现金额不能小于零）')
+          this.$message.error('输入数据有误（请输入数字类型，区间开始值不能大于等于区间结束值，或返现金额不能小于零）')
           return false
         }
         $strategyCashbackUpdateRules(this.cashbackDialogData).then(response => {
