@@ -164,9 +164,6 @@ export default {
       })
     },
     updateCashbackStatus(status) {
-      if (status) {
-        this.initTableList()
-      }
       $strategyCashbackUpdateStatus({ status }).then(response => {
         this.$message.success('配置成功！')
       }).catch(() => {
