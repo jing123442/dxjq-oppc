@@ -130,11 +130,9 @@ export default {
   mounted: function () { },
   methods: {
     initData() {
+      this.initTableList()
       $strategyCashbackStatus({}).then(response => {
         this.cashbackStatus = response.data.cashbackStatus || 0
-        if (this.cashbackStatus) {
-          this.initTableList()
-        }
       })
     },
     initDataObject(begin, end) {
