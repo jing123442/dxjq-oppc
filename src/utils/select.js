@@ -238,7 +238,9 @@ export function utilsTruckAccType() {
     { value: 4, label: '加气退款' },
     { value: 5, label: '加气积分' },
     { value: 6, label: '加气积分退回' },
-    { value: 7, label: '组合圈入' }
+    { value: 7, label: '组合圈入' },
+    { value: 8, label: '返现圈入' },
+    { value: 9, label: '返现圈出' }
   ]
 }
 
@@ -258,7 +260,10 @@ export function utilsTradeType() {
     { value: 12, label: '收入退回' },
     { value: 13, label: '服务费退回' },
     { value: 14, label: '组合圈出' },
-    { value: 15, label: '返现' }
+    { value: 15, label: '返现划入' },
+    { value: 16, label: '返现划出' },
+    { value: 17, label: '返现圈入' },
+    { value: 18, label: '返现圈出' }
   ]
 }
 export function utilsPrintPaper() {
