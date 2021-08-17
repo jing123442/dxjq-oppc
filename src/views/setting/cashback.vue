@@ -3,7 +3,7 @@
     <div style="padding: 15px 5px;display: flex;align-items: center;">
       返现功能(开启/关闭)：<el-switch v-model="cashbackStatus" @change="updateCashbackStatus" :inactive-value="0" :active-value="1"></el-switch>
     </div>
-    <el-row :gutter="10" v-if="cashbackStatus" style="margin: 0">
+    <el-row :gutter="10" style="margin: 0">
       <el-col :span="12">
         <em-table-list :tableListName="'cashback'" :authButtonList="authButtonList" :source="'data'" :sourceData="cashbackData" :buttonsList="buttonsList" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent"></em-table-list>
         <div class="special-desc">
