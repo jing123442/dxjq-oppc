@@ -132,7 +132,7 @@ export default {
     initData() {
       this.initTableList()
       $strategyCashbackStatus({}).then(response => {
-        this.cashbackStatus = response.data.cashbackStatus || 0
+        this.cashbackStatus = Number(response.data.value) || 0
       })
     },
     initDataObject(begin, end) {
@@ -164,7 +164,11 @@ export default {
       })
     },
     updateCashbackStatus(status) {
-      $strategyCashbackUpdateStatus({ status }).then(response => {
+      const params = {
+        name: 'cashback_status',
+        value: status
+      }
+      $strategyCashbackUpdateStatus(params).then(response => {
         this.$message.success('配置成功！')
       }).catch(() => {
         this.cashbackStatus = status === 1 ? 0 : 1

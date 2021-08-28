@@ -250,11 +250,11 @@ export async function $strategyGasstoredsum (data) {
 }
 // 返现开关查询
 export async function $strategyCashbackStatus (data) {
-  return await R({ url: 'strategy/gway_cost/find_cashback_switch', data })
+  return await R({ url: 'strategy/system_config/find_cashback_switch', data })
 }
 // 返现开关修改
 export async function $strategyCashbackUpdateStatus (data) {
-  return await R({ url: 'strategy/gway_cost/edit_cashback_switch', data })
+  return await R({ url: 'strategy/system_config/update_by_Name', data })
 }
 // 查询返现规则
 export async function $strategyCashbackRulesList (data) {
