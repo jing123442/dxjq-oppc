@@ -14,7 +14,7 @@ export default {
     return initVueDataOptions(this, {
       queryCustURL: {
         list: {
-          url: 'pay/allinpay/query_cash_flow',
+          url: 'pay/pay/query_cash_flow',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],

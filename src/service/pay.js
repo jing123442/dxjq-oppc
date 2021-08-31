@@ -2,35 +2,35 @@ import R from '@/utils/request'
 
 // 企业认证
 export async function $orgAuth (data) {
-  return await R({ url: 'pay/allinpay/verifyAccount', data })
+  return await R({ url: 'pay/member/open_account', data })
 }
 
 export async function $signContract (data) {
-  return await R({ url: 'pay/allinpay/signContract', data })
+  return await R({ url: 'pay/member/sign_withdraw_protocol', data })
 }
 
 export async function $signBalanceProtocol (data) {
-  return await R({ url: 'pay/allinpay/signBalanceProtocol', data })
+  return await R({ url: 'pay/member/sign_balance_protocol', data })
 }
 
 export async function $sendVerificationCode (data) {
-  return await R({ url: 'pay/allinpay/sendVerificationCode', data })
+  return await R({ url: 'pay/member/send_sms_code', data })
 }
 
 export async function $unbindPhone (data) {
-  return await R({ url: 'pay/allinpay/unbindPhone', data })
+  return await R({ url: 'pay/member/unbind_phone', data })
 }
 
 export async function $bindPhone (data) {
-  return await R({ url: 'pay/allinpay/bindPhone', data })
+  return await R({ url: 'pay/member/bind_phone', data })
 }
 
 export async function $orgWithdraw (data) {
-  return await R({ url: 'pay/allinpay/withdraw_apply', data })
+  return await R({ url: 'pay/pay/withdraw_apply', data })
 }
 
 export async function $uploadOrgPic (data) {
-  return await R({ url: 'pay/allinpay/upload_org_pic', data })
+  return await R({ url: 'pay/member/upload_org_pic', data })
 }
 // 设置限定余额
 export async function $updateWithdrawConfig (data) {
@@ -66,9 +66,9 @@ export async function $withdrawTotalAmount (data) {
 
 // B2B充值
 export async function $depositApply (data) {
-  return await R({ url: 'pay/allinpay/deposit_apply', data })
+  return await R({ url: 'pay/pay/deposit_apply', data })
 }
 // B2B充值跳转url
 export async function $depositApplyConfirm (data) {
-  return await R({ url: 'pay/allinpay/deposit_apply_confirm', data })
+  return await R({ url: 'pay/pay/deposit_apply_confirm', data })
 }
