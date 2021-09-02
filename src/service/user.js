@@ -320,3 +320,7 @@ export async function $userContractToSign(data) {
 export async function $userOrgCarrier(data) {
   return await R({ url: 'user/org/page_list_carrier', method: 'POST', data })
 }
+// 获取渠道信息
+export async function $userOrgChannelAuth(data) {
+  return await R({ url: 'user/org_channel_auth/get_by_orgId', method: 'POST', data })
+}

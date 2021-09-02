@@ -6,18 +6,21 @@ const vueFiltersInit = (value, item, scope) => {
   if (!item.formatFun) return '暂不支持格式化数据'
 
   const formatRules = item.formatFun
-
   // eslint-disable-next-line no-undef
   if (typeof formatRules === 'string') {
     const formats = formatRules.split(' ')
 
     const params = formats.filter((item, index) => index > 0)
     // eslint-disable-next-line no-eval
-    return eval('(' + formats[0] + ')')(value, ...params, scope.row)
+    return eval('(' + formats[0] + ')')(value, ...params, (scope.row ? scope.row : scope))
   } else {
     // eslint-disable-next-line no-eval
-    return eval('(' + formatRules(value, scope.row) + ')')
+    return eval('(' + formatRules(value, (scope.row ? scope.row : scope)) + ')')
   }
+}
+
+const cardValidDatetime = (value, row) => {
+  return (row.idCardValidStartDate ? row.idCardValidStartDate : '') + '-' + (row.idCardValidEndDate ? row.idCardValidEndDate : '')
 }
 
 const gasstationImage = item => {
@@ -138,6 +141,7 @@ export {
   roleList,
   formateMoney,
   formateZeroToBar,
+  cardValidDatetime,
   formateTextDeleteNULL,
   tableContractStatusToLabel
 }

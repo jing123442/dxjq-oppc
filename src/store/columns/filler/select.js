@@ -16,6 +16,7 @@ import {
   utilsCheckType,
   utilsBearType,
   utilsLNGDataSearch,
+  utilsContractStatus,
   utilsFillerParentList,
   utilSelectGasstationType
 } from '@/utils/select'
@@ -27,6 +28,7 @@ const select = {
     cascaderAddress: regionData,
     status: utilsStatus(),
     authStatus: utilsAuthStatus(),
+    contractStatus: utilsContractStatus(),
     identityType: utilsIdentityType(),
     bankList: utilsBankList(),
     fillerParent: utilsFillerParentList()

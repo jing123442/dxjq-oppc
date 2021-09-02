@@ -16,6 +16,7 @@ const columns = {
     { field: 'legalPhone', name: '法人联系电话', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入法人联系电话' }, detail: { type: 'span', ou: 2 }, rules: [{ validator: 'isValidateMobile', message: '请输入正确格式的法人联系电话', trigger: 'blur' }] },
     { field: 'identityType', name: '法人证件类型', nameSpan: 6, show: { type: 'select', ou: 2, obj: 'identityType', placeholder: '请选择法人证件类型' }, detail: { type: 'span', model: 'select', obj: 'identityType', ou: 2 } },
     { field: 'legalIds', name: '法人证件号', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入法人证件号' }, detail: { type: 'span', ou: 2 } },
+    { field: 'cardValidDatetime', name: '法人证件有效期', nameSpan: 6, show: { type: 'date-picker', model: 'daterange', format: 'yyyy-MM-dd', ou: 2, placeholder: '请输入法人证件有效期', dtime: ['00:00:00', '00:00:00'] }, detail: { type: 'span', stype: 'format', formatFun: 'cardValidDatetime', ou: 2 } },
     { field: 'taxpayer', name: '纳税人识别号', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入纳税人识别号' }, detail: { type: 'span', ou: 2 } },
     { field: 'account', name: '企业对公账户', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入企业对公账户' }, detail: { type: 'span', ou: 2 } },
     { field: 'bank', name: '开户银行名称', nameSpan: 6, show: { type: 'select', obj: 'bankList', ou: 2, placeholder: '请选择开户银行名称' }, detail: { type: 'span', ou: 2 } },

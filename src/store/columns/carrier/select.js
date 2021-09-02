@@ -13,6 +13,7 @@ import {
   utilsBankList,
   utilsOrgSubType,
   utilsComPayType,
+  utilsContractStatus,
   utilsTruckAccType, utilsRechargeType
 } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
@@ -22,6 +23,7 @@ const select = {
     orgId: utilsDyOrgList(2),
     status: utilsStatus(),
     authStatus: utilsAuthStatus(),
+    contractStatus: utilsContractStatus(),
     cascaderAddress: regionData,
     truckType: utilsTruckType(),
     autoAccount: utilsAutoAccountType(),

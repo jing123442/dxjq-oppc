@@ -41,7 +41,7 @@
 import { initVueDataOptions, isTypeof, callbackPagesInfo, custFormBtnList } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $orgAuth, $signContract, $signBalanceProtocol, $sendVerificationCode, $bindPhone, $unbindPhone } from '@/service/pay'
-import { $userOrgAdd, $userOrgEdit } from '@/service/user'
+import { $userOrgAdd, $userOrgChannelAuth, $userOrgEdit } from '@/service/user'
 
 export default {
   name: 'busorg',
@@ -130,6 +130,7 @@ export default {
         // 是否显示dialog
         this.dialogAddGasStationVisible = true
         this.authRow = row
+        this.$set(this.authRow, 'cardValidDatetime', [row.idCardValidStartDate || '', row.idCardValidEndDate || ''])
         if (type === 'add_info' || type === 'self_edit') {
           this.authRow._btn = this.formBtnList
         } else {
@@ -140,10 +141,14 @@ export default {
     handleClick() {
       this.resetAuthPageCol()
     },
-    codeEvent() { // 获取验证码
+    async codeEvent() { // 获取验证码
+      const channelInfo = await $userOrgChannelAuth({ orgId: this.currRow.orgId }).then(response => {
+        return response.data
+      })
+
       const params = {
-        bindPhone: this.formBindTel.tel,
-        orgId: this.currRow.orgId,
+        phone: this.formBindTel.tel,
+        bizUserId: channelInfo.bizUserId,
         verificationCodeType: this.currType == 'bind' ? 9 : 6
       }
       $sendVerificationCode(params).then(res => {
@@ -175,12 +180,16 @@ export default {
     },
     btnClickEvent(item) { // 绑定手机号
       if (item.type == 'ok') {
-        this.$refs.formBindTel.validate(valid => {
+        this.$refs.formBindTel.validate(async valid => {
           if (valid) {
+            const channelInfo = await $userOrgChannelAuth({ orgId: this.currRow.orgId }).then(response => {
+              return response.data
+            })
+
             const params = {
-              orgId: this.currRow.orgId,
+              bizUserId: channelInfo.bizUserId,
               verificationCode: this.formBindTel.code,
-              bindPhone: this.formBindTel.tel,
+              phone: this.formBindTel.tel,
               verificationCodeType: this.currType == 'bind' ? 9 : 6
             }
             if (this.currType == 'bind') {

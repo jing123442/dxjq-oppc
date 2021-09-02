@@ -44,7 +44,7 @@
 </template>
 <script>
 import { callbackPagesInfo, axiosRequestParams, custFormBtnList } from '@/utils/tools'
-import { $userOrgFind } from '@/service/user'
+import { $userOrgChannelAuth, $userOrgFind } from '@/service/user'
 import { $orgAuth, $uploadOrgPic } from '@/service/pay'
 import { mapGetters } from 'vuex'
 
@@ -86,13 +86,18 @@ export default {
     this.initData()
   },
   methods: {
-    initData() {
-      $userOrgFind({ orgId: this.$route.query.orgId }).then(response => {
+    async initData() {
+      const params = { orgId: this.$route.query.orgId }
+
+      await $userOrgFind(params).then(response => {
         this.authRow = response.data
         // 重置tab标签值
         this.active = this.authRow.authType ? '' + this.authRow.authType : '2'
         // 显示认证状态
         this.authColor = this.authRow.authStatus == 2 ? 'no' : 'off'
+      })
+      await $userOrgChannelAuth(params).then(response => {
+        this.authRow = Object.assign({}, this.authRow, response.data)
       })
     },
     onListEvent(type, row) {

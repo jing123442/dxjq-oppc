@@ -12,12 +12,13 @@ const columns = {
     { field: 'areas', name: '详细地址', hide: true, show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址！', trigger: 'blur' }] },
     { field: 'status', name: '状态', formatter: 'status', width: 60 },
     { field: 'authStatus', name: '认证状态', formatter: 'authStatus', filters: [{ value: 0, text: '未认证' }, { value: 1, text: '认证中' }, { value: 2, text: '已认证' }, { value: 3, text: '认证失败' }] },
-    { field: 'protocolNo', name: '转账协议', stype: 'format', formatFun: 'tableStatusToLabel', width: 70 },
+    { field: 'contractStatus', name: '平台合同', width: 100, formatter: 'contractStatus' },
+    /*{ field: 'protocolNo', name: '转账协议', stype: 'format', formatFun: 'tableStatusToLabel', width: 70 },
     { field: 'contractNo', name: '提现协议', stype: 'format', formatFun: 'tableStatusToLabel', width: 70 },
     { field: 'regnumStatus', name: '营业执照认证', formatter: 'authStatus' },
-    { field: 'idcardStatus', name: '法人证件认证', formatter: 'authStatus' },
+    { field: 'idcardStatus', name: '法人证件认证', formatter: 'authStatus' },*/
     { field: 'bindPhone', name: '绑定验证手机号', width: 110 },
-    { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
+    // { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 200, list: params => buttonOrgFillerList(params) }
   ],
   fillerAuthList: [
