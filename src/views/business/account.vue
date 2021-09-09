@@ -93,7 +93,7 @@
 </template>
 <script>
 import { isTypeof, callbackPagesInfo, initVueDataOptions } from '@/utils/tools'
-import { $userOrgFind } from '@/service/user'
+import { $userOrgChannelAuth, $userOrgFind } from '@/service/user'
 import { $orgWithdraw, $getWithdrawInfo, $depositApply, $depositApplyConfirm } from '@/service/pay'
 import { $verifySendMessage } from '@/service/message'
 import { mapGetters } from 'vuex'
@@ -183,14 +183,17 @@ export default {
           this.rechargeDialogVisible = true
         })
       } else {
-        $userOrgFind({ orgId: row.orgId }).then(response => {
+        $userOrgFind({ orgId: row.orgId }).then(async response => {
           const data = response.data
 
+          const channelInfo = await $userOrgChannelAuth({ orgId: row.orgId }).then(response => {
+            return response.data
+          })
           if (data.authStatus != 2) {
             this.$message.error('企业未认证，请先去认证！')
           } else if (!data.bindPhone) {
             this.$message.error('未绑定手机号，请先去绑定手机号！')
-          } else if (!data.contractNo) {
+          } else if (!channelInfo.contractNo) {
             this.$message.error('未签提现协议，请先去签提现协议！')
           } else {
             $getWithdrawInfo({ orgType: row.orgType }).then(res => {
