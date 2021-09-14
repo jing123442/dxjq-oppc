@@ -153,6 +153,7 @@ const columns = {
     { field: 'districtName', name: '业务区域', fixed: 'left' },
     { field: 'nickName', name: '站点名称' },
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType', search: { type: 'select', obj: 'gasstationType', placeholder: '站点类型' } },
+    { field: 'isImportant', name: '重点竞对', formatter: 'isImportant' },
     { field: 'infoType', name: '情报类型', formatter: 'infoType' },
     { field: 'isImportant', hide: true, search: { type: 'select', obj: 'isImportant', placeholder: '是否重点竞对' } },
     { field: 'offlineGasQty', name: '日加气量(吨)', stype: 'input', inputShow: true, action: { url: 'gasdata/gasstation/update/info', message: '是否保存？', params: { gasstationId: 'gasstationId', offlineGasQty: 'offlineGasQty', offlinePrice: 'offlinePrice' } },

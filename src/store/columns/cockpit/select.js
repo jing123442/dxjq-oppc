@@ -32,6 +32,7 @@ const select = {
     districtAreaList: utilDistrictAreaList(),
     infoType: utilInfoType(),
     isImportant: [
+      { value: 0, label: '-' },
       { value: '1', label: '是' },
       { value: '2', label: '否' }
     ]

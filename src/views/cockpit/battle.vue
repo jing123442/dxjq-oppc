@@ -484,6 +484,7 @@ export default {
         this.pages.total = this.gasstationList.length
         if (type == 'gasId') {
           const currGasData = this.gasstationList.filter(item => item.gasstationId == gasId)[0]
+          this.gasQtyChartDataChart(currGasData)
           this.currentWindow.data = currGasData
         }
       })
