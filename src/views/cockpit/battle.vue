@@ -177,7 +177,7 @@ import {
   $gasdataGasstationAnalyses,
   $gasdataGasstationBazaarAnalyses
 } from '@/service/gasdata'
-import { $districtList, $userFindConfigAreaList } from '@/service/user'
+import { $districtList, $userFindConfigAreaList, $userDistrictUserList } from '@/service/user'
 import { currency, formatDate, formateZeroToBar } from '@/utils/filters'
 import { utilSelectGasstationType } from '@/utils/select'
 import { mapGetters } from 'vuex'
@@ -256,7 +256,8 @@ export default {
       select_list: 'cockpit_battle_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
-      response_success: 'response_success'
+      response_success: 'response_success',
+      wopuser: 'wopuser'
     }),
     analysisDistrictName() {
       const districtItem = this.districtList.filter(item => this.finds.districtId === item.districtId)
@@ -283,16 +284,25 @@ export default {
     initData() {
       // 初始化区域list
       this.initDistrictList()
-      // 加气站list
-      this.initGasstationList()
       // 获取地图经纬度数据
       this.pointList = mapJsonData('all')
+      // 当前账号的辖内业务区域
+      this.userDistrictUserList()
     },
     initDataStatus() {
       this.mapStatus = true
       this.$nextTick(() => {
         this.currentWindow.markerWindowStatus = false
         this.mapStatus = false
+      })
+    },
+    userDistrictUserList() {
+      // 当前账号的辖内业务区域
+      const params = { page: 1, param: { userId: this.wopuser.user_id }, size: 10 }
+      $userDistrictUserList(params).then(res => {
+        this.finds.districtId = res.data.records[0].districtId
+        sessionStorage.setItem('wopUserDistrictId', this.finds.districtId)
+        this.initGasstationList('area')
       })
     },
     isImportantBtnClick() {
@@ -394,7 +404,7 @@ export default {
     initDistrictList() {
       $districtList({}).then(response => {
         this.districtList = response.data
-        this.districtList.unshift({ districtId: '', districtName: '全区域' })
+        this.districtList.unshift({ districtId: 0, districtName: '全区域' })
       })
     },
     gasstationCheckType(type) {

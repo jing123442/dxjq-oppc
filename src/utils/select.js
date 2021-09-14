@@ -458,8 +458,8 @@ export function utilSelectAuthDistrictList() {
 }
 export function utilDistrictAreaList() {
   return {
-    url: 'user/district/districtSet',
-    node: ['data', 'districtInfoVoSet'],
+    url: 'user/district/list',
+    node: ['data'],
     params: {},
     props: {
       value: 'districtId',
