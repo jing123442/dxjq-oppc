@@ -12,6 +12,7 @@
               <div class="title">
                 <span class="item-name text-overflow-ellipsis" :title="currentWindow.data.nickName">{{gasstationNickName(currentWindow.data)}}</span>
                 <span class="item-tag">[{{getGasstationTypeName(currentWindow.data.gasType)}}]</span>
+                <span class="item-icon" v-if="currentWindow.data.isImportant == '1'"><img src="@/assets/images/battle/is_important_list.png" alt=""></span>
               </div>
               <div class="address text-overflow-ellipsis">{{currentWindow.data.address}}</div>
             </div>
@@ -73,17 +74,23 @@
           <div class="btn-echarts" :class="buttonClsDataAnalysis" @click="dataAnalysisEvent('open')"></div>
         </div>
         <div class="card-control">
-          <el-input
-            placeholder="请输入加气站"
-            suffix-icon="el-icon-search"
-            v-model="filterGasstationName">
-          </el-input>
+          <div class="filter-top">
+            <el-input
+              placeholder="请输入加气站"
+              suffix-icon="el-icon-search"
+              v-model="filterGasstationName">
+            </el-input>
+            <div :class="isImportantSelectClass" @click="isImportantBtnClick">
+              <img :src="isImportantSelectIcon" alt="">
+            </div>
+          </div>
           <ul class="card-list" :style="{ height: (mapHeight - 345) + 'px'}">
             <li v-for="(item, index) of currGasstationList" :key="index" :class="'icon-' + (item.gasType || 2004)" @click="markerClickEvent(item)">
               <div class="title">
                 <div>
                   <span class="item-name text-overflow-ellipsis" :title="item.nickName">{{gasstationNickName(item)}}</span>
                   <span class="item-tag">[{{getGasstationTypeName(item.gasType)}}]</span>
+                  <span class="item-icon" v-if="item.isImportant == '1'"><img src="@/assets/images/battle/is_important_list.png" alt=""></span>
                 </div>
                 <div class="item-type" v-if="item.gasType === 1001">自</div>
                 <div class="item-type" v-else-if="item.gasType === 1002">合</div>
@@ -99,7 +106,7 @@
               </div>
             </li>
           </ul>
-          <div class="map-list-pagination">共 {{pages.total | formateZeroToBar}} 站点</div>
+          <div class="map-list-pagination"><span class="total-num">共 {{pages.total | formateZeroToBar}} 站点</span><span class="edit-batch" @click="dialogBatchEditVisible = true">情报批量编辑</span></div>
         </div>
       </div>
     </div>
@@ -145,7 +152,7 @@
       <el-button size="small" @click.native="markerLogEvent">变更记录</el-button>
     </div>
     <el-dialog :title="battleTitle" :visible.sync="dialogBattleVisible" :width="add_edit_dialog" :append-to-body="true">
-      <battle-form v-if="dialogBattleVisible" :optType="optType" :rowData="currBattleRow" @click="dialogFormSubmit"></battle-form>
+      <battle-form v-if="dialogBattleVisible" :optType="optType" :rowData="currBattleRow" @click="dialogFormSubmit(currBattleRow)"></battle-form>
     </el-dialog>
     <el-dialog title="变更记录" :visible.sync="dialogBattleLogVisible" :width="add_edit_dialog" :append-to-body="true">
       <battle-log v-if="dialogBattleLogVisible"></battle-log>
@@ -156,6 +163,10 @@
           <el-image :src="item" class="block" :fit="'contain'" style="height: 285px" />
         </el-carousel-item>
       </el-carousel>
+    </el-dialog>
+    <!-- 情报批量编辑弹窗 -->
+    <el-dialog title="情报批量编辑" :visible.sync="dialogBatchEditVisible" :width="add_edit_dialog" :append-to-body="true">
+      <battle-batch-edit v-if="dialogBatchEditVisible"></battle-batch-edit>
     </el-dialog>
   </div>
 </template>
@@ -171,12 +182,12 @@ import { currency, formatDate, formateZeroToBar } from '@/utils/filters'
 import { utilSelectGasstationType } from '@/utils/select'
 import { mapGetters } from 'vuex'
 import { arrayResetSort, initVueDataOptions, isHttpHeaderURL, trim } from '@/utils/tools'
-import { BattleLog, BattleForm } from './components'
+import { BattleLog, BattleForm, BattleBatchEdit } from './components'
 import { mapJsonData } from '@/mock/map'
 
 export default {
   name: 'battle',
-  components: { BattleLog, BattleForm },
+  components: { BattleLog, BattleForm, BattleBatchEdit },
   data: function () {
     return initVueDataOptions(this, {
       mapStatus: false,
@@ -201,7 +212,8 @@ export default {
       },
       finds: {
         districtId: '',
-        gasType: null
+        gasType: null,
+        isImportant: ''
       },
       filterGasstationName: '',
       districtList: [],
@@ -226,10 +238,14 @@ export default {
       dialogBattleLogVisible: false,
       gasstationCerdList: [],
       dialogCerdListVisible: false,
+      dialogBatchEditVisible: false,
       polygon: {
         path: []
       },
-      pointList: []
+      pointList: [],
+      isImportantSelectIcon: require('@/assets/images/battle/is_important_unselect.png'),
+      isImportantSelectClass: 'is-important-select',
+      currentIsImportant: 0
     })
   },
   computed: {
@@ -278,6 +294,18 @@ export default {
         this.currentWindow.markerWindowStatus = false
         this.mapStatus = false
       })
+    },
+    isImportantBtnClick() {
+      if (this.currentIsImportant === 0) {
+        this.currentIsImportant = 1
+        this.isImportantSelectIcon = require('@/assets/images/battle/is_important_selected.png')
+        this.isImportantSelectClass = 'is-important-select selected'
+      } else if (this.currentIsImportant === 1) {
+        this.currentIsImportant = 0
+        this.isImportantSelectIcon = require('@/assets/images/battle/is_important_unselect.png')
+        this.isImportantSelectClass = 'is-important-select'
+      }
+      this.initGasstationList()
     },
     getWindowLogo(type) {
       if (this.gasstationCheckType(type)) {
@@ -438,9 +466,9 @@ export default {
         this.polygon.path = tmpPointList
       })
     },
-    initGasstationList(type = '') {
+    initGasstationList(type = '', gasId = '') {
       const params = this.finds
-
+      params.isImportant = this.currentIsImportant
       if (type === 'area') {
         this.initDataStatus()
         this.districtToAreaList()
@@ -454,6 +482,10 @@ export default {
         // 可通过加气站名过来
         this.currGasstationList = [...new Set(res)]
         this.pages.total = this.gasstationList.length
+        if (type == 'gasId') {
+          const currGasData = this.gasstationList.filter(item => item.gasstationId == gasId)[0]
+          this.currentWindow.data = currGasData
+        }
       })
     },
     markerLabelContent(item) {
@@ -463,15 +495,11 @@ export default {
 
       return html
     },
-    dialogFormSubmit() {
-      this.mapStatus = true
+    dialogFormSubmit(data) {
+      const currGasId = data.gasstationId
       this.dialogBattleVisible = false
-      this.infoWindowClose()
 
-      this.$nextTick(() => {
-        this.initGasstationList()
-        this.mapStatus = false
-      })
+      this.initGasstationList('gasId', currGasId)
     },
     markerAddEvent() {
       this.battleTitle = '新增加气站'
@@ -773,7 +801,7 @@ export default {
       }
     }*/
     .BMap_bubble_top {
-      // height: 8px !important;
+      height: 5px !important;
     }
     /*.BMap_top, .BMap_center, .BMap_bottom {
       border-color: rgba(0, 0, 0, 0.05) !important;
@@ -801,6 +829,14 @@ export default {
           color: #333333;
           font-size: 14px;
           font-weight: bold;
+        }
+        .item-icon {
+          width: 14px;
+          height: 14px;
+          margin-left: 8px;
+          img {
+            width: 100%;
+          }
         }
       }
       .address {
@@ -912,13 +948,44 @@ export default {
         }
       }
       .card-control {
+        .filter-top {
+          display: flex;
+        }
+        .el-input {
+          width: 85%;
+        }
+        .is-important-select {
+          margin-left: 5%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 30px;
+          height: 30px;
+          border: solid 2px #5B8FF9;
+          border-radius: 4px;
+          cursor: pointer;
+          img {
+            width: 80%;
+          }
+        }
+        .is-important-select.selected {
+          background: #5B8FF9;
+        }
         .map-list-pagination {
+          display: flex;
+          justify-content: space-between;
           padding: 0;
           padding-top: 10px;
           border-top: 1px solid #EDEDED;
           font-size: 12px;
-          font-weight: bold;
-          color: #333333;
+          .total-num {
+            font-weight: bold;
+            color: #333333;
+          }
+          .edit-batch {
+            color: #5B8FF9;
+            cursor: pointer;
+          }
         }
         .card-list {
           height: 100px;
@@ -969,6 +1036,14 @@ export default {
               color: #333333;
               font-size: 14px;
               font-weight: bold;
+            }
+            .item-icon {
+              width: 14px;
+              height: 14px;
+              margin-left: 8px;
+              img {
+                width: 100%;
+              }
             }
             .item-type {
               height: 15px;

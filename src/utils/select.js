@@ -456,6 +456,17 @@ export function utilSelectAuthDistrictList() {
     }
   }
 }
+export function utilDistrictAreaList() {
+  return {
+    url: 'user/district/districtSet',
+    node: ['data', 'districtInfoVoSet'],
+    params: {},
+    props: {
+      value: 'districtId',
+      label: 'districtName'
+    }
+  }
+}
 export function utilsSupplierList() {
   return {
     url: 'shop/supplier/list',
@@ -670,5 +681,13 @@ export function utilsCooperationApplyDetail(name) {
   return [
     { value: 0, label: '查看' },
     { value: 1, label: '-' }
+  ]
+}
+// 情报类型
+export function utilInfoType() {
+  return [
+    { value: 0, label: '大象平台情报' },
+    { value: 1, label: '大象线下情报' },
+    { value: 2, label: '非大象情报' }
   ]
 }

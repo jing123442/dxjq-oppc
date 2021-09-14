@@ -45,26 +45,32 @@ const columns = {
       info: { type: 'span', ou: 1, style: 'width: 85%', placeholder: '请输入站点名称' },
       dxinfo: { type: 'span', nameSpan: 6, ou: 1, style: 'width: 85%', placeholder: '请输入站点名称' },
       rules: [{ required: true, message: '请输入站点名称', trigger: 'blur' }] },
+    { field: 'isImportant', name: '重点竞对',
+      show: { type: 'radio', ou: 1, obj: 'isImportant', placeholder: '', value: '2' },
+      update: { type: 'radio', ou: 1, obj: 'isImportant', placeholder: '' },
+      // info: { type: 'span', ou: 1, model: 'select', obj: 'isImportant', placeholder: '', style: 'width: 85%' },
+      // dxinfo: { type: 'span', model: 'select', obj: 'isImportant', nameSpan: 6, ou: 1, placeholder: '', style: 'width: 85%' },
+      rules: [{ required: true, message: '请选择重点竞对', trigger: 'blur' }] },
     { field: 'city', name: '行政区域',
       show: { type: 'select', ou: 1, obj: 'districtList', style: 'width: 85%', placeholder: '请选择行政区域' },
       update: { type: 'select', ou: 1, obj: 'districtList', style: 'width: 85%', placeholder: '请选择行政区域' },
       info: { type: 'span', style: 'width: 85%', placeholder: '请选择行政区域' },
       dxinfo: { type: 'span', nameSpan: 6, style: 'width: 85%', placeholder: '请选择行政区域' },
       rules: [{ required: true, message: '请选择行政区域', trigger: 'change' }] },
+    { field: 'pointAddress', name: '经纬度', colspan: 12, mapKey: 'address',
+      show: { type: 'map', ou: 2, mapStyle: { width: '900px' }, mapHeight: '400px', mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 85.2%', placeholder: '经纬度' },
+      update: { type: 'map', ou: 2, mapStyle: { width: '900px' }, mapHeight: '400px', mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 85.2%', placeholder: '经纬度' },
+      info: { type: 'span', ou: 2, style: 'width: 85.2%', placeholder: '经纬度' },
+      dxinfo: { type: 'span', nameSpan: 6, ou: 2, style: 'width: 85.2%', placeholder: '经纬度' },
+      rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
     { field: 'address', name: '详细地址',
       show: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入详细地址' },
       update: { type: 'text', ou: 1, style: 'width: 85%', placeholder: '请输入详细地址' },
       info: { type: 'span', ou: 1, style: 'width: 85%', placeholder: '请输入详细地址' },
       dxinfo: { type: 'span', nameSpan: 6, ou: 1, style: 'width: 85%', placeholder: '请输入详细地址' },
     },
-    { field: 'pointAddress', name: '经纬度', colspan: 24, nameSpan: 2, mapKey: 'address',
-      show: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 38.6%', placeholder: '经纬度' },
-      update: { type: 'map', ou: 2, mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 38.6%', placeholder: '经纬度' },
-      info: { type: 'span', ou: 2, style: 'width: 38.6%', placeholder: '经纬度' },
-      dxinfo: { type: 'span', nameSpan: 3, ou: 2, style: 'width: 36.3%', placeholder: '经纬度' },
-      rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
-    { field: 'gasQtyTotal', name: '日加气总量', hide: true, ispush: false, colspan: 24, nameSpan: 2,
-      dxinfo: { type: 'span', nameSpan: 3, ou: 1, style: 'width: 36.3%', placeholder: '请输入日加气总量', util: '吨' } },
+    { field: 'gasQtyTotal', name: '日加气总量', hide: true, ispush: false, colspan: 12, nameSpan: 6,
+      dxinfo: { type: 'span', nameSpan: 6, ou: 1, style: 'width: 85.2%', placeholder: '请输入日加气总量', util: '吨' } },
     { field: 'gasQty', name: '平台日加气量', hide: true, ispush: false,
       dxinfo: { type: 'span', nameSpan: 6, ou: 1, style: 'width: 85%', placeholder: '请输入平台日加气量', util: '吨' } },
     { field: 'offlineGasQty', name: '日加气量',
@@ -134,13 +140,36 @@ const columns = {
     { field: 'createTime', name: '时间', fixed: 'left' },
     { field: 'nickName', name: '站点名称' },
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType' },
+    { field: 'isImportant', name: '重点竞对', formatter: 'isImportant' },
     { field: 'operateType', name: '操作类型', formatter: 'operateType' },
     { field: 'city', name: '行政区域' },
     { field: 'address', name: '详细地址' },
     { field: 'longitude', name: '经纬度', stype: 'fields', fieldList: ['longitude', 'latitude'], sign: ',' },
     { field: 'createName', name: '操作人' },
     { field: 'mobile', name: '电话号码' }
+  ],
+  batchEdit: [
+    { field: 'districtId', hide: true, search: { type: 'select', obj: 'districtAreaList', placeholder: '业务区域' } },
+    { field: 'districtName', name: '业务区域', fixed: 'left' },
+    { field: 'nickName', name: '站点名称' },
+    { field: 'gasType', name: '站点类型', formatter: 'gasstationType', search: { type: 'select', obj: 'gasstationType', placeholder: '站点类型' } },
+    { field: 'infoType', name: '情报类型', formatter: 'infoType' },
+    { field: 'isImportant', hide: true, search: { type: 'select', obj: 'isImportant', placeholder: '是否重点竞对' } },
+    { field: 'offlineGasQty', name: '日加气量(吨)', stype: 'input', inputShow: true, action: { url: 'gasdata/gasstation/update/info', message: '是否保存？', params: { gasstationId: 'gasstationId', offlineGasQty: 'offlineGasQty', offlinePrice: 'offlinePrice' } },
+      table: { type: 'text', nameSpan: 0, inputSpan: 24, style: 'width: 100%;', clearable: false }, iShowStatus: item => iShowStatus(item) },
+    { field: 'offlinePrice', name: '结算价(元/公斤)', stype: 'input', inputShow: true, action: { url: 'gasdata/gasstation/update/info', message: '是否保存？', params: { gasstationId: 'gasstationId', offlineGasQty: 'offlineGasQty', offlinePrice: 'offlinePrice' } },
+      table: { type: 'text', nameSpan: 0, inputSpan: 24, style: 'width: 100%;', clearable: false }, iShowStatus: item => iShowStatus(item) }
   ]
+}
+
+const iShowStatus = (item) => {
+  // infoType 情报类型 0大象平台情报 1大象线下情报 2非大象情报
+  // editInfo 是否允许编辑站点情报 0允许 1不允许
+  if (item.infoType !== 0 && item.editInfo === 0) {
+    return true
+  } else {
+    return false
+  }
 }
 
 export default columns

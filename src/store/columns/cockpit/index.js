@@ -22,7 +22,12 @@ const getters = {
   cockpit_battle_log_item_column: item => columns.battleItem,
   cockpit_battle_gas_log_column: item => columns.battleGasList,
   cockpit_battle_gas_log_item_column: item => columns.battleGasItem,
-  cockpit_battle_log_select_list: item => select.battleList
+  cockpit_battle_log_select_list: item => select.battleList,
+
+  batch_edit_mode_list: item => item.app.modeDefault,
+  batch_edit_page_status: item => app.list.batchEdit,
+  batch_edit_column: item => columns.batchEdit,
+  batch_edit_select_list: item => select.batchEdit
 }
 
 export default {

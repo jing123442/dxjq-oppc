@@ -123,6 +123,7 @@ export default {
         address: row.address,
         city: row.city,
         gasType: row.gasType,
+        isImportant: row.isImportant,
         nickName: row.nickName,
         offlineGasQty: row.offlineGasQty,
         offlinePrice: row.offlinePrice,

@@ -1,4 +1,4 @@
-import {utilsBaseRole, utilsStatus, utilSelectGasstationType, utilSelectAuthDistrictList, utilsOperateType} from '@/utils/select'
+import { utilsBaseRole, utilsStatus, utilSelectGasstationType, utilSelectAuthDistrictList, utilsOperateType, utilInfoType, utilDistrictAreaList } from '@/utils/select'
 
 const select = {
   intention: {
@@ -12,13 +12,30 @@ const select = {
   battle: {
     operateType: utilsOperateType(),
     gasstationType: utilSelectGasstationType(),
-    districtList: utilSelectAuthDistrictList()
+    districtList: utilSelectAuthDistrictList(),
+    isImportant: [
+      { value: '1', label: '是' },
+      { value: '2', label: '否' }
+    ]
   },
   battleList: {
     operateType: utilsOperateType(),
     gasstationType: utilSelectGasstationType('all'),
-    districtList: utilSelectAuthDistrictList()
+    districtList: utilSelectAuthDistrictList(),
+    isImportant: [
+      { value: '1', label: '是' },
+      { value: '2', label: '否' }
+    ]
   },
+  batchEdit: {
+    gasstationType: utilSelectGasstationType('all'),
+    districtAreaList: utilDistrictAreaList(),
+    infoType: utilInfoType(),
+    isImportant: [
+      { value: '1', label: '是' },
+      { value: '2', label: '否' }
+    ]
+  }
 }
 
 export default select
