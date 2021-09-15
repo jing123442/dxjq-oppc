@@ -300,7 +300,7 @@ export default {
       // 当前账号的辖内业务区域
       const params = { page: 1, param: { userId: this.wopuser.user_id }, size: 10 }
       $userDistrictUserList(params).then(res => {
-        this.finds.districtId = res.data.records[0].districtId
+        this.finds.districtId = res.data.records[0].districtId === 0 ? '' : res.data.records[0].districtId
         sessionStorage.setItem('wopUserDistrictId', this.finds.districtId)
         this.initGasstationList('area')
       })
@@ -404,7 +404,7 @@ export default {
     initDistrictList() {
       $districtList({}).then(response => {
         this.districtList = response.data
-        this.districtList.unshift({ districtId: 0, districtName: '全区域' })
+        this.districtList.unshift({ districtId: '', districtName: '全区域' })
       })
     },
     gasstationCheckType(type) {
