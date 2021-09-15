@@ -156,9 +156,9 @@ const columns = {
     { field: 'isImportant', name: '重点竞对', formatter: 'isImportantAll' },
     { field: 'infoType', name: '情报类型', formatter: 'infoType' },
     { field: 'isImportant', hide: true, search: { type: 'select', obj: 'isImportant', placeholder: '是否重点竞对' } },
-    { field: 'offlineGasQty', name: '日加气量(吨)', stype: 'input', inputShow: true, action: { url: 'gasdata/gasstation/update/info', isConfirm: false, message: '是否保存？', params: { gasstationId: 'gasstationId', offlineGasQty: 'offlineGasQty', offlinePrice: 'offlinePrice' } },
+    { field: 'offlineGasQty', name: '日加气量(吨)', stype: 'input', inputShow: true, actionBak: { url: 'gasdata/gasstation/update/info', isConfirm: false, message: '是否保存？', params: { gasstationId: 'gasstationId', offlineGasQty: 'offlineGasQty', offlinePrice: 'offlinePrice' } },
       table: { type: 'text', nameSpan: 0, inputSpan: 24, style: 'width: 100%;', clearable: false }, iShowStatus: item => iShowStatus(item) },
-    { field: 'offlinePrice', name: '结算价(元/公斤)', stype: 'input', inputShow: true, action: { url: 'gasdata/gasstation/update/info', isConfirm: false, message: '是否保存？', params: { gasstationId: 'gasstationId', offlineGasQty: 'offlineGasQty', offlinePrice: 'offlinePrice' } },
+    { field: 'offlinePrice', name: '结算价(元/公斤)', stype: 'input', inputShow: true, actionBak: { url: 'gasdata/gasstation/update/info', isConfirm: false, message: '是否保存？', params: { gasstationId: 'gasstationId', offlineGasQty: 'offlineGasQty', offlinePrice: 'offlinePrice' } },
       table: { type: 'text', nameSpan: 0, inputSpan: 24, style: 'width: 100%;', clearable: false }, iShowStatus: item => iShowStatus(item) }
   ]
 }

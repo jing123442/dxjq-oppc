@@ -1,13 +1,17 @@
 <template>
   <div>
     <table-total-data :dataList="dataList" :rowData="dataInfo" :headerStyle="'top: 162px;'"></table-total-data>
-    <em-table-list ref="batchEditTable" :custTableTitle="'情报批量编辑'" :tableListName="'battleBatchEdit'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue"></em-table-list>
+    <em-table-list ref="batchEditTable" :custTableTitle="'情报批量编辑'" :tableListName="'battleBatchEdit'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onReqParams="onReqParams" @onUpdateEvent="onUpdateEvent" @updateColumnValue="updateColumnValue"></em-table-list>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import { TableTotalData } from '@/components'
 import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import {
+  $gasdataGasstationList,
+  $gasdataGasstationBattleInfoUpdate
+} from '@/service/gasdata'
 export default {
   name: 'battleBatchEdit',
   data: function () {
@@ -59,6 +63,27 @@ export default {
         }
       }, 100)
       callback(params)
+    },
+    onUpdateEvent(item, obj) {
+      const field = obj.field
+      const val = item[field]
+      const reg = /(?:^[1-9]([0-9]+)?(?:\.[0-9]{1,2})?$)|(?:^(?:0)$)|(?:^[0-9]\.[0-9](?:[0-9])?$)/
+      if (!reg.test(val) || !val || val == 0) {
+        this.$message.error('当前输入的值必须大于0或者小数点后保留2位的数')
+      } else {
+        // 判断值是否更改,不变则不更改
+        const params = this.finds
+        $gasdataGasstationList(params).then(response => {
+          const res = [...new Set(response.data)] || []
+          const currItem = res.filter(it => item.gasstationId == it.gasstationId)[0]
+          if (currItem[field] != val) {
+            $gasdataGasstationBattleInfoUpdate(item).then(res => {
+              this.$message.success('保存成功')
+              this.$refs.batchEditTable.initDataList()
+            })
+          }
+        })
+      }
     },
     updateColumnValue(tableData, cb) {
       cb(tableData)
