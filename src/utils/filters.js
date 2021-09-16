@@ -83,6 +83,8 @@ const formateTextDeleteNULL = (value) => {
 const formateZeroToBar = (value, type = 'int') => {
   if (type === 'int') {
     return value || '-'
+  } else if (type == 'no') {
+    return value ? Number(value).toFixed(2) : '-'
   } else {
     return value ? (value > 0 && value < 1) ? Number(value).toFixed(2) : parseInt(value) : '-'
   }
