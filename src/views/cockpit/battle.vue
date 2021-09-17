@@ -165,7 +165,7 @@
       </el-carousel>
     </el-dialog>
     <!-- 情报批量编辑弹窗 -->
-    <el-dialog title="情报批量编辑" :visible.sync="dialogBatchEditVisible" :width="add_edit_dialog" :append-to-body="true">
+    <el-dialog title="情报批量编辑" :visible.sync="dialogBatchEditVisible" :width="add_edit_dialog" :append-to-body="true" @close="batchEditDialogClose">
       <battle-batch-edit v-if="dialogBatchEditVisible"></battle-batch-edit>
     </el-dialog>
   </div>
@@ -316,6 +316,10 @@ export default {
         this.isImportantSelectClass = 'is-important-select'
       }
       this.initGasstationList()
+    },
+    batchEditDialogClose() {
+      // 批量编辑弹窗关闭事件
+      this.initData()
     },
     getWindowLogo(type) {
       if (this.gasstationCheckType(type)) {
