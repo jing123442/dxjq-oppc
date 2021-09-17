@@ -319,7 +319,7 @@ export default {
     },
     batchEditDialogClose() {
       // 批量编辑弹窗关闭事件
-      this.initData()
+      this.initGasstationList()
     },
     getWindowLogo(type) {
       if (this.gasstationCheckType(type)) {
