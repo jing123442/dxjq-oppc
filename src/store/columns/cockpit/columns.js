@@ -119,6 +119,7 @@ const columns = {
     { field: 'createTime', name: '时间', fixed: 'left' },
     { field: 'nickName', name: '站点名称', search: { type: 'text', placeholder: '请输入站点名称' } },
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType' },
+    { field: 'isImportant', name: '重点竞对', formatter: 'isImportant' },
     { field: 'operateType', name: '操作类型', formatter: 'operateType' },
     { field: 'city', name: '行政区域' },
     { field: 'address', name: '详细地址' },
