@@ -150,7 +150,7 @@ const columns = {
     { field: 'mobile', name: '电话号码' }
   ],
   batchEdit: [
-    { field: 'districtId', hide: true, search: { type: 'select', obj: 'districtAreaList', value: Number(sessionStorage.getItem('wopUserDistrictId')) === 0 ? '' : Number(sessionStorage.getItem('wopUserDistrictId')), placeholder: '业务区域' } },
+    { field: 'districtId', hide: true, search: { type: 'select', obj: 'districtAreaList', placeholder: '业务区域' } },
     { field: 'districtName', name: '业务区域', fixed: 'left' },
     { field: 'nickName', name: '站点名称' },
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType', search: { type: 'select', obj: 'gasstationType', placeholder: '站点类型' } },

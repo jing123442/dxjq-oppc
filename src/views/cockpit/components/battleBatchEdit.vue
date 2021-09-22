@@ -1,7 +1,7 @@
 <template>
   <div>
     <table-total-data :dataList="dataList" :rowData="dataInfo" :headerStyle="'top: 162px;'"></table-total-data>
-    <em-table-list ref="batchEditTable" :custTableTitle="'情报批量编辑'" :tableListName="'battleBatchEdit'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onReqParams="onReqParams" @onUpdateEvent="onUpdateEvent" @updateColumnValue="updateColumnValue"></em-table-list>
+    <em-table-list ref="batchEditTable" :custTableTitle="'情报批量编辑'" :tableListName="'battleBatchEdit'" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" :options="options" @onReqParams="onReqParams" @onUpdateEvent="onUpdateEvent" @updateColumnValue="updateColumnValue"></em-table-list>
   </div>
 </template>
 <script>
@@ -32,7 +32,12 @@ export default {
         field: 'lastUpdateTime'
       }],
       dataInfo: { lastUpdateTime: '' },
-      queryParams: Function
+      queryParams: Function,
+      options: {
+        finds: {
+          districtId: Number(sessionStorage.getItem('wopUserDistrictId')) === 0 ? '' : Number(sessionStorage.getItem('wopUserDistrictId'))
+        }
+      }
     })
   },
   components: { TableTotalData },
