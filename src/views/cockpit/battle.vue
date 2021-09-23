@@ -76,6 +76,7 @@
         <div class="card-control">
           <div class="filter-top">
             <el-input
+              clearable="true"
               placeholder="请输入加气站"
               suffix-icon="el-icon-search"
               v-model="filterGasstationName">

@@ -84,7 +84,6 @@ export default {
           if (currItem[field] != val) {
             $gasdataGasstationBattleInfoUpdate(item).then(res => {
               this.$message.success('保存成功')
-              this.$refs.batchEditTable.initDataList()
             })
           }
         })
