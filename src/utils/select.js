@@ -656,7 +656,7 @@ export function utilsPlateformOrgList() {
     }
   }
 }
-// 业务区域配置设置联系人
+// 车辆列表
 export function utilsDistrictUserList(name) {
   return {
     url: 'user/user/list',
@@ -673,6 +673,25 @@ export function utilsDistrictUserList(name) {
     props: {
       value: ['userId', 'userName', 'mobile'],
       label: 'userName'
+    }
+  }
+}
+// 业务区域配置设置联系人
+export function utilsTruckList(carNumber) {
+  return {
+    url: 'strategy/truck/list',
+    node: ['data', 'records'],
+    params: {
+      page: 1,
+      size: 10,
+      param: {
+        status: 0,
+        carNumber
+      }
+    },
+    props: {
+      value: 'truckId',
+      label: 'carNumber'
     }
   }
 }

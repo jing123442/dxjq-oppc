@@ -28,4 +28,12 @@ export async function $gasdataGasstationBattleDelete (data) {
 export async function $gasdataGasstationBattleInfoUpdate (data) {
   return await R({ url: 'gasdata/gasstation/update/info', data })
 }
+// 导出LNG气瓶数据
+export async function $gasdataLngContainerExport (data) {
+  return await R({ url: 'gasdata/lng_container/export', method: 'POST', params: data, responseType: 'blob' })
+}
 
+// 导出智能液位计数据
+export async function $gasdataGaugeExport (data) {
+  return await R({ url: 'gasdata/gauge/export', method: 'POST', params: data, responseType: 'blob' })
+}
