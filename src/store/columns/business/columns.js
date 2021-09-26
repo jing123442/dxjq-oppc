@@ -11,10 +11,6 @@ const columns = {
     { field: 'status', name: '企业状态', formatter: 'status' },
     { field: 'authStatus', name: '认证状态', formatter: 'authStatus' },
     { field: 'contractStatus', name: '平台合同', width: 100, formatter: 'contractStatus' },
-    /*{ field: 'protocolNo', name: '转账协议', stype: 'link-status', value: null, label: '已签约', linkLabel: '去签约' },
-    { field: 'contractNo', name: '提现协议', stype: 'link-status', value: null, label: '已签约', linkLabel: '去签约' },
-    { field: 'regnumStatus', name: '营业执照认证', formatter: 'authStatus' },
-    { field: 'idcardStatus', name: '法人证件认证', formatter: 'authStatus' },*/
     { field: 'bindPhone', name: '验证码手机号' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 230, list: params => buttonOrgBusinessList(params) }
   ],

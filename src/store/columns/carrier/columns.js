@@ -12,7 +12,6 @@ const columns = {
       show: { type: 'text', remote: true, obj: 'orgName', style: 'width: 90%;', placeholder: '请输入公司名称' },
       search: { type: 'text', field: 'keyword', placeholder: '请输入公司名称' },
       rules: [{ required: true, message: '请输入公司名称', trigger: 'blur' }] },
-    /*{ field: 'orgShortName', name: '企业简称', width: 150, show: { type: 'text', style: 'width: 90%;', placeholder: '请输入企业简称' }, rules: [{ required: true, message: '请输入企业简称', trigger: 'blur' }] },*/
     { field: 'address', name: '地址',
       show: { type: 'cascader', fieldList: ['address', 'areas'], formatter: 'address', obj: 'cascaderAddress', props: { value: 'label', label: 'label' }, iType: 'string', sign: '', ou: 1, noShow: 2, style: 'width: 90%;', placeholder: '请选择所在地区' },
       rules: [{ required: true, message: '请选择所在地区', trigger: 'change' }] },
@@ -20,10 +19,6 @@ const columns = {
     { field: 'orgSubType', name: '客户类型', formatter: 'orgSubType', width: 95, filters: utilsTableOptionsToFilters('utilsOrgSubType') },
     { field: 'authStatus', name: '认证状态', width: 100, formatter: 'authStatus', filters: utilsTableOptionsToFilters('utilsAuthStatus') },
     { field: 'contractStatus', name: '平台合同', width: 100, formatter: 'contractStatus' },
-    /*{ field: 'protocolNo', name: '转账协议', stype: 'format', formatFun: 'tableStatusToLabel', width: 75 },
-    { field: 'contractNo', name: '提现协议', stype: 'format', formatFun: 'tableStatusToLabel', width: 75 },
-    { field: 'regnumStatus', name: '营业执照认证', formatter: 'authStatus' },
-    { field: 'idcardStatus', name: '法人证件认证', formatter: 'authStatus' },*/
     { field: 'bindPhone', name: '验证码手机号', width: 100 },
     { field: 'authDate', name: '认证时间', stype: 'format', formatFun: 'formateTData all', width: 140, hide: true,
       search: { type: 'date-picker', placeholder: '' } },

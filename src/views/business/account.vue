@@ -93,8 +93,8 @@
 </template>
 <script>
 import { isTypeof, callbackPagesInfo, initVueDataOptions } from '@/utils/tools'
-import { $userOrgChannelAuth, $userOrgFind } from '@/service/user'
-import { $orgWithdraw, $getWithdrawInfo, $depositApply, $depositApplyConfirm } from '@/service/pay'
+import { $userOrgFind } from '@/service/user'
+import { $orgWithdraw, $getWithdrawInfo, $depositApply, $depositApplyConfirm, $getOrgAuthInfo } from '@/service/pay'
 import { $verifySendMessage } from '@/service/message'
 import { mapGetters } from 'vuex'
 
@@ -186,7 +186,7 @@ export default {
         $userOrgFind({ orgId: row.orgId }).then(async response => {
           const data = response.data
 
-          const channelInfo = await $userOrgChannelAuth({ orgId: row.orgId }).then(response => {
+          const channelInfo = await $getOrgAuthInfo({ orgId: row.orgId }).then(response => {
             return response.data
           })
           if (data.authStatus != 2) {
