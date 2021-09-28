@@ -59,6 +59,8 @@ export default {
     onListEvent(type, row) {
       if (type === 'export') {
         this.gaugeExport()
+      } else if (type === 'messageLog' || type === 'setting') {
+        this.$message.warning('暂未开放')
       }
     },
     gaugeExport() {

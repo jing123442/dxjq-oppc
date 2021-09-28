@@ -676,7 +676,7 @@ export function utilsDistrictUserList(name) {
     }
   }
 }
-// 业务区域配置设置联系人
+// 卡车列表
 export function utilsTruckList(carNumber) {
   return {
     url: 'strategy/truck/list',
