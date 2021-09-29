@@ -713,7 +713,7 @@ export function utilInfoType() {
 export function utilsLngContainerCar(carNumber) {
   return {
     url: 'gasdata/lng_container/car',
-    node: ['data', 'records'],
+    node: ['data'],
     params: {
       carNumber
     },
