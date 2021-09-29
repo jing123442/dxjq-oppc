@@ -710,3 +710,16 @@ export function utilInfoType() {
     { value: 2, label: '非大象情报' }
   ]
 }
+export function utilsLngContainerCar(carNumber) {
+  return {
+    url: 'gasdata/lng_container/car',
+    node: ['data', 'records'],
+    params: {
+      carNumber
+    },
+    props: {
+      value: 'containerNumber',
+      label: 'containerNumber'
+    }
+  }
+}

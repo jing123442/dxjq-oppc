@@ -1,4 +1,4 @@
-import { utilsTruckList } from '@/utils/select'
+import { utilsTruckList, utilsLngContainerCar } from '@/utils/select'
 const select = {
   gasTankEquipment: {
     isUsed: [{ value: '0', label: '否' }, { value: '1', label: '是' }],
@@ -7,7 +7,8 @@ const select = {
   gasLevelEquipment: {
     isUsed: [{ value: '0', label: '否' }, { value: '1', label: '是' }],
     cooperationType: [{ value: '0', label: '云端转发' }, { value: '1', label: '硬件直传' }],
-    truckList: utilsTruckList()
+    truckList: utilsTruckList(),
+    lngContainerCar: utilsLngContainerCar()
   }
 }
 

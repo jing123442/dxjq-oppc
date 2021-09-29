@@ -37,3 +37,8 @@ export async function $gasdataLngContainerExport (data) {
 export async function $gasdataGaugeExport (data) {
   return await R({ url: 'gasdata/gauge/export', method: 'POST', params: data, responseType: 'blob' })
 }
+
+// 添加液位计
+export async function $gasdataGaugeAdd(data) {
+  return await R({ url: 'gasdata/gauge/add', data })
+}

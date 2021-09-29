@@ -114,9 +114,9 @@ export default {
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (k === 'carNumberSearch') {
-            params.param.carNumber = v
+            params.param.carNumber = v || null
           } else {
-            if (v !== '') params.param[k] = v
+            if (v !== '') params.param[k] = parseInt(v)
           }
         }
       }
