@@ -72,7 +72,3 @@ export async function $depositApply (data) {
 export async function $depositApplyConfirm (data) {
   return await R({ url: 'pay/pay/deposit_apply_confirm', data })
 }
-
-export async function $getOrgAuthInfo (data) {
-  return await R({ url: 'pay/member/get_org_auth_info', data })
-}

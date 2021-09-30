@@ -142,7 +142,7 @@ export default {
       $userOrgFind(params).then(res => {
         if (res.code === 0) {
           this.status = res.data.regnumStatus
-          if (this.status) {
+          if (this.status == 1 || this.status == 2) {
             if (this.$route.query.authType == 2) {
               if (picType == 0 || picType == 1) this.lisenceArrayOne[0].isDisabled = true
             } else if (this.$route.query.authType == 1) {
@@ -150,7 +150,7 @@ export default {
               if (picType == 0 || picType == 2) this.lisenceArrayThree[1].isDisabled = true
               if (picType == 0 || picType == 3) this.lisenceArrayThree[2].isDisabled = true
             }
-          } else {
+          } else if (this.status == 0 || this.status == 3) {
             if (this.$route.query.authType == 2) {
               if (picType == 0 || picType == 1) this.lisenceArrayOne[0].isDisabled = false
             } else if (this.$route.query.authType == 1) {

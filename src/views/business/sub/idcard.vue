@@ -110,10 +110,10 @@ export default {
       $userOrgFind(params).then(res => {
         if (res.code === 0) {
           this.status = res.data.idcardStatus
-          if (this.status) {
+          if (this.status == 1 || this.status == 2) {
             if (picType == 0 || picType == 8) this.lisenceArray[0].isDisabled = true
             if (picType == 0 || picType == 9) this.lisenceArray[1].isDisabled = true
-          } else {
+          } else if (this.status == 0 || this.status == 3) {
             if (picType == 0 || picType == 8) this.lisenceArray[0].isDisabled = false
             if (picType == 0 || picType == 9) this.lisenceArray[1].isDisabled = false
           }

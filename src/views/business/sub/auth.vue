@@ -13,12 +13,16 @@
         <div class="li-headers">企业影印件上传</div>
         <div class="li-form">
           <div>企业营业执照</div>
-          <div v-if="authRow.regnumStatus" class="btn-update" @click="authLisenceUpload">已认证，去查看</div>
+          <div v-if="authRow.regnumStatus === 0" class="btn-update" @click="authLisenceUpload">未认证，去上传</div>
+          <div v-else-if="authRow.regnumStatus === 3" class="btn-update" @click="authLisenceUpload">认证失败，重新认证</div>
+          <div v-else-if="authRow.regnumStatus === 2" class="btn-update" @click="authLisenceUpload">已认证，去查看</div>
           <div v-else class="btn-update" @click="authLisenceUpload">未认证，去上传</div>
         </div>
         <div class="li-form">
           <div>法人身份证照片</div>
-          <div v-if="authRow.idcardStatus" class="btn-update" @click="authIdcardUpload">已认证，去查看</div>
+          <div v-if="authRow.idcardStatus === 0" class="btn-update" @click="authIdcardUpload">未认证，去上传</div>
+          <div v-else-if="authRow.idcardStatus === 3" class="btn-update" @click="authIdcardUpload">认证失败，重新认证</div>
+          <div v-else-if="authRow.idcardStatus === 2" class="btn-update" @click="authIdcardUpload">已认证，去查看</div>
           <div v-else class="btn-update" @click="authIdcardUpload">未认证，去上传</div>
         </div>
       </li>
@@ -40,8 +44,8 @@
 </template>
 <script>
 import { callbackPagesInfo, axiosRequestParams, custFormBtnList } from '@/utils/tools'
-import { $userOrgFind } from '@/service/user'
-import { $orgAuth, $uploadOrgPic, $getOrgAuthInfo } from '@/service/pay'
+import { $userOrgChannelAuth, $userOrgFind } from '@/service/user'
+import { $orgAuth, $uploadOrgPic } from '@/service/pay'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -92,7 +96,7 @@ export default {
         // 显示认证状态
         this.authColor = this.authRow.authStatus == 2 ? 'no' : 'off'
       })
-      await $getOrgAuthInfo(params).then(response => {
+      await $userOrgChannelAuth(params).then(response => {
         this.authRow = Object.assign({}, this.authRow, response.data)
       })
     },
