@@ -4,6 +4,8 @@ node_modules
 /src/src
 /src/packages
 
+**/.sass-cache/
+
 package-lock.json
 
 # local env files
@@ -24,3 +26,4 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*.css.map

@@ -19,6 +19,7 @@ import PointsMall from './pointsMall'
 import Voucher from './voucher'
 import Contract from './contract'
 import Equipment from './equipment'
+import Checkup from './checkup'
 Vue.use(VueRouter)
 
 const inImport = process.env.NODE_ENV == 'production' ? require('./_product') : require('./_development')
@@ -57,7 +58,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Settlement, ...Setting, ...Order, ...Message, ...Authority, ...Stock, ...Cockpit, ...PointsMall, ...Voucher, ...Contract, ...Equipment]
+  routes: [...routes, ...Mine, ...User, ...Business, ...Carrier, ...Filler, ...Price, ...Settlement, ...Setting, ...Order, ...Message, ...Authority, ...Stock, ...Cockpit, ...PointsMall, ...Voucher, ...Contract, ...Equipment, ...Checkup]
 })
 router.beforeEach((to, from, next) => {
   const woptoken = getSessionStorage('woptoken')
