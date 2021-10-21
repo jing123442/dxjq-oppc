@@ -11,7 +11,7 @@ const columns = {
     { field: 'payAmount', name: '支付金额' },
     { field: 'carrierName', name: '物流公司', search: { type: 'text', placeholder: '请输入物流公司' } },
     { field: 'carNumber', name: '车牌号', search: { type: 'text', placeholder: '请输入车牌号' } },
-    { field: 'gasCylinderNumber', name: '气瓶编号', search: { type: 'text', placeholder: '请输入联系方式' } },
+    { field: 'gasCylinderNumber', name: '气瓶编号', search: { type: 'text', placeholder: '请输入气瓶编号' } },
     { field: 'driverName', name: '司机名称', search: { type: 'text', placeholder: '请输入司机名称' } },
     { field: 'driverMobile', name: '联系方式', search: { type: 'text', placeholder: '请输入联系方式' } },
     { field: 'note', name: '备注', colspan: 24, cancel: { type: 'textarea', placeholder: '请输入取消原因!' }, rules: [{ required: true, message: '请输入取消原因！', trigger: 'blur' }] },
