@@ -32,7 +32,7 @@ const columns = {
     { field: 'signDate', name: '资料签收时间' },
     { field: 'returnDate', name: '资料返还时间' },
     { field: 'signerName', name: '签收人' },
-    { field: 'returnName', name: '返还人' }
+    { field: 'returnerName', name: '返还人' }
   ]
 }
 
