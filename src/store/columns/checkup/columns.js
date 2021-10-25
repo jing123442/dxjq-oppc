@@ -19,7 +19,7 @@ const columns = {
         const row = params.row || {}
         const buttons = [{ type: 'material', name: '资料详情' }]
 
-        if (row.status !== 3 && row.materialStatus === 2) {
+        if (row.status !== 3) {
           buttons.push({ type: 'cancel', name: '取消订单' })
         }
 
