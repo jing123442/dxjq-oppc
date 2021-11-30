@@ -7,7 +7,10 @@ const app = {
     departure: 13,
     preferential: 13,
     mileage: 13,
-    release: 13
+    release: 13,
+    discountCarrier: 13,
+    rebateConfig: 13,
+    rebateConfigRecords: 13
   }
 }
 

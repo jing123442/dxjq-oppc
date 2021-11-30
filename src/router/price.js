@@ -13,6 +13,21 @@ export default [
       { path: 'marketIndex', component: inImport('price/special'), name: 'marketIndex', meta: { title: '专项优惠配置', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'priceIndex', component: inImport('price/index'), name: 'priceIndex', meta: { title: '挂牌价管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'marketCost', component: inImport('price/cost'), name: 'marketCost', meta: { title: '平台费用', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'discountsCarrier', component: inImport('price/discountsCarrier'), name: 'discountsCarrier', meta: { title: '物流公司专享优惠', icon: 'icon-gongnengguanli', noCache: false } },
+      {
+        path: 'discountsCarrier',
+        redirect: '/price/discountsCarrier',
+        hide: true,
+        component: {
+          render (c) { return c('router-view') }
+        },
+        name: 'discountsCarrier',
+        meta: { title: '物流公司专享优惠', icon: 'icon-gongnengguanli', noCache: false },
+        children: [
+          { path: 'rebateConfig', component: inImport('price/rebateConfig'), name: 'rebateConfig', meta: { title: '物流公司优惠配置', icon: 'icon-gongnengguanli', noCache: false } },
+          { path: 'rebateConfigRecords', component: inImport('price/rebateConfigRecords'), name: 'rebateConfigRecords', meta: { title: '优惠配置记录', icon: 'icon-gongnengguanli', noCache: false } }
+        ]
+      },
       {
         path: 'priceIndex',
         name: 'subPriceIndex',

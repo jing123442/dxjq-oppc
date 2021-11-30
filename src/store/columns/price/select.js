@@ -1,4 +1,4 @@
-import { utilsSource } from '@/utils/select'
+import { utilsSource, utilsTruckTypeAll } from '@/utils/select'
 import { provinceAndCityData } from 'element-china-area-data'
 
 const select = {
@@ -15,6 +15,23 @@ const select = {
       { value: 3, label: '驳回' },
       { value: 4, label: '已发布' }
     ]
+  },
+  rebateConfig: {
+    truckType: utilsTruckTypeAll()
+  },
+  rebateFillerAdd: {
+    truckType: utilsTruckTypeAll()
+  },
+  rebateEdit: {
+    truckType: utilsTruckTypeAll()
+  },
+  rebateConfigRecords: {
+    configType: [
+      { value: 1, label: '优惠添加' },
+      { value: 2, label: '优惠编辑' },
+      { value: 3, label: '优惠删除' }
+    ],
+    truckType: utilsTruckTypeAll()
   }
 }
 

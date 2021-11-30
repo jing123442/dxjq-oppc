@@ -76,7 +76,32 @@ const getters = {
   price_release_select_list: item => select.release,
 
   // 发布管理
-  price_release_log_column: item => columns.releaseLog
+  price_release_log_column: item => columns.releaseLog,
+
+  // 物流公司专享优惠列表
+  discount_carrier_column: item => columns.discountCarrier,
+  discount_carrier_mode_list: item => item.app.modeDefault,
+  discount_carrier_page_status: item => app.list.discountCarrier,
+
+  // 物流公司优惠配置
+  rebate_config_column: item => columns.rebateConfig,
+  rebate_config_mode_list: item => item.app.modeDefault,
+  rebate_config_page_status: item => app.list.rebateConfig,
+  rebate_config_select_list: item => select.rebateConfig,
+
+  // 添加优惠加气站
+  rebate_filler_add_column: item => columns.rebateFillerAdd,
+  rebate_filler_add_select_list: item => select.rebateFillerAdd,
+
+  // 优惠编辑
+  rebate_edit_column: item => columns.rebateEdit,
+  rebate_edit_select_list: item => select.rebateEdit,
+
+  // 优惠配置记录
+  rebate_config_records_mode_list: item => item.app.modeDefault,
+  rebate_config_records_page_status: item => app.list.rebateConfigRecords,
+  rebate_config_records_column: item => columns.rebateConfigRecords,
+  rebate_config_records_select_list: item => select.rebateConfigRecords
 }
 
 export default {

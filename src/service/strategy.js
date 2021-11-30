@@ -264,3 +264,31 @@ export async function $strategyCashbackRulesList (data) {
 export async function $strategyCashbackUpdateRules (data) {
   return await R({ url: 'strategy/cashback_config/batch_update', data })
 }
+// 获取物流公司下加气站数量
+export async function $strategyCarrierRebateGasNum (data) {
+  return await R({ url: 'strategy/carrier_gasstation_rebate/carrier_gasstation_num', data })
+}
+// 获取物流公司专享优惠列表
+export async function $strategyCarrierRebateCarrierPage (data) {
+  return await R({ url: 'strategy/carrier_rebate/carrier_page', data })
+}
+// 添加物流公司专项优惠
+export async function $strategyCarrierRebateAddCarriers (data) {
+  return await R({ url: 'strategy/carrier_rebate/add_carriers', data })
+}
+// 关闭物流公司专项优惠
+export async function $strategyCarrierRebatedeleteCarrier (data) {
+  return await R({ url: 'strategy/carrier_rebate/delete_carrier', data })
+}
+// 添加物流公司在多个加气站的专项优惠
+export async function $strategyCarrierRebateAddGasstations (data) {
+  return await R({ url: 'strategy/carrier_gasstation_rebate/add_gasstations', data })
+}
+// 关闭物流公司在加气站的专项优惠
+export async function $strategyCarrierGasstationRebateDelete (data) {
+  return await R({ url: 'strategy/carrier_gasstation_rebate/delete', data })
+}
+// 修改物流公司在加气站的专项优惠
+export async function $strategyCarrierGasstationRebateUpdate (data) {
+  return await R({ url: '/strategy/carrier_gasstation_rebate/update', data })
+}

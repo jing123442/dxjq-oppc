@@ -200,6 +200,13 @@ export function utilsTruckType() {
     { value: 1, label: '其他' }
   ]
 }
+export function utilsTruckTypeAll() {
+  return [
+    { value: 0, label: '自营车辆' },
+    { value: 1, label: '其他车辆' },
+    { value: 2, label: '全部' }
+  ]
+}
 export function utilsPrintStatus() {
   return [
     { value: 0, label: '离线' },

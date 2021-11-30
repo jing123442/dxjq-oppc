@@ -113,6 +113,37 @@ const columns = {
     { field: 'benefit', name: '区域优惠(元/吨)' },
     { field: 'freight', name: '运费(元/吨)' },
     { field: 'lngFromName', name: '液源地' }
+  ],
+  discountCarrier: [
+    { field: 'carrierOrgName', name: '物流公司名称', fixed: 'left', search: { type: 'text', placeholder: '请输入物流公司名称' } },
+    { field: 'num', name: '享受优惠加气站数量' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'rebateConfig', name: '优惠配置' }, { type: 'rebateClose', name: '优惠关闭' }] }
+  ],
+  rebateConfig: [
+    { field: 'gasstationShortName', name: '享受优惠加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
+    { field: 'rebate', name: '享受优惠额度（元/公斤）' },
+    { field: 'truckType', name: '车辆经营类型', formatter: 'truckType', show: { type: 'select', obj: 'truckType' } },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'rebateEdit', name: '优惠编辑' }, { type: 'gasRebateClose', name: '优惠关闭' }] }
+  ],
+  rebateFillerAdd: [
+    { field: 'rebate', name: '享受优惠额度（元/公斤）', nameSpan: 8, show: { type: 'text', placeholder: '请输入享受优惠额度' }, rules: [{ required: true, message: '请输入享受优惠额度', trigger: 'blur' }] },
+    { field: 'truckType', name: '车辆经营类型', formatter: 'truckType', nameSpan: 8, show: { type: 'select', obj: 'truckType', placeholder: '请选择车辆经营类型' }, rules: [{ required: true, message: '请选择车辆经营类型', trigger: 'change' }] }
+  ],
+  rebateEdit: [
+    { field: 'gasstationShortName', name: '享受优惠加气站', nameSpan: 8, show: { type: 'span', placeholder: '' }},
+    { field: 'rebate', name: '享受优惠额度（元/公斤）', nameSpan: 8, show: { type: 'text', placeholder: '请输入享受优惠额度' }, rules: [{ required: true, message: '请输入享受优惠额度', trigger: 'blur' }] },
+    { field: 'truckType', name: '享受优惠车辆经营类型', formatter: 'truckType', nameSpan: 8, show: { type: 'select', obj: 'truckType', placeholder: '请选择车辆经营类型' }, rules: [{ required: true, message: '请选择车辆经营类型', trigger: 'change' }] }
+  ],
+  rebateConfigRecords: [
+    { field: 'updaterName', name: '操作人', fixed: 'left', search: { type: 'text', placeholder: '请输入操作人', serial: 1 } },
+    { field: 'updateDate', name: '发布时间', stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', placeholder: { start: '发布开始时间', end: '发布结束时间' }, serial: 5 } },
+    { field: 'configType', name: '优惠配置', formatter: 'configType', search: { type: 'select', obj: 'configType', placeholder: '请选择配置类型', serial: 2 } },
+    { field: 'carrierOrgName', name: '物流公司', search: { type: 'text', placeholder: '请输入物流公司', serial: 3 } },
+    { field: 'gasstationShortName', name: '加气站', search: { type: 'text', placeholder: '请输入加气站', serial: 4 } },
+    { field: 'oldRebate', name: '发布前享受优惠额度（元/公斤）' },
+    { field: 'newRebate', name: '发布后享受优惠额度（元/公斤）' },
+    { field: 'oldTruckType', name: '发布前享受优惠车辆类型', formatter: 'truckType' },
+    { field: 'newTruckType', name: '发布后享受优惠车辆类型', formatter: 'truckType' }
   ]
 }
 
