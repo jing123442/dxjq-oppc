@@ -13,14 +13,14 @@ export default {
     return initVueDataOptions(this, {
       queryCustURL: {
         list: {
-          url: 'pay/gas_order/list_withtime',
+          url: 'pay/gas_order/carrier_rebate/list_withtime',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
         },
-        name: '优惠订单详情'
+        name: '优惠订单列表'
       },
       dataList: [{
         name: '加气总金额：',
@@ -30,8 +30,16 @@ export default {
         name: '加气总量：',
         field: 'totalGas',
         unit: ' 公斤'
+      }, {
+        name: '加气单量：',
+        field: 'total',
+        unit: ' 单'
+      }, {
+        name: '物流公司专享优惠总金额：',
+        field: 'carrier_rebate',
+        unit: ' 元'
       }],
-      totalInfo: { totalGas: 0, amount: 0, totalServiceFee: 0 },
+      totalInfo: { totalGas: 0, amount: 0, total: 0, carrier_rebate: 0 },
       buttonsList: [],
       formBtnList: custFormBtnList()
     })
@@ -66,6 +74,7 @@ export default {
         if (response.code === 0) {
           if (response.data && response.data.totalInfo) {
             this.totalInfo = response.data.totalInfo
+            this.totalInfo.total = response.data.total
           }
         }
       } else {
@@ -101,6 +110,7 @@ export default {
       }
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
+      this.initTotalData()
     }
   }
 }
