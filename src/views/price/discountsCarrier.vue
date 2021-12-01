@@ -20,13 +20,19 @@
         </div>
       </div>
     </el-dialog>
-    <el-dialog title="确认关闭" :append-to-body="true" :visible.sync="dialogVisibleRebateClose" :width="del_dialog" top="30vh">
-      <div style="padding: 20px 0">点击'确认关闭'，则{{currentRow.carrierOrgName}}在所有加气站的优惠都将取消，还请谨慎操作</div>
+    <el-dialog :title="rebateOptType == 'CLOSE' ? '确认关闭' : rebateOptType == 'OPEN' ? '确认开启' : ''" :append-to-body="true" :visible.sync="dialogVisibleRebateCloseOrOpen" :width="del_dialog" top="30vh">
+      <div style="padding: 20px 0">{{rebateOptType == 'CLOSE' ? rebateCloseTip : rebateOptType == 'OPEN' ? rebateOpenTip : ''}}</div>
        <!-- 按钮 -->
-      <div slot="footer" class="dialog-footer" >
+      <div slot="footer" class="dialog-footer" v-if="rebateOptType == 'CLOSE'">
         <el-button v-for="(btnItem, index) in rebateCloseBtnList.list" :key="index" :type="btnItem.bType"
                     size="small"
-                    :icon="btnItem.icon" @click="rebateCloseEvent(btnItem)">{{btnItem.label}}
+                    :icon="btnItem.icon" @click="rebateBtnEvent(btnItem)">{{btnItem.label}}
+        </el-button>
+      </div>
+      <div slot="footer" class="dialog-footer" v-else-if="rebateOptType == 'OPEN'">
+        <el-button v-for="(btnItem, index) in rebateOpenBtnList.list" :key="index" :type="btnItem.bType"
+                    size="small"
+                    :icon="btnItem.icon" @click="rebateBtnEvent(btnItem)">{{btnItem.label}}
         </el-button>
       </div>
     </el-dialog>
@@ -34,7 +40,7 @@
 </template>
 <script>
 import { initVueDataOptions, custFormBtnList, callbackPagesInfo, isTypeof } from '@/utils/tools'
-import { $strategyCarrierRebateGasNum, $strategyCarrierRebateAddCarriers, $strategyCarrierRebatedeleteCarrier } from '@/service/strategy'
+import { $strategyCarrierRebateGasNum, $strategyCarrierRebateAddCarriers, $strategyCarrierRebateUpdate } from '@/service/strategy'
 import { $userOrgCarrier } from '@/service/user'
 import { mapGetters } from 'vuex'
 export default {
@@ -65,8 +71,15 @@ export default {
         iShow: true,
         list: [{ bType: 'info', icon: '', type: 'cancel', label: '取消' }, { bType: 'primary', icon: '', type: 'ok', label: '确认关闭' }]
       },
-      dialogVisibleRebateClose: false,
-      currentRow: {}
+      rebateOpenBtnList: {
+        iShow: true,
+        list: [{ bType: 'info', icon: '', type: 'cancel', label: '取消' }, { bType: 'primary', icon: '', type: 'ok', label: '确认开启' }]
+      },
+      dialogVisibleRebateCloseOrOpen: false,
+      currentRow: {},
+      rebateOptType: 'CLOSE',
+      rebateCloseTip: '',
+      rebateOpenTip: ''
     })
   },
   computed: {
@@ -74,7 +87,7 @@ export default {
       mode_list: 'discount_carrier_mode_list',
       page_status: 'discount_carrier_page_status',
       page_column: 'discount_carrier_column',
-      select_list: 'price_listing_select_list',
+      select_list: 'discount_carrier_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -121,8 +134,15 @@ export default {
       if (type == 'carrier_rebate_add') {
         this.dialogCarrierAddVisible = true
       } else if (type == 'rebateClose') {
-        this.dialogVisibleRebateClose = true
+        this.rebateOptType = 'CLOSE'
+        this.dialogVisibleRebateCloseOrOpen = true
         this.currentRow = row
+        this.rebateCloseTip = `点击'确认关闭'，则${this.currentRow.carrierOrgName}在所有加气站的优惠都将取消，还请谨慎操作`
+      } else if (type == 'rebateOpen') {
+        this.rebateOptType = 'OPEN'
+        this.dialogVisibleRebateCloseOrOpen = true
+        this.currentRow = row
+        this.rebateOpenTip = `点击'确认开启'，则${this.currentRow.carrierOrgName}在所有加气站的优惠都将开启，还请谨慎操作`
       } else if (type == 'rebateConfig') {
         this.$router.push({
           path: './discountsCarrier/rebateConfig',
@@ -161,16 +181,25 @@ export default {
         this.dialogCarrierAddVisible = false
       }
     },
-    rebateCloseEvent(item) {
+    rebateBtnEvent(item) {
       if (item.type == 'ok') {
-        const params = { id: this.currentRow.id, carrierOrgId: this.currentRow.carrierOrgId }
-        $strategyCarrierRebatedeleteCarrier(params).then(res => {
-          this.dialogVisibleRebateClose = false
-          this.$message.success('关闭成功！')
-          this.$refs.tables.initDataList()
-        })
+        if (this.rebateOptType == 'CLOSE') {
+          const params = { id: this.currentRow.id, carrierOrgId: this.currentRow.carrierOrgId, status: 2 }
+          $strategyCarrierRebateUpdate(params).then(res => {
+            this.dialogVisibleRebateCloseOrOpen = false
+            this.$message.success('关闭成功！')
+            this.$refs.tables.initDataList()
+          })
+        } else if (this.rebateOptType == 'OPEN') {
+          const params = { id: this.currentRow.id, carrierOrgId: this.currentRow.carrierOrgId, status: 1 }
+          $strategyCarrierRebateUpdate(params).then(res => {
+            this.dialogVisibleRebateCloseOrOpen = false
+            this.$message.success('开启成功！')
+            this.$refs.tables.initDataList()
+          })
+        }
       } else {
-        this.dialogVisibleRebateClose = false
+        this.dialogVisibleRebateCloseOrOpen = false
       }
     },
     dialogClose() {

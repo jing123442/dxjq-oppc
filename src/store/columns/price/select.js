@@ -16,6 +16,12 @@ const select = {
       { value: 4, label: '已发布' }
     ]
   },
+  discountCarrier: {
+    rebateStatus: [
+      { value: 1, label: '开启' },
+      { value: 2, label: '关闭' },
+    ]
+  },
   rebateConfig: {
     truckType: utilsTruckTypeAll()
   },

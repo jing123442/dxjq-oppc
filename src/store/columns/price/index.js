@@ -82,6 +82,7 @@ const getters = {
   discount_carrier_column: item => columns.discountCarrier,
   discount_carrier_mode_list: item => item.app.modeDefault,
   discount_carrier_page_status: item => app.list.discountCarrier,
+  discount_carrier_select_list: item => select.discountCarrier,
 
   // 物流公司优惠配置
   rebate_config_column: item => columns.rebateConfig,

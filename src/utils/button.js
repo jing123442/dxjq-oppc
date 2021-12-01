@@ -142,3 +142,14 @@ export function buttonDistrictManagerList(scope) {
 
   return btnList
 }
+
+// 物流公司专享优惠
+export function discountCarrierOpt(scope) {
+  const btnList = [{ type: 'rebateConfig', name: '优惠配置' }]
+  if (scope.row.status == 1) {
+    btnList.push({ type: 'rebateClose', name: '优惠关闭' })
+  } else if (scope.row.status == 2) {
+    btnList.push({ type: 'rebateOpen', name: '优惠开启' })
+  }
+  return btnList
+}

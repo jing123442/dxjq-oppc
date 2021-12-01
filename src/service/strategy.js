@@ -277,8 +277,8 @@ export async function $strategyCarrierRebateAddCarriers (data) {
   return await R({ url: 'strategy/carrier_rebate/add_carriers', data })
 }
 // 关闭物流公司专项优惠
-export async function $strategyCarrierRebatedeleteCarrier (data) {
-  return await R({ url: 'strategy/carrier_rebate/delete_carrier', data })
+export async function $strategyCarrierRebateUpdate (data) {
+  return await R({ url: 'strategy/carrier_rebate/update', data })
 }
 // 添加物流公司在多个加气站的专项优惠
 export async function $strategyCarrierRebateAddGasstations (data) {

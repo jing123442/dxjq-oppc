@@ -1,4 +1,4 @@
-import { buttonPublishReleaseList } from '@/utils/button'
+import { buttonPublishReleaseList, discountCarrierOpt } from '@/utils/button'
 import { monthTimeArea } from '@/utils/tools'
 
 const columns = {
@@ -118,7 +118,8 @@ const columns = {
   discountCarrier: [
     { field: 'carrierOrgName', name: '物流公司名称', fixed: 'left', search: { type: 'text', placeholder: '请输入物流公司名称' } },
     { field: 'num', name: '享受优惠加气站数量' },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'rebateConfig', name: '优惠配置' }, { type: 'rebateClose', name: '优惠关闭' }] }
+    { field: 'status', name: '状态', formatter: 'rebateStatus' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: row => discountCarrierOpt(row) }
   ],
   rebateConfig: [
     { field: 'gasstationShortName', name: '享受优惠加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
