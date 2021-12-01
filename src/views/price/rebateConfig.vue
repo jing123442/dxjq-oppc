@@ -6,7 +6,7 @@
                             :dataList="carrierList"
                             :selectedList="selectedList"
                             :primary="'orgId'"
-                            :fields="'orgName'"
+                            :fields="'orgShortName'"
                             :dataTotal="carrierTotal"
                             @onload="onload"
                             @remote="remote "></nt-infinite-transfer>
@@ -125,7 +125,6 @@ export default {
           this.$message.error('请选择要添加的优惠加气站')
           return
         }
-        console.log(this.rebateFillerAddRow, this.selectedList)
         const temp = []
         this.selectedList.forEach(item => {
           temp.push({
