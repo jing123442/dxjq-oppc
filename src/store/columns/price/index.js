@@ -101,7 +101,13 @@ const getters = {
   rebate_config_records_mode_list: item => item.app.modeDefault,
   rebate_config_records_page_status: item => app.list.rebateConfigRecords,
   rebate_config_records_column: item => columns.rebateConfigRecords,
-  rebate_config_records_select_list: item => select.rebateConfigRecords
+  rebate_config_records_select_list: item => select.rebateConfigRecords,
+
+  // 优惠订单详情
+  rebate_order_mode_list: item => item.app.modeDefault,
+  rebate_order_page_status: item => app.list.rebateOrder,
+  rebate_order_column: item => columns.rebateOrder,
+  rebate_order_select_list: item => select.rebateOrder
 }
 
 export default {

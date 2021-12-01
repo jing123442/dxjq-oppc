@@ -10,7 +10,8 @@ const app = {
     release: 13,
     discountCarrier: 13,
     rebateConfig: 13,
-    rebateConfigRecords: 13
+    rebateConfigRecords: 13,
+    rebateOrder: 13
   }
 }
 

@@ -37,8 +37,6 @@ export default {
   },
   methods: {
     onListEvent(type, row) {
-      if (type == 'carrier_rebate_add') {
-      }
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })

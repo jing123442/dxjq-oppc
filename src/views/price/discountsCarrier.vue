@@ -132,6 +132,10 @@ export default {
         this.$router.push({
           path: './discountsCarrier/rebateConfigRecords'
         })
+      } else if (type == 'rebate_order_detail') {
+        this.$router.push({
+          path: './discountsCarrier/rebateOrder'
+        })
       }
     },
     btnClickEvent(item) {

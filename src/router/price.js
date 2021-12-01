@@ -25,7 +25,8 @@ export default [
         meta: { title: '物流公司专享优惠', icon: 'icon-gongnengguanli', noCache: false },
         children: [
           { path: 'rebateConfig', component: inImport('price/rebateConfig'), name: 'rebateConfig', meta: { title: '物流公司优惠配置', icon: 'icon-gongnengguanli', noCache: false } },
-          { path: 'rebateConfigRecords', component: inImport('price/rebateConfigRecords'), name: 'rebateConfigRecords', meta: { title: '优惠配置记录', icon: 'icon-gongnengguanli', noCache: false } }
+          { path: 'rebateConfigRecords', component: inImport('price/rebateConfigRecords'), name: 'rebateConfigRecords', meta: { title: '优惠配置记录', icon: 'icon-gongnengguanli', noCache: false } },
+          { path: 'rebateOrder', component: inImport('price/rebateOrder'), name: 'rebateOrder', meta: { title: '优惠订单详情', icon: 'icon-gongnengguanli', noCache: false } }
         ]
       },
       {
