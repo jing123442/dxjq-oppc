@@ -125,6 +125,10 @@ export default {
           this.$message.error('请选择要添加的优惠加气站')
           return
         }
+        if (this.rebateFillerAddRow.rebate <= 0) {
+          this.$message.error('享受优惠额度必须大于0')
+          return
+        }
         const temp = []
         this.selectedList.forEach(item => {
           temp.push({
@@ -152,6 +156,10 @@ export default {
     },
     btnClickEventRebateEdit(item) {
       if (item.type == 'ok') {
+        if (this.rebateEditRow.rebate <= 0) {
+          this.$message.error('享受优惠额度必须大于0')
+          return
+        }
         this.$refs.configEdit.$refs.rebateEditRow.validate(valid => {
           if (valid) {
             const params = {
