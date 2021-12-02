@@ -17,7 +17,7 @@
       <nt-form v-if="dialogVisibleRebateEdit" ref="configEdit" :formRef="'rebateEditRow'" :rowData="rebateEditRow" :pageColumn="rebate_edit_page_column" :selectList="rebate_edit_select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="btnClickEventRebateEdit"></nt-form>
     </el-dialog>
     <el-dialog title="确认关闭" :append-to-body="true" :visible.sync="dialogVisibleRebateClose" :width="del_dialog" top="30vh">
-      <div style="padding: 20px 0">点击'确认关闭'，则{{currentRow.carrierOrgName}}在所有加气站的优惠都将取消，还请谨慎操作</div>
+      <div style="padding: 20px 0">点击'确认关闭'，则{{currentRow.carrierOrgName}}在{{currentRow.gasstationShortName}}的所有优惠都将取消，还请谨慎操作</div>
       <div slot="footer" class="dialog-footer" >
         <el-button v-for="(btnItem, index) in rebateCloseBtnList.list" :key="index" :type="btnItem.bType"
                     size="small"
@@ -125,7 +125,7 @@ export default {
           this.$message.error('请选择要添加的优惠加气站')
           return
         }
-        if (this.rebateFillerAddRow.rebate <= 0) {
+        if (this.rebateFillerAddRow.rebate !== '' && this.rebateFillerAddRow.rebate <= 0) {
           this.$message.error('享受优惠额度必须大于0')
           return
         }
@@ -156,7 +156,7 @@ export default {
     },
     btnClickEventRebateEdit(item) {
       if (item.type == 'ok') {
-        if (this.rebateEditRow.rebate <= 0) {
+        if (this.rebateEditRow.rebate !== '' && this.rebateEditRow.rebate <= 0) {
           this.$message.error('享受优惠额度必须大于0')
           return
         }

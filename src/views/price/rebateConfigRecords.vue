@@ -42,7 +42,19 @@ export default {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (v !== '') params.param[k] = v
+          if (k == 'updateDate') {
+            if (_this.finds.updateDate === null) {
+              params.param.updateDateFrom = ''
+              params.param.updateDateTo = ''
+            } else {
+              params.param.updateDateFrom = v[0]
+              params.param.updateDateTo = v[1]
+            }
+          } else {
+            if (v !== '') {
+              params.param[k] = v
+            }
+          }
         }
       }
       // eslint-disable-next-line standard/no-callback-literal
