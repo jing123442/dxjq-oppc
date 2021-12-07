@@ -1,5 +1,6 @@
 <template>
   <div class="rebate-config template-main">
+    <div class="carrier-name">{{carrierOrgName}}</div>
     <em-table-list :tableListName="'rebateConfig'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" ref="tables" :page_status="page_status" :buttonsList="buttonsList" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="添加优惠加气站" :visible.sync="dialogfillerAddVisible" width="80%" :append-to-body="true" @close="dialogClose">
       <nt-infinite-transfer v-if="dialogfillerAddVisible"
@@ -64,7 +65,8 @@ export default {
       currentRow: {},
       rebateFillerAddRow: {},
       dialogVisibleRebateEdit: false,
-      rebateEditRow: {}
+      rebateEditRow: {},
+      carrierOrgName: this.$route.query.carrierOrgName
     })
   },
   computed: {
@@ -214,4 +216,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.carrier-name {
+  padding: 20px 20px 8px;
+  background: #fff;
+}
 </style>
