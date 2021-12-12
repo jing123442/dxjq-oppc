@@ -40,8 +40,8 @@
 <script>
 import { initVueDataOptions, isTypeof, callbackPagesInfo, custFormBtnList } from '@/utils/tools'
 import { mapGetters } from 'vuex'
-import { $orgAuth, $signContract, $signBalanceProtocol, $sendVerificationCode, $bindPhone, $unbindPhone } from '@/service/pay'
-import { $userOrgAdd, $userOrgChannelAuth, $userOrgEdit } from '@/service/user'
+import { $orgAuth, $signContract, $signBalanceProtocol, $sendVerificationCode, $bindPhone, $unbindPhone, $getOrgAuthInfo } from '@/service/pay'
+import { $userOrgAdd, $userOrgEdit } from '@/service/user'
 
 export default {
   name: 'busorg',
@@ -142,7 +142,7 @@ export default {
       this.resetAuthPageCol()
     },
     async codeEvent() { // 获取验证码
-      const channelInfo = await $userOrgChannelAuth({ orgId: this.currRow.orgId }).then(response => {
+      const channelInfo = await $getOrgAuthInfo({ orgId: this.currRow.orgId }).then(response => {
         return response.data
       })
 
@@ -182,7 +182,7 @@ export default {
       if (item.type == 'ok') {
         this.$refs.formBindTel.validate(async valid => {
           if (valid) {
-            const channelInfo = await $userOrgChannelAuth({ orgId: this.currRow.orgId }).then(response => {
+            const channelInfo = await $getOrgAuthInfo({ orgId: this.currRow.orgId }).then(response => {
               return response.data
             })
 

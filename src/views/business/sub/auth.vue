@@ -44,8 +44,8 @@
 </template>
 <script>
 import { callbackPagesInfo, axiosRequestParams, custFormBtnList } from '@/utils/tools'
-import { $userOrgChannelAuth, $userOrgFind } from '@/service/user'
-import { $orgAuth, $uploadOrgPic } from '@/service/pay'
+import { $userOrgFind } from '@/service/user'
+import { $orgAuth, $uploadOrgPic, $getOrgAuthInfo } from '@/service/pay'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -96,7 +96,7 @@ export default {
         // 显示认证状态
         this.authColor = this.authRow.authStatus == 2 ? 'no' : 'off'
       })
-      await $userOrgChannelAuth(params).then(response => {
+      await $getOrgAuthInfo(params).then(response => {
         this.authRow = Object.assign({}, this.authRow, response.data)
       })
     },
