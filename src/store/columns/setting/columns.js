@@ -1,4 +1,4 @@
-import { buttonDistrictManagerList } from '@/utils/button'
+import { buttonDistrictManagerList, buttonWithdrawLimitConfig } from '@/utils/button'
 
 /* eslint-disable */
 const columns = {
@@ -60,6 +60,39 @@ const columns = {
     { field: 'operatorDate', name: '操作时间', stype: 'format', formatFun: 'formateTData all' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', list: [{ type: 'list', name: '查看' }] }
   ],
+  withdrawLimitConfig: [
+    { field: 'orgName', name: '加气站名称', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
+    { field: 'nickName', name: '加气站简称' },
+    { field: 'limitStatus', name: '限制状态', formatter: 'limitStatus', search: { type: 'select', obj: 'limitStatus', placeholder: '限制状态' } },
+    { field: 'operatorName', name: '操作人' },
+    { field: 'updateTime', name: '操作时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: params => buttonWithdrawLimitConfig(params) }
+  ],
+  withdrawCheck: [
+    { field: 'withdrawOrderId', name: '订单号', fixed: 'left' },
+    { field: 'orgName', name: '公司名称', search: { type: 'text', placeholder: '请输入公司名称' } },
+    { field: 'amount', name: '提现金额' },
+    { field: 'createrName', name: '创建人' },
+    { field: 'createDate', name: '创建时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'check', name: '审核' }] }
+  ],
+  checkLogList: [
+    { field: 'withdrawOrderId', name: '订单号', fixed: 'left' },
+    { field: 'amount', name: '提现金额' },
+    { field: 'operatorName', name: '审核人' },
+    { field: 'createDate', name: '审核时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'checkResult', name: '审核结果', formatter: 'checkResult' },
+    { field: 'refuseMessage', name: '驳回原因' }
+  ],
+  checkHistoryList: [
+    { field: 'withdrawOrderId', name: '订单号', fixed: 'left' },
+    { field: 'orgName', name: '公司名称', search: { type: 'text', placeholder: '请输入公司名称' } },
+    { field: 'amount', name: '提现金额' },
+    { field: 'operatorName', name: '审核人' },
+    { field: 'createDate', name: '审核时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'checkResult', name: '审核结果', formatter: 'checkResult', search: { type: 'select', obj: 'checkResult', placeholder: '审核结果' } },
+    { field: 'refuseMessage', name: '驳回原因' }
+  ]
 }
 
 export default columns

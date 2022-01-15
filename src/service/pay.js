@@ -76,3 +76,15 @@ export async function $depositApplyConfirm (data) {
 export async function $getOrgAuthInfo (data) {
   return await R({ url: 'pay/member/get_org_auth_info', data })
 }
+// 修改限制状态
+export async function $updateLimitStatus (data) {
+  return await R({ url: 'pay/withdraw_config/update_limitstatus', data })
+}
+// 批量添加
+export async function $withdrawConfigBatchAdd (data) {
+  return await R({ url: 'pay/withdraw_config/batch_add', data })
+}
+// 提现审核
+export async function $withdrawCheckLogCheck (data) {
+  return await R({ url: 'pay/withdraw_check_log/check', data })
+}

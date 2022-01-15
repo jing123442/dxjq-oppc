@@ -153,3 +153,14 @@ export function discountCarrierOpt(scope) {
   }
   return btnList
 }
+
+// 加气站限制提现
+export function buttonWithdrawLimitConfig(scope) {
+  const btnList = [{ type: 'checkLog', name: '审核记录' }]
+  if (scope.row.limitStatus == 0) {
+    btnList.unshift({ type: 'limitOpen', name: '限制开启' })
+  } else if (scope.row.limitStatus == 1) {
+    btnList.unshift({ type: 'limitClose', name: '限制关闭', style: 'color: #ff4949' })
+  }
+  return btnList
+}

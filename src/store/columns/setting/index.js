@@ -30,7 +30,27 @@ const getters = {
   setting_cashback_select_list: item => item.app.selectDefault,
   // 日志
   setting_cashback_log_page_status: item => app.list.cashbackLog,
-  setting_cashback_log_column: item => columns.cashbackLog
+  setting_cashback_log_column: item => columns.cashbackLog,
+  // 加气站提现限制
+  withdraw_limit_config_page_status: item => app.list.withdrawListConfig,
+  withdraw_limit_config_column: item => columns.withdrawLimitConfig,
+  withdraw_limit_config_select_list: item => select.withdrawLimitConfig,
+  withdraw_limit_config_mode_list: item => item.app.modeDefault,
+  // 提现审核
+  withdraw_check_page_status: item => app.list.withdrawCheck,
+  withdraw_check_column: item => columns.withdrawCheck,
+  withdraw_check_select_list: item => select.withdrawCheck,
+  withdraw_check_mode_list: item => item.app.modeDefault,
+  // 审核记录列表
+  check_log_list_page_status: item => app.list.checkLogList,
+  check_log_list_column: item => columns.checkLogList,
+  check_log_list_select_list: item => select.checkLogList,
+  check_log_list_mode_list: item => item.app.modeDefault,
+  // 审核历史记录
+  check_history_page_status: item => app.list.checkHistoryList,
+  check_history_column: item => columns.checkHistoryList,
+  check_history_select_list: item => select.checkHistoryList,
+  check_history_mode_list: item => item.app.modeDefault,
 }
 
 export default {
