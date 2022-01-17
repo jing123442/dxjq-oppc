@@ -93,13 +93,30 @@ export default {
       }
     },
     checkEvent(btnItem) {
-      console.log(btnItem)
       if (btnItem.type == 'ok') {
-        $withdrawCheckLogCheck({ withdrawOrderId: this.currRow.withdrawOrderId, checkResult: 1 }).then(res => {
-          this.$message.success('操作成功')
-          this.dialogCheckVisible = false
-          this.$refs.tables.initDataList()
-        })
+        this.dialogCheckVisible = false
+        if (this.form.reason !== '') {
+          this.$confirm('确定审核通过吗？', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            $withdrawCheckLogCheck({ withdrawOrderId: this.currRow.withdrawOrderId, checkResult: 1 }).then(res => {
+              this.$message.success('操作成功')
+              this.dialogCheckVisible = false
+              this.$refs.tables.initDataList()
+              this.form.reason = ''
+            })
+          }).catch(() => {
+            this.dialogCheckVisible = true
+          })
+        } else {
+          $withdrawCheckLogCheck({ withdrawOrderId: this.currRow.withdrawOrderId, checkResult: 1 }).then(res => {
+            this.$message.success('操作成功')
+            this.dialogCheckVisible = false
+            this.$refs.tables.initDataList()
+          })
+        }
       } else {
         this.$refs.forms.validate(valid => {
           if (valid) {
@@ -107,6 +124,7 @@ export default {
               this.$message.success('操作成功')
               this.dialogCheckVisible = false
               this.$refs.tables.initDataList()
+              this.form.reason = ''
             })
           }
         })
