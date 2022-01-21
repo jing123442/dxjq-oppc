@@ -292,6 +292,9 @@ export default {
         params.status = 4
       } else if (btnObj.type === 'back') {
         params.status = 5
+      } else {
+        this.dialogAuthStationVisible = false
+        return
       }
       $userOrgPicAudit(params).then(response => {
         this.$message.success('成功！')
@@ -307,6 +310,8 @@ export default {
       if (btnObj.type === 'ok') {
         params.status = 2
       } else if (btnObj.type === 'reject') {
+        params.status = 1
+      } else if (btnObj.type == 'cancel') {
         params.status = 3
       }
       $userOrgEnterStatus(params).then(response => {
