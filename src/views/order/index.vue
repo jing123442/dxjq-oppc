@@ -49,7 +49,9 @@ export default {
       response_success: 'response_success'
     })
   },
-  created: function () {},
+  mounted: function () {
+    console.log(this.$refs.tables)
+  },
   methods: {
     onListEvent(type, row) {},
     updateColumnValue(tableData, callback) {

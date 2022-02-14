@@ -14,7 +14,8 @@ import {
   utilsOrgSubType,
   utilsComPayType,
   utilsContractStatus,
-  utilsTruckAccType, utilsRechargeType
+  utilsTruckAccType, utilsRechargeType,
+  utilsTradeModeType
 } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
@@ -50,7 +51,8 @@ const select = {
   },
   rechargeRecord: {
     utilsCheck: utilsOrderStatus(),
-    rechargeType: utilsRechargeType()
+    rechargeType: utilsRechargeType(),
+    tradeType: utilsTradeModeType()
   },
   inventoryManager: {
     utilsAccountType: utilsAccountType()

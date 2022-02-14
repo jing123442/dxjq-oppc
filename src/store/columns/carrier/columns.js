@@ -228,11 +228,12 @@ const columns = {
   ],
   rechargeRecord: [
     { field: 'rechargeOrderId', name: '订单编号', fixed: 'left', search: { type: 'text', field: 'keyword', placeholder: '请输入充值方或订单编号' } },
-    { field: 'createDate', name: '充值时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '' } },
     { field: 'orgName', name: '充值方' },
     { field: 'amount', name: '充值金额(元)' },
+    { field: 'tradeType', name: '交易模式', formatter: 'tradeType', search: { type: 'select', obj: 'tradeType', placeholder: '交易模式' } },
     { field: 'type', name: '支付方式', formatter: 'rechargeType', search: { type: 'select', obj: 'rechargeType', placeholder: '请选择支付方式' } },
-    { field: 'status', name: '订单状态', formatter: 'utilsCheck', search: { type: 'select', obj: 'utilsCheck', placeholder: '请选择订单状态' } }
+    { field: 'status', name: '订单状态', formatter: 'utilsCheck', search: { type: 'select', obj: 'utilsCheck', placeholder: '请选择订单状态' } },
+    { field: 'createDate', name: '充值时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '' } }
   ],
   rechargeRecordCheck: [
     { field: 'orgName', name: '公司名称', show: { type: 'text', isDisabled: true, style: 'width: 90%;' } },

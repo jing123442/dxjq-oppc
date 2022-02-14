@@ -325,3 +325,19 @@ export async function $userOrgCarrier(data) {
 export async function $userDistrictUserList(data) {
   return await R({ url: 'user/district_user/list', method: 'POST', data })
 }
+// 移除直销模式物流公司
+export async function $userOrgRemoveDsCarrier(data) {
+  return await R({ url: 'user/org/remove_direct_carrier', method: 'POST', data })
+}
+// 移除直销模式加气站
+export async function $userOrgRemoveDsFiller(data) {
+  return await R({ url: 'user/org/remove_direct_gasstation', method: 'POST', data })
+}
+// 添加直销模式物流公司
+export async function $userOrgAddDsCarrier(data) {
+  return await R({ url: 'user/org/add_direct_carrier', method: 'POST', data })
+}
+// 添加直销模式加气站
+export async function $userOrgAddDsFiller(data) {
+  return await R({ url: 'user/org/add_direct_gasstation', method: 'POST', data })
+}

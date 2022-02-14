@@ -296,6 +296,12 @@ export function utilsPayType() {
     { value: 11, label: '组合支付' }
   ]
 }
+export function utilsTradeModeType() {
+  return [
+    { value: 2, label: '直销' },
+    { value: 1, label: '经销' }
+  ]
+}
 
 export function utilsHandleType() {
   return [
