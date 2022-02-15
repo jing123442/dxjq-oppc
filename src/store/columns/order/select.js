@@ -12,6 +12,9 @@ const select = {
   download: {
     status: utilsDownloadStatus(),
     type: utilsDownloadType()
+  },
+  orderDay: {
+    tradeType: utilsTradeModeType(),
   }
 }
 

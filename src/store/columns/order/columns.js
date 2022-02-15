@@ -46,6 +46,7 @@ const columns = {
   ],
   orderDay: [
     { field: 'orderId', name: '订单编号', fixed: 'left', search: { type: 'text', serial: 2, placeholder: '请输入内容', findField: 'orderId' }, currSearch: { type: 'select', hideName: true, obj: 'currDaySearch', value: 'orderId' } },
+    { field: 'tradeType', name: '交易模式', formatter: 'tradeType', search: { type: 'select', obj: 'tradeType', placeholder: '交易模式' } },
     { field: 'updateDate', name: '支付时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: 'date', field: 'date', serial: 1, value: (function() { return formatDate(new Date(), 'yyyy-MM-dd') }()) } },
     { field: 'gasstationName', name: '企业名称' },
     { field: 'nickName', name: '加气站名称' },
