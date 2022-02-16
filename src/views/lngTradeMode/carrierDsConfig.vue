@@ -95,7 +95,7 @@ export default {
       }
     },
     removeList(row) {
-      this.$confirm('确定移除吗？', '提示', {
+      this.$confirm(`确定移除 ${row.orgName} 吗？`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
