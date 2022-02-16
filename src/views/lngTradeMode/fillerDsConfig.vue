@@ -21,7 +21,7 @@
       </div>
     </el-dialog>
     <el-dialog title="操作日志" :visible.sync="dialogLogVisible" :width="add_edit_dialog" :append-to-body="true">
-      <em-table-list :tableListName="'logList'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURLLog" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="filler_log_mode_list" ref="tablesLog" :page_status="filler_log_page_status" :page_column="filler_log_page_column" :select_list="filler_log_select_list" @onReqParams="onReqParamsLog"></em-table-list>
+      <em-table-list v-if="dialogLogVisible" :tableListName="'logList'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURLLog" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="filler_log_mode_list" ref="tablesLog" :page_status="filler_log_page_status" :page_column="filler_log_page_column" :select_list="filler_log_select_list" @onReqParams="onReqParamsLog"></em-table-list>
     </el-dialog>
   </div>
 </template>

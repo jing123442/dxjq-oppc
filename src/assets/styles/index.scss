@@ -45,3 +45,9 @@
 .el-table th.el-table__cell>.cell {
   display: flex;
 }
+#app .sidebar-container {
+  width: 210px!important;
+}
+#app .main-container {
+  margin-left: 210px;
+}

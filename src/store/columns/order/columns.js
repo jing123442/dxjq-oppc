@@ -19,7 +19,7 @@ const columns = {
     { field: 'driverName', name: '司机姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 4 } },
     { field: 'gasstationName', name: '加气站', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 3 } },
     { field: 'cashierName', name: '收银员姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 5 } },
-    { field: 'tradeType', name: '交易模式', formatter: 'tradeType', search: { type: 'select', obj: 'tradeType', placeholder: '交易模式' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 6 } },
+    { field: 'tradeType', name: '交易模式', formatter: 'tradeType', search: { type: 'select', obj: 'tradeType', placeholder: '交易模式' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'tradeType', serial: 6 } },
     { field: 'orderStatus', name: '订单状态', width: 70, formatter: 'orderStatus', search: { type: 'select', obj: 'orderStatus', placeholder: '订单状态' }, detail: { type: 'span', model: 'select', isDisabled: true, obj: 'orderStatus', style: 'width: 85%', serial: 14 } },
     { field: 'payType', name: '支付方式', width: 90, formatter: 'payType',
       search: { type: 'select', obj: 'payType', placeholder: '支付方式', value: '' },
