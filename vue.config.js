@@ -9,7 +9,7 @@ module.exports = {
     open: true,
     proxy: {
       '/api': {
-        target: 'https://dapi.auyen.com',
+        target: 'https://tapi.auyen.com',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'
