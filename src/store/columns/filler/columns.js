@@ -133,7 +133,7 @@ const columns = {
   gasUpdateStock: [
     { field: 'gasstationId', name: '', nameSpan: 6, show: { type: 'hide', isDisabled: true } },
     { field: 'stock', name: '当前库存(公斤)', nameSpan: 6, show: { type: 'text', isDisabled: true } },
-    { field: 'increase', name: '调整重量(公斤)', nameSpan: 6, show: { type: 'text', placeholder: '请输入调整重量' } },
+    { field: 'increase', name: '调整重量(公斤)', nameSpan: 6, show: { type: 'number', precision: 2, placeholder: '请输入调整重量' } },
     { field: 'note', name: '摘要', nameSpan: 6, show: { type: 'textarea', placeholder: '请输入调整库存重量摘要' } }
   ],
   gasStockListRecord: [
