@@ -9,6 +9,9 @@
         <el-step title="完成"></el-step>
       </el-steps>
       <el-form size="small" :model="formWithdraw" v-show="active == 1" label-width="80px" ref="formWithdraw" style="padding: 0 30px 20px;" v-if="dialogWithdrawVisible" :rules="formWithdrawRules">
+        <el-form-item label="交易模式" style="width: 90%;">
+          <el-input disabled :value="this.formWithdraw.tradeType == 1 ? '经销模式': this.formWithdraw.tradeType == 2 ? '直销模式' : ''"></el-input>
+        </el-form-item>
         <el-form-item label="提现金额" prop="amount" style="width: 90%;">
           <el-input v-model="formWithdraw.amount"></el-input>
           <span>账户余额 <span>{{formWithdraw.balance}}</span> 元，可提现余额 <span>{{formWithdraw.withdrawAmount}}</span> 元，<span class="btn-link" @click="balanceToAmount">全部金额</span></span>
@@ -35,6 +38,7 @@
           <p>2.单日交易限额 ￥1,000,000.00</p>
           <p>3.交易时间为 07:00-20:00</p>
           <p>4.为保证业务正常进行，请确保提现后账户余额大于 {{formWithdraw.currentQuota}} 元</p>
+          <p>5.直销加气交易模式的提现，请注意保留充足的备付金，以用于下游清分</p>
         </div>
       </el-form>
       <el-form size="small" :model="formWithdraw" v-show="active == 2" label-width="80px" ref="formWithdrawNext" style="padding: 0 30px 20px;" v-if="dialogWithdrawVisible" :rules="formWithdrawNextRules">

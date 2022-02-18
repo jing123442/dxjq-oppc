@@ -116,7 +116,8 @@ export default {
           org: {
             orgName: keyword,
             orgType: 1,
-            tradeType: 1
+            tradeType: 1,
+            status: 0
           }
         }
       }
