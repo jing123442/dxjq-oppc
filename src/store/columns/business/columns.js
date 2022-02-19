@@ -35,7 +35,7 @@ const columns = {
     { field: 'orgName', nameSpan: 5, name: '公司名称', fixed: 'left', show: { type: 'text', ou: 1, style: 'width: 90%;', placeholder: '请输入公司名称' }, search: { type: 'text', placeholder: '请输入公司名称', nameSpan: 0 }, rules: [{ required: true, message: '请输入公司名称！', trigger: 'blur' }] },
     { field: 'orgShortName', nameSpan: 5, name: '公司简称' },
     { field: 'accountId', nameSpan: 5, name: '账号' },
-    { ffield: 'tradeType', nameSpan: 5, name: '交易模式', formatter: 'tradeType' },
+    { field: 'tradeType', nameSpan: 5, name: '交易模式', formatter: 'tradeType' },
     { field: 'accountType', nameSpan: 5, name: '资金账户类型', formatter: 'accountType' },
     { field: 'balance', nameSpan: 5, name: '账户余额(元)' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 220, list: [{ type: 'list', name: '流水列表' }, { type: 'recharge', name: '充值' }, { type: 'withdraw', name: '提现' }, { type: 'withdraw_list', name: '提现明细' }] }
