@@ -149,6 +149,7 @@ const columns = {
   ],
   rebateOrder: [
     { field: 'orderId', name: '订单编号', fixed: 'left', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 13 } },
+    { field: 'tradeType', name: '交易模式', formatter: 'tradeType', detail: { type: 'span', obj: 'tradeType', model: 'select', isDisabled: true, style: 'width: 85%' } },
     { field: 'createDate', name: '创建时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 55%;height: 50px;', style: 'width: 100%;', findField: 'createDate', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', subField: 'createDateName', hideName: true, obj: 'currDataSearch', style: 'width: 100%;', value: 'createDate' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 15, formatFun: 'formateTData all', stype: 'format' } },
     { field: 'updateDate', name: '支付时间', formatFun: 'formateTData all', width: 140, stype: 'format', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 16, formatFun: 'formateTData all', stype: 'format' } },
     { field: 'gasQty', name: '加气量', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 6, util: '公斤' } },
@@ -167,6 +168,7 @@ const columns = {
     { field: 'gasstationName', name: '加气站', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 3 } },
     { field: 'cashierName', name: '收银员姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 5 } },
     { field: 'orderStatus', name: '订单状态', width: 70, formatter: 'orderStatus', search: { type: 'select', obj: 'orderStatus', placeholder: '订单状态' }, detail: { type: 'span', model: 'select', isDisabled: true, obj: 'orderStatus', style: 'width: 85%', serial: 14 } },
+    { field: 'tradeType', name: '交易模式', hide: true, search: { type: 'select', obj: 'tradeType', placeholder: '交易模式' } },
     { field: 'payType', name: '支付方式', width: 90, formatter: 'payType',
       search: { type: 'select', obj: 'payType', placeholder: '支付方式', value: '' },
       detail: { type: 'span', model: 'select', isDisabled: true, obj: 'payType', style: 'width: 85%', serial: 12,
