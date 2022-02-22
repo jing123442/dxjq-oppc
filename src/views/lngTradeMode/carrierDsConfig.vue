@@ -41,7 +41,7 @@ export default {
             totalCount: ['data', 'total']
           }
         },
-        name: '物流客户直销列表'
+        name: '物流客户直销加气列表'
       },
       queryCustURLLog: {
         list: {

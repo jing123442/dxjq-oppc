@@ -298,8 +298,8 @@ export function utilsPayType() {
 }
 export function utilsTradeModeType() {
   return [
-    { value: 2, label: '直销' },
-    { value: 1, label: '经销' }
+    { value: 1, label: '经销加气' },
+    { value: 2, label: '直销加气' }
   ]
 }
 

@@ -10,7 +10,7 @@
       </el-steps>
       <el-form size="small" :model="formWithdraw" v-show="active == 1" label-width="80px" ref="formWithdraw" style="padding: 0 30px 20px;" v-if="dialogWithdrawVisible" :rules="formWithdrawRules">
         <el-form-item label="交易模式" style="width: 90%;">
-          <el-input disabled :value="this.formWithdraw.tradeType == 1 ? '经销模式': this.formWithdraw.tradeType == 2 ? '直销模式' : ''"></el-input>
+          <el-input disabled :value="this.formWithdraw.tradeType == 1 ? '经销加气': this.formWithdraw.tradeType == 2 ? '直销加气' : ''"></el-input>
         </el-form-item>
         <el-form-item label="提现金额" prop="amount" style="width: 90%;">
           <el-input v-model="formWithdraw.amount"></el-input>
