@@ -76,7 +76,7 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110, list: params => { return params.row.status == 2 && [{ type: 'voucher', name: '查看凭证' }] || (params.row.status == 3 && [{ type: 'reason', name: '查看原因' }]) || (params.row.status == 0 && [{ type: 'audit', name: '审核处理' }]) } }
   ],
   invoiceDsOrder: [
-    { field: 'carrierOrgId', name: '订单号', fixed: 'left' },
+    { field: 'orderId', name: '订单号', fixed: 'left' },
     { field: 'tradeType', name: '交易模式', formatter: 'tradeType' },
     { field: 'createDate', name: '创建时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
     { field: 'updateDate', name: '支付时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
