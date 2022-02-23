@@ -185,7 +185,7 @@ export default {
       if (this.optRadio == 1) {
         // 已开票
         if (btnItem.type == 'ok') {
-          let url = []
+          const url = []
           this.imgList.forEach(item => {
             if (item.path) {
               url.push(item.path.replace(this.$store.state.file.fileHost, ''))
