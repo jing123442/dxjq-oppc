@@ -235,7 +235,7 @@ export default {
               params.param.dateParam.updateDateTo = v[1]
             }
           } else {
-            if (!v) {
+            if (!v && v != 0) {
               params.param[k] = ''
             } else {
               params.param[k] = v
