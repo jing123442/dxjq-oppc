@@ -24,7 +24,12 @@ const getters = {
   // 物流公司加气费汇总--卡车汇总
   settlement_gasPriceTruckList_column: item => columns.gasPriceTruckList,
   // 物流公司加气费汇总--卡车对账单
-  settlement_gasPriceTruckOrderList_column: item => columns.gasPriceTruckOrderList
+  settlement_gasPriceTruckOrderList_column: item => columns.gasPriceTruckOrderList,
+  // 直销加气开票管理
+  invoice_ds_log_column: item => columns.invoiceDs,
+  invoice_ds_log_select_list: item => select.invoiceDs,
+  invoice_ds_log_page_status: item => app.list.invoiceDs,
+  invoice_order_column: item => columns.invoiceDsOrder
 }
 
 export default {

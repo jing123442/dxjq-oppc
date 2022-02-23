@@ -588,3 +588,27 @@ export function browserRedirect() {
 export function trim(str) {
   return typeof str === 'string' ? str.replace(/^\s+|\s+$/g, '') : str
 }
+// 获取当前日期和近N天的日期
+export function getDateRange(n = 30) {
+  // 获取当前日期
+  var myDate = new Date()
+  var nowY = myDate.getFullYear()
+  var nowM = myDate.getMonth() + 1
+  var nowD = myDate.getDate()
+  var nowH = myDate.getHours() < 10 ? '0' + myDate.getHours() : myDate.getHours()
+  var nowMi = myDate.getMinutes() < 10 ? '0' + myDate.getMinutes() : myDate.getMinutes()
+  var nowS = myDate.getSeconds() < 10 ? '0' + myDate.getSeconds() : myDate.getSeconds()
+  var enddate = nowY + '-' + (nowM < 10 ? '0' + nowM : nowM) + '-' + (nowD < 10 ? '0' + nowD : nowD) + ' ' + nowH + ':' + nowMi + ':' + nowS
+
+  // 获取三十天前日期
+  var lw = new Date(myDate - 1000 * 60 * 60 * 24 * n)
+  var lastY = lw.getFullYear()
+  var lastM = lw.getMonth() + 1
+  var lastD = lw.getDate()
+  var lastH = lw.getHours() < 10 ? '0' + lw.getHours() : lw.getHours()
+  var lastMi = lw.getMinutes() < 10 ? '0' + lw.getMinutes() : lw.getMinutes()
+  var lastS = lw.getSeconds() < 10 ? '0' + lw.getSeconds() : lw.getSeconds()
+  var startdate = lastY + '-' + (lastM < 10 ? '0' + lastM : lastM) + '-' + (lastD < 10 ? '0' + lastD : lastD) + ' ' + lastH + ':' + lastMi + ':' + lastS
+
+  return { startdate, enddate }
+}

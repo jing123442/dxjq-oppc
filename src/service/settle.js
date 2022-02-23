@@ -150,3 +150,8 @@ export async function $settleCashFlowDownload (data) {
 export async function $gasstationWeekAverageQtyFind(data) {
   return await R({ url: 'settle/gasstation_week_average_qty/find', data })
 }
+
+// 审核直销模式集中开票申请
+export async function $dsReceiptAuditApply(data) {
+  return await R({ url: 'settle/direct_sales_receipt/auditApply', data })
+}
