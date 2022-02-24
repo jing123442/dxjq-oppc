@@ -250,7 +250,7 @@ export default {
       const row = this.currOrderRow
       var createDateFrom = row.dateStart + ' 00:00:00'
       var createDateTo = row.dateEnd + ' 23:59:59'
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { carrierOrgId: this.woporg, tradeType: 2 }, dateParam: { createDateFrom, createDateTo } } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { carrierOrgId: this.currOrderRow.carrierOrgId, tradeType: 2 }, dateParam: { createDateFrom, createDateTo } } })
 
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
