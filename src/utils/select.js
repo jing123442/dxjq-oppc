@@ -367,8 +367,7 @@ export function utilsContractType() {
   return [
     { value: 1, label: '加气站平台入驻合同' },
     { value: 2, label: '加气站能源合作合同' },
-    { value: 3, label: '物流公司平台入驻合同' },
-    { value: 4, label: '直销物流公司入驻合同' }
+    { value: 3, label: '物流公司平台入驻合同' }
   ]
 }
 export function utilsBearType() {

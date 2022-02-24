@@ -81,7 +81,7 @@ export default {
     'dialogRowData.type'(value) {
       if (value === 1 || value === 2) {
         this.dialogRowData.partyaType = 1
-      } else if (value === 3 || value == 4) {
+      } else if (value === 3) {
         this.dialogRowData.partyaType = 2
       }
     }
