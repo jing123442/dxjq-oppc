@@ -14,6 +14,16 @@ const columns = {
     { field: 'lngFromName', name: '液源地' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 230, fixed: 'right', list: [{ type: 'config_source', name: '液源地选择' }, { type: 'list', name: '变更记录' }, { type: 'config_gas_price', name: '气价调节' }] }
   ],
+  listingQuery: [
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left', search: { type: 'text', field: 'nickName', placeholder: '请输入加气站名称' } },
+    { field: 'platformPrice', name: '平台挂牌价(元/公斤)' },
+    { field: 'harbourPrice', name: '出港价(元/吨)' },
+    { field: 'benefit', name: '区域优惠(元/吨)' },
+    { field: 'freight', name: '运费(元/吨)' },
+    { field: 'profit', name: '加气站利润(元/公斤)' },
+    { field: 'gasprice', name: '气价调节(元/吨)' },
+    { field: 'lngFromName', name: '液源地' }
+  ],
   listingLog: [
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left' },
     { field: 'harbourPrice', name: '出港价(元/吨)' },

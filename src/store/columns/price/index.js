@@ -10,6 +10,8 @@ const getters = {
   price_listing_page_status: item => app.list.listing,
   price_listing_column: item => columns.listing,
   price_listing_select_list: item => select.listing,
+  // 平台挂牌价-查询
+  price_listing_query_column: item => columns.listingQuery,
 
   // 平台挂牌价--变更记录
   price_listing_log_column: item => columns.listingLog,
