@@ -310,6 +310,8 @@ export default {
   display: flex;
   margin: 10px;
   img {
+    margin: 8px 0;
+    margin-right: 12px;
     display: block;
     width: 200px;
     height: 100px;
