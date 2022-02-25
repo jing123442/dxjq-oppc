@@ -66,7 +66,7 @@ const columns = {
   ],
   invoiceDs: [
     { field: 'receiptNumber', name: '集中开票编号', nameSpan: 5, fixed: 'left', detail: { type: 'span' }, search: { type: 'text', placeholder: '请输入集中开票编号' } },
-    { field: 'nickName', name: '物流客户名称', nameSpan: 5, detail: { type: 'span' }, search: { type: 'text', placeholder: '请输入物流客户名称' } },
+    { field: 'carrierOrgName', name: '物流客户名称', nameSpan: 5, detail: { type: 'span' }, search: { type: 'text', placeholder: '请输入物流客户名称' } },
     { field: 'status', name: '集中开票状态', nameSpan: 5, detail: { type: 'span', model: 'select', obj: 'receiptStatus' }, formatter: 'receiptStatus', search: { type: 'select', obj: 'receiptStatus', placeholder: '集中开票状态' } },
     { field: 'totalAmount', name: '开票金额（元）', nameSpan: 5, detail: { type: 'span' } },
     { field: 'payDateRound', name: '支付时段', nameSpan: 5, detail: { type: 'span' } },
