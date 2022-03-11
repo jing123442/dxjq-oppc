@@ -66,7 +66,7 @@ export default {
   created: function () {},
   methods: {
     onListEvent(type, row) {
-      const params = { orgId: row.carrierOrgId, periodYear: row.periodYear, periodMonth: row.periodMonth }
+      const params = { orgId: row.carrierOrgId, periodYear: row.periodYear, periodMonth: row.periodMonth, tradeType: row.tradeType }
 
       if (type === 'recharge_list') {
         this.$router.push({

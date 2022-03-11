@@ -2,7 +2,7 @@
   <div class="template-main">
     <nt-text-info :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 108px;'" :detailInfo="'结算订单为成功支付后订单'"></nt-text-info>
     <em-table-list ref="tables" :tableListName="'orderFiller'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog title="导出下载" :visible.sync="dialogExportDownVisible" :width="add_edit_dialog" :append-to-body="true">
+    <el-dialog :title="exportRow.tradeType == 1 ? '经销模式导出下载' : '直销模式导出下载'" :visible.sync="dialogExportDownVisible" :width="add_edit_dialog" :append-to-body="true">
       <el-form ref="exportDown" v-if="dialogExportDownVisible" :model="exportRow" :rules="exportRowRules" size="small" label-position="left">
         <el-form-item prop="modelList" style="margin-bottom: 50px;">
           <div>
@@ -86,7 +86,7 @@ export default {
   created: function () { },
   methods: {
     onListEvent(type, row) {
-      const params = { orgId: row.gasstationId, periodYear: row.periodYear, periodMonth: row.periodMonth }
+      const params = { orgId: row.gasstationId, periodYear: row.periodYear, periodMonth: row.periodMonth, tradeType: row.tradeType }
       if (type === 'settle_list') {
         this.$router.push({
           path: 'orderFiller/fillerDetailList',
@@ -128,17 +128,17 @@ export default {
               const itemPrams = {}
               if (item == 7) {
                 itemPrams.exportParam = JSON.stringify({
-                  gasOrder: { gasstationId: fillerId },
+                  gasOrder: { gasstationId: fillerId, tradeType: row.tradeType },
                   dateParam: dateParam
                 })
               } else if (item == 9) {
                 itemPrams.exportParam = JSON.stringify({
-                  gasstationGway: { gasstationId: fillerId },
+                  gasstationGway: { gasstationId: fillerId, tradeType: row.tradeType },
                   dataParam: dateParam
                 })
               } else if (item == 10) {
                 itemPrams.exportParam = JSON.stringify({
-                  withdrawOrder: { orgId: fillerId },
+                  withdrawOrder: { orgId: fillerId, tradeType: row.tradeType },
                   dateParam: dateParam
                 })
               }

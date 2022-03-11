@@ -33,6 +33,7 @@ const columns = {
   ],
   fillerOrder: [
     { field: 'gasstationName', name: '企业名称', fixed: 'left' },
+    { field: 'tradeType', name: '交易模式', formatter: 'tradeType', search: { type: 'select', obj: 'tradeType', placeholder: '交易模式' } },
     { field: 'nickName', name: '加气站名称', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'period', name: '', hide: true, search: { type: 'date-picker', model: 'month', placeholder: '请选择账期', clearable: false, value: (function() { const dateObj = formatPeriodDate(); return (dateObj.periodYear + '-' + dateObj.periodMonth + '-' + '01 00:00:00') }()) } },
     { field: 'gasQtyTotal', name: '加气量' },
@@ -75,6 +76,7 @@ const columns = {
   ],
   carrierOrder: [
     { field: 'carrierOrgName', name: '公司名称', fixed: 'left', search: { type: 'text', placeholder: '请输入公司名称' } },
+    { field: 'tradeType', name: '交易模式', formatter: 'tradeType', search: { type: 'select', obj: 'tradeType', placeholder: '交易模式' } },
     { field: 'period', name: '', hide: true, search: { type: 'date-picker', model: 'month', placeholder: '请选择账期', clearable: false, value: (function() { const dateObj = formatPeriodDate(); return (dateObj.periodYear + '-' + dateObj.periodMonth + '-' + '01 00:00:00') }()) } },
     { field: 'rechargeTotal', name: '充值金额汇总(元)' },
     { field: 'gasQtyTotal', name: '加气量汇总(公斤)' },

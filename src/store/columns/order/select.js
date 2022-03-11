@@ -14,7 +14,10 @@ const select = {
     type: utilsDownloadType()
   },
   orderDay: {
-    tradeType: utilsTradeModeType(),
+    tradeType: utilsTradeModeType()
+  },
+  filler: {
+    tradeType: utilsTradeModeType()
   }
 }
 

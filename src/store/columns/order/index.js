@@ -29,7 +29,7 @@ const getters = {
   order_carrier_mode_list: item => item.app.modeDefault,
   order_carrier_page_status: item => app.list.carrier,
   order_carrier_column: item => columns.carrierOrder,
-  order_carrier_select_list: item => select.carrier,
+  order_carrier_select_list: item => select.order,
 
   // 物流公司-加气站结算
   order_carrier_filler_column: item => columns.carrierToFiller,

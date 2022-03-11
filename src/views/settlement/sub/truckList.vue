@@ -1,5 +1,6 @@
 <template>
   <div class="template-main">
+    <p class="trade-type">交易模式： {{query.tradeType == 1 ? '经销模式': '直销模式'}}</p>
     <em-table-list ref="tables" :tableListName="'orderFiller'" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
@@ -84,3 +85,13 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.trade-type {
+  position: absolute;
+  top: 97px;
+  left: 155px;
+  background: #fff;
+  font-size: 14px;
+  color: #0084ff;
+}
+</style>
