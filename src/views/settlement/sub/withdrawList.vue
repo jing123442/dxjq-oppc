@@ -80,7 +80,7 @@ export default {
       })
     },
     onReqParams(type, _this, callback) {
-      const querys = { param: { withdrawOrder: { orgId: this.$route.query.orgId }, dateParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth } } }
+      const querys = { param: { withdrawOrder: { orgId: this.$route.query.orgId, tradeType: 1 }, dateParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth } } }
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
