@@ -1,9 +1,21 @@
-import { utilsOrderStatus, utilsPayType, utilsSource, utilsTruckTypeAll, utilsTradeModeType } from '@/utils/select'
+import {
+  utilsOrderStatus,
+  utilsPayType,
+  utilsSource,
+  utilsTruckTypeAll,
+  utilsTradeModeType,
+  utilsDyOrgList
+} from '@/utils/select'
 import { provinceAndCityData } from 'element-china-area-data'
 
 const select = {
   listing: {
     fromList: utilsSource()
+  },
+  direct: {
+    carrierList: utilsDyOrgList(2),
+    gasstationList: utilsDyOrgList(1),
+    currFieldSearch: [{ value: 'gasstationId', label: '加气站' }, { value: 'carrierOrgId', label: '物流客户' }]
   },
   preferential: {
     addressList: provinceAndCityData

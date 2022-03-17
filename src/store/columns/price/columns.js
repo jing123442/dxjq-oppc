@@ -1,5 +1,6 @@
 import { buttonPublishReleaseList, discountCarrierOpt } from '@/utils/button'
 import { monthTimeArea } from '@/utils/tools'
+import file from '@/store/modules/file'
 
 const columns = {
   listing: [
@@ -13,6 +14,32 @@ const columns = {
     { field: 'gasprice', name: '气价调节(元/吨)' },
     { field: 'lngFromName', name: '液源地' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 230, fixed: 'right', list: [{ type: 'config_source', name: '液源地选择' }, { type: 'list', name: '变更记录' }, { type: 'config_gas_price', name: '气价调节' }] }
+  ],
+  direct: [
+    { field: 'id', name: '', hide: true, show: { type: 'hide' } },
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left',
+      show: { type: 'select', subField: 'nickName', obj: 'gasstationList', placeholder: '请选择加气站' },
+      search: { type: 'text', placeholder: '请输入内容', findField: 'gasstationId' },
+      currSearch: { type: 'select', subField: 'currFieldName', style: 'width: 100%;', hideName: true, obj: 'currFieldSearch', value: 'gasstationId' } },
+    { field: 'carrierOrgId', name: '物流客户', stype: 'mapping', mapping: 'carrierOrgName',
+      show: { type: 'select', subField: 'carrierOrgName', obj: 'carrierList', placeholder: '请选择加气站' } },
+    { field: 'gasstationDirectPrice', ispush: false, name: '结算特价(元/公斤)' },
+    { field: 'platformPrice', ispush: false, name: '挂牌特价(元/公斤)' },
+    { field: 'gasstationDirectFee', name: '服务费特价(元/公斤)',
+      show: { type: 'text', placeholder: '请输入服务费特价' }, },
+    { field: 'gasstationFee', ispush: false, name: '服务费标准价(元/公斤)' },
+    { field: 'url', name: '合作协议', filefield: 'file', stype: 'link', label: '查看',
+      show: { type: 'file', iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl1, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'text', accept: '.pdf', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传合作协议', node: [] }},
+    { field: 'operatorDate', name: '服务费更新时间', ispush: false, stype: 'format', formatFun: 'formateTData all' },
+    { field: 'operatorName', name: '操作人', ispush: false, width: 80 },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 140, fixed: 'right', list: [{ type: 'del', name: '删除' }, { type: 'edit', name: '修改' }] }
+  ],
+  directLog: [
+    { field: 'nickName', name: '加气站' },
+    { field: 'carrierOrgName', name: '物流客户' },
+    { field: 'content', name: '操作内容' },
+    { field: 'operatorDate', name: '操作时间' },
+    { field: 'operator', name: '操作人' },
   ],
   listingQuery: [
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left', search: { type: 'text', field: 'nickName', placeholder: '请输入加气站名称' } },
