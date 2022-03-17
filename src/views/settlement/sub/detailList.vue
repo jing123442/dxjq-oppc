@@ -98,7 +98,7 @@ export default {
       })
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { gasstationId: this.$route.query.orgId, tradeType: 1 }, dateParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth } } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { gasstationId: this.$route.query.orgId, tradeType: this.query.tradeType }, dateParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth } } })
 
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
