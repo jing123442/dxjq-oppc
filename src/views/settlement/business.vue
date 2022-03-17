@@ -12,7 +12,7 @@
           <div style="padding-left: 20px;">根据您的需要，勾选数据进行下载</div>
 
           <el-checkbox-group v-model="exportRow.modelList" style="padding: 10px 20px;">
-            <el-checkbox label="11" name="modelList">象群科技订单列表</el-checkbox>
+            <el-checkbox label="11" name="modelList">象群科技结算明细</el-checkbox>
             <el-checkbox label="12" name="modelList">象群科技与长城奥扬对账函</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
