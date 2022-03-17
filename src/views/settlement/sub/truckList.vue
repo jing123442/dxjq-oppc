@@ -70,7 +70,7 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { carrierTruck: { carrierOrgId: this.$route.query.orgId }, dataParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth } } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { carrierTruck: { carrierOrgId: this.$route.query.orgId, tradeType: this.$route.query.tradeType }, dataParam: { periodYear: this.$route.query.periodYear, periodMonth: this.$route.query.periodMonth } } })
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
