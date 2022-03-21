@@ -12,6 +12,15 @@ const getters = {
   price_listing_select_list: item => select.listing,
   // 平台挂牌价-查询
   price_listing_query_column: item => columns.listingQuery,
+  // 直销加气站
+  price_direct_select_list: item => select.direct,
+  price_direct_log_select_list: item => columns.directLog,
+  price_direct_query_column: item => columns.direct,
+
+  price_direct_order_mode_list: item => item.app.modeDefault,
+  price_direct_order_page_status: item => app.list.directOrder,
+  price_direct_order_query_column: item => columns.directOrder,
+  price_direct_order_select_list: item => select.directOrder,
 
   // 平台挂牌价--变更记录
   price_listing_log_column: item => columns.listingLog,
