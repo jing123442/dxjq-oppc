@@ -6,8 +6,8 @@
       <em-table-list v-if="dialogChangeVisible" :custTableTitle="'变更记录'" :tableListName="'directLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
     </el-dialog>
 
-    <el-dialog title="特价订单" :visible.sync="dialogOrderVisible" :width="add_edit_dialog" :append-to-body="true">
-      <em-table-list v-if="dialogOrderVisible" :custTableTitle="'变更记录'" :tableListName="'directLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
+    <el-dialog title="特价订单" :visible.sync="dialogDirectOrderVisible" :width="add_edit_dialog" :append-to-body="true">
+      <em-table-list v-if="dialogDirectOrderVisible" :custTableTitle="'特价订单列表'" :tableListName="'directOrder'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryDirectCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="direct_mode_list" :page_status="direct_page_status" :page_column="direct_page_column" :select_list="direct_select_list" @onReqParams="onReqOrderParams"></em-table-list>
     </el-dialog>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
   name: 'direct',
   data() {
     return initVueDataOptions(this, {
-      dialogOrderVisible: false,
+      dialogDirectOrderVisible: false,
       dialogChangeVisible: false,
       queryCustURL: {
         add: {
@@ -56,6 +56,17 @@ export default {
         },
         name: ''
       },
+      queryDirectCustURL: {
+        list: {
+          url: 'settle/direct_gas_order/list_withtime',
+          method: 'post',
+          parse: {
+            tableData: ['data', 'records'],
+            totalCount: ['data', 'total']
+          }
+        },
+        name: ''
+      },
       buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '新增' }, { type: 'primary', icon: '', event: 'log', name: '变更记录' }, { type: 'primary', icon: '', event: 'order', name: '特价订单' }]
     })
   },
@@ -66,6 +77,10 @@ export default {
       page_column: 'price_direct_query_column',
       select_list: 'price_direct_select_list',
       log_page_column: 'price_direct_log_select_list',
+      direct_mode_list: 'price_direct_order_mode_list',
+      direct_page_status: 'price_direct_order_page_status',
+      direct_page_column: 'price_direct_order_query_column',
+      direct_select_list: 'price_direct_order_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -77,10 +92,37 @@ export default {
       if (type === 'log') {
         this.dialogChangeVisible = true
       } else if (type === 'order') {
-        this.dialogOrderVisible = true
+        this.dialogDirectOrderVisible = true
       } else if (type === 'url') {
         window.open(row.url)
       }
+    },
+    onReqOrderParams(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { }, dateParam: { createDateFrom: '', createDateTo: '' } } })
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k == 'createDate') {
+            if (_this.finds.createDate === null) {
+              params.param.dateParam.createDateFrom = ''
+              params.param.dateParam.createDateTo = ''
+            } else {
+              params.param.dateParam.createDateFrom = v[0]
+              params.param.dateParam.createDateTo = v[1]
+            }
+          } else if (k == 'updateDate') {
+            if (_this.finds.updateDate === null) {
+              params.param.dateParam.updateDateFrom = ''
+              params.param.dateParam.updateDateTo = ''
+            } else {
+              params.param.dateParam.updateDateFrom = v[0]
+              params.param.dateParam.updateDateTo = v[1]
+            }
+          } else {
+            if (v !== '') params.param.gasOrder[k] = v
+          }
+        }
+      }
+      callback(params)
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
