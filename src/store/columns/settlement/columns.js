@@ -88,7 +88,39 @@ const columns = {
     { field: 'gasstationName', name: '加气站' },
     { field: 'orderStatus', name: '订单状态', formatter: 'orderStatus', filters: [{ text: '待支付', value: 1 }, { text: '已支付', value: 2 }, { text: '取消', value: 3 }] },
     { field: 'payType', name: '支付方式', formatter: 'payType', filters: [{ text: '余额支付', value: 0 }, { text: '微信支付', value: 1 }, { text: '余额+微信支付', value: 2 }, { text: '组合支付', value: 11 }] }
-  ]
+  ],
+  directWithdApply: [
+    { field: 'gasstationName', name: '加气站', fixed: 'left',
+      search: { type: 'text', placeholder: '请输入加气站' } },
+    { field: 'startDate', name: '账期', stype: 'fields', fieldList: ['startDate', 'endDate'], width: 160 },
+    { field: 'applyStatus', name: '状态', formatter: 'applyStatus', stype: 'formatter-style',
+      search: { type: 'select', obj: 'applyStatus', placeholder: '提现申请状态' } },
+    { field: 'serviceFee', name: '服务费总金额（元）' },
+    { field: 'fapiaoNum', name: '发票号' },
+    { field: 'totalAmount', name: '发票总金额（元）' },
+    { field: 'updateDate', name: '更新时间', formatFun: 'formateTData all', stype: 'format' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110,
+      list: params => {
+        const row = params.row
+        const result = []
+
+        if (row.applyStatus != 0) {
+          result.push({ type: 'find', name: '查看' })
+        }
+        if (row.applyStatus == 2) {
+          result.push({ type: 'first', name: '初审' })
+        } else if (row.applyStatus == 3) {
+          result.push({ type: 'review', name: '复审' })
+        }
+        return result
+    } }
+  ],
+  directWithdApplyLog: [
+    { field: 'gasstationName', name: '加气站', fixed: 'left' },
+    { field: 'operateComment', name: '操作内容' },
+    { field: 'createrDate', name: '操作时间', formatFun: 'formateTData all', stype: 'format' },
+    { field: 'createrName', name: '操作人' },
+  ],
 }
 
 export default columns

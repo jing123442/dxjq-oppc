@@ -29,7 +29,14 @@ const getters = {
   invoice_ds_log_column: item => columns.invoiceDs,
   invoice_ds_log_select_list: item => select.invoiceDs,
   invoice_ds_log_page_status: item => app.list.invoiceDs,
-  invoice_order_column: item => columns.invoiceDsOrder
+  invoice_order_column: item => columns.invoiceDsOrder,
+
+  // 直销加气站提现申请
+  settlement_direct_withd_apply_mode_list: item => item.app.modeDefault,
+  settlement_direct_withd_apply_column: item => columns.directWithdApply,
+  settlement_direct_withd_apply_log_column: item => columns.directWithdApplyLog,
+  settlement_direct_withd_apply_select_list: item => select.directWithdApply,
+  settlement_direct_withd_apply_page_status: item => app.list.directWithdApply,
 }
 
 export default {

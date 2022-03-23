@@ -155,3 +155,13 @@ export async function $gasstationWeekAverageQtyFind(data) {
 export async function $dsReceiptAuditApply(data) {
   return await R({ url: 'settle/direct_sales_receipt/auditApply', data })
 }
+
+// 根据账单查看操作日志
+export async function $settleDirectApplyLog(data) {
+  return await R({ url: 'settle/direct_gasstation_fee_apply_log/find_by_id', data })
+}
+
+// 初审/复审发票接口
+export async function $settleDirectApplyFapiao(data) {
+  return await R({ url: 'settle/direct_gasstation_fee_apply/check_fapiao', data })
+}
