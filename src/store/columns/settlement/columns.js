@@ -96,7 +96,7 @@ const columns = {
     { field: 'applyStatus', name: '状态', formatter: 'applyStatus', stype: 'formatter-style',
       search: { type: 'select', obj: 'applyStatus', placeholder: '提现申请状态' } },
     { field: 'serviceFee', name: '服务费总金额（元）' },
-    { field: 'fapiaoNum', name: '发票号' },
+    { field: 'fapiaoNo', name: '发票号' },
     { field: 'totalAmount', name: '发票总金额（元）' },
     { field: 'updateDate', name: '更新时间', formatFun: 'formateTData all', stype: 'format' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 110,

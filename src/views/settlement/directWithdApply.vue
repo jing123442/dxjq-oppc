@@ -9,24 +9,24 @@
         <div class="apply-status" :class="applyStatusToInfo(dealRow.applyStatus, 'cls')">
           {{ applyStatusToInfo(dealRow.applyStatus, 'name') }}
         </div>
-        <el-col :span="dealRow.applyData.length > 0 ? 7 : 1" style="padding-top: 80px;">
+        <el-col :span="dealRow.applyData.length > 0 ? 7 : 1" style="padding-top: 70px;min-height: 300px;max-height: 350px;overflow: hidden;overflow-y: auto;">
           <div v-for="(item, index) of dealRow.applyData" :key="index" class="operate-comment-item">
             <span class="time">{{ item.createrDate | formateTData('all') }}</span>
             <span class="name">{{ item.createrName }}</span>
             <span class="comment">{{ item.operateComment }}</span>
           </div>
         </el-col>
-        <el-col :span="dealRow.applyData.length > 0 ? 17 : 23" style="border-right: 1px dotted #e8e8e8;">
+        <el-col :span="dealRow.applyData.length > 0 ? 17 : 23" style="border-left: 1px dotted #e8e8e8;padding-top: 60px;">
           <el-form ref="clientRow" :model="dealRow" :rules="dealRules" size="small" label-width="120px" class="rules-form-config" label-position="left" style="padding-left: 30px;">
             <el-form-item label="加气站" style="margin-bottom: 0;">{{ dealRow.gasstationName }}</el-form-item>
             <el-form-item label="账期" style="margin-bottom: 0;">{{ dealRow.startDate }} / {{ dealRow.endDate }}</el-form-item>
             <el-form-item label="服务费总金额" style="margin-bottom: 0;">{{ dealRow.serviceFee ? dealRow.serviceFee + ' 元' : '-' }}</el-form-item>
-            <span v-for="(item, index) of dealRow.fapiaoInfoList" :key="index">
-              <el-form-item label="发票文件" style="margin-bottom: 0;" v-if="!(dealRow.applyStatus == 1 && dealRow.optType === 'find')">
-                <el-image style="width: 100px; height: 70px" :src="item.fapiaoUrl" :preview-src-list="[item.fapiaoUrl]"></el-image>
-              </el-form-item>
-            <el-form-item label="发票信息" style="margin-bottom: 0;" v-if="!(dealRow.applyStatus == 1 && dealRow.optType === 'find')">{{ item.fapiaoNum }} | {{ item.fapiaoAmount }}</el-form-item>
-            </span>
+            <el-form-item label="发票文件" style="margin-bottom: 0;" v-if="!(dealRow.applyStatus == 1 && dealRow.optType === 'find')">
+              <el-image style="width: 100px; height: 70px;margin-right: 5px;" v-for="(item, index) of dealRow.fapiaoInfoList" :key="index" :src="item.fapiaoUrl" :preview-src-list="[item.fapiaoUrl]"></el-image>
+            </el-form-item>
+            <el-form-item label="发票信息" style="margin-bottom: 0;" v-if="!(dealRow.applyStatus == 1 && dealRow.optType === 'find')">
+              <span v-for="(item, index) of dealRow.fapiaoInfoList" :key="index" style="margin-right: 5px;">{{ item.fapiaoNum }} | {{ item.fapiaoAmount }}</span>
+            </el-form-item>
             <el-form-item label="发票总金额" style="margin-bottom: 0;" v-if="!(dealRow.applyStatus == 1 && dealRow.optType === 'find')">{{ dealRow.totalAmount ? dealRow.totalAmount + ' 元' : '-' }}</el-form-item>
             <el-form-item label="" v-if="dealRow.optType === 'first' || dealRow.optType === 'review'">
               <el-radio v-model="optRadio" label="1">通过</el-radio>
@@ -34,6 +34,9 @@
             </el-form-item>
             <el-form-item v-if="(dealRow.optType === 'first' || dealRow.optType === 'review') && optRadio == 2" label="驳回原因">
               <el-input type="textarea" v-model="dealRow.reason"></el-input>
+            </el-form-item>
+            <el-form-item v-if="(dealRow.optType === 'find' && dealRow.applyStatus == 5)" label="驳回原因">
+              {{ dealRow.note }}
             </el-form-item>
           </el-form>
         </el-col>
@@ -128,6 +131,11 @@ export default {
         } else if (type == 'review') {
           this.optTitle = '复审中'
         }
+        // 增加驳回描述
+        if (data.length > 0) {
+          row.note = data[0].note || ''
+        }
+
         const fapiaoAmountObj = row.fapiaoAmount ? JSON.parse(row.fapiaoAmount) : {}
         const fapiaoNumObj = row.fapiaoNum ? JSON.parse(row.fapiaoNum) : {}
 
@@ -172,7 +180,9 @@ export default {
     },
     updateColumnValue(tableData, callback) {
       tableData.forEach(item => {
-        item.payDateRound = item.dateStart + ' - ' + item.dateEnd
+        const fapiaoNum = item.fapiaoNum ? JSON.parse(item.fapiaoNum) : {}
+
+        item.fapiaoNo = Object.keys(fapiaoNum).join(' / ')
       })
       callback(tableData)
     },
