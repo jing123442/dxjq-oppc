@@ -99,7 +99,7 @@ export default {
       }],
       form: { reason: '' },
       reason: '',
-      optTitle: '查看'
+      optTitle: '查看详情'
     })
   },
   computed: {
@@ -126,10 +126,14 @@ export default {
         const data = await $settleDirectApplyLog(params).then(response => {
           return response.data
         })
+        this.formBtnList = custFormBtnList()
         if (type == 'first') {
           this.optTitle = '初审中'
         } else if (type == 'review') {
           this.optTitle = '复审中'
+        } else if (type == 'find') {
+          this.optTitle = '查看详情'
+          this.formBtnList = custFormBtnList(1)
         }
         // 增加驳回描述
         if (data.length > 0) {
