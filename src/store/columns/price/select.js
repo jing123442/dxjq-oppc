@@ -14,8 +14,8 @@ const select = {
     fromList: utilsSource()
   },
   direct: {
-    carrierList: utilsDyOrgList(2),
-    gasstationList: utilsDyOrgList(1),
+    carrierList: utilsDyOrgList(2, 'orgId', 'orgName', null, 2),
+    gasstationList: utilsDyOrgList(1, 'orgId', 'orgName', null, 2),
     currFieldSearch: [{ value: 'gasstationId', label: '加气站' }, { value: 'carrierOrgId', label: '物流客户' }]
   },
   directOrder: {

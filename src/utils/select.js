@@ -435,7 +435,7 @@ export function untilsMarketingManList() {
   // })
 }
 
-export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', authStatus = null) {
+export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', authStatus = null, tradeType = null) {
   const result = {
     url: 'user/org/list',
     node: ['data', 'records'],
@@ -454,6 +454,10 @@ export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', 
   }
   if (authStatus !== null) {
     result.params.param.org.authStatus = authStatus
+  }
+
+  if (tradeType !== null) {
+    result.params.param.org.tradeType = tradeType
   }
 
   return result
