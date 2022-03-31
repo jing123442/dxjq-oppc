@@ -17,7 +17,7 @@ const select = {
       { value: 2, label: '初审中', style: 'color: rgb(2, 125, 180);' },
       { value: 3, label: '复审中', style: 'color: rgb(0, 0, 191);' },
       { value: 4, label: '申请通过', style: 'color: rgb(75, 121, 2);' },
-      { value: 5, label: '驳回', style: 'color: rgb(184, 116, 26);' },
+      { value: 5, label: '已驳回', style: 'color: rgb(184, 116, 26);' },
     ]
   }
 }

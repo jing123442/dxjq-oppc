@@ -10,7 +10,7 @@
           {{ applyStatusToInfo(dealRow.applyStatus, 'name') }}
         </div>
         <el-col :span="dealRow.applyData.length > 0 ? 7 : 1" style="padding-top: 70px;min-height: 300px;max-height: 350px;overflow: hidden;overflow-y: auto;">
-          <div v-for="(item, index) of dealRow.applyData" :key="index" class="operate-comment-item">
+          <div v-for="(item, index) of dealRow.applyData" :key="index" class="operate-comment-item" :class="'active'" @click="applyInfoEvent(item, index)">
             <span class="time">{{ item.createrDate | formateTData('all') }}</span>
             <span class="name">{{ item.createrName }}</span>
             <span class="comment">{{ item.operateComment }}</span>
@@ -28,7 +28,7 @@
               <span v-for="(item, index) of dealRow.fapiaoInfoList" :key="index" style="margin-right: 5px;">{{ item.fapiaoNum }} | {{ item.fapiaoAmount }}</span>
             </el-form-item>
             <el-form-item label="发票总金额" style="margin-bottom: 0;" v-if="!(dealRow.applyStatus == 1 && dealRow.optType === 'find')">{{ dealRow.totalAmount ? dealRow.totalAmount + ' 元' : '-' }}</el-form-item>
-            <el-form-item label="" v-if="dealRow.optType === 'first' || dealRow.optType === 'review'">
+            <el-form-item label="" v-if="optStatus && (dealRow.optType === 'first' || dealRow.optType === 'review')">
               <el-radio v-model="optRadio" label="1">通过</el-radio>
               <el-radio v-model="optRadio" label="2">驳回</el-radio>
             </el-form-item>
@@ -89,6 +89,7 @@ export default {
       dealRow: {},
       dealRules: {},
       dealDialog: false,
+      optStatus: true,
       optRadio: '1',
       imgList: [{
         field: '',
@@ -117,49 +118,77 @@ export default {
   mounted: function () {
   },
   methods: {
+    clickToRow(type, row, eventType = '') {
+      if (eventType === 'log') {
+        this.formBtnList = custFormBtnList(1)
+      } else {
+        this.formBtnList = custFormBtnList()
+      }
+      if (type == 'first') {
+        this.optTitle = '初审中'
+      } else if (type == 'review') {
+        this.optTitle = '复审中'
+      } else if (type == 'find') {
+        this.optTitle = '查看详情'
+        this.formBtnList = custFormBtnList(1)
+      }
+
+      const fapiaoAmountObj = row.fapiaoAmount ? JSON.parse(row.fapiaoAmount) : {}
+      const fapiaoNumObj = row.fapiaoNum ? JSON.parse(row.fapiaoNum) : {}
+
+      // 重定义发票信息
+      const fapiaoInfoList = []
+      Object.keys(fapiaoAmountObj).forEach(item => {
+        fapiaoInfoList.push({
+          fapiaoAmount: fapiaoAmountObj[item] || '-',
+          fapiaoNum: item,
+          fapiaoUrl: fapiaoNumObj[item]
+        })
+      })
+      row.fapiaoInfoList = fapiaoInfoList
+
+      this.optRadio = '1'
+      this.dealRow = row
+      this.dealRow.optType = type
+      this.dealDialog = true
+    },
     async onListEvent(type, row) {
+      this.optStatus = true
+      this.customApplyId = row.id
       // 事件
       if (type == 'log') {
         this.orderDialogVisible = true
       } else {
-        const params = { applyId: row.id }
+        const params = { applyId: this.customApplyId }
         const data = await $settleDirectApplyLog(params).then(response => {
           return response.data
         })
-        this.formBtnList = custFormBtnList()
-        if (type == 'first') {
-          this.optTitle = '初审中'
-        } else if (type == 'review') {
-          this.optTitle = '复审中'
-        } else if (type == 'find') {
-          this.optTitle = '查看详情'
-          this.formBtnList = custFormBtnList(1)
-        }
+
         // 增加驳回描述
         if (data.length > 0) {
           row.note = data[0].note || ''
         }
-
-        const fapiaoAmountObj = row.fapiaoAmount ? JSON.parse(row.fapiaoAmount) : {}
-        const fapiaoNumObj = row.fapiaoNum ? JSON.parse(row.fapiaoNum) : {}
-
-        // 重定义发票信息
-        const fapiaoInfoList = []
-        Object.keys(fapiaoAmountObj).forEach(item => {
-          fapiaoInfoList.push({
-            fapiaoAmount: fapiaoAmountObj[item] || '-',
-            fapiaoNum: item,
-            fapiaoUrl: fapiaoNumObj[item]
-          })
-        })
-        row.fapiaoInfoList = fapiaoInfoList
-
-        this.optRadio = '1'
         row.applyData = data
-        this.dealRow = row
-        this.dealRow.optType = type
-        this.dealDialog = true
+
+        this.clickToRow(type, row)
       }
+    },
+    applyInfoEvent(row, index) {
+      let type = 'find'
+      let eventType = 'log'
+      this.optStatus = false
+
+      if (row.applyStatus == 2) {
+        type = 'first'
+      } else if (row.applyStatus == 3) {
+        type = 'review'
+      }
+      if ((row.applyStatus == 2 || row.applyStatus == 3) && index == 0) {
+        this.optStatus = true
+        eventType = ''
+      }
+      row.applyData = this.dealRow.applyData
+      this.clickToRow(type, row, eventType)
     },
     applyStatusToInfo(status, type) {
       const result = {
@@ -168,7 +197,7 @@ export default {
       }
       if (status == 5) {
         result.cls = 'fail'
-        result.name = '驳回'
+        result.name = '已驳回'
       } else if (status == 4) {
         result.cls = 'success'
         result.name = '申请通过'
@@ -213,7 +242,7 @@ export default {
       // 通过和驳回
       if (btnItem.type == 'ok') {
         const params = {
-          applyId: this.dealRow.id,
+          applyId: this.customApplyId,
           applyStatus: this.optRadio == 2 ? 5 : (this.dealRow.applyStatus == 2 ? 3 : 4)
         }
         if (this.optRadio == 2) {
@@ -270,6 +299,10 @@ export default {
 .operate-comment-item {
   display: flex;
   padding: 5px 0 5px 20px;
+  &.active {
+    cursor: pointer;
+    color: #00a0e9;
+  }
   span {
     display: inline-block;
     margin-right: 10px;
