@@ -48,7 +48,6 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          console.log(this.currParams)
           $orgAccountLogDownload({ ...this.currParams.param }).then(res => {
             const fileName = '资金流水_' + Date.parse(new Date()) + '.xlsx'
             exportBlobToFiles(res, fileName)
