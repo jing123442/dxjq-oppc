@@ -3,7 +3,7 @@
     <nt-text-info :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 108px;'"></nt-text-info>
     <em-table-list :tableListName="'gasStockList'" ref="tables" :authButtonList="authButtonList" :axios="axios" :buttonsList="buttonsList" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog title="库存记录" :visible.sync="dialogRecordVisible" width="80%" :append-to-body="true">
-      <em-table-list v-if="dialogRecordVisible" :tableListName="'gasRecordList'" :custTableTitle="'库存记录'" ref="recordList" :axios="axios" :queryCustURL="queryCustURLRecord" :responseSuccess="response_success" :queryParam="queryParamsRecord" :mode_list="mode_list" :page_status="page_status" :page_column="page_column_record" :select_list="select_list" @onReqParams="onReqParams"></em-table-list>
+      <em-table-list v-if="dialogRecordVisible" :tableListName="'gasRecordList'" :custTableTitle="'库存记录'" ref="recordList" :buttonsList="buttonsListRecord" :axios="axios" :queryCustURL="queryCustURLRecord" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column_record" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParamsRecords"></em-table-list>
     </el-dialog>
     <el-dialog title="库存调整" :visible.sync="dialogUpdateStockVisible" width="80%" :append-to-body="true">
       <nt-form ref="stock" v-if="dialogUpdateStockVisible" :rowData="updateRow" :modeList="{}" :pageColumn="page_column_update" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onFormEvent"></nt-form>
@@ -20,8 +20,8 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, queryDefaultParams, custFormBtnList, formateTData, isTypeof, callbackPagesInfo } from '@/utils/tools'
-import { $updateStock, $strategyGasstationLimitStatusLogAdd, $strategyGasstationLimitStatusLogGetLatest, $strategyGasstoredsum } from '@/service/strategy'
+import { initVueDataOptions, queryDefaultParams, custFormBtnList, formateTData, isTypeof, callbackPagesInfo, exportBlobToFiles } from '@/utils/tools'
+import { $updateStock, $strategyGasstationLimitStatusLogAdd, $strategyGasstationLimitStatusLogGetLatest, $strategyGasstoredsum, $strategyStockLogDownload } from '@/service/strategy'
 import { $gasstationWeekAverageQtyFind } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
@@ -42,7 +42,7 @@ export default {
       },
       queryCustURLRecord: {
         list: {
-          url: 'strategy/stock_log/list',
+          url: 'strategy/stock_log/page_list_download',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -63,8 +63,9 @@ export default {
         name: '限制记录'
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'configPlanLimit', name: '配置计划提报限制' }, { type: 'primary', icon: '', event: 'configGasFillLimit', name: '配置加气限制' }],
+      buttonsListRecord: [{ type: 'primary', icon: '', event: 'exportRecord', name: '导出' }],
       queryParams: Function,
-      queryParamsRecord: '',
+      recordRow: '',
       dialogRecordVisible: false,
       updateRow: {},
       dialogUpdateStockVisible: false,
@@ -82,7 +83,8 @@ export default {
         field: 'stockSum',
         unit: ' 公斤'
       }],
-      totalInfo: { gasStationSize: 0, stockSum: 0 }
+      totalInfo: { gasStationSize: 0, stockSum: 0 },
+      recordParams: {}
     })
   },
   computed: {
@@ -107,7 +109,7 @@ export default {
   methods: {
     onListEvent(type, row) {
       if (type === 'list') {
-        this.queryParamsRecord = queryDefaultParams(this, { type: 2, key: 'param', value: { gasstationId: row.gasstationId } })
+        this.recordRow = row
         this.dialogRecordVisible = true
       } else if (type == 'configPlanLimit') {
         this.$router.push('./fillerGasStockList/planSubmitLimitConfig')
@@ -129,7 +131,21 @@ export default {
         this.stockDetailRow._btn = custFormBtnList(2)
         this.stockDetailRow.nickName = row.nickName
         this.stockDetailFind(row)
+      } else if (type == 'exportRecord') {
+        this.exportRecordFun()
       }
+    },
+    exportRecordFun() {
+      this.$confirm('确定下载吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        $strategyStockLogDownload({ ...this.recordParams.param }).then(res => {
+          const fileName = '库存记录_' + Date.parse(new Date()) + '.xlsx'
+          exportBlobToFiles(res, fileName)
+        })
+      })
     },
     onFormEvent(btnObj, row) {
       if (btnObj.type == 'ok') {
@@ -206,6 +222,28 @@ export default {
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (v !== '') params.param[k] = v
+        }
+      }
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
+      this.initTotalData(params.param)
+    },
+    onReqParamsRecords(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { createDateFrom: '', createDateTo: '', gasstationId: this.recordRow.gasstationId } })
+      this.recordParams = params
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k == 'createDate') {
+            if (_this.finds.createDate === null) {
+              params.param.createDateFrom = ''
+              params.param.createDateTo = ''
+            } else {
+              params.param.createDateFrom = v[0]
+              params.param.createDateTo = v[1]
+            }
+          } else {
+            if (v !== '') params.param[k] = v
+          }
         }
       }
       // eslint-disable-next-line standard/no-callback-literal

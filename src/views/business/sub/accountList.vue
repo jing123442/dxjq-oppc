@@ -4,7 +4,8 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, isTypeof, callbackPagesInfo } from '@/utils/tools'
+import { initVueDataOptions, isTypeof, callbackPagesInfo, exportBlobToFiles } from '@/utils/tools'
+import { $orgAccountLogDownload } from '@/service/account'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -21,7 +22,9 @@ export default {
           }
         },
         name: '账户流水'
-      }
+      },
+      currParams: {},
+      buttonsList: [{ type: 'primary', icon: '', event: 'export_account_list', name: '导出' }]
     })
   },
   computed: {
@@ -38,7 +41,21 @@ export default {
   },
   created: function () {},
   methods: {
-    onListEvent(type, row) {},
+    onListEvent(type, row) {
+      if (type == 'export_account_list') {
+        this.$confirm('确定下载吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          console.log(this.currParams)
+          $orgAccountLogDownload({ ...this.currParams.param }).then(res => {
+            const fileName = '资金流水_' + Date.parse(new Date()) + '.xlsx'
+            exportBlobToFiles(res, fileName)
+          })
+        })
+      }
+    },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { dateParam: { createDateFrom: '', createDateTo: '' }, orgAccountLog: { orgId: this.$route.query.orgId, accountId: this.$route.query.accountId } } })
 
@@ -59,7 +76,7 @@ export default {
           }
         }
       }
-
+      this.currParams = params
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     }

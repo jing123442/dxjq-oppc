@@ -51,11 +51,21 @@ export default {
       })
     },
     onReqParams(type, _this, callback) {
-      const querys = { param: { } }
+      const querys = { param: { dateParam: { updateDateFrom: '', updateDateTo: '' } } }
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (v !== '') querys.param[k] = v
+          if (k == 'updateDate') {
+            if (_this.finds.updateDate === null) {
+              querys.param.dateParam.updateDateFrom = ''
+              querys.param.dateParam.updateDateTo = ''
+            } else {
+              querys.param.dateParam.updateDateFrom = v[0]
+              querys.param.dateParam.updateDateTo = v[1]
+            }
+          } else {
+            if (v !== '') querys.param[k] = v
+          }
         }
       }
 

@@ -292,3 +292,7 @@ export async function $strategyCarrierGasstationRebateDelete (data) {
 export async function $strategyCarrierGasstationRebateUpdate (data) {
   return await R({ url: '/strategy/carrier_gasstation_rebate/update', data })
 }
+// 下载库存变动日志列表,财务导出专用
+export async function $strategyStockLogDownload (data) {
+  return await R({ url: 'strategy/stock_log/download_stock_log', method: 'POST', data, responseType: 'blob' })
+}
