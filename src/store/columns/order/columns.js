@@ -1,4 +1,4 @@
-import { monthTimeArea, formatPeriodDate, formatDate } from '@/utils/tools'
+import { monthTimeArea, formatPeriodDate, dataPickerDefault, toolPickerOptions } from '@/utils/tools'
 
 const columns = {
   order: [
@@ -48,7 +48,7 @@ const columns = {
   orderDay: [
     { field: 'orderId', name: '订单编号', fixed: 'left', search: { type: 'text', serial: 2, placeholder: '请输入内容', findField: 'orderId' }, currSearch: { type: 'select', hideName: true, obj: 'currDaySearch', value: 'orderId' } },
     { field: 'tradeType', name: '交易模式', formatter: 'tradeType', search: { type: 'select', obj: 'tradeType', placeholder: '交易模式' } },
-    { field: 'updateDate', name: '支付时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: 'date', field: 'date', serial: 1, value: (function() { return formatDate(new Date(), 'yyyy-MM-dd') }()) } },
+    { field: 'updateDate', name: '支付时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: 'daterange', dataType: 'rangeType', rangeNumber: 7, style: 'width: 350px;', format: 'yyyy-MM-dd', timeOptions: toolPickerOptions(0), value: (function() { const dateObj = dataPickerDefault(new Date(), 1, 'yyyy-MM-dd hh:mm:ss', 1); return [dateObj.start, dateObj.end] })() } },
     { field: 'gasstationName', name: '企业名称' },
     { field: 'nickName', name: '加气站名称' },
     { field: 'carrierOrgName', name: '物流公司' },

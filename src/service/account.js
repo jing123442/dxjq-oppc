@@ -8,3 +8,7 @@ export async function $userAccountUpdate (data) {
 export async function $userAccountChangeScore (data) {
   return await R({ url: 'account/user_account/change_score', data })
 }
+// 下载流水列表,财务导出专用
+export async function $orgAccountLogDownload (data) {
+  return await R({ url: 'account/org_account_log/download', method: 'POST', data, responseType: 'blob' })
+}

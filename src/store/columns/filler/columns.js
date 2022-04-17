@@ -1,6 +1,6 @@
 import file from '../../modules/file'
 import { buttonLNGPlanList, buttonOrgFillerList } from '@/utils/button'
-import { monthTimeArea } from '@/utils/tools'
+import { monthTimeArea, dataPickerDefault, toolPickerOptions } from '@/utils/tools'
 import { utilsTableOptionsToFilters, utilsCommonAuthStatus, utilsContractStatus } from '@/utils/select'
 
 const columns = {
@@ -137,7 +137,7 @@ const columns = {
     { field: 'note', name: '摘要', nameSpan: 6, show: { type: 'textarea', placeholder: '请输入调整库存重量摘要' } }
   ],
   gasStockListRecord: [
-    { field: 'createDate', name: '时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format' },
+    { field: 'createDate', name: '时间', fixed: 'left', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: 'daterange', dataType: 'rangeType', rangeNumber: 31, style: 'width: 350px;', format: 'yyyy-MM-dd', timeOptions: toolPickerOptions(0), value: (function() { const dateObj = dataPickerDefault(new Date(), 1, 'yyyy-MM-dd hh:mm:ss', 1); return [dateObj.start, dateObj.end] })() } },
     { field: 'stockType', name: '变更类型', formatter: 'stockType' },
     { field: 'quantity', name: '变更量(公斤)' },
     { field: 'stock', name: '变更后库存(公斤)' },
