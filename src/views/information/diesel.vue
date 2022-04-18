@@ -107,7 +107,7 @@ export default {
         _fromData.append('file', files)
 
         $importDieselFile({ file: _fromData, headers: this.headers }).then(response => {
-          this.$message.success(response.data)
+          this.$message.success(response.message)
           this.$refs.tables.initDataList()
           this.dialogExportVisible = false
         })

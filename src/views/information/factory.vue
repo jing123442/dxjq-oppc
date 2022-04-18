@@ -105,9 +105,8 @@ export default {
         var _fromData = new FormData()
 
         _fromData.append('file', files)
-
         $importFactoryFile({ file: _fromData, headers: this.headers }).then(response => {
-          this.$message.success(response.data)
+          this.$message.success(response.message)
           this.$refs.tables.initDataList()
           this.dialogExportVisible = false
         })
