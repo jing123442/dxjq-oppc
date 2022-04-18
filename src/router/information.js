@@ -17,7 +17,8 @@ export default [
       { path: 'informationReceiv', component: inImport('information/receiv'), name: 'informationReceiv', meta: { title: '接货价', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'informationHaiqi', component: inImport('information/haiqi'), name: 'informationHaiqi', meta: { title: '海气现货价', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'informationGasstion', component: inImport('information/gasstion'), name: 'informationGasstion', meta: { title: '加气站列表', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'informationDiesel', component: inImport('information/diesel'), name: 'informationDiesel', meta: { title: '柴油列表', icon: 'icon-gongnengguanli', noCache: false } }
+      { path: 'informationDiesel', component: inImport('information/diesel'), name: 'informationDiesel', meta: { title: '柴油列表', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'informationItem', component: inImport('information/item'), name: 'informationItem', meta: { title: '指标配置', icon: 'icon-gongnengguanli', noCache: false } }
     ]
   }
 ]

@@ -7,7 +7,8 @@ const app = {
     receiv: 13,
     haiqi: 13,
     gasstion: 13,
-    diesel: 13
+    diesel: 13,
+    item: 13
   }
 }
 

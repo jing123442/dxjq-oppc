@@ -19,3 +19,11 @@ export async function $importReceivFile (data) {
 export async function $importDieselFile (data) {
   return await R({ url: 'information/diesel_oil/imports', method: 'POST', data: data.file })
 }
+
+export async function $informationFindItem (data) {
+  return await R({ url: 'information/lng_item_info/find', method: 'POST', data })
+}
+
+export async function $informationSaveItem (data) {
+  return await R({ url: 'information/lng_item_info/save_batch', method: 'POST', data })
+}

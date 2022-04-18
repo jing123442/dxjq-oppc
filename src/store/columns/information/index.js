@@ -52,6 +52,12 @@ const getters = {
   information_diesel_page_status: item => app.list.diesel,
   information_diesel_column: item => columns.diesel,
   information_diesel_select_list: item => item.app.selectDefault,
+
+  // 指标
+  information_item_mode_list: item => item.app.modeDefault,
+  information_item_page_status: item => app.list.item,
+  information_item_column: item => columns.item,
+  information_item_select_list: item => item.app.selectDefault,
 }
 
 export default {

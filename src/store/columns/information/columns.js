@@ -10,7 +10,7 @@ const columns = {
         type: 'file', serial: 3, iType: 'string', btnType: true, paramField: 'url',
         props: { url: 'data', name: 'data' },
         params: { url: 'data', name: 'data' },
-        action: file.state.fileUrl,
+        action: file.state.fileUrl1,
         headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders),
         success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;',
         fileHost: file.state.fileHost, placeholder: '请上传情报分析图', node: [],
@@ -93,6 +93,15 @@ const columns = {
     { field: 'infoDate', name: '日期', stype: 'format', formatFun: 'formateTData date', ispush: false,
       search: { type: 'date-picker', model: 'date', placeholder: '请选择', clearable: false, value: (function() { return formateTData(new Date(), 'date') }()) }
     },
+  ],
+  item: [
+    { field: 'northWestAvgPrice', name: '西北液厂均价', nameSpan: 6, show: { type: 'text', style: 'width: 90%', placeholder: '请输入西北液厂均价' } },
+    { field: 'slotBatch', name: '槽批量(吨)', nameSpan: 6, show: { type: 'text', style: 'width: 90%', placeholder: '请输入槽批量' } },
+    { field: 'northChina', name: '华北槽批量(吨)', nameSpan: 6, show: { type: 'text', style: 'width: 90%', placeholder: '请输入华北槽批量' } },
+    { field: 'eastChina', name: '华东槽批量(吨)', nameSpan: 6, show: { type: 'text', style: 'width: 90%', placeholder: '请输入华东槽批量' } },
+    { field: 'southChina', name: '华南槽批量(吨)', nameSpan: 6, show: { type: 'text', style: 'width: 90%', placeholder: '请输入华南槽批量' } },
+    { field: 'liquidOwnership', name: '液厂保有量(万方/日)', nameSpan: 6, show: { type: 'text', style: 'width: 90%', placeholder: '请输入液厂保有量' } },
+    { field: 'operatingRate', name: '液厂开工率', nameSpan: 6, show: { type: 'text', style: 'width: 90%', placeholder: '请输入液厂开工率' } },
   ]
 }
 
