@@ -1,5 +1,5 @@
 <template>
-  <div class='mine-page-warp'>
+  <div class='mine-page-warp' v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="正在获取指标数据，请等待...">
     <div style="display: flex;justify-content: flex-start;align-items: center;padding-left: 60px;">
       <div style="font-size: 14px;color: #606266;">选择日期</div>
       <el-date-picker v-model="currDate" @change="updateEventDate" style="width: 200px;margin-left: 5px;" size="small" type="date" placeholder="选择日期"></el-date-picker>
@@ -17,6 +17,7 @@ export default {
     return initVueDataOptions(this, {
       row: {},
       initRow: {},
+      fullscreenLoading: true,
       currDate: formateTData(new Date(), 'date')
     })
   },
@@ -33,7 +34,7 @@ export default {
   methods: {
     async initData(date) {
       const tmpRow = {}
-
+      this.fullscreenLoading = true
       tmpRow.northWestAvgPrice = await this.getItemInfo('northWestAvgPrice', date)
       tmpRow.slotBatch = await this.getItemInfo('slotBatch', date)
       tmpRow.northChina = await this.getItemInfo('northChina', date)
@@ -44,6 +45,7 @@ export default {
 
       tmpRow._btn = custFormBtnList()
 
+      this.fullscreenLoading = false
       this.row = tmpRow
     },
     async getItemInfo(type, date) {
@@ -70,7 +72,7 @@ export default {
         fieldList.forEach((item, index) => {
           if (this.row[item]) {
             params.push({
-              infoDate: this.currDate,
+              infoDate: formateTData(this.currDate, 'date'),
               itemId: item,
               itemName: fieldName[index],
               type: 'LNG',
