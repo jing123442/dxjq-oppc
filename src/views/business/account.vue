@@ -201,7 +201,6 @@ export default {
             this.$message.error('未签提现协议，请先去签提现协议！')
           } else {
             $getWithdrawInfo({ orgType: row.orgType }).then(res => {
-              console.log(data)
               const currentQuota = res.data && res.data.currentQuota ? Number(res.data.currentQuota) : 0
               this.orgTitle = row.orgName
               row.tel = data.bindPhone
@@ -295,6 +294,7 @@ export default {
         note: this.formWithdraw.note,
         orgId: this.formWithdraw.orgId,
         orgName: this.formWithdraw.orgName,
+        tradeType: this.formWithdraw.tradeType,
         verificationCode: this.formWithdraw.verificationCode
       }
 
