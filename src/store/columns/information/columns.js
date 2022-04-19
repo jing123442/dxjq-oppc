@@ -5,6 +5,10 @@ const columns = {
   analysis: [
     { field: 'id', name: 'ID', hide: true, show: { type: 'hide'} },
     { field: 'title', name: '标题', fixed: 'left', show: { type: 'text', placeholder: '请输入标题'} },
+    { field: 'type', name: '类型', formatter: 'typeList', hide: true,
+      show: { type: 'select', field: 'fileType', obj: 'typeList', value: 1, placeholder: '请选择类型'},
+      search: { type: 'select', obj: 'typeList', value: 1, placeholder: '请选择类型'}
+    },
     { field: 'fileUrl', name: 'URL', filefield: 'file',
       show: {
         type: 'file', serial: 3, iType: 'string', btnType: true, paramField: 'url',

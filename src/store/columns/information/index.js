@@ -9,7 +9,7 @@ const getters = {
   information_analysis_mode_list: item => item.app.modeDefault,
   information_analysis_page_status: item => app.list.analysis,
   information_analysis_column: item => columns.analysis,
-  information_analysis_select_list: item => item.app.selectDefault,
+  information_analysis_select_list: item => select.analysis,
 
   // 行业分析
   information_information_mode_list: item => item.app.modeDefault,
