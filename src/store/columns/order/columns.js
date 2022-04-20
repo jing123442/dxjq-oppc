@@ -48,7 +48,7 @@ const columns = {
   orderDay: [
     { field: 'orderId', name: '订单编号', fixed: 'left', search: { type: 'text', serial: 2, placeholder: '请输入内容', findField: 'orderId' }, currSearch: { type: 'select', hideName: true, obj: 'currDaySearch', value: 'orderId' } },
     { field: 'tradeType', name: '交易模式', formatter: 'tradeType', search: { type: 'select', obj: 'tradeType', placeholder: '交易模式' } },
-    { field: 'updateDate', name: '支付时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: 'daterange', dataType: 'rangeType', rangeNumber: 7, style: 'width: 350px;', format: 'yyyy-MM-dd', timeOptions: toolPickerOptions(0), value: (function() { const dateObj = dataPickerDefault(new Date(), 1, 'yyyy-MM-dd hh:mm:ss', 1); return [dateObj.start, dateObj.end] })() } },
+    { field: 'updateDate', name: '支付时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: 'daterange', dataType: 'rangeType', rangeNumber: 7, style: 'width: 350px;', format: 'yyyy-MM-dd', timeOptions: toolPickerOptions(1), value: (function() { const dateObj = dataPickerDefault(new Date(), 1, 'yyyy-MM-dd hh:mm:ss', 1); return [dateObj.start, dateObj.end] })() } },
     { field: 'gasstationName', name: '企业名称' },
     { field: 'nickName', name: '加气站名称' },
     { field: 'carrierOrgName', name: '物流公司' },
@@ -56,7 +56,7 @@ const columns = {
     { field: 'gasQty', name: '加气量' },
     { field: 'gasamount', note: '长城奥扬收款金额', name: '加气站结算金额' },
     { field: 'amount', note: '物流公司付款金额', name: '平台结算金额' },
-    { field: 'serviceFee', note: '加气站服务费金额', name: '加气站利润金额' }
+    { field: 'serviceFee', note: '加气站利润金额', name: '加气站利润金额' }
   ],
   fillerDetail: [
     { field: 'orderId', name: '订单编号', fixed: 'left' },
