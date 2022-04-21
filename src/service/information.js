@@ -21,7 +21,7 @@ export async function $importDieselFile (data) {
 }
 
 export async function $informationFindItem (data) {
-  return await R({ url: 'information/lng_item_info/find', method: 'POST', data })
+  return await R({ url: 'information/lng_item_info/find_web', method: 'POST', data })
 }
 
 export async function $informationSaveItem (data) {
