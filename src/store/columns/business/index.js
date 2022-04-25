@@ -20,6 +20,7 @@ const getters = {
   // 公司资金账户管理 -- 查看--账户流水
   bus_accountList_column: item => columns.accountList,
   bus_accountDetail_column: item => columns.accountDetail,
+  bus_accountDetail_select_list: item => select.accountDetail,
   bus_acc_list_select_list: item => select.accountList
 }
 

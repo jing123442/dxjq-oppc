@@ -72,7 +72,7 @@ export default {
       mode_list: 'bus_org_mode_list',
       page_status: 'bus_org_page_status',
       page_column: 'bus_accountDetail_column',
-      select_list: 'bus_acc_list_select_list',
+      select_list: 'bus_accountDetail_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success',
