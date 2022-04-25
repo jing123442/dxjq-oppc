@@ -131,7 +131,7 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { withdrawOrder: { orgId: this.$route.query.orgId }, dateParam: { createDateFrom: '', createDateTo: '' } } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { withdrawOrder: { orgId: this.$route.query.orgId, tradeType: this.$route.query.tradeType }, dateParam: { createDateFrom: '', createDateTo: '' } } })
       let datetime = null
       let status = null
 

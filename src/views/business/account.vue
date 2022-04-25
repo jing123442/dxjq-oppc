@@ -180,7 +180,7 @@ export default {
       if (type === 'list') {
         this.$router.push(`account/accountList?orgId=${row.orgId}&accountId=${row.accountId}`)
       } else if (type === 'withdraw_list') {
-        this.$router.push(`account/accountDetail?orgId=${row.orgId}`)
+        this.$router.push(`account/accountDetail?orgId=${row.orgId}&tradeType=${row.tradeType}`)
       } else if (type === 'recharge') {
         $userOrgFind({ orgId: row.orgId }).then(response => {
           this.rechargeRow = response.data
