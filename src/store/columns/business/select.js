@@ -28,6 +28,9 @@ const select = {
       { value: 4, label: '失败' },
       { value: 12, label: '银行处理中' }
     ]
+  },
+  accountDetail: {
+    tradeType: utilsTradeModeType()
   }
 }
 

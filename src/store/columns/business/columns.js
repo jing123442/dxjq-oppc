@@ -53,6 +53,7 @@ const columns = {
   ],
   accountDetail: [
     { field: 'withdrawOrderId', name: '提现单号', fixed: 'left' },
+    { field: 'tradeType', nameSpan: 5, name: '交易模式', formatter: 'tradeType' },
     { field: 'amount', name: '提现金额(元)' },
     { field: 'createDate', name: '提现时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '' } },
     { field: 'status', name: '状态', formatter: 'status', filters: [{ value: 12, text: '银行处理中' }, { value: 3, text: '提现成功' }, { value: 4, text: '失败' }] },
