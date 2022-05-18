@@ -139,7 +139,8 @@ export default {
             gasstationId: item.orgId,
             gasstationShortName: item.orgShortName,
             carrierOrgId: this.$route.query.carrierOrgId,
-            carrierOrgName: this.$route.query.carrierOrgName
+            carrierOrgName: this.$route.query.carrierOrgName,
+            updateDate: this.rebateFillerAddRow.updateDate.replace(' ', 'T')
           })
         })
         const params = [...temp]
