@@ -207,7 +207,8 @@ const columns = {
   rebateEdit: [
     { field: 'gasstationShortName', name: '享受优惠加气站', nameSpan: 8, show: { type: 'span', placeholder: '' }},
     { field: 'rebate', name: '享受优惠额度（元/公斤）', nameSpan: 8, show: { type: 'text', placeholder: '请输入享受优惠额度' }, rules: [{ required: true, message: '请输入享受优惠额度', trigger: 'blur' }] },
-    { field: 'truckType', name: '享受优惠车辆经营类型', formatter: 'truckType', nameSpan: 8, show: { type: 'select', obj: 'truckType', placeholder: '请选择车辆经营类型' }, rules: [{ required: true, message: '请选择车辆经营类型', trigger: 'change' }] }
+    { field: 'truckType', name: '享受优惠车辆经营类型', formatter: 'truckType', nameSpan: 8, show: { type: 'select', obj: 'truckType', placeholder: '请选择车辆经营类型' }, rules: [{ required: true, message: '请选择车辆经营类型', trigger: 'change' }] },
+    { field: 'updateDate', name: '发布时间', nameSpan: 8, show: { type: 'date-picker', model: 'datetime', format: 'yyyy-MM-dd hh:mm:ss', style: 'width: 90%;', placeholder: '请输入发布时间' } }
   ],
   rebateConfigRecords: [
     { field: 'updaterName', name: '操作人', fixed: 'left', search: { type: 'text', placeholder: '请输入操作人', serial: 1 } },
