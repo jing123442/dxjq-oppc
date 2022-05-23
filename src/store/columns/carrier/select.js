@@ -44,7 +44,8 @@ const select = {
     truckType: utilsTruckType(),
     autoAccount: utilsAutoAccountType(),
     driverList: utilsDriverList(),
-    comPayType: utilsComPayType()
+    comPayType: utilsComPayType(),
+    tradeType: utilsTradeModeType()
   },
   truckAccount: {
     type: utilsTruckAccType()
