@@ -9,6 +9,10 @@
     <el-dialog title="特价订单" :visible.sync="dialogDirectOrderVisible" :width="add_edit_dialog" :append-to-body="true">
       <em-table-list v-if="dialogDirectOrderVisible" :custTableTitle="'特价订单列表'" :tableListName="'directOrder'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryDirectCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="direct_mode_list" :page_status="direct_page_status" :page_column="direct_page_column" :select_list="direct_select_list" @onReqParams="onReqOrderParams"></em-table-list>
     </el-dialog>
+
+    <el-dialog title="待发布列表" :visible.sync="dialogUnpublishVisible" :width="add_edit_dialog" :append-to-body="true">
+      <em-table-list v-if="dialogUnpublishVisible" :custTableTitle="'待发布列表'" :tableListName="'directLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURLUnpublish" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="direct_unpublish_page_column" :select_list="select_list" @onReqParams="onReqParamsUnpublish"></em-table-list>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -21,6 +25,7 @@ export default {
     return initVueDataOptions(this, {
       dialogDirectOrderVisible: false,
       dialogChangeVisible: false,
+      dialogUnpublishVisible: false,
       queryCustURL: {
         add: {
           url: 'strategy/direct_sales_fee_config/add',
@@ -45,6 +50,16 @@ export default {
         },
         name: '直销加气站'
       },
+      queryCustURLUnpublish: {
+        list: {
+          url: 'strategy/amount_change_plan/list',
+          method: 'post',
+          parse: {
+            tableData: ['data', 'records'],
+            totalCount: ['data', 'total']
+          }
+        }
+      },
       queryLogCustURL: {
         list: {
           url: 'strategy/direct_sales_fee_log/list',
@@ -67,7 +82,7 @@ export default {
         },
         name: ''
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '新增' }, { type: 'primary', icon: '', event: 'log', name: '变更记录' }, { type: 'primary', icon: '', event: 'order', name: '特价订单' }]
+      buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '新增' }, { type: 'primary', icon: '', event: 'log', name: '变更记录' }, { type: 'primary', icon: '', event: 'order', name: '特价订单' }, { type: 'primary', icon: '', event: 'unpublish', name: '待发布列表' }]
     })
   },
   computed: {
@@ -81,6 +96,7 @@ export default {
       direct_page_status: 'price_direct_order_page_status',
       direct_page_column: 'price_direct_order_query_column',
       direct_select_list: 'price_direct_order_select_list',
+      direct_unpublish_page_column: 'price_direct_unpublish_page_column',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'
@@ -95,6 +111,8 @@ export default {
         this.dialogDirectOrderVisible = true
       } else if (type === 'url') {
         window.open(row.url)
+      } else if (type == 'unpublish') {
+        this.dialogUnpublishVisible = true
       }
     },
     onReqOrderParams(type, _this, callback) {
@@ -126,6 +144,23 @@ export default {
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k === 'gasstationId') {
+            if (v !== '') params.param.nickName = v
+          } else if (k === 'carrierOrgId') {
+            if (v !== '') params.param.carrierOrgName = v
+          } else {
+            if (v !== '') params.param[k] = v
+          }
+        }
+      }
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
+    },
+    onReqParamsUnpublish(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { type: 2 } })
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {

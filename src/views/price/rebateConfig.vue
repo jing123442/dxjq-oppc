@@ -26,6 +26,10 @@
         </el-button>
       </div>
     </el-dialog>
+
+    <el-dialog title="待发布列表" :visible.sync="dialogUnpublishVisible" :width="add_edit_dialog" :append-to-body="true">
+      <em-table-list v-if="dialogUnpublishVisible" :custTableTitle="'待发布列表'" :tableListName="'directLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURLUnpublish" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="unpublish_page_column" :select_list="select_list" @onReqParams="onReqParamsUnpublish"></em-table-list>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -47,8 +51,19 @@ export default {
         },
         name: '物流公司优惠配置'
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'rebate_gasstation_add', name: '新增优惠加气站' }],
+      queryCustURLUnpublish: {
+        list: {
+          url: 'strategy/amount_change_plan/list',
+          method: 'post',
+          parse: {
+            tableData: ['data', 'records'],
+            totalCount: ['data', 'total']
+          }
+        }
+      },
+      buttonsList: [{ type: 'primary', icon: '', event: 'rebate_gasstation_add', name: '新增优惠加气站' }, { type: 'primary', icon: '', event: 'unpublish', name: '待发布列表' }],
       dialogfillerAddVisible: false,
+      dialogUnpublishVisible: false,
       carrierList: [],
       carrierTotal: 0,
       formBtnList: custFormBtnList(),
@@ -74,6 +89,7 @@ export default {
       mode_list: 'rebate_config_mode_list',
       page_status: 'rebate_config_page_status',
       page_column: 'rebate_config_column',
+      unpublish_page_column: 'rebate_config_unpublish_column',
       select_list: 'rebate_config_select_list',
       form_page_column: 'rebate_filler_add_column',
       form_select_list: 'rebate_filler_add_select_list',
@@ -120,6 +136,8 @@ export default {
         this.rebateEditRow = row
         this.rebateEditRow.updateDate = this.rebateEditRow.updateDate.replace('T', ' ')
         this.rebateEditRow._btn = custFormBtnList()
+      } else if (type == 'unpublish') {
+        this.dialogUnpublishVisible = true
       }
     },
     btnClickEvent(item) {
@@ -210,6 +228,23 @@ export default {
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (v !== '') params.param[k] = v
+        }
+      }
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
+    },
+    onReqParamsUnpublish(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { type: 1 } })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k === 'gasstationId') {
+            if (v !== '') params.param.nickName = v
+          } else if (k === 'carrierOrgId') {
+            if (v !== '') params.param.carrierOrgName = v
+          } else {
+            if (v !== '') params.param[k] = v
+          }
         }
       }
       // eslint-disable-next-line standard/no-callback-literal

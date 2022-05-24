@@ -17,6 +17,8 @@ const getters = {
   price_direct_log_select_list: item => columns.directLog,
   price_direct_query_column: item => columns.direct,
 
+  price_direct_unpublish_page_column: item => columns.directUnpublish,
+
   price_direct_order_mode_list: item => item.app.modeDefault,
   price_direct_order_page_status: item => app.list.directOrder,
   price_direct_order_query_column: item => columns.directOrder,
@@ -100,6 +102,8 @@ const getters = {
   rebate_config_mode_list: item => item.app.modeDefault,
   rebate_config_page_status: item => app.list.rebateConfig,
   rebate_config_select_list: item => select.rebateConfig,
+
+  rebate_config_unpublish_column: item => columns.rebateConfigUnpublish,
 
   // 添加优惠加气站
   rebate_filler_add_column: item => columns.rebateFillerAdd,

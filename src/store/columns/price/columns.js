@@ -36,11 +36,26 @@ const columns = {
     { field: 'url', name: '合作协议', filefield: 'file', stype: 'link-label', label: '查看',
       show: { type: 'file', iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl1, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'text', accept: '.pdf', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传合作协议', node: [] }},
     { field: 'operatorDate', name: '发布时间', hide: true, stype: 'format', formatFun: 'formateTData all',
-      show: { type: 'date-picker', model: 'datetime', format: 'yyyy-MM-dd hh:mm:ss', style: 'width: 90%;', placeholder: '请输入发布时间' }
+      show: { type: 'date-picker', model: 'datetime', style: 'width: 90%;', placeholder: '请输入发布时间' }
     },
     { field: 'operatorDate', name: '服务费更新时间', ispush: false, stype: 'format', formatFun: 'formateTData all' },
     { field: 'operatorName', name: '操作人', ispush: false, width: 80 },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 140, fixed: 'right', list: [{ type: 'del', name: '删除' }, { type: 'edit', name: '修改' }] }
+  ],
+  directUnpublish: [
+    { field: 'id', name: '', hide: true, show: { type: 'hide' } },
+    { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left',
+      show: { type: 'select', subField: 'nickName', obj: 'gasstationList', placeholder: '请选择加气站' },
+      search: { type: 'text', placeholder: '请输入内容', findField: 'gasstationId' },
+      currSearch: { type: 'select', subField: 'currFieldName', style: 'width: 100%;', hideName: true, obj: 'currFieldSearch', value: 'gasstationId' },
+      rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
+    { field: 'carrierOrgId', name: '物流客户', stype: 'mapping', mapping: 'carrierOrgName',
+      show: { type: 'select', subField: 'carrierOrgName', obj: 'carrierList', placeholder: '请选择物流客户' },
+      rules: [{ required: true, message: '请选择物流客户', trigger: 'blur' }] },
+    { field: 'amount', name: '服务费特价(元/公斤)',
+      show: { type: 'text', name: '服务费特价', placeholder: '请输入服务费特价' },
+      rules: [{ required: true, message: '请输入服务费特价', trigger: 'blur' }] },
+    { field: 'createDate', name: '待发布时间', ispush: false, stype: 'format', formatFun: 'formateTData all' }
   ],
   directLog: [
     { field: 'nickName', name: '加气站', fixed: 'left' },
@@ -203,16 +218,21 @@ const columns = {
     { field: 'finalPriceDirect', ispush: false, name: '最终直销结算价(元)' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'rebateEdit', name: '优惠编辑' }, { type: 'gasRebateClose', name: '优惠关闭' }] }
   ],
+  rebateConfigUnpublish: [
+    { field: 'gasstationName', name: '享受优惠加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
+    { field: 'amount', name: '享受优惠额度（元/公斤）' },
+    { field: 'truckType', name: '车辆经营类型', formatter: 'truckType', show: { type: 'select', obj: 'truckType' } }
+  ],
   rebateFillerAdd: [
     { field: 'rebate', name: '享受优惠额度（元/公斤）', nameSpan: 8, show: { type: 'text', placeholder: '请输入享受优惠额度' }, rules: [{ required: true, message: '请输入享受优惠额度', trigger: 'blur' }] },
     { field: 'truckType', name: '车辆经营类型', formatter: 'truckType', nameSpan: 8, show: { type: 'select', obj: 'truckType', placeholder: '请选择车辆经营类型' }, rules: [{ required: true, message: '请选择车辆经营类型', trigger: 'change' }] },
-    { field: 'updateDate', name: '发布时间', nameSpan: 8, show: { type: 'date-picker', model: 'datetime', format: 'yyyy-MM-dd hh:mm:ss', style: 'width: 90%;', placeholder: '请输入发布时间' } }
+    { field: 'updateDate', name: '发布时间', nameSpan: 8, show: { type: 'date-picker', model: 'datetime', style: 'width: 90%;', placeholder: '请输入发布时间' } }
   ],
   rebateEdit: [
     { field: 'gasstationShortName', name: '享受优惠加气站', nameSpan: 8, show: { type: 'span', placeholder: '' }},
     { field: 'rebate', name: '享受优惠额度（元/公斤）', nameSpan: 8, show: { type: 'text', placeholder: '请输入享受优惠额度' }, rules: [{ required: true, message: '请输入享受优惠额度', trigger: 'blur' }] },
     { field: 'truckType', name: '享受优惠车辆经营类型', formatter: 'truckType', nameSpan: 8, show: { type: 'select', obj: 'truckType', placeholder: '请选择车辆经营类型' }, rules: [{ required: true, message: '请选择车辆经营类型', trigger: 'change' }] },
-    { field: 'updateDate', name: '发布时间', nameSpan: 8, show: { type: 'date-picker', model: 'datetime', format: 'yyyy-MM-dd hh:mm:ss', style: 'width: 90%;', placeholder: '请输入发布时间' } }
+    { field: 'updateDate', name: '发布时间', nameSpan: 8, show: { type: 'date-picker', model: 'datetime', style: 'width: 90%;', placeholder: '请输入发布时间' } }
   ],
   rebateConfigRecords: [
     { field: 'updaterName', name: '操作人', fixed: 'left', search: { type: 'text', placeholder: '请输入操作人', serial: 1 } },
