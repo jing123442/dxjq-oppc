@@ -31,6 +31,8 @@ const columns = {
       show: { type: 'text', name: '服务费特价', placeholder: '请输入服务费特价' },
       rules: [{ required: true, message: '请输入服务费特价', trigger: 'blur' }] },
     { field: 'gasstationFee', ispush: false, name: '服务费标准价(元/公斤)' },
+    { field: 'finalPriceSelf', ispush: false, name: '自营车辆最终结算价(元)' },
+    { field: 'finalPriceOther', ispush: false, name: '其他车辆最终结算价(元)' },
     { field: 'url', name: '合作协议', filefield: 'file', stype: 'link-label', label: '查看',
       show: { type: 'file', iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl1, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'text', accept: '.pdf', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传合作协议', node: [] }},
     { field: 'operatorDate', name: '发布时间', hide: true, stype: 'format', formatFun: 'formateTData all',
@@ -197,6 +199,8 @@ const columns = {
     { field: 'gasstationShortName', name: '享受优惠加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'rebate', name: '享受优惠额度（元/公斤）' },
     { field: 'truckType', name: '车辆经营类型', formatter: 'truckType', show: { type: 'select', obj: 'truckType' } },
+    { field: 'finalPrice', ispush: false, name: '最终经销结算价(元)' },
+    { field: 'finalPriceDirect', ispush: false, name: '最终直销结算价(元)' },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 140, list: [{ type: 'rebateEdit', name: '优惠编辑' }, { type: 'gasRebateClose', name: '优惠关闭' }] }
   ],
   rebateFillerAdd: [
