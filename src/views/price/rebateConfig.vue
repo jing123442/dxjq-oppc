@@ -134,7 +134,7 @@ export default {
       } else if (type == 'rebateEdit') {
         this.dialogVisibleRebateEdit = true
         this.rebateEditRow = row
-        this.rebateEditRow.updateDate = this.rebateEditRow.updateDate.replace('T', ' ')
+        this.rebateEditRow.updateDate = this.rebateEditRow.updateDate ? this.rebateEditRow.updateDate.replace('T', ' ') : ''
         this.rebateEditRow._btn = custFormBtnList()
       } else if (type == 'unpublish') {
         this.dialogUnpublishVisible = true
@@ -159,7 +159,7 @@ export default {
             gasstationShortName: item.orgShortName,
             carrierOrgId: this.$route.query.carrierOrgId,
             carrierOrgName: this.$route.query.carrierOrgName,
-            updateDate: this.rebateFillerAddRow.updateDate.replace(' ', 'T')
+            updateDate: this.rebateFillerAddRow.updateDate ? this.rebateFillerAddRow.updateDate.replace(' ', 'T') : ''
           })
         })
         const params = [...temp]
@@ -192,7 +192,7 @@ export default {
               gasstationShortName: this.rebateEditRow.gasstationShortName,
               carrierOrgId: this.$route.query.carrierOrgId,
               carrierOrgName: this.$route.query.carrierOrgName,
-              updateDate: this.rebateEditRow.updateDate.replace(' ', 'T')
+              updateDate: this.rebateEditRow.updateDate ? this.rebateEditRow.updateDate.replace(' ', 'T') : ''
             }
             $strategyCarrierGasstationRebateUpdate(params).then(response => {
               this.dialogVisibleRebateEdit = false
