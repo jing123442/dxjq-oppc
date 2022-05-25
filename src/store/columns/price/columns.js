@@ -221,7 +221,8 @@ const columns = {
   rebateConfigUnpublish: [
     { field: 'gasstationName', name: '享受优惠加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' } },
     { field: 'amount', name: '享受优惠额度（元/公斤）' },
-    { field: 'truckType', name: '车辆经营类型', formatter: 'truckType', show: { type: 'select', obj: 'truckType' } }
+    { field: 'truckType', name: '车辆经营类型', formatter: 'truckType', show: { type: 'select', obj: 'truckType' } },
+    { field: 'createDate', name: '待发布时间', ispush: false, stype: 'format', formatFun: 'formateTData all' }
   ],
   rebateFillerAdd: [
     { field: 'rebate', name: '享受优惠额度（元/公斤）', nameSpan: 8, show: { type: 'text', placeholder: '请输入享受优惠额度' }, rules: [{ required: true, message: '请输入享受优惠额度', trigger: 'blur' }] },

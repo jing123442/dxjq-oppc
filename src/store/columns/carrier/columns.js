@@ -180,6 +180,7 @@ const columns = {
     { field: 'comStatus', name: '组合支付', nameSpan: 5, formatter: 'comPayType' },
     { field: 'truckDriverList', name: '当前绑定司机', ispush: false, nameSpan: 5, formatter: '', stype: 'list-tag', action: { name: 'driverName' },
       detail: { type: 'span', name: '绑定司机', formatFun: 'truckToDriverList', stype: 'format', serial: 15, ou: 1, isDisabled: true } },
+    { field: 'updateDate', name: '更新时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
     { field: 'balance', name: '账户余额', ispush: false, hide: true, nameSpan: 5,
       detail: { type: 'span', serial: 16, ou: 2, isDisabled: true, defaultValue: 0 } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'bind', name: '绑定司机' }, /* { type: 'edit', name: '编辑' }, */ { type: 'detail', name: '详情' }] }
