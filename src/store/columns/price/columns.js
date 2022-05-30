@@ -57,7 +57,7 @@ const columns = {
       rules: [{ required: true, message: '请输入服务费特价', trigger: 'blur' }] },
     { field: 'finalPriceSelf', ispush: false, name: '自营车辆最终结算价(元)' },
     { field: 'finalPriceOther', ispush: false, name: '其他车辆最终结算价(元)' },
-    { field: 'createDate', name: '待发布时间', ispush: false, stype: 'format', formatFun: 'formateTData all' }
+    { field: 'changeTime', name: '待发布时间', ispush: false, stype: 'format', formatFun: 'formateTData all' }
   ],
   directLog: [
     { field: 'nickName', name: '加气站', fixed: 'left' },
@@ -226,7 +226,7 @@ const columns = {
     { field: 'finalPrice', ispush: false, name: '最终经销结算价(元)' },
     { field: 'finalPriceDirect', ispush: false, name: '最终直销结算价(元)' },
     { field: 'truckType', name: '车辆经营类型', formatter: 'truckType', show: { type: 'select', obj: 'truckType' } },
-    { field: 'createDate', name: '待发布时间', ispush: false, stype: 'format', formatFun: 'formateTData all' }
+    { field: 'changeTime', name: '待发布时间', ispush: false, stype: 'format', formatFun: 'formateTData all' }
   ],
   rebateFillerAdd: [
     { field: 'rebate', name: '享受优惠额度（元/公斤）', nameSpan: 8, show: { type: 'text', placeholder: '请输入享受优惠额度' }, rules: [{ required: true, message: '请输入享受优惠额度', trigger: 'blur' }] },
