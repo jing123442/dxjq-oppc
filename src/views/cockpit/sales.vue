@@ -1,22 +1,25 @@
 <template>
   <div class="template-main">
     <el-tabs v-model="active" type="card" @tab-click="handleClick">
-      <el-tab-pane label="今日实时" name="0">
+      <el-tab-pane label="今日实时（线上）" name="0">
         <em-table-list ref="tables1" :tableListName="'timeday'" :custTableTitle="custTodayTableTitle" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'id'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :options="{ lazy: true }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue"></em-table-list>
       </el-tab-pane>
-      <el-tab-pane label="历史时段" name="1">
-        <em-table-list ref="tables2" :tableListName="'timehistory'" :custTableTitle="custYesterdayTableTitle" :authButtonList="authButtonList" :buttonsList="buttonsHistoryList" :axios="axios" :queryCustURL="queryHistoryCustURL" :composeParam="composeParam" :rowKey="'id'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_history_status" :page_column="mode_history_list" :options="{ lazy: true }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+      <el-tab-pane label="历史总量" name="1">
+        <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 96px;'"></table-total-data>
+        <em-table-list :tableListName="'timehistory'" :custTableTitle="custYesterdayTableTitle" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryHistoryCustURL" :responseSuccess="response_success" :mode_list="mode_list" :page_status="page_status" :queryParam="queryParams" :page_column="mode_history_list" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParamsHistory" @updateColumnValue="updateColumnValueHistory"></em-table-list>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script>
 import { initVueDataOptions, isTypeof, formateTData, exportBlobToFiles } from '@/utils/tools'
-import { $settleGasstationCurrentSales, $settleGasstationHistorySales } from '@/service/settle'
+import { TableTotalData } from '@/components'
+import { $settleGasstationCurrentSales, $settleGasstationHistorySales, $settleGwayGasOrderGetSumTotal } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'salestime',
+  components: { TableTotalData },
   data() {
     return initVueDataOptions(this, {
       active: 0,
@@ -49,37 +52,31 @@ export default {
       },
       queryHistoryCustURL: {
         list: {
-          url: 'settle/gasstation_monitor/histroy_full_district_list',
+          url: 'settle/gway_gasorder/list',
           method: 'post',
           parse: {
             tableData: ['data']
-          },
-          tree: {
-            key: 'districtId'
-          }
-        },
-        children: {
-          url: 'settle/gasstation_monitor/histroy_district_gasstation_list',
-          method: 'post',
-          props: {
-            districtId: 'districtId'
-          },
-          parse: {
-            tableData: ['data']
-          },
-          tree: {
-            key: 'districtId'
           }
         },
         name: '监控'
       },
       composeParam: ['districtName'],
       custTodayTableTitle: '今日实时',
-      custYesterdayTableTitle: '历史时段',
+      custYesterdayTableTitle: '历史总量',
       buttonsList: [{ type: 'primary', icon: '', event: 'query', name: '查询' }, { type: 'primary', icon: '', event: 'export', name: '导出' }],
       buttonsHistoryList: [{ type: 'primary', icon: '', event: 'his_export', name: '导出' }],
-      page_history_status: 1,
-      initHistoryStatus: true
+      // page_history_status: 1,
+      initHistoryStatus: true,
+      dataList: [{
+        name: '销售总量：',
+        field: 'qtyTotal',
+        unit: ' 吨'
+      }, {
+        name: '销售总金额：',
+        field: 'amountTotal',
+        unit: ' 元'
+      }],
+      totalInfo: { qtyTotal: 0, amountTotal: 0 }
     })
   },
   computed: {
@@ -116,8 +113,14 @@ export default {
       }
     },
     handleClick() {
-      /* this.initHistoryStatus = true
-      this.page_history_status = 1 */
+      // this.initHistoryStatus = true
+      // this.page_history_status = 1
+    },
+    settleGwayGasOrderGetSumTotal(params) {
+      $settleGwayGasOrderGetSumTotal(params).then(res => {
+        console.log(res)
+        this.totalInfo = { ...res.data }
+      })
     },
     resetTitleName(timestamp, datetime) {
       clearInterval(this.timer)
@@ -132,6 +135,16 @@ export default {
       this.custTodayTableTitle = '今日实时【' + this.currDataTime + '】'
       // this.resetTitleName(Date.parse(this.currDataTime), dataList[0].queryDateTime) // 计时器
       // eslint-disable-next-line standard/no-callback-literal
+      callback(dataList)
+    },
+    updateColumnValueHistory(dataList, callback) {
+      dataList.forEach((item) => {
+        if (!item.compareRate) {
+          item.compareRate = '-'
+        } else {
+          item.compareRate += '%'
+        }
+      })
       callback(dataList)
     },
     reloadHistoryTable(_this) {
@@ -163,18 +176,34 @@ export default {
         }
       }
 
-      this.reloadHistoryTable(_this)
-      if (_this.tableListName === 'timehistory') {
-        if (Object.keys(params).length === 0) {
-          const tmpTimes = formateTData(new Date())
-          params.dateTimeFrom = tmpTimes
-          params.dateTimeTo = tmpTimes
-        }
-        this.currDataTime = params
+      // this.reloadHistoryTable(_this)
+      // if (_this.tableListName === 'timehistory') {
+      //   if (Object.keys(params).length === 0) {
+      //     const tmpTimes = formateTData(new Date())
+      //     params.dateTimeFrom = tmpTimes
+      //     params.dateTimeTo = tmpTimes
+      //   }
+      //   this.currDataTime = params
+      // }
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
+    },
+    onReqParamsHistory(type, _this, callback) {
+      console.log(_this)
+      const params = { dateFrom: '', dateTo: '' }
+      if (_this.finds.date) {
+        params.dateFrom = formateTData(_this.finds.date[0], 'date')
+        params.dateTo = formateTData(_this.finds.date[1], 'date')
       }
+      this.settleGwayGasOrderGetSumTotal(params)
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     }
   }
 }
 </script>
+<style lang="scss">
+  .el-table__fixed {
+   height: 100%!important;
+  }
+</style>

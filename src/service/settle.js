@@ -165,3 +165,7 @@ export async function $settleDirectApplyLog(data) {
 export async function $settleDirectApplyFapiao(data) {
   return await R({ url: 'settle/direct_gasstation_fee_apply/check_fapiao', data })
 }
+// 获取合计汇总数据
+export async function $settleGwayGasOrderGetSumTotal(data) {
+  return await R({ url: '/settle/gway_gasorder/get_sum_total', data })
+}

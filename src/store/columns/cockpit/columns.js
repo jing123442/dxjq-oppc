@@ -1,4 +1,4 @@
-import { tableTextColor, toolPickerOptions } from '@/utils/tools'
+import { tableTextColor, tableTextColorSaleRate, formateTData } from '@/utils/tools'
 import file from '../../modules/file'
 
 const columns = {
@@ -20,17 +20,13 @@ const columns = {
     { field: 'monthAverageGasQty', name: '前30日均(公斤)' }
   ],
   historySales: [
-    { field: 'name', name: '名称', fixed: 'left', stype: 'format',
-      formatFun: function(value, row) {
-        if (!value) return '"-"'
-        if (row.districtId || row.gasstationNum > 0) {
-          return '"' + value + '(' + row.gasstationNum + ' 站)"'
-        } else {
-          return '"' + value + '"'
-        }
-      } },
-    { field: 'queryDateTime', name: '', hide: true, search: { type: 'date-picker', dtime: ['00:00:00', '23:59:59'], timeOptions: toolPickerOptions(), rangeNumber: 7, dataType: 'rangeType' } },
-    { field: 'gasQtyTotal', name: '加气量(公斤)' }
+    { field: 'gasstationName', name: '加气站名称(自营站)', fixed: 'left' },
+    { field: 'date', name: '', hide: true, search: {  type: 'date-picker', format: 'yyyy-MM-dd 08:00', valueFormat: 'yyyy-MM-dd 08:00:00', value: (function() { return [new Date(new Date().getTime()-86400000), new Date()] })() } },
+    { field: 'inQtyTotal', name: '入库量(吨)' },
+    { field: 'gasQtyTotal', name: '销售量(吨)' },
+    { field: 'dayAvgPrice', name: '日均零售价(元/吨)' },
+    { field: 'amountTotal', name: '销售金额(元)' },
+    { field: 'compareRate', name: '较前一日销量比', stype: 'text-style', classValueName: (row, field) => tableTextColorSaleRate(row, field) },
   ],
   battle: [
     { field: 'gasType', name: '站点类型',

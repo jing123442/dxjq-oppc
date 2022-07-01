@@ -448,6 +448,16 @@ export function tableTextColor(row, field) {
   }
 }
 
+export function tableTextColorSaleRate(row, field) {
+  if (row[field]) {
+    if (parseFloat(row[field]) > 100) {
+      return 'color: #E86452;'
+    } else if (parseFloat(row[field]) < 100) {
+      return 'color: #41CC7C;'
+    }
+  }
+}
+
 // echarts begin
 // tooltip默认值
 export function initDefaultChartsTooltip() {
