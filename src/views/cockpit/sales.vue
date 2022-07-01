@@ -141,6 +141,8 @@ export default {
       dataList.forEach((item) => {
         if (!item.compareRate) {
           item.compareRate = '-'
+        } else {
+          item.compareRate += '%'
         }
       })
       callback(dataList)
@@ -200,3 +202,8 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .el-table__fixed {
+   height: 100%!important;
+  }
+</style>
