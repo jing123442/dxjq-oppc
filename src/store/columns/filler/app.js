@@ -23,6 +23,9 @@ const app = {
     lngPlan: [
       { ou: 1, name: '计划详情', status: 3 }
     ],
+    // selfFullInventory: [
+    //   { ou: 1, name: '计划详情-----', status: 3 }
+    // ],
     lngPlanChange: [
       { ou: 1, name: '计划详情', status: 3 },
       { ou: 2, name: '变更详情', status: 3 }
@@ -56,7 +59,8 @@ const app = {
     printList: 4,
     lngPlan: 13,
     plsLog: 13,
-    gasLimitDriverDetail: 13
+    gasLimitDriverDetail: 13,
+    selfFullInventory: 13,
   }
 }
 

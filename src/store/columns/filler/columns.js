@@ -176,6 +176,16 @@ const columns = {
     { field: 'downloadUrl', name: '到站榜单', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 18, ou: 1 } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 250, list: params => buttonLNGPlanList(params) }
   ],
+  // 自营站全量库存
+  selfFullInventory: [
+    { field: 'id', hide: true, show: { type: 'hide', noShow: 1 } },
+    { field: 'gasstationId', hide: true, show: { type: 'hide', noShow: 1 } },
+    { field: 'gasstationName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站名称' }, show: { type: 'text', placeholder: '请输入' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
+    { field: 'tradeDate', name: '入库时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 55%;height: 50px;', style: 'width: 100%;', findField: 'tradeDate', dtime: ['00:00:00', '23:59:59'], value: (function () { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', subField: 'tradeDateName', hideName: true, obj: 'currDataSearch', style: 'width: 100%;', value: 'tradeDate', isDisabled: true }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 15, formatFun: 'formateTData all', stype: 'format' }, rules: [{ required: true, message: '请输入入库时间', trigger: 'blur' }], show: { type: 'date-picker', model: 'datetime', placeholder: '请输入' } },
+    { field: 'qty', name: '入库量（吨）', show: { type: 'text', placeholder: '请输入' }, rules: [{ required: true, message: '请输入入库量', trigger: 'blur' }] },
+    // 操作列
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 140, fixed: 'right', list: [{ type: 'del', name: '删除' }, { type: 'edit', name: '修改' }] }
+  ],
   lngPlanCancelInfo: [
     { field: 'id', name: '计划编号', fixed: 'left', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'status', name: '订单状态', nameSpan: 6, show: { type: 'span', model: 'select', obj: 'planStatus', ou: 1 } },

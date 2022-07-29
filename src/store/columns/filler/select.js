@@ -87,6 +87,9 @@ const select = {
     bearType: utilsBearType(),
     currLNGDataSearch: utilsLNGDataSearch()
   },
+  selfFullInventory: {
+    currDataSearch: [{ value: 'tradeDate', label: '入库时间' }], // 日期选择
+  },
   lngStockDetail: {
     proposeType: [{ value: 1, label: '建议优先配送' }, { value: 2, label: '建议常规配送' }, { value: 3, label: '建议调整或取消' }]
   },

@@ -1,4 +1,5 @@
 import R from '@/utils/request'
+import store from '@/store'
 
 export async function $excelDownload (data) {
   return await R({ url: 'settle/excel/download', data, responseType: 'blob' })
@@ -168,4 +169,22 @@ export async function $settleDirectApplyFapiao(data) {
 // 获取合计汇总数据
 export async function $settleGwayGasOrderGetSumTotal(data) {
   return await R({ url: '/settle/gway_gasorder/get_sum_total', data })
+}
+
+// 下载模板
+export async function $importDownloadFile(url, data) {
+  return await R({ url, method: 'get', params: data, responseType: 'blob' })
+}
+
+// 导入
+export async function $importDataFile(url, data) {
+  const headers = {
+    'Content-Type': 'multipart/form-data'
+  }
+  return await R({ url: `${url}?orgId=${store.getters.woporg}`, method: 'POST', data: data.file, headers: { ...data.headers, ...headers } })
+}
+
+// 数据总量
+export async function $sumData ({ url, data }) {
+  return await R({ url, data })
 }

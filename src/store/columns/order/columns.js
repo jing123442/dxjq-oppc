@@ -31,6 +31,22 @@ const columns = {
         ] } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 80, list: [{ type: 'detail', name: '详情' }] }
   ],
+  selfOrder: [
+    { field: 'id', hide: true, show: { type: 'hide', noShow: 1 } },
+    { field: 'gasstationId', hide: true, show: { type: 'hide', noShow: 1 } },
+    { field: 'flag', hide: true, show: { type: 'hide', noShow: 1 } },
+    { field: 'tradeDate', name: '交易时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 55%;height: 50px;', style: 'width: 100%;', findField: 'tradeDate', dtime: ['00:00:00', '23:59:59'], value: (function () { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', subField: 'tradeDateName', hideName: true, obj: 'currDataSearch', style: 'width: 100%;', value: 'tradeDate', isDisabled: true }, show: { type: 'date-picker', model: 'datetime', placeholder: '请输入' } },
+    { field: 'gasstationName', name: '加气站', search: { type: 'text', placeholder: '请输入', findStyle: 'width: 45%', style: 'width: 100%;', findField: 'gasstationName' }, currSearch: { type: 'select', subField: 'currFieldName', style: 'width: 100%;', hideName: true, obj: 'currFieldSearch', value: 'gasstationName' }, show: { type: 'span', placeholder: '请输入' } },
+    { field: 'tradeNo', name: '流水号', show: { type: 'span', placeholder: '请输入' } },
+    { field: 'gunNo', name: '枪号', show: { type: 'text', placeholder: '请输入' } },
+    { field: 'nowGas', name: '加气量(公斤)', show: { type: 'text', placeholder: '请输入' }, rules: [{ required: true, message: '请输入加气量', trigger: 'blur' }] },
+    { field: 'nowMoney', name: '订单金额(元)', show: { type: 'text', placeholder: '请输入' }, rules: [{ required: true, message: '请输入订单金额', trigger: 'blur' }] },
+    { field: 'price', name: '结算单价(元/公斤)', show: { type: 'text', placeholder: '请输入' }, rules: [{ required: true, message: '请输入结算单价', trigger: 'blur' }] },
+    { field: 'carNo', name: '车牌号', show: { type: 'text', placeholder: '请输入' } },
+    { field: 'cashier', name: '收银员', show: { type: 'text', placeholder: '请输入' } },
+    // 操作列
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 140, fixed: 'right', list: [{ type: 'del', name: '删除' }, { type: 'edit', name: '修改' }] }
+  ],
   fillerOrder: [
     { field: 'gasstationName', name: '企业名称', fixed: 'left' },
     { field: 'tradeType', name: '交易模式', formatter: 'tradeType', search: { type: 'select', obj: 'tradeType', placeholder: '交易模式' } },
