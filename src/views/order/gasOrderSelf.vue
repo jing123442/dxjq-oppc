@@ -79,7 +79,7 @@ export default {
         del: {
           url: 'settle/gway_gasorder/delete_gasorder',
           method: 'post',
-          name: 'tradeNo',
+          name: ['gasstationName', 'tradeNo'],
           props: {
             id: 'id'
           }
