@@ -273,7 +273,10 @@ export default {
 }
 .main {
   font-size: 14px;
-  /deep/ img {
+  // /deep/ img {
+  //   max-width: 100%;
+  // }
+  :deep(img) {
     max-width: 100%;
   }
 }

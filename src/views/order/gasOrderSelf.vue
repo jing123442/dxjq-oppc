@@ -97,13 +97,14 @@ export default {
         { type: 'primary', icon: '', event: 'import', name: '订单导入' }
       ],
       dataList: [{
-        name: '加气总金额：',
-        field: 'amountTotal',
-        unit: ' 元'
-      }, {
         name: '加气总量：',
         field: 'qtyTotal',
         unit: ' 公斤'
+      },
+      {
+        name: '加气总金额：',
+        field: 'amountTotal',
+        unit: ' 元'
       }],
       totalInfo: { qtyTotal: 0, amountTotal: 0 },
       dialogExportVisible: false,
