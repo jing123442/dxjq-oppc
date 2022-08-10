@@ -223,8 +223,8 @@ export default {
       console.log(_this)
       const params = { dateFrom: '', dateTo: '' }
       if (_this.finds.date) {
-        params.dateFrom = formateTData(_this.finds.date[0], 'date')
-        params.dateTo = formateTData(_this.finds.date[1], 'date')
+        params.dateFrom = formateTData(_this.finds.date[0], 'all')
+        params.dateTo = formateTData(_this.finds.date[1], 'all')
       }
       this.settleGwayGasOrderGetSumTotal(params)
       // eslint-disable-next-line standard/no-callback-literal
