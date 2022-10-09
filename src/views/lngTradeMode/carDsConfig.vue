@@ -31,7 +31,7 @@ export default {
     return initVueDataOptions(this, {
       queryCustURL: {
         list: {
-          url: 'user/direct_sales_carrier_log/list',
+          url: 'strategy/direct_sales_truck_log/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -39,17 +39,6 @@ export default {
           }
         },
         name: '直销加气车辆配置日志'
-      },
-      queryCustURLLog: {
-        list: {
-          url: 'user/direct_sales_carrier_log/list',
-          method: 'post',
-          parse: {
-            tableData: ['data', 'records'],
-            totalCount: ['data', 'total']
-          }
-        },
-        name: '操作日志列表'
       },
       // buttonsList: [{ type: 'primary', icon: '', event: 'configLog', name: '操作日志' }, { type: 'primary', icon: '', event: 'addList', name: '添加名单' }],
       formBtnList: custFormBtnList(),
