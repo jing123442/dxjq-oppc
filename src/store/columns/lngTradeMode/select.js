@@ -1,6 +1,7 @@
 const optContentList = [
   { value: "开启", label: "开启直销模式" },
-  { value: "关闭", label: "关闭直销模式，转为经销模式" },
+  { value: "关闭", label: "关闭直销模式" },
+  // { value: "关闭", label: "关闭直销模式，转为经销模式" },
 ];
 const select = {
   carrierDsConfig: {
