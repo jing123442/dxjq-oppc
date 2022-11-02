@@ -1,6 +1,7 @@
 const app = {
   list: {
     order: 13,
+    sinopec: 13,
     self: 13,
     filler: 13,
     carrier: 13,

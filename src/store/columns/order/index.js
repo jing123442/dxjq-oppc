@@ -11,6 +11,12 @@ const getters = {
   order_list_column: item => columns.order,
   order_list_select_list: item => select.order,
 
+  // 中石化加气订单
+  order_sinopec_mode_list: item => item.app.modeDefault,
+  order_sinopec_page_status: item => app.list.sinopec,
+  order_sinopec_column: item => columns.sinopecOrder,
+  order_sinopec_select_list: item => select.sinopecOrder,
+
   // 自营站加气机订单
   order_self_mode_list: item => item.app.modeDefault,
   order_self_page_status: item => app.list.self,
