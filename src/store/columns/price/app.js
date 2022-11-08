@@ -12,7 +12,9 @@ const app = {
     rebateConfig: 13,
     rebateConfigRecords: 13,
     rebateOrder: 13,
-    directOrder: 13
+    directOrder: 13,
+    snpRetail: 13,
+    auyanRetail: 13,
   }
 }
 

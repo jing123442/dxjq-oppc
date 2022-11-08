@@ -1,6 +1,22 @@
 const app = {
+  mode: {
+    order: [
+      { ou: 1, name: '', status: 3 },
+      { ou: 2, name: '', status: 3 },
+      { ou: 3, name: '', status: 3 },
+      { ou: 4, name: '', status: 3 },
+      { ou: 5, name: '', status: 3 },
+    ],
+    sinopecOrder: [
+      { ou: 1, name: '', status: 3 },
+      { ou: 2, name: '', status: 3 },
+      { ou: 3, name: '', status: 3 },
+      { ou: 4, name: '', status: 3 },
+    ]
+  },
   list: {
     order: 13,
+    // sinopecOrder: 13,
     sinopec: 13,
     self: 13,
     filler: 13,

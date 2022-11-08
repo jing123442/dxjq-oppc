@@ -8,6 +8,7 @@
 import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
 import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
+import { $settleSnpOrderGetSumTotal } from '@/service/settle'
 
 export default {
   name: 'gasOrderSinopec',
@@ -16,6 +17,7 @@ export default {
     return initVueDataOptions(this, {
       queryCustURL: {
         list: {
+          // url: 'settle/gas_order_snp/list_withtime',
           url: 'pay/gas_order/list_withtime',
           method: 'post',
           parse: {
@@ -60,22 +62,12 @@ export default {
       })
       callback(tableData)
     },
-    initTotalData() {
-      const loading = this.$refs.tables ? this.$refs.tables.loading : true
-      const response = this.$refs.tables && this.$refs.tables.tableListResponse ? this.$refs.tables.tableListResponse : null
-
-      if (!loading && response) {
-        clearTimeout(this.times)
-        if (response.code === 0) {
-          if (response.data && response.data.totalInfo) {
-            this.totalInfo = response.data.totalInfo
-          }
-        }
-      } else {
-        this.times = setTimeout(() => {
-          this.initTotalData()
-        }, 200)
-      }
+    initTotalData(param) {
+      $settleSnpOrderGetSumTotal({
+        param
+      }).then(res => {
+        this.totalInfo = res.data
+      })
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { }, dateParam: { createDateFrom: '', createDateTo: '' } } })
@@ -107,7 +99,7 @@ export default {
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
 
-      this.initTotalData()
+      this.initTotalData(params.param)
     }
   }
 }

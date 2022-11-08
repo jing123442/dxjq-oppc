@@ -123,7 +123,24 @@ const getters = {
   rebate_order_mode_list: item => item.app.modeDefault,
   rebate_order_page_status: item => app.list.rebateOrder,
   rebate_order_column: item => columns.rebateOrder,
-  rebate_order_select_list: item => select.rebateOrder
+  rebate_order_select_list: item => select.rebateOrder,
+
+  // 中石化零售价
+  price_snpRetail_mode_list: item => item.app.modeDefault,
+  price_snpRetail_page_status: item => app.list.snpRetail,
+  price_snpRetail_column: item => columns.snpRetail,
+  price_snpRetail_select_list: item => select.snpRetail,
+  // 中石化零售价--调价记录
+  price_snpRetail_log_column: item => columns.snpRetailLog,
+  price_snpRetail_log_select_list: item => select.snpRetailLog,
+  // 长城奥扬零售价
+  price_auyanRetail_mode_list: item => item.app.modeDefault,
+  price_auyanRetail_page_status: item => app.list.auyanRetail,
+  price_auyanRetail_column: item => columns.auyanRetail,
+  price_auyanRetail_select_list: item => select.auyanRetail,
+  // 长城奥扬零售价--调价记录
+  price_auyanRetail_log_column: item => columns.auyanRetailLog,
+  price_auyanRetail_log_select_list: item => select.auyanRetailLog,
 }
 
 export default {

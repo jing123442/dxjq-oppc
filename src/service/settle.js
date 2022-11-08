@@ -188,3 +188,8 @@ export async function $importDataFile(url, data) {
 export async function $sumData ({ url, data }) {
   return await R({ url, data })
 }
+
+// 获取中石化合计汇总数据
+export async function $settleSnpOrderGetSumTotal(data) {
+  return await R({ url: '/settle/gas_order_snp/sum_withtime', data })
+}

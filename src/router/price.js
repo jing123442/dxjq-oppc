@@ -12,6 +12,7 @@ export default [
       { path: 'priceRelease', component: inImport('price/release'), name: 'priceRelease', meta: { title: '发布审核', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'marketIndex', component: inImport('price/special'), name: 'marketIndex', meta: { title: '专项优惠配置', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'priceIndex', component: inImport('price/index'), name: 'priceIndex', meta: { title: '挂牌价管理', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'snpLimitPrice', component: inImport('price/index'), name: 'snpLimit', meta: { title: '中石化限价', noCache: false } },
       { path: 'marketCost', component: inImport('price/cost'), name: 'marketCost', meta: { title: '平台费用', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'discountsCarrier', component: inImport('price/discountsCarrier'), name: 'discountsCarrier', meta: { title: '物流公司专享优惠', icon: 'icon-gongnengguanli', noCache: false } },
       {
@@ -48,6 +49,19 @@ export default [
           { path: 'measure', component: inImport('price/sub/measure'), name: 'measure', meta: { title: '气价调节', icon: 'icon-gongnengguanli', noCache: false } },
           { path: 'mileage', component: inImport('price/sub/mileage'), name: 'mileage', meta: { title: '加气站里程', icon: 'icon-gongnengguanli', noCache: false } },
           { path: 'marketProfit', component: inImport('price/sub/profit'), name: 'marketProfit', meta: { title: '加气站利润', icon: 'icon-gongnengguanli', noCache: false } }
+        ]
+      },
+      {
+        path: 'snpLimitPrice',
+        name: 'snpLimitPrice',
+        redirect: '/price/snpLimitPrice',
+        component: {
+          render (c) { return c('router-view') }
+        },
+        meta: { title: '中石化限价', noCache: false },
+        children: [
+          { path: 'snpRetail', component: inImport('price/snp/snpRetail'), name: 'snpRetail', meta: { title: '中石化零售价', noCache: false } },
+          { path: 'auyanRetail', component: inImport('price/snp/auyanRetail'), name: 'auyanRetail', meta: { title: '长城奥扬零售价', noCache: false } }
         ]
       }
     ]

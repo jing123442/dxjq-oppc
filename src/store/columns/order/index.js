@@ -6,13 +6,13 @@ const state = Object.assign({}, { app: app }, { columns: columns }, { select: se
 
 const getters = {
   // 加气订单
-  order_list_mode_list: item => item.app.modeDefault,
+  order_list_mode_list: item => app.mode.order,
   order_list_page_status: item => app.list.order,
   order_list_column: item => columns.order,
   order_list_select_list: item => select.order,
 
   // 中石化加气订单
-  order_sinopec_mode_list: item => item.app.modeDefault,
+  order_sinopec_mode_list: item => app.mode.sinopecOrder,
   order_sinopec_page_status: item => app.list.sinopec,
   order_sinopec_column: item => columns.sinopecOrder,
   order_sinopec_select_list: item => select.sinopecOrder,
