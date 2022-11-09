@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, callbackPagesInfo, isTypeof, custFormBtnList, formatDate } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof, formatDate } from '@/utils/tools'
 import { $priceRelease, $listingPriceAlg, $updateGasstationPriceConfig, $gasstationUpdatePrice } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
