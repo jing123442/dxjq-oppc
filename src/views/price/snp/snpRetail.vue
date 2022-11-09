@@ -7,22 +7,23 @@
     <el-dialog title="配置液源地" :visible.sync="dialogFromVisible" width="50%" :append-to-body="true">
       <nt-form v-if="dialogFromVisible" ref="from" :formRef="'fromForm'" :rowData="fromRow" :pageColumn="from_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventFrom"></nt-form>
     </el-dialog>
-    <el-dialog :title="`${currRow?.gasstationName}站 单站调价（单位：元/公斤）`" :visible.sync="dialogMeasureVisible" width="80%" :append-to-body="true">
-      <el-form :inline="true" :model="formInline" :rules="rules" class="demo-form-inline">
+    <el-dialog :title="`${currRow?.gasstationName}站`" :visible.sync="dialogMeasureVisible" width="80%" :append-to-body="true">
+      <h3>单站调价（单位：元/公斤）</h3>
+      <el-form ref="ruleForm" :inline="true" :model="formInline" :rules="rules" class="demo-form-inline">
         <el-form-item label="零售价" prop="retailPrice">
-          <el-input v-model="formInline.retailPrice" placeholder="零售价"></el-input>
+          <el-input v-model="formInline.retailPrice" type="number" placeholder="零售价" @blur="handleBlur" @focus="handleFocus('retailPrice')"></el-input>
         </el-form-item>
         <el-form-item>=</el-form-item>
         <el-form-item label="总利润" prop="profit">
-          <el-input v-model="formInline.profit" placeholder="总利润"></el-input>
+          <el-input v-model="formInline.profit" type="number" placeholder="总利润" @blur="handleBlur" @focus="handleFocus('profit')"></el-input>
         </el-form-item>
         <el-form-item>+</el-form-item>
         <el-form-item label="运费" prop="freight">
-          <el-input v-model="formInline.freight" placeholder="运费"></el-input>
+          <el-input v-model="formInline.freight" type="number" placeholder="运费" @blur="handleBlur" @focus="handleFocus('freight')"></el-input>
         </el-form-item>
         <el-form-item>+</el-form-item>
         <el-form-item label="出港价" prop="harbourPrice">
-          <el-input v-model="formInline.harbourPrice" placeholder="出港价"></el-input>
+          <el-input v-model="formInline.harbourPrice" type="number" placeholder="出港价" @blur="handleBlur" @focus="handleFocus('harbourPrice')"></el-input>
         </el-form-item>
         <el-divider></el-divider>
         <el-form-item>
@@ -31,10 +32,10 @@
         </el-form-item>
         <br />
         <el-form-item>
-          <el-radio v-model="radio" label="1">预约执行</el-radio>
-          <el-form-item prop="updateDate">
+          <el-radio v-model="radio" label="2">预约执行</el-radio>
+          <el-form-item>
             <el-date-picker
-              v-model="formInline.updateDate"
+              v-model="updateDate"
               type="datetime"
               placeholder="选择日期时间">
             </el-date-picker>
@@ -60,7 +61,7 @@ import { $priceRelease, $listingPriceAlg, $updateGasstationPriceConfig, $gasstat
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'listing',
+  name: 'snpRetail',
   data() {
     return initVueDataOptions(this, {
       releaseRow: [],
@@ -114,9 +115,9 @@ export default {
         retailPrice: '',
         profit: '',
         freight: '',
-        harbourPrice: '',
-        updateDate: ''
+        harbourPrice: ''
       },
+      updateDate: '',
       radio: '1',
       rules: {
         retailPrice: [
@@ -150,8 +151,40 @@ export default {
       response_success: 'response_success'
     })
   },
-  created: function () {},
+  created: function () { },
   methods: {
+    handleBlur() {
+      let a = 0
+      for (const key in this.formInline) {
+        if (this.formInline[key] !== '') {
+          a++
+        }
+      }
+      if (a === (Object.keys(this.formInline).length - 1)) {
+        let nullKey = ''
+        for (const key in this.formInline) {
+          if (this.formInline[key] === '') {
+            nullKey = key
+          }
+        }
+        if (nullKey === 'retailPrice') {
+          this.formInline[nullKey] = Number(this.formInline.profit) + Number(this.formInline.freight) + Number(this.formInline.harbourPrice)
+        } else {
+          switch (nullKey) {
+            case 'profit':
+              this.formInline[nullKey] = Number(this.formInline.retailPrice) - Number(this.formInline.freight) - Number(this.formInline.harbourPrice)
+              break
+            case 'freight':
+              this.formInline[nullKey] = Number(this.formInline.retailPrice) - Number(this.formInline.profit) - Number(this.formInline.harbourPrice)
+              break
+            case 'harbourPrice':
+              this.formInline[nullKey] = Number(this.formInline.retailPrice) - Number(this.formInline.freight) - Number(this.formInline.profit)
+              break
+          }
+        }
+      }
+    },
+    handleFocus(key) {},
     onListEvent(type, row) {
       this.currRow = row
       if (type === 'change_price_list') {
