@@ -11,19 +11,23 @@
       <h3>单站调价（单位：元/公斤）</h3>
       <el-form ref="ruleForm" :inline="true" :model="formInline" :rules="rules" class="demo-form-inline">
         <el-form-item label="零售价" prop="retailPrice">
-          <el-input v-model="formInline.retailPrice" type="number" placeholder="零售价" @blur="handleBlur" @focus="handleFocus('retailPrice')"></el-input>
+          <el-input v-model="formInline.retailPrice" type="number" placeholder="零售价" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>=</el-form-item>
         <el-form-item label="总利润" prop="profit">
-          <el-input v-model="formInline.profit" type="number" placeholder="总利润" @blur="handleBlur" @focus="handleFocus('profit')"></el-input>
+          <el-input v-model="formInline.profit" type="number" placeholder="总利润" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>+</el-form-item>
         <el-form-item label="运费" prop="freight">
-          <el-input v-model="formInline.freight" type="number" placeholder="运费" @blur="handleBlur" @focus="handleFocus('freight')"></el-input>
+          <el-input v-model="formInline.freight" type="number" placeholder="运费" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>+</el-form-item>
         <el-form-item label="出港价" prop="harbourPrice">
-          <el-input v-model="formInline.harbourPrice" type="number" placeholder="出港价" @blur="handleBlur" @focus="handleFocus('harbourPrice')"></el-input>
+          <el-input v-model="formInline.harbourPrice" type="number" placeholder="出港价" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-divider></el-divider>
         <el-form-item>
@@ -132,7 +136,8 @@ export default {
         harbourPrice: [
           { required: true, message: '请选择活动区域', trigger: 'change' }
         ]
-      }
+      },
+      noEdit: false
     })
   },
   computed: {
@@ -151,15 +156,30 @@ export default {
       response_success: 'response_success'
     })
   },
+  watch: {
+    formInline: {
+      handler() {
+        const a = this.getHasValueLength()
+        if (a === Object.keys(this.formInline).length - 1) {
+          this.noEdit = true
+        }
+      },
+      deep: true
+    }
+  },
   created: function () { },
   methods: {
-    handleBlur() {
+    getHasValueLength() {
       let a = 0
       for (const key in this.formInline) {
         if (this.formInline[key] !== '') {
           a++
         }
       }
+      return a
+    },
+    handleBlur() {
+      const a = this.getHasValueLength()
       if (a === (Object.keys(this.formInline).length - 1)) {
         let nullKey = ''
         for (const key in this.formInline) {
@@ -182,9 +202,17 @@ export default {
               break
           }
         }
+        setTimeout(() => {
+          this.noEdit = false
+        }, 1000)
       }
     },
-    handleFocus(key) {},
+    handleFocus() {
+      const a = this.getHasValueLength()
+      if (a === 4) {
+        console.log('+++')
+      }
+    },
     onListEvent(type, row) {
       this.currRow = row
       if (type === 'change_price_list') {
@@ -313,6 +341,18 @@ export default {
   padding-bottom: 5px;
   .grey-text {
     color: #999;
+  }
+}
+:deep(.el-form-item__content) {
+  position: relative;
+  .input-has-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    z-index: 10;
   }
 }
 </style>
