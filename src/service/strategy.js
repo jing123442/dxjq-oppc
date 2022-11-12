@@ -296,3 +296,7 @@ export async function $strategyCarrierGasstationRebateUpdate (data) {
 export async function $strategyStockLogDownload (data) {
   return await R({ url: 'strategy/stock_log/download_stock_log', method: 'POST', data, responseType: 'blob' })
 }
+// 中石化 | 长城奥扬调价
+export async function $priceConfigPlan (url, data) {
+  return await R({ url, data })
+}

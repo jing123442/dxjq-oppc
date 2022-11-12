@@ -17,8 +17,8 @@ export default {
     return initVueDataOptions(this, {
       queryCustURL: {
         list: {
-          // url: 'settle/gas_order_snp/list_withtime',
-          url: 'pay/gas_order/list_withtime',
+          url: 'settle/gas_order_snp/list_withtime',
+          // url: 'pay/gas_order/list_withtime',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -29,14 +29,14 @@ export default {
       },
       dataList: [{
         name: '加气总金额：',
-        field: 'amount',
+        field: 'totalAmount',
         unit: ' 元'
       }, {
         name: '加气总量：',
         field: 'totalGas',
         unit: ' 公斤'
       }],
-      totalInfo: { totalGas: 0, amount: 0, totalServiceFee: 0 },
+      totalInfo: { totalGas: 0, totalAmount: 0 },
       buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */]
     })
   },

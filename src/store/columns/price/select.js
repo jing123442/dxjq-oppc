@@ -5,7 +5,8 @@ import {
   utilsTruckTypeAll,
   utilsTradeModeType,
   utilsDyOrgList,
-  utilsTradeType
+  utilsTradeType,
+  utilsExecuteStatus
 } from '@/utils/select'
 import { provinceAndCityData } from 'element-china-area-data'
 
@@ -72,16 +73,17 @@ const select = {
     currFieldSearch: [{ value: 'carNumber', label: '车牌号' }, { value: 'orderId', label: '订单编号', dataType: 'number' }, { value: 'carrierOrgName', label: '物流公司' }, { value: 'driverName', label: '司机姓名' }, { value: 'gasstationName', label: '加气站' }, { value: 'cashierName', label: '收银员姓名' }]
   },
   snpRetail: {
-    // fromList: utilsSource()
-    carrierList: utilsDyOrgList(2, 'orgId', 'orgName', null, 2),
+    status: utilsExecuteStatus(),
     gasstationList: utilsDyOrgList(1, 'orgId', 'orgName', null, 2),
-    currFieldSearch: [{ value: 'gasstationId', label: '加气站' }, { value: 'carrierOrgId', label: '物流客户' }]
+    currFieldSearch: [{ value: 'gasstationId', label: '加气站' }]
   },
   snpRetailLog: {
     currDataSearch: [{ value: "operatorDate", label: "操作时间" }],
   },
   auyanRetail: {
-    fromList: utilsSource()
+    status: utilsExecuteStatus(),
+    gasstationList: utilsDyOrgList(1, 'orgId', 'orgName', null, 2),
+    currFieldSearch: [{ value: 'gasstationId', label: '加气站' }]
   },
   auyanRetailLog: {
     currDataSearch: [{ value: "operatorDate", label: "操作时间" }],

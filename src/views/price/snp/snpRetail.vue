@@ -1,42 +1,36 @@
 <template>
-  <div class="template-main" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="正在计算平台挂牌价，请等待...">
+  <div class="template-main">
     <em-table-list :tableListName="'listing'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" ref="tables" :page_status="page_status" :buttonsList="buttonsList" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog title="发布申请" :visible.sync="dialogReleaseVisible" width="50%" :append-to-body="true">
-      <nt-form v-if="dialogReleaseVisible" ref="release" :formRef="'releaseForm'" :rowData="releaseRow" :pageColumn="release_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventRelease"></nt-form>
-    </el-dialog>
-    <el-dialog title="配置液源地" :visible.sync="dialogFromVisible" width="50%" :append-to-body="true">
-      <nt-form v-if="dialogFromVisible" ref="from" :formRef="'fromForm'" :rowData="fromRow" :pageColumn="from_page_column" :selectList="select_list" :axios="axios" :queryURL="queryCustURL" :responseSuccess="response_success" @onListEvent="onListEventFrom"></nt-form>
-    </el-dialog>
     <el-dialog :title="`${currRow?.gasstationName}站`" :visible.sync="dialogMeasureVisible" width="80%" :append-to-body="true">
       <h3>单站调价（单位：元/公斤）</h3>
-      <el-form ref="ruleForm" :inline="true" :model="formInline" :rules="rules" class="demo-form-inline">
-        <el-form-item label="零售价" prop="retailPrice">
-          <el-input v-model="formInline.retailPrice" type="number" placeholder="零售价" @blur="handleBlur" @focus="handleFocus"></el-input>
+      <el-form ref="ruleForm" :inline="true" :model="priceConfigPlan" :rules="rules" class="demo-form-inline">
+        <el-form-item label="零售价" prop="actualPrice">
+          <el-input v-model.number="priceConfigPlan.actualPrice" type="number" placeholder="零售价" @blur="handleBlur" @focus="handleFocus"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>=</el-form-item>
         <el-form-item label="总利润" prop="profit">
-          <el-input v-model="formInline.profit" type="number" placeholder="总利润" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <el-input v-model.number="priceConfigPlan.profit" type="number" placeholder="总利润" @blur="handleBlur" @focus="handleFocus"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>+</el-form-item>
         <el-form-item label="运费" prop="freight">
-          <el-input v-model="formInline.freight" type="number" placeholder="运费" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <el-input v-model.number="priceConfigPlan.freight" type="number" placeholder="运费" @blur="handleBlur" @focus="handleFocus"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>+</el-form-item>
         <el-form-item label="出港价" prop="harbourPrice">
-          <el-input v-model="formInline.harbourPrice" type="number" placeholder="出港价" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <el-input v-model.number="priceConfigPlan.harbourPrice" type="number" placeholder="出港价" @blur="handleBlur" @focus="handleFocus"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-divider></el-divider>
         <el-form-item>
-          <el-radio v-model="radio" label="1">立即执行</el-radio>
+          <el-radio v-model="status" label="2">立即执行</el-radio>
           <span class="grey-text">（作废 执行中、已预约未执行 调价）</span>
         </el-form-item>
         <br />
         <el-form-item>
-          <el-radio v-model="radio" label="2">预约执行</el-radio>
+          <el-radio v-model="status" label="1">预约执行</el-radio>
           <el-form-item>
             <el-date-picker
               v-model="updateDate"
@@ -60,8 +54,8 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, callbackPagesInfo, isTypeof, formatDate } from '@/utils/tools'
-import { $priceRelease, $listingPriceAlg, $updateGasstationPriceConfig, $gasstationUpdatePrice } from '@/service/strategy'
+import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { $priceConfigPlan } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -77,11 +71,10 @@ export default {
       measureRow: [],
       currRow: {},
       dialogMeasureVisible: false,
-      fullscreenLoading: false,
       queryCustURL: {
         list: {
-          // url: 'strategy/price_config_snp/find',
-          url: 'strategy/price_config/list',
+          url: 'strategy/price_config_snp/find',
+          // url: 'strategy/price_config/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -97,6 +90,7 @@ export default {
           name: ['gasstationName'],
           method: 'post',
           props: {
+            id: 'id',
             gasstationId: 'gasstationId'
           }
         },
@@ -104,7 +98,7 @@ export default {
       },
       queryLogCustURL: {
         list: {
-          url: 'strategy/price_config_snp_plan/list',
+          url: 'strategy/price_config_snp_log/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -115,26 +109,26 @@ export default {
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '添加名单' }],
       dialogAddVisible: false,
-      formInline: {
-        retailPrice: '',
+      priceConfigPlan: {
+        actualPrice: '',
         profit: '',
         freight: '',
         harbourPrice: ''
       },
       updateDate: '',
-      radio: '1',
+      status: '2', // 2: 立即执行；1: 预约执行；
       rules: {
-        retailPrice: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
+        actualPrice: [
+          { required: true, message: '请输入', trigger: 'change' }
         ],
         profit: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
+          { required: true, message: '请输入', trigger: 'change' }
         ],
         freight: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
+          { required: true, message: '请输入', trigger: 'change' }
         ],
         harbourPrice: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
+          { required: true, message: '请输入', trigger: 'change' }
         ]
       },
       noEdit: false
@@ -157,10 +151,10 @@ export default {
     })
   },
   watch: {
-    formInline: {
+    priceConfigPlan: {
       handler() {
         const a = this.getHasValueLength()
-        if (a === Object.keys(this.formInline).length - 1) {
+        if (a === Object.keys(this.priceConfigPlan).length - 1) {
           this.noEdit = true
         }
       },
@@ -171,8 +165,8 @@ export default {
   methods: {
     getHasValueLength() {
       let a = 0
-      for (const key in this.formInline) {
-        if (this.formInline[key] !== '') {
+      for (const key in this.priceConfigPlan) {
+        if (this.priceConfigPlan[key] !== '') {
           a++
         }
       }
@@ -180,37 +174,48 @@ export default {
     },
     handleBlur() {
       const a = this.getHasValueLength()
-      if (a === (Object.keys(this.formInline).length - 1)) {
+      if (a === (Object.keys(this.priceConfigPlan).length - 1)) {
         let nullKey = ''
-        for (const key in this.formInline) {
-          if (this.formInline[key] === '') {
+        for (const key in this.priceConfigPlan) {
+          if (this.priceConfigPlan[key] === '') {
             nullKey = key
           }
         }
-        if (nullKey === 'retailPrice') {
-          this.formInline[nullKey] = Number(this.formInline.profit) + Number(this.formInline.freight) + Number(this.formInline.harbourPrice)
-        } else {
-          switch (nullKey) {
-            case 'profit':
-              this.formInline[nullKey] = Number(this.formInline.retailPrice) - Number(this.formInline.freight) - Number(this.formInline.harbourPrice)
-              break
-            case 'freight':
-              this.formInline[nullKey] = Number(this.formInline.retailPrice) - Number(this.formInline.profit) - Number(this.formInline.harbourPrice)
-              break
-            case 'harbourPrice':
-              this.formInline[nullKey] = Number(this.formInline.retailPrice) - Number(this.formInline.freight) - Number(this.formInline.profit)
-              break
+        const { actualPrice } = this.priceConfigPlan
+        if (nullKey === 'actualPrice') {
+          this.priceConfigPlan[nullKey] = 0
+          for (const key in this.priceConfigPlan) {
+            if (key !== 'actualPrice') {
+              this.priceConfigPlan[nullKey] += this.priceConfigPlan[key]
+            }
           }
+        } else {
+          let otherPrice = 0
+          for (const key in this.priceConfigPlan) {
+            if (key !== nullKey && key !== 'actualPrice') {
+              otherPrice += this.priceConfigPlan[key]
+            }
+          }
+          this.priceConfigPlan[nullKey] = actualPrice - otherPrice
         }
         setTimeout(() => {
           this.noEdit = false
         }, 1000)
       }
     },
-    handleFocus() {
+    handleFocus(e) {
       const a = this.getHasValueLength()
-      if (a === 4) {
-        console.log('+++')
+      if (a === Object.keys(this.priceConfigPlan).length) {
+        e.srcElement.blur()
+        this.$confirm('确定重新填写等式？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$refs.ruleForm.resetFields()
+        }).catch(() => {
+          console.log('取消')
+        })
       }
     },
     onListEvent(type, row) {
@@ -220,95 +225,6 @@ export default {
       } else if (type === 'change_price') {
         this.dialogMeasureVisible = true
       }
-    },
-    algListingPrice() {
-      this.fullscreenLoading = true
-      $listingPriceAlg().then(response => {
-        this.fullscreenLoading = false
-        this.$refs.tables.initDataList()
-      }).catch(() => {
-        this.fullscreenLoading = false
-      })
-    },
-    onListEventFrom(btnObj, row) {
-      if (btnObj.type == 'ok') {
-        this.$refs.from.$refs.fromForm.validate((valid) => {
-          if (valid) {
-            if (this.fromOldRow.lngFromId == row.lngFromId) {
-              return false
-            }
-            const params = {
-              gasstationId: row.gasstationId,
-              lngFromId: row.lngFromId,
-              lngFromName: row.lngFromName
-            }
-
-            $updateGasstationPriceConfig(params).then((res) => {
-              this.$message.success(res.message)
-
-              const data = res.data
-
-              row.platformPrice = data.platformPrice
-              row.harbourPrice = data.harbourPrice
-              row.benefit = data.benefit
-              row.freight = data.freight
-              row.profit = data.profit
-              row.gasprice = data.gasprice
-            })
-          } else {
-            console.log('error submit!!')
-          }
-        })
-      } else {
-        row.lngFromId = this.fromOldRow.lngFromId
-        row.lngFromName = this.fromOldRow.lngFromName
-      }
-      this.dialogFromVisible = false
-    },
-    onMeasureEventFrom(btnObj, row) {
-      if (btnObj.type == 'ok') {
-        this.$refs.from.$refs.measureForm.validate((valid) => {
-          if (valid) {
-            const params = {
-              gasstationId: row.gasstationId,
-              preGasprice: row.measureMoney
-            }
-
-            $gasstationUpdatePrice(params).then((res) => {
-              this.$message.success(res.message)
-
-              row.gasprice = row.measureMoney
-            })
-            this.dialogMeasureVisible = false
-          } else {
-            console.log('error submit!!')
-          }
-        })
-      } else {
-        this.dialogMeasureVisible = false
-      }
-    },
-    onListEventRelease(btnObj, row) {
-      if (btnObj.type == 'ok') {
-        this.$refs.release.$refs.releaseForm.validate((valid) => {
-          if (valid) {
-            var releaseTime = formatDate(row.releaseTime, 'yyyy-MM-dd') + ' 00:00:00'
-
-            const params = {
-              releaseTime: releaseTime
-            }
-
-            $priceRelease(params).then((res) => {
-              this.$message.success(res.message)
-
-              this.$refs.tables.initDataList()
-            })
-          } else {
-            console.log('error submit!!')
-          }
-        })
-      }
-      this.dialogReleaseVisible = false
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
@@ -325,10 +241,39 @@ export default {
       callback(params)
     },
     onCancel() {
-      console.log('--')
+      this.dialogMeasureVisible = false
     },
     onSubmit() {
-      console.log('--')
+      this.$refs.ruleForm.validate((valid) => {
+        if (valid) {
+          if (this.status === '1') {
+            const currentDateTime = (new Date()).getTime()
+            const updateDateTime = this.updateDate.getTime()
+            if (updateDateTime < currentDateTime) {
+              this.$message.warning('请选择当前时间之后的时间')
+              return
+            }
+          }
+          $priceConfigPlan('strategy/price_config_snp_plan/update', {
+            priceConfigPlan: {
+              id: this.currRow.id || this.currRow.gasstationId,
+              gasstationId: this.currRow.gasstationId,
+              updateDate: this.status === '1' ? this.updateDate : new Date(),
+              status: this.status,
+              ...this.priceConfigPlan
+            }
+          }).then(res => {
+            this.$refs.ruleForm.resetFields()
+            this.status = '2'
+            this.updateDate = ''
+            this.$message.success('调价成功')
+            this.dialogMeasureVisible = false
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     }
   }
 }
@@ -343,16 +288,27 @@ export default {
     color: #999;
   }
 }
-:deep(.el-form-item__content) {
-  position: relative;
-  .input-has-mask {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    content: '';
-    z-index: 10;
+:deep(.el-form--inline) {
+  .el-form-item__content {
+    position: relative;
+    .input-has-mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      content: '';
+      z-index: 10;
+    }
+  }
+  .el-input {
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none !important;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
   }
 }
 </style>
