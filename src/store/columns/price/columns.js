@@ -290,7 +290,7 @@ const columns = {
       search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' },
       rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
     // { field: 'gasstationName', name: '加气站', fixed: 'left', search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' } },
-    { field: 'actualPrice', name: '最新零售价(元/公斤)' }, // 无字段
+    { field: 'platformPrice', name: '最新零售价(元/公斤)' }, // 无字段
     { field: 'profit', name: '总利润(元/公斤)' },
     { field: 'freight', name: '运费(元/公斤)' },
     { field: 'harbourPrice', name: '出港价(元/公斤)' },
@@ -304,7 +304,7 @@ const columns = {
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left',
       show: { type: 'select', subField: 'gasstationName', obj: 'gasstationList', placeholder: '请选择加气站' },
       rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
-    { field: 'actualPrice', name: '最新零售价(元/公斤)' },
+    { field: 'platformPrice', name: '最新零售价(元/公斤)' },
     { field: 'profit', name: '总利润(元/公斤)' },
     { field: 'freight', name: '运费(元/公斤)' },
     { field: 'harbourPrice', name: '出港价(元/公斤)' },
@@ -321,7 +321,7 @@ const columns = {
       search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' },
       rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
     // { field: 'gasstationName', name: '加气站', fixed: 'left', search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' } },
-    { field: 'actualPrice', name: '最新零售价ccay(元/公斤)' }, // 无字段
+    { field: 'platformPrice', name: '最新零售价ccay(元/公斤)' }, // 无字段
     { field: 'profit', name: '总利润 ccay(元/公斤)' },
     { field: 'profitGway', name: '长城奥扬 利润(元/公斤)' },
     { field: 'profitGasstation', name: '加气站 利润(元/公斤)' },
@@ -338,7 +338,7 @@ const columns = {
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left',
       show: { type: 'select', subField: 'gasstationName', obj: 'gasstationList', placeholder: '请选择加气站' },
       rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
-      { field: 'actualPrice', name: '零售价ccay(元/公斤)' }, // 无字段
+      { field: 'platformPrice', name: '零售价ccay(元/公斤)' }, // 无字段
       { field: 'profit', name: '总利润 ccay(元/公斤)' },
       { field: 'profitGway', name: '长城奥扬 利润(元/公斤)' },
       { field: 'profitGasstation', name: '加气站 利润(元/公斤)' },

@@ -4,8 +4,8 @@
     <el-dialog :title="`${currRow?.gasstationName}站`" :visible.sync="dialogMeasureVisible" width="80%" :append-to-body="true">
       <h3>单站调价（单位：元/公斤）</h3>
       <el-form ref="ruleForm" :inline="true" :model="priceConfigPlan" :rules="rules" class="demo-form-inline">
-        <el-form-item label="零售价" prop="actualPrice">
-          <el-input v-model.number="priceConfigPlan.actualPrice" type="number" placeholder="零售价" @blur="handleBlur" @focus="handleFocus"></el-input>
+        <el-form-item label="零售价" prop="platformPrice">
+          <el-input v-model.number="priceConfigPlan.platformPrice" type="number" placeholder="零售价" @blur="handleBlur" @focus="handleFocus"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>=</el-form-item>
@@ -88,8 +88,8 @@ export default {
       dialogMeasureVisible: false,
       queryCustURL: {
         list: {
-          // url: 'strategy/price_config_gway/list',
-          url: 'strategy/price_config/list',
+          url: 'strategy/price_config_gway/list',
+          // url: 'strategy/price_config/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -125,7 +125,7 @@ export default {
       buttonsList: [{ type: 'primary', icon: '', event: 'add', name: '添加名单' }],
       dialogAddVisible: false,
       priceConfigPlan: {
-        actualPrice: '',
+        platformPrice: '',
         // profit: '',
         freight: '',
         harbourPrice: '',
@@ -136,7 +136,7 @@ export default {
       updateDate: '',
       status: '2', // 2: 立即执行；0: 预约执行；
       rules: {
-        actualPrice: [
+        platformPrice: [
           { required: true, message: '请输入', trigger: 'change' }
         ],
         // profit: [
@@ -209,22 +209,22 @@ export default {
             nullKey = key
           }
         }
-        const { actualPrice } = this.priceConfigPlan
-        if (nullKey === 'actualPrice') {
+        const { platformPrice } = this.priceConfigPlan
+        if (nullKey === 'platformPrice') {
           this.priceConfigPlan[nullKey] = 0
           for (const key in this.priceConfigPlan) {
-            if (key !== 'actualPrice') {
+            if (key !== 'platformPrice') {
               this.priceConfigPlan[nullKey] += this.priceConfigPlan[key]
             }
           }
         } else {
           let otherPrice = 0
           for (const key in this.priceConfigPlan) {
-            if (key !== nullKey && key !== 'actualPrice') {
+            if (key !== nullKey && key !== 'platformPrice') {
               otherPrice += this.priceConfigPlan[key]
             }
           }
-          this.priceConfigPlan[nullKey] = actualPrice - otherPrice
+          this.priceConfigPlan[nullKey] = platformPrice - otherPrice
         }
         setTimeout(() => {
           this.noEdit = false
