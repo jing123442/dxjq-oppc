@@ -88,7 +88,7 @@ export default {
       dialogMeasureVisible: false,
       queryCustURL: {
         list: {
-          url: 'strategy/price_config_gway/list',
+          url: 'strategy/price_config_gway_plan/list',
           // url: 'strategy/price_config/list',
           method: 'post',
           parse: {

@@ -73,7 +73,7 @@ export default {
       dialogMeasureVisible: false,
       queryCustURL: {
         list: {
-          url: 'strategy/price_config_snp/find',
+          url: 'strategy/price_config_snp_plan/list',
           // url: 'strategy/price_config/list',
           method: 'post',
           parse: {
