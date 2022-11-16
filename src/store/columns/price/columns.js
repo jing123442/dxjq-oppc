@@ -301,6 +301,7 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 230, fixed: 'right', list: [{ type: 'del', name: '移出名单' }, { type: 'change_price_list', name: '调价记录' }, { type: 'change_price', name: '调价' }] }
   ],
   snpRetailLog: [
+    { field: 'id', hide: true },
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left',
       show: { type: 'select', subField: 'gasstationName', obj: 'gasstationList', placeholder: '请选择加气站' },
       rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
@@ -335,6 +336,7 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 230, fixed: 'right', list: [{ type: 'del', name: '移出名单' }, { type: 'change_price_list', name: '调价记录' }, { type: 'change_price', name: '调价' }] }
   ],
   auyanRetailLog: [
+    { field: 'id', hide: true },
     { field: 'gasstationId', name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left',
       show: { type: 'select', subField: 'gasstationName', obj: 'gasstationList', placeholder: '请选择加气站' },
       rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },

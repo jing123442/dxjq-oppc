@@ -54,10 +54,9 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof, calc } from '@/utils/tools'
 import { $priceConfigPlan } from '@/service/strategy'
 import { mapGetters } from 'vuex'
-
 export default {
   name: 'snpRetail',
   data() {
@@ -186,17 +185,20 @@ export default {
           this.priceConfigPlan[nullKey] = 0
           for (const key in this.priceConfigPlan) {
             if (key !== 'platformPrice') {
-              this.priceConfigPlan[nullKey] += this.priceConfigPlan[key]
+              // this.priceConfigPlan[nullKey] += this.priceConfigPlan[key]
+              this.priceConfigPlan[nullKey] = calc.plus(this.priceConfigPlan[nullKey], this.priceConfigPlan[key])
             }
           }
         } else {
           let otherPrice = 0
           for (const key in this.priceConfigPlan) {
             if (key !== nullKey && key !== 'platformPrice') {
-              otherPrice += this.priceConfigPlan[key]
+              // otherPrice += this.priceConfigPlan[key]
+              otherPrice = calc.plus(otherPrice, this.priceConfigPlan[key])
             }
           }
-          this.priceConfigPlan[nullKey] = platformPrice - otherPrice
+          // this.priceConfigPlan[nullKey] = platformPrice - otherPrice
+          this.priceConfigPlan[nullKey] = calc.subtract(platformPrice, otherPrice)
         }
         setTimeout(() => {
           this.noEdit = false
@@ -230,6 +232,7 @@ export default {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
 
       if (_this.tableListName == 'listingLog') {
+        params.param.id = this.currRow.id
         params.param.gasstationId = this.currRow.gasstationId
       }
       if (isTypeof(_this.finds) === 'object') {
@@ -240,8 +243,54 @@ export default {
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     },
-    onCancel() {
+    resetForm() {
+      this.$refs.ruleForm.resetFields()
+      this.status = '2'
+      this.updateDate = ''
       this.dialogMeasureVisible = false
+    },
+    // calcNumber () {
+    //   let operation = (num1, num2, op) => {
+    //     let l1, l2, max;
+    //     try {
+    //       l1 = num1.toString().split(".")[1].length;
+    //     } catch (e) {
+    //       l1 = 0;
+    //     }
+    //     try {
+    //       l2 = num2.toString().split(".")[1].length;
+    //     } catch (e) {
+    //       l2 = 0;
+    //     }
+    //     switch (op) {
+    //       case "plus":
+    //         max = Math.pow(10, Math.max(l1, l2));
+    //         return (num1 * max + num2 * max) / max;
+    //       case "subtract":
+    //         max = Math.pow(10, Math.max(l1, l2));
+    //         return (num1 * max - num2 * max) / max;
+    //       case "multiply":
+    //         return (Number(num1.toString().replace(".", "")) * Number(num2.toString().replace(".", ""))) / Math.pow(10, l1 + l2);
+    //       case "divide":
+    //         return operation(Number(num1.toString().replace(".", "")) / Number(num2.toString().replace(".", "")), Math.pow(10, l2 - l1), "multiply");
+    //     }
+    //   };
+    //   let plus = (a, b) => {
+    //     return operation(a, b, "plus");
+    //   };
+    //   let subtract = (a, b) => {
+    //     return operation(a, b, "subtract");
+    //   };
+    //   let multiply = (a, b) => {
+    //     return operation(a, b, "multiply");
+    //   };
+    //   let divide = (a, b) => {
+    //     return operation(a, b, "divide");
+    //   };
+    //   return { plus, subtract, multiply, divide };
+    // },
+    onCancel() {
+      this.resetForm()
     },
     onSubmit() {
       this.$refs.ruleForm.validate((valid) => {
@@ -263,11 +312,8 @@ export default {
               ...this.priceConfigPlan
             }
           }).then(res => {
-            this.$refs.ruleForm.resetFields()
-            this.status = '2'
-            this.updateDate = ''
+            this.resetForm()
             this.$message.success('调价成功')
-            this.dialogMeasureVisible = false
           })
         } else {
           console.log('error submit!!')

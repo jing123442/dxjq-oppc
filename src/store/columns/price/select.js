@@ -74,7 +74,7 @@ const select = {
   },
   snpRetail: {
     status: utilsExecuteStatus(),
-    gasstationList: utilsDyOrgList(1, 'orgId', 'orgName', null, 2),
+    gasstationList: utilsDyOrgList(1, 'orgId', 'orgName', null, 2, 0),
     currFieldSearch: [{ value: 'gasstationId', label: '加气站' }]
   },
   snpRetailLog: {
@@ -82,7 +82,7 @@ const select = {
   },
   auyanRetail: {
     status: utilsExecuteStatus(),
-    gasstationList: utilsDyOrgList(1, 'orgId', 'orgName', null, 2),
+    gasstationList: utilsDyOrgList(1, 'orgId', 'orgName', null, 2, 0),
     currFieldSearch: [{ value: 'gasstationId', label: '加气站' }]
   },
   auyanRetailLog: {

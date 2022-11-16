@@ -287,8 +287,8 @@ export function utilsTradeType() {
 }
 export function utilsPriceType() {
   return [
-    { value: 0, label: '默认策略' },
-    { value: 1, label: '长城奥扬调价' }
+    { value: 0, label: '原长城奥扬调价' },
+    { value: 1, label: '新中石化限价' }
   ]
 }
 export function utilsPrintPaper() {
@@ -453,7 +453,7 @@ export function untilsMarketingManList() {
   // })
 }
 
-export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', authStatus = null, tradeType = null) {
+export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', authStatus = null, tradeType = null, status) {
   const result = {
     url: 'user/org/list',
     node: ['data', 'records'],
@@ -461,7 +461,7 @@ export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', 
       page: 1,
       size: 10,
       param: {
-        org: { orgType: type },
+        org: { orgType: type, status },
         dateParam: { createDateFrom: '', createDateTo: '' }
       }
     },
