@@ -249,46 +249,6 @@ export default {
       this.updateDate = ''
       this.dialogMeasureVisible = false
     },
-    // calcNumber () {
-    //   let operation = (num1, num2, op) => {
-    //     let l1, l2, max;
-    //     try {
-    //       l1 = num1.toString().split(".")[1].length;
-    //     } catch (e) {
-    //       l1 = 0;
-    //     }
-    //     try {
-    //       l2 = num2.toString().split(".")[1].length;
-    //     } catch (e) {
-    //       l2 = 0;
-    //     }
-    //     switch (op) {
-    //       case "plus":
-    //         max = Math.pow(10, Math.max(l1, l2));
-    //         return (num1 * max + num2 * max) / max;
-    //       case "subtract":
-    //         max = Math.pow(10, Math.max(l1, l2));
-    //         return (num1 * max - num2 * max) / max;
-    //       case "multiply":
-    //         return (Number(num1.toString().replace(".", "")) * Number(num2.toString().replace(".", ""))) / Math.pow(10, l1 + l2);
-    //       case "divide":
-    //         return operation(Number(num1.toString().replace(".", "")) / Number(num2.toString().replace(".", "")), Math.pow(10, l2 - l1), "multiply");
-    //     }
-    //   };
-    //   let plus = (a, b) => {
-    //     return operation(a, b, "plus");
-    //   };
-    //   let subtract = (a, b) => {
-    //     return operation(a, b, "subtract");
-    //   };
-    //   let multiply = (a, b) => {
-    //     return operation(a, b, "multiply");
-    //   };
-    //   let divide = (a, b) => {
-    //     return operation(a, b, "divide");
-    //   };
-    //   return { plus, subtract, multiply, divide };
-    // },
     onCancel() {
       this.resetForm()
     },

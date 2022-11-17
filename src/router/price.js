@@ -15,6 +15,7 @@ export default [
       { path: 'snpLimitPrice', component: inImport('price/index'), name: 'snpLimit', meta: { title: '中石化限价', noCache: false } },
       { path: 'marketCost', component: inImport('price/cost'), name: 'marketCost', meta: { title: '平台费用', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'discountsCarrier', component: inImport('price/discountsCarrier'), name: 'discountsCarrier', meta: { title: '物流公司专享优惠', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'direct', component: inImport('price/sub/direct'), name: 'direct', meta: { title: '直销加气站1站1客1价', icon: 'icon-gongnengguanli', noCache: false } },
       {
         path: 'discountsCarrier',
         redirect: '/price/discountsCarrier',
@@ -40,7 +41,7 @@ export default [
         meta: { title: '挂牌价管理', icon: 'icon-gongnengguanli', noCache: false },
         children: [
           { path: 'listing', component: inImport('price/sub/listing'), name: 'listing', meta: { title: '平台挂牌价', icon: 'icon-gongnengguanli', noCache: false } },
-          { path: 'direct', component: inImport('price/sub/direct'), name: 'direct', meta: { title: '直销加气站1站1客1价', icon: 'icon-gongnengguanli', noCache: false } },
+          // { path: 'direct', component: inImport('price/sub/direct'), name: 'direct', meta: { title: '直销加气站1站1客1价', icon: 'icon-gongnengguanli', noCache: false } },
           { path: 'listingQuery', component: inImport('price/sub/listingQuery'), name: 'listingQuery', meta: { title: '平台挂牌价查询', icon: 'icon-gongnengguanli', noCache: false } },
           { path: 'departure', component: inImport('price/sub/departure'), name: 'departure', meta: { title: 'LNG出港价', icon: 'icon-gongnengguanli', noCache: false } },
           { path: 'preferential', component: inImport('price/sub/preferential'), name: 'preferential', meta: { title: '区域优惠政策', icon: 'icon-gongnengguanli', noCache: false } },
