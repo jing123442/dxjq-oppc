@@ -54,10 +54,9 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof, calc } from '@/utils/tools'
 import { $priceConfigPlan } from '@/service/strategy'
 import { mapGetters } from 'vuex'
-
 export default {
   name: 'snpRetail',
   data() {
@@ -186,17 +185,20 @@ export default {
           this.priceConfigPlan[nullKey] = 0
           for (const key in this.priceConfigPlan) {
             if (key !== 'platformPrice') {
-              this.priceConfigPlan[nullKey] += this.priceConfigPlan[key]
+              // this.priceConfigPlan[nullKey] += this.priceConfigPlan[key]
+              this.priceConfigPlan[nullKey] = calc.plus(this.priceConfigPlan[nullKey], this.priceConfigPlan[key])
             }
           }
         } else {
           let otherPrice = 0
           for (const key in this.priceConfigPlan) {
             if (key !== nullKey && key !== 'platformPrice') {
-              otherPrice += this.priceConfigPlan[key]
+              // otherPrice += this.priceConfigPlan[key]
+              otherPrice = calc.plus(otherPrice, this.priceConfigPlan[key])
             }
           }
-          this.priceConfigPlan[nullKey] = platformPrice - otherPrice
+          // this.priceConfigPlan[nullKey] = platformPrice - otherPrice
+          this.priceConfigPlan[nullKey] = calc.subtract(platformPrice, otherPrice)
         }
         setTimeout(() => {
           this.noEdit = false
@@ -230,6 +232,7 @@ export default {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
 
       if (_this.tableListName == 'listingLog') {
+        params.param.id = this.currRow.id
         params.param.gasstationId = this.currRow.gasstationId
       }
       if (isTypeof(_this.finds) === 'object') {
@@ -240,8 +243,14 @@ export default {
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     },
-    onCancel() {
+    resetForm() {
+      this.$refs.ruleForm.resetFields()
+      this.status = '2'
+      this.updateDate = ''
       this.dialogMeasureVisible = false
+    },
+    onCancel() {
+      this.resetForm()
     },
     onSubmit() {
       this.$refs.ruleForm.validate((valid) => {
@@ -261,11 +270,8 @@ export default {
             status: this.status,
             ...this.priceConfigPlan
           }).then(res => {
-            this.$refs.ruleForm.resetFields()
-            this.status = '2'
-            this.updateDate = ''
+            this.resetForm()
             this.$message.success('调价成功')
-            this.dialogMeasureVisible = false
           })
         } else {
           console.log('error submit!!')
