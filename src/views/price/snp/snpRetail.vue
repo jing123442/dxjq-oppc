@@ -229,15 +229,24 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { priceConfigLog: {}, dateParam: {} } })
 
       if (_this.tableListName == 'listingLog') {
-        params.param.id = this.currRow.id
-        params.param.gasstationId = this.currRow.gasstationId
+        params.param.priceConfigLog.gasstationId = this.currRow.gasstationId
+        params.param.priceConfigLog.id = this.currRow.id
       }
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (v !== '') params.param[k] = v
+          // if (v !== '') params.param.dateParam[k] = v
+          if (k == 'operatorDate') {
+            if (_this.finds.createDate === null) {
+              params.param.dateParam.createDateFrom = ''
+              params.param.dateParam.createDateTo = ''
+            } else {
+              params.param.dateParam.createDateFrom = v[0]
+              params.param.dateParam.createDateTo = v[1]
+            }
+          }
         }
       }
       // eslint-disable-next-line standard/no-callback-literal
