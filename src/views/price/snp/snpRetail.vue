@@ -255,13 +255,11 @@ export default {
             }
           }
           $priceConfigPlan('strategy/price_config_snp_plan/update', {
-            priceConfigPlan: {
-              id: this.currRow.id || this.currRow.gasstationId,
-              gasstationId: this.currRow.gasstationId,
-              updateDate: this.status === '1' ? this.updateDate : new Date(),
-              status: this.status,
-              ...this.priceConfigPlan
-            }
+            id: this.currRow.id || this.currRow.gasstationId,
+            gasstationId: this.currRow.gasstationId,
+            updateDate: this.status === '1' ? this.updateDate : new Date(),
+            status: this.status,
+            ...this.priceConfigPlan
           }).then(res => {
             this.$refs.ruleForm.resetFields()
             this.status = '2'
