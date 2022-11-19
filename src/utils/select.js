@@ -427,16 +427,16 @@ export function utilSelectGasstationType(type = '') {
   ]
   if (type === 'inner') {
     result = [
-      { value: 1001, label: '大象自营' },
-      { value: 1002, label: '大象合作' },
-      { value: 1003, label: '大象加盟' }
+      { value: 1001, label: '合作经营' },
+      { value: 1002, label: '核心联营' },
+      { value: 1003, label: '停业' }
     ]
   }
 
   if (type === 'all') {
-    result.unshift({ value: 1003, label: '大象加盟' })
-    result.unshift({ value: 1002, label: '大象合作' })
-    result.unshift({ value: 1001, label: '大象自营' })
+    result.unshift({ value: 1003, label: '停业' })
+    result.unshift({ value: 1002, label: '核心联营' })
+    result.unshift({ value: 1001, label: '合作经营' })
     result.unshift({ value: 100, label: '大象站' })
     result.unshift({ value: null, label: '全部站点' })
   }
