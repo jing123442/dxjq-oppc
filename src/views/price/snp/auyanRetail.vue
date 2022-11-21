@@ -64,7 +64,7 @@
       </el-form>
     </el-dialog>
     <el-dialog :title="`${currRow?.gasstationName}站 调价记录`" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
-      <em-table-list v-if="dialogChangeVisible" :custTableTitle="`${currRow?.gasstationName}站 调价记录`" :tableListName="'listingLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="log_select_list" @onReqParams="onReqParams"></em-table-list>
+      <em-table-list v-if="dialogChangeVisible" :custTableTitle="`${currRow?.gasstationName}站 调价记录`" :tableListName="'listingLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="log_select_list" @onReqParams="onReqLogParams"></em-table-list>
     </el-dialog>
   </div>
 </template>
@@ -259,6 +259,16 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: {} })
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (v !== '') params.param[k] = v
+        }
+      }
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
+    },
+    onReqLogParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { priceConfigLog: {}, dateParam: {} } })
 
       if (_this.tableListName == 'listingLog') {
@@ -269,12 +279,20 @@ export default {
         for (var [k, v] of Object.entries(_this.finds)) {
           // if (v !== '') params.param.dateParam[k] = v
           if (k == 'operatorDate') {
-            if (_this.finds.createDate === null) {
+            if (_this.finds.operatorDate === null) {
               params.param.dateParam.createDateFrom = ''
               params.param.dateParam.createDateTo = ''
             } else {
               params.param.dateParam.createDateFrom = v[0]
               params.param.dateParam.createDateTo = v[1]
+            }
+          } else if (k == 'updateDate') {
+            if (_this.finds.updateDate === null) {
+              params.param.dateParam.updateFrom = ''
+              params.param.dateParam.updateTo = ''
+            } else {
+              params.param.dateParam.updateFrom = v[0]
+              params.param.dateParam.updateTo = v[1]
             }
           }
         }

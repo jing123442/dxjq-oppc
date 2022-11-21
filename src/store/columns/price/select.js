@@ -78,7 +78,8 @@ const select = {
     currFieldSearch: [{ value: 'gasstationId', label: '加气站' }]
   },
   snpRetailLog: {
-    currDataSearch: [{ value: "operatorDate", label: "操作时间" }],
+    status: utilsExecuteStatus(),
+    currDataSearch: [{ value: "operatorDate", label: "操作时间" }, { value: "updateDate", label: "调价执行时间" }],
   },
   auyanRetail: {
     status: utilsExecuteStatus(),
@@ -86,7 +87,8 @@ const select = {
     currFieldSearch: [{ value: 'gasstationId', label: '加气站' }]
   },
   auyanRetailLog: {
-    currDataSearch: [{ value: "operatorDate", label: "操作时间" }],
+    status: utilsExecuteStatus(),
+    currDataSearch: [{ value: "operatorDate", label: "操作时间" }, { value: "updateDate", label: "调价执行时间" }],
   },
 }
 

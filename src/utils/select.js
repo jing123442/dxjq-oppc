@@ -68,10 +68,10 @@ export function untilsAddress() {
 
 export function utilsExecuteStatus() {
   return [
-    { value: '0', label: '初始' },
-    { value: '1', label: '已预约未执行' },
-    { value: '2', label: '执行中' },
-    { value: '3', label: '已作废' }
+    { value: 0, label: '初始' },
+    { value: 1, label: '已预约未执行' },
+    { value: 2, label: '执行中' },
+    { value: 3, label: '已作废' }
   ]
 }
 export function utilsStatus() {
@@ -287,7 +287,7 @@ export function utilsTradeType() {
 }
 export function utilsPriceType() {
   return [
-    { value: 0, label: '原长城奥扬调价' },
+    { value: 0, label: '原长城奥扬定价' },
     { value: 1, label: '新中石化限价' }
   ]
 }
