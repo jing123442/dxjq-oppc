@@ -5,22 +5,22 @@
       <h3>单站调价（单位：元/公斤）</h3>
       <el-form ref="ruleForm" :inline="true" :model="priceConfigPlan" :rules="rules" class="demo-form-inline">
         <el-form-item label="零售价" prop="platformPrice">
-          <el-input v-model.number="priceConfigPlan.platformPrice" type="number" placeholder="零售价" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <el-input v-model="priceConfigPlan.platformPrice" placeholder="零售价" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'platformPrice')"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>=</el-form-item>
         <el-form-item label="总利润" prop="profit">
-          <el-input v-model.number="priceConfigPlan.profit" type="number" placeholder="总利润" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <el-input v-model="priceConfigPlan.profit" placeholder="总利润" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'profit')"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>+</el-form-item>
         <el-form-item label="运费" prop="freight">
-          <el-input v-model.number="priceConfigPlan.freight" type="number" placeholder="运费" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <el-input v-model="priceConfigPlan.freight" placeholder="运费" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'freight')"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>+</el-form-item>
         <el-form-item label="出港价" prop="harbourPrice">
-          <el-input v-model.number="priceConfigPlan.harbourPrice" type="number" placeholder="出港价" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <el-input v-model="priceConfigPlan.harbourPrice" placeholder="出港价" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'harbourPrice')"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-divider></el-divider>
@@ -54,7 +54,7 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, callbackPagesInfo, isTypeof, calc } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof, calc, handleInputNumber } from '@/utils/tools'
 import { $priceConfigPlan } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 export default {
@@ -162,6 +162,7 @@ export default {
   },
   created: function () { },
   methods: {
+    handleInputNumber,
     getHasValueLength() {
       let a = 0
       for (const key in this.priceConfigPlan) {
@@ -299,6 +300,7 @@ export default {
           }).then(res => {
             this.resetForm()
             this.$message.success('调价成功')
+            this.$refs.tables.initDataList()
           })
         } else {
           console.log('error submit!!')

@@ -5,37 +5,37 @@
       <h3>单站调价（单位：元/公斤）</h3>
       <el-form ref="ruleForm" :inline="true" :model="priceConfigPlan" :rules="rules" class="demo-form-inline">
         <el-form-item label="零售价" prop="platformPrice">
-          <el-input v-model.number="priceConfigPlan.platformPrice" type="number" placeholder="零售价" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <el-input v-model="priceConfigPlan.platformPrice" placeholder="零售价" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'platformPrice')"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>=</el-form-item>
         <el-form-item class="special-form-item">
           <el-form-item label="长城奥扬 利润" prop="profitGway">
-            <el-input v-model.number="priceConfigPlan.profitGway" type="number" placeholder="长城奥扬 利润" @blur="handleBlur" @focus="handleFocus"></el-input>
+            <el-input v-model="priceConfigPlan.profitGway" placeholder="长城奥扬 利润" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'profitGway')"></el-input>
             <div :class="{ 'input-has-mask': noEdit }"></div>
           </el-form-item>
           <br />
           +
           <el-form-item label="加气站 利润" prop="profitGasstation">
-            <el-input v-model.number="priceConfigPlan.profitGasstation" type="number" placeholder="加气站 利润" @blur="handleBlur" @focus="handleFocus"></el-input>
+            <el-input v-model="priceConfigPlan.profitGasstation" placeholder="加气站 利润" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'profitGasstation')"></el-input>
             <div :class="{ 'input-has-mask': noEdit }"></div>
           </el-form-item>
           <br />
           +
           <el-form-item label="大象科技 利润" prop="profitXqkj">
-            <el-input v-model.number="priceConfigPlan.profitXqkj" type="number" placeholder="大象科技 利润" @blur="handleBlur" @focus="handleFocus" disabled></el-input>
+            <el-input v-model="priceConfigPlan.profitXqkj" placeholder="大象科技 利润" @blur="handleBlur" @focus="handleFocus" disabled></el-input>
           </el-form-item>
           <hr>
           <div style="text-align: center;">总利润ccay：{{ profit }}</div>
         </el-form-item>
         <el-form-item>+</el-form-item>
         <el-form-item label="运费" prop="freight">
-          <el-input v-model.number="priceConfigPlan.freight" type="number" placeholder="运费" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <el-input v-model="priceConfigPlan.freight" placeholder="运费" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'freight')"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>+</el-form-item>
         <el-form-item label="出港价" prop="harbourPrice">
-          <el-input v-model.number="priceConfigPlan.harbourPrice" type="number" placeholder="出港价" @blur="handleBlur" @focus="handleFocus"></el-input>
+          <el-input v-model="priceConfigPlan.harbourPrice" placeholder="出港价" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'harbourPrice')"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-divider></el-divider>
@@ -69,7 +69,7 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, callbackPagesInfo, isTypeof, calc } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof, calc, handleInputNumber } from '@/utils/tools'
 import { $priceConfigPlan } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
@@ -175,7 +175,7 @@ export default {
     }),
     profit() {
       const { profitGway, profitGasstation, profitXqkj } = this.priceConfigPlan
-      return (profitGway || 0) + (profitGasstation || 0) + (profitXqkj || 0)
+      return calc.plus((profitGway || 0), (profitGasstation || 0), (profitXqkj || 0))
     }
   },
   watch: {
@@ -191,6 +191,7 @@ export default {
   },
   created: function () { },
   methods: {
+    handleInputNumber,
     getHasValueLength() {
       let a = 0
       for (const key in this.priceConfigPlan) {
@@ -255,7 +256,8 @@ export default {
         this.dialogChangeVisible = true
       } else if (type === 'change_price') {
         this.dialogMeasureVisible = true
-        this.priceConfigPlan.profitXqkj = row.profitXqkj || 11
+        this.priceConfigPlan.profitXqkj = 0 // 从接口获取
+        // this.priceConfigPlan.profitXqkj = row.profitXqkj || 0
       }
     },
     onReqParams(type, _this, callback) {
@@ -325,10 +327,12 @@ export default {
             gasstationId: this.currRow.gasstationId,
             updateDate: this.status === '1' ? this.updateDate : new Date(),
             status: this.status,
+            profit: this.profit,
             ...this.priceConfigPlan
           }).then(res => {
             this.resetForm()
             this.$message.success('调价成功')
+            this.$refs.tables.initDataList()
           })
         } else {
           console.log('error submit!!')

@@ -625,6 +625,7 @@ export function getDateRange(n = 30) {
   return { startdate, enddate }
 }
 
+// 带小数计算
 export const calc = (function () {
   const operation = (num1, num2, op) => {
     let l1, l2, max
@@ -665,3 +666,8 @@ export const calc = (function () {
   }
   return { plus, subtract, multiply, divide }
 })()
+
+export const handleInputNumber = (obj, key, limit = 3) => {
+  const regLimit = new RegExp(`^\\d*(\\.?\\d{0,${limit}})`, 'g')
+  obj[key] = obj[key].replace(/\D*(\d*)(\.?)(\d{0,3})\d*/, '$1$2$3').replace(/^0+(\d)/, '$1').replace(/^\./, '0.').match(regLimit)[0]
+}
