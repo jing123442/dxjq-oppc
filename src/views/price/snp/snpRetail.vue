@@ -33,7 +33,9 @@
           <el-radio v-model="status" label="1">预约执行</el-radio>
           <el-form-item>
             <el-date-picker
+              popper-class="no-time-picker"
               v-model="updateDate"
+              default-time="00:00:00"
               type="datetime"
               placeholder="选择日期时间">
             </el-date-picker>
@@ -155,6 +157,8 @@ export default {
         const a = this.getHasValueLength()
         if (a === Object.keys(this.priceConfigPlan).length - 1) {
           this.noEdit = true
+        } else {
+          this.noEdit = false
         }
       },
       deep: true
@@ -259,11 +263,11 @@ export default {
             }
           } else if (k == 'updateDate') {
             if (_this.finds.updateDate === null) {
-              params.param.dateParam.updateFrom = ''
-              params.param.dateParam.updateTo = ''
+              params.param.dateParam.updateDateFrom = ''
+              params.param.dateParam.updateDateTo = ''
             } else {
-              params.param.dateParam.updateFrom = v[0]
-              params.param.dateParam.updateTo = v[1]
+              params.param.dateParam.updateDateFrom = v[0]
+              params.param.dateParam.updateDateTo = v[1]
             }
           }
         }
@@ -294,7 +298,7 @@ export default {
           $priceConfigPlan('strategy/price_config_snp_plan/update', {
             id: this.currRow.id || this.currRow.gasstationId,
             gasstationId: this.currRow.gasstationId,
-            updateDate: this.status === '1' ? this.updateDate : new Date(),
+            updateDate: Number(this.status) === 1 ? this.updateDate : new Date(),
             status: this.status,
             ...this.priceConfigPlan
           }).then(res => {
@@ -311,6 +315,22 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.no-time-picker {
+  .el-time-spinner {
+    text-align: center;
+  }
+  .el-time-spinner__wrapper:nth-child(2),
+  .el-time-spinner__wrapper:nth-child(3) {
+    display: none !important;
+  }
+  .el-picker-panel__footer {
+    .el-button--text {
+      display: none;
+    }
+  }
+}
+</style>
 <style lang="scss" scoped>
 :deep(.el-divider--horizontal) {
   margin: 0 0 16px;
