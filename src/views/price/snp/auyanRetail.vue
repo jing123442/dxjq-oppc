@@ -45,7 +45,7 @@
         </el-form-item>
         <br />
         <el-form-item>
-          <el-radio v-model="status" label="0">预约执行</el-radio>
+          <el-radio v-model="status" label="1">预约执行</el-radio>
           <el-form-item>
             <el-date-picker
               popper-class="no-time-picker"
@@ -71,8 +71,8 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, callbackPagesInfo, isTypeof, calc, handleInputNumber } from '@/utils/tools'
-import { $priceConfigPlan } from '@/service/strategy'
+import { initVueDataOptions, callbackPagesInfo, isTypeof, calc, handleInputNumber, formateTData } from '@/utils/tools'
+import { $priceConfigPlan, $getPlatformProfit } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -193,9 +193,17 @@ export default {
       deep: true
     }
   },
-  created: function () { },
+  created: function () {
+    // this.getPlatformProfit()
+  },
   methods: {
     handleInputNumber,
+    // 获取大象科技利润
+    getPlatformProfit() {
+      $getPlatformProfit('strategy/price_config_gway_plan/get_platform_profit').then(res => {
+        this.priceConfigPlan.profitXqkj = res.data // 从接口获取
+      })
+    },
     getHasValueLength() {
       let a = 0
       for (const key in this.priceConfigPlan) {
@@ -260,7 +268,7 @@ export default {
         this.dialogChangeVisible = true
       } else if (type === 'change_price') {
         this.dialogMeasureVisible = true
-        this.priceConfigPlan.profitXqkj = 0 // 从接口获取
+        this.getPlatformProfit()
         // this.priceConfigPlan.profitXqkj = row.profitXqkj || 0
       }
     },
@@ -329,7 +337,8 @@ export default {
           $priceConfigPlan('strategy/price_config_gway_plan/update', {
             id: this.currRow.id || this.currRow.gasstationId,
             gasstationId: this.currRow.gasstationId,
-            updateDate: Number(this.status) === 1 ? this.updateDate : new Date(),
+            // updateDate: Number(this.status) === 1 ? this.updateDate : new Date(),
+            updateDate: Number(this.status) === 1 ? formateTData(this.updateDate, 'all') : formateTData(new Date(), 'all'),
             status: this.status,
             profit: this.profit,
             ...this.priceConfigPlan
@@ -378,6 +387,9 @@ export default {
     vertical-align: bottom;
     .el-input {
       width: 160px;
+    }
+    .el-date-editor {
+      width: 100%;
     }
   }
   .special-form-item {

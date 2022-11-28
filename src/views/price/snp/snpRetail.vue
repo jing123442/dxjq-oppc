@@ -56,7 +56,7 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, callbackPagesInfo, isTypeof, calc, handleInputNumber } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof, calc, handleInputNumber, formateTData } from '@/utils/tools'
 import { $priceConfigPlan } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 export default {
@@ -298,7 +298,7 @@ export default {
           $priceConfigPlan('strategy/price_config_snp_plan/update', {
             id: this.currRow.id || this.currRow.gasstationId,
             gasstationId: this.currRow.gasstationId,
-            updateDate: Number(this.status) === 1 ? this.updateDate : new Date(),
+            updateDate: Number(this.status) === 1 ? formateTData(this.updateDate, 'all') : formateTData(new Date(), 'all'),
             status: this.status,
             ...this.priceConfigPlan
           }).then(res => {

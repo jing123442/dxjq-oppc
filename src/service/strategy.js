@@ -300,3 +300,8 @@ export async function $strategyStockLogDownload (data) {
 export async function $priceConfigPlan (url, data) {
   return await R({ url, data })
 }
+
+// 获取大象科技利润
+export async function $getPlatformProfit (url) {
+  return await R({ url })
+}
