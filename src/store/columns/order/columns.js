@@ -12,7 +12,7 @@ const columns = {
     { field: 'actualPrice', name: '平台结算价', hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 9, util: '元/公斤' } },
     { field: 'amount', name: '结算金额(元)', width: 90, detail: { type: 'span', style: 'width: 85%', serial: 12, util: '元', ou: 3, name: '结算金额'} },
     { field: 'amountTotal', name: '订单总金额', width: 90, hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 11, util: '元', value: function(row) { return (Number(row.amount) + Number(row.discountAmount) + Number(row.carrierRebate)).toFixed(2) }, ou: 3 } },
-    { field: 'discountAmount', name: '优惠金额 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 13, util: '元', ou: 3 } },
+    { field: 'carrierRebate', name: '优惠金额 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 13, util: '元', ou: 3 } },
     { field: 'comAmount', name: '立减 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 13, util: '元' } },
     { field: 'orderRealTotal', name: '实付金额 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 11, util: '元' } },
     { field: 'carrierOrgName', name: '物流客户', search: { type: 'text', field: 'carrierOrgName', placeholder: '请输入物流公司', findStyle: 'width: 19%', }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 7, ou: 2 } },

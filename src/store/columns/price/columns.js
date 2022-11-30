@@ -285,10 +285,15 @@ const columns = {
   // 中石化零售价
   snpRetail: [
     { field: 'id', hide: true },
-    { field: 'gasstationId', width: 150, name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left',
+    { field: 'gasstationId', width: 150, name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left',
       show: { type: 'select', subField: 'gasstationName', obj: 'gasstationList', placeholder: '请选择加气站' },
       search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' },
-      rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
+      rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }]
+    },
+    // { field: 'gasstationId', width: 150, name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left',
+    //   show: { type: 'select', subField: 'nickName', obj: 'gasstationList', placeholder: '请选择加气站' },
+    //   search: { type: 'text', field: 'nickName', placeholder: '请输入加气站' },
+    //   rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
     // { field: 'gasstationName', name: '加气站', fixed: 'left', search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' } },
     { field: 'platformPrice', name: '最新零售价(元/公斤)' }, // 无字段
     { field: 'profit', name: '总利润(元/公斤)' },
@@ -305,7 +310,7 @@ const columns = {
     { field: 'gasstationId', width: 150, hide: true, name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left',
       show: { type: 'select', subField: 'gasstationName', obj: 'gasstationList', placeholder: '请选择加气站' },
       rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
-    { field: 'platformPrice', name: '最新零售价(元/公斤)' },
+    { field: 'platformPrice', fixed: 'left', name: '零售价(元/公斤)' },
     { field: 'profit', name: '总利润(元/公斤)' },
     { field: 'freight', name: '运费(元/公斤)' },
     { field: 'harbourPrice', name: '出港价(元/公斤)' },
@@ -317,7 +322,7 @@ const columns = {
   // 长城奥扬零售价
   auyanRetail: [
     { field: 'id', hide: true },
-    { field: 'gasstationId', width: 150, name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left',
+    { field: 'gasstationId', width: 150, name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left',
       show: { type: 'select', subField: 'gasstationName', obj: 'gasstationList', placeholder: '请选择加气站' },
       search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' },
       rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
@@ -340,7 +345,7 @@ const columns = {
     { field: 'gasstationId', width: 150, hide: true, name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left',
       show: { type: 'select', subField: 'gasstationName', obj: 'gasstationList', placeholder: '请选择加气站' },
       rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
-    { field: 'platformPrice', name: '零售价ccay(元/公斤)' }, // 无字段
+    { field: 'platformPrice', fixed: 'left', name: '零售价ccay(元/公斤)' }, // 无字段
     { field: 'profit', name: '总利润 ccay(元/公斤)' },
     { field: 'profitGway', name: '长城奥扬 利润(元/公斤)' },
     { field: 'profitGasstation', name: '加气站 利润(元/公斤)' },

@@ -1,26 +1,26 @@
 <template>
   <div class="template-main">
     <em-table-list :tableListName="'listing'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" ref="tables" :page_status="page_status" :buttonsList="buttonsList" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
-    <el-dialog :title="`${currRow?.gasstationName}站`" :visible.sync="dialogMeasureVisible" width="80%" :append-to-body="true">
+    <el-dialog :title="`${currRow?.nickName}`" :visible.sync="dialogMeasureVisible" width="80%" :append-to-body="true">
       <h3>单站调价（单位：元/公斤）</h3>
       <el-form ref="ruleForm" :inline="true" :model="priceConfigPlan" :rules="rules" class="demo-form-inline">
         <el-form-item label="零售价" prop="platformPrice">
-          <el-input v-model="priceConfigPlan.platformPrice" placeholder="零售价" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'platformPrice')"></el-input>
+          <el-input v-model="priceConfigPlan.platformPrice" placeholder="0.000" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'platformPrice')"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>=</el-form-item>
         <el-form-item label="总利润" prop="profit">
-          <el-input v-model="priceConfigPlan.profit" placeholder="总利润" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'profit')"></el-input>
+          <el-input v-model="priceConfigPlan.profit" placeholder="0.000" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'profit')"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>+</el-form-item>
         <el-form-item label="运费" prop="freight">
-          <el-input v-model="priceConfigPlan.freight" placeholder="运费" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'freight')"></el-input>
+          <el-input v-model="priceConfigPlan.freight" placeholder="0.000" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'freight')"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-form-item>+</el-form-item>
         <el-form-item label="出港价" prop="harbourPrice">
-          <el-input v-model="priceConfigPlan.harbourPrice" placeholder="出港价" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'harbourPrice')"></el-input>
+          <el-input v-model="priceConfigPlan.harbourPrice" placeholder="0.000" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'harbourPrice')"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
         </el-form-item>
         <el-divider></el-divider>
@@ -37,6 +37,7 @@
               v-model="updateDate"
               default-time="00:00:00"
               type="datetime"
+              :disabled="(Number(status) !== 1)"
               placeholder="选择日期时间">
             </el-date-picker>
           </el-form-item>
@@ -50,8 +51,8 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog :title="`${currRow?.gasstationName}站 调价记录`" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
-      <em-table-list v-if="dialogChangeVisible" :custTableTitle="`${currRow?.gasstationName}站 调价记录`" :tableListName="'listingLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="log_select_list" @onReqParams="onReqLogParams"></em-table-list>
+    <el-dialog :title="`${currRow?.nickName} 调价记录`" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
+      <em-table-list v-if="dialogChangeVisible" :custTableTitle="`${currRow?.nickName} 调价记录`" :tableListName="'listingLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="log_select_list" @onReqParams="onReqLogParams"></em-table-list>
     </el-dialog>
   </div>
 </template>
@@ -88,7 +89,7 @@ export default {
         },
         del: {
           url: 'strategy/price_config_snp_plan/remove',
-          name: ['gasstationName'],
+          name: ['nickName'],
           method: 'post',
           props: {
             id: 'id',
