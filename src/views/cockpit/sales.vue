@@ -55,7 +55,7 @@ export default {
       },
       queryHistoryCustURL: {
         list: {
-          url: 'settle/gway_gasorder/list_new',
+          url: 'settle/gway_gasorder/list',
           method: 'post',
           parse: {
             tableData: ['data']
