@@ -102,7 +102,10 @@ export default {
     padding: 12px 32px;
     color: #0084ff;
   }
-  /deep/ .el-del-btn-item {
+  // /deep/ .el-del-btn-item {
+  //   margin: 0;
+  // }
+  :deep(.el-del-btn-item) {
     margin: 0;
   }
 }

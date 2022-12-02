@@ -62,6 +62,13 @@ const getters = {
   filler_lngPlan_page_status: item => app.list.lngPlan,
   filler_lngPlan_column: item => columns.lngPlan,
   filler_lngPlan_select_list: item => select.lngPlan,
+
+  // 自营站全量库存 后台权限配置
+  filler_selfFullInventory_mode_list: item => app.mode.selfFullInventory,
+  filler_selfFullInventory_page_status: item => app.list.selfFullInventory,
+  filler_selfFullInventory_column: item => columns.selfFullInventory,
+  filler_selfFullInventory_select_list: item => select.selfFullInventory,
+
   // LNG计划管理--变更记录
   filler_lng_plan_change_list_column: item => columns.lngPlanChangeInfo,
   // LNG计划管理--变更计划

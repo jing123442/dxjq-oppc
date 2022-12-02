@@ -281,7 +281,82 @@ const columns = {
           { value: 2, fields: ['comAmount', 'orderRealTotal'] }
         ] } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 80, list: [{ type: 'detail', name: '详情' }] }
-  ]
+  ],
+  // 中石化零售价
+  snpRetail: [
+    { field: 'id', hide: true },
+    { field: 'gasstationId', width: 150, name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left',
+      show: { type: 'select', subField: 'gasstationName', obj: 'gasstationList', placeholder: '请选择加气站' },
+      search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' },
+      rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }]
+    },
+    // { field: 'gasstationId', width: 150, name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left',
+    //   show: { type: 'select', subField: 'nickName', obj: 'gasstationList', placeholder: '请选择加气站' },
+    //   search: { type: 'text', field: 'nickName', placeholder: '请输入加气站' },
+    //   rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
+    // { field: 'gasstationName', name: '加气站', fixed: 'left', search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' } },
+    { field: 'platformPrice', name: '最新零售价(元/公斤)' }, // 无字段
+    { field: 'profit', name: '总利润(元/公斤)' },
+    { field: 'freight', name: '运费(元/公斤)' },
+    { field: 'harbourPrice', name: '出港价(元/公斤)' },
+    { field: 'status', formatter: 'status', name: '调价执行状态' },
+    { field: 'updateDate', name: '调价执行时间', formatFun: 'formateTData all', stype: 'format', width: 140 },
+    { field: 'operatorDate', name: '最新操作时间', formatFun: 'formateTData all', stype: 'format', width: 140 },
+    { field: 'operatorName', name: '操作人' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 230, fixed: 'right', list: [{ type: 'del', name: '移出名单' }, { type: 'change_price_list', name: '调价记录' }, { type: 'change_price', name: '调价' }] }
+  ],
+  snpRetailLog: [
+    { field: 'id', hide: true },
+    { field: 'gasstationId', width: 150, hide: true, name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left',
+      show: { type: 'select', subField: 'gasstationName', obj: 'gasstationList', placeholder: '请选择加气站' },
+      rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
+    { field: 'platformPrice', fixed: 'left', name: '零售价(元/公斤)' },
+    { field: 'profit', name: '总利润(元/公斤)' },
+    { field: 'freight', name: '运费(元/公斤)' },
+    { field: 'harbourPrice', name: '出港价(元/公斤)' },
+    { field: 'updateDate', name: '调价执行时间', formatFun: 'formateTData all', stype: 'format', width: 140 },
+    { field: 'operatorDate', name: '操作时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 70%;', style: 'width: 100%;', findField: 'operatorDate', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', subField: 'operatorDateName', hideName: true, obj: 'currDataSearch', style: 'width: 100%;', value: 'operatorDate' } },
+    { field: 'operatorName', name: '操作人' },
+    { field: 'status', formatter: 'status', name: '调价执行状态' },
+  ],
+  // 长城奥扬零售价
+  auyanRetail: [
+    { field: 'id', hide: true },
+    { field: 'gasstationId', width: 150, name: '加气站', stype: 'mapping', mapping: 'nickName', fixed: 'left',
+      show: { type: 'select', subField: 'gasstationName', obj: 'gasstationList', placeholder: '请选择加气站' },
+      search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' },
+      rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
+    // { field: 'gasstationName', name: '加气站', fixed: 'left', search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' } },
+    { field: 'platformPrice', name: '最新零售价ccay(元/公斤)' }, // 无字段
+    { field: 'profit', name: '总利润 ccay(元/公斤)' },
+    { field: 'profitGway', name: '长城奥扬 利润(元/公斤)' },
+    { field: 'profitGasstation', name: '加气站 利润(元/公斤)' },
+    { field: 'profitXqkj', name: '大象科技 利润(元/公斤)' },
+    { field: 'freight', name: '运费 ccay(元/公斤)' },
+    { field: 'harbourPrice', name: '出港价(元/公斤)' },
+    { field: 'status', formatter: 'status', name: '调价执行状态' },
+    { field: 'updateDate', name: '调价执行时间', formatFun: 'formateTData all', stype: 'format', width: 140 },
+    { field: 'operatorDate', name: '最新操作时间', formatFun: 'formateTData all', stype: 'format', width: 140 },
+    { field: 'operatorName', name: '操作人' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 230, fixed: 'right', list: [{ type: 'del', name: '移出名单' }, { type: 'change_price_list', name: '调价记录' }, { type: 'change_price', name: '调价' }] }
+  ],
+  auyanRetailLog: [
+    { field: 'id', hide: true },
+    { field: 'gasstationId', width: 150, hide: true, name: '加气站', stype: 'mapping', mapping: 'gasstationName', fixed: 'left',
+      show: { type: 'select', subField: 'gasstationName', obj: 'gasstationList', placeholder: '请选择加气站' },
+      rules: [{ required: true, message: '请选择加气站', trigger: 'blur' }] },
+    { field: 'platformPrice', fixed: 'left', name: '零售价ccay(元/公斤)' }, // 无字段
+    { field: 'profit', name: '总利润 ccay(元/公斤)' },
+    { field: 'profitGway', name: '长城奥扬 利润(元/公斤)' },
+    { field: 'profitGasstation', name: '加气站 利润(元/公斤)' },
+    { field: 'profitXqkj', name: '大象科技 利润(元/公斤)' },
+    { field: 'freight', name: '运费 ccay(元/公斤)' },
+    { field: 'harbourPrice', name: '出港价(元/公斤)' },
+    { field: 'updateDate', name: '调价执行时间', formatFun: 'formateTData all', stype: 'format', width: 140 },
+    { field: 'operatorDate', name: '操作时间', formatFun: 'formateTData all', stype: 'format', width: 140,search: { type: 'date-picker', placeholder: '', findStyle: 'width: 70%;', style: 'width: 100%;', findField: 'operatorDate', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', subField: 'operatorDateName', hideName: true, obj: 'currDataSearch', style: 'width: 100%;', value: 'operatorDate' } },
+    { field: 'operatorName', name: '操作人' },
+    { field: 'status', formatter: 'status', name: '调价执行状态' },
+  ],
 }
 
 export default columns

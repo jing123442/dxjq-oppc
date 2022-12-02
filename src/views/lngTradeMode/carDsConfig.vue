@@ -20,9 +20,6 @@
         </div>
       </div>
     </el-dialog>
-    <el-dialog title="操作日志" :visible.sync="dialogLogVisible" :width="add_edit_dialog" :append-to-body="true">
-      <em-table-list v-if="dialogLogVisible" :tableListName="'logList'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURLLog" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="carrier_log_mode_list" ref="tablesLog" :page_status="carrier_log_page_status" :page_column="carrier_log_page_column" :select_list="carrier_log_select_list" @onReqParams="onReqParamsLog"></em-table-list>
-    </el-dialog>
   </div>
 </template>
 <script>
@@ -34,27 +31,16 @@ export default {
     return initVueDataOptions(this, {
       queryCustURL: {
         list: {
-          url: 'user/org/list',
+          url: 'strategy/direct_sales_truck_log/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
         },
-        name: '物流客户直销加气列表'
+        name: '直销加气车辆配置日志'
       },
-      queryCustURLLog: {
-        list: {
-          url: 'user/direct_sales_carrier_log/list',
-          method: 'post',
-          parse: {
-            tableData: ['data', 'records'],
-            totalCount: ['data', 'total']
-          }
-        },
-        name: '操作日志列表'
-      },
-      buttonsList: [{ type: 'primary', icon: '', event: 'configLog', name: '操作日志' }, { type: 'primary', icon: '', event: 'addList', name: '添加名单' }],
+      // buttonsList: [{ type: 'primary', icon: '', event: 'configLog', name: '操作日志' }, { type: 'primary', icon: '', event: 'addList', name: '添加名单' }],
       formBtnList: custFormBtnList(),
       dialogAddVisible: false,
       carrierList: [],
@@ -70,16 +56,10 @@ export default {
   components: { },
   computed: {
     ...mapGetters({
-      mode_list: 'carrier_ds_mode_list',
-      page_status: 'carrier_ds_page_status',
-      page_column: 'carrier_ds_column',
-      select_list: 'carrier_ds_select_list',
-      carrier_log_mode_list: 'carrier_log_mode_list',
-      carrier_log_page_status: 'carrier_log_page_status',
-      carrier_log_page_column: 'carrier_log_column',
-      carrier_log_select_list: 'carrier_log_select_list',
-      add_edit_dialog: 'add_edit_dialog_form',
-      del_dialog: 'del_dialog_form',
+      mode_list: 'car_ds_mode_list',
+      page_status: 'car_ds_page_status',
+      page_column: 'car_ds_column',
+      select_list: 'car_ds_select_list',
       response_success: 'response_success'
     })
   },
@@ -112,14 +92,7 @@ export default {
       var params = {
         page: this.pages.page,
         size: this.pages.size,
-        param: {
-          org: {
-            orgName: keyword,
-            orgType: 2,
-            tradeType: 1,
-            orgSubType: 21
-          }
-        }
+        param: {}
       }
       $userOrgList(params).then(res => {
         this.carrierTotal = res.data.total
@@ -159,17 +132,6 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { org: { tradeType: 2, orgType: 2 } } })
-      console.log(params, 'params')
-      if (isTypeof(_this.finds) === 'object') {
-        for (var [k, v] of Object.entries(_this.finds)) {
-          if (v !== '') params.param.org[k] = v
-        }
-      }
-      // eslint-disable-next-line
-      callback(params)
-    },
-    onReqParamsLog(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { dateParam: { createDateFrom: '', createDateTo: '' } } })
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {

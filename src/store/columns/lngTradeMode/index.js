@@ -24,7 +24,12 @@ const getters = {
   filler_log_mode_list: item => item.app.modeDefault,
   filler_log_page_status: item => app.list.fillerOprateLog,
   filler_log_column: item => columns.fillerOprateLog,
-  filler_log_select_list: item => select.fillerOprateLog
+  filler_log_select_list: item => select.fillerOprateLog,
+  // 直销加气车辆配置日志
+  car_ds_mode_list: item => item.app.modeDefault,
+  car_ds_page_status: item => app.list.carDsConfig,
+  car_ds_column: item => columns.carDsConfig,
+  car_ds_select_list: item => select.carDsConfig,
 }
 
 export default {

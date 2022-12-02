@@ -66,6 +66,14 @@ export function untilsAddress() {
   return region
 }
 
+export function utilsExecuteStatus() {
+  return [
+    { value: 0, label: '初始' },
+    { value: 1, label: '已预约未执行' },
+    { value: 2, label: '执行中' },
+    { value: 3, label: '已作废' }
+  ]
+}
 export function utilsStatus() {
   return [
     { value: '0', label: '启用' },
@@ -277,6 +285,12 @@ export function utilsTradeType() {
     { value: 22, label: '直销收款' }
   ]
 }
+export function utilsPriceType() {
+  return [
+    { value: 0, label: '原长城奥扬定价' },
+    { value: 1, label: '新中石化限价' }
+  ]
+}
 export function utilsPrintPaper() {
   return [
     { value: '0', label: '不打印' },
@@ -413,16 +427,16 @@ export function utilSelectGasstationType(type = '') {
   ]
   if (type === 'inner') {
     result = [
-      { value: 1001, label: '大象自营' },
-      { value: 1002, label: '大象合作' },
-      { value: 1003, label: '大象加盟' }
+      { value: 1001, label: '合作经营' },
+      { value: 1002, label: '核心联营' },
+      { value: 1003, label: '停业' }
     ]
   }
 
   if (type === 'all') {
-    result.unshift({ value: 1003, label: '大象加盟' })
-    result.unshift({ value: 1002, label: '大象合作' })
-    result.unshift({ value: 1001, label: '大象自营' })
+    result.unshift({ value: 1003, label: '停业' })
+    result.unshift({ value: 1002, label: '核心联营' })
+    result.unshift({ value: 1001, label: '合作经营' })
     result.unshift({ value: 100, label: '大象站' })
     result.unshift({ value: null, label: '全部站点' })
   }
@@ -439,7 +453,7 @@ export function untilsMarketingManList() {
   // })
 }
 
-export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', authStatus = null, tradeType = null) {
+export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', authStatus = null, tradeType = null, status) {
   const result = {
     url: 'user/org/list',
     node: ['data', 'records'],
@@ -447,7 +461,7 @@ export function utilsDyOrgList(type = null, value = 'orgId', label = 'orgName', 
       page: 1,
       size: 10,
       param: {
-        org: { orgType: type },
+        org: { orgType: type, status },
         dateParam: { createDateFrom: '', createDateTo: '' }
       }
     },

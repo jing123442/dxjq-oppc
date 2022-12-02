@@ -4,7 +4,10 @@
       <el-tab-pane label="今日实时（线上）" name="0">
         <em-table-list ref="tables1" :tableListName="'timeday'" :custTableTitle="custTodayTableTitle" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :composeParam="composeParam" :rowKey="'id'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :options="{ lazy: true }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue"></em-table-list>
       </el-tab-pane>
-      <el-tab-pane label="历史总量" name="1">
+      <el-tab-pane label="历史时段（线上）" name="1">
+        <em-table-list ref="tables2" :tableListName="'timehistory'" :custTableTitle="custYesterdayTableTimeTitle" :authButtonList="authButtonList" :buttonsList="buttonsHistoryList" :axios="axios" :queryCustURL="queryHistoryTimeCustURL" :composeParam="composeParam" :rowKey="'id'" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="mode_history_time_list" :options="{ lazy: true }" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+      </el-tab-pane>
+      <el-tab-pane label="历史总量 (自营)" name="2">
         <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 96px;'"></table-total-data>
         <em-table-list :tableListName="'timehistory'" :custTableTitle="custYesterdayTableTitle" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryHistoryCustURL" :responseSuccess="response_success" :mode_list="mode_list" :page_status="page_status" :queryParam="queryParams" :page_column="mode_history_list" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParamsHistory" @updateColumnValue="updateColumnValueHistory"></em-table-list>
       </el-tab-pane>
@@ -60,12 +63,39 @@ export default {
         },
         name: '监控'
       },
+      queryHistoryTimeCustURL: {
+        list: {
+          url: 'settle/gasstation_monitor/histroy_full_district_list',
+          method: 'post',
+          parse: {
+            tableData: ['data']
+          },
+          tree: {
+            key: 'districtId'
+          }
+        },
+        children: {
+          url: 'settle/gasstation_monitor/histroy_district_gasstation_list',
+          method: 'post',
+          props: {
+            districtId: 'districtId'
+          },
+          parse: {
+            tableData: ['data']
+          },
+          tree: {
+            key: 'districtId'
+          }
+        },
+        name: '监控'
+      },
       composeParam: ['districtName'],
-      custTodayTableTitle: '今日实时',
-      custYesterdayTableTitle: '历史总量',
+      custTodayTableTitle: '今日实时（线上）',
+      custYesterdayTableTimeTitle: '历史时段（线上）',
+      custYesterdayTableTitle: '历史总量 (自营)',
       buttonsList: [{ type: 'primary', icon: '', event: 'query', name: '查询' }, { type: 'primary', icon: '', event: 'export', name: '导出' }],
       buttonsHistoryList: [{ type: 'primary', icon: '', event: 'his_export', name: '导出' }],
-      // page_history_status: 1,
+      page_history_status: 1,
       initHistoryStatus: true,
       dataList: [{
         name: '销售总量：',
@@ -83,6 +113,7 @@ export default {
     ...mapGetters({
       page_column: 'cockpit_sales_column',
       mode_list: 'cockpit_sales_mode_list',
+      mode_history_time_list: 'cockpit_history_time_column',
       mode_history_list: 'cockpit_history_column',
       page_status: 'cockpit_sales_page_status',
       select_list: 'cockpit_sales_select_list',
@@ -176,15 +207,15 @@ export default {
         }
       }
 
-      // this.reloadHistoryTable(_this)
-      // if (_this.tableListName === 'timehistory') {
-      //   if (Object.keys(params).length === 0) {
-      //     const tmpTimes = formateTData(new Date())
-      //     params.dateTimeFrom = tmpTimes
-      //     params.dateTimeTo = tmpTimes
-      //   }
-      //   this.currDataTime = params
-      // }
+      this.reloadHistoryTable(_this)
+      if (_this.tableListName === 'timehistory') {
+        if (Object.keys(params).length === 0) {
+          const tmpTimes = formateTData(new Date())
+          params.dateTimeFrom = tmpTimes
+          params.dateTimeTo = tmpTimes
+        }
+        this.currDataTime = params
+      }
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     },
@@ -192,8 +223,8 @@ export default {
       console.log(_this)
       const params = { dateFrom: '', dateTo: '' }
       if (_this.finds.date) {
-        params.dateFrom = formateTData(_this.finds.date[0], 'date')
-        params.dateTo = formateTData(_this.finds.date[1], 'date')
+        params.dateFrom = formateTData(_this.finds.date[0], 'all')
+        params.dateTo = formateTData(_this.finds.date[1], 'all')
       }
       this.settleGwayGasOrderGetSumTotal(params)
       // eslint-disable-next-line standard/no-callback-literal
