@@ -32,7 +32,7 @@ export default {
       },
       queryLogCustURL: {
         list: {
-          url: 'strategy/release_detail/list',
+          url: 'strategy/release_detail/list_new',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
