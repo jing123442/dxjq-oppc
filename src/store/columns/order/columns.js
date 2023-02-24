@@ -20,6 +20,9 @@ const columns = {
     { field: 'driverName', name: '驾驶员姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 8, ou: 2 } },
     { field: 'gasstationName', name: '加气站', search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 5, ou: 1 } },
     { field: 'cashierName', name: '收银员姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 6, ou: 1 } },
+
+    { field: 'marketType', name: '经营模式',  formatter: 'marketType', search: { type: 'select', obj: 'priceType', placeholder: '经营模式' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'priceType', serial: 3, ou: 1 } },
+
     { field: 'priceType', name: '标准定价策略', formatter: 'priceType', search: { type: 'select', obj: 'priceType', placeholder: '标准定价策略' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'priceType', serial: 3, ou: 1 } },
     { field: 'tradeType', name: '交易模式', formatter: 'tradeType', search: { type: 'select', obj: 'tradeType', placeholder: '交易模式' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'tradeType', serial: 4, ou: 1 } },
     { field: 'platformPrice', hide: true, name: '总利润单价', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 15, util: '元/公斤', ou: 4 } },

@@ -288,7 +288,15 @@ export function utilsTradeType() {
 export function utilsPriceType() {
   return [
     { value: 0, label: '原长城奥扬定价' },
-    { value: 1, label: '新中石化限价' }
+    { value: 1, label: '新中石化限价' },
+    { value: 2, label: '新营销定价' }
+  ]
+}
+export function utilsMarketType() {
+  return [
+    { value: 0, label: '一体化' },
+    { value: 1, label: '一体化' },
+    { value: 2, label: '新营销' }
   ]
 }
 export function utilsPrintPaper() {

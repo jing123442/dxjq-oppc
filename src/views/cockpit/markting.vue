@@ -5,7 +5,7 @@
         <el-form :inline="true" size="mini">
           <el-form-item label="">
             <el-date-picker
-              v-model="value1"
+              v-model="searchForm.param.dateParam.updateTime"
               type="daterange"
               range-separator="至"
               start-placeholder="开始日期"
@@ -27,26 +27,25 @@
 
     <div class="bg">
 
-
       <div class="count">
           <div class="row">
             <div class="count-item">
               <div class="count-key">
-                交易总量：11
+                交易总量：{{ totalData.gasQtyTotal||'—' }}
               </div>
               <div class="count-value">公斤</div>
           </div>
 
           <div class="count-item">
           <div class="count-key">
-                含税采购成本：11
+                含税采购成本：{{ totalData.costWithTax||'—' }}
               </div>
               <div class="count-value">元</div>
             </div>
 
             <div class="count-item">
             <div class="count-key">
-                含税销售收入：11
+                含税销售收入：{{ totalData.incomeWithTax||'—' }}
               </div>
               <div class="count-value">元</div>
             </div>
@@ -56,34 +55,30 @@
 
             <div class="count-item">
               <div class="count-key">
-                毛利：11
+                毛利：{{ totalData.profitTotal||'—' }}
               </div>
               <div class="count-value">公斤</div>
           </div>
 
           <div class="count-item">
           <div class="count-key">
-                不含税采购成本：11
+                不含税采购成本：{{ totalData.costWithoutTax||'—' }}
               </div>
               <div class="count-value">元</div>
             </div>
 
             <div class="count-item">
             <div class="count-key">
-                不含税销售收入：11
+                不含税销售收入：{{ totalData.incomeWithoutTax||'—' }}
               </div>
               <div class="count-value">元</div>
             </div>
 
           </div>
-
-
           </div>
 
-
-
       <div class="between" style="margin-bottom:10px;margin-top: 10px;">
-          <el-select v-model="type" size="mini">
+          <el-select v-model="searchForm.param.type" size="mini">
             <el-option
               v-for="item in selectType"
               :key="item.value"
@@ -92,9 +87,7 @@
             >
             </el-option>
           </el-select>
-
-          <el-button type="primary" @click="getList()" size="mini">导出</el-button>
-
+          <el-button type="primary" @click="exportExcel()" size="mini">导出</el-button>
       </div>
 
       <el-table
@@ -104,138 +97,139 @@
         stripe
         :header-cell-style="headerStyle"
       >
-        <el-table-column prop="orgName" label="加气站" show-overflow-tooltip>
+        <el-table-column prop="orgName" :label="type==0?'加气站':'物流公司'" show-overflow-tooltip>
           <template v-slot="scope">
             <div>{{ scope.row.orgName || "—" }}</div>
           </template>
         </el-table-column>
+
         <el-table-column
-          prop="updateDate"
+          prop="gasQty"
           :label="labelNum()"
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.updateDate || "—" }}</div>
+            <div>{{ scope.row.gasQty || "—" }}</div>
           </template>
         </el-table-column>
 
         <el-table-column
-          prop="updaterName"
+          prop="costWithTaxAvg"
           :label="labelNum1()"
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.updaterName || "—" }}</div>
+            <div>{{ scope.row.costWithTaxAvg || "—" }}</div>
           </template>
         </el-table-column>
 
         <el-table-column
-          prop="updaterName"
+          prop="costWithTax"
           :label="labelNum2()"
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.updaterName || "—" }}</div>
+            <div>{{ scope.row.costWithTax || "—" }}</div>
           </template>
         </el-table-column>
 
         <el-table-column
-          prop="updaterName"
+          prop="incomeWithTaxAvg"
           :label="labelNum3()"
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.updaterName || "—" }}</div>
+            <div>{{ scope.row.incomeWithTaxAvg || "—" }}</div>
           </template>
         </el-table-column>
 
         <el-table-column
-          prop="updaterName"
+          prop="incomeWithTax"
           :label="labelNum4()"
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.updaterName || "—" }}</div>
+            <div>{{ scope.row.incomeWithTax || "—" }}</div>
           </template>
         </el-table-column>
 
         <el-table-column
-          prop="updaterName"
+          prop="ppdWithTax"
           :label="labelNum5()"
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.updaterName || "—" }}</div>
+            <div>{{ scope.row.ppdWithTax || "—" }}</div>
           </template>
         </el-table-column>
 
         <el-table-column
-          prop="updaterName"
+          prop="ppdWithTaxAvg"
           :label="labelNum6()"
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.updaterName || "—" }}</div>
+            <div>{{ scope.row.ppdWithTaxAvg || "—" }}</div>
           </template>
         </el-table-column>
 
         <el-table-column
-          prop="updaterName"
+          prop="costWithoutTaxAvg"
           :label="labelNum7()"
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.updaterName || "—" }}</div>
+            <div>{{ scope.row.costWithoutTaxAvg || "—" }}</div>
           </template>
         </el-table-column>
 
         <el-table-column
-          prop="updaterName"
+          prop="costWithoutTax"
           :label="labelNum8()"
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.updaterName || "—" }}</div>
+            <div>{{ scope.row.costWithoutTax || "—" }}</div>
           </template>
         </el-table-column>
 
         <el-table-column
-          prop="updaterName"
+          prop="incomeWithoutTaxAvg"
           :label="labelNum9()"
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.updaterName || "—" }}</div>
+            <div>{{ scope.row.incomeWithoutTaxAvg || "—" }}</div>
           </template>
         </el-table-column>
 
         <el-table-column
-          prop="updaterName"
+          prop="incomeWithoutTax"
           :label="labelNum10()"
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.updaterName || "—" }}</div>
+            <div>{{ scope.row.incomeWithoutTax || "—" }}</div>
           </template>
         </el-table-column>
 
         <el-table-column
-          prop="updaterName"
+          prop="profit"
           :label="labelNum11()"
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.updaterName || "—" }}</div>
+            <div>{{ scope.row.profit || "—" }}</div>
           </template>
         </el-table-column>
 
         <el-table-column
-          prop="updaterName"
+          prop="profitAvg"
           :label="labelNum12()"
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.updaterName || "—" }}</div>
+            <div>{{ scope.row.profitAvg || "—" }}</div>
           </template>
         </el-table-column>
 
@@ -325,6 +319,8 @@
   </div>
 </template>
 <script>
+
+import { $settleMarketGetSumWithTime, $settleMarketGetWithTime, $settleMarketDownLoad } from '@/service/settle'
 export default {
   data() {
     return {
@@ -369,23 +365,20 @@ export default {
         return '不含税·单吨毛利\n(元/吨)'
       },
 
-      value1: '',
-      type: '0',
       selectType: [
         { name: '按加气站分组', value: '0' },
         { name: '按物流客户分组', value: '1' }
       ],
-      rules: {
-        clientId: [
-          { required: true, message: '设备ID不能为空', trigger: 'blur' }
-        ],
-        orgId: [{ required: true, message: '请选择企业', trigger: 'blur' }]
-      },
       data: [],
       searchForm: {
         page: 1,
         size: 10,
-        param: {}
+        param: {
+          dateParam: {
+            updateTime: ''
+          },
+          type: '0'
+        }
       },
       form: {
         clientId: '',
@@ -399,13 +392,40 @@ export default {
       userType: 0,
       userInfo: {},
       unBindList: [],
-      searchText: ''
+      searchText: '',
+      totalData: {}
     }
   },
   computed: {},
-  mounted() {},
+  mounted() {
+    this.getList()
+  },
 
   methods: {
+    exportExcel() {
+      $settleMarketDownLoad(this.searchForm).then((res) => {
+        this.data = res.data
+        this.totalCount = res.data.total
+      })
+    },
+
+    getList() {
+      if (this.searchForm.param.dateParam.updateTime) {
+        this.searchForm.param.dateParam.updateDateFrom = this.searchForm.param.dateParam.updateTime[0] + ''
+        this.searchForm.param.dateParam.updateDateTo = this.searchForm.param.dateParam.updateTime[1]
+      }
+
+      $settleMarketGetWithTime(this.searchForm).then((res) => {
+        this.data = res.data.rcords
+        this.totalCount = res.data.total
+      })
+      $settleMarketGetSumWithTime(this.searchForm).then((res) => {
+        this.totalData = res.data
+        // this.data = res.data
+        // this.totalCount = res.data.total
+      })
+    },
+
     headerStyle({ column, rowIndex, columnIndex }) {
       console.log('rowIndex', rowIndex)
       if (rowIndex == 0) {
