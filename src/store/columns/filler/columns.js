@@ -49,6 +49,9 @@ const columns = {
   info: [
     { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { type: 'hide', isNode: true, parent: 'gasstationVO' } },
     { field: 'gasstationName', name: '企业名称', nameSpan: 6, fixed: 'left', show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入企业名称', isDisabled: true }, search: { type: 'text', nameSpan: 0, placeholder: '请输入企业名称' } },
+    
+    { field: 'marketType', name: '经营模式',  formatter: 'marketType', search: { type: 'select', obj: 'marketType', placeholder: '经营模式' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'marketType', serial: 3, ou: 1 } },
+
     { field: 'nickName', name: '加气站名称', nameSpan: 6, show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType', nameSpan: 6, show: { type: 'select', ou: 2, obj: 'gasstationType', parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请选择站点类型' }, rules: [{ required: true, message: '请选择站点类型', trigger: 'blur' }] },
     { field: 'listPrice', name: '加气站挂牌价(元/公斤)', ispush: false },
