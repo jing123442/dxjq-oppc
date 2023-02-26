@@ -5,11 +5,14 @@
         <el-form :inline="true" size="mini">
           <el-form-item label="">
             <el-date-picker
-              v-model="searchForm.param.dateParam.updateTime"
+              v-model="updateTime"
               type="daterange"
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              clearable
+
             >
             </el-date-picker>
           </el-form-item>
@@ -78,7 +81,7 @@
           </div>
 
       <div class="between" style="margin-bottom:10px;margin-top: 10px;">
-          <el-select v-model="searchForm.param.type" size="mini">
+          <el-select v-model="searchForm.param.type" size="mini" @change="changeSelect">
             <el-option
               v-for="item in selectType"
               :key="item.value"
@@ -370,12 +373,14 @@ export default {
         { name: '按物流客户分组', value: '1' }
       ],
       data: [],
+      updateTime: [],
       searchForm: {
         page: 1,
         size: 10,
         param: {
           dateParam: {
-            updateTime: ''
+            updateDateFrom: '',
+            updateDateTo: ''
           },
           type: '0'
         }
@@ -402,7 +407,16 @@ export default {
   },
 
   methods: {
+    changeSelect(e) {
+      console.log('changeSelect', e)
+      this.searchForm.page = 1
+      this.getList()
+    },
     exportExcel() {
+      if (this.updateTime) {
+        this.searchForm.param.dateParam.updateDateFrom = this.updateTime[0]
+        this.searchForm.param.dateParam.updateDateTo = this.updateTime[1]
+      }
       $settleMarketDownLoad(this.searchForm).then((res) => {
         this.data = res.data
         this.totalCount = res.data.total
@@ -410,13 +424,16 @@ export default {
     },
 
     getList() {
-      if (this.searchForm.param.dateParam.updateTime) {
-        this.searchForm.param.dateParam.updateDateFrom = this.searchForm.param.dateParam.updateTime[0] + ''
-        this.searchForm.param.dateParam.updateDateTo = this.searchForm.param.dateParam.updateTime[1]
+      console.log('aaaaa', this.updateTime)
+      console.log('bbbb', this.updateTime[0])
+      console.log('cccc', this.updateTime[1])
+      if (this.updateTime) {
+        this.searchForm.param.dateParam.updateDateFrom = this.updateTime[0]
+        this.searchForm.param.dateParam.updateDateTo = this.updateTime[1]
       }
 
       $settleMarketGetWithTime(this.searchForm).then((res) => {
-        this.data = res.data.rcords
+        this.data = res.data.records
         this.totalCount = res.data.total
       })
       $settleMarketGetSumWithTime(this.searchForm).then((res) => {

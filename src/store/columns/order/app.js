@@ -4,6 +4,7 @@ const app = {
       { ou: 1, name: '', status: 3 },
       { ou: 2, name: '', status: 3 },
       { ou: 3, name: '', status: 3 },
+      { ou: 6, name: '', status: 3 },
       { ou: 4, name: '', status: 3 },
       { ou: 5, name: '', status: 3 },
     ],

@@ -5,7 +5,7 @@
     :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL"
     :responseSuccess="response_success" :queryParam="queryParams"
     :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list"
-    @onListEvent="onListEvent" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue"></em-table-list>
+    @onListEvent="onListEvent" @onReqParams="onReqParams" @updateColumnValue="updateColumnValue" :tableBtnEvent="tableBtnEvent"></em-table-list>
   </div>
 </template>
 <script>
@@ -39,11 +39,16 @@ export default {
         unit: ' 公斤'
       }],
       totalInfo: { totalGas: 0, amount: 0, totalServiceFee: 0 },
-      buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */]
+      buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */],
+      detailRow: {},
+      mode_curr_detail_list: [],
+      page_curr_detail_column: [],
+      dialogDetailCarrierVisible: false
     })
   },
   computed: {
     ...mapGetters({
+      order_dialog_column: 'order_dialog_column',
       mode_list: 'order_list_mode_list',
       page_status: 'order_list_page_status',
       page_column: 'order_list_column',
@@ -54,14 +59,25 @@ export default {
     })
   },
   mounted: function () {
-    console.log(this.$refs.tables)
   },
   methods: {
-    onListEvent(type, row) {},
+    onListEvent(type, row) {
+      if (type == 'detail') {
+        console.log('type', type, row)
+      }
+      this.detailRow = row
+      console.log('type', type, row)
+    },
+    tableBtnEvent(row, option) {
+      console.log('typetype', row)
+      console.log('optionoption', option)
+    },
+
     updateColumnValue(tableData, callback) {
-      tableData.forEach(item => {
+      tableData.forEach((item) => {
         item.orderRealTotal = item.payType == 11 ? (Number(item.amount) - Number(item.comAmount)).toFixed(2) : ''
       })
+
       callback(tableData)
     },
     initTotalData() {

@@ -1,5 +1,6 @@
 <template>
   <div class="template-main">
+    222
     <em-table-list :tableListName="'usercarrier'" ref="tables" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :buttonsList="buttonsList" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent"></em-table-list>
 
     <el-dialog title="详情" :visible.sync="dialogDetailCarrierVisible" :width="add_edit_dialog" :append-to-body="true">

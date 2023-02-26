@@ -295,8 +295,7 @@ export function utilsPriceType() {
 export function utilsMarketType() {
   return [
     { value: 0, label: '一体化' },
-    { value: 1, label: '一体化' },
-    { value: 2, label: '新营销' }
+    { value: 1, label: '新营销' }
   ]
 }
 export function utilsPrintPaper() {
