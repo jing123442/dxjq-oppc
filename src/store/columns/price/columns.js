@@ -377,9 +377,9 @@ const columns = {
     { field: 'auditType', name: '审核类型', hide: false,formatter: 'auditType',search:{type: 'select', obj: 'checkPriceType', placeholder: '审核类型' }  },
     { field: 'lngFromId', name: '最新售卖价执行状态', hide: false},
 
-    { field: 'lngFromId', name: '最新售卖价执行时间', hide: false },
-    { field: 'calFreight', name: '最新操作时间', ispush: false },
-    { field: 'mileage', name: '操作人', ispush: false },
+    { field: 'status', name: '最新售卖价执行时间',formatter: 'status',  hide: false },
+    { field: 'operatorDate', name: '最新操作时间', ispush: false },
+    { field: 'operatorName', name: '操作人', ispush: false },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 230, fixed: 'right', list: [ { type: 'price_log', name: '调价记录' }, { type: 'type_check', name: '设置审核类型' },{ type: 'check_btn', name: '审核' }] }
   ],
 }
