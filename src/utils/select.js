@@ -474,6 +474,14 @@ export function businessStateType() {
     { value: 1, label: '停业' }
   ]
 }
+
+export function utilsCheckPriceType() {
+  return [
+    { value: 0, label: '站点自主' },
+    { value: 1, label: '平台审核' }
+  ]
+}
+
 export function untilsMarketingManList() {
   // const params = {
   //   page: 1, param: { baseRole: 7, status: 0, userType: 0 }, size: 100

@@ -14,7 +14,7 @@ export default {
       buttonsList: [],
       queryCustURL: {
         list: {
-          url: 'strategy/price_config_market/find',
+          url: 'strategy/price_config_market/list',
           method: 'post',
           parse: {
             tableData: ['data', 'records'],
@@ -28,9 +28,9 @@ export default {
   computed: {
     ...mapGetters({
       mode_list: 'market_cost_mode_list',
-      page_status: 'market_cost_page_status',
-      page_column: 'stander_price_column',
-      select_list: 'market_cost_select_list',
+      page_status: 'sale_price_status',
+      page_column: 'sale_price_column',
+      select_list: 'sale_price_select',
       response_success: 'response_success'
     })
   },

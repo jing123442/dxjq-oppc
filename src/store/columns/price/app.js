@@ -15,6 +15,7 @@ const app = {
     directOrder: 13,
     snpRetail: 13,
     auyanRetail: 13,
+    gasStationSalePrice:13
   }
 }
 

@@ -141,6 +141,14 @@ const getters = {
   // 长城奥扬零售价--调价记录
   price_auyanRetail_log_column: item => columns.auyanRetailLog,
   price_auyanRetail_log_select_list: item => select.auyanRetailLog,
+
+  // 新营销定价-标准定价
+  stander_price_column:item => columns.standerPrice,
+
+    // 新营销定价-加气站售卖价
+    sale_price_column:item => columns.gasStationSalePrice,
+    sale_price_select:item => select.gasStationSalePrice,
+    sale_price_status: item => app.list.gasStationSalePrice,
 }
 
 export default {

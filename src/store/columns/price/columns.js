@@ -357,6 +357,31 @@ const columns = {
     { field: 'operatorName', name: '操作人' },
     { field: 'status', formatter: 'status', name: '调价执行状态' },
   ],
+  standerPrice: [
+    { field: 'gasstationName', name: '加气站',   fixed: 'left', search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' } },
+    { field: 'address', name: '执行中 · 标准定价(元/公斤)', ispush: false },
+
+    { field: 'lngFromId', name: '执行中 · 加气站售卖价（元/公斤）', hide: false },
+
+    { field: 'lngFromId', name: '执行中 · 标准差价', hide: false },
+    { field: 'calFreight', name: '执行中 · 物流非标差价数量', ispush: false },
+    { field: 'mileage', name: '标准定价执行时间', ispush: false },
+    { field: 'mileage', name: '经营模式', ispush: false },
+    { field: 'mileage', name: '交易模式', ispush: false },
+  ],
+  gasStationSalePrice: [
+    { field: 'gasstationName', name: '加气站',   fixed: 'left', search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' } },
+    { field: 'address', name: '执行中 · 售卖价(元/公斤)', ispush: false },
+
+    { field: 'lngFromId', name: '执行中 · 最新售卖价（元/公斤）', hide: false },
+    { field: 'auditType', name: '审核类型', hide: false,formatter: 'auditType',search:{type: 'select', obj: 'checkPriceType', placeholder: '审核类型' }  },
+    { field: 'lngFromId', name: '最新售卖价执行状态', hide: false},
+
+    { field: 'lngFromId', name: '最新售卖价执行时间', hide: false },
+    { field: 'calFreight', name: '最新操作时间', ispush: false },
+    { field: 'mileage', name: '操作人', ispush: false },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', width: 230, fixed: 'right', list: [ { type: 'price_log', name: '调价记录' }, { type: 'type_check', name: '设置审核类型' },{ type: 'check_btn', name: '审核' }] }
+  ],
 }
 
 export default columns

@@ -183,7 +183,7 @@ const columns = {
     { field: 'updateDate', name: '更新时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
     { field: 'balance', name: '账户余额', ispush: false, hide: true, nameSpan: 5,
       detail: { type: 'span', serial: 16, ou: 2, isDisabled: true, defaultValue: 0 } },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'bind', name: '绑定司机' }, /* { type: 'edit', name: '编辑' }, */ { type: 'detail', name: '详情11' }] }
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'bind', name: '绑定司机' }, /* { type: 'edit', name: '编辑' }, */ { type: 'detail', name: '详情' }] }
   ],
   vehicle_collect: [
     { field: 'amount', name: '归集金额', lg: 24, xl: 24, show: { type: 'text', placeholder: '请输入归集金额' }, rules: [{ required: true, message: '请输入归集金额', trigger: 'blur' }] },
