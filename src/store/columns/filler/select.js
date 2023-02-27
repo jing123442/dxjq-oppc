@@ -18,7 +18,11 @@ import {
   utilsLNGDataSearch,
   utilsContractStatus,
   utilsFillerParentList,
-  utilSelectGasstationType
+  utilSelectGasstationType,
+  utilsMarketType,
+  utilsSiteType,
+  businessStateType,
+  utilsNameType
 } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
 
@@ -31,23 +35,32 @@ const select = {
     contractStatus: utilsContractStatus(),
     identityType: utilsIdentityType(),
     bankList: utilsBankList(),
-    fillerParent: utilsFillerParentList()
+    fillerParent: utilsFillerParentList(),
+
   },
   info: {
     orgId: utilsDyOrgList(1),
     status: utilsStatus(),
     cascaderAddress: regionData,
     address: untilsAddress(),
+    marketType:utilsMarketType(),
     qrcodeType: [
       { value: 0, label: '未设置' },
       { value: 1, label: '加气站二维码' },
       { value: 2, label: '收银员二维码' }
     ],
-    gasstationType: utilSelectGasstationType('inner')
+    currFieldSearch: [{ value: 'nickName', label: '加气站名称' }, { value: 'gasstationName', label: '企业名称'}],
+    siteType:utilsSiteType(),
+    businessState:businessStateType(),
+    // gasstationType: utilSelectGasstationType('inner')
+    gasstationType: utilsSiteType()
   },
   account: {
     orgId: utilsDyOrgList(1)
   },
+  nameType:utilsNameType,
+
+
   accountList: {
     type: utilsTradeType()
   },

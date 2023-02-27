@@ -1,6 +1,5 @@
 <template>
   <div class="template-main">
-    11111
     <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 158px;'"></table-total-data>
     <em-table-list ref="tables" :tableListName="'buyOrder'" :authButtonList="authButtonList"
     :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL"
@@ -11,7 +10,7 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, callbackPagesInfo, isTypeof } from '@/utils/tools'
+import { initVueDataOptions, callbackPagesInfo, isTypeof, queryDefaultParams } from '@/utils/tools'
 import { TableTotalData } from '@/components'
 import { mapGetters } from 'vuex'
 
@@ -40,6 +39,7 @@ export default {
         field: 'totalGas',
         unit: ' 公斤'
       }],
+      queryParams: queryDefaultParams(this, { type: 2, key: 'param', value: { gasOrder: { priceType: '2' } } }),
       totalInfo: { totalGas: 0, amount: 0, totalServiceFee: 0 },
       buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */]
     })
@@ -48,8 +48,9 @@ export default {
     ...mapGetters({
       mode_list: 'order_list_mode_list',
       page_status: 'order_list_page_status',
-      page_column: 'order_list_column',
+      page_column: 'order_buy_list_column',
       select_list: 'order_list_select_list',
+
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success'

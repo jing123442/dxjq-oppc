@@ -409,7 +409,12 @@ export function utilsOperateType() {
     { value: 2, label: '删除' }
   ]
 }
-
+export function utilsNameType() {
+  return [
+    { value: 1, label: '加气站名称' },
+    { value: 2, label: '企业名称' }
+  ]
+}
 export function utilsLNGDataSearch() {
   return [
     /* { value: 'planTime', label: '期望到站日期' }, */
@@ -451,6 +456,24 @@ export function utilSelectGasstationType(type = '') {
   return result
 }
 
+export function utilsSiteType() {
+  return [
+    { value: 1001, label: '合作经营' },
+    { value: 1002, label: '核心联营' },
+    { value: 1003, label: '停业' },
+    { value: 2001, label: '中海油' },
+    { value: 2002, label: '中石油' },
+    { value: 2003, label: '中石化' },
+    { value: 2004, label: '社会' }
+  ]
+}
+
+export function businessStateType() {
+  return [
+    { value: 0, label: '在营' },
+    { value: 1, label: '停业' }
+  ]
+}
 export function untilsMarketingManList() {
   // const params = {
   //   page: 1, param: { baseRole: 7, status: 0, userType: 0 }, size: 100
