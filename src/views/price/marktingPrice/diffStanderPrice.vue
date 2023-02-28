@@ -175,7 +175,7 @@
 </template>
 <script>
 
-import { $getMarketStander, $getMarketLog } from '@/service/strategy'
+import { $getMarketDiffStander, $getMarketDiffStanderLog } from '@/service/strategy'
 import {
   utilsMarketType, utilsCheckPriceType, utilsExecuteStatus
 } from '@/utils/select'
@@ -254,7 +254,7 @@ export default {
 
     },
     getList() {
-      $getMarketStander(this.searchForm).then((res) => {
+      $getMarketDiffStander(this.searchForm).then((res) => {
         this.data = res.data.records
         this.totalCount = res.data.total
       })
@@ -266,7 +266,7 @@ export default {
         this.logSearchForm.param.dateParam.updateDateFrom = this.logUpdateTime[0]
         this.logSearchForm.param.dateParam.updateDateTo = this.logUpdateTime[1]
       }
-      $getMarketLog(this.logSearchForm).then((res) => {
+      $getMarketDiffStanderLog(this.logSearchForm).then((res) => {
         this.logData = res.data.records
         this.logTotal = res.data.total
       })

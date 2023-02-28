@@ -482,6 +482,13 @@ export function utilsCheckPriceType() {
   ]
 }
 
+export function utilsPriceExcuteType() {
+  return [
+    { value: 1, label: '定时生效' },
+    { value: 2, label: '立即生效' }
+  ]
+}
+
 export function untilsMarketingManList() {
   // const params = {
   //   page: 1, param: { baseRole: 7, status: 0, userType: 0 }, size: 100

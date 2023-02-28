@@ -308,5 +308,28 @@ export async function $getPlatformProfit (url) {
 
 // 订单查询
 export async function $getMarketStander (data) {
-  return await R({ url: 'strategy/price_config_market/find', data })
+  return await R({ url: 'strategy/price_config_market/list', data })
+}
+export async function $getMarketLog (data) {
+  return await R({ url: 'strategy/price_config_market/list_log', data })
+}
+
+export async function $getMarketDiffStander (data) {
+  return await R({ url: 'strategy/price_config_market_diff/list', data })
+}
+export async function $getMarketDiffStanderLog (data) {
+  return await R({ url: 'strategy/price_config_market_diff/list_log', data })
+}
+
+export async function $getMarketDiff (data) {
+  return await R({ url: 'strategy/price_config_market_undiff/list', data })
+}
+export async function $getMarketDiffLog (data) {
+  return await R({ url: 'strategy/price_config_market_undiff/list_log', data })
+}
+export async function $getMarketDiffDel (data) {
+  return await R({ url: 'strategy/price_config_market_undiff/remove', data })
+}
+export async function $getMarketDiffAdd (data) {
+  return await R({ url: 'strategy/price_config_market_undiff/add', data })
 }

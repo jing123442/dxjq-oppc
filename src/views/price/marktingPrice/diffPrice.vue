@@ -8,9 +8,7 @@
           </el-form-item>
 
           <el-form-item label="">
-            <el-select  v-model="searchForm.param.auditType">
-              <el-option v-for="item in utilsCheckPriceType" :label="item.label" :value="item.value" :key="item.value"></el-option>
-            </el-select>
+            <el-input placeholder="请输入物流客户" v-model="searchForm.param.carrierOrgName"  size="small"></el-input>
           </el-form-item>
 
         </el-form>
@@ -26,6 +24,14 @@
     </div>
 
     <div class="bg">
+      <div class="between" style="margin-bottom:10px;margin-top: 10px;">
+        <view></view>
+          <div class="row">
+            <el-button type="primary" @click="showAddDialog = true" size="mini">新增</el-button>
+          <el-button type="primary" @click="exportExcel()" size="mini">相关订单</el-button>
+          </div>
+
+      </div>
       <el-table
         :data="data"
         border
@@ -34,30 +40,20 @@
         :header-cell-style="{ background: 'rgb(246, 246, 246)', color: '#606266', borderColor: '#EBEEF5' }"
         @selection-change="handleSelectionChange"
       >
-      <el-table-column
-      type="selection"
-      width="55">
-    </el-table-column>
         <el-table-column prop="gasstationName" label="加气站" show-overflow-tooltip>
         </el-table-column>
-
-        <el-table-column prop="platformPrice" label="执行中·售卖价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="gasstationName" label="物流客户" show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column prop="platformPrice" label="执行中·非标差价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column prop="platformPricePlan" label="执行中·最新售卖价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="platformPricePlan" label="最新非标差价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column prop="auditType" label="审核类型" show-overflow-tooltip>
-          <template slot-scope="scope">
-            <div v-for="item,index in utilsCheckPriceType" :key="index">
-              {{  item.value == scope.row.auditType?item.label:'' }}
-            </div>
-          </template>
-        </el-table-column>
 
-        <el-table-column prop="status" label="最新售卖价执行状态" show-overflow-tooltip>
+        <el-table-column prop="status" label="最新非标差价执行状态" show-overflow-tooltip>
         </el-table-column>
-        <el-table-column prop="updateDate" label="最新售卖价执行时间" show-overflow-tooltip>
+        <el-table-column prop="updateDate" label="最新非标差价执行时间" show-overflow-tooltip>
         </el-table-column>
 
         <el-table-column prop="operatorDate" label="最新操作时间" show-overflow-tooltip>
@@ -68,9 +64,10 @@
 
         <el-table-column label="操作" width="280">
           <template slot-scope="scope">
+
+          <el-button type="text" @click="del(scope.row)">删除</el-button>
           <el-button type="text" @click="changeLog(scope.row)">调价记录</el-button>
-          <el-button type="text" @click="setCheckType(scope.row)">设置审核类型</el-button>
-          <el-button type="text" @click="check(scope.row)">审核</el-button>
+          <el-button type="text" @click="check(scope.row)">调价</el-button>
           </template>
         </el-table-column>
 
@@ -89,8 +86,56 @@
       />
     </div>
 
+    <el-dialog append-to-body width="30%"  :title="logRow.gasstationName+logRow.carrierOrgName+'物流非标差价调价记录'" :visible.sync="showAddDialog">
 
-    <el-dialog append-to-body width="80%"  :title="logRow.gasstationName+'售卖价调价记录'" :visible.sync="showLogDialog">
+      <el-form :model="form" :rules="rules" ref="form" >
+          <el-form-item label="加气站(新营销直销加气)" :label-width="formLabelWidth" prop="orgId" >
+            <el-select
+              v-model="form.gasstationId"
+              clearable
+              filterable
+              placeholder="请输入"
+            >
+
+              <el-option
+                v-for="item in comList"
+                :key="item.id"
+                :label="item.orgName"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="物流客户(直销加气)" :label-width="formLabelWidth" prop="clientId" >
+            <el-select
+              v-model="form.carrierOrgId"
+              clearable
+              filterable
+              placeholder="请选择"
+              @blur.native="selectBlur"
+              @change="selectBlur"
+            >
+              <el-option
+                v-for="(item,index) in unBindList"
+                :key="index"
+                :label="item.clientId"
+                :value="index"
+              />
+            </el-select>
+          </el-form-item>
+
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="showAddDialog = false">取 消</el-button>
+          <el-button type="primary" @click="add('form')"
+            >确 定</el-button
+          >
+        </div>
+
+    </el-dialog>
+
+
+    <el-dialog append-to-body width="80%"  :title="logRow.gasstationName+logRow.carrierOrgName+'物流非标差价调价记录'" :visible.sync="showLogDialog">
       <div class="top-bg">
       <div class="between">
         <el-form :inline="true" size="small" style="flex:1">
@@ -133,28 +178,16 @@
         stripe
         :header-cell-style="{ background: 'rgb(246, 246, 246)', color: '#606266', borderColor: '#EBEEF5' }"
       >
-
-        <el-table-column prop="platformPrice" label="售卖价(元/公斤)" show-overflow-tooltip>
-        </el-table-column>
-
-        <el-table-column prop="auditType" label="审核类型" show-overflow-tooltip>
-          <template slot-scope="scope">
-            <div v-for="item,index in utilsCheckPriceType" :key="index">
-              {{  item.value == scope.row.auditType?item.label:'' }}
-            </div>
-          </template>
+        <el-table-column prop="platformPrice" label="非标差价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="updateDate" label="调价执行时间" show-overflow-tooltip>
         </el-table-column>
-
         <el-table-column prop="operatorDate" label="操作时间" show-overflow-tooltip>
         </el-table-column>
-
         <el-table-column prop="operatorName" label="操作人" show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="status" label="调价执行状态" show-overflow-tooltip>
         </el-table-column>
-
       </el-table>
       <el-pagination
         style="margin-right: 28px; margin-top: 15px"
@@ -175,7 +208,7 @@
 </template>
 <script>
 
-import { $getMarketStander, $getMarketLog } from '@/service/strategy'
+import { $getMarketDiff, $getMarketDiffLog, $getMarketDiffDel, $getMarketDiffAdd } from '@/service/strategy'
 import {
   utilsMarketType, utilsCheckPriceType, utilsExecuteStatus
 } from '@/utils/select'
@@ -226,10 +259,14 @@ export default {
       logData: [],
       logTotal: 0,
 
+      showAddDialog: false,
+      form: {
+
+      },
       totalInfo: {},
       totalCount: 0,
       dialogFormVisible: false,
-      formLabelWidth: '120px',
+      formLabelWidth: '180px',
       searchText: ''
     }
   },
@@ -247,14 +284,27 @@ export default {
       this.showLogDialog = true
       this.getLog()
     },
-    setCheckType() {
-
+    del(row) {
+      $getMarketDiffDel({ id: row.id }).then((res) => {
+        if (res.code == 200) {
+          this.$message.success('删除成功')
+          this.getList()
+        }
+      })
+    },
+    add() {
+      $getMarketDiffAdd({ id: row.id }).then((res) => {
+        if (res.code == 200) {
+          this.$message.success('删除成功')
+          this.getList()
+        }
+      })
     },
     check() {
 
     },
     getList() {
-      $getMarketStander(this.searchForm).then((res) => {
+      $getMarketDiff(this.searchForm).then((res) => {
         this.data = res.data.records
         this.totalCount = res.data.total
       })
@@ -266,7 +316,7 @@ export default {
         this.logSearchForm.param.dateParam.updateDateFrom = this.logUpdateTime[0]
         this.logSearchForm.param.dateParam.updateDateTo = this.logUpdateTime[1]
       }
-      $getMarketLog(this.logSearchForm).then((res) => {
+      $getMarketDiffLog(this.logSearchForm).then((res) => {
         this.logData = res.data.records
         this.logTotal = res.data.total
       })

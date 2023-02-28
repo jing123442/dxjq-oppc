@@ -76,7 +76,9 @@ export default [
         meta: { title: '新营销定价', noCache: false },
         children: [
           { path: 'standardPrice', component: inImport('price/marktingPrice/standardPrice'), name: 'standardPrice', meta: { title: '标准定价', noCache: false } },
-          { path: 'gasStationSalePrice', component: inImport('price/marktingPrice/gasStationSalePrice'), name: 'gasStationSalePrice', meta: { title: '加气站售卖价', noCache: false } }
+          { path: 'gasStationSalePrice', component: inImport('price/marktingPrice/gasStationSalePrice'), name: 'gasStationSalePrice', meta: { title: '加气站售卖价', noCache: false } },
+          { path: 'diffStanderPrice', component: inImport('price/marktingPrice/diffStanderPrice'), name: 'gasStationSalePrice', meta: { title: '标准差价', noCache: false } },
+          { path: 'diffPrice', component: inImport('price/marktingPrice/diffPrice'), name: 'diffPrice', meta: { title: '物流非标差价', noCache: false } }
         ]
       }
     ]
