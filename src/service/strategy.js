@@ -305,3 +305,8 @@ export async function $priceConfigPlan (url, data) {
 export async function $getPlatformProfit (url) {
   return await R({ url })
 }
+
+// 订单查询
+export async function $getMarketStander (data) {
+  return await R({ url: 'strategy/price_config_market/find', data })
+}

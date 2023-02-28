@@ -61,7 +61,12 @@ const columns = {
     
     { field: 'marketType', name: '经营模式',  formatter: 'marketType', nameSpan: 6,search: { type: 'select', obj: 'marketType', placeholder: '经营模式' }, 
     show: { type: 'select', ou: 2, obj: 'marketType', style: 'width: 90%', model: 'select', },
-    rules: [{ required: true, message: '请选择经营模式', trigger: 'blur' }]  },
+    rules: [{ required: true, message: '请选择经营模式', trigger: 'blur' }],
+    cascaderLoder:[
+      {selectField:'gasstationType',cover:1002,cancelField:'gasType',params:{marketType:[{value: 0, label: '一体化' }]}}
+    ]
+  
+  },
 
     { field: 'businessState', name: '营业状态', nameSpan: 6, formatter: 'businessState', search: { type: 'select', obj: 'businessState', placeholder: '营业状态' }, 
     show: { type: 'select', style: 'width: 90%', model: 'select', obj: 'businessState',  ou: 2 } },
@@ -71,7 +76,9 @@ const columns = {
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType', nameSpan: 6,
     search: { type: 'select', obj: 'gasstationType', placeholder: '站点类型' },
      show: { type: 'select', ou: 2, obj: 'gasstationType', parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请选择站点类型' },
-      rules: [{ required: true, message: '请选择站点类型', trigger: 'blur' }] },
+      rules: [{ required: true, message: '请选择站点类型', trigger: 'blur' }],
+   
+    },
 
 
     { field: 'listPrice', name: '加气站挂牌价(元/公斤)', ispush: false },

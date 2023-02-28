@@ -1,53 +1,254 @@
 <template>
-  <div class="template-main">
-    <em-table-list :tableListName="'cost'" :authButtonList="authButtonList" :axios="axios" :buttonsList="buttonsList" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+  <div class="main">
+    <div class="top-bg">
+      <div class="between">
+        <el-form :inline="true" size="small" style="flex:1">
+          <el-form-item label="">
+            <el-select v-model="selectTypeValue">
+              <el-option v-for="item in selectType" :label="item.name" :value="item.value" :key="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+
+
+            <el-form-item label="">
+            <el-input placeholder="请输入加气站" v-model="searchForm.param.gasOrder.carrierOrgName"  size="small"></el-input>
+          </el-form-item>
+
+          <el-form-item label="">
+            <el-select  v-model="numberTypeKey">
+              <el-option v-for="item in numberType" :label="item.name" :value="item.value" :key="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="">
+            <el-input placeholder="请输入" v-model="numberTypeValue" ></el-input>
+          </el-form-item>
+
+          <el-form-item label="">
+            <el-input placeholder="请输入加气站" v-model="searchForm.param.gasOrder.gasstationName" clearable></el-input>
+          </el-form-item>
+
+
+        </el-form>
+        <div style="width:150px">
+          <el-button @click="reset" size="mini" type="info" plain
+            >重置</el-button
+          >
+          <el-button type="primary" @click="getList()" size="mini"
+            >查询</el-button
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="bg">
+      <el-table
+        :data="data"
+        border
+        size="mini"
+        stripe
+        :header-cell-style="{ background: 'rgb(246, 246, 246)', color: '#606266', borderColor: '#EBEEF5' }"
+      >
+        <el-table-column prop="orderId" label="加气站" show-overflow-tooltip>
+        </el-table-column>
+
+        <el-table-column prop="createDate" label="执行中·标准定价(元/公斤)" show-overflow-tooltip>
+        </el-table-column>
+
+        <el-table-column prop="updateDate" label="执行中·标准售卖价(元/公斤)" show-overflow-tooltip>
+        </el-table-column>
+
+        <el-table-column prop="orgName" label="执行中·标准差价(元/公斤)" show-overflow-tooltip>
+        </el-table-column>
+
+        <el-table-column prop="orgName" label="执行中·物流非标差价数量" show-overflow-tooltip>
+        </el-table-column>
+
+        <el-table-column prop="orgName" label="标准定价执行时间" show-overflow-tooltip>
+        </el-table-column>
+
+        <el-table-column prop="orgName" label="经营模式" show-overflow-tooltip>
+        </el-table-column>
+
+        <el-table-column prop="orgName" label="车牌号" show-overflow-tooltip>
+        </el-table-column>
+
+        <el-table-column prop="orgName" label="交易模式" show-overflow-tooltip>
+        </el-table-column>
+
+
+
+      </el-table>
+      <el-pagination
+        style="margin-right: 28px; margin-top: 15px"
+        background
+        align="center"
+        layout="total, sizes,prev, pager, next,jumper"
+        :page-sizes="[10, 20, 50, 100]"
+        :current-page="searchForm.page"
+        :page-size="searchForm.size"
+        @current-change="pageChange"
+        @size-change="sizeChange"
+        :total="totalCount"
+      />
+    </div>
+
   </div>
 </template>
 <script>
-import { initVueDataOptions, callbackPagesInfo } from '@/utils/tools'
-import { mapGetters } from 'vuex'
+
+import { $getMarketStander } from '@/service/strategy'
+import {
+  utilsOrderStatus, utilsPriceType, utilsMarketType, utilsTradeModeType, utilsPayType
+} from '@/utils/select'
 
 export default {
-  name: 'cost',
   data() {
-    return initVueDataOptions(this, {
-      buttonsList: [],
-      queryCustURL: {
-        list: {
-          url: 'strategy/price_config_market/find',
-          method: 'post',
-          parse: {
-            tableData: ['data', 'records'],
-            totalCount: ['data', 'total']
-          }
-        },
-        name: '长城奥扬费用'
-      }
-    })
-  },
-  computed: {
-    ...mapGetters({
-      mode_list: 'market_cost_mode_list',
-      page_status: 'market_cost_page_status',
-      page_column: 'stander_price_column',
-      select_list: 'market_cost_select_list',
-      response_success: 'response_success'
-    })
-  },
-  created() { },
-  mounted: function () { },
-  methods: {
-    onListEvent(type, row) {},
-    handleClick(tab, event) {
-      this.nextTick = false
-      this.initTableList()
-    },
-    onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this))
+    return {
+      selectTypeValue: '0',
+      selectType: [
+        { name: '创建时间', value: '0' },
+        { name: '支付时间', value: '1' }
+      ],
+      numberTypeKey: '0',
+      numberTypeValue: '',
+      numberType: [
+        { name: '车牌号', value: '0' },
+        { name: '订单编号', value: '1' },
+        { name: '司机姓名', value: '2' },
+        { name: '收银员姓名', value: '3' }
+      ],
+      utilsOrderStatus: utilsOrderStatus(),
+      utilsPriceType: utilsPriceType(),
+      utilsMarketType: utilsMarketType(),
+      utilsTradeModeType: utilsTradeModeType(),
+      utilsPayType: utilsPayType(),
 
-      // eslint-disable-next-line standard/no-callback-literal
-      callback(params)
+      data: [],
+      arrayTime: [],
+      searchForm: {
+        page: 1,
+        size: 10,
+        param: {
+          dateParam: {
+            updateDateFrom: '',
+            updateDateTo: ''
+          },
+          gasOrder: {}
+        }
+      },
+      totalInfo: {},
+      totalCount: 0,
+      dialogFormVisible: false,
+      formLabelWidth: '120px',
+      searchText: ''
+    }
+  },
+  computed: {},
+  mounted() {
+    this.getMarketStande()
+  },
+
+  methods: {
+
+    getList() {
+      $getMarketStander(this.searchForm).then((res) => {
+        this.data = res.data.records
+        this.totalCount = res.data.total
+      })
+    },
+
+    reset() {
+      this.searchForm = {
+        page: 1,
+        size: 10,
+        param: {}
+      }
+      this.getList()
+    },
+
+    pageChange(page) {
+      this.searchForm.page = page
+      this.getList()
+    },
+    sizeChange(limit) {
+      this.searchForm.page = 1
+      this.searchForm.size = limit
+      this.getList()
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+
+.count {
+  padding: 10px;
+  width:fit-content;
+  display: flex;
+  flex-direction: column;
+  background-color: #fffdd3;
+  .count-item {
+    display: flex;
+    margin-right: 15px;
+    .count-key {
+      color: #2f3337;
+      font-size: 14px;
+    }
+    .count-value {
+      color: red;
+      font-size: 14px;
+    }
+  }
+}
+.tableStyle3 {
+  font-weight: 400;
+
+  background: "rgb(246, 246, 246)";
+  color: "#606266";
+}
+.between {
+  display: flex;
+  justify-content: space-between;
+}
+.main {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  // .el-input__inner {
+  //   height: 30px;
+  //   line-height: 30px;
+  // }
+  // .el-input__icon {
+  //   line-height: 30px;
+  // }
+}
+
+.top-bg {
+  padding: 15px 15px 0 15px;
+  margin: 5px;
+  background: white;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bg {
+  padding: 15px;
+  margin: 5px;
+  background: white;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+.row {
+  display: flex;
+}
+
+
+</style>
