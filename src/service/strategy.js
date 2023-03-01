@@ -308,8 +308,23 @@ export async function $getPlatformProfit (url) {
 
 // 订单查询
 export async function $getMarketStander (data) {
+  return await R({ url: 'strategy/price_config_market/list_all', data })
+}
+
+
+export async function $getMarketSale (data) {
   return await R({ url: 'strategy/price_config_market/list', data })
 }
+
+export async function $saleAuditType (data) {
+  return await R({ url: 'strategy/price_config_market/edit_audit_type', data })
+}
+
+export async function $saleAuditExcute (data) {
+  return await R({ url: 'strategy/price_config_market/audit', data })
+}
+
+
 export async function $getMarketLog (data) {
   return await R({ url: 'strategy/price_config_market/list_log', data })
 }

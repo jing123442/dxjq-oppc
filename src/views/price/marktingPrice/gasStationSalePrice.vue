@@ -44,7 +44,7 @@
         <el-table-column prop="platformPrice" label="执行中·售卖价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column prop="platformPricePlan" label="执行中·最新售卖价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="platformPricePlan" label="最新售卖价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
 
         <el-table-column prop="auditType" label="审核类型" show-overflow-tooltip>
@@ -56,6 +56,11 @@
         </el-table-column>
 
         <el-table-column prop="status" label="最新售卖价执行状态" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <div v-for="item,index in utilsExecuteStatus" :key="index">
+              {{  item.value == scope.row.auditType?item.label:'' }}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column prop="updateDate" label="最新售卖价执行时间" show-overflow-tooltip>
         </el-table-column>
@@ -69,8 +74,10 @@
         <el-table-column label="操作" width="280">
           <template slot-scope="scope">
           <el-button type="text" @click="changeLog(scope.row)">调价记录</el-button>
-          <el-button type="text" @click="setCheckType(scope.row)">设置审核类型</el-button>
-          <el-button type="text" @click="check(scope.row)">审核</el-button>
+          <el-button type="text" @click="showAuditM(scope.row)">设置审核类型</el-button>
+
+          <el-button type="text" disabled v-if="scope.row.auditStatus==2">审核</el-button>
+          <el-button type="text" @click="showAuditStatusM(scope.row)" v-else>审核</el-button>
           </template>
         </el-table-column>
 
@@ -94,6 +101,13 @@
       <div class="top-bg">
       <div class="between">
         <el-form :inline="true" size="small" style="flex:1">
+
+          <el-form-item label="">
+            <el-select  v-model="selectTypeValue">
+              <el-option v-for="item in selectType" :label="item.name" :value="item.value" :key="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+
             <el-form-item label="">
             <el-date-picker
               v-model="logUpdateTime"
@@ -106,13 +120,6 @@
             >
             </el-date-picker>
           </el-form-item>
-
-          <el-form-item label="">
-            <el-select  v-model="searchForm.param.auditType">
-              <el-option v-for="item in utilsCheckPriceType" :label="item.label" :value="item.value" :key="item.value"></el-option>
-            </el-select>
-          </el-form-item>
-
         </el-form>
         <div style="width:150px">
           <el-button @click="resetLog" size="mini" type="info" plain
@@ -133,10 +140,8 @@
         stripe
         :header-cell-style="{ background: 'rgb(246, 246, 246)', color: '#606266', borderColor: '#EBEEF5' }"
       >
-
         <el-table-column prop="platformPrice" label="售卖价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
-
         <el-table-column prop="auditType" label="审核类型" show-overflow-tooltip>
           <template slot-scope="scope">
             <div v-for="item,index in utilsCheckPriceType" :key="index">
@@ -153,6 +158,11 @@
         <el-table-column prop="operatorName" label="操作人" show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="status" label="调价执行状态" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <div v-for="item,index in utilsExecuteStatus" :key="index">
+              {{  item.value == scope.row.status?item.label:'' }}
+            </div>
+          </template>
         </el-table-column>
 
       </el-table>
@@ -171,11 +181,62 @@
     </div>
     </el-dialog>
 
+    <el-dialog append-to-body width="30%"  title="设置审核类型" :visible.sync="showAuditType">
+      <el-form ref="exportCar"  size="small" label-position="left">
+        <el-form-item><div>{{ auditNames }}共({{selectedList.length}}个站）</div></el-form-item>
+        <el-form-item>
+          <el-radio v-model="auditType" label="1">站点自主</el-radio>
+           <el-radio v-model="auditType" label="0">平台审核</el-radio>
+        </el-form-item>
+
+        <el-form-item class="el-del-btn-item">
+          <div class="btn-item-footer">
+
+            <el-button type="auditType"
+                       size="small"
+                        @click="changeAuditType()">确定
+            </el-button>
+            <el-button
+                       size="small"
+                        @click="showAuditType=false">取消
+            </el-button>
+          </div>
+        </el-form-item>
+        </el-form>
+    </el-dialog>
+
+
+    <el-dialog append-to-body width="30%"  title="审核售卖价" :visible.sync="showAudit">
+      <el-form ref="exportCar2"  size="small" label-position="left">
+
+        <el-form-item><div>{{audioRow.gasstationName}}</div></el-form-item>
+        <el-form-item><div>售卖价：{{audioRow.platformPricePlan}}元/公斤</div></el-form-item>
+        <el-form-item><div>预约：{{audioRow.updateDate}}执行</div></el-form-item>
+        <el-form-item>
+          <el-radio v-model="auditStatus" label="2">通过</el-radio>
+           <el-radio v-model="auditStatus" label="3">不通过</el-radio>
+        </el-form-item>
+
+        <el-form-item class="el-del-btn-item">
+          <div class="btn-item-footer">
+            <el-button type="auditType"
+                       size="small"
+                        @click="audioExcute()">确定
+            </el-button>
+            <el-button
+                       size="small"
+                        @click="showAudit=false">取消
+            </el-button>
+          </div>
+        </el-form-item>
+        </el-form>
+    </el-dialog>
+
   </div>
 </template>
 <script>
 
-import { $getMarketStander, $getMarketLog } from '@/service/strategy'
+import { $getMarketSale, $getMarketLog, $saleAuditType, $saleAuditExcute } from '@/service/strategy'
 import {
   utilsMarketType, utilsCheckPriceType, utilsExecuteStatus
 } from '@/utils/select'
@@ -185,8 +246,8 @@ export default {
     return {
       selectTypeValue: '0',
       selectType: [
-        { name: '创建时间', value: '0' },
-        { name: '支付时间', value: '1' }
+        { name: '操作时间', value: '0' },
+        { name: '调价执行时间', value: '1' }
       ],
       numberTypeKey: '0',
       numberTypeValue: '',
@@ -230,7 +291,17 @@ export default {
       totalCount: 0,
       dialogFormVisible: false,
       formLabelWidth: '120px',
-      searchText: ''
+      searchText: '',
+
+      showAuditType: false,
+      auditType: '1',
+      auditNames: '',
+      selectedList: [],
+
+      showAudit: false,
+      auditStatus: '2',
+      selectedAudioList: [],
+      audioRow: {}
     }
   },
   computed: {},
@@ -239,22 +310,84 @@ export default {
   },
 
   methods: {
-    handleSelectionChange(e) {
 
+    showAuditStatusM(row) {
+      this.showAudit = true
+      this.audioRow = row
+      console.log('showAuditStatusM')
+    },
+
+    audioExcute() {
+      $saleAuditExcute({ auditStatus: this.auditStatus, gasstationId: this.audioRow.gasstationId }).then((res) => {
+        if (res.code == 0) {
+          this.showAudit = false
+          this.$message.success('修改成功')
+          this.getList()
+        }
+      })
+    },
+
+    showAuditM(row) {
+      this.showAuditType = true
+      if (this.selectedList.length == 0) {
+        this.selectedList.push(row)
+      }
+      let names = ''
+      for (let i = 0; i < this.selectedList.length; i++) {
+        if (i == this.selectedList.length - 1) {
+          names = names + this.selectedList[i].nickName
+        } else {
+          names = names + this.selectedList[i].nickName + ','
+        }
+        this.auditNames = names
+      }
+    },
+    changeAuditType() {
+      let ids = ''
+      for (let i = 0; i < this.selectedList.length; i++) {
+        if (i == this.selectedList.length - 1) {
+          ids = ids + this.selectedList[i].gasstationId
+        } else {
+          ids = ids + this.selectedList[i].gasstationId + ','
+        }
+      }
+      $saleAuditType({ auditType: this.auditType, gasstationId: ids }).then((res) => {
+        if (res.code == 0) {
+          this.showAuditType = false
+          this.$message.success('修改成功')
+          this.getList()
+        }
+      })
+    },
+
+    handleSelectionChange(e) {
+      console.log('eeeee', e)
+      this.selectedList = e
+    },
+    resetLog() {
+      this.logSearchForm = {
+        page: 1,
+        size: 10,
+        param: {
+          dateParam: {
+
+          },
+          priceConfigLog: {
+
+          }
+        }
+      }
     },
     changeLog(row) {
       this.logRow = row
       this.showLogDialog = true
       this.getLog()
     },
-    setCheckType() {
-
-    },
     check() {
 
     },
     getList() {
-      $getMarketStander(this.searchForm).then((res) => {
+      $getMarketSale(this.searchForm).then((res) => {
         this.data = res.data.records
         this.totalCount = res.data.total
       })
@@ -266,6 +399,7 @@ export default {
         this.logSearchForm.param.dateParam.updateDateFrom = this.logUpdateTime[0]
         this.logSearchForm.param.dateParam.updateDateTo = this.logUpdateTime[1]
       }
+      this.logSearchForm.param.priceConfigLog.gasstationId = this.logRow.gasstationId
       $getMarketLog(this.logSearchForm).then((res) => {
         this.logData = res.data.records
         this.logTotal = res.data.total

@@ -3,29 +3,9 @@
     <div class="top-bg">
       <div class="between">
         <el-form :inline="true" size="small" style="flex:1">
-          <el-form-item label="">
-            <el-select v-model="selectTypeValue">
-              <el-option v-for="item in selectType" :label="item.name" :value="item.value" :key="item.value"></el-option>
-            </el-select>
-          </el-form-item>
-
-
-            <el-form-item label="">
-            <el-input placeholder="请输入加气站" v-model="searchForm.param.gasOrder.carrierOrgName"  size="small"></el-input>
-          </el-form-item>
 
           <el-form-item label="">
-            <el-select  v-model="numberTypeKey">
-              <el-option v-for="item in numberType" :label="item.name" :value="item.value" :key="item.value"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item label="">
-            <el-input placeholder="请输入" v-model="numberTypeValue" ></el-input>
-          </el-form-item>
-
-          <el-form-item label="">
-            <el-input placeholder="请输入加气站" v-model="searchForm.param.gasOrder.gasstationName" clearable></el-input>
+            <el-input placeholder="请输入加气站" v-model="searchForm.param.gasstationName" clearable></el-input>
           </el-form-item>
 
 
@@ -49,31 +29,30 @@
         stripe
         :header-cell-style="{ background: 'rgb(246, 246, 246)', color: '#606266', borderColor: '#EBEEF5' }"
       >
-        <el-table-column prop="orderId" label="加气站" show-overflow-tooltip>
+        <el-table-column prop="gasstationName" label="加气站" show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column prop="createDate" label="执行中·标准定价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="platformPrice" label="执行中·标准定价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column prop="updateDate" label="执行中·标准售卖价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="gasprice" label="执行中·标准售卖价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
 
         <el-table-column prop="orgName" label="执行中·标准差价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column prop="orgName" label="执行中·物流非标差价数量" show-overflow-tooltip>
+        <el-table-column prop="num" label="执行中·物流非标差价数量" show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column prop="orgName" label="标准定价执行时间" show-overflow-tooltip>
+        <el-table-column prop="updateDate" label="标准定价执行时间" show-overflow-tooltip>
         </el-table-column>
 
         <el-table-column prop="orgName" label="经营模式" show-overflow-tooltip>
-        </el-table-column>
-
-        <el-table-column prop="orgName" label="车牌号" show-overflow-tooltip>
+          <template ><div>新营销</div></template>
         </el-table-column>
 
         <el-table-column prop="orgName" label="交易模式" show-overflow-tooltip>
+          <template ><div>直销加气</div></template>
         </el-table-column>
 
 
@@ -146,7 +125,7 @@ export default {
   },
   computed: {},
   mounted() {
-    this.getMarketStande()
+    this.getList()
   },
 
   methods: {

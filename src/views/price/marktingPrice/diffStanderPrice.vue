@@ -242,6 +242,9 @@ export default {
     handleSelectionChange(e) {
 
     },
+    resetLog() {
+
+    },
     changeLog(row) {
       this.logRow = row
       this.showLogDialog = true

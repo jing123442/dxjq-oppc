@@ -208,6 +208,7 @@
 <script>
 
 import { $getMarketDiff, $getMarketDiffLog, $getMarketDiffDel, $getMarketDiffAdd } from '@/service/strategy'
+import { $userOrgList } from '@/service/user'
 import {
   utilsMarketType, utilsCheckPriceType, utilsExecuteStatus
 } from '@/utils/select'
@@ -266,7 +267,8 @@ export default {
       totalCount: 0,
       dialogFormVisible: false,
       formLabelWidth: '180px',
-      searchText: ''
+      searchText: '',
+      stationList: []
     }
   },
   computed: {},
@@ -277,6 +279,29 @@ export default {
   methods: {
     handleSelectionChange(e) {
 
+    },
+
+    getStation() {
+      $userOrgList({ id: row.id }).then((res) => {
+        if (res.code == 200) {
+          this.stationList = res.data.records
+        }
+      })
+    },
+
+    resetLog() {
+      this.logSearchForm = {
+        page: 1,
+        size: 10,
+        param: {
+          dateParam: {
+
+          },
+          priceConfigLog: {
+
+          }
+        }
+      }
     },
     changeLog(row) {
       this.logRow = row
