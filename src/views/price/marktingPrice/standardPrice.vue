@@ -32,13 +32,13 @@
         <el-table-column prop="gasstationName" label="加气站" show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column prop="platformPrice" label="执行中·标准定价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="actualPrice" label="执行中·标准定价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column prop="gasprice" label="执行中·标准售卖价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="platformPrice" label="执行中·标准售卖价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column prop="orgName" label="执行中·标准差价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="gasprice" label="执行中·标准差价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
 
         <el-table-column prop="num" label="执行中·物流非标差价数量" show-overflow-tooltip>

@@ -342,9 +342,18 @@ export async function $getMarketDiff (data) {
 export async function $getMarketDiffLog (data) {
   return await R({ url: 'strategy/price_config_market_undiff/list_log', data })
 }
+export async function $getMarketUnDiffUpdate (data) {
+  return await R({ url: 'strategy/price_config_market_undiff/update', data })
+}
+
+
 export async function $getMarketDiffDel (data) {
   return await R({ url: 'strategy/price_config_market_undiff/remove', data })
 }
 export async function $getMarketDiffAdd (data) {
   return await R({ url: 'strategy/price_config_market_undiff/add', data })
+}
+
+export async function $getMarketPriceUpdate (data) {
+  return await R({ url: 'strategy/price_config_market_diff/update', data })
 }

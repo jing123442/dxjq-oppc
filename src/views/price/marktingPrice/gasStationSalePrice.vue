@@ -361,10 +361,10 @@ export default {
     },
 
     handleSelectionChange(e) {
-      console.log('eeeee', e)
       this.selectedList = e
     },
     resetLog() {
+      this.logUpdateTime = []
       this.logSearchForm = {
         page: 1,
         size: 10,
@@ -377,6 +377,7 @@ export default {
           }
         }
       }
+      this.getLog()
     },
     changeLog(row) {
       this.logRow = row
@@ -395,9 +396,23 @@ export default {
 
 
     getLog() {
-      if (this.logUpdateTime) {
-        this.logSearchForm.param.dateParam.updateDateFrom = this.logUpdateTime[0]
-        this.logSearchForm.param.dateParam.updateDateTo = this.logUpdateTime[1]
+      this.logSearchForm.param.dateParam = {}
+      if (this.selectTypeValue == '0') {
+        if (this.logUpdateTime.length > 0) {
+          this.logSearchForm.param.dateParam.createDateFrom = this.logUpdateTime[0]
+          this.logSearchForm.param.dateParam.createDateTo = this.logUpdateTime[1]
+        } else {
+          this.logSearchForm.param.dateParam.createDateFrom = ''
+          this.logSearchForm.param.dateParam.createDateTo = ''
+        }
+      } else {
+        if (this.logUpdateTime.length > 0) {
+          this.logSearchForm.param.dateParam.updateDateFrom = this.logUpdateTime[0]
+          this.logSearchForm.param.dateParam.updateDateTo = this.logUpdateTime[1]
+        } else {
+          this.logSearchForm.param.dateParam.updateDateFrom = ''
+          this.logSearchForm.param.dateParam.updateDateTo = ''
+        }
       }
       this.logSearchForm.param.priceConfigLog.gasstationId = this.logRow.gasstationId
       $getMarketLog(this.logSearchForm).then((res) => {
