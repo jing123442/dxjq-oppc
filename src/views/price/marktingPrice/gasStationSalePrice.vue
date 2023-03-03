@@ -192,7 +192,7 @@
         <el-form-item class="el-del-btn-item">
           <div class="btn-item-footer">
 
-            <el-button type="auditType"
+            <el-button type="primary"
                        size="small"
                         @click="changeAuditType()">确定
             </el-button>
@@ -219,7 +219,7 @@
 
         <el-form-item class="el-del-btn-item">
           <div class="btn-item-footer">
-            <el-button type="auditType"
+            <el-button type="primary"
                        size="small"
                         @click="audioExcute()">确定
             </el-button>

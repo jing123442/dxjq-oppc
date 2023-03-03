@@ -10,7 +10,7 @@
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              value-format="yyyy-MM-dd HH:mm:ss"
+              value-format="yyyy-MM-dd"
               clearable
 
             >
@@ -100,7 +100,7 @@
         stripe
         :header-cell-style="headerStyle"
       >
-        <el-table-column prop="orgName" :label="type==0?'加气站':'物流公司'" show-overflow-tooltip>
+        <el-table-column prop="orgName" :label="searchForm.param.type=='0'?'加气站':'物流公司'" show-overflow-tooltip>
           <template v-slot="scope">
             <div>{{ scope.row.orgName || "—" }}</div>
           </template>
@@ -122,7 +122,7 @@
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.costWithTaxAvg || "—" }}</div>
+            <div>{{ scope.row.costWithTaxAvg || "" }}</div>
           </template>
         </el-table-column>
 
@@ -132,7 +132,7 @@
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.costWithTax || "—" }}</div>
+            <div>{{ scope.row.costWithTax || "" }}</div>
           </template>
         </el-table-column>
 
@@ -142,7 +142,7 @@
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.incomeWithTaxAvg || "—" }}</div>
+            <div>{{ scope.row.incomeWithTaxAvg || "" }}</div>
           </template>
         </el-table-column>
 
@@ -162,7 +162,7 @@
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.ppdWithTax || "—" }}</div>
+            <div>{{ scope.row.ppdWithTax || "" }}</div>
           </template>
         </el-table-column>
 
@@ -172,7 +172,7 @@
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.ppdWithTaxAvg || "—" }}</div>
+            <div>{{ scope.row.ppdWithTaxAvg || "" }}</div>
           </template>
         </el-table-column>
 
@@ -182,7 +182,7 @@
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.costWithoutTaxAvg || "—" }}</div>
+            <div>{{ scope.row.costWithoutTaxAvg || "" }}</div>
           </template>
         </el-table-column>
 
@@ -192,7 +192,7 @@
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.costWithoutTax || "—" }}</div>
+            <div>{{ scope.row.costWithoutTax || "" }}</div>
           </template>
         </el-table-column>
 
@@ -202,7 +202,7 @@
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.incomeWithoutTaxAvg || "—" }}</div>
+            <div>{{ scope.row.incomeWithoutTaxAvg || "" }}</div>
           </template>
         </el-table-column>
 
@@ -212,7 +212,7 @@
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.incomeWithoutTax || "—" }}</div>
+            <div>{{ scope.row.incomeWithoutTax || "" }}</div>
           </template>
         </el-table-column>
 
@@ -222,7 +222,7 @@
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.profit || "—" }}</div>
+            <div>{{ scope.row.profit || "" }}</div>
           </template>
         </el-table-column>
 
@@ -232,7 +232,7 @@
           show-overflow-tooltip
         >
           <template v-slot="scope">
-            <div>{{ scope.row.profitAvg || "—" }}</div>
+            <div>{{ scope.row.profitAvg || "" }}</div>
           </template>
         </el-table-column>
 
@@ -251,79 +251,12 @@
       />
     </div>
 
-    <el-dialog
-      title="新建绑定"
-      :visible.sync="dialogFormVisible"
-      width="30%"
-      append-to-body
-    >
-      <el-form :model="form" :rules="rules" ref="form">
-        <el-form-item
-          label="企业名称"
-          :label-width="formLabelWidth"
-          prop="orgId"
-          v-if="userType != 2"
-        >
-          <el-select
-            v-model="form.orgId"
-            clearable
-            filterable
-            placeholder="请输入"
-          >
-            <el-option
-              v-for="item in comList"
-              :key="item.id"
-              :label="item.orgName"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-
-        <el-form-item
-          label="设备ID"
-          :label-width="formLabelWidth"
-          prop="clientId"
-          v-if="userType != 2"
-        >
-          <el-select
-            v-model="form.clientId"
-            clearable
-            filterable
-            placeholder="请选择"
-            @blur.native="selectBlur"
-            @change="selectBlur"
-          >
-            <el-option
-              v-for="(item, index) in unBindList"
-              :key="index"
-              :label="item.clientId"
-              :value="index"
-            />
-          </el-select>
-        </el-form-item>
-
-        <el-form-item
-          label="设备ID"
-          :label-width="formLabelWidth"
-          prop="clientId"
-          v-else
-        >
-          <el-input
-            v-model="form.clientId"
-            placeholder="请输入设备ID"
-          ></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addClient('form')">确 定</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 <script>
 
 import { $settleMarketGetSumWithTime, $settleMarketGetWithTime, $settleMarketDownLoad } from '@/service/settle'
+import { monthTimeArea } from '@/utils/tools'
 export default {
   data() {
     return {
@@ -379,8 +312,6 @@ export default {
         size: 10,
         param: {
           dateParam: {
-            updateDateFrom: '',
-            updateDateTo: ''
           },
           type: '0'
         }
@@ -403,6 +334,9 @@ export default {
   },
   computed: {},
   mounted() {
+    const periodTime = monthTimeArea(new Date(), 'yyyy-MM-dd')
+    this.updateTime.push(periodTime.start)
+    this.updateTime.push(periodTime.end)
     this.getList()
   },
 
@@ -413,20 +347,18 @@ export default {
       this.getList()
     },
     exportExcel() {
-      if (this.updateTime) {
+      if (this.updateTime && this.updateTime.length > 0) {
         this.searchForm.param.dateParam.updateDateFrom = this.updateTime[0]
         this.searchForm.param.dateParam.updateDateTo = this.updateTime[1]
+      } else {
+        this.$message.error('请选择导出时间')
+        return
       }
       $settleMarketDownLoad(this.searchForm).then((res) => {
-        this.data = res.data
-        this.totalCount = res.data.total
       })
     },
 
     getList() {
-      console.log('aaaaa', this.updateTime)
-      console.log('bbbb', this.updateTime[0])
-      console.log('cccc', this.updateTime[1])
       if (this.updateTime) {
         this.searchForm.param.dateParam.updateDateFrom = this.updateTime[0]
         this.searchForm.param.dateParam.updateDateTo = this.updateTime[1]
@@ -465,10 +397,15 @@ export default {
       })
     },
     reset() {
+      this.updateTime = []
       this.searchForm = {
         page: 1,
         size: 10,
-        param: {}
+        param: {
+          dateParam: {
+          },
+          type: '0'
+        }
       }
       this.getList()
     },

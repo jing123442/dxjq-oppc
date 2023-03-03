@@ -35,10 +35,10 @@
         <el-table-column prop="gasstationName" label="加气站" show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column prop="gaspricePlan" label="执行中·标准差价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="gasprice" label="执行中·标准差价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column prop="gasprice" label="最新标准差价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="gaspricePlan" label="最新标准差价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
 
         <el-table-column prop="status" label="最新标准差价执行状态" show-overflow-tooltip>
@@ -99,6 +99,7 @@
               end-placeholder="结束日期"
               value-format="yyyy-MM-dd HH:mm:ss"
               clearable
+              @change="changeUpdateTime"
             >
             </el-date-picker>
           </el-form-item>
@@ -125,7 +126,7 @@
         :header-cell-style="{ background: 'rgb(246, 246, 246)', color: '#606266', borderColor: '#EBEEF5' }"
       >
 
-        <el-table-column prop="platformPrice" label="标准差价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="gaspricePlan" label="标准差价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="updateDate" label="调价执行时间" show-overflow-tooltip>
         </el-table-column>
@@ -161,8 +162,8 @@
     <el-dialog append-to-body width="60%"  title="调整标准差价(元/公斤)" :visible.sync="changePrice">
       <el-form ref="excuteSet"  size="small" label-position="left" :model="excuteParams" :rules="rules">
         <el-form-item><div>{{ auditNames }}共({{selectedList.length}}个站）</div></el-form-item>
-        <el-form-item label="标准差价" :label-width="formLabelWidth" prop="gasprice">
-            <el-input v-model="excuteParams.gasprice"  placeholder="请输入"    style="width: 300px;"></el-input>
+        <el-form-item label="标准差价" :label-width="formLabelWidth" prop="gaspricePlan">
+            <el-input v-model="excuteParams.gaspricePlan"  placeholder="请输入"    style="width: 300px;"></el-input>
         </el-form-item>
 
         <el-form-item label="" >
@@ -185,7 +186,7 @@
 
         <el-form-item class="el-del-btn-item">
           <div class="btn-item-footer">
-            <el-button type="auditType"
+            <el-button type="primary"
                        size="small"
                         @click="checkExcute()">确定
             </el-button>
@@ -198,23 +199,20 @@
         </el-form>
     </el-dialog>
 
-
-
     <el-dialog append-to-body width="30%"  title="调整标准差价" :visible.sync="excuteSureDialog">
       <el-form ref="exportCar"  size="small" label-position="left">
         <el-form-item><div>{{ auditNames }}共({{selectedList.length}}个站）</div></el-form-item>
 
-        <el-form-item><div>标准差价:{{excuteParams.gasprice}}元/公斤</div></el-form-item>
+        <el-form-item><div>标准差价:{{excuteParams.gaspricePlan}}元/公斤</div></el-form-item>
         <el-form-item>
           <div v-if="excuteParams.type==2">立即执行</div>
           <div v-else>预约{{excuteParams.updateDate}}执行</div>
         </el-form-item>
 
-
         <el-form-item class="el-del-btn-item">
           <div class="btn-item-footer">
 
-            <el-button type="auditType"
+            <el-button type="primary"
                        size="small"
                         @click="excuteUpdate()">确定
             </el-button>
@@ -235,12 +233,12 @@ import { $getMarketDiffStander, $getMarketDiffStanderLog, $getMarketPriceUpdate 
 import {
   utilsMarketType, utilsCheckPriceType, utilsExecuteStatus
 } from '@/utils/select'
-
+import { monthTimeArea } from '@/utils/tools'
 export default {
   data() {
     return {
       rules: {
-        gasprice: [{ required: true, message: '请输入差价', trigger: 'blur' }],
+        gaspricePlan: [{ required: true, message: '请输入差价', trigger: 'blur' }],
         updateDate: [{ required: true, message: '请选择时间', trigger: 'blur' }]
 
       },
@@ -286,14 +284,13 @@ export default {
       searchText: '',
 
 
-
       auditNames: '',
       selectedList: [],
       changePrice: false,
       auditType: '1',
 
       excuteParams: {
-        gasprice: '', // 标准差价
+        gaspricePlan: '', // 标准差价
         type: 2,
         updateDate: '',
         gasstationId: ''
@@ -308,6 +305,12 @@ export default {
   },
 
   methods: {
+    changeUpdateTime(e) {
+      if (!e) {
+        this.logUpdateTime = []
+        this.logSearchForm.param.dateParam = {}
+      }
+    },
     checkExcute() {
       this.$refs.excuteSet.validate((valid) => {
         console.log('validvalid', valid)
@@ -321,6 +324,7 @@ export default {
     excuteUpdate() {
       $getMarketPriceUpdate(this.excuteParams).then((res) => {
         if (res.code == 0) {
+          this.excuteSureDialog = false
           this.$message.success('执行成功')
           this.getList()
         }
@@ -339,7 +343,7 @@ export default {
 
     showAuditM(row) {
       this.excuteParams = {
-        gasprice: '', // 标准差价
+        gaspricePlan: '', // 标准差价
         type: 2,
         updateDate: '',
         gasstationId: ''
@@ -381,6 +385,9 @@ export default {
     changeLog(row) {
       this.logRow = row
       this.showLogDialog = true
+      const periodTime = monthTimeArea(new Date())
+      this.logUpdateTime.push(periodTime.start)
+      this.logUpdateTime.push(periodTime.end)
       this.getLog()
     },
     setCheckType() {
@@ -399,21 +406,21 @@ export default {
 
     getLog() {
       this.logSearchForm.param.dateParam = {}
+      console.log('logUpdateTime', this.logUpdateTime)
+      if (!this.logUpdateTime) {
+        this.logUpdateTime = []
+      }
       if (this.selectTypeValue == '0') {
         if (this.logUpdateTime.length > 0) {
           this.logSearchForm.param.dateParam.createDateFrom = this.logUpdateTime[0]
           this.logSearchForm.param.dateParam.createDateTo = this.logUpdateTime[1]
         } else {
-          this.logSearchForm.param.dateParam.createDateFrom = ''
-          this.logSearchForm.param.dateParam.createDateTo = ''
         }
       } else {
         if (this.logUpdateTime.length > 0) {
           this.logSearchForm.param.dateParam.updateDateFrom = this.logUpdateTime[0]
           this.logSearchForm.param.dateParam.updateDateTo = this.logUpdateTime[1]
         } else {
-          this.logSearchForm.param.dateParam.updateDateFrom = ''
-          this.logSearchForm.param.dateParam.updateDateTo = ''
         }
       }
       this.logSearchForm.param.priceConfigLog.gasstationId = this.logRow.gasstationId

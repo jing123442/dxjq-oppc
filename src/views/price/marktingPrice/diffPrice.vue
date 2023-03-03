@@ -25,10 +25,10 @@
 
     <div class="bg">
       <div class="between" style="margin-bottom:10px;margin-top: 10px;">
-        <view></view>
+        <div></div>
           <div class="row">
-            <el-button type="primary" @click="showAddDialog = true" size="mini">新增</el-button>
-          <el-button type="primary" @click="exportExcel()" size="mini">相关订单</el-button>
+            <el-button type="primary" @click="addGas" size="mini">新增</el-button>
+            <el-button type="primary" @click="exportExcel()" size="mini">相关订单</el-button>
           </div>
 
       </div>
@@ -42,13 +42,18 @@
       >
         <el-table-column prop="gasstationName" label="加气站" show-overflow-tooltip>
         </el-table-column>
-        <el-table-column prop="gasstationName" label="物流客户" show-overflow-tooltip>
+        <el-table-column prop="carrierOrgName" label="物流客户" show-overflow-tooltip>
         </el-table-column>
-        <el-table-column prop="platformPrice" label="执行中·非标差价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="gasprice" label="执行中·非标差价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
-        <el-table-column prop="platformPricePlan" label="最新非标差价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="gaspricePlan" label="最新非标差价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
-        <el-table-column prop="status" label="最新非标差价执行状态" show-overflow-tooltip>
+        <el-table-column prop="status" label="最新标准差价执行状态" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <div v-for="item,index in utilsExecuteStatus" :key="index">
+              {{  item.value == scope.row.status?item.label:'' }}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column prop="updateDate" label="最新非标差价执行时间" show-overflow-tooltip>
         </el-table-column>
@@ -64,7 +69,7 @@
 
           <el-button type="text" @click="del(scope.row)">删除</el-button>
           <el-button type="text" @click="changeLog(scope.row)">调价记录</el-button>
-          <el-button type="text" @click="check(scope.row)">调价</el-button>
+          <el-button type="text" @click="showAuditM(scope.row)">调价</el-button>
           </template>
         </el-table-column>
 
@@ -83,11 +88,12 @@
       />
     </div>
 
-    <el-dialog append-to-body width="30%"  title="'新增'" :visible.sync="showAddDialog">
+    <el-dialog append-to-body width="30%"  title="新增" :visible.sync="showAddDialog">
 
       <el-form :model="addParams" :rules="rules" ref="addParams" >
-          <el-form-item label="加气站(新营销直销加气)" :label-width="formLabelWidth" prop="gasstationIndex" >
+          <el-form-item label="加气站(新营销直销加气)"  :label-width="formLabelWidth2" prop="gasstationIndex" >
             <el-select
+            ref="gasSelect"
               v-model="addParams.gasstationIndex"
               clearable
               filterable
@@ -103,9 +109,10 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="物流客户(直销加气)" :label-width="formLabelWidth" prop="carrierIndex" >
+          <el-form-item label="物流客户(直销加气)"  :label-width="formLabelWidth2" prop="carrierIndex" >
             <el-select
             value-key="id"
+            ref="carrierSelect"
               v-model="addParams.carrierIndex"
               clearable
               filterable
@@ -203,20 +210,20 @@
 
     <el-dialog append-to-body width="30%"  title="物流非标差价调价确认" :visible.sync="excuteSureDialog">
       <el-form ref="exportCar"  size="small" label-position="left">
-        <el-form-item><div>{{ auditNames }}共({{selectedList.length}}个站）</div></el-form-item>
+        <el-form-item><div>{{ logRow. gasstationName}},{{ logRow.carrierOrgName }}</div></el-form-item>
 
-        <el-form-item><div>标准差价:{{excuteParams.gasprice}}元/公斤</div></el-form-item>
+        <el-form-item><div>物流非标差价:{{excuteParams.gaspricePlan}}元/公斤</div></el-form-item>
         <el-form-item>
           <div v-if="excuteParams.type==2">立即执行</div>
           <div v-else>预约{{excuteParams.updateDate}}执行</div>
         </el-form-item>
 
-
         <el-form-item class="el-del-btn-item">
           <div class="btn-item-footer">
 
-            <el-button type="auditType"
+            <el-button
                        size="small"
+                       type="primary"
                         @click="excuteUpdate()">确定
             </el-button>
             <el-button
@@ -228,33 +235,45 @@
         </el-form>
     </el-dialog>
 
-    <el-dialog append-to-body width="30%"  title="调整物流非标准差价(元/公斤)" :visible.sync="excuteSureDialog">
-      <el-form ref="exportCar"  size="small" label-position="left">
-        <el-form-item><div>{{ auditNames }}共({{selectedList.length}}个站）</div></el-form-item>
-
-        <el-form-item><div>标准差价:{{excuteParams.gasprice}}元/公斤</div></el-form-item>
-        <el-form-item>
-          <div v-if="excuteParams.type==2">立即执行</div>
-          <div v-else>预约{{excuteParams.updateDate}}执行</div>
+    <el-dialog append-to-body width="60%"  title="调整物流非标差价(元/公斤)" :visible.sync="changePrice">
+      <el-form ref="excuteSet"  size="small" label-position="left" :model="excuteParams" :rules="rulesUpdate">
+        <el-form-item><div>{{ logRow. gasstationName}},{{ logRow.carrierOrgName }}</div></el-form-item>
+        <el-form-item label="非标差价" :label-width="formLabelWidth" prop="gaspricePlan">
+            <el-input v-model="excuteParams.gaspricePlan"  placeholder="请输入"    style="width: 300px;"></el-input>
         </el-form-item>
 
+        <el-form-item label="" >
+         <el-radio v-model="excuteParams.type" :label="2">立即执行(将作废执行中、已预约未执行调价)</el-radio>
+        </el-form-item>
+
+        <el-form-item label="" >
+         <el-radio v-model="excuteParams.type" :label="1">预约</el-radio>
+         <el-date-picker
+            style="width: 300px;"
+            :disabled="excuteParams.type==2"
+              v-model="excuteParams.updateDate"
+              type="datetime"
+              placeholder="请选择"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              clearable
+            />
+            执行(将作废执行中、已预约未执行调价)
+        </el-form-item>
 
         <el-form-item class="el-del-btn-item">
           <div class="btn-item-footer">
-
-            <el-button type="auditType"
+            <el-button  type="primary"
                        size="small"
-                        @click="excuteUpdate()">确定
+                        @click="checkExcute()">确定
             </el-button>
             <el-button
                        size="small"
-                        @click="excuteSureDialog=false">取消
+                        @click="changePrice=false">取消
             </el-button>
           </div>
         </el-form-item>
         </el-form>
     </el-dialog>
-
 
   </div>
 </template>
@@ -265,10 +284,15 @@ import { $userOrgList } from '@/service/user'
 import {
   utilsMarketType, utilsCheckPriceType, utilsExecuteStatus
 } from '@/utils/select'
-
+import { monthTimeArea } from '@/utils/tools'
 export default {
   data() {
     return {
+      rulesUpdate: {
+        gaspricePlan: [{ required: true, message: '请输入差价', trigger: 'blur' }],
+        updateDate: [{ required: true, message: '请选择时间', trigger: 'blur' }]
+
+      },
       rules: {
         gasstationIndex: [{ required: true, message: '请选择加气站', trigger: 'blur' }],
         carrierIndex: [{ required: true, message: '请选择物流公司', trigger: 'blur' }]
@@ -315,7 +339,8 @@ export default {
       totalInfo: {},
       totalCount: 0,
       dialogFormVisible: false,
-      formLabelWidth: '180px',
+      formLabelWidth: '80px',
+      formLabelWidth2: '180px',
       searchText: '',
       stationList: [],
       carrierList: [],
@@ -326,10 +351,11 @@ export default {
       auditType: '1',
 
       excuteParams: {
-        gasprice: '', // 标准差价
+        gasPricePlan: '', // 标准差价
         type: 2,
         updateDate: '',
-        gasstationId: ''
+        gasstationId: '',
+        carrierOrgId: ''
       },
       excuteSureDialog: false,
 
@@ -346,9 +372,32 @@ export default {
   },
 
   methods: {
+    addGas() {
+      this.showAddDialog = true
+      // this.$nextTick(() => {
+      //   this.$refs.gasSelect.$refs.scrollbar.$refs.wrap.addEventListener('scroll', this.gasScolling)
+      //   this.$refs.carrierSelect.$refs.scrollbar.$refs.wrap.addEventListener('scroll', this.carrierScolling)
+      // })
+    },
+    // gasScolling() {
+    //   console.log('11111')
+    //   const e = this.$refs.gasSelect.$refs.scrollbar.$refs.wrap
+    //   const loadMore = e.scrollHeight - e.scrollTop <= e.clientHeight
+    //   if (loadMore) {
+    //     this.getStation()
+    //   }
+    // },
+
+    carrierScolling() {
+      const e = this.$refs.carrierSelect.$refs.scrollbar.$refs.wrap
+      const loadMore = e.scrollHeight - e.scrollTop <= e.clientHeight
+      if (loadMore) {
+        this.getCarrier()
+      }
+    },
 
     checkExcute() {
-      this.$refs.addParams.validate((valid) => {
+      this.$refs.excuteSet.validate((valid) => {
         console.log('validvalid', valid)
         if (valid) {
           this.excuteSureDialog = true
@@ -360,6 +409,7 @@ export default {
     excuteUpdate() {
       $getMarketUnDiffUpdate(this.excuteParams).then((res) => {
         if (res.code == 0) {
+          this.excuteSureDialog = false
           this.$message.success('执行成功')
           this.getList()
         }
@@ -372,33 +422,21 @@ export default {
 
     showAuditM(row) {
       this.excuteParams = {
-        gasprice: '', // 标准差价
+        gasPricePlan: '', // 标准差价
         type: 2,
         updateDate: '',
-        gasstationId: ''
+        id: row.id,
+        gasstationId: row.gasstationId,
+        carrierOrgId: row.carrierOrgId
       }
       this.changePrice = true
-      if (this.selectedList.length == 0) {
-        this.selectedList.push(row)
-      }
-      let names = ''; let ids = ''
-      for (let i = 0; i < this.selectedList.length; i++) {
-        if (i == this.selectedList.length - 1) {
-          names = names + this.selectedList[i].nickName
-          ids = ids + this.selectedList[i].gasstationId
-        } else {
-          names = names + this.selectedList[i].nickName + ','
-          ids = ids + this.selectedList[i].gasstationId + ','
-        }
-        this.auditNames = names
-      }
-      this.excuteParams.gasstationId = ids
+      this.logRow = row
     },
 
     getStation() {
       $userOrgList({
         page: 1,
-        size: 20,
+        size: -1,
         param: {
           org: {
             orgType: 1
@@ -414,7 +452,7 @@ export default {
     getCarrier() {
       $userOrgList({
         page: 1,
-        size: 20,
+        size: -1,
         param: {
           org: {
             orgType: 2
@@ -447,14 +485,24 @@ export default {
     changeLog(row) {
       this.logRow = row
       this.showLogDialog = true
+      const periodTime = monthTimeArea(new Date())
+      this.logUpdateTime.push(periodTime.start)
+      this.logUpdateTime.push(periodTime.end)
       this.getLog()
     },
     del(row) {
-      $getMarketDiffDel({ id: row.id }).then((res) => {
-        if (res.code == 200) {
-          this.$message.success('删除成功')
-          this.getList()
-        }
+      this.$confirm('确认作废?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        $getMarketDiffDel({ id: row.id }).then((res) => {
+          if (res.code == 0) {
+            this.$message.success('删除成功')
+            this.getList()
+          }
+        })
+      }).catch(() => {
       })
     },
     add() {
@@ -469,16 +517,14 @@ export default {
             gasstationName: gastaion.orgName
           }
           $getMarketDiffAdd(obj).then((res) => {
-            if (res.code == 200) {
+            if (res.code == 0) {
+              this.showAddDialog = false
               this.$message.success('新增成功')
               this.getList()
             }
           })
         }
       })
-    },
-    check() {
-
     },
     getList() {
       $getMarketDiff(this.searchForm).then((res) => {
@@ -487,12 +533,26 @@ export default {
       })
     },
 
-
     getLog() {
-      if (this.logUpdateTime) {
-        this.logSearchForm.param.dateParam.updateDateFrom = this.logUpdateTime[0]
-        this.logSearchForm.param.dateParam.updateDateTo = this.logUpdateTime[1]
+      this.logSearchForm.param.dateParam = {}
+      if (!this.logUpdateTime) {
+        this.logUpdateTime = []
       }
+      if (this.selectTypeValue == '0') {
+        if (this.logUpdateTime.length > 0) {
+          this.logSearchForm.param.dateParam.createDateFrom = this.logUpdateTime[0]
+          this.logSearchForm.param.dateParam.createDateTo = this.logUpdateTime[1]
+        } else {
+        }
+      } else {
+        if (this.logUpdateTime.length > 0) {
+          this.logSearchForm.param.dateParam.updateDateFrom = this.logUpdateTime[0]
+          this.logSearchForm.param.dateParam.updateDateTo = this.logUpdateTime[1]
+        } else {
+        }
+      }
+      this.logSearchForm.param.priceConfigLog.gasstationId = this.logRow.gasstationId
+      this.logSearchForm.param.priceConfigLog.carrierOrgId = this.logRow.carrierOrgId
       $getMarketDiffLog(this.logSearchForm).then((res) => {
         this.logData = res.data.records
         this.logTotal = res.data.total
