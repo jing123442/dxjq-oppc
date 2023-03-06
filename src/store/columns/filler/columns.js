@@ -49,18 +49,18 @@ const columns = {
   info: [
     { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { type: 'hide', isNode: true, parent: 'gasstationVO' } },
    
-    { field: 'nickName', name: '加气站名称', fixed: 'left', 
-    formatter: 'currFieldSearch',
-    search: { type: 'text', placeholder: '请输入', findStyle: 'width: 35%', style: 'width: 100%;', 
-    findField: 'nickName' }, 
-    currSearch: { type: 'select', subField: 'currFieldSearch', style: 'width: 100%;',
-     hideName: true, obj: 'currFieldSearch', value: 'nickName' }, show: { type: 'text', placeholder: '请输入' } },
+    // { field: 'nickName', name: '加气站名称', fixed: 'left', 
+    // formatter: 'currFieldSearch',
+    // search: { type: 'text', placeholder: '请输入', findStyle: 'width: 35%', style: 'width: 100%;', 
+    // findField: 'nickName' }, 
+    // currSearch: { type: 'select', subField: 'currFieldSearch', style: 'width: 100%;',
+    //  hideName: true, obj: 'currFieldSearch', value: 'nickName' }, show: { type: 'text', placeholder: '请输入' } },
 
     
     { field: 'gasstationName', name: '企业名称', nameSpan: 6, fixed: 'left', show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入企业名称', isDisabled: true } },
     
     { field: 'marketType', name: '经营模式',  formatter: 'marketType', nameSpan: 6,search: { type: 'select', obj: 'marketType', placeholder: '经营模式' }, 
-    show: { type: 'select', ou: 2, obj: 'marketType', style: 'width: 90%', model: 'select', },
+    show: { type: 'select', ou: 2, obj: 'marketType', style: 'width: 90%', model: 'select',parent: 'gasstationVO', },
     rules: [{ required: true, message: '请选择经营模式', trigger: 'blur' }],
     cascaderLoder:[
       {selectField:'gasstationType',cover:1002,cancelField:'gasType',params:{marketType:[{value: 0, label: '一体化' }]}}
@@ -68,8 +68,8 @@ const columns = {
   
   },
 
-    { field: 'businessState', name: '营业状态', nameSpan: 6, formatter: 'businessState', search: { type: 'select', obj: 'businessState', placeholder: '营业状态' }, 
-    show: { type: 'select', style: 'width: 90%', model: 'select', obj: 'businessState',  ou: 2 } },
+    { field: 'openStatus', name: '营业状态', nameSpan: 6, formatter: 'businessState', search: { type: 'select', obj: 'businessState', placeholder: '营业状态' }, 
+    show: { type: 'select', style: 'width: 90%', model: 'select', obj: 'businessState',  ou: 2 ,parent: 'gasstationVO',} },
 
 
     { field: 'nickName', name: '加气站名称', nameSpan: 6, show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
@@ -81,9 +81,10 @@ const columns = {
     },
 
 
-    { field: 'listPrice', name: '加气站挂牌价(元/公斤)', ispush: false },
-    { field: 'platformPrice', name: '平台挂牌价(元/公斤)', ispush: false },
+    // { field: 'listPrice', name: '加气站挂牌价(元/公斤)', ispush: false },
+    // { field: 'platformPrice', name: '平台挂牌价(元/公斤)', ispush: false },
     { field: 'qrcode', name: '收款码类型', formatter: 'qrcodeType', ispush: false },
+    { field: 'platformPrice', name: '标准定价(元/公斤)', ispush: false },
     { field: 'selectedOptions', hide: true, name: '所在地区', nameSpan: 6, show: { type: 'cascader', parent: 'gasstationVO', iType: 'string', ou: 2, mulField: { province: 0, city: 1, region: 2 }, props: { value: 'label', label: 'label' }, obj: 'cascaderAddress', style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
     { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
     { field: 'pointAddress', name: '经纬度', colspan: 24, hide: true, nameSpan: 3, show: { type: 'map', ou: 2, parent: 'gasstationVO', mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 40.5%', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
