@@ -61,7 +61,7 @@ export default {
     initTotalData() {
       const loading = this.$refs.tables ? this.$refs.tables.loading : true
       const response = this.$refs.tables && this.$refs.tables.tableListResponse ? this.$refs.tables.tableListResponse : null
-
+      console.log('aaaaaaaaaaaaaaaa')
       if (!loading && response) {
         clearTimeout(this.times)
         if (response.code === 0) {
@@ -76,6 +76,7 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
+      console.log('onReqParams11111')
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasOrder: { }, dateParam: { createDateFrom: '', createDateTo: '' } } })
 
       if (isTypeof(_this.finds) === 'object') {

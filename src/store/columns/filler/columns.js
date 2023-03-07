@@ -49,12 +49,12 @@ const columns = {
   info: [
     { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { type: 'hide', isNode: true, parent: 'gasstationVO' } },
    
-    // { field: 'nickName', name: '加气站名称', fixed: 'left', 
-    // formatter: 'currFieldSearch',
-    // search: { type: 'text', placeholder: '请输入', findStyle: 'width: 35%', style: 'width: 100%;', 
-    // findField: 'nickName' }, 
-    // currSearch: { type: 'select', subField: 'currFieldSearch', style: 'width: 100%;',
-    //  hideName: true, obj: 'currFieldSearch', value: 'nickName' }, show: { type: 'text', placeholder: '请输入' } },
+    { field: 'nickName', name: '加气站名称', fixed: 'left', 
+    formatter: 'currFieldSearch',
+    search: { type: 'text', placeholder: '请输入', findStyle: 'width: 35%', style: 'width: 100%;', 
+    findField: 'nickName' }, 
+    currSearch: { type: 'select', subField: 'currFieldSearch', style: 'width: 100%;',
+     hideName: true, obj: 'currFieldSearch', value: 'nickName' }, show: { type: 'text', placeholder: '请输入' } },
 
     
     { field: 'gasstationName', name: '企业名称', nameSpan: 6, fixed: 'left', show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入企业名称', isDisabled: true } },

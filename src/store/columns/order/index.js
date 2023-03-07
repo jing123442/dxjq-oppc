@@ -11,7 +11,7 @@ const getters = {
   order_list_column: item => columns.order,
   order_list_select_list: item => select.order,
   
-  // 加气订单
+  // 采购订单
   order_buy_list_mode_list: item => app.mode.order,
   order_buy_list_page_status: item => app.list.order,
   order_buy_list_column: item => columns.buyOrder,

@@ -22,6 +22,7 @@ import {
   utilsMarketType,
   utilsSiteType,
   businessStateType,
+  utilsSiteTypeWithoutStop,
   utilsNameType
 } from '@/utils/select'
 import { regionData } from 'element-china-area-data'
@@ -53,7 +54,7 @@ const select = {
     siteType:utilsSiteType(),
     businessState:businessStateType(),
     // gasstationType: utilSelectGasstationType('inner')
-    gasstationType: utilsSiteType()
+    gasstationType: utilsSiteTypeWithoutStop()
   },
   account: {
     orgId: utilsDyOrgList(1)
