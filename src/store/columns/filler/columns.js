@@ -50,16 +50,20 @@ const columns = {
     { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { type: 'hide', isNode: true, parent: 'gasstationVO' } },
    
     { field: 'nickName', name: '加气站名称', fixed: 'left', 
-    formatter: 'currFieldSearch',
+    show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' },
+     rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] ,
+
     search: { type: 'text', placeholder: '请输入', findStyle: 'width: 35%', style: 'width: 100%;', 
     findField: 'nickName' }, 
     currSearch: { type: 'select', subField: 'currFieldSearch', style: 'width: 100%;',
-     hideName: true, obj: 'currFieldSearch', value: 'nickName' }, show: { type: 'text', placeholder: '请输入' } },
+     hideName: true, obj: 'currFieldSearch', value: 'nickName' }},
 
-    
+    //  { field: 'nickName', name: '加气站名称', nameSpan: 6, show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' },
+    //  rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
+     
     { field: 'gasstationName', name: '企业名称', nameSpan: 6, fixed: 'left', show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入企业名称', isDisabled: true } },
     
-    { field: 'marketType', name: '经营模式',  formatter: 'marketType', nameSpan: 6,search: { type: 'select', obj: 'marketType', placeholder: '经营模式' }, 
+    { field: 'marketType', name: '经营模式',  formatter: 'marketType', nameSpan: 4,search: { type: 'select', obj: 'marketType', placeholder: '经营模式' }, 
     show: { type: 'select', ou: 2, obj: 'marketType', style: 'width: 90%', model: 'select',parent: 'gasstationVO', },
     rules: [{ required: true, message: '请选择经营模式', trigger: 'blur' }],
     cascaderLoder:[
@@ -68,12 +72,13 @@ const columns = {
   
   },
 
-    { field: 'openStatus', name: '营业状态', nameSpan: 6, formatter: 'businessState', search: { type: 'select', obj: 'businessState', placeholder: '营业状态' }, 
+    { field: 'openStatus', name: '营业状态', nameSpan: 4, formatter: 'businessState', search: { type: 'select', obj: 'businessState', placeholder: '营业状态' }, 
     show: { type: 'select', style: 'width: 90%', model: 'select', obj: 'businessState',  ou: 2 ,parent: 'gasstationVO',} },
 
 
-    { field: 'nickName', name: '加气站名称', nameSpan: 6, show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
-    { field: 'gasType', name: '站点类型', formatter: 'gasstationType', nameSpan: 6,
+
+  
+    { field: 'gasType', name: '站点类型', formatter: 'gasstationType', nameSpan: 4,
     search: { type: 'select', obj: 'gasstationType', placeholder: '站点类型' },
      show: { type: 'select', ou: 2, obj: 'gasstationType', parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请选择站点类型' },
       rules: [{ required: true, message: '请选择站点类型', trigger: 'blur' }],
