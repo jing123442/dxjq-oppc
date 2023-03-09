@@ -57,8 +57,9 @@
 
         <el-table-column prop="status" label="最新售卖价执行状态" show-overflow-tooltip>
           <template slot-scope="scope">
+
             <div v-for="item,index in utilsExecuteStatus" :key="index">
-              {{  item.value == scope.row.auditType?item.label:'' }}
+              {{  item.value == scope.row.status?item.label:'' }}
             </div>
           </template>
         </el-table-column>
@@ -76,8 +77,8 @@
           <el-button type="text" @click="changeLog(scope.row)">调价记录</el-button>
           <el-button type="text" @click="showAuditM(scope.row)">设置审核类型</el-button>
 
-          <el-button type="text" disabled v-if="scope.row.auditStatus==2">审核</el-button>
-          <el-button type="text" @click="showAuditStatusM(scope.row)" v-else>审核</el-button>
+          <el-button type="text"  v-if="scope.row.auditStatus==0" @click="showAuditStatusM(scope.row)">审核</el-button>
+          <el-button type="text" disabled  v-else>审核</el-button>
           </template>
         </el-table-column>
 
