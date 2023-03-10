@@ -77,7 +77,7 @@
           <el-button type="text" @click="changeLog(scope.row)">调价记录</el-button>
           <el-button type="text" @click="showAuditM(scope.row)">设置审核类型</el-button>
 
-          <el-button type="text"  v-if="scope.row.auditStatus==0" @click="showAuditStatusM(scope.row)">审核</el-button>
+          <el-button type="text"  v-if="scope.row.auditStatus==1" @click="showAuditStatusM(scope.row)">审核</el-button>
           <el-button type="text" disabled  v-else>审核</el-button>
           </template>
         </el-table-column>
