@@ -141,7 +141,7 @@
         stripe
         :header-cell-style="{ background: 'rgb(246, 246, 246)', color: '#606266', borderColor: '#EBEEF5' }"
       >
-        <el-table-column prop="platformPrice" label="售卖价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="platformPricePlan" label="售卖价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="auditType" label="审核类型" show-overflow-tooltip>
           <template slot-scope="scope">

@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <em-table-list :tableListName="'fillerInfo'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <em-table-list :tableListName="'fillerInfo'" :authButtonList="authButtonList" :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL" @updateColumnValue="updateColumnValue" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
   </div>
 </template>
 <script>
@@ -55,8 +55,16 @@ export default {
         this.$router.push(`fillerInfo/printerList?gasstationId=${gasstationId}&gasstationName=${gasstationName}`)
       }
     },
+    updateColumnValue(tableData, callback) {
+      tableData.forEach(item => {
+        item.gasType = item.gasType == 1003 ? 1001 : item.gasType
+      })
+      callback(tableData)
+    },
+
     onReqParams(type, _this, callback) {
       // eslint-disable-next-line standard/no-callback-literal
+      console.log('')
       callback({
         page: 1,
         size: 10,
