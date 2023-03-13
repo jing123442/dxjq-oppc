@@ -467,7 +467,16 @@ export function utilsSiteType() {
     { value: 2004, label: '社会' }
   ]
 }
-
+export function utilsSiteTypeWithoutStop() {
+  return [
+    { value: 1001, label: '合作经营' },
+    { value: 1002, label: '核心联营' },
+    { value: 2001, label: '中海油' },
+    { value: 2002, label: '中石油' },
+    { value: 2003, label: '中石化' },
+    { value: 2004, label: '社会' }
+  ]
+}
 export function businessStateType() {
   return [
     { value: 0, label: '在营' },

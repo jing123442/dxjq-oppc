@@ -277,10 +277,10 @@ export default {
         return '含税·销售收入\n(元)'
       },
       labelNum5() {
-        return '含税·购销价\n(元)'
+        return '含税·购销差\n(元)'
       },
       labelNum6() {
-        return '含税·单吨购销价\n(元/吨)'
+        return '含税·单吨购销差\n(元/吨)'
       },
       labelNum7() {
         return '不含税·采购均价\n(元/公斤)'

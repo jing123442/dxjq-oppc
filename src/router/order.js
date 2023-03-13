@@ -15,7 +15,7 @@ export default [
       { path: 'gasOrderCarrier', component: inImport('order/gasOrderCarrier'), name: 'gasOrderCarrier', meta: { title: '物流客户加气订单', noCache: false } },
       { path: 'gasOrderFiller', component: inImport('order/gasOrderFiller'), name: 'gasOrderFiller', meta: { title: '加气站加气订单', noCache: false } },
       { path: 'rechargeRecord', component: inImport('order/rechargeRecord'), name: 'rechargeRecord', meta: { title: '充值订单记录', icon: 'icon-gongnengguanli', noCache: false } },
-      { path: 'gasOrderBuy', component: inImport('order/gasOrderBuy'), name: 'gasOrderBuy', meta: { title: '采购订单', noCache: false } }
+      { path: 'gasOrderBuy', component: inImport('order/gasOrderBuy'), name: 'gasOrderBuy', meta: { title: '新营销采购订单', noCache: false } }
     ]
   }
 ]
