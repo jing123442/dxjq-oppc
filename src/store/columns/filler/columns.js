@@ -60,7 +60,7 @@ const columns = {
     { field: 'gasstationName', name: '企业名称', nameSpan: 6, fixed: 'left', show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入企业名称', isDisabled: true } },
     
     { field: 'marketType', name: '经营模式',  formatter: 'marketType', nameSpan: 6,search: { type: 'select', obj: 'marketType', placeholder: '经营模式' }, 
-    show: { type: 'select', ou: 2, obj: 'marketType', style: 'width: 90%', model: 'select', },
+    show: { type: 'select', ou: 2, obj: 'marketType', style: 'width: 90%', model: 'select',parent: 'gasstationVO', },
     rules: [{ required: true, message: '请选择经营模式', trigger: 'blur' }],
     cascaderLoder:[
       {selectField:'gasstationType',cover:1002,cancelField:'gasType',params:{marketType:[{value: 0, label: '一体化' }]}}
