@@ -29,7 +29,7 @@ const columns = {
     { field: 'marketType', name: '经营模式',  formatter: 'marketType', 
     search: { type: 'select', obj: 'marketType', placeholder: '经营模式' },
      detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'marketType', serial: 3, ou: 1 ,
-      cascaderList:[{value:1,fields:['platformPrice','gasPrice']}] ,
+      cascaderList:[{value:0,fields:['platformPrice','gasPrice']}] ,
     } },
 
     { field: 'priceType', name: '标准定价策略', formatter: 'priceType', search: { type: 'select', obj: 'priceType', placeholder: '标准定价策略' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'priceType', serial: 3, ou: 1 } },

@@ -8,7 +8,7 @@
           </el-form-item>
 
           <el-form-item label="">
-            <el-select  v-model="searchForm.param.auditType">
+            <el-select  v-model="searchForm.param.auditType" placeholder="请选择 <审核类型>">
               <el-option v-for="item in utilsCheckPriceType" :label="item.label" :value="item.value" :key="item.value"></el-option>
             </el-select>
           </el-form-item>
@@ -184,8 +184,8 @@
       <el-form ref="exportCar"  size="small" label-position="left">
         <el-form-item><div>{{ auditNames }}共({{selectedList.length}}个站）</div></el-form-item>
         <el-form-item>
-          <el-radio v-model="auditType" label="1">站点自主</el-radio>
-           <el-radio v-model="auditType" label="0">平台审核</el-radio>
+          <el-radio v-model="auditType" label="0">站点自主</el-radio>
+           <el-radio v-model="auditType" label="1">平台审核</el-radio>
         </el-form-item>
 
         <el-form-item class="el-del-btn-item">

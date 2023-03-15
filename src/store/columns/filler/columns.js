@@ -88,7 +88,7 @@ const columns = {
 
     // { field: 'listPrice', name: '加气站挂牌价(元/公斤)', ispush: false },
     // { field: 'platformPrice', name: '平台挂牌价(元/公斤)', ispush: false },
-    { field: 'qrcode', name: '收款码类型', formatter: 'qrcodeType', ispush: false },
+    // { field: 'qrcode', name: '收款码类型', formatter: 'qrcodeType', ispush: false },
     { field: 'platformPrice', name: '标准定价(元/公斤)', ispush: false },
     { field: 'selectedOptions', hide: true, name: '所在地区', nameSpan: 6, show: { type: 'cascader', parent: 'gasstationVO', iType: 'string', ou: 2, mulField: { province: 0, city: 1, region: 2 }, props: { value: 'label', label: 'label' }, obj: 'cascaderAddress', style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
     { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },

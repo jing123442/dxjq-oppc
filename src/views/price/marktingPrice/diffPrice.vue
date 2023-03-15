@@ -181,7 +181,7 @@
         stripe
         :header-cell-style="{ background: 'rgb(246, 246, 246)', color: '#606266', borderColor: '#EBEEF5' }"
       >
-        <el-table-column prop="platformPrice" label="非标差价(元/公斤)" show-overflow-tooltip>
+        <el-table-column prop="gaspricePlan" label="非标差价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="updateDate" label="调价执行时间" show-overflow-tooltip>
         </el-table-column>
@@ -190,6 +190,11 @@
         <el-table-column prop="operatorName" label="操作人" show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="status" label="调价执行状态" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <div v-for="item,index in utilsExecuteStatus" :key="index">
+              {{  item.value == scope.row.status?item.label:'' }}
+            </div>
+          </template>
         </el-table-column>
       </el-table>
       <el-pagination
