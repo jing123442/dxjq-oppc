@@ -256,7 +256,8 @@
 <script>
 
 import { $settleMarketGetSumWithTime, $settleMarketGetWithTime, $settleMarketDownLoad } from '@/service/settle'
-import { monthTimeArea } from '@/utils/tools'
+import { monthTimeArea, exportBlobToFiles } from '@/utils/tools'
+
 export default {
   data() {
     return {
@@ -347,14 +348,19 @@ export default {
       this.getList()
     },
     exportExcel() {
+      const params = { dateParam: {}, type: 0 }
       if (this.updateTime && this.updateTime.length > 0) {
-        this.searchForm.param.dateParam.updateDateFrom = this.updateTime[0]
-        this.searchForm.param.dateParam.updateDateTo = this.updateTime[1]
+        params.dateParam.updateDateFrom = this.updateTime[0]
+        params.dateParam.updateDateTo = this.updateTime[1]
       } else {
         this.$message.error('请选择导出时间')
         return
       }
-      $settleMarketDownLoad(this.searchForm).then((res) => {
+      params.type = this.searchForm.type
+      $settleMarketDownLoad(params).then((res) => {
+        console.log('resss', res)
+        const fileName = '新营销毛利核算' + '_' + (new Date().getTime()) + '.xlsx'
+        exportBlobToFiles(res, fileName)
       })
     },
 
