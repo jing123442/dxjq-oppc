@@ -191,7 +191,8 @@
         </el-table-column>
         <el-table-column prop="status" label="调价执行状态" show-overflow-tooltip>
           <template slot-scope="scope">
-            <div v-for="item,index in utilsExecuteStatus" :key="index">
+            <div v-if="scope.row.auditStatus == 1">待审核</div>
+            <div v-for="item,index in utilsExecuteStatus" :key="index" v-else>
               {{  item.value == scope.row.status?item.label:'' }}
             </div>
           </template>
