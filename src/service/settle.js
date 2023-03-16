@@ -206,5 +206,5 @@ export async function $settleMarketGetWithTime(data) {
 
 // 新营销订单条件下载
 export async function $settleMarketDownLoad(data) {
-  return await R({ url: '/settle/gas_order_market/download_withtime', method: 'POST', data, responseType: 'blob' })
+  return await R({ url: 'settle/gas_order_market/download_withtime', data, responseType: 'blob' })
 }
