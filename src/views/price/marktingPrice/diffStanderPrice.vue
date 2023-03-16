@@ -181,6 +181,8 @@
               v-model="excuteParams.updateDate"
               type="datetime"
               placeholder="请选择"
+              default-time="00:00:00"
+              popper-class="no-time-picker"
               value-format="yyyy-MM-dd HH:mm:ss"
               clearable
             />
