@@ -356,7 +356,7 @@ export default {
         this.$message.error('请选择导出时间')
         return
       }
-      params.type = this.searchForm.type
+      params.type = this.searchForm.param.type
       $settleMarketDownLoad(params).then((res) => {
         console.log('resss', res)
         const fileName = '新营销毛利核算' + '_' + (new Date().getTime()) + '.xlsx'

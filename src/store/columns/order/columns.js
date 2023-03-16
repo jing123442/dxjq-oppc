@@ -13,7 +13,11 @@ const columns = {
     { field: 'amount', name: '结算金额(元)', width: 90, detail: { type: 'span', style: 'width: 85%', serial: 12, util: '元', ou: 3, name: '结算金额'} },
     { field: 'amountTotal', name: '订单总金额', width: 90, hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 11, util: '元', value: function(row) { return (Number(row.amount) + Number(row.discountAmount) + Number(row.carrierRebate)).toFixed(2) }, ou: 3 } },
     { field: 'carrierRebate', name: '优惠金额 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 13, util: '元', ou: 3 } },
-    { field: 'gasPrice', name: '长城奥扬差价 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2, util: '元/公斤', ou: 6 } },
+    { field: 'diff', name: '长城奥扬差价 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2, util: '元/公斤', ou: 6,value: function(row) { return (Number(row.platformPrice) - Number(row.gasprice) ).toFixed(2) } } },
+   
+    { field: 'gasprice', name: '加气站售卖价 ', hide: true, width: 90, 
+    detail: { type: 'span', isDisabled: true,  style: 'width: 85%', serial: 1, util: '元', ou: 6,}
+     },
     { field: 'comAmount', name: '立减 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 13, util: '元' } },
     { field: 'orderRealTotal', name: '实付金额 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 11, util: '元' } },
     { field: 'carrierOrgName', name: '物流客户', search: { type: 'text', field: 'carrierOrgName', placeholder: '请输入物流公司', findStyle: 'width: 19%', }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 7, ou: 2 } },
@@ -22,14 +26,12 @@ const columns = {
     { field: 'gasstationName', name: '加气站', search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 5, ou: 1 } },
     { field: 'cashierName', name: '收银员姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 6, ou: 1 } },
 
-    { field: 'platformPrice', name: '加气站售卖价 ', hide: true, width: 90, 
-    detail: { type: 'span', isDisabled: true,  style: 'width: 85%', serial: 1, util: '元', ou: 6,}
-     },
+ 
      
     { field: 'marketType', name: '经营模式',  formatter: 'marketType', 
     search: { type: 'select', obj: 'marketType', placeholder: '经营模式' },
      detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'marketType', serial: 3, ou: 1 ,
-      cascaderList:[{value:0,fields:['platformPrice','gasPrice']}] ,
+      cascaderList:[{value:0,fields:['diff','gasprice']}] ,
     } },
 
     { field: 'priceType', name: '标准定价策略', formatter: 'priceType', search: { type: 'select', obj: 'priceType', placeholder: '标准定价策略' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'priceType', serial: 3, ou: 1 } },

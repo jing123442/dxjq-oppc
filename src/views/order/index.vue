@@ -63,14 +63,10 @@ export default {
   methods: {
     onListEvent(type, row) {
       if (type == 'detail') {
-        console.log('type', type, row)
       }
       this.detailRow = row
-      console.log('type', type, row)
     },
     tableBtnEvent(row, option) {
-      console.log('typetype', row)
-      console.log('optionoption', option)
     },
 
     updateColumnValue(tableData, callback) {
