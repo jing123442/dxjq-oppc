@@ -98,7 +98,7 @@
               v-model="addParams.gasstationIndex"
               clearable
               filterable
-              placeholder="请输入"
+              placeholder="请选择"
             >
 
               <el-option
@@ -448,7 +448,8 @@ export default {
         size: -1,
         param: {
           org: {
-            orgType: 1
+            orgType: 1,
+            tradeType: 2
           }
         }
       }).then((res) => {
@@ -464,7 +465,8 @@ export default {
         size: -1,
         param: {
           org: {
-            orgType: 2
+            orgType: 2,
+            tradeType: 2
           }
         }
       }).then((res) => {
