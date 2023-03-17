@@ -263,6 +263,8 @@
               placeholder="请选择"
               default-time="00:00:00"
               popper-class="no-time-picker"
+              :picker-options="pickerOptions"
+              @change="handle"
               value-format="yyyy-MM-dd HH:mm:ss"
               clearable
             />
@@ -293,7 +295,7 @@ import { $userOrgList } from '@/service/user'
 import {
   utilsMarketType, utilsCheckPriceType, utilsExecuteStatus
 } from '@/utils/select'
-import { monthTimeArea } from '@/utils/tools'
+import { monthTimeArea, formatDate } from '@/utils/tools'
 export default {
   data() {
     return {
@@ -370,6 +372,13 @@ export default {
 
       addParams: {
 
+      },
+      pickerOptions: {
+        disabledDate (time) {
+          // disabledDate 文档上：设置禁用状态，参数为当前日期，要求返回 Boolean
+          // return time.getTime() > Date.now()// 选当前时间之前的时间
+          return time.getTime() < Date.now() - 1 * 24 * 3600 * 1000
+        }
       }
     }
   },
@@ -381,6 +390,14 @@ export default {
   },
 
   methods: {
+
+    handle() {
+      var startAt = new Date(this.excuteParams.updateDate) * 1000 / 1000
+      if (startAt < Date.now()) {
+        this.excuteParams.updateDate = formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss')
+      }
+    },
+
     addGas() {
       this.showAddDialog = true
       // this.$nextTick(() => {

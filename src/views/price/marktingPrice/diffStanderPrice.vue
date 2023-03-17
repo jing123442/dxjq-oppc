@@ -184,6 +184,8 @@
               default-time="00:00:00"
               popper-class="no-time-picker"
               value-format="yyyy-MM-dd HH:mm:ss"
+              :picker-options="pickerOptions"
+              @change="handle"
               clearable
             />
             执行(将作废执行中、已预约未执行调价)
@@ -238,10 +240,17 @@ import { $getMarketDiffStander, $getMarketDiffStanderLog, $getMarketPriceUpdate 
 import {
   utilsMarketType, utilsCheckPriceType, utilsExecuteStatus
 } from '@/utils/select'
-import { monthTimeArea } from '@/utils/tools'
+import { monthTimeArea, formatDate } from '@/utils/tools'
 export default {
   data() {
     return {
+      pickerOptions: {
+        disabledDate (time) {
+          // disabledDate 文档上：设置禁用状态，参数为当前日期，要求返回 Boolean
+          // return time.getTime() > Date.now()// 选当前时间之前的时间
+          return time.getTime() < Date.now() - 1 * 24 * 3600 * 1000
+        }
+      },
       rules: {
         gaspricePlan: [{ required: true, message: '请输入差价', trigger: 'blur' }],
         updateDate: [{ required: true, message: '请选择时间', trigger: 'blur' }]
@@ -281,19 +290,15 @@ export default {
       logUpdateTime: [],
       logData: [],
       logTotal: 0,
-
       totalInfo: {},
       totalCount: 0,
       dialogFormVisible: false,
       formLabelWidth: '80px',
       searchText: '',
-
-
       auditNames: '',
       selectedList: [],
       changePrice: false,
       auditType: '1',
-
       excuteParams: {
         gaspricePlan: '', // 标准差价
         type: 2,
@@ -310,6 +315,12 @@ export default {
   },
 
   methods: {
+    handle() {
+      var startAt = new Date(this.excuteParams.updateDate) * 1000 / 1000
+      if (startAt < Date.now()) {
+        this.excuteParams.updateDate = formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss')
+      }
+    },
     changeUpdateTime(e) {
       if (!e) {
         this.logUpdateTime = []
