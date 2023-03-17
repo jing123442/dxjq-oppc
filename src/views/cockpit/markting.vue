@@ -368,6 +368,8 @@ export default {
       if (this.updateTime) {
         this.searchForm.param.dateParam.updateDateFrom = this.updateTime[0]
         this.searchForm.param.dateParam.updateDateTo = this.updateTime[1]
+      } else {
+        this.searchForm.param.dateParam = {}
       }
 
       $settleMarketGetWithTime(this.searchForm).then((res) => {
@@ -409,10 +411,14 @@ export default {
         size: 10,
         param: {
           dateParam: {
+
           },
           type: '0'
         }
       }
+      const periodTime = monthTimeArea(new Date(), 'yyyy-MM-dd')
+      this.updateTime.push(periodTime.start)
+      this.updateTime.push(periodTime.end)
       this.getList()
     },
 
