@@ -394,7 +394,9 @@ export default {
     handle() {
       var startAt = new Date(this.excuteParams.updateDate) * 1000 / 1000
       if (startAt < Date.now()) {
-        this.excuteParams.updateDate = formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss')
+        // this.excuteParams.updateDate = formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss')
+        this.$message.error('选择的时间不能小于当前的时间')
+        this.excuteParams.updateDate = ''
       }
     },
 
