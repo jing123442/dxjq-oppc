@@ -6,7 +6,9 @@ import {
   utilsTradeModeType,
   utilsDyOrgList,
   utilsTradeType,
-  utilsExecuteStatus
+  utilsExecuteStatus,
+  utilsCheckPriceType,
+  utilsPriceExcuteType
 } from '@/utils/select'
 import { provinceAndCityData } from 'element-china-area-data'
 
@@ -90,6 +92,13 @@ const select = {
     status: utilsExecuteStatus(),
     currDataSearch: [{ value: "operatorDate", label: "操作时间" }, { value: "updateDate", label: "调价执行时间" }],
   },
+  gasStationSalePrice:{
+    status: utilsExecuteStatus(),
+    checkPriceType:utilsCheckPriceType(),
+    priceExcuteType:utilsPriceExcuteType()
+    
+
+  }
 }
 
 export default select

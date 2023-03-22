@@ -193,3 +193,18 @@ export async function $sumData ({ url, data }) {
 export async function $settleSnpOrderGetSumTotal(data) {
   return await R({ url: '/settle/gas_order_snp/sum_withtime', data })
 }
+
+// 新营销订单条件查询汇总
+export async function $settleMarketGetSumWithTime(data) {
+  return await R({ url: '/settle/gas_order_market/sum_withtime', data })
+}
+
+// 新营销条件查询
+export async function $settleMarketGetWithTime(data) {
+  return await R({ url: '/settle/gas_order_market/list_withtime', data })
+}
+
+// 新营销订单条件下载
+export async function $settleMarketDownLoad(data) {
+  return await R({ url: 'settle/gas_order_market/download_withtime', data, responseType: 'blob' })
+}

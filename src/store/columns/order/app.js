@@ -4,6 +4,15 @@ const app = {
       { ou: 1, name: '', status: 3 },
       { ou: 2, name: '', status: 3 },
       { ou: 3, name: '', status: 3 },
+      { ou: 6, name: '', status: 3 },
+      { ou: 4, name: '', status: 3 },
+      { ou: 5, name: '', status: 3 },
+    ],
+    buyOrder: [
+      { ou: 1, name: '', status: 3 },
+      { ou: 2, name: '', status: 3 },
+      { ou: 3, name: '', status: 3 },
+      { ou: 6, name: '', status: 3 },
       { ou: 4, name: '', status: 3 },
       { ou: 5, name: '', status: 3 },
     ],
@@ -16,6 +25,7 @@ const app = {
   },
   list: {
     order: 13,
+    buyOrder: 13,
     // sinopecOrder: 13,
     sinopec: 13,
     self: 13,

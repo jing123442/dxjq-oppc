@@ -13,6 +13,11 @@ const columns = {
     { field: 'amount', name: '结算金额(元)', width: 90, detail: { type: 'span', style: 'width: 85%', serial: 12, util: '元', ou: 3, name: '结算金额'} },
     { field: 'amountTotal', name: '订单总金额', width: 90, hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 11, util: '元', value: function(row) { return (Number(row.amount) + Number(row.discountAmount) + Number(row.carrierRebate)).toFixed(2) }, ou: 3 } },
     { field: 'carrierRebate', name: '优惠金额 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 13, util: '元', ou: 3 } },
+    { field: 'diff', name: '长城奥扬差价 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2, util: '元/公斤', ou: 6,value: function(row) { return (Number(row.platformPrice) - Number(row.gasprice) ).toFixed(2) } } },
+   
+    { field: 'gasprice', name: '加气站售卖价 ', hide: true, width: 90, 
+    detail: { type: 'span', isDisabled: true,  style: 'width: 85%', serial: 1, util: '元', ou: 6,}
+     },
     { field: 'comAmount', name: '立减 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 13, util: '元' } },
     { field: 'orderRealTotal', name: '实付金额 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 11, util: '元' } },
     { field: 'carrierOrgName', name: '物流客户', search: { type: 'text', field: 'carrierOrgName', placeholder: '请输入物流公司', findStyle: 'width: 19%', }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 7, ou: 2 } },
@@ -20,6 +25,15 @@ const columns = {
     { field: 'driverName', name: '驾驶员姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 8, ou: 2 } },
     { field: 'gasstationName', name: '加气站', search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 5, ou: 1 } },
     { field: 'cashierName', name: '收银员姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 6, ou: 1 } },
+
+ 
+     
+    { field: 'marketType', name: '经营模式',  formatter: 'marketType', 
+    search: { type: 'select', obj: 'marketType', placeholder: '经营模式' },
+     detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'marketType', serial: 3, ou: 1 ,
+      cascaderList:[{value:0,fields:['diff','gasprice']}] ,
+    } },
+
     { field: 'priceType', name: '标准定价策略', formatter: 'priceType', search: { type: 'select', obj: 'priceType', placeholder: '标准定价策略' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'priceType', serial: 3, ou: 1 } },
     { field: 'tradeType', name: '交易模式', formatter: 'tradeType', search: { type: 'select', obj: 'tradeType', placeholder: '交易模式' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'tradeType', serial: 4, ou: 1 } },
     { field: 'platformPrice', hide: true, name: '总利润单价', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 15, util: '元/公斤', ou: 4 } },
@@ -35,8 +49,50 @@ const columns = {
           { value: 1, fields: ['comAmount', 'orderRealTotal'] },
           { value: 2, fields: ['comAmount', 'orderRealTotal'] }
         ] } },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 80, list: [{ type: 'detail', name: '详情' }] }
+    { field: 'useropts', stype: 'opt', ispush: true, name: '操作', fixed: 'right', width: 80, 
+  
+    list: [{ type: 'detail', name: '详情', }] }
   ],
+
+  buyOrder: [
+    { field: 'orderId', name: '订单编号', fixed: 'left',  detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 1, ou: 1} },
+    { field: 'createDate', name: '创建时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 51%;height: 50px;', style: 'width: 100%;', findField: 'createDate', dtime: ['00:00:00', '23:59:59'], value: (function () { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', subField: 'createDateName', hideName: true, obj: 'currDataSearch', style: 'width: 100%;', value: 'createDate' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2, formatFun: 'formateTData all', stype: 'format', ou: 1 } },
+    // { field: 'createDate', name: '创建时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 30%;height: 50px;', style: 'width: 100%;', findField: 'createDate', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return ['2021-10-19', dateObj.end] }()) }, currSearch: { type: 'select', subField: 'createDateName', hideName: true, obj: 'currDataSearch', style: 'width: 100%;', value: 'createDate' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2, formatFun: 'formateTData all', stype: 'format', ou: 1 } },
+    { field: 'updateDate', name: '支付时间', formatFun: 'formateTData all', width: 140, stype: 'format', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 21, formatFun: 'formateTData all', stype: 'format' , ou: 5} },
+
+    { field: 'gasprice', name: '采购价(元)', width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2, util: '元', ou: 6 } },
+    { field: 'gasQty', name: '采购量(公斤)', width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2, util: '公斤', ou: 6 } },
+    { field: 'gasamount', name: '采购金额(元)',width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2, util: '元', ou: 6 } },
+
+    { field: 'gasstationName', name: '加气站', search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 5, ou: 1 } },
+    { field: 'cashierName', name: '收银员姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 6, ou: 1 } },
+    { field: 'carrierOrgName', name: '物流客户', search: { type: 'text', field: 'carrierOrgName', placeholder: '请输入物流公司', findStyle: 'width: 19%', }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 7, ou: 2 } },
+    { field: 'carNumber', name: '车牌号', search: { type: 'text', placeholder: '请输入', findStyle: 'width: 30%', style: 'width: 100%;', findField: 'carNumber' }, 
+    currSearch: { type: 'select', subField: 'currFieldName', style: 'width: 100%;', hideName: true, obj: 'currFieldSearch', value: 'carNumber' }, 
+    detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 9, ou: 2 } },
+    { field: 'driverName', name: '驾驶员姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 8, ou: 2 } },
+    
+
+    { field: 'marketType', name: '经营模式',  formatter: 'marketType', 
+
+     detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'marketType', serial: 3, ou: 1 ,
+      cascaderList:[{value:1,fields:['platformPrice','gasPrice']}] ,
+    } },
+
+    { field: 'priceType', name: '标准定价策略', formatter: 'priceType', detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'priceType', serial: 3, ou: 1 } },
+    { field: 'tradeType', name: '交易模式', formatter: 'tradeType',  detail: { type: 'span', isDisabled: true, style: 'width: 85%', model: 'select', obj: 'tradeType', serial: 4, ou: 1 } },
+    { field: 'orderStatus', name: '订单状态', width: 70, formatter: 'orderStatus', search: { type: 'select', obj: 'orderStatus', placeholder: '订单状态' }, 
+    detail: { type: 'span', model: 'select', isDisabled: true, obj: 'orderStatus', style: 'width: 85%', serial: 19, ou: 5 } },
+    { field: 'payType', name: '支付方式', width: 90, formatter: 'payType',
+    detail: { type: 'span', model: 'select', isDisabled: true, obj: 'payType', style: 'width: 85%', serial: 20, ou: 5,
+      cascaderList: [
+        { value: 0, fields: ['comAmount', 'orderRealTotal'] },
+        { value: 1, fields: ['comAmount', 'orderRealTotal'] },
+        { value: 2, fields: ['comAmount', 'orderRealTotal'] }
+      ] } },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 80, list: [{ type: 'detail', name: '详情' },]}
+  ],
+
   sinopecOrder: [
     { field: 'orderId', name: '订单编号', fixed: 'left', search: { type: 'text', field: 'orderId', placeholder: '请输入订单编号' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 1, ou: 1 } },
     { field: 'createDate', name: '创建时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 51%;height: 50px;', style: 'width: 100%;', findField: 'createDate', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()), serial: 2 }, show: { type: 'span', ou: 1 }, currSearch: { type: 'select', subField: 'createDateName', hideName: true, obj: 'currDataSearch', style: 'width: 100%;', value: 'createDate' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 1, formatFun: 'formateTData all', stype: 'format' } },

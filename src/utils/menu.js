@@ -37,7 +37,7 @@ export function menuList() {
     name: 'filler',
     meta: { title: '加气站管理', icon: 'icon-jiaqizhanguanli', class: 'em-iconfont', noCache: false },
     children: [
-      { path: '/fillerIndex', name: 'fillerIndex', meta: { title: '加气站列表', noCache: false } },
+      { path: '/fillerIndex', name: 'fillerIndex', meta: { title: '加气站企业资料', noCache: false } },
       { path: '/fillerInfo', name: 'fillerInfo', meta: { title: '加气站信息维护', noCache: false } },
       { path: '/fillerAccount', name: 'fillerAccount', meta: { title: '加气站资金账户管理', noCache: false } },
       { path: '/fillerPrice', name: 'fillerPrice', meta: { title: '加气站挂牌价查询', noCache: false } },

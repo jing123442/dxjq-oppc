@@ -11,6 +11,7 @@ export default [
     children: [
       { path: 'priceRelease', component: inImport('price/release'), name: 'priceRelease', meta: { title: '发布审核', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'marketIndex', component: inImport('price/special'), name: 'marketIndex', meta: { title: '专项优惠配置', icon: 'icon-gongnengguanli', noCache: false } },
+      { path: 'marktingPrice', component: inImport('price/index'), name: 'marktingPrice', meta: { title: '新营销定价', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'priceIndex', component: inImport('price/index'), name: 'priceIndex', meta: { title: '挂牌价管理', icon: 'icon-gongnengguanli', noCache: false } },
       { path: 'snpLimitPrice', component: inImport('price/index'), name: 'snpLimit', meta: { title: '中石化限价', noCache: false } },
       { path: 'marketCost', component: inImport('price/cost'), name: 'marketCost', meta: { title: '平台费用', icon: 'icon-gongnengguanli', noCache: false } },
@@ -63,6 +64,21 @@ export default [
         children: [
           { path: 'snpRetail', component: inImport('price/snp/snpRetail'), name: 'snpRetail', meta: { title: '中石化零售价', noCache: false } },
           { path: 'auyanRetail', component: inImport('price/snp/auyanRetail'), name: 'auyanRetail', meta: { title: '长城奥扬零售价', noCache: false } }
+        ]
+      },
+      {
+        path: 'marktingPrice',
+        name: 'marktingPrice',
+        redirect: '/price/marktingPrice',
+        component: {
+          render (c) { return c('router-view') }
+        },
+        meta: { title: '新营销定价', noCache: false },
+        children: [
+          { path: 'standardPrice', component: inImport('price/marktingPrice/standardPrice'), name: 'standardPrice', meta: { title: '标准定价', noCache: false } },
+          { path: 'gasStationSalePrice', component: inImport('price/marktingPrice/gasStationSalePrice'), name: 'gasStationSalePrice', meta: { title: '加气站售卖价', noCache: false } },
+          { path: 'diffStanderPrice', component: inImport('price/marktingPrice/diffStanderPrice'), name: 'gasStationSalePrice', meta: { title: '标准差价', noCache: false } },
+          { path: 'diffPrice', component: inImport('price/marktingPrice/diffPrice'), name: 'diffPrice', meta: { title: '物流非标差价', noCache: false } }
         ]
       }
     ]

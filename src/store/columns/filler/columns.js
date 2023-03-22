@@ -48,19 +48,56 @@ const columns = {
   ],
   info: [
     { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { type: 'hide', isNode: true, parent: 'gasstationVO' } },
-    { field: 'gasstationName', name: '企业名称', nameSpan: 6, fixed: 'left', show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入企业名称', isDisabled: true }, search: { type: 'text', nameSpan: 0, placeholder: '请输入企业名称' } },
-    { field: 'nickName', name: '加气站名称', nameSpan: 6, show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' }, rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
-    { field: 'gasType', name: '站点类型', formatter: 'gasstationType', nameSpan: 6, show: { type: 'select', ou: 2, obj: 'gasstationType', parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请选择站点类型' }, rules: [{ required: true, message: '请选择站点类型', trigger: 'blur' }] },
-    { field: 'listPrice', name: '加气站挂牌价(元/公斤)', ispush: false },
-    { field: 'platformPrice', name: '平台挂牌价(元/公斤)', ispush: false },
-    { field: 'qrcode', name: '收款码类型', formatter: 'qrcodeType', ispush: false },
+   
+    { field: 'nickName', name: '加气站名称', fixed: 'left', 
+    show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' },
+     rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] ,
+
+    search: { type: 'text', placeholder: '请输入', findStyle: 'width: 35%', style: 'width: 100%;', 
+    findField: 'nickName' }, 
+    currSearch: { type: 'select', subField: 'currFieldSearch', style: 'width: 100%;',
+     hideName: true, obj: 'currFieldSearch', value: 'nickName' }},
+
+    //  { field: 'nickName', name: '加气站名称', nameSpan: 6, show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' },
+    //  rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
+     
+    { field: 'gasstationName', name: '企业名称', nameSpan: 6, fixed: 'left', show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入企业名称', isDisabled: true } },
+    
+    { field: 'marketType', name: '经营模式',  formatter: 'marketType', nameSpan: 6,search: { type: 'select', obj: 'marketType', placeholder: '经营模式' }, 
+    show: { type: 'select', ou: 2, obj: 'marketType', style: 'width: 90%', model: 'select',parent: 'gasstationVO', },
+    rules: [{ required: true, message: '请选择经营模式', trigger: 'blur' }],
+    cascaderLoder:[
+      {selectField:'gasstationType',cover:1002,cancelField:'gasType',params:{marketType:[{value: 0, label: '一体化' }]}}
+    ]
+  
+  },
+
+    { field: 'openStatus', name: '营业状态', nameSpan: 4, formatter: 'businessState', search: { type: 'select', obj: 'businessState', placeholder: '营业状态' }, 
+    show: { type: 'select', style: 'width: 90%', model: 'select', obj: 'businessState',  ou: 2 ,parent: 'gasstationVO',} },
+
+
+
+  
+    { field: 'gasType', name: '站点类型', formatter: 'gasstationType', nameSpan: 4,
+    search: { type: 'select', obj: 'gasstationType', placeholder: '站点类型' },
+     show: { type: 'select', ou: 2, obj: 'gasstationType', parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请选择站点类型' },
+      rules: [{ required: true, message: '请选择站点类型', trigger: 'blur' }],
+   
+    },
+
+
+    // { field: 'listPrice', name: '加气站挂牌价(元/公斤)', ispush: false },
+    // { field: 'platformPrice', name: '平台挂牌价(元/公斤)', ispush: false },
+    // { field: 'qrcode', name: '收款码类型', formatter: 'qrcodeType', ispush: false },
+    { field: 'platformPrice', name: '标准定价(元/公斤)', ispush: false },
     { field: 'selectedOptions', hide: true, name: '所在地区', nameSpan: 6, show: { type: 'cascader', parent: 'gasstationVO', iType: 'string', ou: 2, mulField: { province: 0, city: 1, region: 2 }, props: { value: 'label', label: 'label' }, obj: 'cascaderAddress', style: 'width: 90%;', placeholder: '请选择所在地区' }, rules: [{ required: true, message: '请选择所在地区', trigger: 'blur' }] },
     { field: 'address', name: '详细地址', nameSpan: 6, show: { type: 'text', ou: 2, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入详细地址' }, rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }] },
     { field: 'pointAddress', name: '经纬度', colspan: 24, hide: true, nameSpan: 3, show: { type: 'map', ou: 2, parent: 'gasstationVO', mulField: { longitude: 0, latitude: 1 }, iType: 'string', sign: ',', style: 'width: 40.5%', placeholder: '经纬度' }, rules: [{ required: true, message: '请选择经纬度', trigger: 'change' }] },
     { field: 'url', name: '加气站头像', filefield: 'file', hide: true, nameSpan: 6, show: { type: 'file', ou: 2, parent: 'gasstationVO', iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传加气站头像', node: [], rules: [{ required: true, message: '请上传加气站头像！', trigger: 'change' }] } },
     { field: 'orgPics', name: '加气站形象图', filefield: 'file', ispush: false, hide: true, nameSpan: 6, show: { type: 'file', ou: 2, limit: 6, size: 1024, iType: 'string', btnType: true, paramField: 'url', props: { url: 'picPath', name: 'picPath' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传加气站形象图', node: [], successAxios: file.state.successAxios, deleteAxios: file.state.deleteAxios, rules: [{ required: true, message: '请上传加气站形象图！', trigger: 'change' }] } },
     { field: 'introduce', hide: true, name: '加气站宣传文案', nameSpan: 6, show: { type: 'textarea', ou: 2, maxlength: 400, isWordLimit: true, style: 'width: 90%;', placeholder: '请输入加气站宣传文案' } },
-    { field: 'mobile', hide: true, name: '加气站联系电话', nameSpan: 6, show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加气站联系电话', util: '<div style="font-size: 12px;color: #efab10;">此联系电话将在加气站名片和物流公司的订单详情中显示</div>' }, rules: [{ validator: 'isValidateMobile', message: '请输入正确的加气站联系电话', trigger: 'blur' }] },
+    { field: 'mobile', hide: true, name: '加气站联系电话', nameSpan: 6, 
+    show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加气站联系电话', util: '<div style="font-size: 12px;color: #efab10;">此联系电话将在加气站名片和物流公司的订单详情中显示</div>' }, rules: [{ validator: 'isValidateMobile', message: '请输入正确的加气站联系电话', trigger: 'blur' }] },
     { field: 'fillingMachineNum', hide: true, name: '加注机数量', nameSpan: 6, show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加注机数量' } },
     { field: 'cashierNum', hide: true, name: '收银员数量', nameSpan: 6, show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入收银员数量' } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 150, list: [{ type: 'edit', name: '编辑' }, { type: 'printer', name: '小票机' }] }

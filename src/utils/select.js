@@ -288,7 +288,14 @@ export function utilsTradeType() {
 export function utilsPriceType() {
   return [
     { value: 0, label: '原长城奥扬定价' },
-    { value: 1, label: '新中石化限价' }
+    { value: 1, label: '新中石化限价' },
+    { value: 2, label: '新营销定价' }
+  ]
+}
+export function utilsMarketType() {
+  return [
+    { value: 0, label: '一体化' },
+    { value: 1, label: '新营销' }
   ]
 }
 export function utilsPrintPaper() {
@@ -402,7 +409,12 @@ export function utilsOperateType() {
     { value: 2, label: '删除' }
   ]
 }
-
+export function utilsNameType() {
+  return [
+    { value: 1, label: '加气站名称' },
+    { value: 2, label: '企业名称' }
+  ]
+}
 export function utilsLNGDataSearch() {
   return [
     /* { value: 'planTime', label: '期望到站日期' }, */
@@ -442,6 +454,48 @@ export function utilSelectGasstationType(type = '') {
   }
 
   return result
+}
+
+export function utilsSiteType() {
+  return [
+    { value: 1001, label: '合作经营' },
+    { value: 1002, label: '核心联营' },
+    { value: 1003, label: '停业' },
+    { value: 2001, label: '中海油' },
+    { value: 2002, label: '中石油' },
+    { value: 2003, label: '中石化' },
+    { value: 2004, label: '社会' }
+  ]
+}
+export function utilsSiteTypeWithoutStop() {
+  return [
+    { value: 1001, label: '合作经营' },
+    { value: 1002, label: '核心联营' },
+    { value: 2001, label: '中海油' },
+    { value: 2002, label: '中石油' },
+    { value: 2003, label: '中石化' },
+    { value: 2004, label: '社会' }
+  ]
+}
+export function businessStateType() {
+  return [
+    { value: 0, label: '在营' },
+    { value: 1, label: '停业' }
+  ]
+}
+
+export function utilsCheckPriceType() {
+  return [
+    { value: 0, label: '站点自主' },
+    { value: 1, label: '平台审核' }
+  ]
+}
+
+export function utilsPriceExcuteType() {
+  return [
+    { value: 1, label: '定时生效' },
+    { value: 2, label: '立即生效' }
+  ]
 }
 
 export function untilsMarketingManList() {

@@ -88,3 +88,8 @@ export async function $withdrawConfigBatchAdd (data) {
 export async function $withdrawCheckLogCheck (data) {
   return await R({ url: 'pay/withdraw_check_log/check', data })
 }
+
+// 订单查询
+export async function $gasOrderWithTime (data) {
+  return await R({ url: 'pay/gas_order/list_withtime', data })
+}
