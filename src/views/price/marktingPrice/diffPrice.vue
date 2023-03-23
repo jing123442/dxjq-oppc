@@ -48,7 +48,7 @@
         </el-table-column>
         <el-table-column prop="gaspricePlan" label="最新非标差价(元/公斤)" show-overflow-tooltip>
         </el-table-column>
-        <el-table-column prop="status" label="最新标准差价执行状态" show-overflow-tooltip>
+        <el-table-column prop="status" label="最新非标准差价执行状态" show-overflow-tooltip>
           <template slot-scope="scope">
             <div v-if="scope.row.auditStatus == 1">待审核</div>
             <div v-for="item,index in utilsExecuteStatus" :key="index" v-else>
