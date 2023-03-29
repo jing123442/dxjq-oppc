@@ -32,7 +32,7 @@ export default {
       },
       dataList: [{
         name: '采购总金额：',
-        field: 'amount',
+        field: 'gasamount',
         unit: ' 元'
       }, {
         name: '采购总量：',
