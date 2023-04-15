@@ -929,7 +929,11 @@ export default {
     btnClickEvent(btnObj, row) {
       if (btnObj.type === 'ok') {
         var files = document.getElementsByName('file')[0].files[0]
-
+        console.log('files', files)
+        if (!files) {
+          this.$message.error('请先上传文件')
+          return
+        }
         var _fromData = new FormData()
         _fromData.append('date', this.updateTime)
         _fromData.append('file', files)
