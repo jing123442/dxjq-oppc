@@ -1,4 +1,5 @@
 import R from '@/utils/request'
+import R2 from '@/utils/requestUpload'
 import store from '@/store'
 
 export async function $excelDownload (data) {
@@ -183,6 +184,12 @@ export async function $importDataFile(url, data) {
   }
   return await R({ url: `${url}?orgId=${store.getters.woporg}`, method: 'POST', data: data.file, headers: { ...data.headers, ...headers } })
 }
+export async function $importDataFileWithNoOrgId(url, data) {
+  const headers = {
+    'Content-Type': 'multipart/form-data'
+  }
+  return await R2({ url: `${url}`, method: 'POST', data: data.file, headers: { ...data.headers, ...headers } })
+}
 
 // 数据总量
 export async function $sumData ({ url, data }) {
@@ -208,3 +215,21 @@ export async function $settleMarketGetWithTime(data) {
 export async function $settleMarketDownLoad(data) {
   return await R({ url: 'settle/gas_order_market/download_withtime', data, responseType: 'blob' })
 }
+
+// 下载导入模板
+export async function $settleGasorderdownload (data) {
+  return await R({ url: 'settle/gway_gasorder_adjust/download_gasorder_adjust_tpl', data, responseType: 'blob', method: 'get' })
+}
+
+export async function $settleGasorderWait (data) {
+  return await R({ url: 'settle/gway_gasorder_adjust/page', data })
+}
+
+export async function $settleGasorderAdjustDetail(data) {
+  return await R({ url: 'settle/gway_gasorder_adjust/find', data })
+}
+
+export async function $settleGasorderAdjustAudit(data) {
+  return await R({ url: 'settle/gway_gasorder_adjust/audit', data })
+}
+
