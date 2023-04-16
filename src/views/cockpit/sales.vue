@@ -85,6 +85,7 @@
                   value-format="yyyy-MM-dd"
                   @change="changeTime"
                   placeholder="选择日期"
+                  :picker-options="pickerBeginDateBefore"
                 >
                 </el-date-picker>
               </el-form-item>
@@ -755,7 +756,12 @@ export default {
       showDetail: false,
       isAudit: false,
       radioAudit: '2',
-      authList: []
+      authList: [],
+      pickerBeginDateBefore: {
+        disabledDate(time) {
+          return time.getTime() > Date.now()
+        }
+      }
     })
   },
   computed: {
