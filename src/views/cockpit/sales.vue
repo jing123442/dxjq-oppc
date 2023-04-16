@@ -891,20 +891,6 @@ export default {
       } else {
         return ''
       }
-
-      // if (columnIndex === 11) { // 表格的第11行做处理
-      //   if (fxdj == 4) { // 如果是低风险背景色蓝色，字体色白色
-      //     return 'background:blue; color:white'
-      //   } else if (fxdj == 2) { // 较大风险
-      //     return 'background:orange'
-      //   } else if (fxdj == 1) { // 重大风险
-      //     return 'background:red'
-      //   } else { // 一般风险
-      //     return 'background:yellow'
-      //   }
-      // } else {
-      //   return ''
-      // }
     },
 
     resetData() {
@@ -1087,10 +1073,10 @@ export default {
         }
         if (this.showImport == 4) {
           this.showImport = 3
+          this.getWaitCheck()
         } else {
           this.showImport = 0
         }
-        this.getWaitCheck()
       })
     },
     dealData() {
