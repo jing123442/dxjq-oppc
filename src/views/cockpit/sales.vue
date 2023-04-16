@@ -74,7 +74,8 @@
         ></em-table-list>
 
         <div class="top-bg" v-if="showImport == 1 || showImport == 4">
-            每日导入
+          <div v-if="showImport == 1">每日导入</div>
+          <div v-else>数据调整</div>
           <div class="between" style="margin-top:20px">
             <el-form :inline="true" size="mini">
               <el-form-item label="">
