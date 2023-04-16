@@ -809,6 +809,7 @@ export default {
           this.$message.success('下载成功')
         })
       } else if (type === 'data_import') {
+        this.resetData()
         this.showImport = 1
       } else if (type === 'template_down') {
         $importDownloadFile('settle/gway_gasorder_adjust/download_gasorder_adjust_tpl', { orgId: this.woporg }).then((response) => {
