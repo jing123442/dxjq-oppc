@@ -1122,9 +1122,9 @@ export default {
         } else {
           rateColor = 'red'
         }
-        if (this.dataListImport[i].compareRate * 1 < this.dataListImport[i].compareRateNew * 1) {
+        if (this.dataListImport[i].compareRateNew * 1 > 100) {
           rateColorNew = 'green'
-        } else if (this.dataListImport[i].compareRate * 1 == 100) {
+        } else if (this.dataListImport[i].compareRateNew * 1 == 100) {
           rateColorNew = 'grey'
         } else {
           rateColorNew = 'red'
