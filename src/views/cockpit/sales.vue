@@ -910,6 +910,7 @@ export default {
     resetData() {
       this.totalInfoImport = { qtyTotal: 0, amountTotal: 0, amountTotalNew: 0, qtyTotalNew: 0 }
       this.dataListImport = []
+      this.errorList = []
     },
 
     auditPass() {
