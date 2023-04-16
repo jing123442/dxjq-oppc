@@ -1049,7 +1049,6 @@ export default {
             this.totalInfoImport.amountTotal = response.data.amountTotal
           }
 
-
           if (this.showImport == 4 && response.data && response.data.orderList) {
             this.totalInfoImport.qtyTotalNew = response.data.qtyTotalNew
             this.totalInfoImport.amountTotalNew = response.data.amountTotalNew
