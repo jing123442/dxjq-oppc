@@ -154,11 +154,13 @@
           </div>
 
           <el-table
+          :cell-style="tableCellStyle"
             style="margin-top: 20px"
             :data="dataListImport"
             border
             size="mini"
             stripe
+
             :header-cell-style="{
               background: 'rgb(246, 246, 246)',
               color: '#606266',
@@ -166,6 +168,7 @@
             }"
           >
             <el-table-column
+            min-width="125"
               prop="gasstationName"
               label="加气站(自营站)"
               show-overflow-tooltip
@@ -424,6 +427,7 @@
           <el-table
             style="margin-top: 20px"
             :data="dataListImport"
+            :cell-style="tableCellStyle"
             border
             size="mini"
             stripe
@@ -436,6 +440,7 @@
             <el-table-column
               prop="gasstationName"
               label="加气站(自营站)"
+              min-width="125"
               show-overflow-tooltip
             >
               <template v-slot="scope">
@@ -495,7 +500,9 @@
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div>{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
+                <div v-if="scope.row.compareRate==0" >{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
+                <div v-else-if="scope.row.compareRate>0" style="color:#41CCA1">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
+                <div v-else style="color:red">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
               </template>
             </el-table-column>
           </el-table>
@@ -828,6 +835,70 @@ export default {
       }
     },
 
+    tableCellStyle ({ row, column, rowIndex, columnIndex }) {
+      console.log('rowrowrow', row, column, rowIndex)
+
+      if (column.property == 'step') { // 对比阶段
+
+      } else if (column.property == 'amountTotal') {
+        if (row.amountTotalDiff) {
+          if (row.step == '调整前') {
+            return 'background:#E6E6FF'
+          } else {
+            return 'background:#E6FFE6'
+          }
+        } else {
+          return ''
+        }
+      } else if (column.property == 'gasQtyTotal') {
+        if (row.gasQtyTotalDiff) {
+          if (row.step == '调整前') {
+            return 'background:#E6E6FF'
+          } else {
+            return 'background:#E6FFE6'
+          }
+        } else {
+          return ''
+        }
+      } else if (column.property == 'dayAvgPrice') {
+        if (row.dayAvgPriceDiff) {
+          if (row.step == '调整前') {
+            return 'background:#E6E6FF'
+          } else {
+            return 'background:#E6FFE6'
+          }
+        } else {
+          return ''
+        }
+      } else if (column.property == 'inQtyTotal') {
+        if (row.inQtyTotalDiff) {
+          if (row.step == '调整前') {
+            return 'background:#E6E6FF'
+          } else {
+            return 'background:#E6FFE6'
+          }
+        } else {
+          return ''
+        }
+      } else {
+        return ''
+      }
+
+      // if (columnIndex === 11) { // 表格的第11行做处理
+      //   if (fxdj == 4) { // 如果是低风险背景色蓝色，字体色白色
+      //     return 'background:blue; color:white'
+      //   } else if (fxdj == 2) { // 较大风险
+      //     return 'background:orange'
+      //   } else if (fxdj == 1) { // 重大风险
+      //     return 'background:red'
+      //   } else { // 一般风险
+      //     return 'background:yellow'
+      //   }
+      // } else {
+      //   return ''
+      // }
+    },
+
     resetData() {
       this.totalInfoImport = { qtyTotal: 0, amountTotal: 0, amountTotalNew: 0, qtyTotalNew: 0 }
       this.dataListImport = []
@@ -1019,10 +1090,10 @@ export default {
                   inQtyTotal: this.dataListImport[i].inQtyTotalNew,
                   compareRate: this.dataListImport[i].compareRateNew,
 
-                  amountTotalDiff: this.dataListImport[i].amountTotalNew,
-                  dayAvgPriceDiff: this.dataListImport[i].dayAvgPriceNew,
-                  gasQtyTotalDiff: this.dataListImport[i].gasQtyTotalNew,
-                  inQtyTotalDiff: this.dataListImport[i].inQtyTotalNew,
+                  amountTotalDiff: this.dataListImport[i].amountTotalDiff,
+                  dayAvgPriceDiff: this.dataListImport[i].dayAvgPriceDiff,
+                  gasQtyTotalDiff: this.dataListImport[i].gasQtyTotalDiff,
+                  inQtyTotalDiff: this.dataListImport[i].inQtyTotalDiff,
 
                   step: '调整后'
                 })
