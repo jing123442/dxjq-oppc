@@ -1045,62 +1045,7 @@ export default {
           if (this.showImport == 4 && response.data && response.data.orderList) {
             this.totalInfoImport.qtyTotalNew = response.data.qtyTotalNew
             this.totalInfoImport.amountTotalNew = response.data.amountTotalNew
-            const newArray = []
-            for (let i = 0; i < this.dataListImport.length; i++) {
-              let diffCount = 0
-              if (this.dataListImport[i].amountTotal * 1 != this.dataListImport[i].amountTotalNew * 1) {
-                this.dataListImport[i].amountTotalDiff = true
-                diffCount++
-              } else {
-                this.dataListImport[i].amountTotalDiff = false
-              }
-
-              if (this.dataListImport[i].dayAvgPrice * 1 != this.dataListImport[i].dayAvgPriceNew * 1) {
-                this.dataListImport[i].dayAvgPriceDiff = true
-                diffCount++
-              } else {
-                this.dataListImport[i].dayAvgPriceDiff = false
-              }
-
-              if (this.dataListImport[i].gasQtyTotal * 1 != this.dataListImport[i].gasQtyTotalNew * 1) {
-                this.dataListImport[i].gasQtyTotalDiff = true
-                diffCount++
-              } else {
-                this.dataListImport[i].gasQtyTotalDiff = false
-              }
-
-              if (this.dataListImport[i].inQtyTotal * 1 != this.dataListImport[i].inQtyTotalNew * 1) {
-                this.dataListImport[i].inQtyTotalDiff = true
-                diffCount++
-              } else {
-                this.dataListImport[i].inQtyTotalDiff = false
-              }
-
-              if (diffCount > 0) {
-                newArray.push({ ...this.dataListImport[i], step: '调整前' })
-              } else {
-                newArray.push({ ...this.dataListImport[i], step: '—' })
-              }
-
-              if (diffCount > 0) {
-                newArray.push({
-                  amountTotal: this.dataListImport[i].amountTotalNew,
-                  dayAvgPrice: this.dataListImport[i].dayAvgPriceNew,
-                  gasQtyTotal: this.dataListImport[i].gasQtyTotalNew,
-                  inQtyTotal: this.dataListImport[i].inQtyTotalNew,
-                  compareRate: this.dataListImport[i].compareRateNew,
-
-                  amountTotalDiff: this.dataListImport[i].amountTotalDiff,
-                  dayAvgPriceDiff: this.dataListImport[i].dayAvgPriceDiff,
-                  gasQtyTotalDiff: this.dataListImport[i].gasQtyTotalDiff,
-                  inQtyTotalDiff: this.dataListImport[i].inQtyTotalDiff,
-
-                  step: '调整后'
-                })
-              }
-            }
-            console.log(' this.dataListImport ', this.dataListImport)
-            this.dataListImport = newArray
+            this.dealData()
           }
 
 
@@ -1141,6 +1086,65 @@ export default {
         this.$refs.tables3.initDataList()
       })
     },
+    dealData() {
+      const newArray = []
+      for (let i = 0; i < this.dataListImport.length; i++) {
+        let diffCount = 0
+        if (this.dataListImport[i].amountTotal * 1 != this.dataListImport[i].amountTotalNew * 1) {
+          this.dataListImport[i].amountTotalDiff = true
+          diffCount++
+        } else {
+          this.dataListImport[i].amountTotalDiff = false
+        }
+
+        if (this.dataListImport[i].dayAvgPrice * 1 != this.dataListImport[i].dayAvgPriceNew * 1) {
+          this.dataListImport[i].dayAvgPriceDiff = true
+          diffCount++
+        } else {
+          this.dataListImport[i].dayAvgPriceDiff = false
+        }
+
+        if (this.dataListImport[i].gasQtyTotal * 1 != this.dataListImport[i].gasQtyTotalNew * 1) {
+          this.dataListImport[i].gasQtyTotalDiff = true
+          diffCount++
+        } else {
+          this.dataListImport[i].gasQtyTotalDiff = false
+        }
+
+        if (this.dataListImport[i].inQtyTotal * 1 != this.dataListImport[i].inQtyTotalNew * 1) {
+          this.dataListImport[i].inQtyTotalDiff = true
+          diffCount++
+        } else {
+          this.dataListImport[i].inQtyTotalDiff = false
+        }
+
+        if (diffCount > 0) {
+          newArray.push({ ...this.dataListImport[i], step: '调整前' })
+        } else {
+          newArray.push({ ...this.dataListImport[i], step: '—' })
+        }
+
+        if (diffCount > 0) {
+          newArray.push({
+            amountTotal: this.dataListImport[i].amountTotalNew,
+            dayAvgPrice: this.dataListImport[i].dayAvgPriceNew,
+            gasQtyTotal: this.dataListImport[i].gasQtyTotalNew,
+            inQtyTotal: this.dataListImport[i].inQtyTotalNew,
+            compareRate: this.dataListImport[i].compareRateNew,
+
+            amountTotalDiff: this.dataListImport[i].amountTotalDiff,
+            dayAvgPriceDiff: this.dataListImport[i].dayAvgPriceDiff,
+            gasQtyTotalDiff: this.dataListImport[i].gasQtyTotalDiff,
+            inQtyTotalDiff: this.dataListImport[i].inQtyTotalDiff,
+
+            step: '调整后'
+          })
+        }
+      }
+      console.log(' this.dataListImport ', this.dataListImport)
+      this.dataListImport = newArray
+    },
+
     getDetail(id) {
       $settleGasorderAdjustDetail({ id: id }).then(response => {
         this.dataListImport = response.data.orderList
@@ -1148,62 +1152,7 @@ export default {
         this.totalInfoImport.amountTotal = response.data.amountTotal
         this.totalInfoImport.qtyTotalNew = response.data.qtyTotalNew
         this.totalInfoImport.amountTotalNew = response.data.amountTotalNew
-        const newArray = []
-        for (let i = 0; i < this.dataListImport.length; i++) {
-          let diffCount = 0
-          if (this.dataListImport[i].amountTotal * 1 != this.dataListImport[i].amountTotalNew * 1) {
-            this.dataListImport[i].amountTotalDiff = true
-            diffCount++
-          } else {
-            this.dataListImport[i].amountTotalDiff = false
-          }
-
-          if (this.dataListImport[i].dayAvgPrice * 1 != this.dataListImport[i].dayAvgPriceNew * 1) {
-            this.dataListImport[i].dayAvgPriceDiff = true
-            diffCount++
-          } else {
-            this.dataListImport[i].dayAvgPriceDiff = false
-          }
-
-          if (this.dataListImport[i].gasQtyTotal * 1 != this.dataListImport[i].gasQtyTotalNew * 1) {
-            this.dataListImport[i].gasQtyTotalDiff = true
-            diffCount++
-          } else {
-            this.dataListImport[i].gasQtyTotalDiff = false
-          }
-
-          if (this.dataListImport[i].inQtyTotal * 1 != this.dataListImport[i].inQtyTotalNew * 1) {
-            this.dataListImport[i].inQtyTotalDiff = true
-            diffCount++
-          } else {
-            this.dataListImport[i].inQtyTotalDiff = false
-          }
-
-          if (diffCount > 0) {
-            newArray.push({ ...this.dataListImport[i], step: '调整前' })
-          } else {
-            newArray.push({ ...this.dataListImport[i], step: '—' })
-          }
-
-          if (diffCount > 0) {
-            newArray.push({
-              amountTotal: this.dataListImport[i].amountTotalNew,
-              dayAvgPrice: this.dataListImport[i].dayAvgPriceNew,
-              gasQtyTotal: this.dataListImport[i].gasQtyTotalNew,
-              inQtyTotal: this.dataListImport[i].inQtyTotalNew,
-              compareRate: this.dataListImport[i].compareRateNew,
-
-              amountTotalDiff: this.dataListImport[i].amountTotalDiff,
-              dayAvgPriceDiff: this.dataListImport[i].dayAvgPriceDiff,
-              gasQtyTotalDiff: this.dataListImport[i].gasQtyTotalDiff,
-              inQtyTotalDiff: this.dataListImport[i].inQtyTotalDiff,
-
-              step: '调整后'
-            })
-          }
-        }
-        console.log(' this.dataListImport ', this.dataListImport)
-        this.dataListImport = newArray
+        this.dealData()
       })
     },
     updateColumnValueHistory(dataList, callback) {
