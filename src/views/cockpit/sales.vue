@@ -74,7 +74,8 @@
         ></em-table-list>
 
         <div class="top-bg" v-if="showImport == 1 || showImport == 4">
-          <div class="between">
+            每日导入
+          <div class="between" style="margin-top:20px">
             <el-form :inline="true" size="mini">
               <el-form-item label="">
                 <el-date-picker
@@ -114,7 +115,7 @@
             <div class="row">
               <div class="count-item">
                 <div class="count-key">
-                {{ showImport==4?'调整前交易总量：':'交易总量：' }}  {{ totalInfoImport.qtyTotal || "—" }}
+                {{ showImport==4?'调整前销售总量：':'销售总量：' }}  {{ totalInfoImport.qtyTotal || "—" }}
                 </div>
                 <div class="count-value" v-if="totalInfoImport.qtyTotal">
                   吨
@@ -134,7 +135,7 @@
             <div class="row" v-if="showImport == 4">
               <div class="count-item">
                 <div class="count-key">
-                  调整后交易总量：{{ totalInfoImport.qtyTotal || "—" }}
+                  调整后销售总量：{{ totalInfoImport.qtyTotal || "—" }}
                 </div>
                 <div class="count-value" v-if="totalInfoImport.qtyTotal">
                   吨
@@ -191,9 +192,14 @@
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div>{{ scope.row.inQtyTotal || "—" }}</div>
+                <div  >{{ scope.row.inQtyTotal || "—" }}</div>
+<!--
+                <div  v-if="scope.row.inQtyTotalDiff">{{ scope.row.inQtyTotal || "—" }}</div>
+                <div  v-else-if="scope.row.step=='调整前'" style="background-color: #E6E6FF;">{{ scope.row.inQtyTotal || "—" }}</div>
+                <div  v-else-if="scope.row.step=='调整后'" style="background-color: #E6FFE6;">{{ scope.row.inQtyTotal || "—" }}</div> -->
               </template>
             </el-table-column>
+
             <el-table-column
               prop="gasQtyTotal"
               label="销售量(吨)"
@@ -227,7 +233,9 @@
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div>{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
+                <div v-if="scope.row.compareRate==0" >{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
+                <div v-else-if="scope.row.compareRate>0" style="color:#41CCA1">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
+                <div v-else style="color:red">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
               </template>
             </el-table-column>
           </el-table>
@@ -246,14 +254,14 @@
             <el-button
               size="mini"
               type="info"
-              v-if="errorList.length > 0 || dataListImport == 0">{{showImport == 4?'确定发起':'确认上传'}}</el-button
+              v-if="errorList.length > 0 || dataListImport == 0">{{showImport == 4?'确定发起':'确定导入'}}</el-button
             >
             <el-button
               @click="onListEvent('sure_upload')"
               size="mini"
               type="primary"
               v-else
-              >{{showImport == 4?'确定发起':'确认上传'}}</el-button
+              >{{showImport == 4?'确定发起':'确定导入'}}</el-button
             >
             <el-button
               type="primary"
@@ -267,7 +275,7 @@
 
         <div class="bg" v-if="showImport == 3">
           <div class="between">
-            <div></div>
+            <div>数据调整</div>
             <div>
               <el-button
               v-if="needButton['start_modify']"
@@ -293,6 +301,7 @@
             <el-table-column
               prop="duration"
               label="数据时段"
+              min-width="100"
               show-overflow-tooltip
             >
             </el-table-column>
@@ -794,6 +803,7 @@ export default {
           this.$message.success('下载成功')
         })
       } else if (type === 'data_upload') {
+        this.resetData()
         this.importEvent()
       } else if (type === 'sure_upload') {
         this.sureUpload()
@@ -801,19 +811,28 @@ export default {
         this.showImport = 3
         this.getWaitCheck()
       } else if (type === 'start_modify') {
+        this.resetData()
         this.showImport = 4
       } else if (type === 'check_detail') {
         this.isAudit = false
         this.clickRow = row
         this.showDetail = true
+        this.resetData()
         this.getDetail(row.id)
       } else if (type === 'check_audit') {
+        this.resetData()
         this.isAudit = true
         this.clickRow = row
         this.showDetail = true
         this.getDetail(row.id)
       }
     },
+
+    resetData() {
+      this.totalInfoImport = { qtyTotal: 0, amountTotal: 0, amountTotalNew: 0, qtyTotalNew: 0 }
+      this.dataListImport = []
+    },
+
     auditPass() {
       $settleGasorderAdjustAudit({ id: this.clickRow.id, auditStatus: this.radioAudit }).then(res => {
         if (res.code == 0) {
@@ -870,9 +889,7 @@ export default {
     },
 
     changeTime(e, type) {
-      console.log('changeTime', e)
-
-      var time = new Date(e).getTime() - 24 * 60 * 60 * 1000
+      var time = new Date(e).getTime() + 24 * 60 * 60 * 1000
       var yesterday = new Date(time)
       yesterday =
         yesterday.getFullYear() +
@@ -885,12 +902,10 @@ export default {
           ? yesterday.getDate()
           : '0' + yesterday.getDate())
       if (type) {
-        return yesterday + '  08:00 至  ' + e + '  08:00 '
+        return e + '  08:00 至  ' + yesterday + '  08:00 '
       } else {
-        this.tipTime = '导入时间：' + yesterday + '  08:00 至  ' + e + '  08:00 '
+        this.tipTime = '导入时间：' + e + '  08:00 至  ' + yesterday + '  08:00 '
       }
-
-      console.log('   this.tipTime ', this.tipTime)
     },
 
     handleClick() {
@@ -961,15 +976,57 @@ export default {
             this.totalInfoImport.amountTotalNew = response.data.amountTotalNew
             const newArray = []
             for (let i = 0; i < this.dataListImport.length; i++) {
-              newArray.push({ ...this.dataListImport[i], step: '调整前' })
-              newArray.push({
-                amountTotal: this.dataListImport[i].amountTotalNew,
-                dayAvgPrice: this.dataListImport[i].dayAvgPriceNew,
-                gasQtyTotal: this.dataListImport[i].gasQtyTotalNew,
-                inQtyTotal: this.dataListImport[i].inQtyTotalNew,
-                compareRate: this.dataListImport[i].compareRateNew,
-                step: '调整后'
-              })
+              let diffCount = 0
+              if (this.dataListImport[i].amountTotal * 1 != this.dataListImport[i].amountTotalNew * 1) {
+                this.dataListImport[i].amountTotalDiff = true
+                diffCount++
+              } else {
+                this.dataListImport[i].amountTotalDiff = false
+              }
+
+              if (this.dataListImport[i].dayAvgPrice * 1 != this.dataListImport[i].dayAvgPriceNew * 1) {
+                this.dataListImport[i].dayAvgPriceDiff = true
+                diffCount++
+              } else {
+                this.dataListImport[i].dayAvgPriceDiff = false
+              }
+
+              if (this.dataListImport[i].gasQtyTotal * 1 != this.dataListImport[i].gasQtyTotalNew * 1) {
+                this.dataListImport[i].gasQtyTotalDiff = true
+                diffCount++
+              } else {
+                this.dataListImport[i].gasQtyTotalDiff = false
+              }
+
+              if (this.dataListImport[i].inQtyTotal * 1 != this.dataListImport[i].inQtyTotalNew * 1) {
+                this.dataListImport[i].inQtyTotalDiff = true
+                diffCount++
+              } else {
+                this.dataListImport[i].inQtyTotalDiff = false
+              }
+
+              if (diffCount > 0) {
+                newArray.push({ ...this.dataListImport[i], step: '调整前' })
+              } else {
+                newArray.push({ ...this.dataListImport[i], step: '—' })
+              }
+
+              if (diffCount > 0) {
+                newArray.push({
+                  amountTotal: this.dataListImport[i].amountTotalNew,
+                  dayAvgPrice: this.dataListImport[i].dayAvgPriceNew,
+                  gasQtyTotal: this.dataListImport[i].gasQtyTotalNew,
+                  inQtyTotal: this.dataListImport[i].inQtyTotalNew,
+                  compareRate: this.dataListImport[i].compareRateNew,
+
+                  amountTotalDiff: this.dataListImport[i].amountTotalNew,
+                  dayAvgPriceDiff: this.dataListImport[i].dayAvgPriceNew,
+                  gasQtyTotalDiff: this.dataListImport[i].gasQtyTotalNew,
+                  inQtyTotalDiff: this.dataListImport[i].inQtyTotalNew,
+
+                  step: '调整后'
+                })
+              }
             }
             console.log(' this.dataListImport ', this.dataListImport)
             this.dataListImport = newArray
@@ -1140,7 +1197,7 @@ export default {
   display: flex;
 }
 .top-bg {
-  padding: 25px 15px 0 15px;
+  padding: 15px 15px 0 15px;
   margin: 5px;
   background: white;
   border-radius: 5px;
