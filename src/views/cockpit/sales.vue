@@ -408,18 +408,18 @@
             <div class="row" style="margin-top: 10px;">
               <div class="count-item">
                 <div class="count-key">
-                  调整后交易总量：{{ totalInfoImport.qtyTotal || "—" }}
+                  调整后交易总量：{{ totalInfoImport.qtyTotalNew || "—" }}
                 </div>
-                <div class="count-value" v-if="totalInfoImport.qtyTotal">
+                <div class="count-value" v-if="totalInfoImport.qtyTotalNew">
                   吨
                 </div>
               </div>
 
               <div class="count-item">
                 <div class="count-key">
-                  调整后销售总金额：{{ totalInfoImport.amountTotal || "—" }}
+                  调整后销售总金额：{{ totalInfoImport.amountTotalNew || "—" }}
                 </div>
-                <div class="count-value" v-if="totalInfoImport.amountTotal">
+                <div class="count-value" v-if="totalInfoImport.amountTotalNew">
                   元
                 </div>
               </div>
