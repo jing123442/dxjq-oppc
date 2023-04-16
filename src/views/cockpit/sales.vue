@@ -238,8 +238,8 @@
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div v-if="scope.row.compareRate==0" >{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
-                <div v-else-if="scope.row.compareRate>0" style="color:#41CCA1">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
+                <div v-if="scope.row.rateColor=='grey'" >{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
+                <div v-else-if="scope.row.rateColor=='green'" style="color:#41CCA1">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
                 <div v-else style="color:red">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
               </template>
             </el-table-column>
@@ -502,9 +502,11 @@
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div v-if="scope.row.compareRate==0" >{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
-                <div v-else-if="scope.row.compareRate>0" style="color:#41CCA1">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
+                <div v-if="scope.row.rateColor=='grey'" >{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
+                <div v-else-if="scope.row.rateColor=='green'" style="color:#41CCA1">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
                 <div v-else style="color:red">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
+
+
               </template>
             </el-table-column>
           </el-table>
@@ -1111,10 +1113,28 @@ export default {
           this.dataListImport[i].inQtyTotalDiff = false
         }
 
-        if (diffCount > 0) {
-          newArray.push({ ...this.dataListImport[i], step: '调整前' })
+        let rateColor = 0
+        let rateColorNew = 0
+        if (this.dataListImport[i].compareRate * 1 > 100) {
+          rateColor = 'green'
+        } else if (this.dataListImport[i].compareRate * 1 == 100) {
+          rateColor = 'grey'
         } else {
-          newArray.push({ ...this.dataListImport[i], step: '—' })
+          rateColor = 'red'
+        }
+        if (this.dataListImport[i].compareRate * 1 < this.dataListImport[i].compareRateNew * 1) {
+          rateColorNew = 'green'
+        } else if (this.dataListImport[i].compareRate * 1 == 100) {
+          rateColorNew = 'grey'
+        } else {
+          rateColorNew = 'red'
+        }
+
+
+        if (diffCount > 0) {
+          newArray.push({ ...this.dataListImport[i], step: '调整前', rateColor: rateColor })
+        } else {
+          newArray.push({ ...this.dataListImport[i], step: '—', rateColor: rateColor })
         }
 
         if (diffCount > 0) {
@@ -1129,7 +1149,7 @@ export default {
             dayAvgPriceDiff: this.dataListImport[i].dayAvgPriceDiff,
             gasQtyTotalDiff: this.dataListImport[i].gasQtyTotalDiff,
             inQtyTotalDiff: this.dataListImport[i].inQtyTotalDiff,
-
+            rateColor: rateColorNew,
             step: '调整后'
           })
         }
