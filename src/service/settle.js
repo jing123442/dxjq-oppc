@@ -218,7 +218,7 @@ export async function $settleMarketDownLoad(data) {
 
 // 下载导入模板
 export async function $settleGasorderdownload (data) {
-  return await R({ url: 'settle/gway_gasorder_adjust/download_gasorder_adjust_tpl', data, responseType: 'blob', method: 'get' })
+  return await R({ url: 'settle/gway_gasorder_adjust/download_gasorder_adjust_tpl', params: data, responseType: 'blob', method: 'get' })
 }
 
 export async function $settleGasorderWait (data) {

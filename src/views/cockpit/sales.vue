@@ -605,7 +605,7 @@ import {
   $settleGasstationCurrentSales,
   $settleGasstationHistorySales,
   $settleGwayGasOrderGetSumTotal,
-  $settleGasorderdownload,
+  $importDownloadFile,
   $importDataFileWithNoOrgId,
   $settleGasorderWait, $settleGasorderAdjustDetail, $settleGasorderAdjustAudit
 } from '@/service/settle'
@@ -811,8 +811,8 @@ export default {
       } else if (type === 'data_import') {
         this.showImport = 1
       } else if (type === 'template_down') {
-        $settleGasorderdownload({}).then((response) => {
-          const fileName = '每日导入' + Date.parse(new Date()) + '.xlsx'
+        $importDownloadFile('settle/gway_gasorder_adjust/download_gasorder_adjust_tpl', { orgId: this.woporg }).then((response) => {
+          const fileName = '每日导入' + Date.parse(new Date()) + '.xls'
           exportBlobToFiles(response, fileName)
           this.$message.success('下载成功')
         })
