@@ -329,12 +329,12 @@
               </template>
             </el-table-column>
             <el-table-column
-              prop="dayAvgPrice"
+              prop="operatorDate"
               label="发起时间"
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div>{{ scope.row.auditDate || "—" }}</div>
+                <div>{{ scope.row.operatorDate || "—" }}</div>
               </template>
             </el-table-column>
             <el-table-column
