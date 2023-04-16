@@ -171,12 +171,12 @@
           >
             <el-table-column
             min-width="125"
-              prop="gasstationName"
+              prop="nickName"
               label="加气站(自营站)"
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div>{{ scope.row.gasstationName || "—" }}</div>
+                <div>{{ scope.row.nickName || "—" }}</div>
               </template>
             </el-table-column>
 
@@ -440,13 +440,13 @@
             }"
           >
             <el-table-column
-              prop="gasstationName"
+              prop="nickName"
               label="加气站(自营站)"
               min-width="125"
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div>{{ scope.row.gasstationName || "—" }}</div>
+                <div>{{ scope.row.nickName || "—" }}</div>
               </template>
             </el-table-column>
 
@@ -520,7 +520,7 @@
               type="primary" @click="auditPass()">确定</el-button
             >
             <el-button
-              @click="onListEvent('sure_upload')"
+              @click="showDetail = false"
               size="mini"
               type="primary" plain>取消</el-button >
           </el-row>
@@ -1090,8 +1090,7 @@ export default {
         } else {
           this.showImport = 0
         }
-
-        this.$refs.tables3.initDataList()
+        this.getWaitCheck()
       })
     },
     dealData() {
