@@ -117,39 +117,39 @@
             <div class="row">
               <div class="count-item">
                 <div class="count-key">
-                {{ showImport==4?'调整前销售总量：':'销售总量：' }}  {{ totalInfoImport.qtyTotal || "—" }}
+                {{ showImport==4?'调整前销售总量：':'销售总量：' }}
                 </div>
-                <div class="count-value" v-if="totalInfoImport.qtyTotal">
-                  吨
+                <div class="count-value" :style="{'color':totalInfoImport.qtyTotalColor}">
+                  {{ totalInfoImport.qtyTotal || "0" }}<span style="color:#606266">吨</span>
                 </div>
               </div>
 
               <div class="count-item">
                 <div class="count-key">
-                  {{ showImport==4?'调整前销售总金额：':'销售总金额：' }}  {{ totalInfoImport.amountTotal || "—" }}
+                  {{ showImport==4?'调整前销售总金额：':'销售总金额：' }}
                 </div>
-                <div class="count-value" v-if="totalInfoImport.amountTotal">
-                  元
+                <div class="count-value" :style="{'color':totalInfoImport.amountTotalColor}">
+                  {{ totalInfoImport.amountTotal || "0" }}<span style="color:#606266">元</span>
                 </div>
               </div>
             </div>
 
-            <div class="row" v-if="showImport == 4">
+            <div class="row" v-if="showImport == 4 && uploadInfo.file">
               <div class="count-item">
                 <div class="count-key">
-                  调整后销售总量：{{ totalInfoImport.qtyTotalNew || "—" }}
+                  调整后销售总量：
                 </div>
-                <div class="count-value" v-if="totalInfoImport.qtyTotalNew">
-                  吨
+                <div class="count-value" :style="{'color':totalInfoImport.qtyTotalNewColor}">
+                  {{ totalInfoImport.qtyTotalNew || "0" }}<span style="color:#606266">吨</span>
                 </div>
               </div>
 
               <div class="count-item">
                 <div class="count-key">
-                  调整后销售总金额：{{ totalInfoImport.amountTotalNew || "—" }}
+                  调整后销售总金额：
                 </div>
-                <div class="count-value" v-if="totalInfoImport.amountTotalNew">
-                  元
+                <div class="count-value" :style="{'color':totalInfoImport.amountTotalNewColor}">
+                  {{ totalInfoImport.amountTotalNew || "0" }}<span style="color:#606266">元</span>
                 </div>
               </div>
             </div>
@@ -176,7 +176,7 @@
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div>{{ scope.row.nickName || "—" }}</div>
+                <div>{{ scope.row.nickName || "" }}</div>
               </template>
             </el-table-column>
 
@@ -198,10 +198,6 @@
             >
               <template v-slot="scope">
                 <div  >{{ scope.row.inQtyTotal || "—" }}</div>
-<!--
-                <div  v-if="scope.row.inQtyTotalDiff">{{ scope.row.inQtyTotal || "—" }}</div>
-                <div  v-else-if="scope.row.step=='调整前'" style="background-color: #E6E6FF;">{{ scope.row.inQtyTotal || "—" }}</div>
-                <div  v-else-if="scope.row.step=='调整后'" style="background-color: #E6FFE6;">{{ scope.row.inQtyTotal || "—" }}</div> -->
               </template>
             </el-table-column>
 
@@ -245,11 +241,12 @@
             </el-table-column>
           </el-table>
 
-          <el-col>
+          <el-col v-if="errorList.length>0" style="margin-top:10px">
             <div
               v-for="(item, index) in errorList"
               :key="index"
-              style="color: red"
+              style="color: red;font-size: 14px;"
+
             >
               {{ item }}
             </div>
@@ -259,7 +256,7 @@
             <el-button
               size="mini"
               type="info"
-              v-if="errorList.length > 0 || dataListImport == 0">{{showImport == 4?'确定发起':'确定导入'}}</el-button
+              v-if="errorList.length > 0 || dataListImport == 0 || (showImport == 1 && !canUploadData) ||  (showImport == 4 && !uploadInfo.file) ">{{showImport == 4?'确定发起':'确定导入'}}</el-button
             >
             <el-button
               @click="onListEvent('sure_upload')"
@@ -364,7 +361,6 @@
 
           </el-table>
 
-
           <el-row style="margin-top: 20px" >
             <el-button
               @click="showImport = 0"
@@ -388,19 +384,19 @@
             <div class="row" style="margin-top: 10px;">
               <div class="count-item">
                 <div class="count-key">
-                {{ '调整前交易总量'}}  {{ totalInfoImport.qtyTotal || "—" }}
+                {{ '调整前交易总量：'}}
                 </div>
-                <div class="count-value" v-if="totalInfoImport.qtyTotal">
-                  吨
+                <div class="count-value"  :style="{'color':totalInfoImport.qtyTotalColor}">
+                  {{ totalInfoImport.qtyTotal || "0" }}<span style="color:#606266">吨</span>
                 </div>
               </div>
 
               <div class="count-item">
                 <div class="count-key">
-                  {{ '调整前销售总金额：' }}  {{ totalInfoImport.amountTotal || "—" }}
+                  {{ '调整前销售总金额：' }}
                 </div>
-                <div class="count-value" v-if="totalInfoImport.amountTotal">
-                  元
+                <div class="count-value"  :style="{'color':totalInfoImport.amountTotalColor}">
+                  {{ totalInfoImport.amountTotal || "0" }}<span style="color:#606266">元</span>
                 </div>
               </div>
             </div>
@@ -408,19 +404,19 @@
             <div class="row" style="margin-top: 10px;">
               <div class="count-item">
                 <div class="count-key">
-                  调整后交易总量：{{ totalInfoImport.qtyTotalNew || "—" }}
+                  调整后交易总量：
                 </div>
-                <div class="count-value" v-if="totalInfoImport.qtyTotalNew">
-                  吨
+                <div class="count-value"  :style="{'color':totalInfoImport.qtyTotalNewColor}">
+                  {{ totalInfoImport.qtyTotalNew || "0" }}<span style="color:#606266">吨</span>
                 </div>
               </div>
 
               <div class="count-item">
                 <div class="count-key">
-                  调整后销售总金额：{{ totalInfoImport.amountTotalNew || "—" }}
+                  调整后销售总金额：
                 </div>
-                <div class="count-value" v-if="totalInfoImport.amountTotalNew">
-                  元
+                <div class="count-value" :style="{'color':totalInfoImport.amountTotalNewColor}">
+                  {{ totalInfoImport.amountTotalNew || "0" }}<span style="color:#606266">元</span>
                 </div>
               </div>
             </div>
@@ -527,8 +523,6 @@
               type="primary" plain>取消</el-button >
           </el-row>
         </div>
-
-
         </el-dialog>
 
       </el-tab-pane>
@@ -609,7 +603,7 @@ import {
   $settleGwayGasOrderGetSumTotal,
   $importDownloadFile,
   $importDataFileWithNoOrgId,
-  $settleGasorderWait, $settleGasorderAdjustDetail, $settleGasorderAdjustAudit
+  $settleGasorderWait, $settleGasorderAdjustDetail, $settleGasorderAdjustAudit, $settleGasorderList
 } from '@/service/settle'
 import { mapGetters } from 'vuex'
 
@@ -764,7 +758,8 @@ export default {
         disabledDate(time) {
           return time.getTime() > Date.now()
         }
-      }
+      },
+      canUploadData: true
     })
   },
   computed: {
@@ -811,6 +806,7 @@ export default {
           this.$message.success('下载成功')
         })
       } else if (type === 'data_import') {
+        this.getToday()
         this.resetData()
         this.showImport = 1
       } else if (type === 'template_down') {
@@ -820,7 +816,16 @@ export default {
           this.$message.success('下载成功')
         })
       } else if (type === 'data_upload') {
-        this.resetData()
+        if (!this.canUploadData) {
+          if (this.showImport == 4) {
+            this.$message.error('该时段暂无数据，不可调整')
+          } else {
+            this.$message.error('该时段已存在数据')
+          }
+
+          return
+        }
+        // this.resetData()
         this.importEvent()
       } else if (type === 'sure_upload') {
         this.sureUpload()
@@ -828,6 +833,7 @@ export default {
         this.showImport = 3
         this.getWaitCheck()
       } else if (type === 'start_modify') {
+        this.getToday()
         this.resetData()
         this.showImport = 4
       } else if (type === 'check_detail') {
@@ -873,7 +879,12 @@ export default {
           if (row.step == '调整前') {
             return 'background:#E6E6FF'
           } else {
-            return 'background:#E6FFE6'
+            console.log('row.dayAvgPriceFlag ', row)
+            if (row.dayAvgPriceFlag == 1) {
+              return 'background:#FBE7EA'
+            } else {
+              return 'background:#E6FFE6'
+            }
           }
         } else {
           return ''
@@ -897,6 +908,7 @@ export default {
       this.totalInfoImport = { qtyTotal: 0, amountTotal: 0, amountTotalNew: 0, qtyTotalNew: 0 }
       this.dataListImport = []
       this.errorList = []
+      this.uploadInfo = {}
     },
 
     auditPass() {
@@ -971,9 +983,45 @@ export default {
         return e + '  08:00 至  ' + yesterday + '  08:00 '
       } else {
         this.tipTime = '导入时间：' + e + '  08:00 至  ' + yesterday + '  08:00 '
+        this.getOrderList(e, yesterday)
       }
     },
+    getOrderList(fromDate, dateTo) {
+      this.dataListImport = []
+      $settleGasorderList({ dateFrom: fromDate, dateTo: dateTo }).then(res => {
+        this.dataListImport = res.data
+        if (res.data.length > 0) {
+          if (this.showImport == 4) {
+            this.canUploadData = true
+          } else {
+            this.canUploadData = false
+          }
 
+          for (const item of res.data) {
+            if (item.compareRate * 1 > 100) {
+              item.rateColor = 'red'
+            } else if (item.compareRate * 1 == 100) {
+              item.rateColor = 'grey'
+            } else {
+              item.rateColor = 'green'
+            }
+          }
+        } else {
+          if (this.showImport == 4) {
+            this.canUploadData = false
+          } else {
+            this.canUploadData = true
+          }
+        }
+      })
+      this.settleGwayGasOrderGetSumTotalImport({ dateFrom: fromDate, dateTo: dateTo })
+    },
+    settleGwayGasOrderGetSumTotalImport(params) {
+      $settleGwayGasOrderGetSumTotal(params).then((res) => {
+        console.log(res)
+        this.totalInfoImport = { ...res.data }
+      })
+    },
     handleClick() {
       // this.initHistoryStatus = true
       // this.page_history_status = 1
@@ -1048,9 +1096,30 @@ export default {
           if (this.showImport == 4 && response.data && response.data.orderList) {
             this.totalInfoImport.qtyTotalNew = response.data.qtyTotalNew
             this.totalInfoImport.amountTotalNew = response.data.amountTotalNew
+            if (this.totalInfoImport.amountTotalNew > this.totalInfoImport.amountTotal) {
+              this.totalInfoImport.amountTotalNewColor = '#FF440D'
+              this.totalInfoImport.amountTotalColor = '#41CCA1'
+            } else if (this.totalInfoImport.amountTotalNew == this.totalInfoImport.amountTotal) {
+              this.totalInfoImport.amountTotalNewColor = '#606266'
+              this.totalInfoImport.amountTotalColor = '#606266'
+            } else {
+              this.totalInfoImport.amountTotalNewColor = '#41CCA1'
+              this.totalInfoImport.amountTotalColor = '#FF440D'
+            }
+
+            if (this.totalInfoImport.qtyTotalNew > this.totalInfoImport.qtyTotal) {
+              this.totalInfoImport.qtyTotalNewColor = '#FF440D'
+              this.totalInfoImport.qtyTotalColor = '#41CCA1'
+            } else if (this.totalInfoImport.qtyTotalNew == this.totalInfoImport.qtyTotal) {
+              this.totalInfoImport.qtyTotalNewColor = '#606266'
+              this.totalInfoImport.qtyTotalColor = '#606266'
+            } else {
+              this.totalInfoImport.qtyTotalNewColor = '#41CCA1'
+              this.totalInfoImport.qtyTotalColor = '#FF440D'
+            }
+
             this.dealData()
           }
-
 
           if (response.message) {
             this.errorList = response.message.split(',')
@@ -1058,10 +1127,6 @@ export default {
             this.errorList = []
           }
 
-          if (this.errorList.length == 0) {
-            this.$message.success('导入成功')
-          }
-          // this.$refs.tables4.initDataList()
           this.dialogExportVisible = false
         })
       } else {
@@ -1157,6 +1222,7 @@ export default {
             dayAvgPriceDiff: this.dataListImport[i].dayAvgPriceDiff,
             gasQtyTotalDiff: this.dataListImport[i].gasQtyTotalDiff,
             inQtyTotalDiff: this.dataListImport[i].inQtyTotalDiff,
+            dayAvgPriceFlag: this.dataListImport[i].dayAvgPriceFlag,
             rateColor: rateColorNew,
             step: '调整后'
           })
@@ -1173,6 +1239,27 @@ export default {
         this.totalInfoImport.amountTotal = response.data.amountTotal
         this.totalInfoImport.qtyTotalNew = response.data.qtyTotalNew
         this.totalInfoImport.amountTotalNew = response.data.amountTotalNew
+        if (this.totalInfoImport.amountTotalNew > this.totalInfoImport.amountTotal) {
+          this.totalInfoImport.amountTotalNewColor = '#FF440D'
+          this.totalInfoImport.amountTotalColor = '#41CCA1'
+        } else if (this.totalInfoImport.amountTotalNew == this.totalInfoImport.amountTotal) {
+          this.totalInfoImport.amountTotalNewColor = '#606266'
+          this.totalInfoImport.amountTotalColor = '#606266'
+        } else {
+          this.totalInfoImport.amountTotalNewColor = '#41CCA1'
+          this.totalInfoImport.amountTotalColor = '#FF440D'
+        }
+
+        if (this.totalInfoImport.qtyTotalNew > this.totalInfoImport.qtyTotal) {
+          this.totalInfoImport.qtyTotalNewColor = '#FF440D'
+          this.totalInfoImport.qtyTotalColor = '#41CCA1'
+        } else if (this.totalInfoImport.qtyTotalNew == this.totalInfoImport.qtyTotal) {
+          this.totalInfoImport.qtyTotalNewColor = '#606266'
+          this.totalInfoImport.qtyTotalColor = '#606266'
+        } else {
+          this.totalInfoImport.qtyTotalNewColor = '#41CCA1'
+          this.totalInfoImport.qtyTotalColor = '#FF440D'
+        }
         this.dealData()
       })
     },
