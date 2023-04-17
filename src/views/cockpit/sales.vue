@@ -556,7 +556,7 @@
               name="file"
               :limit="1"
               :headers="headers"
-              accept=".xls,.xlsx"
+              accept=".xlsx"
               action="/user/import/import_user"
               :auto-upload="false"
             >
