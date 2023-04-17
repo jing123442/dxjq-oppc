@@ -846,8 +846,6 @@ export default {
     },
 
     tableCellStyle ({ row, column, rowIndex, columnIndex }) {
-      console.log('rowrowrow', row, column, rowIndex)
-
       if (column.property == 'step') { // 对比阶段
 
       } else if (column.property == 'amountTotal') {
@@ -1036,6 +1034,15 @@ export default {
             this.dataListImport = response.data.orderList
             this.totalInfoImport.qtyTotal = response.data.qtyTotal
             this.totalInfoImport.amountTotal = response.data.amountTotal
+            for (const item of response.data.orderList) {
+              if (item.compareRate * 1 > 100) {
+                item.rateColor = 'red'
+              } else if (item.compareRate * 1 == 100) {
+                item.rateColor = 'grey'
+              } else {
+                item.rateColor = 'green'
+              }
+            }
           }
 
           if (this.showImport == 4 && response.data && response.data.orderList) {
@@ -1116,18 +1123,19 @@ export default {
         let rateColor = 0
         let rateColorNew = 0
         if (this.dataListImport[i].compareRate * 1 > 100) {
-          rateColor = 'green'
+          rateColor = 'red'
         } else if (this.dataListImport[i].compareRate * 1 == 100) {
           rateColor = 'grey'
         } else {
-          rateColor = 'red'
+          rateColor = 'green'
         }
+
         if (this.dataListImport[i].compareRateNew * 1 > 100) {
-          rateColorNew = 'green'
+          rateColorNew = 'red'
         } else if (this.dataListImport[i].compareRateNew * 1 == 100) {
           rateColorNew = 'grey'
         } else {
-          rateColorNew = 'red'
+          rateColorNew = 'green'
         }
 
 
