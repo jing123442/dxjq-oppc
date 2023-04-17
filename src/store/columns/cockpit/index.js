@@ -9,6 +9,8 @@ const getters = {
   cockpit_sales_page_status: item => app.list.sales,
   cockpit_sales_column: item => columns.daySales,
   cockpit_history_column: item => columns.historySales,
+  modifyListColumn: item => columns.modifyList,
+
   cockpit_history_time_column: item => columns.historyTimeSales,
   cockpit_sales_select_list: item => item.app.selectDefault,
 

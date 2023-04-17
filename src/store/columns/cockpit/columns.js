@@ -41,6 +41,16 @@ const columns = {
     { field: 'amountTotal', name: '销售金额(元)' },
     { field: 'compareRate', name: '较前一日销量比', stype: 'text-style', classValueName: (row, field) => tableTextColorSaleRate(row, field) },
   ],
+  modifyList: [
+    { field: 'gasstationName', name: '数据时段', fixed: 'left' },
+    { field: 'date', name: '', hide: true, search: {  type: 'date-picker', dtime: ['08:00:00', '08:00:00'], format: 'yyyy-MM-dd 08:00:00', valueFormat: 'yyyy-MM-dd 08:00:00', value: (function() { return [new Date((new Date(new Date().toDateString() + ' 08:00:00')).getTime()-86400000), new Date(new Date().toDateString() + ' 08:00:00')] })() } },
+    { field: 'inQtyTotal', name: '审核状态' },
+    { field: 'inQtyTotal', name: '发起人' },
+    { field: 'inQtyTotal', name: '发起时间' },
+    { field: 'inQtyTotal', name: '审核人' },
+    { field: 'inQtyTotal', name: '审核时间' },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 210, list: [{ type: 'details', name: '详情' },{ type: 'check', name: '审核' }] }
+  ],
   battle: [
     { field: 'gasType', name: '站点类型',
       show: { type: 'select', ou: 1, obj: 'gasstationType', style: 'width: 85%', placeholder: '请选择站点类型' },

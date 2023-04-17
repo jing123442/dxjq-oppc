@@ -128,6 +128,7 @@ const formatCardNumber = cardNumber => {
   return cardNumber
 }
 
+
 export {
   vueFiltersInit,
   gasstationImage,
