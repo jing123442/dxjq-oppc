@@ -1036,11 +1036,11 @@ export default {
             this.totalInfoImport.amountTotal = response.data.amountTotal
             for (const item of response.data.orderList) {
               if (item.compareRate * 1 > 100) {
-                item.rateColor = 'green'
+                item.rateColor = 'red'
               } else if (item.compareRate * 1 == 100) {
                 item.rateColor = 'grey'
               } else {
-                item.rateColor = 'red'
+                item.rateColor = 'green'
               }
             }
           }
@@ -1123,19 +1123,19 @@ export default {
         let rateColor = 0
         let rateColorNew = 0
         if (this.dataListImport[i].compareRate * 1 > 100) {
-          rateColor = 'green'
+          rateColor = 'red'
         } else if (this.dataListImport[i].compareRate * 1 == 100) {
           rateColor = 'grey'
         } else {
-          rateColor = 'red'
+          rateColor = 'green'
         }
 
         if (this.dataListImport[i].compareRateNew * 1 > 100) {
-          rateColorNew = 'green'
+          rateColorNew = 'red'
         } else if (this.dataListImport[i].compareRateNew * 1 == 100) {
           rateColorNew = 'grey'
         } else {
-          rateColorNew = 'red'
+          rateColorNew = 'green'
         }
 
 
