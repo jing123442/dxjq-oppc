@@ -233,3 +233,7 @@ export async function $settleGasorderAdjustAudit(data) {
   return await R({ url: 'settle/gway_gasorder_adjust/audit', data })
 }
 
+export async function $settleGasorderList(data) {
+  return await R({ url: 'settle/gway_gasorder/list', data })
+}
+

@@ -33,7 +33,7 @@ const columns = {
     { field: 'gasQtyTotal', name: '加气量(公斤)' }
   ],
   historySales: [
-    { field: 'gasstationName', name: '加气站名称(自营站)', fixed: 'left' },
+    { field: 'nickName', name: '加气站(自营站)', fixed: 'left' },
     { field: 'date', name: '', hide: true, search: {  type: 'date-picker', dtime: ['08:00:00', '08:00:00'], format: 'yyyy-MM-dd 08:00:00', valueFormat: 'yyyy-MM-dd 08:00:00', value: (function() { return [new Date((new Date(new Date().toDateString() + ' 08:00:00')).getTime()-86400000), new Date(new Date().toDateString() + ' 08:00:00')] })() } },
     { field: 'inQtyTotal', name: '入库量(吨)' },
     { field: 'gasQtyTotal', name: '销售量(吨)' },
