@@ -811,7 +811,7 @@ export default {
         this.showImport = 1
       } else if (type === 'template_down') {
         $importDownloadFile('settle/gway_gasorder_adjust/download_gasorder_adjust_tpl', { orgId: this.woporg }).then((response) => {
-          const fileName = '每日导入' + Date.parse(new Date()) + '.xls'
+          const fileName = '每日导入' + Date.parse(new Date()) + '.xlsx'
           exportBlobToFiles(response, fileName)
           this.$message.success('下载成功')
         })
