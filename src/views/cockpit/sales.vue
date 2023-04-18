@@ -987,7 +987,7 @@ export default {
       }
     },
     getOrderList(fromDate, dateTo) {
-      this.dataListImport = []
+      this.resetData()
       $settleGasorderList({ dateFrom: fromDate, dateTo: dateTo }).then(res => {
         this.dataListImport = res.data
         if (res.data.length > 0) {
