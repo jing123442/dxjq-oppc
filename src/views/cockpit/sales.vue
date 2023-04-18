@@ -120,7 +120,7 @@
                 {{ showImport==4?'调整前销售总量：':'销售总量：' }}
                 </div>
                 <div class="count-value" :style="{'color':totalInfoImport.qtyTotalColor}">
-                  {{ totalInfoImport.qtyTotal || "0" }}<span style="color:#606266">吨</span>
+                  {{ totalInfoImport.qtyTotal || "0" }}吨
                 </div>
               </div>
 
@@ -129,7 +129,7 @@
                   {{ showImport==4?'调整前销售总金额：':'销售总金额：' }}
                 </div>
                 <div class="count-value" :style="{'color':totalInfoImport.amountTotalColor}">
-                  {{ totalInfoImport.amountTotal || "0" }}<span style="color:#606266">元</span>
+                  {{ totalInfoImport.amountTotal || "0" }}元
                 </div>
               </div>
             </div>
@@ -140,7 +140,7 @@
                   调整后销售总量：
                 </div>
                 <div class="count-value" :style="{'color':totalInfoImport.qtyTotalNewColor}">
-                  {{ totalInfoImport.qtyTotalNew || "0" }}<span style="color:#606266">吨</span>
+                  {{ totalInfoImport.qtyTotalNew || "0" }}吨
                 </div>
               </div>
 
@@ -149,7 +149,7 @@
                   调整后销售总金额：
                 </div>
                 <div class="count-value" :style="{'color':totalInfoImport.amountTotalNewColor}">
-                  {{ totalInfoImport.amountTotalNew || "0" }}<span style="color:#606266">元</span>
+                  {{ totalInfoImport.amountTotalNew || "0" }}元
                 </div>
               </div>
             </div>
@@ -387,7 +387,7 @@
                 {{ '调整前交易总量：'}}
                 </div>
                 <div class="count-value"  :style="{'color':totalInfoImport.qtyTotalColor}">
-                  {{ totalInfoImport.qtyTotal || "0" }}<span style="color:#606266">吨</span>
+                  {{ totalInfoImport.qtyTotal || "0" }}吨
                 </div>
               </div>
 
@@ -396,7 +396,7 @@
                   {{ '调整前销售总金额：' }}
                 </div>
                 <div class="count-value"  :style="{'color':totalInfoImport.amountTotalColor}">
-                  {{ totalInfoImport.amountTotal || "0" }}<span style="color:#606266">元</span>
+                  {{ totalInfoImport.amountTotal || "0" }}元
                 </div>
               </div>
             </div>
@@ -407,7 +407,7 @@
                   调整后交易总量：
                 </div>
                 <div class="count-value"  :style="{'color':totalInfoImport.qtyTotalNewColor}">
-                  {{ totalInfoImport.qtyTotalNew || "0" }}<span style="color:#606266">吨</span>
+                  {{ totalInfoImport.qtyTotalNew || "0" }}吨
                 </div>
               </div>
 
@@ -416,7 +416,7 @@
                   调整后销售总金额：
                 </div>
                 <div class="count-value" :style="{'color':totalInfoImport.amountTotalNewColor}">
-                  {{ totalInfoImport.amountTotalNew || "0" }}<span style="color:#606266">元</span>
+                  {{ totalInfoImport.amountTotalNew || "0" }}元
                 </div>
               </div>
             </div>
@@ -442,7 +442,7 @@
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div>{{ scope.row.nickName || "—" }}</div>
+                <div>{{ scope.row.nickName || "" }}</div>
               </template>
             </el-table-column>
 
@@ -987,7 +987,7 @@ export default {
       }
     },
     getOrderList(fromDate, dateTo) {
-      this.dataListImport = []
+      this.resetData()
       $settleGasorderList({ dateFrom: fromDate, dateTo: dateTo }).then(res => {
         this.dataListImport = res.data
         if (res.data.length > 0) {
