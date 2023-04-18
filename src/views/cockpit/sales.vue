@@ -117,7 +117,7 @@
             <div class="row">
               <div class="count-item">
                 <div class="count-key">
-                {{ showImport==4?'调整前销售总量：':'销售总量：' }}
+              <span style="color:#4343FF" v-if="showImport==4">[ 调整前 ]</span>  {{ showImport==4?'销售总量：':'销售总量：' }}
                 </div>
                 <div class="count-value" :style="{'color':totalInfoImport.qtyTotalColor}">
                   {{ totalInfoImport.qtyTotal || "0" }}吨
@@ -126,7 +126,7 @@
 
               <div class="count-item">
                 <div class="count-key">
-                  {{ showImport==4?'调整前销售总金额：':'销售总金额：' }}
+                  {{ showImport==4?'销售总金额：':'销售总金额：' }}
                 </div>
                 <div class="count-value" :style="{'color':totalInfoImport.amountTotalColor}">
                   {{ totalInfoImport.amountTotal || "0" }}元
@@ -137,7 +137,8 @@
             <div class="row" v-if="showImport == 4 && uploadInfo.file">
               <div class="count-item">
                 <div class="count-key">
-                  调整后销售总量：
+                  <span style="color:#70B603" v-if="showImport==4">[ 调整后 ]</span>
+                  销售总量：
                 </div>
                 <div class="count-value" :style="{'color':totalInfoImport.qtyTotalNewColor}">
                   {{ totalInfoImport.qtyTotalNew || "0" }}吨
@@ -146,7 +147,7 @@
 
               <div class="count-item">
                 <div class="count-key">
-                  调整后销售总金额：
+                  调销售总金额：
                 </div>
                 <div class="count-value" :style="{'color':totalInfoImport.amountTotalNewColor}">
                   {{ totalInfoImport.amountTotalNew || "0" }}元
@@ -162,7 +163,6 @@
             border
             size="mini"
             stripe
-
             :header-cell-style="{
               background: 'rgb(246, 246, 246)',
               color: '#606266',
@@ -172,7 +172,7 @@
             <el-table-column
             min-width="125"
               prop="nickName"
-              label="加气站(自营站)"
+              label="加气站(自营)"
               show-overflow-tooltip
             >
               <template v-slot="scope">
@@ -187,7 +187,8 @@
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div>{{ scope.row.step || "—" }}</div>
+                <div v-if="scope.row.step =='调整前'" style="color: #B5B5FF;">[ 调整前 ]</div>
+                <div v-if="scope.row.step =='调整后'"  style="color: #70B603;">[ 调整后 ]</div>
               </template>
             </el-table-column>
 
@@ -288,7 +289,7 @@
               >
             </div>
           </div>
-        <el-table
+          <el-table
             style="margin-top: 20px"
             :data="waitList"
             border
@@ -313,7 +314,9 @@
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div>{{ getAudioStatus(scope.row.auditStatus)   }}</div>
+                <div v-if="scope.row.auditStatus==0 || scope.row.auditStatus==0" style="color:#B5B5FF">{{ getAudioStatus(scope.row.auditStatus)   }}</div>
+                <div v-if="scope.row.auditStatus==2" style="color:#70B603">{{ getAudioStatus(scope.row.auditStatus)   }}</div>
+                <div v-if="scope.row.auditStatus==3" style="color:#C3C3C3">{{ getAudioStatus(scope.row.auditStatus)   }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -372,7 +375,6 @@
         <el-dialog  :title="!isAudit?'数据详情':'数据审核'"
       :visible.sync ="showDetail"
       :width="add_edit_dialog"
-
       :append-to-body="true" >
           <div class="bg" >
           <div class="count">
@@ -384,7 +386,8 @@
             <div class="row" style="margin-top: 10px;">
               <div class="count-item">
                 <div class="count-key">
-                {{ '调整前交易总量：'}}
+                  <span style="color:#4343FF">调整前</span>
+                {{ '交易总量：'}}
                 </div>
                 <div class="count-value"  :style="{'color':totalInfoImport.qtyTotalColor}">
                   {{ totalInfoImport.qtyTotal || "0" }}吨
@@ -393,7 +396,7 @@
 
               <div class="count-item">
                 <div class="count-key">
-                  {{ '调整前销售总金额：' }}
+                  {{ '销售总金额：' }}
                 </div>
                 <div class="count-value"  :style="{'color':totalInfoImport.amountTotalColor}">
                   {{ totalInfoImport.amountTotal || "0" }}元
@@ -404,7 +407,8 @@
             <div class="row" style="margin-top: 10px;">
               <div class="count-item">
                 <div class="count-key">
-                  调整后交易总量：
+                  <span style="color:#70B603" >调整后</span>
+                  交易总量：
                 </div>
                 <div class="count-value"  :style="{'color':totalInfoImport.qtyTotalNewColor}">
                   {{ totalInfoImport.qtyTotalNew || "0" }}吨
@@ -413,7 +417,7 @@
 
               <div class="count-item">
                 <div class="count-key">
-                  调整后销售总金额：
+                  销售总金额：
                 </div>
                 <div class="count-value" :style="{'color':totalInfoImport.amountTotalNewColor}">
                   {{ totalInfoImport.amountTotalNew || "0" }}元
@@ -437,7 +441,7 @@
           >
             <el-table-column
               prop="nickName"
-              label="加气站(自营站)"
+              label="加气站(自营)"
               min-width="125"
               show-overflow-tooltip
             >
@@ -452,7 +456,7 @@
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div>{{ scope.row.step || "—" }}</div>
+                <div :style="scope.row.stepColor">{{ scope.row.step || "—" }}</div>
               </template>
             </el-table-column>
 
@@ -692,7 +696,6 @@ export default {
       custTodayTableTitle: '今日实时（线上）',
       custYesterdayTableTimeTitle: '历史时段（线上）',
       custYesterdayTableTitle: '历史总量 (自营)',
-      custYesterdayTableTitle2: '历史总量 (自营)2',
       buttonsList: [
         { type: 'primary', icon: '', event: 'query', name: '查询' },
         { type: 'primary', icon: '', event: 'export', name: '导出' }
@@ -806,9 +809,9 @@ export default {
           this.$message.success('下载成功')
         })
       } else if (type === 'data_import') {
+        this.showImport = 1
         this.getToday()
         this.resetData()
-        this.showImport = 1
       } else if (type === 'template_down') {
         $importDownloadFile('settle/gway_gasorder_adjust/download_gasorder_adjust_tpl', { orgId: this.woporg }).then((response) => {
           const fileName = '加气站销量监控' + Date.parse(new Date()) + '.xlsx'
@@ -850,7 +853,15 @@ export default {
         this.getDetail(row.id)
       }
     },
-
+    tableDayStyle ({ row, column, rowIndex, columnIndex }) {
+      if (column.property == 'dayAvgPrice') {
+        if (row.dayAvgPriceFlag == 1) {
+          return 'background:#FBE7EA'
+        } else {
+          return ''
+        }
+      }
+    },
     tableCellStyle ({ row, column, rowIndex, columnIndex }) {
       if (column.property == 'step') { // 对比阶段
 
@@ -879,7 +890,6 @@ export default {
           if (row.step == '调整前') {
             return 'background:#E6E6FF'
           } else {
-            console.log('row.dayAvgPriceFlag ', row)
             if (row.dayAvgPriceFlag == 1) {
               return 'background:#FBE7EA'
             } else {
@@ -887,6 +897,9 @@ export default {
             }
           }
         } else {
+          if (row.dayAvgPriceFlag == 1) {
+            return 'background:#FBE7EA'
+          }
           return ''
         }
       } else if (column.property == 'inQtyTotal') {
@@ -935,9 +948,9 @@ export default {
       } else if (status == '1') {
         return '待审核'
       } else if (status == '2') {
-        return '审核通过'
+        return '已生效'
       } else if (status == '3') {
-        return '未通过'
+        return '已拒绝'
       }
     },
 
@@ -982,7 +995,12 @@ export default {
       if (type) {
         return e + '  08:00 至  ' + yesterday + '  08:00 '
       } else {
-        this.tipTime = '导入时间：' + e + '  08:00 至  ' + yesterday + '  08:00 '
+        if (this.showImport == 1) {
+          this.tipTime = '(导入时段：' + e + '  08:00 至  ' + yesterday + '  08:00 )'
+        } else {
+          this.tipTime = '(选中时段：' + e + '  08:00 至  ' + yesterday + '  08:00 )'
+        }
+
         this.getOrderList(e, yesterday)
       }
     },
@@ -1205,9 +1223,9 @@ export default {
 
 
         if (diffCount > 0) {
-          newArray.push({ ...this.dataListImport[i], step: '调整前', rateColor: rateColor })
+          newArray.push({ ...this.dataListImport[i], step: '调整前', rateColor: rateColor, stepColor: '#4343FF' })
         } else {
-          newArray.push({ ...this.dataListImport[i], step: '—', rateColor: rateColor })
+          newArray.push({ ...this.dataListImport[i], step: '—', rateColor: rateColor, stepColor: '#4343FF' })
         }
 
         if (diffCount > 0) {
@@ -1224,6 +1242,7 @@ export default {
             inQtyTotalDiff: this.dataListImport[i].inQtyTotalDiff,
             dayAvgPriceFlag: this.dataListImport[i].dayAvgPriceFlag,
             rateColor: rateColorNew,
+            stepColor: '#558010',
             step: '调整后'
           })
         }
