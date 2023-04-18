@@ -147,7 +147,7 @@
 
               <div class="count-item">
                 <div class="count-key">
-                  调销售总金额：
+                  销售总金额：
                 </div>
                 <div class="count-value" :style="{'color':totalInfoImport.amountTotalNewColor}">
                   {{ totalInfoImport.amountTotalNew || "0" }}元
@@ -950,7 +950,7 @@ export default {
       } else if (status == '2') {
         return '已生效'
       } else if (status == '3') {
-        return '已拒绝'
+        return '未通过'
       }
     },
 
