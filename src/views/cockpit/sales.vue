@@ -442,7 +442,7 @@
               show-overflow-tooltip
             >
               <template v-slot="scope">
-                <div>{{ scope.row.nickName || "—" }}</div>
+                <div>{{ scope.row.nickName || "" }}</div>
               </template>
             </el-table-column>
 
