@@ -1,10 +1,10 @@
 <template>
-  <div class="main">
+  <div class="pointsAccount template-main">
     <div class="top-bg">
       <div class="between">
         <el-form :inline="true" size="mini">
           <el-form-item label="" >
-            <el-select v-model="searchForm.param.status" size="mini" @change="changeSelect" placeholder="请选择 <直销物流户余额状态>" style="width:200px">
+            <el-select v-model="searchForm.param.status" size="mini" @change="changeSelect" placeholder="请选择 <直销物流户余额状态>" style="width:210px">
               <el-option v-for="item in selectType" :key="item.value" :label="item.name" :value="item.value">
               </el-option>
             </el-select>
@@ -85,16 +85,17 @@
 
       </div>
       <el-table
+      size="mini"
       :cell-style="{ 'textAlign': 'center' }"
         :header-cell-style="{ textAlign: 'center', background: 'rgb(246, 246, 246)', color: '#606266', borderColor: '#EBEEF5' }"
-        :data="data" border size="mini" style="margin-top: 15px;" stripe>
-        <el-table-column prop="orgName" label="物流公司">
+        :data="data" border  style="margin-top: 15px;" stripe>
+        <el-table-column prop="orgName" label="物流公司"     >
           <template v-slot="scope">
             <div>{{ scope.row.orgName || "—" }}</div>
           </template>
         </el-table-column>
 
-        <el-table-column prop="status" :label="labelTotal7()" show-overflow-tooltip>
+        <el-table-column prop="status" :label="labelTotal7()" show-overflow-tooltip    >
           <template v-slot="scope">
             <div v-if="scope.row.status==0" style="color:#E6A23C">不足</div>
             <div v-if="scope.row.status==1" >正常</div>
@@ -127,14 +128,14 @@
 
         <el-table-column prop="orgName" label="操作" show-overflow-tooltip>
           <template slot-scope="scope">
-          <el-button type="text" @click="getConfig(scope.row.orgId,scope.row.orgName)">提醒设置</el-button>
-          <el-button type="text" @click="getLog(scope.row.orgId,scope.row.orgName)">提醒记录</el-button>
+          <el-button type="text" @click="getConfig(scope.row.orgId,scope.row.orgName)" size="mini">提醒设置</el-button>
+          <el-button type="text" @click="getLog(scope.row.orgId,scope.row.orgName)" size="mini">提醒记录</el-button>
           </template>
         </el-table-column>
 
 
       </el-table>
-      <el-pagination style="margin-right: 28px; margin-top: 15px;margin-bottom: 80px;" background align="center"
+      <el-pagination style="margin-right: 28px; margin-top: 15px;;" background align="center"
         layout="total, sizes,prev, pager, next,jumper" :page-sizes="[10, 20, 50, 100]" :current-page="searchForm.page"
         :page-size="searchForm.size" @current-change="pageChange" @size-change="sizeChange" :total="totalCount" />
     </div>
@@ -472,10 +473,11 @@ export default {
 }
 
 .main {
+  height: 100vh;
+
   padding: 10px;
   display: flex;
   flex-direction: column;
-height: 100%;
   .el-input__inner {
     height: 30px;
     line-height: 30px;
@@ -502,6 +504,7 @@ height: 100%;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .add {
