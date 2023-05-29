@@ -134,7 +134,7 @@
 
 
       </el-table>
-      <el-pagination style="margin-right: 28px; margin-top: 15px" background align="center"
+      <el-pagination style="margin-right: 28px; margin-top: 15px;margin-bottom: 80px;" background align="center"
         layout="total, sizes,prev, pager, next,jumper" :page-sizes="[10, 20, 50, 100]" :current-page="searchForm.page"
         :page-size="searchForm.size" @current-change="pageChange" @size-change="sizeChange" :total="totalCount" />
     </div>
@@ -433,7 +433,7 @@ export default {
 <style lang="scss" scoped>
 
 .el-dialog-div{
-    height: 60vh;
+  height: 60vh;
      overflow: auto;
     }
 .count {
@@ -475,7 +475,7 @@ export default {
   padding: 10px;
   display: flex;
   flex-direction: column;
-
+height: 100%;
   .el-input__inner {
     height: 30px;
     line-height: 30px;
