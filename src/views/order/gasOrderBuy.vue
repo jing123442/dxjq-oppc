@@ -123,7 +123,6 @@ export default {
 
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
-      console.log('000000000')
       this.initTotalData()
     }
   }
