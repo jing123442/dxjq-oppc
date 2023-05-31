@@ -20,7 +20,7 @@
         </el-form>
         <div>
           <el-button @click="reset" size="mini" type="info" plain>重置</el-button>
-          <el-button type="primary" @click="getList()" size="mini">查询</el-button>
+          <el-button type="primary" @click="getList(1)" size="mini">查询</el-button>
         </div>
       </div>
       <div class="between">
@@ -422,7 +422,10 @@ export default {
         }
       })
     },
-    getList() {
+    getList(page) {
+      if (page) {
+        this.searchForm.page = 1
+      }
       $carrierBalancePage(this.searchForm).then((res) => {
         if (res.code == 0) {
           this.totalCount = res.data.total
