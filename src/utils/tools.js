@@ -671,3 +671,35 @@ export const handleInputNumber = (obj, key, limit = 3) => {
   const regLimit = new RegExp(`^\\d*(\\.?\\d{0,${limit}})`, 'g')
   obj[key] = obj[key].replace(/\D*(\d*)(\.?)(\d{0,3})\d*/, '$1$2$3').replace(/^0+(\d)/, '$1').replace(/^\./, '0.').match(regLimit)[0]
 }
+export const checkNum = function(value, type) {
+  let checkPlan = '' + value
+  checkPlan = checkPlan
+    .replace(/[^\d.]/g, '') // 清除“数字”和“.”以外的字符
+    .replace(/\.{2,}/g, '.') // 只保留第一个. 清除多余的
+    .replace(/^\./g, '') // 保证第一个为数字而不是.
+    .replace('.', '$#$')
+    .replace(/\./g, '')
+    .replace('$#$', '.')
+  console.log('value', value)
+  if (checkPlan.indexOf('.') < 0 && checkPlan !== '') {
+  // 以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+    checkPlan = parseFloat(checkPlan) + ''
+  } else {
+    if (type !== 1) {
+      if (checkPlan.indexOf('.') >= 0) {
+        if (type == 2) {
+          checkPlan = checkPlan
+            .replace(/^()*(\d+)\.(\d\d).*$/, '$1$2.$3') // 只能输入两个小数
+        } else if (type == 3) {
+          checkPlan = checkPlan
+            .replace(/^()*(\d+)\.(\d\d\d).*$/, '$1$2.$3') // 只能输入两个小数
+        } else if (type == 4) {
+          checkPlan = checkPlan
+            .replace(/^()*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3') // 只能输入两个小数
+        }
+      }
+    }
+  }
+  console.log('checkPlan', checkPlan)
+  return checkPlan
+}

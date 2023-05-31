@@ -11,10 +11,11 @@
           </el-form-item>
 
           <el-form-item label="">
-            <el-input placeholder="请输入物流客户" v-model="searchForm.param.orgName" clearable></el-input>
+            <el-input placeholder="请输入物流公司名称" v-model="searchForm.param.orgName" clearable></el-input>
           </el-form-item>
           <el-form-item label="">
-            <el-input placeholder="请输入车牌号" v-model="searchForm.param.carNumber" clearable></el-input>
+            <el-input placeholder="请输入车牌号" v-model="searchForm.param.carNumber"
+            clearable></el-input>
           </el-form-item>
         </el-form>
         <div>
@@ -24,11 +25,19 @@
       </div>
       <div class="between">
         <el-form :inline="true" size="mini">
-          <el-form-item label="直销物流客户余额(元) ≤">
-            <el-input placeholder="" v-model="searchForm.param.balanceUp" clearable style="width:130px"></el-input>
+          <el-form-item label="直销物流户余额(元) ≤">
+            <el-input placeholder="" v-model="searchForm.param.balanceUp" clearable style="width:130px"
+            @keyup.native="
+                  searchForm.param.balanceUp = checkNum(
+                    searchForm.param.balanceUp,2 )"
+            ></el-input>
           </el-form-item>
-          <el-form-item label="直销物流客户余额(元) ≥">
-            <el-input placeholder="" v-model="searchForm.param.balanceDown" clearable style="width:130px"></el-input>
+          <el-form-item label="直销物流户余额(元) ≥">
+            <el-input placeholder="" v-model="searchForm.param.balanceDown" clearable style="width:130px"
+            @keyup.native="
+                  searchForm.param.balanceDown = checkNum(
+                    searchForm.param.balanceDown,2 )"
+            ></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -89,7 +98,7 @@
       :cell-style="{ 'textAlign': 'center' }"
         :header-cell-style="{ textAlign: 'center', background: 'rgb(246, 246, 246)', color: '#606266', borderColor: '#EBEEF5' }"
         :data="data" border  style="margin-top: 15px;" stripe>
-        <el-table-column prop="orgName" label="物流公司"     >
+        <el-table-column prop="orgName" label="物流公司"     show-overflow-tooltip>
           <template v-slot="scope">
             <div>{{ scope.row.orgName || "—" }}</div>
           </template>
@@ -122,6 +131,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="rechargeDate" label="最近充值时间" show-overflow-tooltip>
+          <template v-slot="scope">
+            <div >{{ scope.row.rechargeDate||'—' }}</div>
+          </template>
         </el-table-column>
         <el-table-column prop="amount" :label="labelTotal6()" show-overflow-tooltip>
         </el-table-column>
@@ -214,7 +226,7 @@
       <div class="el-dialog-div">
       <el-form ref="excuteSet" size="small" label-position="left"  >
         <el-form-item>
-          <div><span style="color: #909399;">物流客户：</span>{{ truckSumData.orgName }}    <span style="color: #909399;margin-left: 20px;">直销车辆户余额：</span>{{ truckSumData.balance }}</div>
+          <div><span style="color: #909399;">物流客户：</span>{{ truckSumData.orgName }}    <span style="color: #909399;margin-left: 20px;">{{truckSumData.type=='2'?'直销车辆户余额：':'经销车辆户余额：'}}</span>{{ truckSumData.balance }}</div>
           <div></div>
         </el-form-item>
         <el-table :cell-style="{ 'textAlign': 'center' }"
@@ -222,7 +234,7 @@
         :data="truckData" border size="mini" style="width:100%" stripe>
         <el-table-column prop="carNumber" label="车牌号" show-overflow-tooltip>
         </el-table-column>
-        <el-table-column prop="balance" :label="labelTotal2()" show-overflow-tooltip sortable>
+        <el-table-column prop="balance" :label="truckSumData.type=='2'?labelTotal2():labelTotal4()" show-overflow-tooltip sortable>
         </el-table-column>
         </el-table>
       </el-form>
@@ -313,6 +325,39 @@ export default {
   },
 
   methods: {
+    checkNum (value, type) {
+      let checkPlan = '' + value
+      checkPlan = checkPlan
+        .replace(/[^\d.]/g, '') // 清除“数字”和“.”以外的字符
+        .replace(/\.{2,}/g, '.') // 只保留第一个. 清除多余的
+        .replace(/^\./g, '') // 保证第一个为数字而不是.
+        .replace('.', '$#$')
+        .replace(/\./g, '')
+        .replace('$#$', '.')
+      console.log('value', value)
+      if (checkPlan.indexOf('.') < 0 && checkPlan !== '') {
+        // 以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+        checkPlan = parseFloat(checkPlan) + ''
+      } else {
+        if (type !== 1) {
+          if (checkPlan.indexOf('.') >= 0) {
+            if (type == 2) {
+              checkPlan = checkPlan
+                .replace(/^()*(\d+)\.(\d\d).*$/, '$1$2.$3') // 只能输入两个小数
+            } else if (type == 3) {
+              checkPlan = checkPlan
+                .replace(/^()*(\d+)\.(\d\d\d).*$/, '$1$2.$3') // 只能输入两个小数
+            } else if (type == 4) {
+              checkPlan = checkPlan
+                .replace(/^()*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3') // 只能输入两个小数
+            }
+          }
+        }
+      }
+      console.log('checkPlan', checkPlan)
+      return checkPlan
+    },
+
     changeSelect(e) {
       console.log('changeSelect', e)
     },
