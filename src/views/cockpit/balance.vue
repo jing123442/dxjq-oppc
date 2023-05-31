@@ -155,7 +155,7 @@
     <el-dialog append-to-body width="60%" title="直销物流户余额不足 · 提醒配置" :visible.sync="showConfig">
       <el-form ref="excuteSet" size="small" label-position="left" >
         <el-form-item>
-          <div>物流客户：{{ configParams.orgName }}</div>
+          <div>物流公司：{{ configParams.orgName }}</div>
         </el-form-item>
         <el-form-item>
           &nbsp;&nbsp;&nbsp;&nbsp;站内信：<el-switch v-model="configParams.mail" active-color="#13ce66" inactive-color="#909399" :active-value="1"   :inactive-value="0">
@@ -202,7 +202,7 @@
     <div class="el-dialog-div">
       <el-form ref="excuteSet" size="small" label-position="left"  :rules="rulesUpdate">
         <el-form-item>
-          <div>物流客户：{{  logName}}</div>
+          <div>物流公司：{{  logName}}</div>
         </el-form-item>
         <el-table :cell-style="{ 'textAlign': 'center' }"
         :header-cell-style="{ textAlign: 'center', background: 'rgb(246, 246, 246)', color: '#606266', borderColor: '#EBEEF5' }"
@@ -226,7 +226,7 @@
       <div class="el-dialog-div">
       <el-form ref="excuteSet" size="small" label-position="left"  >
         <el-form-item>
-          <div><span style="color: #909399;">物流客户：</span>{{ truckSumData.orgName }}    <span style="color: #909399;margin-left: 20px;">{{truckSumData.type=='2'?'直销车辆户余额：':'经销车辆户余额：'}}</span>{{ truckSumData.balance }}</div>
+          <div><span style="color: #909399;">物流公司：</span>{{ truckSumData.orgName }}    <span style="color: #909399;margin-left: 20px;">{{truckSumData.type=='2'?'直销车辆户余额：':'经销车辆户余额：'}}</span>{{ truckSumData.balance }}</div>
           <div></div>
         </el-form-item>
         <el-table :cell-style="{ 'textAlign': 'center' }"
