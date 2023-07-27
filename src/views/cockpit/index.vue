@@ -798,7 +798,7 @@ export default {
         this.ec02BarOptions = {
           legend: initDefaultChartsLegend(),
           tooltip: Object.assign({}, initDefaultChartsTooltip(), {
-            formatter: (data) => this.formatterEchartTooltip(data, ['存量(公斤)'])
+            // formatter: (data) => this.formatterEchartTooltip(data, ['存量(公斤)'])
           }),
           grid: {
             left: '13%',
@@ -839,7 +839,7 @@ export default {
       $findFundSum({ date: this.currDate }).then(res => {
         this.ec03BarLineOptions = {
           tooltip: Object.assign({}, initDefaultChartsTooltip(), {
-            formatter: (data) => this.formatterEchartTooltip(data)
+            // formatter: (data) => this.formatterEchartTooltip(data)
           }),
           legend: Object.assign({}, initDefaultChartsLegend(), {
             type: 'scroll',
@@ -885,7 +885,7 @@ export default {
       $findTruckTrendList({ date: this.currDate }).then(res => {
         this.ec04BarLineOptions = {
           tooltip: Object.assign({}, initDefaultChartsTooltip(), {
-            formatter: (data) => this.formatterEchartTooltip(data, ['变化数'])
+            // formatter: (data) => this.formatterEchartTooltip(data, ['变化数'])
           }),
           legend: Object.assign({}, initDefaultChartsLegend(), {
             type: 'scroll',
@@ -1215,7 +1215,7 @@ export default {
     },
     formatterEchartTooltip(data, notAbs = []) {
       let str = ''
-      data.forEach(item => {
+      Array.isArray(data) && data.forEach(item => {
         if (notAbs.length > 0 && notAbs.includes(item.seriesName)) {
           str += `${item.seriesName} : ${item.value} </br>`
         } else {
