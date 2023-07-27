@@ -240,7 +240,7 @@ import { $getMarketDiffStander, $getMarketDiffStanderLog, $getMarketPriceUpdate 
 import {
   utilsMarketType, utilsCheckPriceType, utilsExecuteStatus
 } from '@/utils/select'
-import { monthTimeArea, formatDate } from '@/utils/tools'
+import { monthTimeArea } from '@/utils/tools'
 export default {
   data() {
     return {

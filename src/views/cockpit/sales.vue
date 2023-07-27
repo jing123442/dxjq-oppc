@@ -378,7 +378,7 @@
       :append-to-body="true" >
           <div class="bg" >
           <div class="count">
-            <el-row>审核状态：{{ getAudioStatus(clickRow.auditStatus) }}   <span style="margin-left:20px">发起人：{{ clickRow.operatorName||'—' }}   </span>      <span style="margin-left:20px"></span>发起时间：{{ clickRow. operatorDate||'—'}}</span>
+            <el-row>审核状态：{{ getAudioStatus(clickRow.auditStatus) }}   <span style="margin-left:20px">发起人：{{ clickRow.operatorName||'—' }}   </span>      <span style="margin-left:20px">发起时间：{{ clickRow. operatorDate||'—'}}</span>
               <span style="margin-left:20px">审核人：{{ clickRow.auditName ||'—'}}</span>     <span style="margin-left:20px">审核时间：{{ clickRow. auditDate||'—'}}</span>
 
             </el-row>
