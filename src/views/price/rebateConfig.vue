@@ -234,7 +234,7 @@ export default {
       callback(params)
     },
     onReqParamsUnpublish(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { type: 1 } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { type: 1, carrierOrgId: this.$route.query.carrierOrgId } })
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
