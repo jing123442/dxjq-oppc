@@ -357,3 +357,63 @@ export async function $getMarketDiffAdd (data) {
 export async function $getMarketPriceUpdate (data) {
   return await R({ url: 'strategy/price_config_market_diff/update', data })
 }
+
+// 下载加注机卡模版文件
+export async function $strategyDownloadCardFile (data) {
+  return await R({ url: 'strategy/inventory_card/download_tpl', method: 'get', params: data, responseType: 'blob' })
+}
+
+// 下载加注机卡确认导入
+export async function $strategyCardConfirmImport (data) {
+  return await R({ url: 'strategy/inventory_card/confirm_import', data })
+}
+
+// 盈亏数据总和
+export async function $strategyInventorySum (data) {
+  return await R({ url: 'strategy/inventory_adjust/sum', data })
+}
+
+// 盈亏数据模版文件
+export async function $strategyDownloadLossFile (data) {
+  return await R({ url: 'strategy/inventory_adjust/download_tpl', method: 'get', params: data, responseType: 'blob' })
+}
+
+// 盈亏数据确认导入
+export async function $strategyLossConfirmImport (data) {
+  return await R({ url: 'strategy/inventory_adjust/confirm_import', data })
+}
+
+// 盈亏数据模版文件
+export async function $strategyDownloadStevedoreFile (data) {
+  return await R({ url: 'strategy/inventory_truck_in/download_truckin_tpl', method: 'get', params: data, responseType: 'blob' })
+}
+
+// 盈亏数据确认导入
+export async function $strategyStevedoreConfirmImport (data) {
+  return await R({ url: 'strategy/inventory_truck_in/upload_confirm', data })
+}
+
+// 获取加气站列表
+export async function $strategyGetStationList (data) {
+  return await R({ url: 'strategy/inventory_data/get_station', method: 'get', params: data })
+}
+
+// 加注机全量模版文件
+export async function $strategyDownloadOutFile (data) {
+  return await R({ url: 'strategy/inventory_out_all/download_out_all_tpl', method: 'get', params: data, responseType: 'blob' })
+}
+
+// 加注机全量数据确认导入
+export async function $strategyOutConfirmImport (data) {
+  return await R({ url: 'strategy/inventory_out_all/upload_confirm', data })
+}
+
+// 三方模版文件
+export async function $strategyDownloadSFFile (data) {
+  return await R({ url: 'strategy/inventory_out_third/download_out_third_tpl', method: 'get', params: data, responseType: 'blob' })
+}
+
+// 三方数据确认导入
+export async function $strategySFConfirmImport (data) {
+  return await R({ url: 'strategy/inventory_out_third/upload_confirm', data })
+}

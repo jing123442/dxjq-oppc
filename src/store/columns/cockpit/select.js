@@ -1,4 +1,23 @@
-import { utilsBaseRole, utilsStatus, utilSelectGasstationType, utilSelectAuthDistrictList, utilsOperateType, utilInfoType, utilDistrictAreaList } from '@/utils/select'
+import {
+  utilsBaseRole,
+  utilsStatus,
+  utilSelectGasstationType,
+  utilSelectAuthDistrictList,
+  utilsOperateType,
+  utilInfoType,
+  utilDistrictAreaList,
+  utilsBuyType,
+  utilsStevedoreDataSearch,
+  utilDyncCardTypeList,
+  utilsLossDataSearch,
+  utilsUploadType,
+  utilSelectOutTypeList,
+  utilSelectSaleTypeList,
+  utilsOutTimeSearch,
+  utilsCreateTimeSearch,
+  utilsPayCreateTimeSearch,
+  utilSelectPayTypeList
+} from '@/utils/select'
 
 const select = {
   intention: {
@@ -40,7 +59,33 @@ const select = {
       { value: '1', label: '是' },
       { value: '2', label: '否' }
     ]
-  }
+  },
+  dyncStevedor: {
+    buyType: utilsBuyType(),
+    uploadType: utilsUploadType(),
+    stevedoreDataSearch: utilsStevedoreDataSearch()
+  },
+  entrain: {
+    outType: utilSelectOutTypeList(),
+    saleType: utilSelectSaleTypeList(),
+    outTimeSearch: utilsOutTimeSearch(),
+  },
+  entrainSF: {
+    saleType: utilSelectSaleTypeList(),
+    createTimeSearch: utilsCreateTimeSearch(),
+  },
+  entrainDX: {
+    payType: utilSelectPayTypeList(),
+    createTimeSearch: utilsPayCreateTimeSearch(),
+  },
+  dyncLoss: {
+    lossDataSearch: utilsLossDataSearch(),
+  },
+  dyncCard: {
+    cardType: utilDyncCardTypeList(),
+  },
+  dyncGass: {},
+  dyncRefuel: {},
 }
 
 export default select

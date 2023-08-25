@@ -3,7 +3,8 @@ const app = {
   list: {
     sales: 5,
     log: 13,
-    batchEdit: 13
+    batchEdit: 13,
+    dync: 13
   }
 }
 
