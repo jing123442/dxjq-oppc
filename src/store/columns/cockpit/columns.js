@@ -213,7 +213,7 @@ const columns = {
   dyncUpdateStevedor: [
     { field: 'updateDate', name: '数据更新时间', fixed: 'left', stype: 'format', formatFun: 'formateTData all' },
     { field: 'updaterName', name: '数据更新人' },
-    { field: 'uploadType', name: '更新类型', formatter: 'uploadType' },
+    { field: 'action', name: '更新类型', formatter: 'uploadType' },
   ],
   dyncEntrain: [
     { field: 'orderId', name: '加注流水号', fixed: 'left' },

@@ -35,9 +35,10 @@
         :on-error="uploadError"
         :on-success="uploadSuccess"
         :show-file-list="false"
-        style="position: absolute;top: 86px; right: 125px;z-index: 10000;">
+        style="position: absolute;top: 106px; right: 125px;z-index: 10000;">
         <el-button size="small" type="primary" style="height: 28px;padding: 7px 15px;">数据上传</el-button>
       </el-upload>
+      <div>导入覆盖范围: {{ updateFindStr }}</div>
       <div class="import-title" v-if="dataInfoStatus">
         <div>
           <span>[ 导入前 ]</span>
@@ -172,6 +173,7 @@ export default {
       buttonsImportList: [{ type: 'primary', icon: '', event: 'download', name: '模版下载' }],
 
       updateVisible: false,
+      updateFindStr: '',
       queryCustUpdateURL: {
         list: {
           url: 'strategy/inventory_upload_log/get_upload_log',
@@ -270,16 +272,20 @@ export default {
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
+
+            this.updateFindStr = `装车时间 ${v.join(' - ')}`
           } else if (k === 'unloadTime') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
+            this.updateFindStr = `卸车时间 ${v.join(' - ')}`
           } else if (k === 'updateDate') {
             params.param.timeType = 2
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
+            this.updateFindStr = `数据更新时间 ${v.join(' - ')}`
           } else {
             if (v !== '') params.param[k] = v
           }
@@ -290,14 +296,35 @@ export default {
       callback(params)
     },
     onReqUpdateParams(type, _this, callback) {
-      console.log(11111111)
       const params = Object.assign({}, callbackPagesInfo(_this), { param: {} })
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (v !== '') params.param[k] = v
+          if (k === 'loadTime') {
+            params.param.timeType = 0
+
+            params.param.startTime = v[0]
+            params.param.endTime = v[1]
+
+            this.updateFindStr = `装车时间 ${v.join(' - ')}`
+          } else if (k === 'unloadTime') {
+            params.param.timeType = 1
+
+            params.param.startTime = v[0]
+            params.param.endTime = v[1]
+            this.updateFindStr = `卸车时间 ${v.join(' - ')}`
+          } else if (k === 'updateDate') {
+            params.param.timeType = 2
+
+            params.param.startTime = v[0]
+            params.param.endTime = v[1]
+            this.updateFindStr = `数据更新时间 ${v.join(' - ')}`
+          } else {
+            if (v !== '') params.param[k] = v
+          }
         }
       }
+      params.param.uploadType = 0
 
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)

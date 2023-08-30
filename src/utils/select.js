@@ -467,11 +467,7 @@ export function utilsBuyType() {
 // 更新类型
 export function utilsUploadType() {
   return [
-    { value: 0, label: '装卸数据' },
-    { value: 1, label: '加注机全量数据' },
-    { value: 2, label: '盘盈亏数据' },
-    { value: 3, label: '卡管理数据' },
-    { value: 4, label: '三方线上数据' }
+    { value: 0, label: '批量导入' }
   ]
 }
 
@@ -507,7 +503,7 @@ export function utilsPayCreateTimeSearch() {
 
 export function utilsLossDataSearch() {
   return [
-    { value: 'gatherTime', label: '实际采集时间' },
+    { value: 'gatherTime', label: '实存采集时间' },
     { value: 'updateDate', label: '数据更新时间' }
   ]
 }

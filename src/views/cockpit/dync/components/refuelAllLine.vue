@@ -4,7 +4,7 @@
         ref="tables1"
         :dataList="dataList"
         :rowData="totalInfo"
-        :headerStyle="'top: 159px;'"
+        :headerStyle="'top: 109px;'"
     ></table-total-data>
     <em-table-list
         ref="refuelAllLine"
@@ -83,6 +83,26 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+
+    <el-dialog append-to-body width="800px" title="加注机全量 · 更新记录" :visible.sync="updateVisible">
+      <em-table-list
+        v-if="updateVisible"
+        ref="tables3"
+        :custTableTitle="'加注机全量 · 更新记录'"
+        :tableListName="'updateStevedore'"
+        :buttonsList="[]"
+        :axios="axios"
+        :queryCustURL="queryCustUpdateURL"
+        :responseSuccess="response_success"
+        :queryParam="queryParams"
+        :mode_list="mode_list"
+        :page_status="page_status"
+        :page_column="page_update_column"
+        :options="{ lazy: true }"
+        :select_list="select_update_list"
+        @onReqParams="onReqUpdateParams"
+      ></em-table-list>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -115,7 +135,10 @@ export default {
           }
         }
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'import', name: '数据导入' }],
+      buttonsList: [
+        { type: 'primary', icon: '', event: 'import', name: '数据导入' },
+        { type: 'primary', icon: '', event: 'update', name: '数据更新记录' }
+      ],
       dataList: [
         {
           name: '加注总量：',
@@ -135,7 +158,19 @@ export default {
       importData: [],
       importDataInfo: {},
       uploadURL: process.env.VUE_APP_BASE_URL + 'strategy/inventory_out_all/upload_out_all',
-      buttonsImportList: [{ type: 'primary', icon: '', event: 'download', name: '模版下载' }]
+      buttonsImportList: [{ type: 'primary', icon: '', event: 'download', name: '模版下载' }],
+
+      updateVisible: false,
+      queryCustUpdateURL: {
+        list: {
+          url: 'strategy/inventory_upload_log/get_upload_log',
+          method: 'post',
+          parse: {
+            tableData: ['data', 'records'],
+            totalCount: ['data', 'total']
+          }
+        }
+      }
     })
   },
   watch: {
@@ -151,6 +186,7 @@ export default {
       mode_list: 'cockpit_dync_stevedor_mode_list',
       page_status: 'cockpit_dync_stevedor_page_status',
       select_list: 'cockpit_dync_entrain_select_list',
+      select_update_list: 'cockpit_dync_stevedor_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success',
@@ -241,6 +277,33 @@ export default {
       }
 
       params.param.gasstationId = this.stationId // 对应加气站
+
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
+    },
+    onReqUpdateParams(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: {} })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k === 'outTime') {
+            params.param.timeType = 0
+
+            params.param.startTime = v[0]
+            params.param.endTime = v[1]
+          } else if (k === 'updateDate') {
+            params.param.timeType = 2
+
+            params.param.startTime = v[0]
+            params.param.endTime = v[1]
+          } else {
+            if (v !== '') params.param[k] = v
+          }
+        }
+      }
+
+      params.param.gasstationId = this.stationId // 对应加气站
+      params.param.uploadType = 1
 
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)

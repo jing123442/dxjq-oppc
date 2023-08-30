@@ -20,19 +20,20 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, isTypeof } from '@/utils/tools'
+import { callbackPagesInfo, initVueDataOptions, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'DyncRefuel',
   data() {
     return initVueDataOptions(this, {
+      authButtonList: null,
       queryCustURL: {
         list: {
           url: 'strategy/inventory_standard_price/list',
           method: 'post',
           parse: {
-            tableData: ['data'],
+            tableData: ['data', 'records'],
             totalCount: ['data', 'total']
           }
         }
@@ -58,15 +59,15 @@ export default {
 
     },
     onReqParams(type, _this, callback) {
-      const params = { dateParam: {} }
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { dateParam: {} } })
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (k === 'outTime') {
-            params.dateParam.updateDateFrom = v[0]
-            params.dateParam.updateDateTo = v[1]
+            params.param.dateParam.updateDateFrom = v[0]
+            params.param.dateParam.updateDateTo = v[1]
           } else {
-            if (v !== '') params[k] = v
+            if (v !== '') params.param[k] = v
           }
         }
       }

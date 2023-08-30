@@ -83,6 +83,26 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+
+    <el-dialog append-to-body width="800px" title="三方线上 · 更新记录" :visible.sync="updateVisible">
+      <em-table-list
+        v-if="updateVisible"
+        ref="tables3"
+        :custTableTitle="'三方线上 · 更新记录'"
+        :tableListName="'updateStevedore'"
+        :buttonsList="[]"
+        :axios="axios"
+        :queryCustURL="queryCustUpdateURL"
+        :responseSuccess="response_success"
+        :queryParam="queryParams"
+        :mode_list="mode_list"
+        :page_status="page_status"
+        :page_column="page_update_column"
+        :options="{ lazy: true }"
+        :select_list="select_update_list"
+        @onReqParams="onReqUpdateParams"
+      ></em-table-list>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -91,8 +111,7 @@ import { mapGetters } from 'vuex'
 import { TableTotalData } from '@/components'
 import {
   $strategyDownloadSFFile,
-  $strategyDownloadStevedoreFile, $strategySFConfirmImport,
-  $strategyStevedoreConfirmImport
+  $strategySFConfirmImport
 } from '@/service/strategy'
 
 export default {
@@ -119,15 +138,18 @@ export default {
           }
         }
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'import', name: '数据导入' }],
+      buttonsList: [
+        { type: 'primary', icon: '', event: 'import', name: '数据导入' },
+        { type: 'primary', icon: '', event: 'update', name: '数据更新记录' }
+      ],
       dataList: [
         {
-          name: '加注总量：',
+          name: '加气总量：',
           field: 'outQty',
-          unit: ' 吨'
+          unit: ' 公斤'
         },
         {
-          name: '加注总额：',
+          name: '加气总额：',
           field: 'outValue',
           unit: ' 元'
         }
@@ -139,7 +161,19 @@ export default {
       importData: [],
       importDataInfo: {},
       uploadURL: process.env.VUE_APP_BASE_URL + 'strategy/inventory_out_third/upload_out_third',
-      buttonsImportList: [{ type: 'primary', icon: '', event: 'download', name: '模版下载' }]
+      buttonsImportList: [{ type: 'primary', icon: '', event: 'download', name: '模版下载' }],
+
+      updateVisible: false,
+      queryCustUpdateURL: {
+        list: {
+          url: 'strategy/inventory_upload_log/get_upload_log',
+          method: 'post',
+          parse: {
+            tableData: ['data', 'records'],
+            totalCount: ['data', 'total']
+          }
+        }
+      }
     })
   },
   watch: {
@@ -155,6 +189,7 @@ export default {
       mode_list: 'cockpit_dync_stevedor_mode_list',
       page_status: 'cockpit_dync_stevedor_page_status',
       select_list: 'cockpit_dync_entrain_sf_select_list',
+      select_update_list: 'cockpit_dync_stevedor_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success',
@@ -250,6 +285,38 @@ export default {
       }
 
       params.param.gasstationId = this.stationId // 对应加气站
+
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
+    },
+    onReqUpdateParams(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: {} })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (k === 'loadTime') {
+            params.param.timeType = 0
+
+            params.param.startTime = v[0]
+            params.param.endTime = v[1]
+          } else if (k === 'unloadTime') {
+            params.param.timeType = 1
+
+            params.param.startTime = v[0]
+            params.param.endTime = v[1]
+          } else if (k === 'updateDate') {
+            params.param.timeType = 2
+
+            params.param.startTime = v[0]
+            params.param.endTime = v[1]
+          } else {
+            if (v !== '') params.param[k] = v
+          }
+        }
+      }
+
+      params.param.gasstationId = this.stationId // 对应加气站
+      params.param.uploadType = 4
 
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)

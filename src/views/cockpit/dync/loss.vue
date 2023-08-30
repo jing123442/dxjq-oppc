@@ -81,6 +81,26 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+
+    <el-dialog append-to-body width="800px" title="盘盈亏数据 · 更新记录" :visible.sync="updateVisible">
+      <em-table-list
+        v-if="updateVisible"
+        ref="tables3"
+        :custTableTitle="'盘盈亏数据 · 更新记录'"
+        :tableListName="'updateStevedore'"
+        :buttonsList="[]"
+        :axios="axios"
+        :queryCustURL="queryCustUpdateURL"
+        :responseSuccess="response_success"
+        :queryParam="queryParams"
+        :mode_list="mode_list"
+        :page_status="page_status"
+        :page_column="page_update_column"
+        :options="{ lazy: true }"
+        :select_list="select_update_list"
+        @onReqParams="onReqUpdateParams"
+      ></em-table-list>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -110,7 +130,10 @@ export default {
           }
         }
       },
-      buttonsList: [{ type: 'primary', icon: '', event: 'import', name: '数据导入' }],
+      buttonsList: [
+        { type: 'primary', icon: '', event: 'import', name: '数据导入' },
+        { type: 'primary', icon: '', event: 'update', name: '数据更新记录' }
+      ],
       dataList: [
         {
           name: '盈亏总量：',
@@ -130,16 +153,30 @@ export default {
       importData: [],
       importDataInfo: {},
       uploadURL: process.env.VUE_APP_BASE_URL + 'strategy/inventory_adjust/import',
-      buttonsImportList: [{ type: 'primary', icon: '', event: 'download', name: '模版下载' }]
+      buttonsImportList: [{ type: 'primary', icon: '', event: 'download', name: '模版下载' }],
+
+      updateVisible: false,
+      queryCustUpdateURL: {
+        list: {
+          url: 'strategy/inventory_upload_log/get_upload_log',
+          method: 'post',
+          parse: {
+            tableData: ['data', 'records'],
+            totalCount: ['data', 'total']
+          }
+        }
+      }
     })
   },
   computed: {
     ...mapGetters({
       page_column: 'cockpit_dync_loss_column',
       page_import_column: 'cockpit_dync_loss_import_column',
+      page_update_column: 'cockpit_dync_stevedor_update_column',
       mode_list: 'cockpit_dync_stevedor_mode_list',
       page_status: 'cockpit_dync_stevedor_page_status',
       select_list: 'cockpit_dync_loss_select_list',
+      select_update_list: 'cockpit_dync_stevedor_select_list',
       add_edit_dialog: 'add_edit_dialog_form',
       del_dialog: 'del_dialog_form',
       response_success: 'response_success',
@@ -154,6 +191,8 @@ export default {
         this.importData = []
         this.dataInfoStatus = false
         this.importVisible = true
+      } else if (type === 'update') {
+        this.updateVisible = true
       }
     },
     lossTotal(params) {
@@ -206,6 +245,19 @@ export default {
 
       // 求和
       this.lossTotal(params.param)
+      // eslint-disable-next-line standard/no-callback-literal
+      callback(params)
+    },
+    onReqUpdateParams(type, _this, callback) {
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: {} })
+
+      if (isTypeof(_this.finds) === 'object') {
+        for (var [k, v] of Object.entries(_this.finds)) {
+          if (v !== '') params.param[k] = v
+        }
+      }
+      params.param.uploadType = 2
+
       // eslint-disable-next-line standard/no-callback-literal
       callback(params)
     }

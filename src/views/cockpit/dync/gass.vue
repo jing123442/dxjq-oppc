@@ -27,6 +27,7 @@ export default {
   name: 'DyncRefuel',
   data() {
     return initVueDataOptions(this, {
+      authButtonList: null,
       queryCustURL: {
         list: {
           url: 'strategy/inventory_station_time/page',
