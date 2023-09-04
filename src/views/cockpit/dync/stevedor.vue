@@ -31,7 +31,6 @@
         class="upload-demo"
         :action="uploadURL"
         :headers="axios.headers"
-        :limit="1"
         :on-error="uploadError"
         :on-success="uploadSuccess"
         :show-file-list="false"
@@ -220,7 +219,7 @@ export default {
       // 模版下载
       if (type === 'download') {
         $strategyDownloadStevedoreFile({}).then(res => {
-          const fileName = '卸载数据_' + Date.parse(new Date()) + '.xlsx'
+          const fileName = '装卸数据_' + Date.parse(new Date()) + '.xlsx'
           exportBlobToFiles(res, fileName)
         })
       }
@@ -252,15 +251,17 @@ export default {
       }
     },
     btnClickEvent(btn) {
+      let confirm = 1
       if (btn.type === 'ok') {
-        $strategyStevedoreConfirmImport({}).then(res => {
-          this.$message.success('成功')
-          this.$refs.stevedoreTables.initDataList()
-          this.importVisible = false
-        })
       } else {
-        this.importVisible = false
+        confirm = 0
       }
+
+      $strategyStevedoreConfirmImport({ confirm }).then(res => {
+        this.$message.success('成功')
+        this.$refs.stevedoreTables.initDataList()
+        this.importVisible = false
+      })
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: {} })
@@ -336,7 +337,7 @@ export default {
 .import-title {
   font-size: 12px;
   position: absolute;
-  top: 80px;
+  top: 100px;
   left: 35px;
   span {
     display: inline-block;

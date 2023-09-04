@@ -9,6 +9,7 @@ import {
   utilsBuyType,
   utilsStevedoreDataSearch,
   utilDyncCardTypeList,
+  utilsImportTypeList,
   utilsLossDataSearch,
   utilsUploadType,
   utilSelectOutTypeList,
@@ -79,9 +80,11 @@ const select = {
     createTimeSearch: utilsPayCreateTimeSearch(),
   },
   dyncLoss: {
+    importTypeList: utilsImportTypeList(),
     lossDataSearch: utilsLossDataSearch(),
   },
   dyncCard: {
+    importTypeList: utilsImportTypeList(),
     cardType: utilDyncCardTypeList(),
   },
   dyncGass: {},

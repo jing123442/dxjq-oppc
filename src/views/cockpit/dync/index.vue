@@ -1,1423 +1,532 @@
 <template>
   <div class="template-main">
-    <el-tabs v-model="active" type="card" @tab-click="handleClick">
-      <el-tab-pane label="今日实时（线上）" name="0">
-        <em-table-list
-          ref="tables1"
-          :tableListName="'timeday'"
-          :custTableTitle="custTodayTableTitle"
-          :authButtonList="authButtonList"
-          :buttonsList="buttonsList"
-          :axios="axios"
-          :queryCustURL="queryCustURL"
-          :composeParam="composeParam"
-          :rowKey="'id'"
-          :responseSuccess="response_success"
-          :queryParam="queryParams"
-          :mode_list="mode_list"
-          :page_status="page_status"
-          :page_column="page_column"
-          :options="{ lazy: true }"
-          :select_list="select_list"
-          @onListEvent="onListEvent"
-          @onReqParams="onReqParams"
-          @updateColumnValue="updateColumnValue"
-        ></em-table-list>
-      </el-tab-pane>
-      <el-tab-pane label="历史时段（线上）" name="1">
-        <em-table-list
-          ref="tables2"
-          :tableListName="'timehistory'"
-          :custTableTitle="custYesterdayTableTimeTitle"
-          :authButtonList="authButtonList"
-          :buttonsList="buttonsHistoryList"
-          :axios="axios"
-          :queryCustURL="queryHistoryTimeCustURL"
-          :composeParam="composeParam"
-          :rowKey="'id'"
-          :responseSuccess="response_success"
-          :queryParam="queryParams"
-          :mode_list="mode_list"
-          :page_status="page_status"
-          :page_column="mode_history_time_list"
-          :options="{ lazy: true }"
-          :select_list="select_list"
-          @onListEvent="onListEvent"
-          @onReqParams="onReqParams"
-        ></em-table-list>
-      </el-tab-pane>
-      <el-tab-pane label="历史总量 (自营)" name="2">
-        <table-total-data
-          ref="tables3"
-          :dataList="dataList"
-          :rowData="totalInfo"
-          :headerStyle="'top: 96px;'"
-          v-if="showImport == 0"
-        ></table-total-data>
-        <em-table-list
-          :tableListName="'timehistory'"
-          :custTableTitle="custYesterdayTableTitle"
-          :authButtonList="authButtonList"
-          :axios="axios"
-          :buttonsList="buttonsHistoryCountList"
-          :queryCustURL="queryHistoryCustURL"
-          :responseSuccess="response_success"
-          :mode_list="mode_list"
-          :page_status="page_status"
-          :queryParam="queryParams"
-          :page_column="mode_history_list"
-          :select_list="select_list"
-          @onListEvent="onListEvent"
-          @onReqParams="onReqParamsHistory"
-          @updateColumnValue="updateColumnValueHistory"
-          v-if="showImport == 0"
-        ></em-table-list>
-
-        <div class="top-bg" v-if="showImport == 1 || showImport == 4">
-          <div v-if="showImport == 1">每日导入</div>
-          <div v-else>数据调整</div>
-          <div class="between" style="margin-top:20px">
-            <el-form :inline="true" size="mini">
-              <el-form-item label="">
-                <el-date-picker
-                  v-model="updateTime"
-                  type="date"
-                  format="yyyy-MM-dd"
-                  value-format="yyyy-MM-dd"
-                  @change="changeTime"
-                  placeholder="选择日期"
-                  :picker-options="pickerBeginDateBefore"
-                >
-                </el-date-picker>
-              </el-form-item>
-              <el-form-item label="">{{ tipTime }}</el-form-item>
-            </el-form>
-            <div>
-              <el-button
-              v-if="needButton['data_upload']"
-                @click="onListEvent('data_upload')"
-                size="mini"
-                type="primary"
-                >数据上传</el-button
-              >
-              <el-button
-              v-if="needButton['template_down']"
-                type="primary"
-                @click="onListEvent('template_down')"
-                size="mini"
-                plain
-                >模板下载</el-button
-              >
-            </div>
-          </div>
+    <div class="chart-wrapper">
+      <div class="search-wrapper">
+        <div class="station-wrapper">
+          <el-select v-model="stationValue" size="small" placeholder="请选择加气站" @change="stationChange">
+            <el-option v-for="item in stationList" :key="item.gasstationId" :label="item.nickName" :value="item.gasstationId"></el-option>
+          </el-select>
+          <el-date-picker v-model="stationDate" type="daterange" size="small" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+          </el-date-picker>
+          <el-button type="primary" size="small" @click="watchDyncData">查询</el-button>
         </div>
-
-        <div class="bg" v-if="showImport == 1 || showImport == 4 ">
-          <div class="count">
-            <div class="row">
-              <div class="count-item">
-                <div class="count-key">
-              <span style="color:#4343FF" v-if="showImport==4">[ 调整前 ]</span>  {{ showImport==4?'销售总量：':'销售总量：' }}
-                </div>
-                <div class="count-value" :style="{'color':totalInfoImport.qtyTotalColor}">
-                  {{ totalInfoImport.qtyTotal || "0" }}吨
-                </div>
-              </div>
-
-              <div class="count-item">
-                <div class="count-key">
-                  {{ showImport==4?'销售总金额：':'销售总金额：' }}
-                </div>
-                <div class="count-value" :style="{'color':totalInfoImport.amountTotalColor}">
-                  {{ totalInfoImport.amountTotal || "0" }}元
-                </div>
-              </div>
-            </div>
-
-            <div class="row" v-if="showImport == 4 && uploadInfo.file">
-              <div class="count-item">
-                <div class="count-key">
-                  <span style="color:#70B603" v-if="showImport==4">[ 调整后 ]</span>
-                  销售总量：
-                </div>
-                <div class="count-value" :style="{'color':totalInfoImport.qtyTotalNewColor}">
-                  {{ totalInfoImport.qtyTotalNew || "0" }}吨
-                </div>
-              </div>
-
-              <div class="count-item">
-                <div class="count-key">
-                  销售总金额：
-                </div>
-                <div class="count-value" :style="{'color':totalInfoImport.amountTotalNewColor}">
-                  {{ totalInfoImport.amountTotalNew || "0" }}元
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <el-table
-          :cell-style="tableCellStyle"
-            style="margin-top: 20px"
-            :data="dataListImport"
-            border
-            size="mini"
-            stripe
-            :header-cell-style="{
-              background: 'rgb(246, 246, 246)',
-              color: '#606266',
-              borderColor: '#EBEEF5',
-            }"
-          >
-            <el-table-column
-            min-width="125"
-              prop="nickName"
-              label="加气站(自营)"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div>{{ scope.row.nickName || "" }}</div>
-              </template>
-            </el-table-column>
-
-            <el-table-column
-            v-if=" showImport == 4 || showImport == 5"
-              prop="step"
-              label="对比阶段"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div v-if="scope.row.step =='调整前'" style="color: #B5B5FF;">[ 调整前 ]</div>
-                <div v-if="scope.row.step =='调整后'"  style="color: #70B603;">[ 调整后 ]</div>
-              </template>
-            </el-table-column>
-
-            <el-table-column
-              prop="inQtyTotal"
-              label="入库量(吨)"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div  >{{ scope.row.inQtyTotal || "—" }}</div>
-              </template>
-            </el-table-column>
-
-            <el-table-column
-              prop="gasQtyTotal"
-              label="销售量(吨)"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div>{{ scope.row.gasQtyTotal || "—" }}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="dayAvgPrice"
-              label="日均零售价(元/吨)"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div>{{ scope.row.dayAvgPrice || "—" }}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="amountTotal"
-              label="销售金额(元)"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div>{{ scope.row.amountTotal || "—" }}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="compareRate"
-              label="较前一日销量比"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div v-if="scope.row.rateColor=='grey'" >{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
-                <div v-else-if="scope.row.rateColor=='green'" style="color:#41CCA1">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
-                <div v-else style="color:red">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
-              </template>
-            </el-table-column>
-          </el-table>
-
-          <el-col v-if="errorList.length>0" style="margin-top:10px">
-            <div
-              v-for="(item, index) in errorList"
-              :key="index"
-              style="color: red;font-size: 14px;"
-
-            >
-              {{ item }}
-            </div>
-          </el-col>
-
-          <el-row style="margin-top: 20px; margin-left: 10px">
-            <el-button
-              size="mini"
-              type="info"
-              v-if="errorList.length > 0 || dataListImport == 0 || (showImport == 1 && !canUploadData) ||  (showImport == 4 && !uploadInfo.file) ">{{showImport == 4?'确定发起':'确定导入'}}</el-button
-            >
-            <el-button
-              @click="onListEvent('sure_upload')"
-              size="mini"
-              type="primary"
-              v-else
-              >{{showImport == 4?'确定发起':'确定导入'}}</el-button
-            >
-            <el-button
-              type="primary"
-              @click="clickCancel()"
-              size="mini"
-              plain
-              >取消</el-button
-            >
-          </el-row>
-        </div>
-
-        <div class="bg" v-if="showImport == 3">
-          <div class="between">
-            <div>数据调整</div>
-            <div>
-              <el-button
-              v-if="needButton['start_modify']"
-                @click="onListEvent('start_modify')"
-                size="mini"
-                type="primary"
-                >发起调整</el-button
-              >
-            </div>
-          </div>
-          <el-table
-            style="margin-top: 20px"
-            :data="waitList"
-            border
-            size="mini"
-            stripe
-            :header-cell-style="{
-              background: 'rgb(246, 246, 246)',
-              color: '#606266',
-              borderColor: '#EBEEF5',
-            }"
-          >
-            <el-table-column
-              prop="duration"
-              label="数据时段"
-              min-width="100"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              prop="inQtyTotal"
-              label="审核状态"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div v-if="scope.row.auditStatus==0 || scope.row.auditStatus==0" style="color:#B5B5FF">{{ getAudioStatus(scope.row.auditStatus)   }}</div>
-                <div v-if="scope.row.auditStatus==2" style="color:#70B603">{{ getAudioStatus(scope.row.auditStatus)   }}</div>
-                <div v-if="scope.row.auditStatus==3" style="color:#C3C3C3">{{ getAudioStatus(scope.row.auditStatus)   }}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="operatorName"
-              label="发起人"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div>{{ scope.row.operatorName || "—" }}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="operatorDate"
-              label="发起时间"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div>{{ scope.row.operatorDate || "—" }}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="审核人"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div>{{ scope.row.auditName || "—" }}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="审核时间"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div>{{ scope.row.auditDate ||"—" }}</div>
-              </template>
-            </el-table-column>
-
-            <el-table-column label="操作" width="280">
-          <template slot-scope="scope">
-
-          <el-button type="text" @click="onListEvent('check_detail',scope.row)"      v-if="needButton['check_detail']">详情</el-button>
-          <el-button type="text" @click="onListEvent('check_audit',scope.row)" v-if="scope.row.auditStatus==0 && needButton['check_audit']">审核</el-button>
-          </template>
-        </el-table-column>
-
-          </el-table>
-
-          <el-row style="margin-top: 20px" >
-            <el-button
-              @click="showImport = 0"
-              size="mini"
-              type="primary" plain>返回</el-button >
-          </el-row>
-        </div>
-
-        <el-dialog  :title="!isAudit?'数据详情':'数据审核'"
-      :visible.sync ="showDetail"
-      :width="add_edit_dialog"
-      :append-to-body="true" >
-          <div class="bg" >
-          <div class="count">
-            <el-row>审核状态：{{ getAudioStatus(clickRow.auditStatus) }}   <span style="margin-left:20px">发起人：{{ clickRow.operatorName||'—' }}   </span>      <span style="margin-left:20px">发起时间：{{ clickRow. operatorDate||'—'}}</span>
-              <span style="margin-left:20px">审核人：{{ clickRow.auditName ||'—'}}</span>     <span style="margin-left:20px">审核时间：{{ clickRow. auditDate||'—'}}</span>
-
-            </el-row>
-            <el-row style="margin-top: 10px;">数据时段 ：{{ clickRow.duration }}</el-row>
-            <div class="row" style="margin-top: 10px;">
-              <div class="count-item">
-                <div class="count-key">
-                  <span style="color:#4343FF">调整前</span>
-                {{ '交易总量：'}}
-                </div>
-                <div class="count-value"  :style="{'color':totalInfoImport.qtyTotalColor}">
-                  {{ totalInfoImport.qtyTotal || "0" }}吨
-                </div>
-              </div>
-
-              <div class="count-item">
-                <div class="count-key">
-                  {{ '销售总金额：' }}
-                </div>
-                <div class="count-value"  :style="{'color':totalInfoImport.amountTotalColor}">
-                  {{ totalInfoImport.amountTotal || "0" }}元
-                </div>
-              </div>
-            </div>
-
-            <div class="row" style="margin-top: 10px;">
-              <div class="count-item">
-                <div class="count-key">
-                  <span style="color:#70B603" >调整后</span>
-                  交易总量：
-                </div>
-                <div class="count-value"  :style="{'color':totalInfoImport.qtyTotalNewColor}">
-                  {{ totalInfoImport.qtyTotalNew || "0" }}吨
-                </div>
-              </div>
-
-              <div class="count-item">
-                <div class="count-key">
-                  销售总金额：
-                </div>
-                <div class="count-value" :style="{'color':totalInfoImport.amountTotalNewColor}">
-                  {{ totalInfoImport.amountTotalNew || "0" }}元
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <el-table
-            style="margin-top: 20px"
-            :data="dataListImport"
-            :cell-style="tableCellStyle"
-            border
-            size="mini"
-            stripe
-            :header-cell-style="{
-              background: 'rgb(246, 246, 246)',
-              color: '#606266',
-              borderColor: '#EBEEF5',
-            }"
-          >
-            <el-table-column
-              prop="nickName"
-              label="加气站(自营)"
-              min-width="125"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div>{{ scope.row.nickName || "" }}</div>
-              </template>
-            </el-table-column>
-
-            <el-table-column
-              prop="step"
-              label="对比阶段"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div :style="scope.row.stepColor">{{ scope.row.step || "—" }}</div>
-              </template>
-            </el-table-column>
-
-            <el-table-column
-              prop="inQtyTotal"
-              label="入库量(吨)"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div>{{ scope.row.inQtyTotal || "—" }}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="gasQtyTotal"
-              label="销售量(吨)"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div>{{ scope.row.gasQtyTotal || "—" }}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="dayAvgPrice"
-              label="日均零售价(元/吨)"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div>{{ scope.row.dayAvgPrice || "—" }}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="amountTotal"
-              label="销售金额(元)"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div>{{ scope.row.amountTotal || "—" }}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="compareRate"
-              label="较前一日销量比"
-              show-overflow-tooltip
-            >
-              <template v-slot="scope">
-                <div v-if="scope.row.rateColor=='grey'" >{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
-                <div v-else-if="scope.row.rateColor=='green'" style="color:#41CCA1">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
-                <div v-else style="color:red">{{ scope.row.compareRate ? (scope.row.compareRate + "%") : "—" }}</div>
-
-
-              </template>
-            </el-table-column>
-          </el-table>
-
-          <el-row v-if="isAudit" style="margin-top: 20px;">
-            审核结果：  <el-radio v-model="radioAudit" label="2">通过</el-radio>
-                       <el-radio v-model="radioAudit" label="3">不通过</el-radio>
-          </el-row>
-
-          <el-row style="margin-top: 20px" v-if="isAudit">
-            <el-button
-              size="mini"
-              type="primary" @click="auditPass()">确定</el-button
-            >
-            <el-button
-              @click="showDetail = false"
-              size="mini"
-              type="primary" plain>取消</el-button >
-          </el-row>
-        </div>
-        </el-dialog>
-
-      </el-tab-pane>
-    </el-tabs>
-
-    <el-dialog
-      title="数据上传"
-      :visible.sync="dialogExportVisible"
-      :width="add_edit_dialog"
-      :append-to-body="true"
-    >
-      <el-form
-        ref="exportCar"
-        v-if="dialogExportVisible"
-        :model="importRow"
-        size="small"
-        :rules="importRules"
-        label-position="left"
-      >
-        <el-form-item>
-          <div>
-            <i class="el-icon-upload"></i>
-            <span style="display: inline-block; padding-left: 2px"
-              >上传文件</span
-            >
-          </div>
-          <div style="padding-left: 20px">
-            <el-upload
-              class="upload-demo"
-              ref="upload"
-              name="file"
-              :limit="1"
-              :headers="headers"
-              accept=".xlsx"
-              action="/user/import/import_user"
-              :auto-upload="false"
-            >
-              <el-button slot="trigger" size="small" type="primary"
-                >选取上传文件</el-button
-              >
-              <div slot="tip" class="el-upload__tip">
-                只能上传xlsx，且不超过10Mb
-              </div>
-            </el-upload>
-          </div>
-        </el-form-item>
-        <!-- 按钮 -->
-        <el-form-item class="el-del-btn-item">
-          <div class="btn-item-footer">
-            <el-button
-              v-for="(btnItem, index) in importRow._btn.list"
-              :key="index"
-              :type="btnItem.bType"
-              size="small"
-              :icon="btnItem.icon"
-              @click="btnClickEvent(btnItem)"
-              >{{ btnItem.label }}
-            </el-button>
-          </div>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
+        <el-button type="primary" size="small" @click="exportDataFile">数据导出</el-button>
+      </div>
+      <ul class="sale-total">
+        <li>装车总量：{{ statisticsDataInfo.loadTotalQty }}公斤</li>
+        <li>入库总量：{{ statisticsDataInfo.inTotalQty }}公斤</li>
+        <li>销售总量：{{ statisticsDataInfo.saleTotalQty }}公斤</li>
+        <li>销售总额：{{ statisticsDataInfo.saleTotalValue }}元</li>
+        <li>销售总额到站成本：{{ statisticsDataInfo.saleTotalCost }}元</li>
+        <li>总进销差：{{ statisticsDataInfo.saleTotalDiff }}元</li>
+      </ul>
+      <div style="height: 300px;">
+        <MyChart :option="optionBar" @chartClick="chartClick"></MyChart>
+      </div>
+    </div>
+    <div class="day-wrapper" v-if="dayStatisticsActive">
+      <div class="day-title">{{ getCurrentClickDate() }}</div>
+      <ul>
+        <li>
+          <div>装车量：30.0 吨（X.xx 元/公斤）</div>
+          <div>在途量：30.0 吨（X.xx 元/公斤）</div>
+          <div>-</div>
+          <div>入库量：30.0 吨（X.xx 元/公斤）</div>
+        </li>
+        <li>
+          <div>销售量：30.0 吨</div>
+          <div>销售金额：30.0 元（X.xx 元/公斤）</div>
+          <div>到站成本：30.0 元（X.xx 元/公斤）</div>
+          <div>进销差：30.0 元</div>
+        </li>
+        <li>
+          <div>账存量：30.0 吨（X.xx 元/公斤）</div>
+          <div>-</div>
+          <div>未出库量：30.0 吨（X.xx 元/公斤）</div>
+          <div>CNG 出库量：30.0 吨（X.xx 元/公斤）</div>
+        </li>
+      </ul>
+      <ul>
+        <li class="btn" :class="{ active: dayStatus === 1 }" @click="clickBtn(1)">桑基图</li>
+        <li class="btn" :class="{ active: dayStatus === 2 }" @click="clickBtn(2)">列表</li>
+      </ul>
+      <div v-if="dayStatus === 1" style="height: 300px">
+        <MyChart :option="optionSankey"></MyChart>
+      </div>
+      <DayStatisticsList v-if="dayStatus === 2"></DayStatisticsList>
+    </div>
   </div>
 </template>
 <script>
-import {
-  initVueDataOptions,
-  isTypeof,
-  formateTData,
-  exportBlobToFiles,
-  toolsFileHeaders,
-  custFormBtnList
-} from '@/utils/tools'
-import { TableTotalData } from '@/components'
-import {
-  $settleGasstationCurrentSales,
-  $settleGasstationHistorySales,
-  $settleGwayGasOrderGetSumTotal,
-  $importDownloadFile,
-  $importDataFileWithNoOrgId,
-  $settleGasorderWait, $settleGasorderAdjustDetail, $settleGasorderAdjustAudit, $settleGasorderList
-} from '@/service/settle'
-import { mapGetters } from 'vuex'
+import * as echarts from 'echarts'
+
+import { exportBlobToFiles, formatDate, formateTData, getDateRange } from '@/utils/tools'
+import { $strategyDyncDayExportData, $strategyDyncDayStatisticsData, $strategyGetStationList } from '@/service/strategy'
+import MyChart from '@/components/MyChart/MyChart.vue'
+import DayStatisticsList from './components/dayStatisticsList.vue'
 
 export default {
-  name: 'salestime',
-  components: { TableTotalData },
+  name: 'DyncIndex',
+  components: { DayStatisticsList, MyChart },
   data() {
-    return initVueDataOptions(this, {
-      updateTime: '',
-      showImport: 0,
-      active: 0,
-      queryCustURL: {
-        list: {
-          url: 'settle/gasstation_monitor/full_district_list',
-          method: 'post',
-          parse: {
-            tableData: ['data']
-          },
-          tree: {
-            key: 'districtId'
+    return {
+      dayStatisticsActive: false,
+      dayStatus: 1,
+      stationDate: [],
+      stationList: [],
+      stationValue: '',
+      currentStationInfo: {},
+      statisticsDataInfo: {},
+      statisticsDataList: [],
+      optionBar: {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {}
+        },
+        color: ['#4D94FF', '#FDC624', '#22FFFF'],
+        grid: {
+          top: '2%',
+          right: '1.5%',
+          left: '0.1%',
+          bottom: '10%',
+          containLabel: true
+        },
+        legend: {
+          show: true,
+          icon: 'rect',
+          itemHeight: 4,
+          itemWidth: 16,
+          type: 'plain',
+          left: 'center',
+          bottom: '-1%',
+          textStyle: {
+            color: '#333'
           }
         },
-        children: {
-          url: 'settle/gasstation_monitor/district_gasstation_list',
-          method: 'post',
-          props: {
-            districtId: 'districtId',
-            queryDateTime: 'dateTime'
-          },
-          parse: {
-            tableData: ['data']
-          },
-          tree: {
-            key: 'districtId'
+        xAxis: [
+          {
+            boundaryGap: false,
+            type: 'category',
+            axisLine: {
+              show: true,
+              lineStyle: {
+                width: 1,
+                type: 'solid',
+                color: '#A3A8B0'
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              color: '#333',
+              margin: 12
+            },
+            splitLine: {
+              show: false
+            },
+            // 横坐标
+            data: []
           }
-        },
-        name: '监控'
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            name: '',
+            nameTextStyle: {
+              color: '#333',
+              align: 'right',
+              padding: 5
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                type: 'dashed',
+                width: 1
+              }
+            },
+            axisLine: {
+              show: false
+            },
+            axisLabel: {
+              show: true,
+              formatter: '{value}',
+              color: '#333'
+            },
+            axisTick: {
+              show: false
+            }
+          }
+        ],
+        series: [
+          {
+            name: '入库量(公斤)',
+            type: 'bar',
+            smooth: true,
+            barWidth: 6,
+            label: {
+              show: false,
+              position: 'top',
+              color: '#333'
+            },
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: 'rgba(77, 148, 255, 1)' },
+                { offset: 1, color: 'rgba(77, 148, 255, 0.3)' }
+              ])
+            },
+            data: []
+          },
+          {
+            name: '销售量(公斤)',
+            type: 'bar',
+            smooth: true,
+            barWidth: 6,
+            label: {
+              show: false,
+              position: 'top',
+              color: '#333'
+            },
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: 'rgba(253, 198, 36, 1)' },
+                { offset: 1, color: 'rgba(253, 198, 36, 0.3)' }
+              ])
+            },
+            data: []
+          },
+          {
+            name: '进销差(元)',
+            type: 'line',
+            stack: 'a',
+            smooth: true,
+            barWidth: 6,
+            label: {
+              show: false,
+              position: 'top',
+              color: '#333'
+            },
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: 'rgba(34, 255, 255, 1)' },
+                { offset: 1, color: 'rgba(34, 255, 255, 0.3)' }
+              ])
+            },
+            data: []
+          }
+        ]
       },
-      queryHistoryCustURL: {
-        list: {
-          url: 'settle/gway_gasorder/list',
-          method: 'post',
-          parse: {
-            tableData: ['data']
-          }
-        },
-        name: '监控'
-      },
-      queryWaitURL: {
-        list: {
-          url: 'settle/gway_gasorder_adjust/page',
-          method: 'post',
-          parse: {
-            tableData: ['data']
-          }
-        },
-        name: '数据调整'
-      },
-      queryHistoryTimeCustURL: {
-        list: {
-          url: 'settle/gasstation_monitor/histroy_full_district_list',
-          method: 'post',
-          parse: {
-            tableData: ['data']
+      clickDate: '',
+      optionSankey: {
+        animation: true,
+        animationThreshold: 2000,
+        animationDuration: 1000,
+        animationEasing: 'cubicOut',
+        animationDelay: 0,
+        animationDurationUpdate: 300,
+        animationEasingUpdate: 'cubicOut',
+        animationDelayUpdate: 0,
+        color: [
+          'rgba(120,163,206,0.8)',
+          '#FBC2EB',
+          'rgba(161,140,209,0.6)',
+          '#C2E9FB',
+          '#A1C4FD',
+          '#D4FC79',
+          '#A646DD',
+          'rgba(252,198,135,0.5)',
+          '#F28D86',
+          '#F286A0',
+          '#33876A',
+          '#B5BF6E',
+          '#2979F1',
+          '#F08F1B',
+          '#57B956',
+          '#ABA5EA',
+          '#9BC46C',
+          '#30E0E0',
+          '#F286CA',
+          '#82CAFF',
+          '#D66161',
+          '#8FF379',
+          '#1CBDB4',
+          '#EEF2F3',
+          '#8E9EAB',
+          '#BB9BF1',
+          '#887BF2',
+          '#7FFED8',
+          '#09BDFE',
+          'rgba(127,189,91,0.8)'
+        ],
+        series: {
+          type: 'sankey',
+          layout: 'none',
+          nodeGap: 20,
+          top: '10%',
+          left: '5%',
+          lineStyle: {
+            normal: {
+              color: '#D3F1E1',
+              opacity: 1
+            }
           },
-          tree: {
-            key: 'districtId'
-          }
-        },
-        children: {
-          url: 'settle/gasstation_monitor/histroy_district_gasstation_list',
-          method: 'post',
-          props: {
-            districtId: 'districtId'
+          emphasis: {
+            lineStyle: {
+              color: '#84D65C',
+              opacity: 0.5
+            }
           },
-          parse: {
-            tableData: ['data']
+          itemStyle: {
+            normal: {
+              borderWidth: 0,
+              borderColor: '#fff',
+              opacity: 1
+            }
           },
-          tree: {
-            key: 'districtId'
+          label: {
+            color: '#fff'
+          },
+          textBorderWidth: 0,
+          focusNodeAdjacency: false,
+          draggable: false,
+          data: [],
+          links: []
+        },
+        legend: [
+          {
+            data: ['sankey'],
+            selected: {
+              sankey: true
+            },
+            show: false,
+            padding: 5,
+            itemGap: 10,
+            itemWidth: 25,
+            itemHeight: 12
           }
-        },
-        name: '监控'
-      },
-      composeParam: ['districtName'],
-      custTodayTableTitle: '今日实时（线上）',
-      custYesterdayTableTimeTitle: '历史时段（线上）',
-      custYesterdayTableTitle: '历史总量 (自营)',
-      buttonsList: [
-        { type: 'primary', icon: '', event: 'query', name: '查询' },
-        { type: 'primary', icon: '', event: 'export', name: '导出' }
-      ],
-      buttonsHistoryList: [
-        { type: 'primary', icon: '', event: 'his_export', name: '导出' }
-      ],
-      buttonsHistoryCountList: [
-        { type: 'primary', icon: '', event: 'data_import', name: '每日导入' },
-        { type: 'primary', icon: '', event: 'data_modify', name: '数据调整' }
-      ],
-      buttonsWaitList: [
-        { type: 'primary', icon: '', event: 'start_modify', name: '发起调整' }
-      ],
-      needButton:
-      {
-        start_modify: false,
-        data_upload: false,
-        template_down: false,
-        check_audit: false,
-        check_detail: false,
-        data_modify: false,
-        sure_upload: false
-      },
-      page_history_status: 1,
-      initHistoryStatus: true,
-      dataList: [
-        {
-          name: '销售总量：',
-          field: 'qtyTotal',
-          unit: ' 吨'
-        },
-        {
-          name: '销售总金额：',
-          field: 'amountTotal',
-          unit: ' 元'
+        ],
+        tooltip: {
+          show: true,
+          trigger: 'item',
+          triggerOn: 'mousemove|click',
+          axisPointer: {
+            type: 'line'
+          },
+          textStyle: {
+            fontSize: 14
+          },
+          borderWidth: 0,
+          formatter: function (params) {
+            return params.name
+          }
         }
-      ],
-      dataListImport: [],
-      totalInfo: { qtyTotal: 0, amountTotal: 0 },
-      totalInfoImport: { qtyTotal: 0, amountTotal: 0, amountTotalNew: 0, qtyTotalNew: 0 },
-
-      headers: {},
-      dialogExportVisible: false,
-      importRow: {},
-      importRules: {},
-      sumParams: {},
-      tipTime: '',
-      uploadInfo: {},
-      errorList: [],
-      waitList: [],
-      audit: {
-        auditStatus: '',
-        curDate: '',
-        id: ''
-      },
-      clickRow: {},
-      showDetail: false,
-      isAudit: false,
-      radioAudit: '2',
-      authList: [],
-      pickerBeginDateBefore: {
-        disabledDate(time) {
-          return time.getTime() > Date.now()
-        }
-      },
-      canUploadData: true
-    })
-  },
-  computed: {
-    ...mapGetters({
-      page_column: 'cockpit_sales_column',
-      mode_list: 'cockpit_sales_mode_list',
-      mode_history_time_list: 'cockpit_history_time_column',
-      mode_history_list: 'cockpit_history_column',
-      modifyListColumn: 'modifyListColumn',
-
-      page_status: 'cockpit_sales_page_status',
-      select_list: 'cockpit_sales_select_list',
-      add_edit_dialog: 'add_edit_dialog_form',
-      del_dialog: 'del_dialog_form',
-      response_success: 'response_success',
-      woporg: 'woporg'
-    })
+      }
+    }
   },
   created: function () {
-    this.headers = toolsFileHeaders(this)
-    this.getToday()
-    this.getAuth()
+    this.initData()
   },
-  mounted: function () {},
   methods: {
-    onListEvent(type, row) {
-      if (type == 'query') {
-        this.$refs.tables1.initDataList()
-      } else if (type === 'export') {
-        $settleGasstationCurrentSales({
-          queryDateTime: this.currDataTime
-        }).then((response) => {
-          const fileName = '实时销量监控数据' + Date.parse(new Date()) + '.xls'
-          exportBlobToFiles(response, fileName)
-          this.$message.success('下载成功')
+    initData() {
+      const { startdate, enddate } = getDateRange()
+      this.stationDate = [startdate, enddate]
+      $strategyGetStationList({}).then(res => {
+        this.stationList = res.data || []
+
+        if (this.stationList.length > 0) {
+          this.currentStationInfo = this.stationList[0]
+          this.stationValue = this.stationList[0].gasstationId
+
+          this.watchDyncData()
+        }
+      })
+    },
+    stationChange(val) {
+      const item = this.stationList.find(item => item.gasstationId === val)
+
+      this.currentStationInfo = item || {}
+    },
+    exportDataFile() {
+      const params = {
+        gasstationId: this.stationValue,
+        startDate: formateTData(this.stationDate[0], 'date'),
+        endDate: formateTData(this.stationDate[1], 'date')
+      }
+      $strategyDyncDayExportData(params).then(res => {
+        const fileName = '动态库存_' + Date.parse(new Date()) + '.xlsx'
+        exportBlobToFiles(res, fileName)
+      })
+    },
+    sankeyChartData() {
+      const datas = [] // res.data.datas
+      const links = [] // res.data.links
+      const linkColor = [
+        'rgba(120,163,206,0.8)',
+        '#FBC2EB',
+        'rgba(161,140,209,0.6)',
+        '#C2E9FB',
+        '#A1C4FD',
+        '#D4FC79',
+        '#A646DD',
+        'rgba(252,198,135,0.5)',
+        '#F28D86',
+        '#F286A0',
+        '#33876A',
+        '#B5BF6E',
+        '#2979F1',
+        '#F08F1B',
+        '#57B956',
+        '#ABA5EA',
+        '#9BC46C',
+        '#30E0E0',
+        '#F286CA',
+        '#82CAFF',
+        '#D66161',
+        '#8FF379',
+        '#1CBDB4',
+        '#EEF2F3',
+        '#8E9EAB',
+        '#BB9BF1',
+        '#887BF2',
+        '#7FFED8',
+        '#09BDFE',
+        'rgba(127,189,91,0.8)'
+      ]
+      // echarts series data
+      const chartSeriesData = []
+      datas.forEach((item) => {
+        chartSeriesData.push({ name: item.name })
+      })
+      this.optionSankey.series.data = chartSeriesData
+
+      // echarts series links
+      const chartSeriesLink = []
+      links.forEach((item, index) => {
+        // 取颜色值
+        const color = index >= linkColor.length ? linkColor[index % linkColor.length] : linkColor[index]
+        chartSeriesLink.push({
+          value: item.value,
+          source: item.source,
+          target: item.target,
+          lineStyle: {
+            color,
+            opacity: 0.4
+          },
+          emphasis: {
+            lineStyle: {
+              color,
+              opacity: 0.8
+            }
+          }
         })
-      } else if (type === 'his_export') {
-        $settleGasstationHistorySales({
-          dateTimeFrom: this.currDataTime.dateTimeFrom,
-          dateTimeTo: this.currDataTime.dateTimeTo
-        }).then((response) => {
-          const fileName = '历史销量监控数据' + Date.parse(new Date()) + '.xls'
-          exportBlobToFiles(response, fileName)
-          this.$message.success('下载成功')
+      })
+      this.optionSankey.series.links = chartSeriesLink
+    },
+    watchDyncData() {
+      const params = {
+        gasstationId: this.stationValue,
+        startDate: formateTData(this.stationDate[0], 'date'),
+        endDate: formateTData(this.stationDate[1], 'date')
+      }
+      $strategyDyncDayStatisticsData(params).then(res => {
+        const { dayStatistics, ...dataInfo } = res.data
+        this.statisticsDataInfo = dataInfo
+        this.statisticsDataList = dayStatistics || []
+
+        const xAxisData = []
+        const data1 = []
+        const data2 = []
+        const data3 = []
+        dayStatistics && dayStatistics.forEach(item => {
+          xAxisData.push(this.formatMonthDay(item.date))
+          data1.push(item.inQty)
+          data2.push(item.saleQty)
+          data3.push(item.saleDiff)
         })
-      } else if (type === 'data_import') {
-        this.showImport = 1
-        this.getToday()
-        this.resetData()
-      } else if (type === 'template_down') {
-        $importDownloadFile('settle/gway_gasorder_adjust/download_gasorder_adjust_tpl', { orgId: this.woporg }).then((response) => {
-          const fileName = '加气站销量监控' + Date.parse(new Date()) + '.xlsx'
-          exportBlobToFiles(response, fileName)
-          this.$message.success('下载成功')
-        })
-      } else if (type === 'data_upload') {
-        if (!this.canUploadData) {
-          if (this.showImport == 4) {
-            this.$message.error('该时段暂无数据，不可调整')
-          } else {
-            this.$message.error('该时段已存在数据')
-          }
-
-          return
-        }
-        // this.resetData()
-        this.importEvent()
-      } else if (type === 'sure_upload') {
-        this.sureUpload()
-      } else if (type === 'data_modify') {
-        this.showImport = 3
-        this.getWaitCheck()
-      } else if (type === 'start_modify') {
-        this.getToday()
-        this.resetData()
-        this.showImport = 4
-      } else if (type === 'check_detail') {
-        this.isAudit = false
-        this.clickRow = row
-        this.showDetail = true
-        this.resetData()
-        this.getDetail(row.id)
-      } else if (type === 'check_audit') {
-        this.resetData()
-        this.isAudit = true
-        this.clickRow = row
-        this.showDetail = true
-        this.getDetail(row.id)
-      }
-    },
-    tableDayStyle ({ row, column, rowIndex, columnIndex }) {
-      if (column.property == 'dayAvgPrice') {
-        if (row.dayAvgPriceFlag == 1) {
-          return 'background:#FBE7EA'
-        } else {
-          return ''
-        }
-      }
-    },
-    tableCellStyle ({ row, column, rowIndex, columnIndex }) {
-      if (column.property == 'step') { // 对比阶段
-
-      } else if (column.property == 'amountTotal') {
-        if (row.amountTotalDiff) {
-          if (row.step == '调整前') {
-            return 'background:#E6E6FF'
-          } else {
-            return 'background:#E6FFE6'
-          }
-        } else {
-          return ''
-        }
-      } else if (column.property == 'gasQtyTotal') {
-        if (row.gasQtyTotalDiff) {
-          if (row.step == '调整前') {
-            return 'background:#E6E6FF'
-          } else {
-            return 'background:#E6FFE6'
-          }
-        } else {
-          return ''
-        }
-      } else if (column.property == 'dayAvgPrice') {
-        if (row.dayAvgPriceDiff) {
-          if (row.step == '调整前') {
-            return 'background:#E6E6FF'
-          } else {
-            if (row.dayAvgPriceFlag == 1) {
-              return 'background:#FBE7EA'
-            } else {
-              return 'background:#E6FFE6'
-            }
-          }
-        } else {
-          if (row.dayAvgPriceFlag == 1) {
-            return 'background:#FBE7EA'
-          }
-          return ''
-        }
-      } else if (column.property == 'inQtyTotal') {
-        if (row.inQtyTotalDiff) {
-          if (row.step == '调整前') {
-            return 'background:#E6E6FF'
-          } else {
-            return 'background:#E6FFE6'
-          }
-        } else {
-          return ''
-        }
-      } else {
-        return ''
-      }
-    },
-
-    resetData() {
-      this.totalInfoImport = { qtyTotal: 0, amountTotal: 0, amountTotalNew: 0, qtyTotalNew: 0 }
-      this.dataListImport = []
-      this.errorList = []
-      this.uploadInfo = {}
-    },
-
-    auditPass() {
-      $settleGasorderAdjustAudit({ id: this.clickRow.id, auditStatus: this.radioAudit }).then(res => {
-        if (res.code == 0) {
-          this.showDetail = false
-          this.$message.success('已审核')
-          this.getWaitCheck()
-        } else {
-        }
+        this.optionBar.xAxis[0].data = xAxisData
+        this.optionBar.series[0].data = data1
+        this.optionBar.series[1].data = data2
+        this.optionBar.series[2].data = data3
       })
     },
-    clickCancel() {
-      if (this.showImport == 4) {
-        this.showImport = 3
-      } else {
-        this.showImport = 0
-      }
+    formatMonthDay(day) {
+      const days = day.split('-')
+
+      return `${Number(days[1])}.${Number(days[2])}`
     },
-    getAudioStatus(status) {
-      console.log('status', status)
-      if (status == '0') {
-        return '待审核'
-      } else if (status == '1') {
-        return '待审核'
-      } else if (status == '2') {
-        return '已生效'
-      } else if (status == '3') {
-        return '未通过'
-      }
+    chartClick(item) {
+      this.clickDate = this.statisticsDataList[item.dataIndex].date
+      this.sankeyChartData()
+      this.dayStatisticsActive = true
     },
+    getCurrentClickDate() {
+      const times = this.clickDate.split('-')
 
-    getWaitCheck() {
-      $settleGasorderWait({ page: 1, size: -1 }).then(res => {
-        for (const item of res.data.records) {
-          const aa = this.changeTime(item.curDate, 1)
-          item.duration = aa
-          this.waitList.push(item)
-        }
-        this.waitList = res.data.records
-      })
+      const start = new Date(times[0], times[1] - 1, times[2])
+      const end = new Date(times[0], times[1] - 1, Number(times[2]) + 1)
+      const startDate = formatDate(start, 'yyyy年MM月dd日')
+      const endDate = formatDate(end, 'yyyy年MM月dd日')
+
+      return `${startDate} ${this.currentStationInfo.time} 至 ${endDate} ${this.currentStationInfo.time}`
     },
-
-    getToday() {
-      let today = new Date()
-      today =
-        today.getFullYear() +
-        '-' +
-        (today.getMonth() > 9
-          ? today.getMonth() + 1
-          : '0' + (today.getMonth() + 1)) +
-        '-' +
-        (today.getDate() > 9 ? today.getDate() : '0' + today.getDate())
-      this.updateTime = today
-      this.changeTime(today)
-    },
-
-    changeTime(e, type) {
-      var time = new Date(e).getTime() + 24 * 60 * 60 * 1000
-      var yesterday = new Date(time)
-      yesterday =
-        yesterday.getFullYear() +
-        '-' +
-        (yesterday.getMonth() > 9
-          ? yesterday.getMonth() + 1
-          : '0' + (yesterday.getMonth() + 1)) +
-        '-' +
-        (yesterday.getDate() > 9
-          ? yesterday.getDate()
-          : '0' + yesterday.getDate())
-      if (type) {
-        return e + '  08:00 至  ' + yesterday + '  08:00 '
-      } else {
-        if (this.showImport == 1) {
-          this.tipTime = '(导入时段：' + e + '  08:00 至  ' + yesterday + '  08:00 )'
-        } else {
-          this.tipTime = '(选中时段：' + e + '  08:00 至  ' + yesterday + '  08:00 )'
-        }
-
-        this.getOrderList(e, yesterday)
-      }
-    },
-    getOrderList(fromDate, dateTo) {
-      this.resetData()
-      $settleGasorderList({ dateFrom: fromDate, dateTo: dateTo }).then(res => {
-        this.dataListImport = res.data
-        if (res.data.length > 0) {
-          if (this.showImport == 4) {
-            this.canUploadData = true
-          } else {
-            this.canUploadData = false
-          }
-
-          for (const item of res.data) {
-            if (item.compareRate * 1 > 100) {
-              item.rateColor = 'red'
-            } else if (item.compareRate * 1 == 100) {
-              item.rateColor = 'grey'
-            } else {
-              item.rateColor = 'green'
-            }
-          }
-        } else {
-          if (this.showImport == 4) {
-            this.canUploadData = false
-          } else {
-            this.canUploadData = true
-          }
-        }
-      })
-      this.settleGwayGasOrderGetSumTotalImport({ dateFrom: fromDate, dateTo: dateTo })
-    },
-    settleGwayGasOrderGetSumTotalImport(params) {
-      $settleGwayGasOrderGetSumTotal(params).then((res) => {
-        console.log(res)
-        this.totalInfoImport = { ...res.data }
-      })
-    },
-    handleClick() {
-      // this.initHistoryStatus = true
-      // this.page_history_status = 1
-    },
-    settleGwayGasOrderGetSumTotal(params) {
-      $settleGwayGasOrderGetSumTotal(params).then((res) => {
-        console.log(res)
-        this.totalInfo = { ...res.data }
-      })
-    },
-    resetTitleName(timestamp, datetime) {
-      clearInterval(this.timer)
-      this.timer = setInterval(() => {
-        timestamp = Number(timestamp) + 1000
-        this.custTodayTableTitle =
-          '今日实时【' + datetime + '】 ' + formateTData(timestamp, 'all')
-      }, 1000)
-    },
-    updateColumnValue(dataList, callback) {
-      this.currDataTime = dataList[0].dateTime
-
-      this.custTodayTableTitle = '今日实时【' + this.currDataTime + '】'
-      // this.resetTitleName(Date.parse(this.currDataTime), dataList[0].queryDateTime) // 计时器
-      // eslint-disable-next-line standard/no-callback-literal
-      callback(dataList)
-    },
-
-    importEvent() {
-      this.importRow._btn = custFormBtnList()
-      this.importRow.orgId = this.woporg
-      this.dialogExportVisible = true
-    },
-    // dialog里的按钮事件
-    btnClickEvent(btnObj, row) {
-      if (btnObj.type === 'ok') {
-        var files = document.getElementsByName('file')[0].files[0]
-        console.log('files', files)
-        if (!files) {
-          this.$message.error('请先上传文件')
-          return
-        }
-        var _fromData = new FormData()
-        _fromData.append('date', this.updateTime)
-        _fromData.append('file', files)
-
-        let url = ''
-        if (this.showImport == 4) {
-          url = 'settle/gway_gasorder_adjust/adjust_gasorder_preview'
-        } else {
-          url = 'settle/gway_gasorder_adjust/import_gasorder_preview'
-        }
-        $importDataFileWithNoOrgId(url, {
-          file: _fromData,
-          headers: this.headers
-        }).then((response) => {
-          this.uploadInfo = { file: _fromData, headers: this.headers }
-          if (response.data && response.data.orderList) {
-            this.dataListImport = response.data.orderList
-            this.totalInfoImport.qtyTotal = response.data.qtyTotal
-            this.totalInfoImport.amountTotal = response.data.amountTotal
-            for (const item of response.data.orderList) {
-              if (item.compareRate * 1 > 100) {
-                item.rateColor = 'red'
-              } else if (item.compareRate * 1 == 100) {
-                item.rateColor = 'grey'
-              } else {
-                item.rateColor = 'green'
-              }
-            }
-          }
-
-          if (this.showImport == 4 && response.data && response.data.orderList) {
-            this.totalInfoImport.qtyTotalNew = response.data.qtyTotalNew
-            this.totalInfoImport.amountTotalNew = response.data.amountTotalNew
-            if (this.totalInfoImport.amountTotalNew > this.totalInfoImport.amountTotal) {
-              this.totalInfoImport.amountTotalNewColor = '#FF440D'
-              this.totalInfoImport.amountTotalColor = '#41CCA1'
-            } else if (this.totalInfoImport.amountTotalNew == this.totalInfoImport.amountTotal) {
-              this.totalInfoImport.amountTotalNewColor = '#606266'
-              this.totalInfoImport.amountTotalColor = '#606266'
-            } else {
-              this.totalInfoImport.amountTotalNewColor = '#41CCA1'
-              this.totalInfoImport.amountTotalColor = '#FF440D'
-            }
-
-            if (this.totalInfoImport.qtyTotalNew > this.totalInfoImport.qtyTotal) {
-              this.totalInfoImport.qtyTotalNewColor = '#FF440D'
-              this.totalInfoImport.qtyTotalColor = '#41CCA1'
-            } else if (this.totalInfoImport.qtyTotalNew == this.totalInfoImport.qtyTotal) {
-              this.totalInfoImport.qtyTotalNewColor = '#606266'
-              this.totalInfoImport.qtyTotalColor = '#606266'
-            } else {
-              this.totalInfoImport.qtyTotalNewColor = '#41CCA1'
-              this.totalInfoImport.qtyTotalColor = '#FF440D'
-            }
-
-            this.dealData()
-          }
-
-          if (response.message) {
-            this.errorList = response.message.split(',')
-          } else {
-            this.errorList = []
-          }
-
-          this.dialogExportVisible = false
-        })
-      } else {
-        this.dialogExportVisible = false
-      }
-    },
-
-    sureUpload() {
-      let url = ''
-      if (this.showImport == 4) {
-        url = 'settle/gway_gasorder_adjust/adjust_gasorder'
-      } else {
-        url = 'settle/gway_gasorder_adjust/import_gasorder'
-      }
-      $importDataFileWithNoOrgId(url, this.uploadInfo).then((response) => {
-        if (response.code == 0) {
-          this.$message.success(response.message)
-        }
-        if (this.showImport == 4) {
-          this.showImport = 3
-          this.getWaitCheck()
-        } else {
-          this.showImport = 0
-        }
-      })
-    },
-    dealData() {
-      const newArray = []
-      for (let i = 0; i < this.dataListImport.length; i++) {
-        let diffCount = 0
-        if (this.dataListImport[i].amountTotal * 1 != this.dataListImport[i].amountTotalNew * 1) {
-          this.dataListImport[i].amountTotalDiff = true
-          diffCount++
-        } else {
-          this.dataListImport[i].amountTotalDiff = false
-        }
-
-        if (this.dataListImport[i].dayAvgPrice * 1 != this.dataListImport[i].dayAvgPriceNew * 1) {
-          this.dataListImport[i].dayAvgPriceDiff = true
-          diffCount++
-        } else {
-          this.dataListImport[i].dayAvgPriceDiff = false
-        }
-
-        if (this.dataListImport[i].gasQtyTotal * 1 != this.dataListImport[i].gasQtyTotalNew * 1) {
-          this.dataListImport[i].gasQtyTotalDiff = true
-          diffCount++
-        } else {
-          this.dataListImport[i].gasQtyTotalDiff = false
-        }
-
-        if (this.dataListImport[i].inQtyTotal * 1 != this.dataListImport[i].inQtyTotalNew * 1) {
-          this.dataListImport[i].inQtyTotalDiff = true
-          diffCount++
-        } else {
-          this.dataListImport[i].inQtyTotalDiff = false
-        }
-
-        let rateColor = 0
-        let rateColorNew = 0
-        if (this.dataListImport[i].compareRate * 1 > 100) {
-          rateColor = 'red'
-        } else if (this.dataListImport[i].compareRate * 1 == 100) {
-          rateColor = 'grey'
-        } else {
-          rateColor = 'green'
-        }
-
-        if (this.dataListImport[i].compareRateNew * 1 > 100) {
-          rateColorNew = 'red'
-        } else if (this.dataListImport[i].compareRateNew * 1 == 100) {
-          rateColorNew = 'grey'
-        } else {
-          rateColorNew = 'green'
-        }
-
-
-        if (diffCount > 0) {
-          newArray.push({ ...this.dataListImport[i], step: '调整前', rateColor: rateColor, stepColor: '#4343FF' })
-        } else {
-          newArray.push({ ...this.dataListImport[i], step: '—', rateColor: rateColor, stepColor: '#4343FF' })
-        }
-
-        if (diffCount > 0) {
-          newArray.push({
-            amountTotal: this.dataListImport[i].amountTotalNew,
-            dayAvgPrice: this.dataListImport[i].dayAvgPriceNew,
-            gasQtyTotal: this.dataListImport[i].gasQtyTotalNew,
-            inQtyTotal: this.dataListImport[i].inQtyTotalNew,
-            compareRate: this.dataListImport[i].compareRateNew,
-
-            amountTotalDiff: this.dataListImport[i].amountTotalDiff,
-            dayAvgPriceDiff: this.dataListImport[i].dayAvgPriceDiff,
-            gasQtyTotalDiff: this.dataListImport[i].gasQtyTotalDiff,
-            inQtyTotalDiff: this.dataListImport[i].inQtyTotalDiff,
-            dayAvgPriceFlag: this.dataListImport[i].dayAvgPriceFlag,
-            rateColor: rateColorNew,
-            stepColor: '#558010',
-            step: '调整后'
-          })
-        }
-      }
-      console.log(' this.dataListImport ', this.dataListImport)
-      this.dataListImport = newArray
-    },
-
-    getDetail(id) {
-      $settleGasorderAdjustDetail({ id: id }).then(response => {
-        this.dataListImport = response.data.orderList
-        this.totalInfoImport.qtyTotal = response.data.qtyTotal
-        this.totalInfoImport.amountTotal = response.data.amountTotal
-        this.totalInfoImport.qtyTotalNew = response.data.qtyTotalNew
-        this.totalInfoImport.amountTotalNew = response.data.amountTotalNew
-        if (this.totalInfoImport.amountTotalNew > this.totalInfoImport.amountTotal) {
-          this.totalInfoImport.amountTotalNewColor = '#FF440D'
-          this.totalInfoImport.amountTotalColor = '#41CCA1'
-        } else if (this.totalInfoImport.amountTotalNew == this.totalInfoImport.amountTotal) {
-          this.totalInfoImport.amountTotalNewColor = '#606266'
-          this.totalInfoImport.amountTotalColor = '#606266'
-        } else {
-          this.totalInfoImport.amountTotalNewColor = '#41CCA1'
-          this.totalInfoImport.amountTotalColor = '#FF440D'
-        }
-
-        if (this.totalInfoImport.qtyTotalNew > this.totalInfoImport.qtyTotal) {
-          this.totalInfoImport.qtyTotalNewColor = '#FF440D'
-          this.totalInfoImport.qtyTotalColor = '#41CCA1'
-        } else if (this.totalInfoImport.qtyTotalNew == this.totalInfoImport.qtyTotal) {
-          this.totalInfoImport.qtyTotalNewColor = '#606266'
-          this.totalInfoImport.qtyTotalColor = '#606266'
-        } else {
-          this.totalInfoImport.qtyTotalNewColor = '#41CCA1'
-          this.totalInfoImport.qtyTotalColor = '#FF440D'
-        }
-        this.dealData()
-      })
-    },
-    updateColumnValueHistory(dataList, callback) {
-      dataList.forEach((item) => {
-        if (!item.compareRate) {
-          item.compareRate = '-'
-        } else {
-          item.compareRate += '%'
-        }
-      })
-      callback(dataList)
-    },
-    reloadHistoryTable(_this) {
-      if (this.initHistoryStatus) {
-        if (_this.tableListName === 'timehistory') {
-          if (_this.finds.queryDateTime) {
-            this.page_history_status = 5
-            this.timers = setTimeout(() => {
-              this.initHistoryStatus = false
-              this.$refs.tables2.initDataList()
-            }, 100)
-          }
-        }
-      } else {
-        clearTimeout(this.timers)
-      }
-    },
-    onReqParams(type, _this, callback) {
-      const params = {}
-
-      if (isTypeof(_this.finds) === 'object') {
-        for (var [k, v] of Object.entries(_this.finds)) {
-          if (k == 'queryDateTime') {
-            if (_this.finds.queryDateTime) {
-              params.dateTimeFrom = v[0]
-              params.dateTimeTo = v[1]
-            }
-          }
-        }
-      }
-
-      this.reloadHistoryTable(_this)
-      if (_this.tableListName === 'timehistory') {
-        if (Object.keys(params).length === 0) {
-          const tmpTimes = formateTData(new Date())
-          params.dateTimeFrom = tmpTimes
-          params.dateTimeTo = tmpTimes
-        }
-        this.currDataTime = params
-      }
-      // eslint-disable-next-line standard/no-callback-literal
-      callback(params)
-    },
-    onReqParamsHistory(type, _this, callback) {
-      console.log(_this)
-      const params = { dateFrom: '', dateTo: '' }
-      if (_this.finds.date) {
-        params.dateFrom = formateTData(_this.finds.date[0], 'all')
-        params.dateTo = formateTData(_this.finds.date[1], 'all')
-      }
-      this.settleGwayGasOrderGetSumTotal(params)
-      // eslint-disable-next-line standard/no-callback-literal
-      callback(params)
-    },
-
-    getAuth() {
-      const menuString = JSON.parse(this.$getSessionStorage('menu_tree'))
-      for (const item of menuString) {
-        for (const child of item.children) {
-          if (child.routeName == this.$route.name) {
-            this.authList = child.buttons.split('$')
-            break
-          }
-        }
-      }
-
-      for (const key in this.needButton) {
-        for (const item of this.authList) {
-          if (item == key) {
-            this.needButton[key] = true
-            break
-          }
-        }
-      }
-
-      console.log('needButton', this.needButton)
-      console.log('authList', this.authList)
+    clickBtn(index) {
+      this.dayStatus = Number(index)
     }
-
-
   }
 }
 </script>
-<style lang="scss">
-.el-table__fixed {
-  height: 100% !important;
+<style lang="scss" scoped>
+.chart-wrapper {
+  width: 100%;
+
+  .search-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .station-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      & > div {
+        margin-right: 10px;
+      }
+    }
+  }
 }
-.between {
-  display: flex;
-  justify-content: space-between;
-}
-.row {
-  display: flex;
-}
-.top-bg {
-  padding: 15px 15px 0 15px;
-  margin: 5px;
-  background: white;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
+.day-wrapper {
+  margin-top: 20px;
+
+  .day-title {
+    font-weight: bold;
+  }
+  ul li {
+
+  }
+
+  .btn {
+    cursor: pointer;
+    &:hover {
+      color: #2D64B3;
+    }
+    &.active {
+      color: #0989f3;
+    }
+  }
 }
 
-.bg {
-  padding: 15px;
-  margin: 5px;
-  background: white;
-  border-radius: 5px;
+ul {
   display: flex;
-  flex-direction: column;
-}
-.count {
-  padding: 10px;
-  width: fit-content;
-  display: flex;
-  flex-direction: column;
-  background-color: #fffdd3;
-  .count-item {
-    display: flex;
-    margin-right: 15px;
-    .count-key {
-      color: #2f3337;
-      font-size: 14px;
-    }
-    .count-value {
-      color: red;
-      font-size: 14px;
-    }
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 10px 0;
+
+  li {
+    list-style: none;
+    margin-right: 10px;
+    font-size: 14px;
   }
 }
 </style>

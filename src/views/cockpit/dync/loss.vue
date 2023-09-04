@@ -235,11 +235,19 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: {} })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { dateParam: {} } })
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (v !== '') params.param[k] = v
+          if (k === 'gatherTime') {
+            params.param.dateParam.createDateFrom = v[0]
+            params.param.dateParam.createDateTo = v[1]
+          } else if (k === 'updateDate') {
+            params.param.dateParam.updateDateFrom = v[0]
+            params.param.dateParam.updateDateTo = v[1]
+          } else {
+            if (v !== '') params.param[k] = v
+          }
         }
       }
 
@@ -253,7 +261,15 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (v !== '') params.param[k] = v
+          if (k === 'gatherTime') {
+            params.param.dateParam.createDateFrom = v[0]
+            params.param.dateParam.createDateTo = v[1]
+          } else if (k === 'updateDate') {
+            params.param.dateParam.updateDateFrom = v[0]
+            params.param.dateParam.updateDateTo = v[1]
+          } else {
+            if (v !== '') params.param[k] = v
+          }
         }
       }
       params.param.uploadType = 2

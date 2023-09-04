@@ -417,3 +417,18 @@ export async function $strategyDownloadSFFile (data) {
 export async function $strategySFConfirmImport (data) {
   return await R({ url: 'strategy/inventory_out_third/upload_confirm', data })
 }
+
+// 动态数据统计
+export async function $strategyDyncDayStatisticsData (data) {
+  return await R({ url: 'strategy/inventory_day_statistics/get_month_data', data })
+}
+
+// 动态数据统计-数据导出
+export async function $strategyDyncDayExportData (data) {
+  return await R({ url: 'strategy/inventory_day_statistics/export_data', data, responseType: 'blob' })
+}
+
+// 动态数据单日统计
+export async function $strategyDyncDayStatisticsItemData (data) {
+  return await R({ url: 'strategy/inventory_day_statistics/get_daily_data', data, responseType: 'blob' })
+}

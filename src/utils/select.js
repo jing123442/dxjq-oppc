@@ -501,6 +501,13 @@ export function utilsPayCreateTimeSearch() {
   ]
 }
 
+export function utilsImportTypeList() {
+  return [
+    { value: '1', label: '[ 导入前 ]' },
+    { value: '2', label: '[ 导入后 ]' }
+  ]
+}
+
 export function utilsLossDataSearch() {
   return [
     { value: 'gatherTime', label: '实存采集时间' },

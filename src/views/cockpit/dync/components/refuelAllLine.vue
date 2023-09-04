@@ -25,7 +25,7 @@
         @onReqParams="onReqParams"
     ></em-table-list>
 
-    <el-dialog append-to-body width="800px" title="装卸数据 · 导入" :visible.sync="importVisible">
+    <el-dialog append-to-body width="800px" title="加注机全量 · 导入" :visible.sync="importVisible">
       <el-upload
           v-if="importVisible"
           class="upload-demo"
@@ -266,7 +266,7 @@ export default {
             params.param.startTime = v[0]
             params.param.endTime = v[1]
           } else if (k === 'updateDate') {
-            params.param.timeType = 2
+            params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
@@ -292,7 +292,7 @@ export default {
             params.param.startTime = v[0]
             params.param.endTime = v[1]
           } else if (k === 'updateDate') {
-            params.param.timeType = 2
+            params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]

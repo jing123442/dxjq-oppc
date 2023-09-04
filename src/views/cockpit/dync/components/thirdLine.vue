@@ -263,12 +263,12 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k === 'loadTime') {
+          if (k === 'createTime') {
             params.param.timeType = 0
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-          } else if (k === 'unloadTime') {
+          } else if (k === 'payTime') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
@@ -294,12 +294,12 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k === 'loadTime') {
+          if (k === 'createTime') {
             params.param.timeType = 0
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-          } else if (k === 'unloadTime') {
+          } else if (k === 'payTime') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]

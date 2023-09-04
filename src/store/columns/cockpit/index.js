@@ -60,7 +60,12 @@ const getters = {
   cockpit_dync_gass_select_list: item => select.dyncGass,
 
   cockpit_dync_refuel_column: item => columns.dyncRefuel,
-  cockpit_dync_refuel_select_list: item => select.dyncRefuel
+  cockpit_dync_refuel_select_list: item => select.dyncRefuel,
+
+  cockpit_dync_day_info1_column: item => columns.dyncDayInfo1,
+  cockpit_dync_day_info2_column: item => columns.dyncDayInfo2,
+  cockpit_dync_day_info3_column: item => columns.dyncDayInfo3,
+
 }
 
 export default {
