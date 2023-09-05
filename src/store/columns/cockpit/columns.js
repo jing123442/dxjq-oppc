@@ -227,6 +227,16 @@ const columns = {
     { field: 'updateDate', name: '数据更新时间', stype: 'format', formatFun: 'formateTData all' },
     { field: 'updaterName', name: '数据更新人' },
   ],
+  dyncImportEntrain: [
+    { field: 'comparisonName', name: '对比阶段', fixed: 'left' },
+    { field: 'orderId', name: '加注流水号' },
+    { field: 'outTime', name: '加注时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'outQty', name: '加注量(公斤)' },
+    { field: 'outPrice', name: '加注机价(元/公斤)' },
+    { field: 'outValue', name: '加注金额(元)' },
+    { field: 'outType', name: '加注类型' },
+    { field: 'cardNo', name: '加注卡号' },
+  ],
   dyncEntrainSF: [
     { field: 'orderId', name: '加气订单编号', fixed: 'left' },
     { field: 'createTime', name: '创建时间', stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 51%;height: 50px;', style: 'width: 100%;', findField: 'createTime', dtime: ['00:00:00', '23:59:59'], value: (function () { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', nameSpan: 0, style: 'width: 100%', subField: 'createDateName', hideName: true, obj: 'createTimeSearch', value: 'createTime' } },
@@ -237,6 +247,16 @@ const columns = {
     { field: 'saleType', name: '销售方式', search: { type: 'select', obj: 'saleType', placeholder: '销售方式' } },
     { field: 'updateDate', name: '数据更新时间', stype: 'format', formatFun: 'formateTData all' },
     { field: 'updaterName', name: '数据更新人' },
+  ],
+  dyncImportEntrainSF: [
+    { field: 'comparisonName', name: '对比阶段', fixed: 'left' },
+    { field: 'orderId', name: '加气订单编号' },
+    { field: 'createTime', name: '创建时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'payTime', name: '支付时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'gasQty', name: '加气量(公斤)' },
+    { field: 'gasPrice', name: '结算价(元/公斤)' },
+    { field: 'gasValue', name: '结算金额(元)' },
+    { field: 'saleType', name: '销售方式' },
   ],
   dyncEntrainDX: [
     { field: 'orderId', name: '加气订单编号', fixed: 'left' },

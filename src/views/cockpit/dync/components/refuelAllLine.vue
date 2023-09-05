@@ -30,24 +30,25 @@
           v-if="importVisible"
           class="upload-demo"
           :action="uploadURL"
+          :data="{ gasstationId: stationId }"
           :headers="axios.headers"
-          :limit="1"
           :on-error="uploadError"
           :on-success="uploadSuccess"
           :show-file-list="false"
-          style="position: absolute;top: 86px; right: 125px;z-index: 10000;">
+          style="position: absolute;top: 106px; right: 125px;z-index: 10000;">
         <el-button size="small" type="primary" style="height: 28px;padding: 7px 15px;">数据上传</el-button>
       </el-upload>
+      <div>导入覆盖范围: {{ updateFindStr }}</div>
       <div class="import-title" v-if="dataInfoStatus">
         <div>
           <span>[ 导入前 ]</span>
-          <span>加注总量：{{ importDataInfo.beforeLoadQty === null ? '-' : importDataInfo.beforeLoadQty }} 吨</span>
-          <span>加注总额：{{ importDataInfo.beforeBuyCost === null ? '-' : importDataInfo.beforeBuyCost }} 元</span>
+          <span>加注总量：{{ importDataInfo.beforeOutQty === null ? '-' : importDataInfo.beforeOutQty }} 公斤</span>
+          <span>加注总额：{{ importDataInfo.beforeOutValue === null ? '-' : importDataInfo.beforeOutValue }} 元</span>
         </div>
         <div>
           <span>[ 导入后 ]</span>
-          <span>加注总量：{{ importDataInfo.beforeLoadQty === null ? '-' : importDataInfo.beforeLoadQty }} 吨</span>
-          <span>加注总额：{{ importDataInfo.beforeBuyCost === null ? '-' : importDataInfo.beforeBuyCost }} 元</span>
+          <span>加注总量：{{ importDataInfo.afterOutQty === null ? '-' : importDataInfo.afterOutQty }} 公斤</span>
+          <span>加注总额：{{ importDataInfo.afterOutValue === null ? '-' : importDataInfo.afterOutValue }} 元</span>
         </div>
       </div>
       <em-table-list
@@ -118,7 +119,9 @@ export default {
     stationId: {
       type: String,
       required: true
-    }
+    },
+    nickName: String,
+    time: String
   },
   data() {
     return initVueDataOptions(this, {
@@ -143,7 +146,7 @@ export default {
         {
           name: '加注总量：',
           field: 'outQty',
-          unit: ' 吨'
+          unit: ' 公斤'
         },
         {
           name: '加注总额：',
@@ -155,6 +158,7 @@ export default {
 
       importVisible: false,
       dataInfoStatus: false,
+      updateFindStr: '',
       importData: [],
       importDataInfo: {},
       uploadURL: process.env.VUE_APP_BASE_URL + 'strategy/inventory_out_all/upload_out_all',
@@ -181,7 +185,7 @@ export default {
   computed: {
     ...mapGetters({
       page_column: 'cockpit_dync_entrain_column',
-      page_import_column: 'cockpit_dync_stevedor_import_column',
+      page_import_column: 'cockpit_dync_entrain_import_column',
       page_update_column: 'cockpit_dync_stevedor_update_column',
       mode_list: 'cockpit_dync_stevedor_mode_list',
       page_status: 'cockpit_dync_stevedor_page_status',
@@ -265,11 +269,13 @@ export default {
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
+            this.updateFindStr = `( ${this.nickName} ${this.time} ) 加注时间 ${v.join(' - ')}`
           } else if (k === 'updateDate') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
+            this.updateFindStr = `( ${this.nickName} ${this.time} ) 数据更新时间 ${v.join(' - ')}`
           } else {
             if (v !== '') params.param[k] = v
           }
@@ -315,7 +321,7 @@ export default {
 .import-title {
   font-size: 12px;
   position: absolute;
-  top: 80px;
+  top: 100px;
   left: 35px;
   span {
     display: inline-block;

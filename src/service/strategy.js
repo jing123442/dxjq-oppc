@@ -430,5 +430,5 @@ export async function $strategyDyncDayExportData (data) {
 
 // 动态数据单日统计
 export async function $strategyDyncDayStatisticsItemData (data) {
-  return await R({ url: 'strategy/inventory_day_statistics/get_daily_data', data, responseType: 'blob' })
+  return await R({ url: 'strategy/inventory_day_statistics/get_daily_data', data })
 }

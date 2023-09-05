@@ -9,10 +9,10 @@
 
     <el-tabs v-model="active" type="card" @tab-click="handleClick">
       <el-tab-pane label="加注机全量" name="0">
-        <refuel-all-line v-if="stationValue" :stationId="stationValue" />
+        <refuel-all-line v-if="stationValue" :stationId="stationValue" :nickName="currentStationInfo.nickName" :time="currentStationInfo.time" />
       </el-tab-pane>
       <el-tab-pane label="三方线上" name="1">
-        <third-line v-if="stationValue" :stationId="stationValue" />
+        <third-line v-if="stationValue" :stationId="stationValue" :nickName="currentStationInfo.nickName" :time="currentStationInfo.time" />
       </el-tab-pane>
       <el-tab-pane label="大象线上" name="2">
         <dx-line v-if="stationValue" :stationId="stationValue" />

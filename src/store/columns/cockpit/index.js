@@ -40,9 +40,11 @@ const getters = {
   cockpit_dync_stevedor_select_list: item => select.dyncStevedor,
 
   cockpit_dync_entrain_column: item => columns.dyncEntrain,
+  cockpit_dync_entrain_import_column: item => columns.dyncImportEntrain,
   cockpit_dync_entrain_select_list: item => select.entrain,
 
   cockpit_dync_entrain_sf_column: item => columns.dyncEntrainSF,
+  cockpit_dync_entrain_sf_import_column: item => columns.dyncImportEntrainSF,
   cockpit_dync_entrain_sf_select_list: item => select.entrainSF,
 
   cockpit_dync_entrain_dx_column: item => columns.dyncEntrainDX,

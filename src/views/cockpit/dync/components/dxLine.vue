@@ -59,7 +59,7 @@ export default {
         {
           name: '加注总量：',
           field: 'loadQty',
-          unit: ' 吨'
+          unit: ' 公斤'
         },
         {
           name: '加注总额：',

@@ -41,16 +41,16 @@
       <div class="import-title" v-if="dataInfoStatus">
         <div>
           <span>[ 导入前 ]</span>
-          <span>装车总量：{{ importDataInfo.beforeLoadQty === null ? '-' : importDataInfo.beforeLoadQty }} 吨</span>
+          <span>装车总量：{{ importDataInfo.beforeLoadQty === null ? '-' : importDataInfo.beforeLoadQty }} 公斤</span>
           <span>采购总成本：{{ importDataInfo.beforeBuyCost === null ? '-' : importDataInfo.beforeBuyCost }} 元</span>
-          <span>到站总量：{{ importDataInfo.beforeInQty === null ? '-' : importDataInfo.beforeInQty }} 吨</span>
+          <span>到站总量：{{ importDataInfo.beforeInQty === null ? '-' : importDataInfo.beforeInQty }} 公斤</span>
           <span>到站总成本：{{ importDataInfo.beforeInCost === null ? '-' : importDataInfo.beforeInCost }} 元</span>
         </div>
         <div>
           <span>[ 导入后 ]</span>
-          <span>装车总量：{{ importDataInfo.afterLoadQty === null ? '-' : importDataInfo.afterLoadQty }} 吨</span>
+          <span>装车总量：{{ importDataInfo.afterLoadQty === null ? '-' : importDataInfo.afterLoadQty }} 公斤</span>
           <span>采购总成本：{{ importDataInfo.afterBuyCost === null ? '-' : importDataInfo.afterBuyCost }} 元</span>
-          <span>到站总量：{{ importDataInfo.afterInQty === null ? '-' : importDataInfo.afterInQty }} 吨</span>
+          <span>到站总量：{{ importDataInfo.afterInQty === null ? '-' : importDataInfo.afterInQty }} 公斤</span>
           <span>到站总成本：{{ importDataInfo.afterInCost === null ? '-' : importDataInfo.afterInCost }} 元</span>
         </div>
       </div>
@@ -144,7 +144,7 @@ export default {
         {
           name: '装车总量：',
           field: 'loadQty',
-          unit: ' 吨'
+          unit: ' 公斤'
         },
         {
           name: '采购总成本：',
@@ -154,7 +154,7 @@ export default {
         {
           name: '到站总量：',
           field: 'inQty',
-          unit: ' 吨'
+          unit: ' 公斤'
         },
         {
           name: '到站总成本：',

@@ -28,22 +28,22 @@
       <div class="day-title">{{ getCurrentClickDate() }}</div>
       <ul>
         <li>
-          <div>装车量：30.0 吨（X.xx 元/公斤）</div>
-          <div>在途量：30.0 吨（X.xx 元/公斤）</div>
+          <div>装车量：{{ sankeyData.loadQty }} 公斤（{{ sankeyData.loadPrice }} 元/公斤）</div>
+          <div>在途量：{{ sankeyData.onwayQty }} 公斤（{{ sankeyData.onwayPrice }} 元/公斤）</div>
           <div>-</div>
-          <div>入库量：30.0 吨（X.xx 元/公斤）</div>
+          <div>入库量：{{ sankeyData.inQty }} 公斤（{{ sankeyData.inPrice }} 元/公斤）</div>
         </li>
         <li>
-          <div>销售量：30.0 吨</div>
-          <div>销售金额：30.0 元（X.xx 元/公斤）</div>
-          <div>到站成本：30.0 元（X.xx 元/公斤）</div>
-          <div>进销差：30.0 元</div>
+          <div>销售量：{{ sankeyData.saleQty }} 公斤</div>
+          <div>销售金额：{{ sankeyData.saleValue }} 元（{{ sankeyData.saleValuePrice }} 元/公斤）</div>
+          <div>到站成本：{{ sankeyData.saleCost }} 元（{{ sankeyData.saleCostPrice }} 元/公斤）</div>
+          <div>进销差：{{ sankeyData.saleDiff }} 元</div>
         </li>
         <li>
-          <div>账存量：30.0 吨（X.xx 元/公斤）</div>
+          <div>账存量：{{ sankeyData.acountQty }} 公斤（{{ sankeyData.acountPrice }} 元/公斤）</div>
           <div>-</div>
-          <div>未出库量：30.0 吨（X.xx 元/公斤）</div>
-          <div>CNG 出库量：30.0 吨（X.xx 元/公斤）</div>
+          <div>未出库量：{{ sankeyData.inventoryQty }} 公斤（{{ sankeyData.inventoryPrice }} 元/公斤）</div>
+          <div>CNG 出库量：{{ sankeyData.cngQty }} 公斤（{{ sankeyData.cngPrice }} 元/公斤）</div>
         </li>
       </ul>
       <ul>
@@ -61,7 +61,12 @@
 import * as echarts from 'echarts'
 
 import { exportBlobToFiles, formatDate, formateTData, getDateRange } from '@/utils/tools'
-import { $strategyDyncDayExportData, $strategyDyncDayStatisticsData, $strategyGetStationList } from '@/service/strategy'
+import {
+  $strategyDyncDayExportData,
+  $strategyDyncDayStatisticsData,
+  $strategyDyncDayStatisticsItemData,
+  $strategyGetStationList
+} from '@/service/strategy'
 import MyChart from '@/components/MyChart/MyChart.vue'
 import DayStatisticsList from './components/dayStatisticsList.vue'
 
@@ -320,7 +325,8 @@ export default {
             return params.name
           }
         }
-      }
+      },
+      sankeyData: {}
     }
   },
   created: function () {
@@ -358,69 +364,78 @@ export default {
       })
     },
     sankeyChartData() {
-      const datas = [] // res.data.datas
-      const links = [] // res.data.links
-      const linkColor = [
-        'rgba(120,163,206,0.8)',
-        '#FBC2EB',
-        'rgba(161,140,209,0.6)',
-        '#C2E9FB',
-        '#A1C4FD',
-        '#D4FC79',
-        '#A646DD',
-        'rgba(252,198,135,0.5)',
-        '#F28D86',
-        '#F286A0',
-        '#33876A',
-        '#B5BF6E',
-        '#2979F1',
-        '#F08F1B',
-        '#57B956',
-        '#ABA5EA',
-        '#9BC46C',
-        '#30E0E0',
-        '#F286CA',
-        '#82CAFF',
-        '#D66161',
-        '#8FF379',
-        '#1CBDB4',
-        '#EEF2F3',
-        '#8E9EAB',
-        '#BB9BF1',
-        '#887BF2',
-        '#7FFED8',
-        '#09BDFE',
-        'rgba(127,189,91,0.8)'
-      ]
-      // echarts series data
-      const chartSeriesData = []
-      datas.forEach((item) => {
-        chartSeriesData.push({ name: item.name })
-      })
-      this.optionSankey.series.data = chartSeriesData
+      const params = {
+        date: '2023-08-11',
+        gasstationId: 1
+      }
+      $strategyDyncDayStatisticsItemData(params).then(res => {
+        console.log(res)
+        const { sankeyItems, inventoryDayStatisticsVo } = res.data
+        this.sankeyData = inventoryDayStatisticsVo || {}
 
-      // echarts series links
-      const chartSeriesLink = []
-      links.forEach((item, index) => {
-        // 取颜色值
-        const color = index >= linkColor.length ? linkColor[index % linkColor.length] : linkColor[index]
-        chartSeriesLink.push({
-          value: item.value,
-          source: item.source,
-          target: item.target,
-          lineStyle: {
-            color,
-            opacity: 0.4
-          },
-          emphasis: {
+        const links = [] // res.data.links
+        const linkColor = [
+          'rgba(120,163,206,0.8)',
+          '#FBC2EB',
+          'rgba(161,140,209,0.6)',
+          '#C2E9FB',
+          '#A1C4FD',
+          '#D4FC79',
+          '#A646DD',
+          'rgba(252,198,135,0.5)',
+          '#F28D86',
+          '#F286A0',
+          '#33876A',
+          '#B5BF6E',
+          '#2979F1',
+          '#F08F1B',
+          '#57B956',
+          '#ABA5EA',
+          '#9BC46C',
+          '#30E0E0',
+          '#F286CA',
+          '#82CAFF',
+          '#D66161',
+          '#8FF379',
+          '#1CBDB4',
+          '#EEF2F3',
+          '#8E9EAB',
+          '#BB9BF1',
+          '#887BF2',
+          '#7FFED8',
+          '#09BDFE',
+          'rgba(127,189,91,0.8)'
+        ]
+        // echarts series data
+        const chartSeriesData = []
+        sankeyItems.forEach((item) => {
+          chartSeriesData.push({ name: item.name })
+        })
+        this.optionSankey.series.data = chartSeriesData
+
+        // echarts series links
+        const chartSeriesLink = []
+        links.forEach((item, index) => {
+          // 取颜色值
+          const color = index >= linkColor.length ? linkColor[index % linkColor.length] : linkColor[index]
+          chartSeriesLink.push({
+            value: item.value,
+            source: item.source,
+            target: item.target,
             lineStyle: {
               color,
-              opacity: 0.8
+              opacity: 0.4
+            },
+            emphasis: {
+              lineStyle: {
+                color,
+                opacity: 0.8
+              }
             }
-          }
+          })
         })
+        this.optionSankey.series.links = chartSeriesLink
       })
-      this.optionSankey.series.links = chartSeriesLink
     },
     watchDyncData() {
       const params = {
