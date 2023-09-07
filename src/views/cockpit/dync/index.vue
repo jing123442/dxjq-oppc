@@ -51,7 +51,7 @@
         <li class="btn" :class="{ active: dayStatus === 2 }" @click="clickBtn(2)">列表</li>
       </ul>
       <div v-if="dayStatus === 1" style="height: 300px">
-        <MyChart :option="optionSankey"></MyChart>
+        <MyChart :option="optionSankey" :animation="false"></MyChart>
       </div>
       <DayStatisticsList v-if="dayStatus === 2"></DayStatisticsList>
     </div>
@@ -266,6 +266,7 @@ export default {
         series: {
           type: 'sankey',
           layout: 'none',
+          layoutIterations: 0,
           nodeGap: 20,
           top: '10%',
           left: '5%',
