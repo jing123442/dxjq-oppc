@@ -289,7 +289,7 @@ export default {
             }
           },
           label: {
-            color: '#fff'
+            color: '#333'
           },
           textBorderWidth: 0,
           focusNodeAdjacency: false,
@@ -365,15 +365,13 @@ export default {
     },
     sankeyChartData() {
       const params = {
-        date: '2023-08-11',
-        gasstationId: 1
+        date: this.clickDate,
+        gasstationId: this.stationValue // '900048340234420224'
       }
       $strategyDyncDayStatisticsItemData(params).then(res => {
-        console.log(res)
-        const { sankeyItems, inventoryDayStatisticsVo } = res.data
+        const { data: chartSeriesData, links, inventoryDayStatisticsVo } = res.data
         this.sankeyData = inventoryDayStatisticsVo || {}
 
-        const links = [] // res.data.links
         const linkColor = [
           'rgba(120,163,206,0.8)',
           '#FBC2EB',
@@ -407,10 +405,6 @@ export default {
           'rgba(127,189,91,0.8)'
         ]
         // echarts series data
-        const chartSeriesData = []
-        sankeyItems.forEach((item) => {
-          chartSeriesData.push({ name: item.name })
-        })
         this.optionSankey.series.data = chartSeriesData
 
         // echarts series links
