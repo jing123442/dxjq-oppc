@@ -30,6 +30,7 @@ export default {
     getBreadcrumb() {
       let matched = this.$route.matched.filter(item => item.name)
 
+      console.log(matched, 9999999)
       const first = matched[0]
       if (first && first.name !== 'home') {
         matched = [].concat(matched)

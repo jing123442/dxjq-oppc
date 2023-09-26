@@ -76,6 +76,17 @@ const formateTData = (date, fmt) => {
   return date ? (date === 'null' ? '-' : formateTSData(date, fmt)) : '-'
 }
 
+const formatTimeToHS = (value) => {
+  // eslint-disable-next-line no-undef
+  if (value) {
+    // eslint-disable-next-line no-undef
+    const dataArr = value.split(':')
+
+    return dataArr[0] + ':' + dataArr[1]
+  }
+  return '-'
+}
+
 const formateTextDeleteNULL = (value) => {
   return value ? (value === 'null' ? '-' : value) : '-'
 }
@@ -133,6 +144,7 @@ export {
   vueFiltersInit,
   gasstationImage,
   formateTData,
+  formatTimeToHS,
   formatDate,
   currency,
   kiloToTon,

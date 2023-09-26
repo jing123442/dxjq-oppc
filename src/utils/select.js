@@ -456,6 +456,65 @@ export function utilSelectGasstationType(type = '') {
   return result
 }
 
+// 采购类型
+export function utilsBuyType() {
+  return [
+    { value: 0, label: '中石化' },
+    { value: 1, label: '外采' }
+  ]
+}
+
+// 更新类型
+export function utilsUploadType() {
+  return [
+    { value: 0, label: '批量导入' }
+  ]
+}
+
+export function utilsStevedoreDataSearch() {
+  return [
+    { value: 'loadTime', label: '装车时间' },
+    { value: 'unloadTime', label: '卸车时间' },
+    { value: 'updateDate', label: '数据更新时间' }
+  ]
+}
+
+export function utilsOutTimeSearch() {
+  return [
+    { value: 'outTime', label: '加注时间' },
+    { value: 'updateDate', label: '数据更新时间' }
+  ]
+}
+
+export function utilsCreateTimeSearch() {
+  return [
+    { value: 'createTime', label: '创建时间' },
+    { value: 'payTime', label: '支付时间' },
+    { value: 'updateDate', label: '数据更新时间' }
+  ]
+}
+
+export function utilsPayCreateTimeSearch() {
+  return [
+    { value: 'createDate', label: '创建时间' },
+    { value: 'payTime', label: '支付时间' }
+  ]
+}
+
+export function utilsImportTypeList() {
+  return [
+    { value: '1', label: '[ 导入前 ]' },
+    { value: '2', label: '[ 导入后 ]' }
+  ]
+}
+
+export function utilsLossDataSearch() {
+  return [
+    { value: 'gatherTime', label: '实存采集时间' },
+    { value: 'updateDate', label: '数据更新时间' }
+  ]
+}
+
 export function utilsSiteType() {
   return [
     { value: 1001, label: '合作经营' },
@@ -495,6 +554,15 @@ export function utilsPriceExcuteType() {
   return [
     { value: 1, label: '定时生效' },
     { value: 2, label: '立即生效' }
+  ]
+}
+
+// 支付状态
+export function utilSelectPayTypeList() {
+  return [
+    { value: 0, label: '待支付' },
+    { value: 1, label: '已支付' },
+    { value: 2, label: '已取消' }
   ]
 }
 
@@ -545,6 +613,24 @@ export function utilSelectAuthDistrictList() {
     }
   }
 }
+// 加注类型
+export function utilSelectOutTypeList() {
+  return {
+    url: 'strategy/inventory_data/get_out_type',
+    method: 'get',
+    node: ['data'],
+    params: {}
+  }
+}
+// 销售接口
+export function utilSelectSaleTypeList() {
+  return {
+    url: 'strategy/inventory_data/get_all_sale_type',
+    method: 'get',
+    node: ['data'],
+    params: {}
+  }
+}
 export function utilDistrictAreaList() {
   return {
     url: 'user/district/list',
@@ -553,6 +639,19 @@ export function utilDistrictAreaList() {
     props: {
       value: 'districtId',
       label: 'districtName'
+    }
+  }
+}
+// 卡片类型
+export function utilDyncCardTypeList() {
+  return {
+    url: 'strategy/inventory_data/get_card_type',
+    method: 'get',
+    node: ['data'],
+    params: {},
+    props: {
+      value: 'id',
+      label: 'cardType'
     }
   }
 }

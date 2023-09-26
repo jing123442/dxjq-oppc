@@ -8,6 +8,8 @@ export function formateTData(date, fmt) { // 字符串
       return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
     } else if (fmt == 'hour') {
       return formatDate(date, 'yyyy-MM-dd hh')
+    } else if (fmt == 'time') {
+      return formatDate(date, 'hh:mm')
     } else {
       return formatDate(date, 'yyyy-MM-dd hh:mm')
     }
