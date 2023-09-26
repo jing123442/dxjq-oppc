@@ -438,6 +438,12 @@ export default {
         startDate: formateTData(this.stationDate[0], 'date'),
         endDate: formateTData(this.stationDate[1], 'date')
       }
+
+      // 默认显示第一个日期的桑基图
+      this.clickDate = formateTData(this.stationDate[0], 'date')
+      this.sankeyChartData()
+      this.dayStatisticsActive = true
+
       $strategyDyncDayStatisticsData(params).then(res => {
         const { dayStatistics, ...dataInfo } = res.data
         this.statisticsDataInfo = dataInfo
