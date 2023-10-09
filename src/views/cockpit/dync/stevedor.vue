@@ -25,7 +25,7 @@
       @onReqParams="onReqParams"
     ></em-table-list>
 
-    <el-dialog append-to-body width="800px" title="装卸数据 · 导入" :visible.sync="importVisible">
+    <el-dialog append-to-body width="900px" title="装卸数据 · 导入" :visible.sync="importVisible">
       <el-upload
         v-if="importVisible"
         class="upload-demo"
@@ -274,19 +274,19 @@ export default {
             params.param.startTime = v[0]
             params.param.endTime = v[1]
 
-            this.updateFindStr = `装车时间 ${v.join(' - ')}`
+            this.updateFindStr = `装车时间 ${Array.isArray(v) ? v.join(' - ') : v}`
           } else if (k === 'unloadTime') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-            this.updateFindStr = `卸车时间 ${v.join(' - ')}`
+            this.updateFindStr = `卸车时间 ${Array.isArray(v) ? v.join(' - ') : v}`
           } else if (k === 'updateDate') {
             params.param.timeType = 2
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-            this.updateFindStr = `数据更新时间 ${v.join(' - ')}`
+            this.updateFindStr = `数据更新时间 ${Array.isArray(v) ? v.join(' - ') : v}`
           } else {
             if (v !== '') params.param[k] = v
           }
@@ -307,19 +307,19 @@ export default {
             params.param.startTime = v[0]
             params.param.endTime = v[1]
 
-            this.updateFindStr = `装车时间 ${v.join(' - ')}`
+            this.updateFindStr = `装车时间 ${Array.isArray(v) ? v.join(' - ') : v}`
           } else if (k === 'unloadTime') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-            this.updateFindStr = `卸车时间 ${v.join(' - ')}`
+            this.updateFindStr = `卸车时间 ${Array.isArray(v) ? v.join(' - ') : v}`
           } else if (k === 'updateDate') {
             params.param.timeType = 2
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-            this.updateFindStr = `数据更新时间 ${v.join(' - ')}`
+            this.updateFindStr = `数据更新时间 ${Array.isArray(v) ? v.join(' - ') : v}`
           } else {
             if (v !== '') params.param[k] = v
           }

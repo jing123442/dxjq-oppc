@@ -272,19 +272,19 @@ export default {
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-            this.updateFindStr = `( ${this.nickName} ${this.time} ) 创建时间 ${v.join(' - ')}`
+            this.updateFindStr = `( ${this.nickName} ${this.time} ) 创建时间 ${Array.isArray(v) ? v.join(' - ') : v}`
           } else if (k === 'payTime') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-            this.updateFindStr = `( ${this.nickName} ${this.time} ) 支付时间 ${v.join(' - ')}`
+            this.updateFindStr = `( ${this.nickName} ${this.time} ) 支付时间 ${Array.isArray(v) ? v.join(' - ') : v}`
           } else if (k === 'updateDate') {
             params.param.timeType = 2
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-            this.updateFindStr = `( ${this.nickName} ${this.time} ) 数据更新时间 ${v.join(' - ')}`
+            this.updateFindStr = `( ${this.nickName} ${this.time} ) 数据更新时间 ${Array.isArray(v) ? v.join(' - ') : v}`
           } else {
             if (v !== '') params.param[k] = v
           }

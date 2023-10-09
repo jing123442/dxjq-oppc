@@ -248,16 +248,16 @@ export default {
         this.dataInfoStatus = true
       }
     },
-    btnClickEvent(btn) {
-      if (btn.type === 'ok') {
-        $strategyOutConfirmImport({}).then(res => {
-          this.$message.success('成功')
-          this.$refs.refuelAllLine.initDataList()
-          this.importVisible = false
-        })
-      } else {
-        this.importVisible = false
+    async btnClickEvent(btn) {
+      const params = {
+        gasstationId: this.stationId,
+        confirm: btn.type === 'ok' ? 1 : 0
       }
+      await $strategyOutConfirmImport(params).then(res => {
+        this.$message.success('成功')
+        this.$refs.refuelAllLine.initDataList()
+      })
+      this.importVisible = false
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: {} })
@@ -269,13 +269,13 @@ export default {
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-            this.updateFindStr = `( ${this.nickName} ${this.time} ) 加注时间 ${v.join(' - ')}`
+            this.updateFindStr = `( ${this.nickName} 交接班时间：${this.time} ) 加注时间 ${Array.isArray(v) ? v.join(' - ') : v}`
           } else if (k === 'updateDate') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-            this.updateFindStr = `( ${this.nickName} ${this.time} ) 数据更新时间 ${v.join(' - ')}`
+            this.updateFindStr = `( ${this.nickName} 交接班时间：${this.time} ) 数据更新时间 ${Array.isArray(v) ? v.join(' - ') : v}`
           } else {
             if (v !== '') params.param[k] = v
           }

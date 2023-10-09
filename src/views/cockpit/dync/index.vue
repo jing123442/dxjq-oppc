@@ -13,9 +13,9 @@
         <el-button type="primary" size="small" @click="exportDataFile">数据导出</el-button>
       </div>
       <ul class="sale-total">
-        <li>装车总量：{{ statisticsDataInfo.loadTotalQty }}公斤</li>
-        <li>入库总量：{{ statisticsDataInfo.inTotalQty }}公斤</li>
-        <li>销售总量：{{ statisticsDataInfo.saleTotalQty }}公斤</li>
+        <li>装车总量：{{ statisticsDataInfo.loadTotalQty }}吨</li>
+        <li>入库总量：{{ statisticsDataInfo.inTotalQty }}吨</li>
+        <li>销售总量：{{ statisticsDataInfo.saleTotalQty }}吨</li>
         <li>销售总额：{{ statisticsDataInfo.saleTotalValue }}元</li>
         <li>销售总额到站成本：{{ statisticsDataInfo.saleTotalCost }}元</li>
         <li>总进销差：{{ statisticsDataInfo.saleTotalDiff }}元</li>
@@ -53,7 +53,7 @@
       <div v-if="dayStatus === 1" style="height: 300px">
         <MyChart :option="optionSankey" :animation="false"></MyChart>
       </div>
-      <DayStatisticsList v-if="dayStatus === 2"></DayStatisticsList>
+      <DayStatisticsList v-if="dayStatus === 2" :items="dayData"></DayStatisticsList>
     </div>
   </div>
 </template>
@@ -327,7 +327,8 @@ export default {
           }
         }
       },
-      sankeyData: {}
+      sankeyData: {},
+      dayData: {}
     }
   },
   created: function () {
@@ -370,8 +371,9 @@ export default {
         gasstationId: this.stationValue // '900048340234420224'
       }
       $strategyDyncDayStatisticsItemData(params).then(res => {
-        const { data: chartSeriesData, links, inventoryDayStatisticsVo } = res.data
+        const { data: chartSeriesData, links, map, inventoryDayStatisticsVo } = res.data
         this.sankeyData = inventoryDayStatisticsVo || {}
+        this.dayData = map || {}
 
         const linkColor = [
           'rgba(120,163,206,0.8)',
@@ -410,7 +412,7 @@ export default {
 
         // echarts series links
         const chartSeriesLink = []
-        links.forEach((item, index) => {
+        links && links.forEach((item, index) => {
           // 取颜色值
           const color = index >= linkColor.length ? linkColor[index % linkColor.length] : linkColor[index]
           chartSeriesLink.push({
@@ -473,6 +475,7 @@ export default {
     chartClick(item) {
       this.clickDate = this.statisticsDataList[item.dataIndex].date
       this.sankeyChartData()
+      this.dayStatus = 1
       this.dayStatisticsActive = true
     },
     getCurrentClickDate() {

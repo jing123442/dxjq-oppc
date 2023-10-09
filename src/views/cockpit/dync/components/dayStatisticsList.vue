@@ -1,5 +1,6 @@
 <template>
   <div class="template-main">
+    <!--        :custTableTitle="'商品列表'"-->
     <em-table-list
         ref="dxLine"
         :tableListName="'dxLine'"
@@ -61,6 +62,12 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'DayStatisticsList',
+  props: {
+    items: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return initVueDataOptions(this, {
       authButtonList: null,
@@ -83,7 +90,11 @@ export default {
       woporg: 'woporg'
     })
   },
-  created: function () {},
+  created: function () {
+    this.dataList1 = this.items.before || []
+    this.dataList2 = this.items.mid || []
+    this.dataList3 = this.items.after || []
+  },
   mounted: function () {},
   methods: {
     onReqParams(type, _this, callback) {
