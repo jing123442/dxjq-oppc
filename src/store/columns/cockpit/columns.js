@@ -330,11 +330,11 @@ const columns = {
     { field: 'salePrice', name: '销售价(元/公斤)' },
   ],
   dyncDayInfo2: [
-    { field: 'nickName', name: '盘盈亏时间', fixed: 'left' },
-    { field: 'outPrice', name: '盈亏量(公斤)' },
-    { field: 'outPrice', name: '平均价(元/公斤)' },
-    { field: 'outPrice', name: '实存量(公斤)' },
-    { field: 'outPrice', name: '账存量(公斤)' },
+    { field: 'gatherTime', name: '盘盈亏时间', fixed: 'left' },
+    { field: 'subQty', name: '盈亏量(公斤)' },
+    { field: 'avgPrice', name: '平均价(元/公斤)' },
+    { field: 'actualQty', name: '实存量(公斤)' },
+    { field: 'accountQty', name: '账存量(公斤)' },
   ],
   dyncDayInfo3: [
     { field: 'loadTime', name: '装车时间', fixed: 'left' },

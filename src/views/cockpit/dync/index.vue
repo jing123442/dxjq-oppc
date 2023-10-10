@@ -375,6 +375,7 @@ export default {
         this.sankeyData = inventoryDayStatisticsVo || {}
         this.dayData = map || {}
 
+        if (!chartSeriesData || !links) return
         const linkColor = [
           'rgba(120,163,206,0.8)',
           '#FBC2EB',
@@ -414,7 +415,7 @@ export default {
         const chartSeriesLink = []
         links && links.forEach((item, index) => {
           // 取颜色值
-          const color = index >= linkColor.length ? linkColor[index % linkColor.length] : linkColor[index]
+          const color = linkColor[index % linkColor.length]
           chartSeriesLink.push({
             value: item.value,
             source: item.source,
@@ -473,10 +474,13 @@ export default {
       return `${Number(days[1])}.${Number(days[2])}`
     },
     chartClick(item) {
-      this.clickDate = this.statisticsDataList[item.dataIndex].date
-      this.sankeyChartData()
-      this.dayStatus = 1
-      this.dayStatisticsActive = true
+      this.dayStatus = null
+      this.$nextTick(() => {
+        this.clickDate = this.statisticsDataList[item.dataIndex].date
+        this.sankeyChartData()
+        this.dayStatus = 1
+        this.dayStatisticsActive = true
+      })
     },
     getCurrentClickDate() {
       const times = this.clickDate.split('-')

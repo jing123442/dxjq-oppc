@@ -2,7 +2,7 @@
   <div class="template-main">
     <!--        :custTableTitle="'商品列表'"-->
     <em-table-list
-        ref="dxLine"
+        ref="dxLine1"
         :tableListName="'dxLine'"
         :authButtonList="authButtonList"
         :buttonsList="buttonsList"
@@ -19,7 +19,7 @@
         @onReqParams="onReqParams"
     ></em-table-list>
     <em-table-list
-        ref="dxLine"
+        ref="dxLine2"
         style="margin-top: 10px"
         :tableListName="'dxLine'"
         :authButtonList="authButtonList"
@@ -37,7 +37,7 @@
         @onReqParams="onReqParams"
     ></em-table-list>
     <em-table-list
-        ref="dxLine"
+        ref="dxLine3"
         style="margin-top: 10px"
         :tableListName="'dxLine'"
         :authButtonList="authButtonList"
@@ -91,9 +91,10 @@ export default {
     })
   },
   created: function () {
+    console.log(this.items)
     this.dataList1 = this.items.before || []
     this.dataList2 = this.items.mid || []
-    this.dataList3 = this.items.after || []
+    this.dataList3 = this.items.last || []
   },
   mounted: function () {},
   methods: {
