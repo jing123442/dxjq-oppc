@@ -231,6 +231,9 @@ export default {
       } else {
         this.$message.success('文件上传成功')
         const { data, ...dataInfo } = res.data
+
+        this.updateFindStr = `( ${this.nickName} 交接班时间：${this.time} ) 加注时间 ${dataInfo.startTime} - ${dataInfo.endTime}`
+
         const tmpData = []
         data && data.forEach(item => {
           if (item.before) {
@@ -269,18 +272,18 @@ export default {
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-            this.updateFindStr = `( ${this.nickName} 交接班时间：${this.time} ) 加注时间 ${Array.isArray(v) ? v.join(' - ') : v}`
           } else if (k === 'updateDate') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-            this.updateFindStr = `( ${this.nickName} 交接班时间：${this.time} ) 数据更新时间 ${Array.isArray(v) ? v.join(' - ') : v}`
           } else {
             if (v !== '') params.param[k] = v
           }
         }
       }
+      this.updateFindStr = `( ${this.nickName} 交接班时间：${this.time} )`
+
 
       params.param.gasstationId = this.stationId // 对应加气站
 
