@@ -63,7 +63,7 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k === 'outTime') {
+          if (v && k === 'outTime') {
             params.param.dateParam.updateDateFrom = v[0]
             params.param.dateParam.updateDateTo = v[1]
           } else {

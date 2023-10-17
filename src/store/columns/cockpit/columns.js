@@ -182,7 +182,7 @@ const columns = {
       table: { type: 'text', nameSpan: 0, inputSpan: 24, style: 'width: 100%;', clearable: false }, iShowStatus: item => iShowStatus(item) }
   ],
   dyncStevedor: [
-    { field: 'nickName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请求输入加气站' } },
+    { field: 'nickName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站' } },
     { field: 'buyType', name: '采购方式', search: { type: 'select', obj: 'buyType', placeholder: '采购方式' } },
     { field: 'carNumber', name: '槽车车牌号' },
     { field: 'loadTime', name: '装车时间', stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 51%;height: 50px;', style: 'width: 100%;', findField: 'loadTime', dtime: ['00:00:00', '23:59:59'], value: (function () { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', nameSpan: 0, style: 'width: 100%', subField: 'createDateName', hideName: true, obj: 'stevedoreDataSearch', value: 'loadTime' } },
@@ -268,7 +268,7 @@ const columns = {
     { field: 'orderStatus', name: '支付状态', search: { type: 'select', obj: 'payType', placeholder: '支付状态' } },
   ],
   dyncLoss: [
-    { field: 'nickName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请求输入加气站' } },
+    { field: 'nickName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站' } },
     { field: 'adjustMonth', name: '盘盈亏月' },
     { field: 'gatherTime', name: '实存采集时间', stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 51%;height: 50px;', style: 'width: 100%;', findField: 'gatherTime', dtime: ['00:00:00', '23:59:59'], value: (function () { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', nameSpan: 0, style: 'width: 100%', subField: 'createDateName', hideName: true, obj: 'lossDataSearch', value: 'gatherTime' } },
     { field: 'actualQty', name: '实存量(公斤)' },
@@ -288,8 +288,8 @@ const columns = {
     { field: 'avgPrice', name: '平均价(元/公斤)' },
   ],
   dyncCard: [
-    { field: 'nickName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请求输入加气站' } },
-    { field: 'cardNo', name: '加注卡号', search: { type: 'text', placeholder: '请求输入加注卡号' } },
+    { field: 'nickName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站' } },
+    { field: 'cardNo', name: '加注卡号', search: { type: 'text', placeholder: '请输入加注卡号' } },
     { field: 'cardTypeId', stype: 'mapping', mapping: 'cardType', name: '卡类型', search: { type: 'select', obj: 'cardType', placeholder: '卡类型' } },
     { field: 'updateDate', name: '数据更新时间', stype: 'format', formatFun: 'formateTData all' },
     { field: 'updaterName', name: '数据更新人' },
@@ -301,7 +301,7 @@ const columns = {
     { field: 'cardType', name: '卡类型' },
   ],
   dyncGass: [
-    { field: 'nickName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请求输入加气站' } },
+    { field: 'nickName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站' } },
     { field: 'time', name: '交接班时间点(时:分)', stype: 'format', formatFun: 'formatTimeToHS' },
     { field: 'timeLength', name: '时长(小时)' },
     { field: 'updateDate', name: '数据更新时间', stype: 'format', formatFun: 'formateTData all' },

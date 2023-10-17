@@ -27,7 +27,7 @@
 
     <el-dialog append-to-body width="800px" title="三方线上 · 导入" :visible.sync="importVisible">
       <el-upload
-          v-if="importVisible"
+          v-if="importVisible && uploadBtnStatus"
           class="upload-demo"
           :action="uploadURL"
           :data="{ gasstationId: stationId }"
@@ -161,6 +161,7 @@ export default {
 
       importVisible: false,
       dataInfoStatus: false,
+      uploadBtnStatus: true,
       updateFindStr: '',
       importData: [],
       importDataInfo: {},
@@ -226,9 +227,17 @@ export default {
       }
     },
     uploadError() {
+      this.uploadBtnStatus = false
+      this.$nextTick(() => {
+        this.uploadBtnStatus = true
+      })
       this.$message.error('文件上传失败')
     },
     uploadSuccess(res) {
+      this.uploadBtnStatus = false
+      this.$nextTick(() => {
+        this.uploadBtnStatus = true
+      })
       if (res.code !== 0) {
         this.$message.error(res.message)
       } else {
@@ -269,18 +278,18 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k === 'createTime') {
+          if (v && k === 'createTime') {
             params.param.timeType = 0
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-          } else if (k === 'payTime') {
+          } else if (v && k === 'payTime') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
             // this.updateFindStr = `( ${this.nickName} ${this.time} ) 支付时间 ${Array.isArray(v) ? v.join(' - ') : v}`
-          } else if (k === 'updateDate') {
+          } else if (v && k === 'updateDate') {
             params.param.timeType = 2
 
             params.param.startTime = v[0]
@@ -304,17 +313,17 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k === 'createTime') {
+          if (v && k === 'createTime') {
             params.param.timeType = 0
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-          } else if (k === 'payTime') {
+          } else if (v && k === 'payTime') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-          } else if (k === 'updateDate') {
+          } else if (v && k === 'updateDate') {
             params.param.timeType = 2
 
             params.param.startTime = v[0]

@@ -20,7 +20,7 @@
 
     <el-dialog append-to-body width="800px" title="加注机线下卡管理 · 导入" :visible.sync="importVisible">
       <el-upload
-        v-if="importVisible"
+        v-if="importVisible && uploadBtnStatus"
         class="upload-demo"
         :action="uploadURL"
         :headers="axios.headers"
@@ -163,9 +163,17 @@ export default {
       }
     },
     uploadError() {
+      this.uploadBtnStatus = false
+      this.$nextTick(() => {
+        this.uploadBtnStatus = true
+      })
       this.$message.error('文件上传失败')
     },
     uploadSuccess(res) {
+      this.uploadBtnStatus = false
+      this.$nextTick(() => {
+        this.uploadBtnStatus = true
+      })
       if (res.code !== 0) {
         this.$message.error(res.message)
       } else {

@@ -27,7 +27,7 @@
 
     <el-dialog append-to-body width="900px" title="装卸数据 · 导入" :visible.sync="importVisible">
       <el-upload
-        v-if="importVisible"
+        v-if="importVisible && uploadBtnStatus"
         class="upload-demo"
         :action="uploadURL"
         :headers="axios.headers"
@@ -41,16 +41,16 @@
       <div class="import-title" v-if="dataInfoStatus">
         <div>
           <span>[ 导入前 ]</span>
-          <span>装车总量：{{ importDataInfo.beforeLoadQty === null ? '-' : importDataInfo.beforeLoadQty }} 公斤</span>
+          <span>装车总量：{{ importDataInfo.beforeLoadQty === null ? '-' : importDataInfo.beforeLoadQty }} 吨</span>
           <span>采购总成本：{{ importDataInfo.beforeBuyCost === null ? '-' : importDataInfo.beforeBuyCost }} 元</span>
-          <span>到站总量：{{ importDataInfo.beforeInQty === null ? '-' : importDataInfo.beforeInQty }} 公斤</span>
+          <span>到站总量：{{ importDataInfo.beforeInQty === null ? '-' : importDataInfo.beforeInQty }} 吨</span>
           <span>到站总成本：{{ importDataInfo.beforeInCost === null ? '-' : importDataInfo.beforeInCost }} 元</span>
         </div>
         <div>
           <span>[ 导入后 ]</span>
-          <span>装车总量：{{ importDataInfo.afterLoadQty === null ? '-' : importDataInfo.afterLoadQty }} 公斤</span>
+          <span>装车总量：{{ importDataInfo.afterLoadQty === null ? '-' : importDataInfo.afterLoadQty }} 吨</span>
           <span>采购总成本：{{ importDataInfo.afterBuyCost === null ? '-' : importDataInfo.afterBuyCost }} 元</span>
-          <span>到站总量：{{ importDataInfo.afterInQty === null ? '-' : importDataInfo.afterInQty }} 公斤</span>
+          <span>到站总量：{{ importDataInfo.afterInQty === null ? '-' : importDataInfo.afterInQty }} 吨</span>
           <span>到站总成本：{{ importDataInfo.afterInCost === null ? '-' : importDataInfo.afterInCost }} 元</span>
         </div>
       </div>
@@ -144,7 +144,7 @@ export default {
         {
           name: '装车总量：',
           field: 'loadQty',
-          unit: ' 公斤'
+          unit: ' 吨'
         },
         {
           name: '采购总成本：',
@@ -154,7 +154,7 @@ export default {
         {
           name: '到站总量：',
           field: 'inQty',
-          unit: ' 公斤'
+          unit: ' 吨'
         },
         {
           name: '到站总成本：',
@@ -166,6 +166,7 @@ export default {
 
       importVisible: false,
       dataInfoStatus: false,
+      uploadBtnStatus: true,
       importData: [],
       importDataInfo: {},
       uploadURL: process.env.VUE_APP_BASE_URL + 'strategy/inventory_truck_in/upload_truck_in',
@@ -225,9 +226,17 @@ export default {
       }
     },
     uploadError() {
+      this.uploadBtnStatus = false
+      this.$nextTick(() => {
+        this.uploadBtnStatus = true
+      })
       this.$message.error('文件上传失败')
     },
     uploadSuccess(res) {
+      this.uploadBtnStatus = false
+      this.$nextTick(() => {
+        this.uploadBtnStatus = true
+      })
       if (res.code !== 0) {
         this.$message.error(res.message)
       } else {
@@ -261,7 +270,7 @@ export default {
       }
 
       $strategyStevedoreConfirmImport({ confirm }).then(res => {
-        this.$message.success('成功')
+        confirm && this.$message.success('成功')
         this.$refs.stevedoreTables.initDataList()
         this.importVisible = false
       })
@@ -271,20 +280,20 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k === 'loadTime') {
+          if (v && k === 'loadTime') {
             params.param.timeType = 0
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
 
             // this.updateFindStr = `装车时间 ${Array.isArray(v) ? v.join(' - ') : v}`
-          } else if (k === 'unloadTime') {
+          } else if (v && k === 'unloadTime') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
             // this.updateFindStr = `卸车时间 ${Array.isArray(v) ? v.join(' - ') : v}`
-          } else if (k === 'updateDate') {
+          } else if (v && k === 'updateDate') {
             params.param.timeType = 2
 
             params.param.startTime = v[0]
@@ -304,20 +313,20 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k === 'loadTime') {
+          if (v && k === 'loadTime') {
             params.param.timeType = 0
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
 
             // this.updateFindStr = `装车时间 ${Array.isArray(v) ? v.join(' - ') : v}`
-          } else if (k === 'unloadTime') {
+          } else if (v && k === 'unloadTime') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
             // this.updateFindStr = `卸车时间 ${Array.isArray(v) ? v.join(' - ') : v}`
-          } else if (k === 'updateDate') {
+          } else if (v && k === 'updateDate') {
             params.param.timeType = 2
 
             params.param.startTime = v[0]

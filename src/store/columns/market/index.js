@@ -52,7 +52,12 @@ const getters = {
   market_gasstationConfig_mode_list: item => item.app.modeDefault,
   market_gasstationConfig_page_status: item => app.list.marketingManager,
   market_gasstationConfig_column: item => columns.gasstationConfig,
-  market_gasstationConfig_select_list: item => select.gasstationConfig
+  market_gasstationConfig_select_list: item => select.gasstationConfig,
+
+  // 营销中心-加气卡
+  market_card_column: item => columns.marketCard,
+  market_card_select_list: item => select.marketCenter,
+
 }
 
 export default {
