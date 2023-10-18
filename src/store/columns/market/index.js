@@ -56,6 +56,7 @@ const getters = {
 
   // 营销中心-加气卡
   market_card_column: item => columns.marketCard,
+  market_order_card_column: item => columns.marketOrderCard,
   market_card_select_list: item => select.marketCenter,
 
 }

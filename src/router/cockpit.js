@@ -25,12 +25,12 @@ export default [
         meta: { title: '动态库存', noCache: false },
         children: [
           { path: 'cockpitDyncIndex', component: inImport('cockpit/dync/index'), name: 'cockpitDyncIndex', meta: { title: '动态库存监控', noCache: false } },
-          { path: 'cockpitDyncStevedor', component: inImport('cockpit/dync/stevedor'), name: 'cockpitDyncStevedor', meta: { title: '装卸数据', noCache: false } },
-          { path: 'cockpitDyncEntrain', component: inImport('cockpit/dync/entrain'), name: 'cockpitDyncEntrain', meta: { title: '加气数据', noCache: false } },
-          { path: 'cockpitDyncLoss', component: inImport('cockpit/dync/loss'), name: 'cockpitDyncLoss', meta: { title: '盘盈亏', noCache: false } },
-          { path: 'cockpitDyncRefuelCard', component: inImport('cockpit/dync/card'), name: 'cockpitDyncRefuelCard', meta: { title: '加注机卡管理', noCache: false } },
-          { path: 'cockpitDyncRefuel', component: inImport('cockpit/dync/refuel'), name: 'cockpitDyncRefuel', meta: { title: '加注机管理', noCache: false } },
-          { path: 'cockpitDyncGass', component: inImport('cockpit/dync/gass'), name: 'cockpitDyncGass', meta: { title: '加气站', noCache: false } }
+          { path: 'cockpitDyncStevedor', component: inImport('cockpit/dync/stevedor'), name: 'cockpitDyncStevedor', meta: { title: '装卸数据管理', noCache: false } },
+          { path: 'cockpitDyncEntrain', component: inImport('cockpit/dync/entrain'), name: 'cockpitDyncEntrain', meta: { title: '加气数据管理', noCache: false } },
+          { path: 'cockpitDyncLoss', component: inImport('cockpit/dync/loss'), name: 'cockpitDyncLoss', meta: { title: '盘盈亏管理', noCache: false } },
+          { path: 'cockpitDyncRefuelCard', component: inImport('cockpit/dync/card'), name: 'cockpitDyncRefuelCard', meta: { title: '加注机线下卡管理', noCache: false } },
+          { path: 'cockpitDyncRefuel', component: inImport('cockpit/dync/refuel'), name: 'cockpitDyncRefuel', meta: { title: '加注机标准价监控', noCache: false } },
+          { path: 'cockpitDyncGass', component: inImport('cockpit/dync/gass'), name: 'cockpitDyncGass', meta: { title: '加气站交班管理', noCache: false } }
         ]
       }
     ]
