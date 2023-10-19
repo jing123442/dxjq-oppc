@@ -1,3 +1,5 @@
+import {monthTimeArea} from "@/utils/tools";
+
 const columns = {
   rebate: [
     { field: 'beginRange', stype: 'fields', fieldList: ['beginRange', 'endRange'], sign: ' ≤ X < ', name: '优惠区间(公斤)', fixed: 'left' },
@@ -71,6 +73,40 @@ const columns = {
     { field: 'managerPhone', name: '营销合作经理电话', ispush: false },
     { field: 'operateDate', name: '操作时间', ispush: false, stype: 'format', formatFun: 'formateTData all', width: 140 },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: [{ type: 'edit', name: '配置合作经理' }] }
+  ],
+  marketCard: [
+    { field: 'createDate', name: '', hide: true, search: { type: 'date-picker', serial: 1, placeholder: '', findStyle: 'width: 51%;height: 50px;', style: 'width: 100%;', findField: 'createDate', dtime: ['00:00:00', '23:59:59'], value: (function () { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', nameSpan: 0, style: 'width: 100%', subField: 'createDateName', hideName: true, obj: 'createTimeSearch', value: '' }  },
+    { field: 'cardId', name: '卡号',  fixed: 'left', search: { type: 'text', serial: 3, placeholder: '请输入卡号', nameSpan: 0 } },
+    { field: 'status', name: '卡运营状态', formatter: 'cardStatus', search: { type: 'select', serial: 2, obj: 'cardStatus', placeholder: '卡运营状态', nameSpan: 0 } },
+    { field: 'carNumber', name: '车牌号', search: { type: 'text', serial: 4, placeholder: '请输入车牌号', nameSpan: 0 } },
+    { field: 'remainAmount', name: '卡余额（元）' },
+    { field: 'discountAmount', name: '优惠额（元）' },
+    { field: 'initAmount', name: '卡发放额（元）' },
+    { field: 'latestTime', name: '最近扣款时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'senderDate', name: '发放时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'partnerName', name: '合作方', search: { type: 'text', placeholder: '请输入合作方', serial: 5, nameSpan: 0 } },
+    { field: 'orgName', name: '所属集体户', search: { type: 'text', placeholder: '请输入所属集体户', serial: 6, nameSpan: 0 } },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 160, list: scope => {
+        const list = [{ type: 'order', name: '优惠账单' }]
+
+        if (scope.row.status !== 1) {
+          list.unshift({ type: 'remove', name: '作废' })
+        }
+        return list
+      } }
+  ],
+  marketOrderCard: [
+    { field: 'orderId', name: '加气订单号',  fixed: 'left' },
+    { field: 'nickName', name: '加气站' },
+    { field: 'createDate', name: '创建时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'updateDate', name: '支付时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'standardPrice', name: '标准价（元/公斤）' },
+    { field: 'actualPrice', name: '结算价（元/公斤）' },
+    { field: 'diffPrice', name: '优惠差价（元/公斤）' },
+    { field: 'gasQty', name: '加气量（公斤）' },
+    { field: 'actualAmount', name: '结算金额（元）' },
+    { field: 'diffAmount', name: '优惠差额（元）' },
+    { field: 'remainAmount', name: '卡余额（元）' },
   ]
 }
 

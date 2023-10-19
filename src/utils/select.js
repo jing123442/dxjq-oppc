@@ -561,8 +561,8 @@ export function utilsPriceExcuteType() {
 export function utilSelectPayTypeList() {
   return [
     { value: 0, label: '待支付' },
-    { value: 1, label: '已支付' },
-    { value: 2, label: '已取消' }
+    { value: 1, label: '已支付' }
+    // { value: 2, label: '已取消' }
   ]
 }
 

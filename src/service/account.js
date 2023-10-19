@@ -40,3 +40,23 @@ export async function $carrierBalanceConfig (data) {
 export async function $carrierBalanceSumTruckAccounts (data) {
   return await R({ url: 'account/carrier_balance/sum_truck_accounts', method: 'POST', data })
 }
+// 获取所有的集体户信息
+export async function $accountCardToOrgList (data) {
+  return await R({ url: 'account/card_org/get_all_org', method: 'GET', params: data })
+}
+// 获取所有的集体户信息-卡车
+export async function $accountOrgToTruckList (data) {
+  return await R({ url: 'account/card_org/get_org_truck', method: 'POST', data })
+}
+// 获取所有的合作方
+export async function $accountCardPartnerList (data) {
+  return await R({ url: 'account/card_partner/get_all_partner', method: 'GET', params: data })
+}
+// 发放新卡
+export async function $accountSendCard (data) {
+  return await R({ url: 'account/card_info/send_card', method: 'POST', data })
+}
+// 发放新卡
+export async function $accountCancelCard (data) {
+  return await R({ url: 'account/card_info/cancel_card', method: 'POST', data })
+}

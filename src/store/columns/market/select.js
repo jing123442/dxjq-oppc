@@ -19,6 +19,17 @@ const select = {
   },
   gasstationConfig: {
     userList: utilsUserList()
+  },
+  marketCenter: {
+    cardStatus: [
+      { value: 0, label: '运营中' },
+      { value: 1, label: '已作废' },
+    ],
+    createTimeSearch: [
+      { value: '', label: '请选择' },
+      { value: 'latestTime', label: '最近扣款时间' },
+      { value: 'senderDate', label: '发放时间' }
+    ]
   }
 }
 

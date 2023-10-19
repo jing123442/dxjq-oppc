@@ -100,17 +100,17 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k === 'loadTime') {
+          if (v && k === 'loadTime') {
             params.param.timeType = 0
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-          } else if (k === 'unloadTime') {
+          } else if (v && k === 'unloadTime') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-          } else if (k === 'updateDate') {
+          } else if (v && k === 'updateDate') {
             params.param.timeType = 2
 
             params.param.startTime = v[0]

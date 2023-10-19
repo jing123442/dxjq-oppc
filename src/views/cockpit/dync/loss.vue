@@ -26,7 +26,7 @@
 
     <el-dialog append-to-body width="800px" title="盘盈亏数据 · 导入" :visible.sync="importVisible">
       <el-upload
-        v-if="importVisible"
+        v-if="importVisible && uploadBtnStatus"
         class="upload-demo"
         :action="uploadURL"
         :headers="axios.headers"
@@ -150,6 +150,7 @@ export default {
 
       importVisible: false,
       dataInfoStatus: false,
+      uploadBtnStatus: true,
       importData: [],
       importDataInfo: {},
       uploadURL: process.env.VUE_APP_BASE_URL + 'strategy/inventory_adjust/import',
@@ -209,10 +210,19 @@ export default {
         })
       }
     },
-    uploadError() {
+    uploadError(err, file, fileList) {
+      console.log(err, file, fileList)
+      this.uploadBtnStatus = false
+      this.$nextTick(() => {
+        this.uploadBtnStatus = true
+      })
       this.$message.error('文件上传失败')
     },
     uploadSuccess(res) {
+      this.uploadBtnStatus = false
+      this.$nextTick(() => {
+        this.uploadBtnStatus = true
+      })
       if (res.code !== 0) {
         this.$message.error(res.message)
       } else {
@@ -239,10 +249,10 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k === 'gatherTime') {
+          if (v && k === 'gatherTime') {
             params.param.dateParam.createDateFrom = v[0]
             params.param.dateParam.createDateTo = v[1]
-          } else if (k === 'updateDate') {
+          } else if (v && k === 'updateDate') {
             params.param.dateParam.updateDateFrom = v[0]
             params.param.dateParam.updateDateTo = v[1]
           } else {
@@ -261,10 +271,10 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k === 'gatherTime') {
+          if (v && k === 'gatherTime') {
             params.param.dateParam.createDateFrom = v[0]
             params.param.dateParam.createDateTo = v[1]
-          } else if (k === 'updateDate') {
+          } else if (v && k === 'updateDate') {
             params.param.dateParam.updateDateFrom = v[0]
             params.param.dateParam.updateDateTo = v[1]
           } else {

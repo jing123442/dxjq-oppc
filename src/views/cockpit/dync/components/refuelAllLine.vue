@@ -4,7 +4,7 @@
         ref="tables1"
         :dataList="dataList"
         :rowData="totalInfo"
-        :headerStyle="'top: 109px;'"
+        :headerStyle="dataStyle"
     ></table-total-data>
     <em-table-list
         ref="refuelAllLine"
@@ -25,9 +25,9 @@
         @onReqParams="onReqParams"
     ></em-table-list>
 
-    <el-dialog append-to-body width="800px" title="加注机全量 · 导入" :visible.sync="importVisible">
+    <el-dialog append-to-body width="800px" :title="importTitle" :visible.sync="importVisible">
       <el-upload
-          v-if="importVisible"
+          v-if="importVisible && uploadBtnStatus"
           class="upload-demo"
           :action="uploadURL"
           :data="{ gasstationId: stationId }"
@@ -156,8 +156,10 @@ export default {
       ],
       totalInfo: { outQty: 0, outValue: 0 },
 
+      importTitle: '加注机全量 · 导入',
       importVisible: false,
       dataInfoStatus: false,
+      uploadBtnStatus: true,
       updateFindStr: '',
       importData: [],
       importDataInfo: {},
@@ -174,7 +176,8 @@ export default {
             totalCount: ['data', 'total']
           }
         }
-      }
+      },
+      dataStyle: 'display: none'
     })
   },
   watch: {
@@ -202,6 +205,7 @@ export default {
   methods: {
     onListEvent(type, row) {
       if (type === 'import') {
+        this.importTitle = `加注机全量 · 导入 【${this.nickName} 交接班时间：${this.time}】`
         this.importData = []
         this.dataInfoStatus = false
         this.importVisible = true
@@ -212,6 +216,9 @@ export default {
     afterTableData(res) {
       const { page, ...dataInfo } = res.data
       this.totalInfo = dataInfo || {}
+
+      const dom = this.$refs.refuelAllLine.$children[1].$el.getBoundingClientRect()
+      this.dataStyle = `top: ${dom.top + 20 - 172}px`
     },
     onListImportEvent(type, row) {
       // 模版下载
@@ -223,14 +230,25 @@ export default {
       }
     },
     uploadError() {
+      this.uploadBtnStatus = false
+      this.$nextTick(() => {
+        this.uploadBtnStatus = true
+      })
       this.$message.error('文件上传失败')
     },
     uploadSuccess(res) {
+      this.uploadBtnStatus = false
+      this.$nextTick(() => {
+        this.uploadBtnStatus = true
+      })
       if (res.code !== 0) {
         this.$message.error(res.message)
       } else {
         this.$message.success('文件上传成功')
         const { data, ...dataInfo } = res.data
+
+        this.updateFindStr = `加注时间 ${dataInfo.startTime} - ${dataInfo.endTime}`
+
         const tmpData = []
         data && data.forEach(item => {
           if (item.before) {
@@ -248,39 +266,39 @@ export default {
         this.dataInfoStatus = true
       }
     },
-    btnClickEvent(btn) {
-      if (btn.type === 'ok') {
-        $strategyOutConfirmImport({}).then(res => {
-          this.$message.success('成功')
-          this.$refs.refuelAllLine.initDataList()
-          this.importVisible = false
-        })
-      } else {
-        this.importVisible = false
+    async btnClickEvent(btn) {
+      const params = {
+        gasstationId: this.stationId,
+        confirm: btn.type === 'ok' ? 1 : 0
       }
+      await $strategyOutConfirmImport(params).then(res => {
+        confirm && this.$message.success('成功')
+        this.$refs.refuelAllLine.initDataList()
+      })
+      this.importVisible = false
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: {} })
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k === 'outTime') {
+          if (v && k === 'outTime') {
             params.param.timeType = 0
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-            this.updateFindStr = `( ${this.nickName} ${this.time} ) 加注时间 ${v.join(' - ')}`
-          } else if (k === 'updateDate') {
+          } else if (v && k === 'updateDate') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-            this.updateFindStr = `( ${this.nickName} ${this.time} ) 数据更新时间 ${v.join(' - ')}`
           } else {
             if (v !== '') params.param[k] = v
           }
         }
       }
+      this.updateFindStr = ''
+
 
       params.param.gasstationId = this.stationId // 对应加气站
 
@@ -292,12 +310,12 @@ export default {
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (k === 'outTime') {
+          if (v && k === 'outTime') {
             params.param.timeType = 0
 
             params.param.startTime = v[0]
             params.param.endTime = v[1]
-          } else if (k === 'updateDate') {
+          } else if (v && k === 'updateDate') {
             params.param.timeType = 1
 
             params.param.startTime = v[0]
