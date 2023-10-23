@@ -25,7 +25,7 @@
         @onReqParams="onReqParams"
     ></em-table-list>
 
-    <el-dialog append-to-body width="800px" title="三方线上 · 导入" :visible.sync="importVisible">
+    <el-dialog append-to-body width="800px" :title="importTitle" :visible.sync="importVisible">
       <el-upload
           v-if="importVisible && uploadBtnStatus"
           class="upload-demo"
@@ -159,6 +159,7 @@ export default {
       ],
       totalInfo: { outQty: 0, outValue: 0 },
 
+      importTitle: '三方线上 · 导入',
       importVisible: false,
       dataInfoStatus: false,
       uploadBtnStatus: true,
@@ -206,6 +207,7 @@ export default {
   methods: {
     onListEvent(type, row) {
       if (type === 'import') {
+        this.importTitle = `三方线上 · 导入 【${this.nickName} 交接班时间：${this.time}】`
         this.importData = []
         this.dataInfoStatus = false
         this.importVisible = true
@@ -243,7 +245,7 @@ export default {
       } else {
         this.$message.success('文件上传成功')
         const { data, ...dataInfo } = res.data
-        this.updateFindStr = `( ${this.nickName} ${this.time} ) 创建时间 ${dataInfo.startTime} - ${dataInfo.endTime}`
+        this.updateFindStr = `创建时间 ${dataInfo.startTime} - ${dataInfo.endTime}`
 
         const tmpData = []
         data && data.forEach(item => {
@@ -263,15 +265,15 @@ export default {
       }
     },
     btnClickEvent(btn) {
-      if (btn.type === 'ok') {
-        $strategySFConfirmImport({}).then(res => {
-          this.$message.success('成功')
-          this.$refs.thirdLine.initDataList()
-          this.importVisible = false
-        })
-      } else {
-        this.importVisible = false
+      const params = {
+        confirm: btn.type === 'ok' ? 1 : 0,
+        gasstationId: this.stationId
       }
+      $strategySFConfirmImport(params).then(res => {
+        this.$message.success('成功')
+        this.$refs.thirdLine.initDataList()
+        this.importVisible = false
+      })
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: {} })
@@ -301,7 +303,7 @@ export default {
         }
       }
 
-      this.updateFindStr = `( ${this.nickName} ${this.time} )`
+      this.updateFindStr = ''
 
       params.param.gasstationId = this.stationId // 对应加气站
 

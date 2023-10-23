@@ -57,12 +57,12 @@ export default {
       },
       dataList: [
         {
-          name: '加注总量：',
+          name: '加气总量：',
           field: 'loadQty',
           unit: ' 公斤'
         },
         {
-          name: '加注总额：',
+          name: '加气总额：',
           field: 'buyCost',
           unit: ' 元'
         }

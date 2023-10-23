@@ -205,6 +205,7 @@ export default {
   methods: {
     onListEvent(type, row) {
       if (type === 'import') {
+        this.updateFindStr = ''
         this.importData = []
         this.dataInfoStatus = false
         this.importVisible = true

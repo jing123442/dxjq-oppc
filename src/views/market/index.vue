@@ -48,7 +48,7 @@
     </el-dialog>
     <!-- 作废 -->
     <el-dialog title="购车加气优惠卡 · 作废" :visible.sync="dialogCancelVisible" width="500px" :append-to-body="true">
-      <el-form size="small" label-width="100px" ref="formCancel" v-if="dialogCancelVisible">
+      <el-form size="small" label-width="100px" ref="formCancel" label-position="left" v-if="dialogCancelVisible">
         <el-form-item label="卡号" style="width: 90%;margin-bottom: 0;">{{ currentRow.cardId }}</el-form-item>
         <el-form-item label="所属集体户" style="width: 90%;margin-bottom: 0;">{{ currentRow.orgName }}</el-form-item>
         <el-form-item label="车牌号" style="width: 90%;margin-bottom: 0;">{{ currentRow.carNumber }}</el-form-item>
@@ -97,8 +97,15 @@ export default {
   components: { TableTotalData },
   data() {
     const checkNumber = (rule, value, callback) => {
+      const regex = /^-?\d+(\.\d{1,2})?$/
+
+      console.log(regex.test(value))
       if (value < 0 || isNaN(Number(value))) {
-        callback(new Error('请输入正确格式金额'))
+        callback(new Error('请输入正确格式金额，并最多保留2位小数'))
+        return false
+      } if (!regex.test(value)) {
+        callback(new Error('请输入正确格式金额，并最多保留2位小数'))
+        return false
       } else {
         callback()
       }
@@ -146,7 +153,7 @@ export default {
         orgId: [{ required: true, message: '请选择所属集体户！', trigger: 'change' }],
         carNumber: [{ required: true, message: '请选择车牌号！', trigger: 'change' }],
         partnerId: [{ required: true, message: '请选择合作方！', trigger: 'change' }],
-        initAmount: [{ required: true, validator: checkNumber, message: '请输入发放金额', trigger: 'blur' }]
+        initAmount: [{ required: true, validator: checkNumber, message: '请输入正确格式金额，并最多保留2位小数', trigger: 'blur' }]
       },
       dataList: [
         {
