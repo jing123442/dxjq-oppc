@@ -270,7 +270,7 @@ export default {
         gasstationId: this.stationId
       }
       $strategySFConfirmImport(params).then(res => {
-        this.$message.success('成功')
+        params.confirm && this.$message.success('成功')
         this.$refs.thirdLine.initDataList()
         this.importVisible = false
       })
