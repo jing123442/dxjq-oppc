@@ -9,13 +9,13 @@
 
     <el-tabs v-model="active" type="card" @tab-click="handleClick">
       <el-tab-pane label="加注机全量" name="0">
-        <refuel-all-line v-if="stationValue" :stationId="stationValue" :nickName="currentStationInfo.nickName" :time="currentStationInfo.time" />
+        <refuel-all-line v-if="active == 0 && stationValue" :stationId="stationValue" :nickName="currentStationInfo.nickName" :time="currentStationInfo.time" />
       </el-tab-pane>
       <el-tab-pane label="三方线上" name="1">
-        <third-line v-if="stationValue" :stationId="stationValue" :nickName="currentStationInfo.nickName" :time="currentStationInfo.time" />
+        <third-line v-if="active == 1 && stationValue" :stationId="stationValue" :nickName="currentStationInfo.nickName" :time="currentStationInfo.time" />
       </el-tab-pane>
       <el-tab-pane label="大象线上" name="2">
-        <dx-line v-if="stationValue" :stationId="stationValue" />
+        <dx-line v-if="active == 2 && stationValue" :stationId="stationValue" />
       </el-tab-pane>
     </el-tabs>
   </div>
