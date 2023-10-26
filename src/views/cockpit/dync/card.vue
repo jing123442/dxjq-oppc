@@ -114,6 +114,7 @@ export default {
       uploadURL: process.env.VUE_APP_BASE_URL + 'strategy/inventory_card/import',
       buttonsImportList: [{ type: 'primary', icon: '', event: 'download', name: '模版下载' }],
 
+      uploadBtnStatus: true,
       updateVisible: false,
       queryCustUpdateURL: {
         list: {

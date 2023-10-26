@@ -28,22 +28,22 @@
       <div class="day-title">{{ getCurrentClickDate() }}</div>
       <ul>
         <li>
-          <div>装车量：{{ sankeyData.loadQty }} 公斤（{{ sankeyData.loadPrice }} 元/公斤）</div>
-          <div>在途量：{{ sankeyData.onwayQty }} 公斤（{{ sankeyData.onwayPrice }} 元/公斤）</div>
+          <div>装车量：{{ sankeyData.loadQty }} 吨（{{ sankeyData.loadPrice }} 元/公斤）</div>
+          <div>在途量：{{ sankeyData.onwayQty }} 吨（{{ sankeyData.onwayPrice }} 元/公斤）</div>
           <div>-</div>
-          <div>入库量：{{ sankeyData.inQty }} 公斤（{{ sankeyData.inPrice }} 元/公斤）</div>
+          <div>入库量：{{ sankeyData.inQty }} 吨（{{ sankeyData.inPrice }} 元/公斤）</div>
         </li>
         <li>
-          <div>销售量：{{ sankeyData.saleQty }} 公斤</div>
-          <div>销售金额：{{ sankeyData.saleValue }} 元（{{ sankeyData.saleValuePrice }} 元/公斤）</div>
-          <div>到站成本：{{ sankeyData.saleCost }} 元（{{ sankeyData.saleCostPrice }} 元/公斤）</div>
-          <div>进销差：{{ sankeyData.saleDiff }} 元</div>
+          <div>销售量：{{ sankeyData.saleQty }} 吨</div>
+          <div> · 销售金额：{{ sankeyData.saleValue }} 元（{{ sankeyData.saleValuePrice }} 元/公斤）</div>
+          <div> · 到站成本：{{ sankeyData.saleCost }} 元（{{ sankeyData.saleCostPrice }} 元/公斤）</div>
+          <div> · 进销差：{{ sankeyData.saleDiff }} 元</div>
         </li>
         <li>
-          <div>账存量：{{ sankeyData.acountQty }} 公斤（{{ sankeyData.acountPrice }} 元/公斤）</div>
+          <div>账存量：{{ sankeyData.acountQty }} 吨（{{ sankeyData.acountPrice }} 元/公斤）</div>
           <div>-</div>
-          <div>未出库量：{{ sankeyData.inventoryQty }} 公斤（{{ sankeyData.inventoryPrice }} 元/公斤）</div>
-          <div>CNG 出库量：{{ sankeyData.cngQty }} 公斤（{{ sankeyData.cngPrice }} 元/公斤）</div>
+          <div>未出库量：{{ sankeyData.inventoryQty }} 吨（{{ sankeyData.inventoryPrice }} 元/公斤）</div>
+          <div>CNG 出库量：{{ sankeyData.cngQty }} 吨（{{ sankeyData.cngPrice }} 元/公斤）</div>
         </li>
       </ul>
       <ul>
@@ -165,7 +165,7 @@ export default {
         ],
         series: [
           {
-            name: '入库量(公斤)',
+            name: '入库量(吨)',
             type: 'bar',
             smooth: true,
             barWidth: 6,
@@ -183,7 +183,7 @@ export default {
             data: []
           },
           {
-            name: '销售量(公斤)',
+            name: '销售量(吨)',
             type: 'bar',
             smooth: true,
             barWidth: 6,
@@ -201,7 +201,7 @@ export default {
             data: []
           },
           {
-            name: '进销差(元)',
+            name: '进销差(万元)',
             type: 'line',
             stack: 'a',
             smooth: true,
@@ -275,6 +275,9 @@ export default {
               color: '#D3F1E1',
               opacity: 1
             }
+          },
+          labelLayout: {
+            moveOverlap: 'shiftY'
           },
           emphasis: {
             lineStyle: {

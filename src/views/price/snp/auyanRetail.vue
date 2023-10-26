@@ -192,6 +192,11 @@ export default {
         }
       },
       deep: true
+    },
+    status(newVal) {
+      if (Number(newVal) === 1) {
+        this.updateDate = new Date(new Date().setHours(new Date().getHours() + 1))
+      }
     }
   },
   created: function () {
