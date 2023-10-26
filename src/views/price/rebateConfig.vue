@@ -133,7 +133,7 @@ export default {
         this.currentRow = row
       } else if (type == 'rebateEdit') {
         this.dialogVisibleRebateEdit = true
-        this.rebateEditRow = row
+        this.rebateEditRow = Object.assign({}, row)
         this.rebateEditRow.updateDate = this.rebateEditRow.updateDate ? this.rebateEditRow.updateDate.replace('T', ' ') : ''
         this.rebateEditRow._btn = custFormBtnList()
       } else if (type == 'unpublish') {

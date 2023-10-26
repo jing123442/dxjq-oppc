@@ -374,6 +374,9 @@ export default {
         gasstationId: this.stationValue // '900048340234420224'
       }
       $strategyDyncDayStatisticsItemData(params).then(res => {
+        this.optionSankey.series.data = []
+        this.optionSankey.series.links = []
+
         const { data: chartSeriesData, links, map, inventoryDayStatisticsVo } = res.data
         this.sankeyData = inventoryDayStatisticsVo || {}
         this.dayData = map || {}

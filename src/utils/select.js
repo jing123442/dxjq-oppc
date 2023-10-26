@@ -497,7 +497,7 @@ export function utilsCreateTimeSearch() {
 export function utilsPayCreateTimeSearch() {
   return [
     { value: 'createDate', label: '创建时间' },
-    { value: 'payTime', label: '支付时间' }
+    { value: 'updateDate', label: '支付时间' }
   ]
 }
 
@@ -560,8 +560,8 @@ export function utilsPriceExcuteType() {
 // 支付状态
 export function utilSelectPayTypeList() {
   return [
-    { value: 0, label: '待支付' },
-    { value: 1, label: '已支付' }
+    { value: 1, label: '待支付' },
+    { value: 2, label: '已支付' }
     // { value: 2, label: '已取消' }
   ]
 }

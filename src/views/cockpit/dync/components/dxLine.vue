@@ -72,7 +72,7 @@ export default {
   },
   watch: {
     stationId() {
-      this.$refs.refuelAllLine.initDataList()
+      this.$refs.dxLine.initDataList()
     }
   },
   computed: {
@@ -96,25 +96,16 @@ export default {
       this.totalInfo = dataInfo || {}
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: {} })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { dateParam: {} } })
 
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
-          if (v && k === 'loadTime') {
-            params.param.timeType = 0
-
-            params.param.startTime = v[0]
-            params.param.endTime = v[1]
-          } else if (v && k === 'unloadTime') {
-            params.param.timeType = 1
-
-            params.param.startTime = v[0]
-            params.param.endTime = v[1]
+          if (v && k === 'createDate') {
+            params.param.dateParam.createDateFrom = v[0]
+            params.param.dateParam.createDateTo = v[1]
           } else if (v && k === 'updateDate') {
-            params.param.timeType = 2
-
-            params.param.startTime = v[0]
-            params.param.endTime = v[1]
+            params.param.dateParam.updateDateFrom = v[0]
+            params.param.dateParam.updateDateTo = v[1]
           } else {
             if (v !== '') params.param[k] = v
           }

@@ -261,7 +261,7 @@ const columns = {
   dyncEntrainDX: [
     { field: 'orderId', name: '加气订单编号', fixed: 'left' },
     { field: 'createDate', name: '创建时间', stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 51%;height: 50px;', style: 'width: 100%;', findField: 'createDate', dtime: ['00:00:00', '23:59:59'], value: (function () { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', nameSpan: 0, style: 'width: 100%', subField: 'createDateName', hideName: true, obj: 'createTimeSearch', value: 'createDate' } },
-    { field: 'nickName', name: '支付时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'updateDate', name: '支付时间', stype: 'format', formatFun: 'formateTData all' },
     { field: 'gasQty', name: '加气量(公斤)' },
     { field: 'actualPrice', name: '结算价(元/公斤)' },
     { field: 'amount', name: '结算金额(元)' },
