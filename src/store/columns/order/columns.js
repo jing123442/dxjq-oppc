@@ -6,11 +6,14 @@ const columns = {
     { field: 'createDate', name: '创建时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 51%;height: 50px;', style: 'width: 100%;', findField: 'createDate', dtime: ['00:00:00', '23:59:59'], value: (function () { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', subField: 'createDateName', hideName: true, obj: 'currDataSearch', style: 'width: 100%;', value: 'createDate' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2, formatFun: 'formateTData all', stype: 'format', ou: 1 } },
     // { field: 'createDate', name: '创建时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 30%;height: 50px;', style: 'width: 100%;', findField: 'createDate', dtime: ['00:00:00', '23:59:59'], value: (function() { const dateObj = monthTimeArea(new Date()); return ['2021-10-19', dateObj.end] }()) }, currSearch: { type: 'select', subField: 'createDateName', hideName: true, obj: 'currDataSearch', style: 'width: 100%;', value: 'createDate' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2, formatFun: 'formateTData all', stype: 'format', ou: 1 } },
     { field: 'updateDate', name: '支付时间', formatFun: 'formateTData all', width: 140, stype: 'format', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 21, formatFun: 'formateTData all', stype: 'format' , ou: 5} },
+    { field: 'platformPrice', name: '标准价(元/公斤)', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 14, util: '元', ou: 3, name: '标准价' } },
     { field: 'actualPrice', name: '结算价(元/公斤)', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 14, util: '元', ou: 3, name: '结算价' } },
+    { field: 'diffPrice', name: '优惠差价(元/公斤)', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 14, util: '元', ou: 3, name: '优惠差价' } },
     { field: 'gasQty', name: '加气量(公斤)', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 10, util: '公斤', ou: 3, name: '加气量' } },
     { field: 'platformPrice', name: '平台挂牌价', hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 8, util: '元/公斤' } },
     { field: 'actualPrice', name: '平台结算价', hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 9, util: '元/公斤' } },
     { field: 'amount', name: '结算金额(元)', width: 90, detail: { type: 'span', style: 'width: 85%', serial: 12, util: '元', ou: 3, name: '结算金额'} },
+    { field: 'diffAmount', name: '优惠差额(元)', width: 90, detail: { type: 'span', style: 'width: 85%', serial: 12, util: '元', ou: 3, name: '优惠差额'} },
     { field: 'amountTotal', name: '订单总金额', width: 90, hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 11, util: '元', value: function(row) { return (Number(row.amount) + Number(row.discountAmount) + Number(row.carrierRebate)).toFixed(2) }, ou: 3 } },
     { field: 'carrierRebate', name: '优惠金额 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 13, util: '元', ou: 3 } },
     { field: 'diff', name: '长城奥扬差价 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2, util: '元/公斤', ou: 6,value: function(row) { return (Number(row.platformPrice) - Number(row.gasprice) ).toFixed(2) } } },
@@ -20,9 +23,9 @@ const columns = {
      },
     { field: 'comAmount', name: '立减 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 13, util: '元' } },
     { field: 'orderRealTotal', name: '实付金额 ', hide: true, width: 90, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 11, util: '元' } },
-    { field: 'carrierOrgName', name: '物流客户', search: { type: 'text', field: 'carrierOrgName', placeholder: '请输入物流公司', findStyle: 'width: 19%', }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 7, ou: 2 } },
+    { field: 'carrierOrgName', name: '物流公司', search: { type: 'text', field: 'carrierOrgName', placeholder: '请输入物流公司', findStyle: 'width: 19%', }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 7, ou: 2 } },
     { field: 'carNumber', name: '车牌号', search: { type: 'text', placeholder: '请输入', findStyle: 'width: 30%', style: 'width: 100%;', findField: 'carNumber' }, currSearch: { type: 'select', subField: 'currFieldName', style: 'width: 100%;', hideName: true, obj: 'currFieldSearch', value: 'carNumber' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 9, ou: 2 } },
-    { field: 'driverName', name: '驾驶员姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 8, ou: 2 } },
+    { field: 'driverName', name: '驾驶员', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 8, ou: 2 } },
     { field: 'gasstationName', name: '加气站', search: { type: 'text', field: 'gasstationName', placeholder: '请输入加气站' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 5, ou: 1 } },
     { field: 'cashierName', name: '收银员姓名', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 6, ou: 1 } },
 
@@ -40,7 +43,6 @@ const columns = {
     { field: 'freight', hide: true, name: '运费单价', detail: { type: 'span', style: 'width: 85%', serial: 16, util: '元/公斤', ou: 4 } },
     { field: 'harbourPrice', hide: true, name: '出港价', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 17, util: '元/公斤', ou: 4 } },
     { field: 'benefit', hide: true, name: '优惠单价', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 18, util: '元/公斤', ou: 4} },
-    { field: 'orderStatus', name: '订单状态', width: 70, formatter: 'orderStatus', search: { type: 'select', obj: 'orderStatus', placeholder: '订单状态' }, detail: { type: 'span', model: 'select', isDisabled: true, obj: 'orderStatus', style: 'width: 85%', serial: 19, ou: 5 } },
     { field: 'payType', name: '支付方式', width: 90, formatter: 'payType',
       search: { type: 'select', obj: 'payType', placeholder: '支付方式', value: '' },
       detail: { type: 'span', model: 'select', isDisabled: true, obj: 'payType', style: 'width: 85%', serial: 20, ou: 5,
@@ -49,9 +51,18 @@ const columns = {
           { value: 1, fields: ['comAmount', 'orderRealTotal'] },
           { value: 2, fields: ['comAmount', 'orderRealTotal'] }
         ] } },
-    { field: 'useropts', stype: 'opt', ispush: true, name: '操作', fixed: 'right', width: 80,
+    { field: 'settleStatus', name: '结算状态', width: 70, formatter: 'orderStatus', search: { type: 'select', obj: 'orderStatus', placeholder: '结算状态' }, detail: { type: 'span', model: 'select', isDisabled: true, obj: 'orderStatus', style: 'width: 85%', serial: 19, ou: 5 } },
+    { field: 'useropts', stype: 'opt', ispush: true, name: '操作', fixed: 'right', width: 180,
+      list: scope => {
+      	const row = scope.row || {}
+        const btns = [{ type: 'detail', name: '详情' }, { type: 'info', name: '操作记录' }]
 
-    list: [{ type: 'detail', name: '详情', }] }
+        if (row.settleStatus === 2) {
+          btns.unshift({ type: 'back', name: '退款执行' })
+        }
+
+        return btns
+      } }
   ],
 
   buyOrder: [

@@ -151,10 +151,10 @@ export function utilsOrderStatus() {
   return [
     { value: 1, label: '待支付' },
     { value: 2, label: '已支付' },
-    { value: 3, label: '取消' },
+    { value: 3, label: '已取消' },
     { value: 4, label: '支付中' },
     { value: 5, label: '退款中' },
-    { value: 6, label: '退款完成' }
+    { value: 6, label: '已退款' }
   ]
 }
 
@@ -281,6 +281,7 @@ export function utilsTradeType() {
     { value: 16, label: '返现划出' },
     { value: 17, label: '返现圈出退回' },
     { value: 18, label: '返现圈出' },
+    { value: 20, label: '微信退回' },
     { value: 21, label: '直销退款' },
     { value: 22, label: '直销收款' }
   ]
@@ -317,8 +318,8 @@ export function utilsPayType() {
   return [
     { value: 0, label: '余额' },
     { value: 1, label: '微信' },
-    { value: 2, label: '微信+余额' },
-    { value: 11, label: '组合支付' }
+    { value: 2, label: '微信+余额' }
+    // { value: 11, label: '组合支付' }
   ]
 }
 export function utilsTradeModeType() {

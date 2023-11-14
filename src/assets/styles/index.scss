@@ -51,3 +51,12 @@
 #app .main-container {
   margin-left: 210px;
 }
+
+.form-line.el-form-item {
+  width: calc(50% - 10px);
+  margin-bottom: 0;
+
+  .el-form-item__label {
+    text-align: left;
+  }
+}

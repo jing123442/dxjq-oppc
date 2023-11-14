@@ -21,6 +21,16 @@ export async function $unbindPhone (data) {
   return await R({ url: 'pay/member/unbind_phone', data })
 }
 
+// 提交退款
+export async function $payRefundExecute (data) {
+  return await R({ url: 'allinpay/refund/execute', data })
+}
+
+// 退款订单信息
+export async function $payRefundLog (data) {
+  return await R({ url: 'allinpay/refund/log', data })
+}
+
 export async function $bindPhone (data) {
   return await R({ url: 'pay/member/bind_phone', data })
 }
