@@ -29,7 +29,7 @@
             accept=".png,.jpg,.bmp"
             :on-exceed="handleExceed">
             <el-button size="small" type="primary">上传退款审批凭证</el-button>
-            <div slot="tip" class="el-upload__tip">支持 png、jpg、bmp 格式图片，最多 9 张</div>
+            <div slot="tip" class="el-upload__tip"><span style="color: red;">*</span> 支持 png、jpg、bmp 格式图片，最多 9 张</div>
           </el-upload>
         </el-form-item>
       </el-form>

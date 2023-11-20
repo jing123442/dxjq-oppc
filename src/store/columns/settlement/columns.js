@@ -86,8 +86,8 @@ const columns = {
     { field: 'carNumber', name: '车牌号'},
     { field: 'driverName', name: '司机姓名' },
     { field: 'gasstationName', name: '加气站' },
-    { field: 'orderStatus', name: '订单状态', formatter: 'orderStatus', filters: [{ text: '待支付', value: 1 }, { text: '已支付', value: 2 }, { text: '取消', value: 3 }] },
-    { field: 'payType', name: '支付方式', formatter: 'payType', filters: [{ text: '余额支付', value: 0 }, { text: '微信支付', value: 1 }, { text: '余额+微信支付', value: 2 }, { text: '组合支付', value: 11 }] }
+    { field: 'orderStatus', name: '订单状态', formatter: 'orderStatus', filters: [{ text: '待支付', value: 1 }, { text: '已支付', value: 2 }, { text: '已取消', value: 3 }] },
+    { field: 'payType', name: '支付方式', formatter: 'payType', filters: [{ text: '余额支付', value: 0 }, { text: '微信支付', value: 1 }, { text: '余额+微信支付', value: 2 }] }
   ],
   directWithdApply: [
     { field: 'gasstationName', name: '加气站', fixed: 'left',
