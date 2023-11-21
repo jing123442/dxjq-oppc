@@ -2,6 +2,7 @@
   <div class="template-main">
     <!--        :custTableTitle="'商品列表'"-->
     <em-table-list
+        v-if="dataList1.length > 0"
         ref="dxLine1"
         :tableListName="'dxLine'"
         :authButtonList="authButtonList"
@@ -20,6 +21,7 @@
     ></em-table-list>
     <em-table-list
         ref="dxLine2"
+        v-if="dataList2.length > 0"
         style="margin-top: 10px"
         :tableListName="'dxLine'"
         :authButtonList="authButtonList"
@@ -39,6 +41,7 @@
     <em-table-list
         ref="dxLine3"
         style="margin-top: 10px"
+        v-if="dataList3.length > 0"
         :tableListName="'dxLine'"
         :authButtonList="authButtonList"
         :buttonsList="buttonsList"

@@ -63,7 +63,7 @@
           </el-table-column>
           <el-table-column label="审批凭证">
             <template slot-scope="scope">
-              <el-image v-if="scope.row.refundUrl" :preview-src-list="scope.row.refundUrl.split(',')">查看</el-image>
+              <el-image v-if="scope.row.refundUrl" :src="refundUrl(scope.row, 1)" :preview-src-list="refundUrl(scope.row)">查看</el-image>
               <div v-else>--</div>
             </template>
           </el-table-column>
@@ -107,10 +107,10 @@ export default {
         unit: ' 元'
       }, {
         name: '加气总优惠：',
-        field: 'totalServiceFee',
+        field: 'totalDiffAmount',
         unit: ' 元'
       }],
-      totalInfo: { totalGas: 0, amount: 0, totalServiceFee: 0 },
+      totalInfo: { totalGas: 0, amount: 0, totalDiffAmount: 0 },
       buttonsList: [/* { type: 'primary', icon: '', event: 'add_info', name: '增加企业' } */],
       detailRow: {},
       mode_curr_detail_list: [],
@@ -145,6 +145,13 @@ export default {
   mounted: function () {
   },
   methods: {
+    refundUrl(row, type = 2) {
+      if (row.refundUrl) {
+        const tmpUrl = row.refundUrl.split(',')
+        return type === 1 ? tmpUrl[0] : tmpUrl
+      }
+      return type === 1 ? '' : []
+    },
     setFileList(fileList) {
       const tmp = []
       fileList.forEach(item => {
