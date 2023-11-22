@@ -1,6 +1,6 @@
 <template>
   <div class="template-main">
-    <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="'top: 158px;'"></table-total-data>
+    <table-total-data :dataList="dataList" :rowData="totalInfo" :headerStyle="dataStyle"></table-total-data>
     <em-table-list ref="tables" :tableListName="'order'" :authButtonList="authButtonList"
     :buttonsList="buttonsList" :axios="axios" :queryCustURL="queryCustURL"
     :responseSuccess="response_success" :queryParam="queryParams"
@@ -127,7 +127,8 @@ export default {
       dialogBackVisible: false,
 
       tableData: [],
-      dialogInfoVisible: false
+      dialogInfoVisible: false,
+      dataStyle: 'display: none'
     })
   },
   computed: {
@@ -213,7 +214,7 @@ export default {
     },
     settleStatusToLabel(type) {
       const settleList = utilsOrderStatus()
-      const tmpInfo = settleList.find(item => item.value === type)
+      const tmpInfo = settleList.find(item => Number(item.value) === Number(type))
 
       return tmpInfo ? tmpInfo.label : '-'
     },
@@ -233,6 +234,9 @@ export default {
         if (response.code === 0) {
           if (response.data && response.data.totalInfo) {
             this.totalInfo = response.data.totalInfo
+
+            const dom = this.$refs.tables.$children[1].$el.getBoundingClientRect()
+            this.dataStyle = `top: ${dom.top + 20 - 100}px`
           }
         }
       } else {

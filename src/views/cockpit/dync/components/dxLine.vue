@@ -94,6 +94,9 @@ export default {
     afterTableData(res) {
       const { page, ...dataInfo } = res.data
       this.totalInfo = dataInfo || {}
+
+      this.totalInfo.loadQty = this.totalInfo.loadQty || 0
+      this.totalInfo.buyCost = this.totalInfo.buyCost || 0
     },
     onReqParams(type, _this, callback) {
       const params = Object.assign({}, callbackPagesInfo(_this), { param: { dateParam: {} } })
