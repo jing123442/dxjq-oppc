@@ -53,10 +53,14 @@ const columns = {
     { field: 'useropts', stype: 'opt', ispush: true, name: '操作', fixed: 'right', width: 180,
       list: scope => {
       	const row = scope.row || {}
-        const btns = [{ type: 'detail', name: '详情' }, { type: 'info', name: '操作记录' }]
+        const btns = [{ type: 'detail', name: '详情' }]
 
         if (row.settleStatus == 2) {
           btns.unshift({ type: 'back', name: '退款执行' })
+        }
+
+        if (!row.orderId.startsWith('-')) {
+          btns.push({ type: 'info', name: '操作记录' })
         }
 
         return btns
