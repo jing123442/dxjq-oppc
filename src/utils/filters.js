@@ -23,6 +23,8 @@ const cardValidDatetime = (value, row) => {
   return (row.idCardValidStartDate ? row.idCardValidStartDate : '') + '-' + (row.idCardValidEndDate ? row.idCardValidEndDate : '')
 }
 
+const cardInfo = value => value || '-'
+
 const gasstationImage = item => {
   return item
 }
@@ -158,5 +160,6 @@ export {
   formateZeroToBar,
   cardValidDatetime,
   formateTextDeleteNULL,
-  tableContractStatusToLabel
+  tableContractStatusToLabel,
+  cardInfo
 }

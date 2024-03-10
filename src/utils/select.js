@@ -147,6 +147,55 @@ export function utilsAccountType() {
   ]
 }
 
+// 气价监控里type
+export function utilsControlType() {
+  return [
+    { value: 0, label: '大象线上' },
+    { value: 1, label: '线下优惠' }
+  ]
+}
+
+export function utilsFundType() {
+  return [
+    { value: 1, label: '充值' },
+    { value: 2, label: '圈出' },
+    { value: 3, label: '圈进' },
+    { value: 4, label: '提现' },
+    { value: 5, label: '收入' },
+    { value: 6, label: '利润' },
+    { value: 7, label: '平台费' },
+    { value: 8, label: '调增' },
+    { value: 9, label: '调减' },
+    { value: 10, label: '提现退回' },
+    { value: 11, label: '平台费退回' },
+    { value: 12, label: '收入退回' },
+    { value: 13, label: '利润退回' },
+    { value: 26, label: '购气款' },
+    { value: 27, label: '购气款退回' }
+
+  ]
+}
+
+export function utilsFundTypeDs() {
+  return [
+    { value: 1, label: '充值' },
+    { value: 2, label: '圈出' },
+    { value: 3, label: '圈进' },
+    { value: 4, label: '提现' },
+    { value: 5, label: '收入' },
+    { value: 6, label: '服务费' },
+    { value: 7, label: '平台费' },
+    { value: 8, label: '调增' },
+    { value: 9, label: '调减' },
+    { value: 10, label: '提现退回' },
+    { value: 11, label: '平台费退回' },
+    { value: 12, label: '收入退回' },
+    { value: 13, label: '服务费退回' },
+    { value: 26, label: '购气款' },
+    { value: 27, label: '购气款退回' }
+  ]
+}
+
 export function utilsOrderStatus() {
   return [
     { value: 1, label: '待支付' },

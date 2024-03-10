@@ -15,32 +15,32 @@
 
     <!-- 气价监控 -->
     <el-dialog :title="gasName + ' · 气价监控'" :visible.sync="dialogControlVisible" width="70%" :append-to-body="true">
-
+      <control-info :orgId="orgId" v-if="dialogControlVisible" />
     </el-dialog>
 
     <!-- 盘盈亏 -->
     <el-dialog :title="gasName + ' · 盘盈亏'" :visible.sync="dialogProfitVisible" width="70%" :append-to-body="true">
-
+      <profit-info :orgId="orgId" v-if="dialogProfitVisible" />
     </el-dialog>
 
     <!-- 经销资金 -->
     <el-dialog :title="gasName + ' · 经销资金'" :visible.sync="dialogDistributeVisible" width="70%" :append-to-body="true">
-
+      <fund-info :orgId="orgId" type="1" v-if="dialogDistributeVisible" />
     </el-dialog>
 
     <!-- 直销资金 -->
     <el-dialog :title="gasName + ' · 直销资金'" :visible.sync="dialogDirectVisible" width="70%" :append-to-body="true">
-
+      <fund-info :orgId="orgId" type="2" v-if="dialogDirectVisible" />
     </el-dialog>
 
     <!-- 设备监控 -->
     <el-dialog :title="gasName + ' · 设备监控'" :visible.sync="dialogDevVisible" width="70%" :append-to-body="true">
-
+      <monitor-info orgId="orgId" v-if="dialogDevVisible" />
     </el-dialog>
 
     <!-- 现场监控 -->
     <el-dialog :title="gasName + ' · 现场监控'" :visible.sync="dialogSiteVisible" width="70%" :append-to-body="true">
-
+      <site-info orgId="orgId" v-if="dialogSiteVisible" />
     </el-dialog>
   </div>
 </template>
@@ -50,9 +50,14 @@ import { callbackPagesInfo, initVueDataOptions, isTypeof } from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { TableTotalData } from '@/components'
 import { $strategyFlagMonitorSum } from '@/service/strategy'
+import ControlInfo from '@/views/cockpit/components/controlInfo.vue'
+import ProfitInfo from '@/views/cockpit/components/profitInfo.vue'
+import MonitorInfo from '@/views/cockpit/components/monitorInfo.vue'
+import SiteInfo from '@/views/cockpit/components/siteInfo.vue'
+import FundInfo from '@/views/cockpit/components/fundInfo.vue'
 
 export default {
-  components: { TableTotalData },
+  components: { FundInfo, SiteInfo, MonitorInfo, ProfitInfo, ControlInfo, TableTotalData },
   data() {
     return initVueDataOptions(this, {
       queryCustURL: {
@@ -68,6 +73,7 @@ export default {
       },
       buttonsList: [{ type: 'primary', icon: '', event: 'send', name: '新卡发放' }],
       gasName: '',
+      orgId: '',
       dialogControlVisible: false,
       dialogProfitVisible: false,
       dialogDistributeVisible: false,
@@ -107,6 +113,7 @@ export default {
     async initData() {},
     onListEvent(type, row) {
       this.gasName = row.nickName || '-'
+      this.orgId = row.gasstationId
       if (type === 'control') {
         this.dialogControlVisible = true
       } else if (type === 'profit') {
