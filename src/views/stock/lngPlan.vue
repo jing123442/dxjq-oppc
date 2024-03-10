@@ -355,6 +355,8 @@ export default {
             return false
           }
         })
+      } else if (btnObj === 'reload') {
+        console.log('上传榜单成功。')
       } else {
         this.dialogLeaveVisible = false
       }

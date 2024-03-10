@@ -47,6 +47,12 @@ const select = {
       { value: '2', label: '否' }
     ]
   },
+  control: {
+    marketType: [
+      { value: 0, label: '一体化' },
+      { value: 1, label: '新营销' }
+    ]
+  },
   batchEdit: {
     gasstationType: utilSelectGasstationType('all'),
     districtAreaList: utilDistrictAreaList(),

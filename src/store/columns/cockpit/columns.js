@@ -181,6 +181,26 @@ const columns = {
     { field: 'offlinePrice', name: '结算价(元/公斤)', stype: 'input', inputShow: true, actionBak: { url: 'gasdata/gasstation/update/info', isConfirm: false, message: '是否保存？', params: { gasstationId: 'gasstationId', offlineGasQty: 'offlineGasQty', offlinePrice: 'offlinePrice' } },
       table: { type: 'text', nameSpan: 0, inputSpan: 24, style: 'width: 100%;', clearable: false }, iShowStatus: item => iShowStatus(item) }
   ],
+  control: [
+    { field: 'timeItem', hide: true, search: { type: 'date-picker', model: 'daterange', format: 'yyyy-MM-dd', vformat: 'yyyy-MM-dd', value: (function () { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) } },
+    { field: 'nickName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站' } },
+    { field: 'gasQty', name: '加气量(公斤)' },
+    { field: 'gasAmount', name: '加气额(元)' },
+    { field: 'avgQty', name: '日均加气量(公斤)' },
+    { field: 'time', name: '交接班时间点(时:分)' },
+    { field: 'marketType', name: '经营模式', formatter: 'marketType', search: { type: 'select', obj: 'marketType', placeholder: '经营模式' } },
+    { field: 'djCode', name: '站对接类型码', search: { type: 'text', placeholder: '站对接类型码' } },
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 360, list: () => {
+      return [
+        { type: 'control', name: '气价监控' },
+        { type: 'profit', name: '盘盈亏' },
+        { type: 'distribute', name: '经销资金' },
+        { type: 'direct', name: '直销资金' },
+        { type: 'dev', name: '设备监控' },
+        { type: 'site', name: '现场监控' },
+      ]
+      } }
+  ],
   dyncStevedor: [
     { field: 'nickName', name: '加气站', fixed: 'left', search: { type: 'text', placeholder: '请输入加气站' } },
     { field: 'buyType', name: '采购方式', search: { type: 'select', obj: 'buyType', placeholder: '采购方式' } },

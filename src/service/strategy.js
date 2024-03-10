@@ -432,3 +432,8 @@ export async function $strategyDyncDayExportData (data) {
 export async function $strategyDyncDayStatisticsItemData (data) {
   return await R({ url: 'strategy/inventory_day_statistics/get_daily_data', data })
 }
+
+// 查询站的运营监控汇总
+export async function $strategyFlagMonitorSum (data) {
+  return await R({ url: 'strategy/flag/monitor/sum', data })
+}

@@ -32,6 +32,11 @@ const getters = {
   batch_edit_column: item => columns.batchEdit,
   batch_edit_select_list: item => select.batchEdit,
 
+  cockpit_control_mode_list: item => item.app.modeDefault,
+  cockpit_control_page_status: item => app.list.control,
+  cockpit_control_column: item => columns.control,
+  cockpit_control_select_list: item => select.control,
+
   cockpit_dync_stevedor_mode_list: item => item.app.modeDefault,
   cockpit_dync_stevedor_page_status: item => app.list.dync,
   cockpit_dync_stevedor_column: item => columns.dyncStevedor,

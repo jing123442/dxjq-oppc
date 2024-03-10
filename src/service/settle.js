@@ -237,3 +237,18 @@ export async function $settleGasorderList(data) {
   return await R({ url: 'settle/gway_gasorder/list', data })
 }
 
+// 智慧数据加气站消费总趋势（物流+散户）
+export async function $settleConsumeTrendAll(data) {
+  return await R({ url: 'settle/flag_smart_data/consume_trend_all', data })
+}
+
+// 智慧数据加气站消费趋势物流选择
+export async function $settleCarriersList(data) {
+  return await R({ url: 'settle/flag_smart_data/select_carriers', data })
+}
+
+// 智慧数据加气站消费趋势（物流，carrierOrgId必传）
+export async function $settleConsumeTrend(data) {
+  return await R({ url: 'settle/flag_smart_data/consume_trend', data })
+}
+

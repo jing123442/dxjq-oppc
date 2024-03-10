@@ -194,6 +194,19 @@ export function toolsFileHeaders(_this) {
   }
 }
 
+export function currentMonthTimeArea(now) {
+  var nowYear = now.getFullYear()
+  var nowMonth = now.getMonth()
+
+  var monthStartDate = new Date(nowYear, nowMonth, 1)
+  var monthEndDate = new Date(nowYear, nowMonth + 1, 0)
+
+  return {
+    start: formatDate(monthStartDate, 'yyyy-MM-dd 00:00:00'),
+    end: formatDate(monthEndDate, 'yyyy-MM-dd 00:00:00')
+  }
+}
+
 // 请求头文件
 export function axiosRequestParams(_this) {
   return {
