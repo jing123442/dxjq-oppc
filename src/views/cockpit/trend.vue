@@ -3,7 +3,7 @@
     <div class="box-wrap">
       <div class="title">整体趋势</div>
       <div class="header-info">
-        <div style="white-space: nowrap; padding-right: 8px">交接班：{{ trendAllTime }}</div>
+        <div style="white-space: nowrap; padding-right: 8px" v-if="stationValue">交接班：{{ trendAllTime }}</div>
         <el-date-picker
           v-model="trendDate"
           @change="trendCharts()"
@@ -13,6 +13,9 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期">
         </el-date-picker>
+        <el-select v-model="stationValue" style="margin-left: 10px;width: 300px" size="mini" @change="stationChange()" placeholder="请选择加气站">
+          <el-option v-for="item in stationList" :key="item.gasstationId" :label="item.nickName" :value="item.gasstationId"></el-option>
+        </el-select>
       </div>
       <div class="charts">
         <MyChart :option="optionBar"></MyChart>
@@ -21,17 +24,7 @@
     <div class="box-wrap">
       <div class="title">物流趋势</div>
       <div class="header-info">
-        <div style="white-space: nowrap; padding-right: 8px">交接班：{{ trendTime }}</div>
-        <el-date-picker
-          v-model="trendItemDate"
-          type="daterange"
-          @change="trendData()"
-          size="mini"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期">
-        </el-date-picker>
-        <el-select v-model="carrierValue" style="margin-left: 10px" size="mini" @change="trendData()" placeholder="请选择">
+        <el-select v-model="carrierValue" style="margin-left: 10px;width: 200px" size="mini" @change="trendData()" placeholder="请选择物流公司">
           <el-option
             v-for="item in options"
             :key="item.carrierOrgId"
@@ -53,6 +46,7 @@ import MyChart from '@/components/MyChart/MyChart'
 import { $settleCarriersList, $settleConsumeTrend, $settleConsumeTrendAll } from '@/service/settle'
 import { getSessionStorage } from '@/utils/storage'
 import { currentMonthTimeArea, formatDate } from '@/utils/tools'
+import { $strategyGetStationList } from '@/service/strategy'
 
 export default {
   name: 'homeInfo',
@@ -63,6 +57,8 @@ export default {
       trendItemDate: [],
       carrierValue: '',
       options: [],
+      stationValue: '',
+      stationList: [],
       trendTime: '',
       trendAllTime: '',
       optionBar: {
@@ -292,15 +288,30 @@ export default {
     initData() {
       const { start, end } = currentMonthTimeArea(new Date())
       this.trendDate.push(start, end)
-      this.trendItemDate.push(start, end)
+      // this.trendItemDate.push(start, end)
+      this.trendCharts()
+      this.carrierList()
+
+      $strategyGetStationList({}).then(res => {
+        this.stationList = res.data || []
+
+        if (this.stationList.length > 0) {
+          this.currentStationInfo = this.stationList[0]
+          this.stationValue = this.stationList[0].gasstationId
+        }
+      })
+    },
+    stationChange() {
       this.trendCharts()
       this.carrierList()
     },
     carrierList() {
       const params = {
-        gasstationId: getSessionStorage('woporg'),
         startDate: formatDate(this.trendDate[0], 'yyyy-MM-dd'),
         endDate: formatDate(this.trendDate[1], 'yyyy-MM-dd')
+      }
+      if (this.stationValue) {
+        params.gasstationId = this.stationValue
       }
       $settleCarriersList(params).then(res => {
         this.options = res.data || []
@@ -313,9 +324,11 @@ export default {
     },
     trendCharts() {
       const params = {
-        gasstationId: getSessionStorage('woporg'),
         startDate: formatDate(this.trendDate[0], 'yyyy-MM-dd'),
         endDate: formatDate(this.trendDate[1], 'yyyy-MM-dd')
+      }
+      if (this.stationValue) {
+        params.gasstationId = this.stationValue
       }
       $settleConsumeTrendAll(params).then(res => {
         const data = res.data || []
@@ -339,8 +352,8 @@ export default {
       const params = {
         carrierOrgId: this.carrierValue,
         gasstationId: getSessionStorage('woporg'),
-        startDate: formatDate(this.trendItemDate[0], 'yyyy-MM-dd'),
-        endDate: formatDate(this.trendItemDate[1], 'yyyy-MM-dd')
+        startDate: formatDate(this.trendDate[0], 'yyyy-MM-dd'),
+        endDate: formatDate(this.trendDate[1], 'yyyy-MM-dd')
       }
       $settleConsumeTrend(params).then(res => {
         const data = res.data || []
