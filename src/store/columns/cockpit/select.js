@@ -17,7 +17,7 @@ import {
   utilsOutTimeSearch,
   utilsCreateTimeSearch,
   utilsPayCreateTimeSearch,
-  utilSelectPayTypeList
+  utilSelectPayTypeList, utilsDjCode
 } from '@/utils/select'
 
 const select = {
@@ -51,7 +51,8 @@ const select = {
     marketType: [
       { value: 0, label: '一体化' },
       { value: 1, label: '新营销' }
-    ]
+    ],
+    djCode: utilsDjCode()
   },
   batchEdit: {
     gasstationType: utilSelectGasstationType('all'),

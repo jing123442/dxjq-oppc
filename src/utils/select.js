@@ -839,6 +839,14 @@ export function utilsSource() {
   }
 }
 
+export function utilsDjCode() {
+  return {
+    url: 'strategy/flag/monitor/get_djcode',
+    node: ['data'],
+    params: {}
+  }
+}
+
 export function utilsBankList() {
   return {
     url: 'user/bank/list_by_keywords',

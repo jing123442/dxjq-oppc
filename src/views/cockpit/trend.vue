@@ -289,8 +289,6 @@ export default {
       const { start, end } = currentMonthTimeArea(new Date())
       this.trendDate.push(start, end)
       // this.trendItemDate.push(start, end)
-      this.trendCharts()
-      this.carrierList()
 
       $strategyGetStationList({}).then(res => {
         this.stationList = res.data || []
@@ -299,6 +297,9 @@ export default {
           this.currentStationInfo = this.stationList[0]
           this.stationValue = this.stationList[0].gasstationId
         }
+
+        this.trendCharts()
+        this.carrierList()
       })
     },
     stationChange() {

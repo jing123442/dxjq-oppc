@@ -189,7 +189,7 @@ const columns = {
     { field: 'avgQty', name: '日均加气量(公斤)' },
     { field: 'time', name: '交接班时间点(时:分)' },
     { field: 'marketType', name: '经营模式', formatter: 'marketType', search: { type: 'select', obj: 'marketType', placeholder: '经营模式' } },
-    { field: 'djCode', name: '站对接类型码', search: { type: 'text', placeholder: '站对接类型码' } },
+    { field: 'djCode', name: '站对接类型码', search: { type: 'select', obj: 'djCode', placeholder: '站对接类型码' } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 360, list: () => {
       return [
         { type: 'control', name: '气价监控' },

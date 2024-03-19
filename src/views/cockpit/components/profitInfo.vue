@@ -60,7 +60,7 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { dateParam: { createDateFrom: '', createDateTo: '' }, gasstationId: this.orgId } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { dateParam: {}, gasstationId: this.orgId } })
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (v !== '') params.param[k] = v
