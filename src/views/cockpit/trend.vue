@@ -44,7 +44,6 @@ import * as echarts from 'echarts'
 
 import MyChart from '@/components/MyChart/MyChart'
 import { $settleCarriersList, $settleConsumeTrend, $settleConsumeTrendAll } from '@/service/settle'
-import { getSessionStorage } from '@/utils/storage'
 import { currentMonthTimeArea, formatDate } from '@/utils/tools'
 import { $strategyGetStationList } from '@/service/strategy'
 
@@ -352,7 +351,7 @@ export default {
     trendData() {
       const params = {
         carrierOrgId: this.carrierValue,
-        gasstationId: getSessionStorage('woporg'),
+        gasstationId: this.stationValue,
         startDate: formatDate(this.trendDate[0], 'yyyy-MM-dd'),
         endDate: formatDate(this.trendDate[1], 'yyyy-MM-dd')
       }
