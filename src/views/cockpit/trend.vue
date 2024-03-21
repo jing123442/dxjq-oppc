@@ -3,7 +3,7 @@
     <div class="box-wrap">
       <div class="title">整体趋势</div>
       <div class="header-info">
-        <div style="white-space: nowrap; padding-right: 8px" v-if="stationValue">交接班：{{ trendAllTime }}</div>
+<!--        <div style="white-space: nowrap; padding-right: 8px" v-if="stationValue">交接班：{{ trendAllTime }}</div>-->
         <el-date-picker
           v-model="trendDate"
           @change="trendCharts()"
