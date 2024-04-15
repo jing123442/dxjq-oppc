@@ -242,7 +242,7 @@ const columns = {
     { field: 'uploadWeight', name: '出港重量(公斤)', nameSpan: 6, show: { type: 'text', ou: 2, value: '21450', placeholder: '请输入出港重量' }, rules: [{ required: true, message: '请输入出港重量', trigger: 'blur' }] },
     { field: 'driverName', name: '驾驶员', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入驾驶员' } },
     { field: 'lngFromCode', name: '液原地', nameSpan: 6, show: { type: 'select', subField: 'lngFromName', ou: 2, obj: 'source', placeholder: '请选择液原地' }, rules: [{ required: true, message: '请选择液原地', trigger: 'blur' }] },
-    { field: 'driverPhone', name: '驾驶员联系方式', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入驾驶员联系方式' }, rules: [{ validator: 'isValidateMobile', message: '请输入正确格式的驾驶员联系方式', trigger: 'blur' }] },
+    { field: 'driverPhone', name: '驾驶员联系方式', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入驾驶员联系方式' } },
     { field: 'leaveTime', name: '出港时间(装车结束时间)', nameSpan: 6, show: { type: 'date-picker', model: 'datetime', ou: 2, placeholder: '请选择出港时间' }, rules: [{ required: true, message: '请选择出港时间', trigger: 'blur' }] },
     { field: 'carNumber', name: '车牌号', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入车牌号' }, rules: [{ required: true, message: '请输入车牌号', trigger: 'blur' }] },
     { field: 'uploadUrl', name: '上传出港磅单', nameSpan: 6, filefield: 'file', show: { type: 'file', ou: 2, iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传出港磅单', node: [] } },

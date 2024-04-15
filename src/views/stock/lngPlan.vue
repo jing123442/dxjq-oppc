@@ -313,7 +313,7 @@ export default {
         const mins = formatDate(time, 'mm')
         const sec = formatDate(time, 'ss')
         // row.planTime
-        const val = new Date(year, mouth - 1, date, hours > 21 ? (21 - 24) : (hours - 24), mins, sec)
+        const val = new Date(year, mouth - 1, date, hours > 21 ? (21 - 24) : (hours - 24), hours > 21 ? 0 : mins, hours > 21 ? 0 : sec)
         if (row.hasOwnProperty('leaveTime')) {
           row.leaveTime = val
         } else {
@@ -328,7 +328,6 @@ export default {
           this.$set(row, 'lngFromCode', val)
         }
       }
-      console.log(row, 889922)
       this.leaveRow = row
       this.leaveRow._btn = custFormBtnList()
       this.dialogLeaveVisible = true

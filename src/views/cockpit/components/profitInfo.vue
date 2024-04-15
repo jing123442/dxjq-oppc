@@ -8,8 +8,8 @@
         <div class="item"><card-data name="当前实存" :value="calInfo.actualQty || '-'" unit="吨"></card-data></div>
         <div class="item"><card-data name="当前账存" :value="calInfo.accountQty || '-'" unit="吨"></card-data></div>
         <div class="item"><card-data name="当前盈亏量" :value="calInfo.lossQty || '-'" unit="公斤"></card-data></div>
-        <!--        <div class="item"><card-data name="盘盈亏价" :value="calInfo.avgPrice || '-'" unit="元/公斤"></card-data></div>-->
-        <!--        <div class="item"><card-data name="当前盈亏额" :value="calInfo.lossValue || '-'" unit="吨"></card-data></div>-->
+        <div class="item" v-if="menuType === 'op'"><card-data name="盘盈亏价" :value="calInfo.avgPrice || '-'" unit="元/公斤"></card-data></div>
+        <div class="item" v-if="menuType === 'op'"><card-data name="当前盈亏额" :value="calInfo.lossValue || '-'" unit="吨"></card-data></div>
       </div>
     </div>
 <!--    <div class="time-wrapper">
@@ -23,7 +23,7 @@
         end-placeholder="结束月份">
       </el-date-picker>
     </div>-->
-    <em-table-list :tableListName="'rebate'" :axios="axios" :queryCustURL="queryCustURL"
+    <em-table-list :tableListName="'rebate'" :custTableTitle="'盘盈亏'" :axios="axios" :queryCustURL="queryCustURL"
                    :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" ref="tables"
                    :page_status="page_status" :buttonsList="buttonsList" :page_column="page_column"
                    :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
@@ -38,7 +38,7 @@ import { formateTData } from '@/utils/filters'
 
 export default {
   name: 'profitInfo',
-  props: ['orgId'],
+  props: ['orgId', 'menuType'],
   components: { CardData },
   data() {
     return initVueDataOptions(this, {

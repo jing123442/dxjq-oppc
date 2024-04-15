@@ -20,7 +20,7 @@
 
     <!-- 盘盈亏 -->
     <el-dialog :title="gasName + ' · 盘盈亏'" :visible.sync="dialogProfitVisible" width="70%" :append-to-body="true">
-      <profit-info :orgId="orgId" v-if="dialogProfitVisible" />
+      <profit-info :orgId="orgId" :menu-type="'op'" v-if="dialogProfitVisible" />
     </el-dialog>
 
     <!-- 经销资金 -->

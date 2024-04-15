@@ -17,7 +17,6 @@ export default [
       {
         path: 'wisdomIndex',
         redirect: '/station/wisdomIndex',
-        hide: true,
         component: {
           render (c) { return c('router-view') }
         },
