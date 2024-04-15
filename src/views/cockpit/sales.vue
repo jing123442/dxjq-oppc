@@ -601,12 +601,12 @@
 
     <!-- 设备监控 -->
     <el-dialog :title="gasName + ' · 设备监控'" :visible.sync="dialogDevVisible" width="70%" :append-to-body="true">
-      <monitor-info orgId="orgId" v-if="dialogDevVisible" />
+      <monitor-info :orgId="orgId" v-if="dialogDevVisible" />
     </el-dialog>
 
     <!-- 现场监控 -->
     <el-dialog :title="gasName + ' · 现场监控'" :visible.sync="dialogSiteVisible" width="70%" :append-to-body="true">
-      <site-info orgId="orgId" v-if="dialogSiteVisible" />
+      <site-info :orgId="orgId" v-if="dialogSiteVisible" />
     </el-dialog>
   </div>
 </template>
@@ -848,7 +848,7 @@ export default {
         this.resetData()
       } else if (type === 'template_down') {
         $importDownloadFile('settle/gway_gasorder_adjust/download_gasorder_adjust_tpl', { orgId: this.woporg }).then((response) => {
-          const fileName = '加气站销量监控' + Date.parse(new Date()) + '.xlsx'
+          const fileName = '加气站运营管理' + Date.parse(new Date()) + '.xlsx'
           exportBlobToFiles(response, fileName)
           this.$message.success('下载成功')
         })
@@ -885,6 +885,10 @@ export default {
         this.clickRow = row
         this.showDetail = true
         this.getDetail(row.id)
+      } else if (type === 'info') {
+        this.$router.push({
+          path: '/station/stationIndex'
+        })
       } else if (type === 'control') {
         this.dialogControlVisible = true
       } else if (type === 'profit') {

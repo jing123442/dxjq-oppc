@@ -35,12 +35,12 @@
 
     <!-- 设备监控 -->
     <el-dialog :title="gasName + ' · 设备监控'" :visible.sync="dialogDevVisible" width="70%" :append-to-body="true">
-      <monitor-info orgId="orgId" v-if="dialogDevVisible" />
+      <monitor-info :orgId="orgId" v-if="dialogDevVisible" />
     </el-dialog>
 
     <!-- 现场监控 -->
     <el-dialog :title="gasName + ' · 现场监控'" :visible.sync="dialogSiteVisible" width="70%" :append-to-body="true">
-      <site-info orgId="orgId" v-if="dialogSiteVisible" />
+      <site-info :orgId="orgId" v-if="dialogSiteVisible" />
     </el-dialog>
   </div>
 </template>

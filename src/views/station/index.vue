@@ -40,12 +40,14 @@
             <card-data name="当前实存" :value="currentInfo.actualQty" unit="吨"></card-data>
           </el-col>
           <el-col :span="6">
-            <card-data name="当日入库(榜单签收)" :value="currentInfo.inQty" unit="吨">
+            <card-data name="当日入库" :value="' '" unit="">
               <div class="info-box">
                 <div class="info-item">
-                  <div class="name">设备检测</div>
+                  <div class="name">榜单签收</div>
+                  <div class="value">{{ currentInfo.inQty || '-' }}吨</div>
                 </div>
                 <div class="info-item">
+                  <div class="name">设备检测</div>
                   <div class="value">{{ currentInfo.devInQty || '-' }}吨（{{ currentInfo.devInQtyDiff }}吨）</div>
                 </div>
               </div>
@@ -541,7 +543,7 @@ export default {
   .info-item {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
   }
   .value {
     margin-left: 10px;

@@ -174,7 +174,7 @@ export default {
       }
 
       if (this.currentDate) {
-        params.data = formatDate(this.currentDate, 'yyyy-MM-dd')
+        params.date = formatDate(this.currentDate, 'yyyy-MM-dd')
       }
       // $strategySmartInventory({ date: formatDate(this.currentDate, 'yyyy-MM-dd'), gasstationId: this.gasstationId }).then(res => {
       $strategySmartInventory(params).then(res => {

@@ -40,13 +40,18 @@ const columns = {
     { field: 'dayAvgPrice', name: '日均零售价(元/吨)' },
     { field: 'amountTotal', name: '销售金额(元)' },
     { field: 'compareRate', name: '较前一日销量比', stype: 'text-style', classValueName: (row, field) => tableTextColorSaleRate(row, field) },
-    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 300, list: () => {
-        return [
-          { type: 'control', name: '气价监控' },
-          { type: 'profit', name: '盘盈亏' },
-          { type: 'dev', name: '设备监控' },
-          { type: 'site', name: '现场监控' },
-        ]
+    { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 300, list: (scope) => {
+        if (scope.row.djCode === 'DJ100') {
+          return [
+            { type: 'info', name: '详情' },
+            { type: 'control', name: '气价监控' },
+            { type: 'profit', name: '盘盈亏' },
+            { type: 'dev', name: '设备监控' },
+            { type: 'site', name: '现场监控' },
+          ]
+        }
+
+        return []
       } }
   ],
   modifyList: [
