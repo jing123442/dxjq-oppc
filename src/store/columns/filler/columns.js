@@ -48,41 +48,41 @@ const columns = {
   ],
   info: [
     { field: 'gasstationId', name: '', stype: 'checkbox', align: 'center', fixed: 'left', width: 50, hide: true, show: { type: 'hide', isNode: true, parent: 'gasstationVO' } },
-   
-    { field: 'nickName', name: '加气站名称', fixed: 'left', 
+
+    { field: 'nickName', name: '加气站名称', fixed: 'left',
     show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' },
      rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] ,
 
-    search: { type: 'text', placeholder: '请输入', findStyle: 'width: 35%', style: 'width: 100%;', 
-    findField: 'nickName' }, 
+    search: { type: 'text', placeholder: '请输入', findStyle: 'width: 35%', style: 'width: 100%;',
+    findField: 'nickName' },
     currSearch: { type: 'select', subField: 'currFieldSearch', style: 'width: 100%;',
      hideName: true, obj: 'currFieldSearch', value: 'nickName' }},
 
     //  { field: 'nickName', name: '加气站名称', nameSpan: 6, show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入加气站名称' },
     //  rules: [{ required: true, message: '请输入加气站名称', trigger: 'blur' }] },
-     
+
     { field: 'gasstationName', name: '企业名称', nameSpan: 6, fixed: 'left', show: { type: 'text', ou: 2, isNode: true, parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请输入企业名称', isDisabled: true } },
-    
-    { field: 'marketType', name: '经营模式',  formatter: 'marketType', nameSpan: 6,search: { type: 'select', obj: 'marketType', placeholder: '经营模式' }, 
+
+    { field: 'marketType', name: '经营模式',  formatter: 'marketType', nameSpan: 6,search: { type: 'select', obj: 'marketType', placeholder: '经营模式' },
     show: { type: 'select', ou: 2, obj: 'marketType', style: 'width: 90%', model: 'select',parent: 'gasstationVO', },
     rules: [{ required: true, message: '请选择经营模式', trigger: 'blur' }],
     cascaderLoder:[
       {selectField:'gasstationType',cover:1002,cancelField:'gasType',params:{marketType:[{value: 0, label: '一体化' }]}}
     ]
-  
+
   },
 
-    { field: 'openStatus', name: '营业状态', nameSpan: 4, formatter: 'businessState', search: { type: 'select', obj: 'businessState', placeholder: '营业状态' }, 
+    { field: 'openStatus', name: '营业状态', nameSpan: 4, formatter: 'businessState', search: { type: 'select', obj: 'businessState', placeholder: '营业状态' },
     show: { type: 'select', style: 'width: 90%', model: 'select', obj: 'businessState',  ou: 2 ,parent: 'gasstationVO',} },
 
 
 
-  
+
     { field: 'gasType', name: '站点类型', formatter: 'gasstationType', nameSpan: 4,
     search: { type: 'select', obj: 'gasstationType', placeholder: '站点类型' },
      show: { type: 'select', ou: 2, obj: 'gasstationType', parent: 'gasstationVO', style: 'width: 90%;', placeholder: '请选择站点类型' },
       rules: [{ required: true, message: '请选择站点类型', trigger: 'blur' }],
-   
+
     },
 
 
@@ -96,7 +96,7 @@ const columns = {
     { field: 'url', name: '加气站头像', filefield: 'file', hide: true, nameSpan: 6, show: { type: 'file', ou: 2, parent: 'gasstationVO', iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传加气站头像', node: [], rules: [{ required: true, message: '请上传加气站头像！', trigger: 'change' }] } },
     { field: 'orgPics', name: '加气站形象图', filefield: 'file', ispush: false, hide: true, nameSpan: 6, show: { type: 'file', ou: 2, limit: 6, size: 1024, iType: 'string', btnType: true, paramField: 'url', props: { url: 'picPath', name: 'picPath' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传加气站形象图', node: [], successAxios: file.state.successAxios, deleteAxios: file.state.deleteAxios, rules: [{ required: true, message: '请上传加气站形象图！', trigger: 'change' }] } },
     { field: 'introduce', hide: true, name: '加气站宣传文案', nameSpan: 6, show: { type: 'textarea', ou: 2, maxlength: 400, isWordLimit: true, style: 'width: 90%;', placeholder: '请输入加气站宣传文案' } },
-    { field: 'mobile', hide: true, name: '加气站联系电话', nameSpan: 6, 
+    { field: 'mobile', hide: true, name: '加气站联系电话', nameSpan: 6,
     show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加气站联系电话', util: '<div style="font-size: 12px;color: #efab10;">此联系电话将在加气站名片和物流公司的订单详情中显示</div>' }, rules: [{ validator: 'isValidateMobile', message: '请输入正确的加气站联系电话', trigger: 'blur' }] },
     { field: 'fillingMachineNum', hide: true, name: '加注机数量', nameSpan: 6, show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入加注机数量' } },
     { field: 'cashierNum', hide: true, name: '收银员数量', nameSpan: 6, show: { type: 'text', ou: 2, style: 'width: 90%;', placeholder: '请输入收银员数量' } },
@@ -239,10 +239,10 @@ const columns = {
     { field: 'nickName', name: '加气站名称', nameSpan: 6, show: { type: 'span', ou: 1 } },
     { field: 'planTime', name: '期望送达时间', nameSpan: 6, show: { type: 'span', ou: 1, stype: 'format', formatFun: 'formateTData all' } },
     { field: 'createNote', name: '提报备注', nameSpan: 6, show: { type: 'span', ou: 1 } },
-    { field: 'uploadWeight', name: '出港重量(公斤)', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入出港重量' }, rules: [{ required: true, message: '请输入出港重量', trigger: 'blur' }] },
-    { field: 'driverName', name: '驾驶员', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入驾驶员' }, rules: [{ required: true, message: '请输入驾驶员', trigger: 'blur' }] },
+    { field: 'uploadWeight', name: '出港重量(公斤)', nameSpan: 6, show: { type: 'text', ou: 2, value: '21450', placeholder: '请输入出港重量' }, rules: [{ required: true, message: '请输入出港重量', trigger: 'blur' }] },
+    { field: 'driverName', name: '驾驶员', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入驾驶员' } },
     { field: 'lngFromCode', name: '液原地', nameSpan: 6, show: { type: 'select', subField: 'lngFromName', ou: 2, obj: 'source', placeholder: '请选择液原地' }, rules: [{ required: true, message: '请选择液原地', trigger: 'blur' }] },
-    { field: 'driverPhone', name: '驾驶员联系方式', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入驾驶员联系方式' }, rules: [{ required: true, message: '请输入驾驶员联系方式', trigger: 'blur' }, { validator: 'isValidateMobile', message: '请输入正确格式的驾驶员联系方式', trigger: 'blur' }] },
+    { field: 'driverPhone', name: '驾驶员联系方式', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入驾驶员联系方式' }, rules: [{ validator: 'isValidateMobile', message: '请输入正确格式的驾驶员联系方式', trigger: 'blur' }] },
     { field: 'leaveTime', name: '出港时间(装车结束时间)', nameSpan: 6, show: { type: 'date-picker', model: 'datetime', ou: 2, placeholder: '请选择出港时间' }, rules: [{ required: true, message: '请选择出港时间', trigger: 'blur' }] },
     { field: 'carNumber', name: '车牌号', nameSpan: 6, show: { type: 'text', ou: 2, placeholder: '请输入车牌号' }, rules: [{ required: true, message: '请输入车牌号', trigger: 'blur' }] },
     { field: 'uploadUrl', name: '上传出港磅单', nameSpan: 6, filefield: 'file', show: { type: 'file', ou: 2, iType: 'string', btnType: true, paramField: 'url', props: { url: 'data', name: 'data' }, params: { url: 'data', name: 'data' }, action: file.state.fileUrl, headers: (typeof file.state.fileHeaders == 'function' ? file.state.fileHeaders() : file.state.fileHeaders), success: file.state.fileSuccess, listType: 'picture', style: 'width: 90%;', fileHost: file.state.fileHost, placeholder: '请上传出港磅单', node: [] } },

@@ -5,6 +5,7 @@ const app = {
     sidebar: {
       opened: true// !+sessionStorage.getItem('sidebarStatus')
     },
+    stationId: '900048339093569536',
     systemprefix: '运营管理平台',
     systemsuffix: '',
     listDefault: 29,

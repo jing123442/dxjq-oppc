@@ -589,6 +589,25 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+    <!-- 气价监控 -->
+    <el-dialog :title="gasName + ' · 气价监控'" :visible.sync="dialogControlVisible" width="70%" :append-to-body="true">
+      <control-info :orgId="orgId" v-if="dialogControlVisible" />
+    </el-dialog>
+
+    <!-- 盘盈亏 -->
+    <el-dialog :title="gasName + ' · 盘盈亏'" :visible.sync="dialogProfitVisible" width="70%" :append-to-body="true">
+      <profit-info :orgId="orgId" v-if="dialogProfitVisible" />
+    </el-dialog>
+
+    <!-- 设备监控 -->
+    <el-dialog :title="gasName + ' · 设备监控'" :visible.sync="dialogDevVisible" width="70%" :append-to-body="true">
+      <monitor-info orgId="orgId" v-if="dialogDevVisible" />
+    </el-dialog>
+
+    <!-- 现场监控 -->
+    <el-dialog :title="gasName + ' · 现场监控'" :visible.sync="dialogSiteVisible" width="70%" :append-to-body="true">
+      <site-info orgId="orgId" v-if="dialogSiteVisible" />
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -610,10 +629,14 @@ import {
   $settleGasorderWait, $settleGasorderAdjustDetail, $settleGasorderAdjustAudit, $settleGasorderList
 } from '@/service/settle'
 import { mapGetters } from 'vuex'
+import SiteInfo from './components/siteInfo.vue'
+import ProfitInfo from './components/profitInfo.vue'
+import MonitorInfo from './components/monitorInfo.vue'
+import ControlInfo from './components/controlInfo.vue'
 
 export default {
   name: 'salestime',
-  components: { TableTotalData },
+  components: { ControlInfo, MonitorInfo, ProfitInfo, SiteInfo, TableTotalData },
   data() {
     return initVueDataOptions(this, {
       updateTime: '',
@@ -762,7 +785,15 @@ export default {
           return time.getTime() > Date.now()
         }
       },
-      canUploadData: true
+      canUploadData: true,
+      gasName: '',
+      orgId: '',
+      dialogControlVisible: false,
+      dialogProfitVisible: false,
+      dialogDistributeVisible: false,
+      dialogDirectVisible: false,
+      dialogDevVisible: false,
+      dialogSiteVisible: false
     })
   },
   computed: {
@@ -789,6 +820,9 @@ export default {
   mounted: function () {},
   methods: {
     onListEvent(type, row) {
+      this.gasName = row.nickName || '-'
+      this.orgId = row.gasstationId
+
       if (type == 'query') {
         this.$refs.tables1.initDataList()
       } else if (type === 'export') {
@@ -851,6 +885,18 @@ export default {
         this.clickRow = row
         this.showDetail = true
         this.getDetail(row.id)
+      } else if (type === 'control') {
+        this.dialogControlVisible = true
+      } else if (type === 'profit') {
+        this.dialogProfitVisible = true
+      } else if (type === 'distribute') {
+        this.dialogDistributeVisible = true
+      } else if (type === 'direct') {
+        this.dialogDirectVisible = true
+      } else if (type === 'dev') {
+        this.dialogDevVisible = true
+      } else if (type === 'site') {
+        this.dialogSiteVisible = true
       }
     },
     tableDayStyle ({ row, column, rowIndex, columnIndex }) {

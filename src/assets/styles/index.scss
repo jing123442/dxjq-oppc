@@ -4,6 +4,9 @@
 @import 'iconfont/iconfont.css';
 @import 'chart';
 
+p {
+  margin: 0;
+}
 // 表配置
 .item-sign {
   white-space: nowrap;
@@ -58,5 +61,19 @@
 
   .el-form-item__label {
     text-align: left;
+  }
+}
+
+.box-wrap {
+  position: relative;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  background-color: rgba(255, 255, 255, 1);
+
+  .title {
+    padding: 13px 20px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(240, 240, 240, 1);
   }
 }

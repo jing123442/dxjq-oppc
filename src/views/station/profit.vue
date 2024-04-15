@@ -8,11 +8,11 @@
         <div class="item"><card-data name="当前实存" :value="calInfo.actualQty || '-'" unit="吨"></card-data></div>
         <div class="item"><card-data name="当前账存" :value="calInfo.accountQty || '-'" unit="吨"></card-data></div>
         <div class="item"><card-data name="当前盈亏量" :value="calInfo.lossQty || '-'" unit="公斤"></card-data></div>
-        <!--        <div class="item"><card-data name="盘盈亏价" :value="calInfo.avgPrice || '-'" unit="元/公斤"></card-data></div>-->
-        <!--        <div class="item"><card-data name="当前盈亏额" :value="calInfo.lossValue || '-'" unit="吨"></card-data></div>-->
+<!--        <div class="item"><card-data name="盘盈亏价" :value="calInfo.avgPrice || '-'" unit="元/公斤"></card-data></div>-->
+<!--        <div class="item"><card-data name="当前盈亏额" :value="calInfo.lossValue || '-'" unit="吨"></card-data></div>-->
       </div>
     </div>
-<!--    <div class="time-wrapper">
+    <div class="time-wrapper">
       <el-date-picker
         v-model="trendDate"
         @change="changeTrendDate"
@@ -22,7 +22,7 @@
         start-placeholder="开始月份"
         end-placeholder="结束月份">
       </el-date-picker>
-    </div>-->
+    </div>
     <em-table-list :tableListName="'rebate'" :axios="axios" :queryCustURL="queryCustURL"
                    :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" ref="tables"
                    :page_status="page_status" :buttonsList="buttonsList" :page_column="page_column"
@@ -37,8 +37,6 @@ import { $strategyCalInfo, $strategyStationInfo } from '@/service/strategy'
 import { formateTData } from '@/utils/filters'
 
 export default {
-  name: 'profitInfo',
-  props: ['orgId'],
   components: { CardData },
   data() {
     return initVueDataOptions(this, {
@@ -79,11 +77,11 @@ export default {
     formateTData,
     initData() {
       // 获取站信息
-      $strategyStationInfo({ gasstationId: this.orgId }).then(res => {
+      $strategyStationInfo({ gasstationId: this.gasstationId }).then(res => {
         this.stationInfo = res.data || {}
       })
 
-      $strategyCalInfo({ gasstationId: this.orgId }).then(res => {
+      $strategyCalInfo({ gasstationId: this.gasstationId }).then(res => {
         this.calInfo = res.data || {}
       })
 
@@ -107,7 +105,7 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { dateParam: { createDateFrom: formatDate(this.trendDate[0], 'yyyy-MM'), createDateTo: formatDate(this.trendDate[1], 'yyyy-MM') }, gasstationId: this.orgId } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { dateParam: { createDateFrom: formatDate(this.trendDate[0], 'yyyy-MM'), createDateTo: formatDate(this.trendDate[1], 'yyyy-MM') }, gasstationId: this.gasstationId } })
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (v !== '') params.param[k] = v
@@ -163,7 +161,7 @@ export default {
 
 .time-wrapper {
   position: absolute;
-  top: 290px;
+  top: 220px;
   right: 30px;
   z-index: 10000;
 }

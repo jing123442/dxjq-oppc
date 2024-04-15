@@ -39,11 +39,11 @@
         <el-row>
           <el-col :span="6" class="item-form">
             <p class="name">泵池温度：{{ currentInfo.poolTemp || '-' }}℃</p>
-            <!--            <p class="red">报警：储罐液位高(≥122)</p>-->
+<!--            <p class="red">报警：储罐液位高(≥122)</p>-->
           </el-col>
           <el-col :span="6" class="item-form">
             <p class="name">泵池压力：{{ currentInfo.poolPress || '-' }}</p>
-            <!--            <p class="yellow">预警：储罐压力低(≤122)</p>-->
+<!--            <p class="yellow">预警：储罐压力低(≤122)</p>-->
           </el-col>
           <el-col :span="6" class="item-form">
             <p class="name">泵后压力：{{ currentInfo.pumpBackPress || '-' }}</p>
@@ -70,11 +70,11 @@
           </el-col>
           <el-col :span="6" class="item-form">
             <p class="name">流量计流速：{{ currentInfo.flow || '-' }}</p>
-            <!--            <p class="red">报警：泵后压力高(≥122)</p>-->
+<!--            <p class="red">报警：泵后压力高(≥122)</p>-->
           </el-col>
           <el-col :span="6" class="item-form">
             <p class="name">1#枪 出口压力：{{ currentInfo.press1 || '-' }}</p>
-            <!--            <p class="red">报警：泵气浊</p>-->
+<!--            <p class="red">报警：泵气浊</p>-->
           </el-col>
         </el-row>
         <el-row style="margin-top: 16px;">
@@ -92,8 +92,7 @@ import { $strategyMonitorInfo } from '@/service/strategy'
 import { formatDate, formateTData } from '@/utils/tools'
 
 export default {
-  name: 'monitorInfo',
-  props: ['orgId'],
+  name: 'homeInfo',
   data() {
     return {
       stationInfo: {},
@@ -107,7 +106,7 @@ export default {
   },
   methods: {
     initData() {
-      $strategyMonitorInfo({ gasstationId: this.orgId }).then(res => {
+      $strategyMonitorInfo({ gasstationId: this.gasstationId }).then(res => {
         this.currentInfo = res.data || {}
       })
     },

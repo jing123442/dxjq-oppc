@@ -30,11 +30,11 @@
             </div>
             <div class="bm-content__price" v-else>
               <div class="bm-content__price-item">
-                <div class="name">平台结算价<span class="timer">({{ currentWindow.data.priceDate | formateTData('date') }})</span></div>
+                <div class="name">平台价<span class="timer">({{ currentWindow.data.priceDate | formateTData('date') }})</span></div>
                 <div class="price"><span class="text-bold-number">{{ currentWindow.data.price | currency }}</span> /公斤</div>
               </div>
               <div class="bm-content__price-item">
-                <div class="name">线下结算价<span class="timer">({{ currentWindow.data.offlinePriceDate | formateTData('date') }})</span></div>
+                <div class="name">线下挂牌价<span class="timer">({{ currentWindow.data.offlinePriceDate | formateTData('date') }})</span></div>
                 <div class="price"><span class="text-bold-number">{{ currentWindow.data.offlinePrice | currency }}</span> /公斤</div>
               </div>
             </div>
@@ -44,7 +44,8 @@
             <nt-charts v-if="currentWindow.markerWindowStatus" :webUIType="'echart'" :chartOptions="gasQtyChartOption"></nt-charts>
           </div>
           <div class="bm-bottom">
-            <el-button v-if="currentWindow.data.editInfo == 0" size="mini" type="primary" @click="infoWindowInfoEdit(currentWindow.data)" plain>情报编辑</el-button>
+            <el-button v-if="currentWindow.data.editInfo == 0 && currentWindow.data.editGas != 1" size="mini" type="primary" @click="infoWindowInfoEdit(currentWindow.data)" plain>情报编辑</el-button>
+            <el-button v-if="currentWindow.data.editGas == 1" size="mini" type="primary" @click="infoWindowDetail(currentWindow.data)" plain>详情</el-button>
             <el-button v-if="currentWindow.data.credentials" size="mini" type="primary" @click="infoWindowCredentials(currentWindow.data)" plain>情报凭证</el-button>
             <el-button v-if="gasstationCheckType(currentWindow.data.gasType) && currentWindow.data.editGas == 0" size="mini" type="primary" @click="infoWindowGasEdit(currentWindow.data)" plain>站点编辑</el-button>
           </div>
@@ -213,7 +214,7 @@ export default {
       },
       finds: {
         districtId: '',
-        gasType: null,
+        gasType: 100,
         isImportant: ''
       },
       filterGasstationName: '',
@@ -437,6 +438,12 @@ export default {
     infoWindowInfoEdit(row) {
       this.battleTitle = '编辑情报'
       this.battleDialogStatus('info', row)
+    },
+    // 详情
+    infoWindowDetail(row) {
+      this.$router.push({
+        path: '/station/stationIndex'
+      })
     },
     // 凭证图片走马灯
     infoWindowCredentials(item) {

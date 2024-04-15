@@ -50,7 +50,14 @@
   </div>
 </template>
 <script>
-import { initVueDataOptions, isTypeof, callbackPagesInfo, custFormBtnList, exportBlobToFiles } from '@/utils/tools'
+import {
+  initVueDataOptions,
+  isTypeof,
+  callbackPagesInfo,
+  custFormBtnList,
+  exportBlobToFiles,
+  formateTData, formatDate
+} from '@/utils/tools'
 import { mapGetters } from 'vuex'
 import { $strategyOrderConfirm, $strategyOrderCancel, $strategyPurchaseLeave, $strategyModifyPurchase, $strategyCheckReachPurchase, $strategyExceptionPurchase, $strategyExceptionFindPurchase, $strategyPurchaseFind, $strategyPurchaseExport, $purchaseProposeDetailFind } from '@/service/strategy'
 
@@ -297,6 +304,31 @@ export default {
     },
     // 录入磅单信息
     leaveEvent(row) {
+      if (!row.leaveTime) {
+        const time = formateTData(row.planTime, 'all')
+        const year = formatDate(time, 'yyyy')
+        const mouth = formatDate(time, 'MM')
+        const date = formatDate(time, 'dd')
+        const hours = formatDate(time, 'hh')
+        const mins = formatDate(time, 'mm')
+        const sec = formatDate(time, 'ss')
+        // row.planTime
+        const val = new Date(year, mouth - 1, date, hours > 21 ? (21 - 24) : (hours - 24), mins, sec)
+        if (row.hasOwnProperty('leaveTime')) {
+          row.leaveTime = val
+        } else {
+          this.$set(row, 'leaveTime', val)
+        }
+      }
+      if (!row.lngFromCode) {
+        const val = 'zhongshihuadongjiakou'
+        if (row.hasOwnProperty('lngFromCode')) {
+          row.lngFromCode = val
+        } else {
+          this.$set(row, 'lngFromCode', val)
+        }
+      }
+      console.log(row, 889922)
       this.leaveRow = row
       this.leaveRow._btn = custFormBtnList()
       this.dialogLeaveVisible = true

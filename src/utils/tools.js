@@ -718,3 +718,24 @@ export const checkNum = function(value, type) {
   console.log('checkPlan', checkPlan)
   return checkPlan
 }
+
+// 获取 两个日期之间天数
+export function getDaysBetween(dateString1, dateString2) {
+  var startDate = Date.parse(dateString1)
+  var endDate = Date.parse(dateString2)
+  var days = (endDate - startDate) / (1 * 24 * 60 * 60 * 1000)
+  // alert(days);
+  return days
+}
+
+// 时间限制
+export function pickerOptions() {
+  return {
+    disabledDate(time) {
+      // 这里的阈值设置为当前时间之后10天。您可以根据需要调整此值。
+      const threshold = new Date('2024-04-10 08:00:00')
+      console.log(threshold, 3333)
+      return time.getTime() < threshold.getTime()
+    }
+  }
+}

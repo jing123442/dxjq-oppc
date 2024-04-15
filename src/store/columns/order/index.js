@@ -9,8 +9,12 @@ const getters = {
   order_list_mode_list: item => app.mode.order,
   order_list_page_status: item => app.list.order,
   order_list_column: item => columns.order,
+  order_station_list_column: item => columns.orderList,
+  order_recharge_list_column: item => columns.recharge,
   order_list_select_list: item => select.order,
-  
+  order_station_list_select_list: item => select.orderList,
+  order_recharge_list_select_list: item => select.recharge,
+
   // 采购订单
   order_buy_list_mode_list: item => app.mode.order,
   order_buy_list_page_status: item => app.list.order,

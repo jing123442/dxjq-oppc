@@ -437,3 +437,52 @@ export async function $strategyDyncDayStatisticsItemData (data) {
 export async function $strategyFlagMonitorSum (data) {
   return await R({ url: 'strategy/flag/monitor/sum', data })
 }
+
+// 加气站当日时段销量
+export async function $strategyCurrentSales(data) {
+  return await R({ url: 'strategy/flag_smart_data/daytime_sales', data })
+}
+
+// 智慧数据经营趋势
+export async function $strategySmartOperate(data) {
+  return await R({ url: 'strategy/flag_smart_data/get_smart_operate', data })
+}
+
+// 查询站的气价监控信息,站id必传
+export async function $strategyPriceInfo(data) {
+  return await R({ url: 'strategy/flag/price/get_price_info', data })
+}
+
+// 重新计算盘盈亏,站id必传
+export async function $strategyCalInfo(data) {
+  return await R({ url: 'strategy/flag/adjust/cal', data })
+}
+
+// 智慧数据加气站当日时段销量
+export async function $strategyDaytimeSales(data) {
+  return await R({ url: 'strategy/flag_smart_data/daytime_sales', data })
+}
+
+// 智慧数据动态库存
+export async function $strategySmartInventory(data) {
+  return await R({ url: 'strategy/flag_smart_data/get_smart_inventory', data })
+}
+
+// 查询站的设备监控列表,站id必传
+export async function $strategyMonitorInfo(data) {
+  return await R({ url: 'strategy/flag/device/get_monitor_list', data })
+}
+
+export async function $excelOrderDownload (data) {
+  return await R({ url: 'strategy/flag_order/export_order', data, responseType: 'blob' })
+}
+
+// 查询站的当日概况信息,只传站id即可
+export async function $strategyCurrentStationInfo(data) {
+  return await R({ url: 'strategy/flag_station_info/get_overview', data })
+}
+
+// 查询站的信息，站名、对接码、交班时间、站康分,只传站id即可
+export async function $strategyStationInfo(data) {
+  return await R({ url: 'strategy/flag_station_info/get_station_info', data })
+}

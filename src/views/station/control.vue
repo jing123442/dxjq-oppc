@@ -19,8 +19,6 @@ import { mapGetters } from 'vuex'
 import CardData from '@/components/CardData.vue'
 import { $strategyPriceInfo } from '@/service/strategy'
 export default {
-  name: 'controlInfo',
-  props: ['orgId'],
   components: { CardData },
   data() {
     return initVueDataOptions(this, {
@@ -57,7 +55,7 @@ export default {
   },
   methods: {
     initData() {
-      $strategyPriceInfo({ gasstationId: this.orgId }).then(res => {
+      $strategyPriceInfo({ gasstationId: this.gasstationId }).then(res => {
         this.currentInfo = res.data || {}
       })
     },
@@ -71,7 +69,7 @@ export default {
       }
     },
     onReqParams(type, _this, callback) {
-      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasstationId: this.orgId } })
+      const params = Object.assign({}, callbackPagesInfo(_this), { param: { gasstationId: this.gasstationId } })
       if (isTypeof(_this.finds) === 'object') {
         for (var [k, v] of Object.entries(_this.finds)) {
           if (v !== '') params[k] = v
@@ -94,7 +92,6 @@ export default {
 .content-box {
   padding: 20px;
 }
-
 .box-wrap .title em {
   margin-left: 28px;
   font-style: normal;

@@ -1,6 +1,47 @@
-import { monthTimeArea, formatPeriodDate, dataPickerDefault, toolPickerOptions } from '@/utils/tools'
-
+import { monthTimeArea, formatPeriodDate, dataPickerDefault, toolPickerOptions, getDateRange, pickerOptions } from '@/utils/tools'
+var getDate = () => {
+  return [getDateRange(5).startdate, getDateRange(5).enddate]
+}
 const columns = {
+  orderList: [
+    { field: 'orderId', name: '订单号', fixed: 'left', search: { type: 'text', placeholder: '请输入订单编号/物流公司/车牌号/收银员姓名', style: 'width: 320px', findField: 'orderId' }, currSearch: { style: 'width: 110px', type: 'select', hideName: true, obj: 'fieldList', value: 'orderId' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 12 } },
+    { field: 'createTime', width: 140, name: '创建时间', stype: 'format', formatFun: 'formateTData all', search: { type: 'date-picker', model: '', value: getDate(), dtime: ['00:00:00', '23:59:59'], findField: 'createTime', timeOptions: pickerOptions(), clearable: false }, currSearch: { style: 'width: 110px', type: 'select', hideName: true, obj: 'dateFieldList', value: 'createTime' } },
+    { field: 'payTime', width: 140, name: '支付时间', stype: 'format', formatFun: 'formateTData all' },
+    { field: 'platPrice', name: '标准价(元/公斤)' },
+    { field: 'settlePrice', name: '结算价(元/公斤)' },
+    { field: 'preferPrice', name: '优惠差价(元/公斤)' },
+    { field: 'outQty', name: '加气量(公斤)' },
+    { field: 'settleValue', name: '结算金额(元)' },
+    { field: 'preferValue', name: '优惠差额(元)' },
+    // { field: 'gasQty', name: '加气量', hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 6, util: '公斤' } },
+    // { field: 'amount', name: '结算金额', hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 11, util: '元' } },
+    { field: 'carrierName', name: '物流公司', search: { type: 'text', placeholder: '请输入物流公司' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 3 } },
+    { field: 'cardNumber', name: '车牌号', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 1 } },
+    { field: 'driver', name: '驾驶员', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2 } },
+    { field: 'cashier', width: 70, name: '收银员', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 5 } },
+    // { field: 'platformPrice', name: '平台挂牌价', hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 7, util: '元/公斤' } },
+    // { field: 'actualPrice', name: '平台结算价', hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 8, util: '元/公斤' } },
+    // { field: 'carrierRebate', name: '物流公司专享优惠 ', width: 90, hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 10, util: '元' } },
+    // { field: 'amountTotal', name: '订单总金额', hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 9, util: '元', value: function(row) { return (Number(row.amount) + Number(row.discountAmount) + Number(row.carrierRebate)).toFixed(2) } } },
+    // { field: 'discountAmount', name: '优惠金额 ', hide: true, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 10, util: '元' } },
+    { field: 'orderType', stype: 'mapping', mapping: 'orderTypeStr', width: 70, name: '销售方式', search: { type: 'select', obj: 'orderTypeStr', placeholder: '销售方式' }, filters: [{ text: '大象线上', value: 1 }, { text: '线下-优惠', value: 2 }, { text: '线下-标准', value: 3 }, { value: 4, text: '团液线上' }], detail: { type: 'span', model: 'select', isDisabled: true, obj: 'orderTypeStr', style: 'width: 85%', serial: 13 } },
+    { field: 'settleStatus', width: 70, name: '结算状态', search: { type: 'select', obj: 'orderStatus', placeholder: '结算状态' }, filters: [{ text: '待支付', value: 1 }, { text: '已支付', value: 2 }, { text: '已取消', value: 3 }, { value: 4, text: '支付中' }, { value: 5, text: '退款中' }, { value: 6, text: '已退款' }], detail: { type: 'span', /*model: 'select', obj: 'orderStatus',*/ isDisabled: true, style: 'width: 85%', serial: 13 } },
+    { field: 'payType', width: 70, name: '支付方式', search: { type: 'select', obj: 'payType', placeholder: '支付方式' }, filters: [{ text: '余额支付', value: 0 }, { text: '微信支付', value: 1 }, { text: '余额+微信支付', value: 2 }], detail: { type: 'span', /*model: 'select',  obj: 'payType',*/ isDisabled: true, style: 'width: 85%', serial: 14 } },
+    { field: 'createTime', hide: true, name: '创建时间', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 16, formatFun: 'formateTData all', stype: 'format' } },
+    { field: 'payTime', hide: true, name: '支付时间', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 15, formatFun: 'formateTData all', stype: 'format' } },
+    { field: 'tradeType', name: '交易模式', search: { type: 'select', obj: 'tradeType', placeholder: '交易模式' }, detail: { type: 'span', /*model: 'select', obj: 'tradeType',*/ serial: 13, style: 'width: 85%', isDisabled: true } },
+    { field: 'useropts', stype: 'opt', ispush: false, width: 120, name: '操作', fixed: 'right', list: [{ type: 'detail', name: '详情' }, { type: 'opt', name: '操作记录' }] }
+  ],
+  recharge: [
+    { field: 'orderId', name: '订单编号', fixed: 'left', search: { type: 'text', placeholder: '请输入订单编号/付款方/加气卡号', style: 'width: 320px', findField: 'orderId' }, currSearch: { style: 'width: 110px', type: 'select', hideName: true, obj: 'fieldList', value: 'orderId' } },
+    { field: 'createDate', name: '创建时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', model: '', value: getDate(), dtime: ['00:00:00', '23:59:59'], timeOptions: pickerOptions(), findField: 'createDate', clearable: false }, currSearch: { style: 'width: 110px', type: 'select', hideName: true, obj: 'dateFieldList', value: 'createDate' } },
+    { field: 'settleDate', name: '结算时间', formatFun: 'formateTData all', width: 140, stype: 'format' },
+    { field: 'actualValue', name: '实收金额(元)' },
+    { field: 'giveValue', name: '赠送金额(元)' },
+    { field: 'carrierName', name: '付款方' },
+    { field: 'rechargeType', name: '充值类型' },
+    { field: 'cardNo', name: '加气卡号' },
+  ],
   order: [
     { field: 'orderId', name: '订单编号', fixed: 'left', detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 1, ou: 1} },
     { field: 'createDate', name: '创建时间', formatFun: 'formateTData all', width: 140, stype: 'format', search: { type: 'date-picker', placeholder: '', findStyle: 'width: 51%;height: 50px;', style: 'width: 100%;', findField: 'createDate', dtime: ['00:00:00', '23:59:59'], value: (function () { const dateObj = monthTimeArea(new Date()); return [dateObj.start, dateObj.end] }()) }, currSearch: { type: 'select', subField: 'createDateName', hideName: true, obj: 'currDataSearch', style: 'width: 100%;', value: 'createDate' }, detail: { type: 'span', isDisabled: true, style: 'width: 85%', serial: 2, formatFun: 'formateTData all', stype: 'format', ou: 1 } },
