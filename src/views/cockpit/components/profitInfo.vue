@@ -9,7 +9,7 @@
         <div class="item"><card-data name="当前账存" :value="calInfo.accountQty || '-'" unit="吨"></card-data></div>
         <div class="item"><card-data name="当前盈亏量" :value="calInfo.lossQty || '-'" unit="公斤"></card-data></div>
         <div class="item" v-if="menuType === 'op'"><card-data name="盘盈亏价" :value="calInfo.avgPrice || '-'" unit="元/公斤"></card-data></div>
-        <div class="item" v-if="menuType === 'op'"><card-data name="当前盈亏额" :value="calInfo.lossValue || '-'" unit="吨"></card-data></div>
+        <div class="item" v-if="menuType === 'op'"><card-data name="当前盈亏额" :value="calInfo.lossValue || '-'" unit="元"></card-data></div>
       </div>
     </div>
 <!--    <div class="time-wrapper">

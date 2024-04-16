@@ -48,7 +48,7 @@
                 </div>
                 <div class="info-item">
                   <div class="name">设备检测</div>
-                  <div class="value">{{ currentInfo.devInQty || '-' }}吨（{{ currentInfo.devInQtyDiff }}吨）</div>
+                  <div class="value">{{ currentInfo.devInQty || '-' }}吨（{{ Number(currentInfo.devInQtyDiff) > 0 ? '+' + currentInfo.devInQtyDiff : currentInfo.devInQtyDiff }}）</div>
                 </div>
               </div>
             </card-data>

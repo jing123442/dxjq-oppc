@@ -16,11 +16,11 @@ export default [
       { path: 'stationSite', component: inImport('station/site'), name: 'stationSite', meta: { title: '现场监控', noCache: false } },
       {
         path: 'wisdomIndex',
-        redirect: '/station/wisdomIndex',
+        redirect: '/station/wisdomIndex/stationWisdom',
         component: {
           render (c) { return c('router-view') }
         },
-        name: 'wisdomIndex',
+        name: 'subWisdomIndex',
         meta: { title: '智慧数据', icon: 'icon-gongnengguanli', noCache: false },
         children: [
           { path: 'stationWisdom', component: inImport('station/wisdom'), name: 'stationWisdom', meta: { title: '消费趋势', icon: 'icon-gongnengguanli', noCache: false } },
@@ -30,7 +30,7 @@ export default [
       {
         path: 'stationOrderIndex',
         name: 'stationOrderIndex',
-        redirect: '/station/stationOrderIndex',
+        redirect: '/station/stationOrderIndex/stationOrder',
         component: {
           render (c) { return c('router-view') }
         },

@@ -369,7 +369,7 @@ export default {
                 lngFromCode: row.lngFromCode,
                 lngFromName: row.lngFromName,
                 driverPhone: row.driverPhone,
-                leaveTime: row.leaveTime,
+                leaveTime: formatDate(row.leaveTime, 'yyyy-MM-dd hh:mm:ss'),
                 carNumber: row.carNumber,
                 trailerNumber: row.trailerNumber
               }
