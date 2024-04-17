@@ -731,11 +731,11 @@ export function getDaysBetween(dateString1, dateString2) {
 // 时间限制
 export function pickerOptions() {
   return {
-    disabledDate(time) {
-      // 这里的阈值设置为当前时间之后10天。您可以根据需要调整此值。
-      const threshold = new Date('2024-04-10 08:00:00')
-      console.log(threshold, 3333)
-      return time.getTime() < threshold.getTime()
-    }
+    // disabledDate(time) {
+    //   // 这里的阈值设置为当前时间之后10天。您可以根据需要调整此值。
+    //   const threshold = new Date('2024-04-10 08:00:00')
+    //   console.log(threshold, 3333)
+    //   return time.getTime() < threshold.getTime()
+    // }
   }
 }

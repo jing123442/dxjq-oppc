@@ -694,6 +694,7 @@ export default {
       }
     },
     gasQtyChartDataChart(data) {
+      console.log(data, 88776666)
       this.gasQtyChartOption = {
         xAxisDel: true,
         yAxisDel: true,
@@ -741,11 +742,14 @@ export default {
             label: {
               show: true,
               position: 'outside',
-              formatter: function(parmas) {
-                const dataTime = parmas.name === '平台' ? data.gasQtyDate : data.offlineGasQtyDate
-
-                return formateZeroToBar(parmas.value, 'no') + '吨 (' + (parmas.percent ? parmas.percent + '%' : '-') + ')\n(' + formatDate(dataTime, 'yyyy-MM-dd') + ')'
-              }
+              formatter: '{c}吨({d}%)\n'
+              /* + formatDate(`${b === '平台' ? data.gasQtyDate : data.offlineGasQtyDate}`, 'yyyy-MM-dd') */
+              // formatter(params) {
+              //   console.log(params.name, 333333)
+              //   const dataTime = params.name === '平台' ? data.gasQtyDate : data.offlineGasQtyDate
+              //
+              //   return formateZeroToBar(params.value, 'no') + '吨 (' + (params.percent ? params.percent + '%' : '-') + ')\n(' + formatDate(dataTime, 'yyyy-MM-dd') + ')'
+              // }
             },
             labelLine: {
               normal: {
