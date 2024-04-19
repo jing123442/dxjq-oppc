@@ -820,8 +820,8 @@ export default {
   mounted: function () {},
   methods: {
     onListEvent(type, row) {
-      this.gasName = row.nickName || '-'
-      this.orgId = row.gasstationId
+      this.gasName = row ? row.nickName || '-' : '-'
+      this.orgId = row ? row.gasstationId : '-'
 
       if (type == 'query') {
         this.$refs.tables1.initDataList()
