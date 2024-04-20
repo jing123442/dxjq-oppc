@@ -12,7 +12,7 @@
         <div class="item" v-if="menuType === 'op'"><card-data name="当前盈亏额" :value="calInfo.lossValue || '-'" unit="元"></card-data></div>
       </div>
     </div>
-<!--    <div class="time-wrapper">
+    <div class="time-wrapper">
       <el-date-picker
         v-model="trendDate"
         @change="changeTrendDate"
@@ -22,7 +22,7 @@
         start-placeholder="开始月份"
         end-placeholder="结束月份">
       </el-date-picker>
-    </div>-->
+    </div>
     <em-table-list :tableListName="'rebate'" :custTableTitle="'盘盈亏'" :axios="axios" :queryCustURL="queryCustURL"
                    :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" ref="tables"
                    :page_status="page_status" :buttonsList="buttonsList" :page_column="page_column"
@@ -164,7 +164,7 @@ export default {
 .time-wrapper {
   position: absolute;
   top: 290px;
-  right: 30px;
+  right: 50px;
   z-index: 10000;
 }
 </style>

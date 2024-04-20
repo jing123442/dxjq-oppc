@@ -54,7 +54,7 @@ import * as echarts from 'echarts'
 import MyChart from '@/components/MyChart/MyChart'
 import { $settleCarriersList, $settleConsumeTrend, $settleConsumeTrendAll } from '@/service/settle'
 import { $strategySmartInventory } from '@/service/strategy'
-import { pickerOptions, dataPickerDefault, formatDate } from '@/utils/tools'
+import { pickerOptions, currentMonthTimeArea, formatDate } from '@/utils/tools'
 
 export default {
   name: 'homeInfo',
@@ -295,9 +295,9 @@ export default {
   methods: {
     pickerOptions,
     initData() {
-      const { start, end } = dataPickerDefault(new Date('2024-04-10 08:00:00'), -30)
-      this.trendDate.push(end, start)
-      this.trendItemDate.push(end, start)
+      const { start, end } = currentMonthTimeArea(new Date())
+      this.trendDate.push(start, end)
+      this.trendItemDate.push(start, end)
       this.trendCharts()
       this.carrierList()
 

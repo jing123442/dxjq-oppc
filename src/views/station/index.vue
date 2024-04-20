@@ -97,7 +97,7 @@ import {
   $strategySmartOperate,
   $strategyStationInfo
 } from '@/service/strategy'
-import { dataPickerDefault, formatDate, pickerOptions } from '@/utils/tools'
+import { currentMonthTimeArea, formatDate, pickerOptions } from '@/utils/tools'
 
 export default {
   name: 'homeInfo',
@@ -392,8 +392,8 @@ export default {
         this.optionBarOnly.series[0].data = barData
       })
       // 智慧数据经营趋势
-      const { start, end } = dataPickerDefault(new Date('2024-04-10 08:00:00'), -30)
-      this.trendDate.push(end, start)
+      const { start, end } = currentMonthTimeArea(new Date())
+      this.trendDate.push(start, end)
       this.trendCharts()
     },
     trendCharts() {
