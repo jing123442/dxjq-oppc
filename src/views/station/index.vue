@@ -23,7 +23,7 @@
             <card-data name="当日加气量" :value="currentInfo.qty" unit="公斤"></card-data>
           </el-col>
           <el-col :span="6">
-            <card-data name="当日加气额" :value="currentInfo.sale" unit="万元"></card-data>
+            <card-data name="当日加气额" :value="currentInfo.sale" unit="元"></card-data>
           </el-col>
           <el-col :span="6">
             <card-data name="当日销售均价" :value="currentInfo.avgPrice" :compare="currentInfo.avgPriceStatus" unit="元/公斤"></card-data>
