@@ -43,7 +43,7 @@ const app = {
     ],
     lngPlanCheckInfo: [
       { ou: 1, name: '计划详情', status: 3 },
-      { ou: 2, name: '核对到站榜单', status: 3 }
+      { ou: 2, name: '核对到站磅单', status: 3 }
     ],
     lngPlanAnomalousInfo: [
       { ou: 1, name: '计划详情', status: 3 },

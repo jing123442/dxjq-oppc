@@ -1,5 +1,6 @@
 <template>
   <el-breadcrumb class="app-breadcrumb" separator="/">
+    <StationName v-show="isName" />
     <transition-group name="breadcrumb">
       <div v-for="(item,index)  in levelList" :key="item.path">
         <el-breadcrumb-item v-if='item.meta.title'>
@@ -12,7 +13,10 @@
   </el-breadcrumb>
 </template>
 <script>
+import StationName from '@/components/StationName.vue'
+
 export default {
+  components: { StationName },
   created() {
     this.getBreadcrumb()
   },
@@ -26,11 +30,20 @@ export default {
       this.getBreadcrumb()
     }
   },
+  computed: {
+    isName() {
+      const names = ['stationStock', 'stationWisdom', 'stationSite', 'stationMonitor', 'stationRecharge', 'stationOrder', 'stationProfit', 'stationControl']
+
+      if (names.includes(this.$route.name)) {
+        return true
+      }
+      return false
+    }
+  },
   methods: {
     getBreadcrumb() {
       let matched = this.$route.matched.filter(item => item.name)
 
-      console.log(matched, 888999)
       const first = matched[0]
       if (first && first.name !== 'home') {
         matched = [].concat(matched)
@@ -38,7 +51,6 @@ export default {
         matched = [{ path: '/home/index', meta: { title: '首页' } }]
       }
 
-      console.log(matched, 44333)
       this.levelList = matched
     }
   }

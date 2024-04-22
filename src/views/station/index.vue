@@ -43,12 +43,12 @@
             <card-data name="当日入库" :value="' '" unit="">
               <div class="info-box">
                 <div class="info-item">
-                  <div class="name">榜单签收</div>
+                  <div class="name">磅单签收</div>
                   <div class="value">{{ currentInfo.inQty || '-' }}吨</div>
                 </div>
                 <div class="info-item">
                   <div class="name">设备检测</div>
-                  <div class="value">{{ currentInfo.devInQty || '-' }}吨（{{ Number(currentInfo.devInQtyDiff) > 0 ? '+' + currentInfo.devInQtyDiff : currentInfo.devInQtyDiff }}）</div>
+                  <div class="value">{{ currentInfo.devInQty || '-' }}吨({{ Number(currentInfo.devInQtyDiff) > 0 ? '+' + currentInfo.devInQtyDiff : currentInfo.devInQtyDiff }})</div>
                 </div>
               </div>
             </card-data>
@@ -544,6 +544,10 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+
+    .value {
+      font-size: 14px;
+    }
   }
   .value {
     margin-left: 10px;

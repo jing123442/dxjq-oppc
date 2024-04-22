@@ -210,7 +210,7 @@ const columns = {
     { field: 'carNumber', name: '车牌号', hide: true, nameSpan: 6, detail: { type: 'span', serial: 15, ou: 1 } },
     { field: 'trailerNumber', name: '挂牌号', hide: true, nameSpan: 6, detail: { type: 'span', serial: 16, ou: 1 } },
     { field: 'uploadUrl', name: '出港磅单', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 17, ou: 1 } },
-    { field: 'downloadUrl', name: '到站榜单', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 18, ou: 1 } },
+    { field: 'downloadUrl', name: '到站磅单', hide: true, nameSpan: 6, detail: { type: 'span', model: 'img', serial: 18, ou: 1 } },
     { field: 'useropts', stype: 'opt', ispush: false, name: '操作', fixed: 'right', width: 250, list: params => buttonLNGPlanList(params) }
   ],
   // 自营站全量库存

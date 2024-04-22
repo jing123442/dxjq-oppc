@@ -387,7 +387,7 @@ export default {
           }
         })
       } else if (btnObj === 'reload') {
-        console.log('上传榜单成功。')
+        console.log('上传磅单成功。')
       } else {
         this.dialogLeaveVisible = false
       }

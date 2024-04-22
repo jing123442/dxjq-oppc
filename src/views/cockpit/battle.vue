@@ -180,7 +180,7 @@ import {
   $gasdataGasstationBazaarAnalyses
 } from '@/service/gasdata'
 import { $districtList, $userFindConfigAreaList, $userDistrictUserList } from '@/service/user'
-import { currency, formatDate, formateZeroToBar } from '@/utils/filters'
+import { currency, formateZeroToBar } from '@/utils/filters'
 import { utilSelectGasstationType } from '@/utils/select'
 import { mapGetters } from 'vuex'
 import { arrayResetSort, initVueDataOptions, isHttpHeaderURL, trim } from '@/utils/tools'
@@ -280,6 +280,13 @@ export default {
   mounted() {
     // 重置地图高度
     this.mapHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+
+    setTimeout(() => {
+      // 获取桃林站
+      const initStation = this.gasstationList && this.gasstationList.find(item => item.gasstationId === '900048339093569536')
+      console.log(initStation)
+      initStation && this.markerClickEvent(initStation)
+    }, 500)
   },
   methods: {
     // 初始化数据
@@ -694,7 +701,6 @@ export default {
       }
     },
     gasQtyChartDataChart(data) {
-      console.log(data, 88776666)
       this.gasQtyChartOption = {
         xAxisDel: true,
         yAxisDel: true,
