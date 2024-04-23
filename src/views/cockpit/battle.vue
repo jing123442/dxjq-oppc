@@ -45,7 +45,7 @@
           </div>
           <div class="bm-bottom">
             <el-button v-if="currentWindow.data.editInfo == 0 && currentWindow.data.editGas != 1" size="mini" type="primary" @click="infoWindowInfoEdit(currentWindow.data)" plain>情报编辑</el-button>
-            <el-button v-if="currentWindow.data.editGas == 1" size="mini" type="primary" @click="infoWindowDetail(currentWindow.data)" plain>详情</el-button>
+            <el-button v-if="currentWindow.data.editGas == 1" size="mini" type="primary" @click="infoWindowDetail(currentWindow.data)" plain>智慧单站</el-button>
             <el-button v-if="currentWindow.data.credentials" size="mini" type="primary" @click="infoWindowCredentials(currentWindow.data)" plain>情报凭证</el-button>
             <el-button v-if="gasstationCheckType(currentWindow.data.gasType) && currentWindow.data.editGas == 0" size="mini" type="primary" @click="infoWindowGasEdit(currentWindow.data)" plain>站点编辑</el-button>
           </div>
