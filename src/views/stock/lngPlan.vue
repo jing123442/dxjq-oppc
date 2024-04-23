@@ -511,11 +511,13 @@ export default {
             tmpDetailInfo['operatorType' + item.type + '_' + index] = item.typeName
           }
           tmpDetailCol.push({ field: 'operatorName' + item.type + '_' + index, name: '操作人', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
-          tmpDetailCol.push({ field: 'operatorTime' + item.type + '_' + index, name: item.operateTimeName, hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index, formatFun: 'formateTData all', stype: 'format' } })
+          tmpDetailCol.push({ field: 'operatorTime' + item.type + '_' + index, name: item.type == 125 ? '签收上报时间' : item.operateTimeName, hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index, formatFun: 'formateTData all', stype: 'format' } })
 
           tmpDetailInfo['operatorName' + item.type + '_' + index] = item.operatorName
           tmpDetailInfo['operatorTime' + item.type + '_' + index] = item.operatorTime
           if (item.type == 125) {
+            tmpDetailCol.push({ field: 'reachTime' + item.type + '_' + index, name: '实际签收时间', hide: true, nameSpan: 6, detail: { type: 'span', serial: (20 + Number(index)), ou: item.type + '_' + index } })
+            tmpDetailInfo['reachTime' + item.type + '_' + index] = data.purchase.reachTime
             tmpDetailInfo.operatorReachTime = item.operatorTime
           }
 
