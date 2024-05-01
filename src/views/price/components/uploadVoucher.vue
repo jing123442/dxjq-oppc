@@ -1,24 +1,27 @@
 <template>
     <div>
       <el-upload
-        :key="index"
         :action="'#'"
+        :auto-upload="false"
         class="fileBox"
-        list-type="none"
-        accept=".jpg,.png,bmp"
+        list-type="picture-card"
+        accept=".jpg,.png,.bmp"
         :multiple="true"
-              :limit="9"
-              :show-file-list="false"
-              :on-change="(file, fileList) => changeFile(file, fileList, index)"
-              :auto-upload="false">
-              <div slot="default">
-                <img :src="item.path ? item.path : item.defaultPath" alt="">
-              </div>
-            </el-upload>
-        </div>
+        :limit="9"
+        :on-change="changeFile"
+        >
+      </el-upload>
+    </div>
 </template>
 <script>
 export default {
+  name: 'ImgUpload',
+  props: {
+    max: {
+      type: Number,
+      default: 3
+    }
+  },
   data () {
     return {
       imgList: [{
@@ -31,9 +34,10 @@ export default {
     }
   },
   methods: {
-    changeFile(file, fileList, index) {
+    changeFile(file, fileList) {
       const fileD = new FormData()
       fileD.append('file', file.raw)
+      console.log(fileList)
       console.log(file)
     //   $upload(fileD).then(res => {
     //     if (res.data.code === 0) {
