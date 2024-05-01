@@ -2,8 +2,8 @@
   <div class="template-main">
     <em-table-list :tableListName="'listing'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" ref="tables" :page_status="page_status" :buttonsList="buttonsList" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog :title="`${currRow.nickName}`" :visible.sync="dialogMeasureVisible" width="80%" :append-to-body="true">
-      <h3>单站调价（单位：元/公斤）</h3>
-      <el-form ref="ruleForm" :inline="true" :model="priceConfigPlan" :rules="rules" class="demo-form-inline">
+      <PriceAdjustment :stations="['这个站', '那个站']"></PriceAdjustment>
+      <!-- <el-form ref="ruleForm" :inline="true" :model="priceConfigPlan" :rules="rules" class="demo-form-inline">
         <el-form-item label="零售价" prop="platformPrice">
           <el-input v-model="priceConfigPlan.platformPrice" placeholder="0.000" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'platformPrice')"></el-input>
           <div :class="{ 'input-has-mask': noEdit }"></div>
@@ -49,7 +49,7 @@
           <el-button @click="onCancel">取消</el-button>
           <el-button type="primary" @click="onSubmit">确定</el-button>
         </el-form-item>
-      </el-form>
+      </el-form> -->
     </el-dialog>
     <el-dialog :title="`${currRow.nickName} 调价记录`" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
       <em-table-list v-if="dialogChangeVisible" :custTableTitle="`${currRow.nickName} 调价记录`" :tableListName="'listingLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="log_select_list" @onReqParams="onReqLogParams"></em-table-list>
@@ -60,7 +60,11 @@
 import { initVueDataOptions, callbackPagesInfo, isTypeof, calc, handleInputNumber, formateTData } from '@/utils/tools'
 import { $priceConfigPlan } from '@/service/strategy'
 import { mapGetters } from 'vuex'
+import PriceAdjustment from '../components/priceAdjustment.vue'
 export default {
+  components: {
+    PriceAdjustment
+  },
   name: 'snpRetail',
   data() {
     return initVueDataOptions(this, {
