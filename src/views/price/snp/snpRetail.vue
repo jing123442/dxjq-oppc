@@ -1,55 +1,9 @@
 <template>
   <div class="template-main">
     <em-table-list :tableListName="'listing'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" ref="tables" :page_status="page_status" :buttonsList="buttonsList" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
+    <newTableList :columns="tableColumns" :data="tableData"></newTableList>
     <el-dialog :title="`${currRow.nickName}`" :visible.sync="dialogMeasureVisible" width="80%" :append-to-body="true">
       <PriceAdjustment :stations="['这个站', '那个站']"></PriceAdjustment>
-      <!-- <el-form ref="ruleForm" :inline="true" :model="priceConfigPlan" :rules="rules" class="demo-form-inline">
-        <el-form-item label="零售价" prop="platformPrice">
-          <el-input v-model="priceConfigPlan.platformPrice" placeholder="0.000" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'platformPrice')"></el-input>
-          <div :class="{ 'input-has-mask': noEdit }"></div>
-        </el-form-item>
-        <el-form-item>=</el-form-item>
-        <el-form-item label="总利润" prop="profit">
-          <el-input v-model="priceConfigPlan.profit" placeholder="0.000" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'profit')"></el-input>
-          <div :class="{ 'input-has-mask': noEdit }"></div>
-        </el-form-item>
-        <el-form-item>+</el-form-item>
-        <el-form-item label="运费" prop="freight">
-          <el-input v-model="priceConfigPlan.freight" placeholder="0.000" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'freight')"></el-input>
-          <div :class="{ 'input-has-mask': noEdit }"></div>
-        </el-form-item>
-        <el-form-item>+</el-form-item>
-        <el-form-item label="出港价" prop="harbourPrice">
-          <el-input v-model="priceConfigPlan.harbourPrice" placeholder="0.000" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'harbourPrice')"></el-input>
-          <div :class="{ 'input-has-mask': noEdit }"></div>
-        </el-form-item>
-        <el-divider></el-divider>
-        <el-form-item>
-          <el-radio v-model="status" label="2">立即执行</el-radio>
-          <span class="grey-text">（作废 执行中、已预约未执行 调价）</span>
-        </el-form-item>
-        <br />
-        <el-form-item>
-          <el-radio v-model="status" label="1">预约执行</el-radio>
-          <el-form-item>
-            <el-date-picker
-              popper-class="no-time-picker"
-              v-model="updateDate"
-              default-time="00:00:00"
-              type="datetime"
-              :disabled="(Number(status) !== 1)"
-              placeholder="选择日期时间">
-            </el-date-picker>
-          </el-form-item>
-          <span>执行</span>
-          <span class="grey-text">（作废 执行中、已预约未执行 调价）</span>
-        </el-form-item>
-        <br />
-        <el-form-item style="text-align: right; display: block;">
-          <el-button @click="onCancel">取消</el-button>
-          <el-button type="primary" @click="onSubmit">确定</el-button>
-        </el-form-item>
-      </el-form> -->
     </el-dialog>
     <el-dialog :title="`${currRow.nickName} 调价记录`" :visible.sync="dialogChangeVisible" :width="add_edit_dialog" :append-to-body="true">
       <em-table-list v-if="dialogChangeVisible" :custTableTitle="`${currRow.nickName} 调价记录`" :tableListName="'listingLog'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryLogCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" :page_status="page_status" :page_column="log_page_column" :select_list="log_select_list" @onReqParams="onReqLogParams"></em-table-list>
@@ -61,9 +15,11 @@ import { initVueDataOptions, callbackPagesInfo, isTypeof, calc, handleInputNumbe
 import { $priceConfigPlan } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 import PriceAdjustment from '../components/priceAdjustment.vue'
+import newTableList from './components/newTableList.vue'
 export default {
   components: {
-    PriceAdjustment
+    PriceAdjustment,
+    newTableList
   },
   name: 'snpRetail',
   data() {
@@ -137,7 +93,8 @@ export default {
           { required: true, message: '请输入', trigger: 'change' }
         ]
       },
-      noEdit: false
+      noEdit: false,
+      data: []
     })
   },
   computed: {
@@ -169,7 +126,8 @@ export default {
       deep: true
     }
   },
-  created: function () { },
+  created: function () {
+  },
   methods: {
     handleInputNumber,
     getHasValueLength() {
