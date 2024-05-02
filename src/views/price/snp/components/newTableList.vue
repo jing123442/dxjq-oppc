@@ -6,7 +6,7 @@
 
 <script>
 import NewTable from '../../components/newTableListTable.vue'
-import { getTableColumns, getTableData } from './snpRetail.js'
+import { getTableColumns, getTableData } from './snpRetail.jsx'
 export default {
   components: {
     NewTable

@@ -55,6 +55,18 @@ export const getTableColumns = () => [{
   ],
 },
 {
+  prop: "test",
+  label: "测试",
+  children: [{
+    prop: "test1",
+    label: "中石化零售价（元/公斤）",
+  },
+  {
+    prop: "test2",
+    label: "采购价（元/公斤）",
+  },]
+},
+{
   prop: "operation",
   label: "操作",
   width: "250",
@@ -63,11 +75,6 @@ export const getTableColumns = () => [{
 ];
 export const getTableData = async () => {
 
-  await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, 1000);
-  })
   return [{
     gasstationId: '青岛',
     type: '是',
