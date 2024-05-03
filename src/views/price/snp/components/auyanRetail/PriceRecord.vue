@@ -7,8 +7,8 @@
       @size-change="sizeChange"
       @current-change="currentChange">
       <!-- 执行状态插槽 -->
-      <div slot="status" slot-scope="scope">
-        {{scope.row.status}}?
+      <div slot="voucher" slot-scope="scope">
+        {{scope.row.voucher}}?
         <el-button type="text">上传</el-button>
         <el-button type="text">查看</el-button>
       </div>

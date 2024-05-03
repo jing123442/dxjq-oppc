@@ -15,16 +15,16 @@
           <el-button size="small" @click="batchRecord">调价记录</el-button>
         </div>
         <div style='padding: 0 10px' slot="operation" slot-scope="scope">
-          <el-button type="text" size="small" @click="change(scope)">调价</el-button>
+          <el-button type="text" size="small" @click="change(scope)">调价标准</el-button>
           <el-button type="text" size="small" @click="record(scope)">调价记录</el-button>
           <el-button type="text" size="small" @click="remove(scope)">移出名单</el-button>
         </div>
       </NewTable>
-      <!-- 中石化零售价.调价 调价弹窗 -->
-      <el-dialog title="中石化零售价.调价" :visible.sync="dialogPriceVisible" :append-to-body="true">
+      <!-- 长城奥扬标准价.调价 调价弹窗 -->
+      <el-dialog title="长城奥扬标准价.调价" :visible.sync="dialogPriceVisible" :append-to-body="true">
           <PriceAjustment :data="dialogTarget" v-if="dialogPriceVisible"></PriceAjustment>
       </el-dialog>
-      <!-- 中石化零售价.调价 调价记录 -->
+      <!-- 长城奥扬标准价.调价 调价记录 -->
       <el-dialog title="中石化零售价.调价记录" width="1000px" :visible.sync="dialogRecordVisible" :append-to-body="true">
           <PriceRecord :data="dialogTarget" v-if="dialogRecordVisible"></PriceRecord>
       </el-dialog>
@@ -34,7 +34,7 @@
 <script>
 import NewTable from '@/components/Table/newTable.vue'
 import TableFilter from './newTableListFilter.vue'
-import { getTableColumns, getTableData } from './snpRetail.js'
+import { getTableColumns, getTableData } from './index.js'
 import PriceAjustment from './PriceAjustment.vue'
 import PriceRecord from './PriceRecord.vue'
 export default {

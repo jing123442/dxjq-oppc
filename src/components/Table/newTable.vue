@@ -13,7 +13,7 @@ export default {
             type={item.type}
           >
             {
-              item.slot ? arg => (ctx.$scopedSlots[item.slot](arg)) : (item.children && getColumns(item.children, ctx))
+              item.slot ? arg => (ctx.$scopedSlots[item.slot]?.(arg)) : (item.children && getColumns(item.children, ctx))
             }
           </el-table-column>
         )
@@ -138,6 +138,11 @@ export default {
   :deep(thead) {
     th {
       background-color: #f5f7fa;
+      text-align: center;
+      .cell {
+        width: 100%;
+        justify-content: center;
+      }
     }
   }
 }

@@ -15,7 +15,7 @@ import { initVueDataOptions, callbackPagesInfo, isTypeof, calc, handleInputNumbe
 import { $priceConfigPlan } from '@/service/strategy'
 import { mapGetters } from 'vuex'
 // import PriceAdjustment from '../components/priceAdjustment.vue'
-import newTableList from './components/newTableList.vue'
+import newTableList from './components/snpRetail/newTableList.vue'
 export default {
   components: {
     // PriceAdjustment,

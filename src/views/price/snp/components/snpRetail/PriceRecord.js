@@ -39,12 +39,12 @@ export const getColumns = () => [{
 }, {
   prop: 'status',
   label: '执行状态',
-  width: '150',
-  slot: 'status'
+  width: '150'
 }, {
   prop: 'voucher',
   label: '凭证',
-  width: '150'
+  width: '150',
+  slot: 'voucher'
 }, {
   prop: 'operationTime',
   label: '创建时间',

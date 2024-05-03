@@ -1,6 +1,5 @@
 <template>
   <div class="login-container">
-    <!-- <MyTable></MyTable> -->
     <div class="login-main">
       <div class="login-left"></div>
       <el-form ref="loginForm" :model="form" :rules="rules" class="login-form" autocomplete="on" label-position="left">
@@ -20,11 +19,7 @@
 </template>
 
 <script>
-// import MyTable from './components/newTableList.vue'
 export default {
-  components: {
-    // MyTable
-  },
   data() {
     return {
       loading: false,
