@@ -55,26 +55,19 @@ export const getTableColumns = () => [{
   ],
 },
 {
-  prop: "test",
-  label: "测试",
-  children: [{
-    prop: "test1",
-    label: "中石化零售价（元/公斤）",
-  },
-  {
-    prop: "test2",
-    label: "采购价（元/公斤）",
-  },]
-},
-{
   prop: "operation",
   label: "操作",
   width: "250",
   fixed: "right",
+  slot: 'operation', // 这里是插槽的名称
 },
 ];
-export const getTableData = async () => {
-
+export const getTableData = async ({
+  page,
+  size,
+  id
+}) => {
+  console.log('check table data>>>', page, size, id);
   return [{
     gasstationId: '青岛',
     type: '是',
