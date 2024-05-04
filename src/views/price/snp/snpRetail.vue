@@ -2,7 +2,13 @@
   <div class="template-main">
     <em-table-list :tableListName="'listing'" :authButtonList="authButtonList" :axios="axios" :queryCustURL="queryCustURL" :responseSuccess="response_success" :queryParam="queryParams" :mode_list="mode_list" ref="tables" :page_status="page_status" :buttonsList="buttonsList" :page_column="page_column" :select_list="select_list" @onListEvent="onListEvent" @onReqParams="onReqParams"></em-table-list>
     <el-dialog :title="`${currRow.nickName}`" :visible.sync="dialogMeasureVisible" width="80%" :append-to-body="true">
-      <PriceAdjustment :stations="['这个站', '那个站']"></PriceAdjustment>
+      <LogisticsPriceForm></LogisticsPriceForm>
+      <!-- <PriceAdjustment
+      :stations="['这个站', '那个站']"
+      :renderItems="['aoyangPrice', 'uploadVoucherTime', 'uploadVoucher', 'measurement']"
+      :rowInfo="{id: '123'}"
+      ></PriceAdjustment> -->
+
       <!-- <el-form ref="ruleForm" :inline="true" :model="priceConfigPlan" :rules="rules" class="demo-form-inline">
         <el-form-item label="零售价" prop="platformPrice">
           <el-input v-model="priceConfigPlan.platformPrice" placeholder="0.000" @blur="handleBlur" @focus="handleFocus" @input="handleInputNumber(priceConfigPlan, 'platformPrice')"></el-input>
@@ -60,10 +66,12 @@
 import { initVueDataOptions, callbackPagesInfo, isTypeof, calc, handleInputNumber, formateTData } from '@/utils/tools'
 import { $priceConfigPlan } from '@/service/strategy'
 import { mapGetters } from 'vuex'
-import PriceAdjustment from '../components/priceAdjustment.vue'
+// import PriceAdjustment from '../components/priceAdjustment.vue'
+import LogisticsPriceForm from '../components/logisticsPriceForm.vue'
 export default {
   components: {
-    PriceAdjustment
+    // PriceAdjustment,
+    LogisticsPriceForm
   },
   name: 'snpRetail',
   data() {

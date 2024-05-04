@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h4> {{titleInfo}} </h4>
     <el-form
       ref="ruleForm"
       :inline="true"
@@ -8,9 +7,10 @@
       :rules="rules"
       class="demo-form-inline"
     >
+    <div class="title"> {{titleInfo}} </div>
     <!---------------- 中石化 一票制 ---------------->
-    <template>
-      <el-form-item label="一票制">
+    <template v-if='showItems.snpPrice'>
+      <el-form-item label="一票制" >
         <el-radio-group v-model="formData.oneTicket" @change="changeMode">
             <el-radio label="1">是</el-radio>
             <el-radio label="0">否</el-radio>
@@ -78,9 +78,32 @@
       </el-form-item>
       <el-divider></el-divider>
    </template>
+   <!---------------- 奥扬定价 ---------------->
+   <template v-if='showItems.aoyangPrice'>
+   <el-form-item label="平台价" prop="onlinePrice" style='margin-right:50px;'>
+        <el-input
+          v-model="formData.platformPrice"
+          placeholder="0.000"
+          @input="handleInputNumber(formData, 'onlinePrice')"
+        >
+          <span  slot="suffix">元 / 公斤</span>
+        </el-input>
+      </el-form-item>
+
+     <el-form-item label="挂牌价" prop="offlinePrice">
+        <el-input
+          v-model="formData.offlinePrice"
+          placeholder="0.000"
+          @input="handleInputNumber(formData, 'offlinePrice')"
+        >
+         <span  slot="suffix">元 / 公斤</span>
+        </el-input>
+      </el-form-item>
+    <el-divider></el-divider>
+   </template>
 
    <!---------------- 执行时间选择 ---------------->
-
+  <template v-if="showItems.excuteTime">
    <el-form-item>
       <el-radio v-model="formData.status" label="2">立即执行</el-radio>
     </el-form-item>
@@ -101,9 +124,25 @@
       <span>执行</span>
     </el-form-item>
     <el-divider></el-divider>
-   <!---------------- 上传凭证 ---------------->
-    <ImgUpload></ImgUpload>
+    </template>
+   <!---------------- 测算 ---------------->
+   <template v-if="showItems.measurement">
+      <div class="title">决策辅助·测算</div>
+      <Measurement></Measurement>
+    <el-divider></el-divider>
+   </template>
 
+   <!-- <template v-if="uploadVoucherTime">
+    <div>
+      预计执行时间: &nbsp;{{ uploadVoucherTime }}
+    </div>
+   </template> -->
+   <!---------------- 上传凭证 ---------------->
+   <template  v-if=showItems.uploadVoucher>
+    <div class="title">上传凭证</div>
+    <p class="upload-hint">（支持 png、jpg、bmp 格式图片，最多9张）</p>
+    <ImgUpload :imgList="imageFileList" @changeImgList="changeImgFile" :max="9"></ImgUpload>
+   </template>
     <el-form-item style="text-align: right; display: block">
       <el-button @click="onCancel">取消</el-button>
       <el-button type="primary" @click="onSubmit">确定</el-button>
@@ -115,10 +154,12 @@
 <script>
 import { handleInputNumber, calc } from '@/utils/tools'
 import ImgUpload from './uploadVoucher.vue'
+import Measurement from './measurement.vue'
 export default {
   name: 'priceAdjustment',
   components: {
-    ImgUpload
+    ImgUpload,
+    Measurement
   },
   props: {
     stations: {
@@ -127,13 +168,28 @@ export default {
     },
     renderItems: {
       type: Array,
-      default: () => ['oneTicket', 2, 3]
+      default: () => ['snpPrice', 'aoyangPrice', 'uploadVoucher', 'measurement']
+    },
+    rowInfo: {
+      type: Object,
+      default: () => {}
+    },
+    uploadVoucherTime: {
+      type: String,
+      default: '2024-5-3'
     }
   },
   data() {
     return {
+      showItems: {
+        snpPrice: false,
+        aoyangPrice: false,
+        uploadVoucher: false,
+        measurement: false
+      },
       titleInfo: '',
       formData: {
+        id: '',
         oneTicket: '1', // 一票制
         platformPrice: '', // 中石化零售价
         procurePrice: '', // 采购价
@@ -141,7 +197,10 @@ export default {
         harbourPrice: '', // 出港价
         freight: '', // 运费
         status: '2', // 2 立即执行 1 预约执行
-        updateDate: '' // 执行时间
+        updateDate: '', // 执行时间
+        images: [], // 上传凭证
+        onlinePrice: '', // 奥扬平台价
+        offlinePrice: ''// 奥扬挂牌价
       },
       rules: {
         platformPrice: [
@@ -157,6 +216,12 @@ export default {
           { required: true, message: '请输入', trigger: 'change' }
         ],
         freight: [
+          { required: true, message: '请输入', trigger: 'change' }
+        ],
+        onlinePrice: [
+          { required: true, message: '请输入', trigger: 'change' }
+        ],
+        offlinePrice: [
           { required: true, message: '请输入', trigger: 'change' }
         ]
       },
@@ -183,7 +248,9 @@ export default {
         key: 'freight',
         type: 'addItem'
       }],
-      calcType: []
+      calcType: [],
+      imageFileList: [],
+      measurementData: {}
     }
   },
   computed: {
@@ -193,9 +260,9 @@ export default {
   },
   methods: {
     handleInputNumber,
-    changeMode () {
+    changeMode () { // 一票制切换
       this.resetSumItems()
-      this.calcType = this.formData.oneTicket === '1' ? this.oneTicketSumRelation : this.normalSumRelation
+      this.calcType = this.formData.oneTicket == '1' ? this.oneTicketSumRelation : this.normalSumRelation
     },
     getTitle () { // 顶部标题
       this.stations.forEach(item => {
@@ -204,7 +271,7 @@ export default {
       const len = this.stations.length
       this.titleInfo = this.titleInfo.substring(0, this.titleInfo.length - 1) + ' ( 共' + len + '站 ) '
     },
-    resetSumItems () {
+    resetSumItems () { // 等式清空
       this.formData.procurePrice = ''
       this.formData.servicePrice = ''
       this.formData.harbourPrice = ''
@@ -214,7 +281,7 @@ export default {
         this.$refs.ruleForm.clearValidate()
       })
     },
-    autoGetEmptyItem () {
+    autoGetEmptyItem () { // 获取等式未填情况
       let emptyCount = 0
       const emptyItems = []
       this.calcType.forEach(item => {
@@ -271,22 +338,71 @@ export default {
         this.formData[aotukey] = autoValue
       }
     },
-    getImgList () {
-
+    apiGetImags (files) {
+      const tempArr = []
+      if (!files) {
+        return []
+      }
+      files.forEach(item => {
+        tempArr.push({ url: item })
+      })
+      this.imageFileList = tempArr
     },
-    onSubmit () {},
-    onCancel () {}
+    changeImgFile (imgList) {
+      this.formData.images = imgList
+      console.log(this.formData, 'this.formData')
+    },
+    onSubmit () {
+      console.log(this.imageFileList)
+      this.$refs.ruleForm.validate((valid) => {
+        if (valid) {
+          this.$emit('submitForm', this.formData)
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    onCancel () {
+      this.$emit('closeInfo')
+    },
+    mergeEditData (rowInfo, formData) {
+      for (const key in formData) {
+        if (rowInfo[key]) {
+          formData[key] = rowInfo[key]
+        }
+      }
+    }
   },
   mounted () {
+    // 获取渲染项
+    this.renderItems.forEach(key => {
+      this.showItems[key] = true
+    })
+    // 获取站名
     this.getTitle()
+    // 初始化？？？？？
     this.changeMode()
+    // 行内容合并
+    this.mergeEditData(this.rowInfo, this.formData)
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.title{
+ font-size: 16px;
+ font-weight: bold;
+ color:#333;
+ margin:15px auto;
+}
 .txt-c{
     text-align: center;
+}
+.upload-hint{
+    color: #999;
+    font-size: 12px;
+    margin:0 0 20px -5px;
 }
 .procure-con{
     text-align: right;

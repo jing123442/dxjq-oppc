@@ -2,58 +2,115 @@
     <div>
       <el-upload
         :action="'#'"
-        :auto-upload="false"
-        class="fileBox"
+        ref="upload"
         list-type="picture-card"
+        :http-request="uploadImage"
+        :on-preview="handlePreview"
+        :on-remove="handleRemove"
         accept=".jpg,.png,.bmp"
-        :multiple="true"
-        :limit="9"
-        :on-change="changeFile"
+        :limit="max"
+        :file-list="imgFileList"
+        :before-upload="beforeImageUpload"
+        :exceed-limit="handleExeed"
+        :on-error="handleError"
+        :on-success="hendleSuccess"
         >
+        <i class="el-icon-plus"></i>
       </el-upload>
     </div>
 </template>
 <script>
+import { $upload } from '@/service/main'
 export default {
   name: 'ImgUpload',
   props: {
     max: {
       type: Number,
       default: 3
+    },
+    imgList: {
+      type: Array,
+      default: () => []
     }
   },
   data () {
     return {
-      imgList: [{
-        field: '',
-        path: '',
-        isDisabled: false,
-        defaultPath: require('@/assets/images/main/license@2x.png'),
-        text: ''
-      }]
+      imgFileList: []
     }
   },
   methods: {
-    changeFile(file, fileList) {
-      const fileD = new FormData()
-      fileD.append('file', file.raw)
-      console.log(fileList)
-      console.log(file)
-    //   $upload(fileD).then(res => {
-    //     if (res.data.code === 0) {
-    //       var pathUrl = this.$store.state.file.fileHost + res.data.data
-    //       this.imgList[index].path = pathUrl
-    //       if (this.imgList.length < 3) {
-    //         this.$set(this.imgList, this.imgList.length, {
-    //           field: '',
-    //           path: '',
-    //           isDisabled: false,
-    //           defaultPath: require('@/assets/images/main/license@2x.png'),
-    //           text: ''
-    //         })
-    //       }
-    //     }
-    //   })
+    mergeEditData () { // 父传入数据处理
+      if (this.imgList.length > 0) {
+        this.imgFileList = this.imgFileList.map(item => {
+          return {
+            url: item
+          }
+        })
+      }
+    },
+    submitImgList () { // 向父传递数据
+      const emitImgList = []
+      if (this.imgFileList.length > 0) {
+        this.imgFileList.forEach(item => {
+          emitImgList.push(item.url)
+        })
+      }
+      this.$emit('changeImgList', emitImgList)
+    },
+    onchange (e) {
+      console.log(e)
+    },
+    uploadImage (file) { // 手动上传，成功由onsucceess处理，失败由onerror处理
+      return new Promise((resolve, reject) => {
+        const formData = new FormData()
+        formData.append('file', file.file)
+        $upload(formData).then(res => {
+          if (res.data.code === 0) {
+            const url = this.$store.state.file.fileHost + res.data.data
+            resolve(url)
+          } else {
+            reject(new Error('上传失败'))
+          }
+        }).catch(error => {
+          console.log(error, 'error')
+          reject(error)
+        })
+      })
+    },
+    hendleSuccess (url, file) { // 上传成功
+      const tempObj = {
+        url: url,
+        uid: file.uid
+      }
+      this.imgFileList.push(tempObj)
+      this.submitImgList()
+    },
+    handleError (error) { // 上传失败
+      this.$message.error(error)
+    },
+    handleRemove (file) { // 删除图片
+      const index = this.imgFileList.findIndex(item => item.url === file.url)
+      this.imgFileList.splice(index, 1)
+      this.submitImgList()
+    },
+    handlePreview (file) {
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
+    },
+    beforeImageUpload (file) { // 上传前校验
+      const types = ['image/jpeg', 'image/png', 'image/bmp']
+      const isImg = types.includes(file.type)
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isImg) {
+        this.$message.error('上传图片只能是 JPG、PNG、BMP 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传图片大小不能超过 2MB!')
+      }
+      return isImg && isLt2M
+    },
+    handleExeed () { // 超出限制
+      this.$message.error(`此处仅限${this.max}张图片`)
     }
   }
 }
