@@ -21,21 +21,26 @@
         </div>
       </NewTable>
       <!-- 中石化零售价.调价 调价弹窗 -->
-      <el-dialog title="中石化零售价.调价" :visible.sync="dialogPriceVisible" :append-to-body="true">
-          <PriceAjustment :data="dialogTarget" v-if="dialogPriceVisible"></PriceAjustment>
+      <el-dialog title="中石化零售价.调价" :visible.sync="dialogPriceVisible" :append-to-body="true" width='80%'>
+          <PriceAjustment
+            v-if="dialogPriceVisible"
+            :selectRows="dialogTarget"
+            :renderItems='renderAdjustment'
+            @submitForm='submitPriceAjustment'
+            @closeInfo='dialogPriceVisible = false'
+          ></PriceAjustment>
       </el-dialog>
       <!-- 中石化零售价.调价 调价记录 -->
       <el-dialog title="中石化零售价.调价记录" width="1000px" :visible.sync="dialogRecordVisible" :append-to-body="true">
-          <PriceRecord :data="dialogTarget" v-if="dialogRecordVisible"></PriceRecord>
+          <PriceRecord :selectRows="dialogTarget" v-if="dialogRecordVisible"></PriceRecord>
       </el-dialog>
     </el-card>
 </template>
-
 <script>
 import NewTable from '@/components/Table/newTable.vue'
 import TableFilter from './newTableListFilter.vue'
 import { getTableColumns, getTableData } from './snpRetail.js'
-import PriceAjustment from './PriceAjustment.vue'
+import PriceAjustment from '../components/priceAjustment.vue'
 import PriceRecord from './PriceRecord.vue'
 export default {
   components: {
@@ -46,6 +51,7 @@ export default {
   },
   data () {
     return {
+      renderAdjustment: ['snpPrice', 'excuteTime', 'uploadVoucher'],
       tableData: [],
       cacheSelection: [],
       params: {
@@ -122,12 +128,21 @@ export default {
     record ({ row }) {
       console.log('record>>>', row)
       this.dialogRecordVisible = true
-      this.dialogTarget = row
+      this.dialogTarget = [row]
     },
     // 调价
     change ({ row }) {
       this.dialogPriceVisible = true
-      this.dialogTarget = row
+      this.dialogTarget = [row]
+    },
+    submitPriceAjustment (form) {
+      // let ids = ''
+      // this.dialogTarget.forEach(item => {
+      //   ids += item.id + ','
+      // })
+      // ids = ids.substring(0, ids.length - 1)
+      // 提交调价
+      console.log(form)
     }
   }
 }

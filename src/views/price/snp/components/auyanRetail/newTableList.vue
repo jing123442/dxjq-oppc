@@ -1,4 +1,6 @@
 <template>
+    <section>
+    <el-card style='margin-bottom:10px;'> <Measurement :editMeasureData='measureData' :measureType="'total'"></Measurement></el-card>
     <el-card shadow="never" class="new-table-list-filter">
       <!-- 表格顶部筛选项 -->
       <TableFilter slot="header" @search="searchStation" @add="addStation"></TableFilter>
@@ -22,23 +24,33 @@
       </NewTable>
       <!-- 长城奥扬标准价.调价 调价弹窗 -->
       <el-dialog title="长城奥扬标准价.调价" :visible.sync="dialogPriceVisible" :append-to-body="true">
-          <PriceAjustment :data="dialogTarget" v-if="dialogPriceVisible"></PriceAjustment>
+          <PriceAjustment
+            v-if="dialogPriceVisible"
+            :selectRows="dialogTarget"
+            :renderItems='renderAdjustment'
+            @submitForm='submitPriceAjustment'
+            @closeInfo='dialogPriceVisible = false'
+          ></PriceAjustment>
       </el-dialog>
       <!-- 长城奥扬标准价.调价 调价记录 -->
       <el-dialog title="中石化零售价.调价记录" width="1000px" :visible.sync="dialogRecordVisible" :append-to-body="true">
           <PriceRecord :data="dialogTarget" v-if="dialogRecordVisible"></PriceRecord>
       </el-dialog>
     </el-card>
+  </section>
 </template>
 
 <script>
 import NewTable from '@/components/Table/newTable.vue'
 import TableFilter from './newTableListFilter.vue'
 import { getTableColumns, getTableData } from './index.js'
-import PriceAjustment from './PriceAjustment.vue'
+import PriceAjustment from '../components/priceAjustment.vue'
 import PriceRecord from './PriceRecord.vue'
+import Measurement from '../components/measurement.vue'
+
 export default {
   components: {
+    Measurement,
     NewTable,
     TableFilter,
     PriceAjustment,
@@ -46,6 +58,8 @@ export default {
   },
   data () {
     return {
+      renderAdjustment: ['aoyangPrice', 'excuteTime', 'measurement', 'uploadVoucher'],
+      measureData: {},
       tableData: [],
       cacheSelection: [],
       params: {
@@ -122,12 +136,21 @@ export default {
     record ({ row }) {
       console.log('record>>>', row)
       this.dialogRecordVisible = true
-      this.dialogTarget = row
+      this.dialogTarget = [row]
     },
     // 调价
     change ({ row }) {
       this.dialogPriceVisible = true
-      this.dialogTarget = row
+      this.dialogTarget = [row]
+    },
+    submitPriceAjustment (form) {
+      // let ids = ''
+      // this.dialogTarget.forEach(item => {
+      //   ids += item.id + ','
+      // })
+      // ids = ids.substring(0, ids.length - 1)
+      // 提交调价
+      console.log(form)
     }
   }
 }
