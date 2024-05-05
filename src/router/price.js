@@ -62,7 +62,7 @@ export default [
         },
         meta: { title: '中石化限价', noCache: false },
         children: [
-          { path: 'snpRetail', component: inImport('price/snp/snpRetail'), name: 'snpRetail', meta: { title: '中石化零售价', noCache: false } },
+          { path: 'snpRetail', component: inImport('price/snp/components/snpRetail/newTableList'), name: 'snpRetail', meta: { title: '中石化零售价', noCache: false } },
           { path: 'auyanRetail', component: inImport('price/snp/auyanRetail'), name: 'auyanRetail', meta: { title: '长城奥扬零售价', noCache: false } }
         ]
       },
